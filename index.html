@@ -221,6 +221,7 @@ table.subs tr.nosub td:not(.wk){color:var(--muted);font-style:italic}
 .hist summary{cursor:pointer;color:var(--muted);font-weight:600}
 .hist ol{margin:4px 0 0;padding-left:18px}
 .pinv{font-weight:700;letter-spacing:1px}
+.pdftip{margin-top:8px;background:var(--card);border-left:4px solid var(--leaf);border-radius:6px;padding:8px 10px;font-size:13px;line-height:1.5}
 .wktable input{border:1.5px solid var(--line);border-radius:8px;padding:6px 8px;background:var(--card);max-width:170px}
 .wktable td{vertical-align:middle}
 .logsum{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-top:16px}
@@ -631,7 +632,7 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
 
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'1.4', date:'September 27, 2026' } };
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'1.6', date:'September 27, 2026' } };
 document.getElementById('verFirst').textContent = 'First version: '+VERSION.first.no+', '+VERSION.first.date;
 document.getElementById('verNow').textContent = 'Current version: '+VERSION.current.no+', '+VERSION.current.date;
 const LOGO = document.querySelector('.mark img').src;
@@ -1147,7 +1148,7 @@ function docBlock(K){
     </div></div>
     <div class="namebox"><b>Before uploading, rename your file to this name</b>
       <div class="namerow"><code>${esc(name)}</code><button type="button" class="btn small" onclick="copyText('${esc(name)}')">Copy name</button></div>
-      <div class="hint">Keep the file ending such as .docx, .pptx, or .pdf.</div>
+      <div class="hint">Keep the file ending such as .docx, .pptx, or .pdf. Up to ${K==='PPT'?30:10} MB.</div>${K==='PPT'?`<div class="pdftip"><b>Make your PPT lighter: save it as PDF first.</b> In PowerPoint, click <b>File</b>, then <b>Save As</b> (or <b>Export</b>), choose <b>PDF</b>, and save. On a phone, open the PPT, tap the <b>three dots</b> or <b>Share</b>, and choose <b>PDF</b>. Name the PDF ${esc(name)} before uploading.</div>`:''}
       <input type="file" id="${K}File" accept=".pdf,.doc,.docx,.ppt,.pptx" style="margin-top:8px;width:100%" onchange="checkName('${K}')">
       <div class="fcheck" id="${K}Check"></div>
     </div>
@@ -1178,7 +1179,8 @@ function checkName(K){
   const m = f.name.match(/^(.*)\.([A-Za-z0-9]+)$/);
   const ext = m ? m[2].toLowerCase() : '';
   if (['pdf','doc','docx','ppt','pptx'].indexOf(ext) < 0){ out.innerHTML = '<span class="mk-late">Upload a PDF, Word, or PowerPoint file.</span>'; $(K+'File').value=''; return false; }
-  if (f.size > 10*1024*1024){ out.innerHTML = '<span class="mk-late">This file is larger than 10 MB.</span>'; $(K+'File').value=''; return false; }
+  const maxMB = K==='PPT' ? 30 : 10;
+  if (f.size > maxMB*1024*1024){ out.innerHTML = `<span class="mk-late">This ${K} is ${(f.size/1048576).toFixed(1)} MB. The limit is ${maxMB} MB.${K==='PPT'?' Save it as PDF to make it lighter: in PowerPoint, click File, Save As, choose PDF. You can also use File, Compress Pictures.':''}</span>`; $(K+'File').value=''; return false; }
   if (m[1].toLowerCase() !== name.toLowerCase()){
     out.innerHTML = `<span class="mk-late">Your file is named "${esc(f.name)}". It must be named ${esc(name)}.${esc(ext)}</span>`;
     $('renSub').textContent = `Your ${K} file is named "${f.name}". TALA only accepts files named exactly like this:`;
@@ -1223,6 +1225,7 @@ async function submitDocs(){
     for (const j of jobs){
       loading(true, j.file ? 'Uploading '+j.x.which+' file' : 'Saving '+j.x.which+' details');
       if (j.x.needScan){ loading(true,'Reading the LPT'); try{ await W.scanPromise; }catch(e){} j.x.scan = W.scan; delete j.x.needScan; loading(true, 'Uploading LPT file'); }
+      if (j.file && j.file.size > 8*1048576) loading(true, 'Uploading '+j.x.which+' file. Large files may take a minute');
       if (j.file){ j.x.fileName = j.file.name; j.x.mime = j.file.type; j.x.base64 = await readB64(j.file); }
       await api('submitFile', {doc:j.x});
     }
