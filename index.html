@@ -184,7 +184,10 @@ details.byt .table-wrap{border:0;border-top:1px solid var(--line);border-radius:
 .spin{width:22px;height:22px;border:3px solid var(--line);border-top-color:var(--brandtxt);border-radius:50%;animation:sp .8s linear infinite;margin-right:10px}
 @keyframes sp{to{transform:rotate(360deg)}}
 @media (prefers-reduced-motion:reduce){.spin{animation:none}}
-footer{text-align:center;font-size:12.5px;color:var(--muted);padding:10px 18px 30px}
+footer{text-align:center;font-size:12.5px;color:var(--muted);padding:18px 18px 30px;border-top:1px solid var(--line);margin-top:10px;line-height:1.7}
+footer .f-name{font-size:13.5px;color:var(--ink)}
+footer .f-ver span{display:inline-block;margin:0 8px}
+footer .f-dev{margin-top:4px;color:var(--ink)}
 
 @media (max-width:760px){
   .stats{grid-template-columns:repeat(2,1fr)}
@@ -217,6 +220,19 @@ table.subs tr.nosub td:not(.wk){color:var(--muted);font-style:italic}
 .hist summary{cursor:pointer;color:var(--muted);font-weight:600}
 .hist ol{margin:4px 0 0;padding-left:18px}
 .pinv{font-weight:700;letter-spacing:1px}
+.logsum{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-top:16px}
+.logsum .stat span{display:block}
+.tour{position:fixed;inset:0;z-index:100}
+.tour-hole{position:fixed;border-radius:12px;box-shadow:0 0 0 9999px rgba(10,20,12,.72);outline:3px solid var(--sun);transition:all .25s ease;pointer-events:none}
+.tour-hole.center{width:0;height:0;left:50%;top:40%;outline:0}
+.tour-card{position:fixed;width:min(330px,calc(100vw - 24px));background:var(--card);color:var(--ink);border-radius:14px;padding:16px 16px 12px;box-shadow:0 12px 34px rgba(0,0,0,.3);transition:top .25s ease,left .25s ease}
+.tour-card h4{margin:2px 0 6px;font-size:17px;color:var(--brandtxt)}
+.tour-card p{margin:0 0 10px;font-size:14px;line-height:1.5}
+.tour-count{font-size:12px;color:var(--muted);font-weight:600}
+.tour-hide{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);margin-bottom:10px;cursor:pointer}
+.tour-btns{display:flex;justify-content:space-between;align-items:center}
+.tour-arrow{position:absolute;width:16px;height:16px;background:var(--card);transform:rotate(45deg)}
+@media (prefers-reduced-motion:reduce){.tour-hole,.tour-card{transition:none}}
 .flow{list-style:none;margin:14px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:6px 4px;align-items:center;font-size:13px}
 .flow li{display:flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:4px 10px 4px 4px}
 .flow li b{width:20px;height:20px;border-radius:50%;background:var(--sun);color:var(--onsun);display:grid;place-items:center;font-size:11.5px;flex:none}
@@ -307,6 +323,7 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
   <div class="menu" id="menu">
     <div class="who" id="menuWho"></div>
     <button id="menuAcc" onclick="openAccounts()" style="display:none">Teacher accounts</button>
+    <button id="menuTour" onclick="$('menu').classList.remove('open');startTour(true)" style="display:none">Show the guide again</button>
     <button onclick="openPin(false)">Change my PIN</button>
     <button onclick="signOut()">Sign out</button>
   </div>
@@ -331,6 +348,7 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
       <div><h2>LPT and PPT Weekly Tracking</h2><p id="trkSub"></p></div>
       <div class="head-actions">
         <button class="btn ghost" id="accBtn" style="display:none" onclick="openAccounts()">Teacher accounts</button>
+        <button class="btn ghost" id="logBtn" style="display:none" onclick="openLog()">Teacher activity</button>
         <button class="btn ghost" id="bankBtn" style="display:none" onclick="openBank()">Learning Competency and Objective List</button>
         <button class="btn ghost" id="setBtn" style="display:none" onclick="openSettings()">Term dates and deadline</button>
         <button class="btn danger" id="clrBtn" style="display:none" onclick="openClear()">Clear data for launch</button>
@@ -363,6 +381,23 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
     <div class="entry" id="bEditor"></div>
   </section>
 
+  <!-- TEACHER ACTIVITY -->
+  <section id="viewLog" style="display:none">
+    <div class="trk-head">
+      <div><h2>Teacher Activity</h2><p>Everything each teacher did in TALA, with the date and time: sign ins, PIN changes, and every LPT and PPT upload, with how early or late it was.</p></div>
+      <div class="head-actions"><button class="btn ghost" onclick="showTracker()">Back to tracker</button><button class="btn ghost" onclick="openLog()">Refresh</button></div>
+    </div>
+    <div id="logSum" class="logsum"></div>
+    <div class="filters" style="margin-top:14px">
+      <select id="logWho" onchange="renderLog()" aria-label="Teacher"><option value="">All teachers</option></select>
+      <select id="logType" onchange="renderLog()" aria-label="Action">
+        <option value="">All actions</option><option value="Uploaded">Uploads</option><option value="Signed in">Sign ins</option><option value="PIN">PIN changes</option>
+      </select>
+      <input id="logText" placeholder="Search subject, grade, or file" oninput="renderLog()" aria-label="Search">
+    </div>
+    <div id="logBody"></div>
+  </section>
+
   <!-- ACCOUNTS -->
   <section id="viewAcc" style="display:none">
     <div class="trk-head">
@@ -381,7 +416,12 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
   </div>
 </main>
 
-<footer>TALA, Teacher Assistance, Learning, and Accountability. Baluyan Elementary School, School ID 125592, Imelda District, Schools Division of Zamboanga Sibugay</footer>
+<footer>
+  <div class="f-name"><b>TALA</b>, Teacher Assistance, Learning, and Accountability</div>
+  <div>Baluyan Elementary School, School ID 125592, Imelda District, Schools Division of Zamboanga Sibugay</div>
+  <div class="f-ver"><span id="verFirst"></span><span id="verNow"></span></div>
+  <div class="f-dev">Developed by <b>MARK JUMIL T. PADILLA</b></div>
+</footer>
 
 <!-- Sign in -->
 <div class="overlay" id="loginModal">
@@ -555,11 +595,29 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
   </div>
 </div>
 
+<div id="tour" class="tour" hidden>
+  <div class="tour-hole" id="tourHole"></div>
+  <div class="tour-card" id="tourCard" role="dialog" aria-live="polite">
+    <div class="tour-arrow" id="tourArrow"></div>
+    <div class="tour-count" id="tourCount"></div>
+    <h4 id="tourTitle"></h4>
+    <p id="tourText"></p>
+    <label class="tour-hide"><input type="checkbox" id="tourHide">Do not show this again</label>
+    <div class="tour-btns">
+      <button class="linkbtn" onclick="endTour()">Skip</button>
+      <span><button class="btn ghost small" id="tourBack" onclick="tourGo(-1)">Back</button> <button class="btn small" id="tourNext" onclick="tourGo(1)">Next</button></span>
+    </div>
+  </div>
+</div>
 <div class="toast" id="toast"></div>
 <div class="loading" id="loading"><div class="spin"></div><span id="loadingText">Loading</span></div>
 <div id="printArea"></div>
 
 <script>
+/* Version information. Update CURRENT each time a new version is released. */
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'1.2', date:'September 27, 2026' } };
+document.getElementById('verFirst').textContent = 'First version: '+VERSION.first.no+', '+VERSION.first.date;
+document.getElementById('verNow').textContent = 'Current version: '+VERSION.current.no+', '+VERSION.current.date;
 const LOGO = document.querySelector('.mark img').src;
 document.getElementById('heroLogo').src = LOGO; document.getElementById('favicon').href = LOGO;
 const DOC_KEYS = ['LPT','PPT'];
@@ -777,7 +835,9 @@ function render(){
   $('signInBtn').style.display = USER ? 'none' : '';
   $('userBtn').style.display = USER ? 'flex' : 'none';
   $('menuAcc').style.display = role==='head' ? '' : 'none';
+  $('menuTour').style.display = role==='teacher' ? '' : 'none';
   $('accBtn').style.display = role==='head' ? '' : 'none';
+  $('logBtn').style.display = role==='head' ? '' : 'none';
   $('setBtn').style.display = role==='head' ? '' : 'none';
   $('bankBtn').style.display = role==='head' ? '' : 'none';
   $('clrBtn').style.display = role==='head' ? '' : 'none';
@@ -786,7 +846,7 @@ function render(){
   const ROLES = [['public','Public','See how many weekly LPT and PPT files were submitted and approved.'],
     ['teacher','Teachers','Submit your weekly LPT and PPT, rename and upload the files, and read the School Head\u2019s remarks.'],
     ['head','School Head','Check each file, validate it as Approved or Returned, give remarks, lock approved files, and see who is late.']];
-  const FLOW = ['Download from DZIIS or prepare your own','Print it','Rename: LPT_Term#_Grade_Subject_Week#','Upload by Monday, 7:45 AM','School Head validates','If returned, revise and reupload'];
+  const FLOW = ['Download from DZIIS or prepare your own','Print it','Rename: LPT_Term#_Grade_Subject_Week#','Upload 3 days before, or on Monday by 7:45 AM','School Head validates','If returned, revise and reupload'];
   const mine = ROLES.find(r => r[0]===role);
   $('roles').innerHTML = (role==='head' ? '' : `<ol class="flow" aria-label="Steps for teachers">${FLOW.map((s,i)=>`<li><b>${i+1}</b>${esc(s)}</li>`).join('')}</ol>`)
     + (USER && mine ? `<div class="mybox"><b>${esc(mine[1]==='Teachers'?'Teacher Portal':'School Head Portal')}</b> ${esc(mine[2])}</div>` : '');
@@ -810,7 +870,7 @@ function tickClock(){
 tickClock(); setInterval(tickClock, 1000);
 function toggleMenu(){ $('menu').classList.toggle('open'); }
 document.addEventListener('click', e => { if (!e.target.closest('#menu') && !e.target.closest('#userBtn')) $('menu').classList.remove('open'); });
-function showTracker(){ $('viewAcc').style.display='none'; $('viewBank').style.display='none'; $('viewTrk').style.display=''; }
+function showTracker(){ ['viewAcc','viewBank','viewLog'].forEach(v => $(v).style.display='none'); $('viewTrk').style.display=''; }
 
 /* ---------- Term and week bar ---------- */
 function pickCurrentTerm(st){
@@ -1222,6 +1282,104 @@ function printWeek(){
   setTimeout(() => window.print(), 150);
 }
 
+/* ---------- First time guide for teachers ---------- */
+const TOUR = [
+  { t:'Welcome to TALA', x:'This short guide shows you where to submit your LPT and PPT and where to print your weekly tracking. Tap Next to continue.' },
+  { el:'#roles .flow', t:'Your weekly steps', x:'Every week: download from DZIIS or prepare your own, print it, rename it, then upload it 3 days before or on Monday by 7:45 AM.' },
+  { el:'#addBtn', t:'Submit your LPT and PPT here', x:'Tap Submit LPT and PPT. Choose the term, grade level, subject, and week, then upload your renamed files and enter when you downloaded and printed them.' },
+  { el:'.bar', t:'Choose the term and week', x:'Pick a term and a week to see your submissions for that week. All weeks shows Weeks 1 to 12 in one table.' },
+  { el:'.stats', t:'Your summary', x:'See how many of your files are for validation, returned, approved, or late. Tap a box to show only those.' },
+  { el:'#entryList', t:'Your submissions', x:'Each file shows its status, the School Head\u2019s remarks, the history, and a QR code for viewing. If a file is returned, tap Reupload here.' },
+  { el:'#printBtn', t:'Download or print your tracking', x:'Choose a week first, then tap Print week. To download it, choose Save as PDF in the print window.' },
+  { el:'#userBtn', t:'Your account', x:'Tap your name to change your PIN, sign out, or open this guide again.' },
+  { t:'You are all set!', x:'Tick Do not show this again if you no longer need this guide. You can always open it from your name at the top.' }
+];
+let TI = 0;
+function tourKey(){ return 'tala_tour_hide_' + (USER ? USER.email : ''); }
+function maybeTour(){
+  if (!USER || USER.role !== 'teacher' || USER.mustChange) return;
+  try{ if (localStorage.getItem(tourKey()) === '1' || sessionStorage.getItem('tala_tour_seen') === '1') return; }catch(e){}
+  setTimeout(() => startTour(false), 500);
+}
+function startTour(manual){
+  showTracker(); TI = 0;
+  try{ $('tourHide').checked = localStorage.getItem(tourKey()) === '1'; sessionStorage.setItem('tala_tour_seen','1'); }catch(e){}
+  $('tour').hidden = false; drawTour();
+}
+function endTour(){
+  try{ if ($('tourHide').checked) localStorage.setItem(tourKey(),'1'); else localStorage.removeItem(tourKey()); }catch(e){}
+  $('tour').hidden = true;
+}
+function tourGo(d){ TI += d; if (TI >= TOUR.length){ endTour(); return; } if (TI < 0) TI = 0; drawTour(); }
+function drawTour(){
+  const s = TOUR[TI], el = s.el ? document.querySelector(s.el) : null, show = el && el.offsetParent !== null;
+  $('tourCount').textContent = 'Step '+(TI+1)+' of '+TOUR.length;
+  $('tourTitle').textContent = s.t; $('tourText').textContent = s.x;
+  $('tourBack').style.visibility = TI ? 'visible' : 'hidden';
+  $('tourNext').textContent = TI === TOUR.length-1 ? 'Finish' : 'Next';
+  const hole = $('tourHole'), card = $('tourCard'), arrow = $('tourArrow');
+  if (!show){
+    hole.className = 'tour-hole center'; hole.style.cssText = '';
+    arrow.style.display = 'none';
+    card.style.left = Math.max(12,(window.innerWidth - card.offsetWidth)/2)+'px';
+    card.style.top = Math.max(12,(window.innerHeight - card.offsetHeight)/2)+'px';
+    return;
+  }
+  el.scrollIntoView({ block:'center' });
+  requestAnimationFrame(() => {
+    const r = el.getBoundingClientRect(), pad = 6, vw = window.innerWidth, vh = window.innerHeight;
+    const top = Math.max(4, r.top - pad), left = Math.max(4, r.left - pad);
+    const w = Math.min(vw - 8 - left, r.width + pad*2), hgt = Math.min(vh - 8 - top, r.height + pad*2);
+    hole.className = 'tour-hole';
+    Object.assign(hole.style, { top:top+'px', left:left+'px', width:w+'px', height:hgt+'px' });
+    const cw = card.offsetWidth, ch = card.offsetHeight;
+    let below = top + hgt + 14 + ch < vh, cy = below ? top + hgt + 14 : top - ch - 14;
+    if (cy < 8){ cy = Math.min(vh - ch - 8, top + hgt + 14); below = true; }
+    const cx = Math.min(vw - cw - 12, Math.max(12, left + w/2 - cw/2));
+    card.style.top = cy+'px'; card.style.left = cx+'px';
+    const ax = Math.min(cw - 26, Math.max(10, left + w/2 - cx - 8));
+    Object.assign(arrow.style, { display:'block', left:ax+'px', top: below ? '-8px' : '', bottom: below ? '' : '-8px' });
+  });
+}
+window.addEventListener('resize', () => { if (!$('tour').hidden) drawTour(); });
+
+/* ---------- Teacher activity (School Head) ---------- */
+let LOG = null;
+async function openLog(){
+  ['viewTrk','viewAcc','viewBank'].forEach(v => $(v).style.display='none'); $('viewLog').style.display=''; window.scrollTo(0,0);
+  loading(true);
+  try{
+    LOG = await api('getLog');
+    const cur = $('logWho').value;
+    $('logWho').innerHTML = '<option value="">All teachers</option>' + LOG.teachers.map(t=>`<option value="${esc(t.email)}">${esc(t.name)}</option>`).join('');
+    $('logWho').value = cur; renderLog();
+  }catch(e){ handleErr(e); }
+  loading(false);
+}
+function logWhat(x){
+  if (!x.id || !x.subject) return esc(x.details||'');
+  const rel = /^Uploaded/.test(x.action) && x.weekStart ? relDays(x.on, x, true) : '';
+  return `${esc(x.grade)}, ${esc(x.subject)}, Term ${esc(x.term)} Week ${esc(x.week)}${x.details?`<small>${esc(x.details)}</small>`:''}${rel?`<small class="${/late|after/.test(rel)?'mk-late':'mk-ok'}">${esc(rel)}</small>`:''}`;
+}
+function renderLog(){
+  const who = $('logWho').value, type = $('logType').value, q = $('logText').value.toLowerCase();
+  const tset = new Set(LOG.teachers.map(t=>t.email));
+  const mine = LOG.log.filter(x => tset.has(x.email));
+  $('logSum').innerHTML = LOG.teachers.map(t => {
+    const a = mine.filter(x=>x.email===t.email), last = a[0];
+    const n = k => a.filter(x=>x.action.indexOf(k)===0).length;
+    return `<button class="stat ${who===t.email?'on':''}" onclick="$('logWho').value=$('logWho').value==='${esc(t.email)}'?'':'${esc(t.email)}';renderLog()">
+      <b style="font-size:15px">${esc(t.name)}</b><span>${n('Signed in')} sign ins, ${n('Uploaded')} uploads</span>
+      <span>${last?'Last active '+esc(dTime(last.on)):'<span class="mk-wait">No activity yet</span>'}</span></button>`;
+  }).join('');
+  const list = mine.filter(x => (!who || x.email===who) && (!type || x.action.indexOf(type) > -1) &&
+    (!q || [x.grade,x.subject,x.details,x.action].join(' ').toLowerCase().indexOf(q) > -1));
+  $('logBody').innerHTML = !list.length ? '<div class="empty">No activity to show yet.</div>' :
+    `<div class="table-wrap"><table><thead><tr><th>Date and time</th>${who?'':'<th>Teacher</th>'}<th>Action</th><th>Details</th></tr></thead><tbody>${
+      list.map(x=>`<tr><td style="white-space:nowrap">${esc(dTime(x.on))}</td>${who?'':`<td>${esc(x.name)}</td>`}<td><b>${esc(x.action)}</b></td><td>${logWhat(x)}</td></tr>`).join('')}</tbody></table></div>
+     <p class="hint" style="margin-top:8px">Showing ${list.length} of the most recent actions.</p>`;
+}
+
 /* ---------- Clear data for launch ---------- */
 function openClear(){ $('clrType').value=''; $('clrErr').textContent=''; openModal('clrModal'); }
 async function doClear(){
@@ -1263,6 +1421,7 @@ async function doLogin(){
 $('lgPin').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
 async function afterSignIn(){
   loading(true); try{ await loadData(true); toast('Welcome, '+USER.name.split(' ')[0]+'.'); }catch(e){ handleErr(e); } loading(false);
+  maybeTour();
 }
 async function signOut(){
   $('menu').classList.remove('open');
@@ -1294,7 +1453,7 @@ async function savePin(){
 /* ---------- Competency list (School Head) ---------- */
 let BW = '1';
 function openBank(){
-  $('viewTrk').style.display='none'; $('viewAcc').style.display='none'; $('viewBank').style.display='';
+  $('viewTrk').style.display='none'; $('viewAcc').style.display='none'; $('viewLog').style.display='none'; $('viewBank').style.display='';
   $('bTerm').value = SEL.term; $('bGrade').innerHTML = DATA.options.grades.map(g=>`<option>${esc(g)}</option>`).join('');
   BW = SEL.week==='all' ? '1' : SEL.week; drawBank(true); window.scrollTo(0,0);
 }
@@ -1324,7 +1483,7 @@ async function saveBank(){
 
 /* ---------- Accounts ---------- */
 async function openAccounts(){
-  $('menu').classList.remove('open'); $('viewTrk').style.display='none'; $('viewBank').style.display='none'; $('viewAcc').style.display=''; loading(true);
+  $('menu').classList.remove('open'); $('viewTrk').style.display='none'; $('viewBank').style.display='none'; $('viewLog').style.display='none'; $('viewAcc').style.display=''; loading(true);
   try{ ACC = await api('getAccounts'); renderAcc(); }catch(e){ handleErr(e); }
   loading(false);
 }
@@ -1398,7 +1557,7 @@ document.addEventListener('keydown', e => { if (e.key==='Escape') document.query
   }catch(e){}
   if (saved){
     TOKEN = saved;
-    try{ await loadData(!DATA); return; }
+    try{ await loadData(!DATA); maybeTour(); return; }
     catch(e){
       const m = String(e.message||'');
       if (m.indexOf('PIN_CHANGE_REQUIRED') > -1){ try{ USER = await api('checkSession'); render(); openPin(true); }catch(x){} await loadPublic(); return; }
