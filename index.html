@@ -221,6 +221,8 @@ table.subs tr.nosub td:not(.wk){color:var(--muted);font-style:italic}
 .hist summary{cursor:pointer;color:var(--muted);font-weight:600}
 .hist ol{margin:4px 0 0;padding-left:18px}
 .pinv{font-weight:700;letter-spacing:1px}
+.wktable input{border:1.5px solid var(--line);border-radius:8px;padding:6px 8px;background:var(--card);max-width:170px}
+.wktable td{vertical-align:middle}
 .logsum{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-top:16px}
 .logsum .stat span{display:block}
 .tour{position:fixed;inset:0;z-index:100}
@@ -352,6 +354,7 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
         <button class="btn ghost" id="logBtn" style="display:none" onclick="openLog()">Teacher activity</button>
         <button class="btn ghost" id="bankBtn" style="display:none" onclick="openBank()">Learning Competency and Objective List</button>
         <button class="btn ghost" id="setBtn" style="display:none" onclick="openSettings()">Term dates and deadline</button>
+        <button class="btn ghost" id="wkBtn" style="display:none" onclick="openWeeks()">Week schedule</button>
         <button class="btn danger" id="clrBtn" style="display:none" onclick="openClear()">Clear data for launch</button>
         <button class="btn ghost" id="printBtn" style="display:none" onclick="printWeek()">Print week</button>
         <button class="btn sun" id="addBtn" style="display:none" onclick="openSubmit()">Submit LPT and PPT</button>
@@ -380,6 +383,18 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
     <div class="chips weeks" id="bWeeks" style="margin:10px 0 4px"></div>
     <p class="hint" style="margin:0 0 12px">Weeks with a dot are already filled in.</p>
     <div class="entry" id="bEditor"></div>
+  </section>
+
+  <!-- WEEK SCHEDULE -->
+  <section id="viewWeeks" style="display:none">
+    <div class="trk-head">
+      <div><h2>Week Schedule</h2><p>Weeks follow the calendar, Monday to Friday, starting from each term's first day. Change any date or deadline here, for example for holidays or suspended classes. Teachers see your schedule but cannot edit it.</p></div>
+      <div class="head-actions"><button class="btn ghost" onclick="showTracker()">Back to tracker</button></div>
+    </div>
+    <div class="bar"><div class="tabs" id="wkTabs"></div></div>
+    <div id="wkBody"></div>
+    <div class="err" id="wkErr"></div>
+    <div class="modal-actions" style="justify-content:flex-start"><button class="btn" id="wkSave" onclick="saveWeeks()">Save schedule</button></div>
   </section>
 
   <!-- TEACHER ACTIVITY -->
@@ -501,9 +516,9 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
   <div class="modal" role="dialog" aria-labelledby="setTitle">
     <h3 id="setTitle">Term dates and deadline</h3>
     <p class="sub">TALA uses these to show each week's dates and count how many days a file was late.</p>
-    <div class="field"><label for="sT1">Term 1, Monday of Week 1</label><input type="date" id="sT1"></div>
-    <div class="field"><label for="sT2">Term 2, Monday of Week 1</label><input type="date" id="sT2"></div>
-    <div class="field"><label for="sT3">Term 3, Monday of Week 1</label><input type="date" id="sT3"></div>
+    <div class="field"><label for="sT1">Term 1, first day of classes</label><input type="date" id="sT1"></div>
+    <div class="field"><label for="sT2">Term 2, first day of classes</label><input type="date" id="sT2"></div>
+    <div class="field"><label for="sT3">Term 3, first day of classes</label><input type="date" id="sT3"></div>
     <div>
       <div class="field"><label for="sTime">Upload deadline on Monday</label><input type="time" id="sTime"><div class="hint">Files uploaded after this time on Monday of the week are late.</div></div>
 
@@ -616,7 +631,7 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
 
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'1.3', date:'September 27, 2026' } };
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'1.4', date:'September 27, 2026' } };
 document.getElementById('verFirst').textContent = 'First version: '+VERSION.first.no+', '+VERSION.first.date;
 document.getElementById('verNow').textContent = 'Current version: '+VERSION.current.no+', '+VERSION.current.date;
 const LOGO = document.querySelector('.mark img').src;
@@ -666,17 +681,28 @@ function dTime(s){
   let [h,m]=t.split(':').map(Number); const ap=h>=12?'PM':'AM'; h=h%12||12; return dShort(s)+', '+h+':'+String(m).padStart(2,'0')+' '+ap;
 }
 function addDays(s,n){ const p=s.split('-').map(Number); return new Date(Date.UTC(p[0],p[1]-1,p[2]+n)).toISOString().slice(0,10); }
+function dow(s){ const p=s.split('-').map(Number); return new Date(Date.UTC(p[0],p[1]-1,p[2])).getUTCDay(); }
+const DAYNAMES = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+// Calendar week, Monday to Friday. Week 1 starts on the term's first day, even midweek.
+function calWeek(start, n){
+  if (!start || !n) return null;
+  let d = start; const w = dow(d);
+  if (w === 6) d = addDays(d,2); else if (w === 0) d = addDays(d,1);
+  const monday = addDays(d, 1 - dow(d));
+  return { start: n===1 ? d : addDays(monday, 7*(n-1)), end: addDays(monday, 7*(n-1)+4) };
+}
 function weekOf(term, week){
-  const st = (DATA||PUB).settings, start = st['t'+term];
-  if (!start || !week || week==='all') return null;
-  const ws = addDays(start,(Number(week)-1)*7);
-  return {start:ws, end:addDays(ws,4), due:ws};
+  if (!week || week==='all') return null;
+  const src = DATA||PUB, st = src.settings, o = (src.weeks||{})[term+'|'+week], base = calWeek(st['t'+term], Number(week));
+  if (!base && !o) return null;
+  const start = (o && o.start) || base.start;
+  return { start, end:(o && o.end) || base.end, due:(o && o.dueDate) || start, dueTime:(o && o.dueTime) || st.dueTime || '07:45', edited:!!o };
 }
 function rangeText(w){ return w ? dShort(w.start).replace(/, \d{4}$/,'')+' to '+dShort(w.end) : ''; }
 function lateTag(o){ return !o ? '' : `<span class="${!o.late?'mk-ok':o.level===1?'mk-wait':o.level===3?'mk-late mk-x':'mk-late'}">${esc(o.text)}</span>`; }
 function lateText(o){ return !o ? '' : o.text; }
 function fmtTime(t){ let [hh,mm] = String(t||'07:45').split(':').map(Number); const ap = hh>=12?'PM':'AM'; hh = hh%12||12; return hh+':'+String(mm).padStart(2,'0')+' '+ap; }
-function dueText(w){ const st=(DATA||PUB).settings; return w ? `Upload by ${dShort(w.start).replace(/, \d{4}$/,'')}, ${fmtTime(st.dueTime)}` : ''; }
+function dueText(w){ const st=(DATA||PUB).settings; return w && (w.due||w.start) ? `Upload by ${dShort(w.due||w.start).replace(/, \d{4}$/,'')}, ${fmtTime(w.dueTime||st.dueTime)}` : ''; }
 function fileLink(d){ return /^https?:/.test(d.link) ? `<a href="${esc(d.link)}" target="_blank" rel="noopener">${esc(d.fileName)}</a>` : `<button type="button" class="linkbtn fname" onclick="showFile('${esc(d.fileName)}')">${esc(d.fileName)}</button>`; }
 const DAYS = ['Monday','Tuesday','Wednesday','Thursday','Friday'];
 function lcHtml(lc){
@@ -696,9 +722,10 @@ function qrBox(link, size){
 function dayDiffC(a,b){ const x=a.split('-').map(Number), y=b.split('-').map(Number); return Math.round((Date.UTC(x[0],x[1]-1,x[2])-Date.UTC(y[0],y[1]-1,y[2]))/86400000); }
 function relDays(stamp, e, isUpload){
   stamp = String(stamp||''); if (!stamp || !e.weekStart) return '';
-  const n = dayDiffC(stamp.slice(0,10), e.weekStart), st = (DATA||PUB).settings;
+  const st = (DATA||PUB).settings, base = isUpload ? (e.due || e.weekStart) : e.weekStart, t = e.dueTime || st.dueTime || '07:45';
+  const n = dayDiffC(stamp.slice(0,10), base), day = DAYNAMES[dow(base)];
   if (n < 0) return (-n)+' day'+(n<-1?'s':'')+' early';
-  if (n === 0) return isUpload ? (stamp.slice(11,16) <= (st.dueTime||'07:45') ? 'on Monday, before '+fmtTime(st.dueTime) : 'on Monday, after '+fmtTime(st.dueTime)) : 'on Monday';
+  if (n === 0) return isUpload ? (stamp.slice(11,16) <= t ? 'on '+day+', before '+fmtTime(t) : 'on '+day+', after '+fmtTime(t)) : 'on '+day;
   return n+' day'+(n>1?'s':'')+' late';
 }
 function docState(d){ return d.link ? (d.validation||'Pending') : ''; }
@@ -839,6 +866,7 @@ function render(){
   $('menuTour').style.display = role==='teacher' ? '' : 'none';
   $('accBtn').style.display = role==='head' ? '' : 'none';
   $('logBtn').style.display = role==='head' ? '' : 'none';
+  $('wkBtn').style.display = role==='head' ? '' : 'none';
   $('setBtn').style.display = role==='head' ? '' : 'none';
   $('bankBtn').style.display = role==='head' ? '' : 'none';
   $('clrBtn').style.display = role==='head' ? '' : 'none';
@@ -871,7 +899,7 @@ function tickClock(){
 tickClock(); setInterval(tickClock, 1000);
 function toggleMenu(){ $('menu').classList.toggle('open'); }
 document.addEventListener('click', e => { if (!e.target.closest('#menu') && !e.target.closest('#userBtn')) $('menu').classList.remove('open'); });
-function showTracker(){ ['viewAcc','viewBank','viewLog'].forEach(v => $(v).style.display='none'); $('viewTrk').style.display=''; }
+function showTracker(){ ['viewAcc','viewBank','viewLog','viewWeeks'].forEach(v => $(v).style.display='none'); $('viewTrk').style.display=''; }
 
 /* ---------- Term and week bar ---------- */
 function pickCurrentTerm(st){
@@ -1045,7 +1073,7 @@ function renderList(){
   $('entryList').innerHTML = '<div class="list">' + list.map(e => {
     const lockedAny = e.lpt.validation==='Approved' || e.ppt.validation==='Approved';
     return `<article class="entry">
-      <div class="entry-top"><span>Term ${esc(e.term)}, Week ${esc(e.week)}${e.weekStart?' ('+esc(rangeText({start:e.weekStart,end:e.weekEnd}))+')':''}</span>${e.due?`<span>${esc(dueText({start:e.weekStart}))}</span>`:''}</div>
+      <div class="entry-top"><span>Term ${esc(e.term)}, Week ${esc(e.week)}${e.weekStart?' ('+esc(rangeText({start:e.weekStart,end:e.weekEnd}))+')':''}</span>${e.due?`<span>${esc(dueText({due:e.due,dueTime:e.dueTime}))}</span>`:''}</div>
       <h4>${esc(e.grade)}, ${esc(e.subject)}</h4>
       ${head?`<div class="by">${esc(e.teacher)}</div>`:''}
       ${lcDetails(e)}
@@ -1355,10 +1383,54 @@ function drawTour(){
 }
 window.addEventListener('resize', () => { if (!$('tour').hidden) drawTour(); });
 
+/* ---------- Week schedule (School Head) ---------- */
+let WK_TERM = '1';
+function openWeeks(){
+  ['viewTrk','viewAcc','viewBank','viewLog'].forEach(v => $(v).style.display='none'); $('viewWeeks').style.display=''; window.scrollTo(0,0);
+  WK_TERM = SEL.term; drawWeeks();
+}
+function drawWeeks(){
+  const st = DATA.settings;
+  $('wkTabs').innerHTML = ['1','2','3'].map(t => `<button class="${WK_TERM===t?'on':''}" onclick="WK_TERM='${t}';drawWeeks()">Term ${t}</button>`).join('');
+  $('wkErr').textContent = '';
+  if (!st['t'+WK_TERM]){ $('wkBody').innerHTML = `<div class="notice">Set the first day of Term ${WK_TERM} in Term dates and deadline first. The weeks will then follow the calendar automatically.</div>`; $('wkSave').style.display='none'; return; }
+  $('wkSave').style.display='';
+  let rows = '';
+  for (let n = 1; n <= DATA.options.weeks; n++){
+    const w = weekOf(WK_TERM, String(n));
+    rows += `<tr data-week="${n}"><td><b>Week ${n}</b><small class="${w.edited?'mk-wait':''}">${w.edited?'Edited by you':'From the calendar'}</small></td>
+      <td><input type="date" class="wk-start" value="${w.start}"><small>${DAYNAMES[dow(w.start)]}</small></td>
+      <td><input type="date" class="wk-end" value="${w.end}"><small>${DAYNAMES[dow(w.end)]}</small></td>
+      <td><input type="date" class="wk-due" value="${w.due}"></td>
+      <td><input type="time" class="wk-time" value="${w.dueTime}"></td>
+      <td>${w.edited?`<button class="linkbtn" onclick="resetWeek(${n})">Back to calendar</button>`:''}</td></tr>`;
+  }
+  $('wkBody').innerHTML = `<div class="table-wrap"><table class="wktable"><thead><tr><th>Week</th><th>First class day</th><th>Last class day</th><th>Upload deadline date</th><th>Deadline time</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>`;
+}
+function resetWeek(n){
+  const tr = document.querySelector(`#wkBody tr[data-week="${n}"]`), b = calWeek(DATA.settings['t'+WK_TERM], n);
+  tr.querySelector('.wk-start').value = b.start; tr.querySelector('.wk-end').value = b.end;
+  tr.querySelector('.wk-due').value = b.start; tr.querySelector('.wk-time').value = DATA.settings.dueTime || '07:45';
+  tr.querySelector('small').textContent = 'Back to calendar after you save'; tr.querySelector('small').className = '';
+}
+async function saveWeeks(){
+  const st = DATA.settings, weeks = [];
+  document.querySelectorAll('#wkBody tr[data-week]').forEach(tr => {
+    const n = Number(tr.dataset.week), b = calWeek(st['t'+WK_TERM], n);
+    const w = { week:n, start:tr.querySelector('.wk-start').value, end:tr.querySelector('.wk-end').value, dueDate:tr.querySelector('.wk-due').value, dueTime:tr.querySelector('.wk-time').value };
+    w.edited = w.start!==b.start || w.end!==b.end || w.dueDate!==b.start || w.dueTime!==(st.dueTime||'07:45');
+    weeks.push(w);
+  });
+  $('wkErr').textContent=''; $('wkSave').disabled = true;
+  try{ DATA.weeks = await api('saveWeeks',{term:WK_TERM, weeks}); await loadData(); drawWeeks(); toast('Week schedule saved. Teachers now see these dates.'); }
+  catch(e){ handleErr(e,'wkErr'); }
+  $('wkSave').disabled = false;
+}
+
 /* ---------- Teacher activity (School Head) ---------- */
 let LOG = null;
 async function openLog(){
-  ['viewTrk','viewAcc','viewBank'].forEach(v => $(v).style.display='none'); $('viewLog').style.display=''; window.scrollTo(0,0);
+  ['viewTrk','viewAcc','viewBank','viewWeeks'].forEach(v => $(v).style.display='none'); $('viewLog').style.display=''; window.scrollTo(0,0);
   loading(true);
   try{
     LOG = await api('getLog');
@@ -1465,7 +1537,7 @@ async function savePin(){
 /* ---------- Competency list (School Head) ---------- */
 let BW = '1';
 function openBank(){
-  $('viewTrk').style.display='none'; $('viewAcc').style.display='none'; $('viewLog').style.display='none'; $('viewBank').style.display='';
+  $('viewTrk').style.display='none'; $('viewAcc').style.display='none'; $('viewLog').style.display='none'; $('viewWeeks').style.display='none'; $('viewBank').style.display='';
   $('bTerm').value = SEL.term; $('bGrade').innerHTML = DATA.options.grades.map(g=>`<option>${esc(g)}</option>`).join('');
   BW = SEL.week==='all' ? '1' : SEL.week; drawBank(true); window.scrollTo(0,0);
 }
@@ -1495,7 +1567,7 @@ async function saveBank(){
 
 /* ---------- Accounts ---------- */
 async function openAccounts(){
-  $('menu').classList.remove('open'); $('viewTrk').style.display='none'; $('viewBank').style.display='none'; $('viewLog').style.display='none'; $('viewAcc').style.display=''; loading(true);
+  $('menu').classList.remove('open'); ['viewTrk','viewBank','viewLog','viewWeeks'].forEach(v => $(v).style.display='none'); $('viewAcc').style.display=''; loading(true);
   try{ ACC = await api('getAccounts'); renderAcc(); }catch(e){ handleErr(e); }
   loading(false);
 }
