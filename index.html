@@ -159,6 +159,7 @@ details.byt .table-wrap{border:0;border-top:1px solid var(--line);border-radius:
 .chip.on:disabled{opacity:1}
 .chips.weeks .chip{min-width:52px;text-align:center}
 .weekline{font-size:13.5px;background:var(--page);border-radius:var(--r-sm);padding:9px 12px;margin-top:10px}
+.existing.stop{background:var(--late-soft);color:var(--late)}
 .existing{font-size:13.5px;background:var(--sun-soft);border-radius:var(--r-sm);padding:9px 12px;margin-top:10px}
 .docblock{border:1.5px solid var(--line);border-radius:var(--r-lg);padding:14px 16px;margin-top:12px}
 .docblock h4{margin:0 0 10px;display:flex;align-items:center;gap:8px;font-size:16px}
@@ -615,7 +616,7 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
 
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'1.2', date:'September 27, 2026' } };
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'1.3', date:'September 27, 2026' } };
 document.getElementById('verFirst').textContent = 'First version: '+VERSION.first.no+', '+VERSION.first.date;
 document.getElementById('verNow').textContent = 'Current version: '+VERSION.current.no+', '+VERSION.current.date;
 const LOGO = document.querySelector('.mark img').src;
@@ -1083,14 +1084,25 @@ function drawWizard(){
   $('wBtn').style.display = ready ? '' : 'none';
   if (!ready) return;
   W.entry = DATA.entries.find(x => x.email===USER.email && x.term===W.term && x.grade===W.grade && x.subject===W.subject && x.week===W.week) || null;
-  $('wExisting').style.display = W.entry && !W.fixed ? '' : 'none';
-  $('wExisting').textContent = 'You already have a submission for this week. You are updating it.';
-  $('wDocs').innerHTML = DOC_KEYS.map(docBlock).join('');
+  const key = [W.term,W.grade,W.subject,W.week].join('|');
+  const other = (DATA.taken||[]).find(t => t.key === key);
+  const open = W.entry ? DOC_KEYS.filter(K => { const s = docState(W.entry[K.toLowerCase()]); return !s || s==='Returned'; }) : DOC_KEYS;
+  let note = '';
+  if (other) note = `<b>Not allowed.</b> ${esc(W.grade)}, ${esc(W.subject)}, Term ${esc(W.term)} Week ${esc(W.week)} was already submitted by ${esc(other.name)}. Only one submission is allowed for each grade level, subject, term, and week. Please check your choices.`;
+  else if (W.entry && !open.length) note = `<b>Already submitted.</b> Both your LPT and PPT for ${esc(W.grade)}, ${esc(W.subject)}, Term ${esc(W.term)} Week ${esc(W.week)} are already in TALA. You cannot upload them again unless the School Head returns a file or deletes the submission.`;
+  else if (W.entry) note = `You already submitted part of this week. You can now upload the ${open.join(' and ')} only.`;
+  $('wExisting').style.display = note ? '' : 'none';
+  $('wExisting').innerHTML = note;
+  $('wExisting').classList.toggle('stop', !!other || (W.entry && !open.length));
+  const blocked = !!other || (W.entry && !open.length);
+  $('wDocs').innerHTML = blocked ? '' : `<p class="hint" style="margin:0 0 4px">You can submit the <b>LPT only</b>, the <b>PPT only</b>, or <b>both</b>. Submit the other one later by choosing the same term, grade level, subject, and week.</p>` + DOC_KEYS.map(docBlock).join('');
+  $('wBtn').style.display = blocked ? 'none' : '';
+  if (blocked) return;
   const bk = DATA.bank[[W.term,W.grade,W.subject,W.week].join('|')];
   W.bank = bk && bk.competencies ? bk : null;
   W.scan = null; drawLC();
 
-  DOC_KEYS.forEach(K => { segSync(K+'Seg'); syncSame(K); });
+  DOC_KEYS.forEach(K => { if ($(K+'Seg')) { segSync(K+'Seg'); syncSame(K); } });
 }
 function docBlock(K){
   const d = W.entry ? W.entry[K.toLowerCase()] : {};
