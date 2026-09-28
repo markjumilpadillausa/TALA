@@ -292,7 +292,10 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
   .p-table .qr{display:block;margin-top:4px}
   .p-note{margin-top:8px}
   .p-lc{min-width:170px}
-  .p-rem{min-width:120px}
+  .p-rem{min-width:150px}
+  .p-small{font-size:8.5px;color:#333}
+  .p-rmk{margin-top:6px;border-top:1px solid #999;padding-top:4px}
+  .p-rule{text-align:center;margin:0 0 8px;font-size:9.5px}
   .p-sig{min-width:80px}
   .p-hist{margin:2px 0 0;padding-left:12px}
   .p-blank td{height:26px}
@@ -521,7 +524,8 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
     <div class="field"><label for="sT2">Term 2, first day of classes</label><input type="date" id="sT2"></div>
     <div class="field"><label for="sT3">Term 3, first day of classes</label><input type="date" id="sT3"></div>
     <div>
-      <div class="field"><label for="sTime">Upload deadline on Monday</label><input type="time" id="sTime"><div class="hint">Files uploaded after this time on Monday of the week are late.</div></div>
+      <input type="hidden" id="sTime">
+      <div class="notice" style="margin:0 0 13px">Deadline rule: LPT and PPT are due on the <b>first class day of the week</b> (Monday), preferably in the morning. The next day is 1 day late, the day after is 2 days late, and so on. Change a week's deadline in Week schedule.</div>
 
     </div>
     <div class="field"><label for="sLate">Start counting late submissions on</label><input type="date" id="sLate"><div class="hint">Leave blank until TALA is released. Weeks due before this date are never marked late, so teachers can still upload Term 1 and early Term 2 files.</div></div>
@@ -632,7 +636,7 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
 
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'1.6', date:'September 27, 2026' } };
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'1.7', date:'September 28, 2026' } };
 document.getElementById('verFirst').textContent = 'First version: '+VERSION.first.no+', '+VERSION.first.date;
 document.getElementById('verNow').textContent = 'Current version: '+VERSION.current.no+', '+VERSION.current.date;
 const LOGO = document.querySelector('.mark img').src;
@@ -703,7 +707,7 @@ function rangeText(w){ return w ? dShort(w.start).replace(/, \d{4}$/,'')+' to '+
 function lateTag(o){ return !o ? '' : `<span class="${!o.late?'mk-ok':o.level===1?'mk-wait':o.level===3?'mk-late mk-x':'mk-late'}">${esc(o.text)}</span>`; }
 function lateText(o){ return !o ? '' : o.text; }
 function fmtTime(t){ let [hh,mm] = String(t||'07:45').split(':').map(Number); const ap = hh>=12?'PM':'AM'; hh = hh%12||12; return hh+':'+String(mm).padStart(2,'0')+' '+ap; }
-function dueText(w){ const st=(DATA||PUB).settings; return w && (w.due||w.start) ? `Upload by ${dShort(w.due||w.start).replace(/, \d{4}$/,'')}, ${fmtTime(w.dueTime||st.dueTime)}` : ''; }
+function dueText(w){ return w && (w.due||w.start) ? `Due ${DAYNAMES[dow(w.due||w.start)]}, ${dShort(w.due||w.start).replace(/, \d{4}$/,'')}` : ''; }
 function fileLink(d){ return /^https?:/.test(d.link) ? `<a href="${esc(d.link)}" target="_blank" rel="noopener">${esc(d.fileName)}</a>` : `<button type="button" class="linkbtn fname" onclick="showFile('${esc(d.fileName)}')">${esc(d.fileName)}</button>`; }
 const DAYS = ['Monday','Tuesday','Wednesday','Thursday','Friday'];
 function lcHtml(lc){
@@ -723,10 +727,10 @@ function qrBox(link, size){
 function dayDiffC(a,b){ const x=a.split('-').map(Number), y=b.split('-').map(Number); return Math.round((Date.UTC(x[0],x[1]-1,x[2])-Date.UTC(y[0],y[1]-1,y[2]))/86400000); }
 function relDays(stamp, e, isUpload){
   stamp = String(stamp||''); if (!stamp || !e.weekStart) return '';
-  const st = (DATA||PUB).settings, base = isUpload ? (e.due || e.weekStart) : e.weekStart, t = e.dueTime || st.dueTime || '07:45';
+  const base = isUpload ? (e.due || e.weekStart) : e.weekStart;
   const n = dayDiffC(stamp.slice(0,10), base), day = DAYNAMES[dow(base)];
-  if (n < 0) return (-n)+' day'+(n<-1?'s':'')+' early';
-  if (n === 0) return isUpload ? (stamp.slice(11,16) <= t ? 'on '+day+', before '+fmtTime(t) : 'on '+day+', after '+fmtTime(t)) : 'on '+day;
+  if (n < 0) return 'on time, '+(-n)+' day'+(n<-1?'s':'')+' before '+day;
+  if (n === 0) return 'on time, on '+day;
   return n+' day'+(n>1?'s':'')+' late';
 }
 function docState(d){ return d.link ? (d.validation||'Pending') : ''; }
@@ -876,7 +880,7 @@ function render(){
   const ROLES = [['public','Public','See how many weekly LPT and PPT files were submitted and approved.'],
     ['teacher','Teachers','Submit your weekly LPT and PPT, rename and upload the files, and read the School Head\u2019s remarks.'],
     ['head','School Head','Check each file, validate it as Approved or Returned, give remarks, lock approved files, and see who is late.']];
-  const FLOW = ['Download from DZIIS or prepare your own','Print it','Rename: LPT_Term#_Grade_Subject_Week#','Upload 3 days before, or on Monday by 7:45 AM','School Head validates','If returned, revise and reupload'];
+  const FLOW = ['Download from DZIIS or prepare your own','Print it','Rename: LPT_Term#_Grade_Subject_Week#','Submit on or before Monday, morning is best','School Head validates','If returned, revise and reupload'];
   const mine = ROLES.find(r => r[0]===role);
   $('roles').innerHTML = (role==='head' ? '' : `<ol class="flow" aria-label="Steps for teachers">${FLOW.map((s,i)=>`<li><b>${i+1}</b>${esc(s)}</li>`).join('')}</ol>`)
     + (USER && mine ? `<div class="mybox"><b>${esc(mine[1]==='Teachers'?'Teacher Portal':'School Head Portal')}</b> ${esc(mine[2])}</div>` : '');
@@ -1016,8 +1020,9 @@ function docBox(e, k){
   return h + `<div class="act">${docAction(e,K)}</div></div>`;
 }
 
+function dedupe(hs){ return hs.filter((x,i) => !(i>0 && hs[i-1].event===x.event && hs[i-1].remarks===x.remarks && String(hs[i-1].on).slice(0,16)===String(x.on).slice(0,16))); }
 function historyBox(d, e){
-  const hs = d.history || [];
+  const hs = dedupe(d.history || []);
   if (!hs.length) return '';
   return `<details class="hist"><summary>History (${hs.length})</summary><ol>${hs.map(x=>{ const rel = e && !/^Validated/.test(x.event) ? relDays(x.on, e, true) : ''; return `<li><b>${esc(dTime(x.on))}</b> ${esc(x.event)}${rel?' ('+esc(rel)+')':''}${x.remarks?': '+esc(x.remarks):''}</li>`; }).join('')}</ol></details>`;
 }
@@ -1025,7 +1030,9 @@ function docAction(e, K){
   const d = e[K.toLowerCase()], s = docState(d), id = esc(e.id);
   if (USER.role==='head'){
     if (!d.link) return '<span class="mk-wait">Waiting for the teacher</span>';
-    return `<button class="btn small" onclick="openVal('${id}','${K}')">Validate ${K}</button><button class="btn danger small" onclick="removeFile('${id}','${K}')">Delete ${K}</button>`;
+    return (s==='Pending' ? `<button class="btn small" onclick="openVal('${id}','${K}')">Validate ${K}</button>`
+      : `<span class="mk-ok" style="font-size:13px">Validated</span><button class="btn ghost small" onclick="openVal('${id}','${K}',true)">Edit validation</button>`)
+      + `<button class="btn danger small" onclick="removeFile('${id}','${K}')">Delete ${K}</button>`;
   }
   if (s==='Approved') return '<span class="mk-ok">Approved and locked</span>';
   if (s==='Pending') return '<span class="mk-wait">Waiting for validation</span>';
@@ -1255,10 +1262,12 @@ function vHint(){
     : radioVal('vDec')==='Returned' ? 'The teacher will be able to reupload this file.' : '';
 }
 document.querySelectorAll('input[name=vDec]').forEach(r => r.addEventListener('change', () => { segSync('vSeg'); vHint(); }));
-function openVal(id, K){
+let V_EDIT = false;
+function openVal(id, K, edit){
   const e = DATA.entries.find(x=>x.id===id), d = e[K.toLowerCase()];
+  V_EDIT = !!edit;
   $('vId').value=id; $('vWhich').value=K;
-  $('valTitle').textContent = 'Validate '+K;
+  $('valTitle').textContent = (edit ? 'Edit validation of ' : 'Validate ')+K;
   $('valSub').innerHTML = `${esc(e.teacher)}: ${esc(e.grade)}, ${esc(e.subject)}, Term ${esc(e.term)} Week ${esc(e.week)}<br>File: ${fileLink(d)}`;
   document.querySelectorAll('input[name=vDec]').forEach(r => r.checked = r.value === (d.validation==='Returned'?'Returned':'Approved'));
   segSync('vSeg'); vHint(); $('vRem').value = d.remarks||''; $('vErr').textContent='';
@@ -1266,7 +1275,7 @@ function openVal(id, K){
 }
 async function saveValidation(){
   const dec = radioVal('vDec'); $('vErr').textContent=''; $('vBtn').disabled=true;
-  try{ await api('validateFile',{id:$('vId').value, which:$('vWhich').value, decision:dec, remarks:$('vRem').value});
+  try{ await api('validateFile',{id:$('vId').value, which:$('vWhich').value, decision:dec, remarks:$('vRem').value, edit:V_EDIT});
     closeModal('valModal'); await loadData(); toast($('vWhich').value+(dec==='Approved'?' approved and locked.':' returned to the teacher.')); }
   catch(e){ handleErr(e,'vErr'); }
   $('vBtn').disabled=false;
@@ -1280,14 +1289,14 @@ function printWeek(){
     .sort((a,b)=>a.teacher.localeCompare(b.teacher)||a.grade.localeCompare(b.grade)||a.subject.localeCompare(b.subject));
   const dt = (v,l) => v ? esc(dTime(v))+(l!==null&&l!==undefined?'<br>'+lateText(l):'') : '';
   const valCell = d => d.link ? (d.validation==='Pending'?'For validation':'Validated, '+esc(d.validation))+(d.validatedOn&&d.validation!=='Pending'?'<br>'+esc(dTime(d.validatedOn)):'') : 'Not uploaded';
-  const hist = (d, e) => { const hs = d.history||[];
-    const r = d.remarks ? `<b>Remarks:</b> ${esc(d.remarks)}` : '';
-    const lines = [];
-    if (d.downloaded) lines.push(`${esc(dTime(d.downloaded))}: Downloaded${relDays(d.downloaded,e)?', '+esc(relDays(d.downloaded,e)):''}`);
-    if (d.printed) lines.push(`${esc(dTime(d.printed))}: Printed${relDays(d.printed,e)?', '+esc(relDays(d.printed,e)):''}`);
-    hs.forEach(x => { const rel = /^Validated/.test(x.event) ? '' : relDays(x.on, e, true);
-      lines.push(`${esc(dTime(x.on))}: ${esc(x.event)}${rel?', '+esc(rel):''}${x.remarks?'. '+esc(x.remarks):''}`); });
-    return r + (lines.length ? `<ol class="p-hist">${lines.map(l=>`<li>${l}</li>`).join('')}</ol>` : ''); };
+  const status = (d, e, K) => {
+    if (!d.link) return `<b>${K}:</b> Not yet submitted`;
+    const o = d.upLate, txt = o ? o.text : (relDays(d.firstUpload, e, true) || '');
+    return `<b>${K}:</b> ${esc(txt.charAt(0).toUpperCase()+txt.slice(1))}<br><span class="p-small">Submitted ${esc(dTime(d.firstUpload))}${d.uploads>1?', revised '+esc(dTime(d.lastUpload)):''}</span>`; };
+  const remarks = e => {
+    const r = ['lpt','ppt'].filter(k => e[k].remarks).map(k => `<b>${k.toUpperCase()}:</b> ${esc(e[k].remarks)}`);
+    return `<div>${status(e.lpt,e,'LPT')}</div><div style="margin-top:4px">${status(e.ppt,e,'PPT')}</div>`
+      + (r.length ? `<div class="p-rmk"><b>School Head remarks</b><br>${r.join('<br>')}</div>` : ''); };
   let rows = '', i = 0;
   list.forEach(e => { i++;
     ['lpt','ppt'].forEach((k,j) => { const d=e[k];
@@ -1295,7 +1304,7 @@ function printWeek(){
         <td style="text-align:center"><b>${k.toUpperCase()}</b></td><td>${esc(d.fileName||'')}${qrBox(d.link, 56)}</td><td>${esc(d.source||'')}</td>
         <td>${dt(d.downloaded,d.downLate)}</td><td>${d.printed?dt(d.printed,d.printLate)+(d.same?'<br>(same as download)':''):(d.link?'Not printed':'')}</td>
         <td>${dt(d.firstUpload,d.upLate)}</td><td>${valCell(d)}</td>
-        <td class="p-rem">${hist(d, e)}</td>
+        ${j===0?`<td rowspan="2" class="p-rem">${remarks(e)}</td>`:''}
         ${j===0?`<td rowspan="2" class="p-sig"></td>`:''}</tr>`; });
   });
   if (!rows){ // empty template rows
@@ -1315,7 +1324,8 @@ function printWeek(){
     <div class="p-head"><img src="${LOGO}" alt=""><div>Republic of the Philippines<br><b>Department of Education</b><br>Region IX, Zamboanga Peninsula<br>Schools Division of Zamboanga Sibugay<br>Imelda District<br><b>BALUYAN ELEMENTARY SCHOOL</b><br>School ID 125592</div></div>
     <div class="p-title">LPT AND PPT WEEKLY TRACKING REPORT</div>
     <p class="p-sub">Term ${esc(SEL.term)}, Week ${esc(SEL.week)}${w?' ('+esc(rangeText(w))+'). '+esc(dueText(w)):''}. ${esc(DATA.settings.sy||'')}${teacherName?'<br>Teacher: <b>'+esc(teacherName)+'</b>':''}</p>
-    <table class="p-table"><thead><tr><th>No.</th>${head?'<th>Teacher</th>':''}<th>Grade Level</th><th>Subject</th><th>File</th><th>File Name</th><th>Source</th><th>Downloaded</th><th>Printed</th><th>Uploaded</th><th>Validation</th><th>Remarks and History</th><th>Signature</th></tr></thead><tbody>${rows}</tbody></table>
+    <p class="p-rule"><b>Deadline:</b> The LPT and PPT must be submitted on or before the first class day of the week${w?' ('+esc(DAYNAMES[dow(w.due)])+', '+esc(dShort(w.due))+')':' (Monday)'}, preferably in the morning. Submitting the next day is 1 day late, two days after is 2 days late, and so on.</p>
+    <table class="p-table"><thead><tr><th>No.</th>${head?'<th>Teacher</th>':''}<th>Grade Level</th><th>Subject</th><th>File</th><th>File Name</th><th>Source</th><th>Downloaded</th><th>Printed</th><th>Uploaded</th><th>Validation</th><th>Status and Remarks</th><th>Signature</th></tr></thead><tbody>${rows}</tbody></table>
     ${missing}
     <div class="p-sign">
       ${teacherName?`<div>Prepared by:<b>${esc(teacherName)}</b>Teacher</div>`:''}
@@ -1328,7 +1338,7 @@ function printWeek(){
 /* ---------- First time guide for teachers ---------- */
 const TOUR = [
   { t:'Welcome to TALA', x:'This short guide shows you where to submit your LPT and PPT and where to print your weekly tracking. Tap Next to continue.' },
-  { el:'#roles .flow', t:'Your weekly steps', x:'Every week: download from DZIIS or prepare your own, print it, rename it, then upload it 3 days before or on Monday by 7:45 AM.' },
+  { el:'#roles .flow', t:'Your weekly steps', x:'Every week: download from DZIIS or prepare your own, print it, rename it, then submit it on or before Monday, preferably in the morning.' },
   { el:'#addBtn', t:'Submit your LPT and PPT here', x:'Tap Submit LPT and PPT. Choose the term, grade level, subject, and week, then upload your renamed files and enter when you downloaded and printed them.' },
   { el:'.bar', t:'Choose the term and week', x:'Pick a term and a week to see your submissions for that week. All weeks shows Weeks 1 to 12 in one table.' },
   { el:'.stats', t:'Your summary', x:'See how many of your files are for validation, returned, approved, or late. Tap a box to show only those.' },
@@ -1405,23 +1415,22 @@ function drawWeeks(){
       <td><input type="date" class="wk-start" value="${w.start}"><small>${DAYNAMES[dow(w.start)]}</small></td>
       <td><input type="date" class="wk-end" value="${w.end}"><small>${DAYNAMES[dow(w.end)]}</small></td>
       <td><input type="date" class="wk-due" value="${w.due}"></td>
-      <td><input type="time" class="wk-time" value="${w.dueTime}"></td>
       <td>${w.edited?`<button class="linkbtn" onclick="resetWeek(${n})">Back to calendar</button>`:''}</td></tr>`;
   }
-  $('wkBody').innerHTML = `<div class="table-wrap"><table class="wktable"><thead><tr><th>Week</th><th>First class day</th><th>Last class day</th><th>Upload deadline date</th><th>Deadline time</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>`;
+  $('wkBody').innerHTML = `<div class="table-wrap"><table class="wktable"><thead><tr><th>Week</th><th>First class day</th><th>Last class day</th><th>Deadline (submit on or before)</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>`;
 }
 function resetWeek(n){
   const tr = document.querySelector(`#wkBody tr[data-week="${n}"]`), b = calWeek(DATA.settings['t'+WK_TERM], n);
   tr.querySelector('.wk-start').value = b.start; tr.querySelector('.wk-end').value = b.end;
-  tr.querySelector('.wk-due').value = b.start; tr.querySelector('.wk-time').value = DATA.settings.dueTime || '07:45';
+  tr.querySelector('.wk-due').value = b.start;
   tr.querySelector('small').textContent = 'Back to calendar after you save'; tr.querySelector('small').className = '';
 }
 async function saveWeeks(){
   const st = DATA.settings, weeks = [];
   document.querySelectorAll('#wkBody tr[data-week]').forEach(tr => {
     const n = Number(tr.dataset.week), b = calWeek(st['t'+WK_TERM], n);
-    const w = { week:n, start:tr.querySelector('.wk-start').value, end:tr.querySelector('.wk-end').value, dueDate:tr.querySelector('.wk-due').value, dueTime:tr.querySelector('.wk-time').value };
-    w.edited = w.start!==b.start || w.end!==b.end || w.dueDate!==b.start || w.dueTime!==(st.dueTime||'07:45');
+    const w = { week:n, start:tr.querySelector('.wk-start').value, end:tr.querySelector('.wk-end').value, dueDate:tr.querySelector('.wk-due').value, dueTime:'' };
+    w.edited = w.start!==b.start || w.end!==b.end || w.dueDate!==b.start;
     weeks.push(w);
   });
   $('wkErr').textContent=''; $('wkSave').disabled = true;
