@@ -7,6 +7,8 @@
 <link rel="icon" type="image/png" href="" id="favicon">
 <script src="config.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js" defer></script>
+<link rel="preconnect" href="https://script.google.com">
+<link rel="preconnect" href="https://script.googleusercontent.com" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -234,6 +236,19 @@ table.subs tr.nosub td:not(.wk){color:var(--muted);font-style:italic}
 .hist summary{cursor:pointer;color:var(--muted);font-weight:600}
 .hist ol{margin:4px 0 0;padding-left:18px}
 .pinv{font-weight:700;letter-spacing:1px}
+body.signed .hero,body.signed .tag{display:none}
+body.signed .trk-head{margin-top:10px}
+.gcards{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px}
+.gcard{text-align:left;background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-sm);padding:12px 14px;cursor:pointer;color:var(--ink);display:flex;flex-direction:column;gap:4px;font:inherit}
+.gcard:hover{border-color:var(--leaf)}
+.gcard.on{border-color:var(--brandtxt);box-shadow:inset 0 0 0 1px var(--brandtxt)}
+.gcard b{font-size:15.5px}.gcard small{color:var(--muted);font-size:12px}
+.gbar{height:6px;border-radius:9px;background:var(--line);overflow:hidden;margin:4px 0}
+.gbar i{display:block;height:100%;background:var(--leaf);border-radius:9px}
+.gnum{font-size:13px}.gnum b{font-size:13px}.gnum em{font-style:normal;color:var(--muted);font-size:12px;margin-left:6px}
+.gtools{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin:12px 0}
+.gtitle{font-size:17px;margin:6px 0 10px;color:var(--brandtxt)}
+@media (max-width:900px){.gcards{grid-template-columns:repeat(2,1fr)}}
 .pdftip{margin-top:8px;background:var(--card);border-left:4px solid var(--leaf);border-radius:6px;padding:8px 10px;font-size:13px;line-height:1.5}
 .wktable input{border:1.5px solid var(--line);border-radius:8px;padding:6px 8px;background:var(--card);max-width:170px}
 .wktable td{vertical-align:middle}
@@ -653,7 +668,7 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
 
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'1.8', date:'September 30, 2026' } };
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'1.9', date:'October 1, 2026' } };
 document.getElementById('verLine').textContent = 'First created on '+VERSION.first.date+'. Version '+VERSION.current.no+', updated '+VERSION.current.date+'.';
 const LOGO = document.querySelector('.mark img').src;
 document.getElementById('heroLogo').src = LOGO; document.getElementById('favicon').href = LOGO;
@@ -766,10 +781,13 @@ function lcHtml(lc){
 }
 function lcDetails(e){ return `<details class="lcd"${FILTER.openLC?' open':''}><summary>Competencies and objectives</summary>${e.scanNote?`<div class="mk-late" style="font-size:12.5px;margin-top:4px">Could not read the LPT: ${esc(e.scanNote)}</div>`:''}${lcHtml(e.lc)}</details>`; }
 function showFile(name){ $('fvName').textContent = name; openModal('fileModal'); }
+const QRS = new Map(); // QR codes are drawn once and reused
 function qrBox(link, size){
   if (!/^https?:/.test(link||'') || !window.qrcode) return '';
-  try{ const q = qrcode(0,'M'); q.addData(link); q.make();
-    return `<a class="qr" href="${esc(link)}" target="_blank" rel="noopener" title="Scan or tap to view the file" style="width:${size}px;height:${size}px">${q.createSvgTag({cellSize:2, margin:0, scalable:true})}</a>`; }
+  try{
+    let svg = QRS.get(link);
+    if (!svg){ const q = qrcode(0,'M'); q.addData(link); q.make(); svg = q.createSvgTag({cellSize:2, margin:0, scalable:true}); QRS.set(link, svg); }
+    return `<a class="qr" href="${esc(link)}" target="_blank" rel="noopener" title="Scan or tap to view the file" style="width:${size}px;height:${size}px">${svg}</a>`; }
   catch(e){ return ''; }
 }
 function dayDiffC(a,b){ const x=a.split('-').map(Number), y=b.split('-').map(Number); return Math.round((Date.UTC(x[0],x[1]-1,x[2])-Date.UTC(y[0],y[1]-1,y[2]))/86400000); }
@@ -921,6 +939,7 @@ function render(){
   const role = USER ? USER.role : 'public';
   $('portalPill').textContent = role==='head' ? 'School Head Portal' : 'Teacher Portal';
   $('portalPill').style.display = USER ? '' : 'none';
+  document.body.classList.toggle('signed', !!USER);
   $('signInBtn').style.display = USER ? 'none' : '';
   $('userBtn').style.display = USER ? 'flex' : 'none';
   $('menuAcc').style.display = role==='head' ? '' : 'none';
@@ -987,10 +1006,26 @@ function renderAll(){ try{ renderBar(); if (USER && DATA && DATA.settings) rende
 /* ---------- Loading data ---------- */
 async function loadPublic(){
   try{ PUB = await api('publicData'); try{ localStorage.setItem('tala_pub', JSON.stringify(PUB)); }catch(e){}
-    if (!USER){ if (!loadPublic.done) SEL.term = pickCurrentTerm(PUB.settings); loadPublic.done = true; renderAll(); } }
+    if (!USER){ if (!loadPublic.done){ SEL.term = pickCurrentTerm(PUB.settings); SEL.week = pickCurrentWeek(SEL.term); } loadPublic.done = true; renderAll(); } }
   catch(e){ if (!PUB) $('trkBody').innerHTML = `<div class="empty">${esc(friendly(e.message))}<br><button class="btn small" style="margin-top:10px" onclick="$('trkBody').innerHTML=skeleton();loadPublic()">Try again</button></div>`; }
 }
+function applyData(d, first){
+  if (!d) return;
+  if (first && d.user && d.user.role==='head' && (d.entries||[]).some(e => e.lpt.validation==='Pending' && e.lpt.link || e.ppt.validation==='Pending' && e.ppt.link)) FILTER.quick = 'Pending';
+  DATA = d;
+  if (DATA.user) USER = DATA.user;
+  try{ localStorage.setItem('tala_data', JSON.stringify(DATA)); }catch(e){}
+  if (first) SEL.term = pickCurrentTerm(DATA.settings);
+  render(); renderAll();
+}
+// Saves something and gets the updated page data back in the same trip
+async function apiData(action, payload){
+  const r = await api(action, Object.assign({ withData:true }, payload||{}));
+  if (r && r.data){ applyData(r.data); return r.result; }
+  return r;
+}
 async function loadData(first){
+  if (first) return applyData(await api('getData'), true);
   DATA = await api('getData');
   if (DATA.user) USER = DATA.user;
   try{ localStorage.setItem('tala_data', JSON.stringify(DATA)); }catch(e){}
@@ -999,16 +1034,33 @@ async function loadData(first){
 }
 
 /* ---------- Public view ---------- */
+let PUBGRADE = '';
+function pickCurrentWeek(term){
+  const today = todayPH();
+  for (let n = 1; n <= 12; n++){ const w = weekOf(term, String(n)); if (w && w.start <= today && today <= addDays(w.end,2)) return String(n); }
+  return 'all';
+}
+function gradeCards(){
+  const o = PUB.options, weeks = SEL.week==='all' ? o.weeks : 1;
+  const scope = PUB.entries.filter(e => e.term===SEL.term && (SEL.week==='all' || e.week===SEL.week));
+  return `<div class="gcards">${o.grades.map(g => {
+    const subs = (o.subjectsByGrade[g]||[]).length, need = subs*weeks, mine = scope.filter(e=>e.grade===g);
+    const up = k => mine.filter(e=>e[k]!=='Not uploaded').length, ok = k => mine.filter(e=>e[k]==='Approved').length;
+    const pct = need ? Math.round((up('lpt')+up('ppt'))/(need*2)*100) : 0;
+    return `<button class="gcard ${PUBGRADE===g?'on':''}" onclick="PUBGRADE=PUBGRADE==='${esc(g)}'?'':'${esc(g)}';renderPublic()">
+      <b>${esc(g)}</b><small>${subs} subject${subs>1?'s':''}${SEL.week==='all'?' \u00D7 12 weeks':''}</small>
+      <span class="gbar"><i style="width:${pct}%"></i></span>
+      <span class="gnum">LPT <b>${up('lpt')}</b> of ${need}<em>${ok('lpt')} approved</em></span>
+      <span class="gnum">PPT <b>${up('ppt')}</b> of ${need}<em>${ok('ppt')} approved</em></span></button>`; }).join('')}</div>`;
+}
 function renderPublic(){
-  const list = PUB.entries.filter(e => e.term===SEL.term && (SEL.week==='all' || e.week===SEL.week))
+  const all = PUBGRADE === '*';
+  const list = PUB.entries.filter(e => e.term===SEL.term && (SEL.week==='all' || e.week===SEL.week) && (all || e.grade===PUBGRADE))
     .sort((a,b)=>Number(a.week)-Number(b.week) || a.grade.localeCompare(b.grade) || a.subject.localeCompare(b.subject));
-  const count = (k,v) => list.filter(e=>e[k]===v).length;
-  let h = `<div class="stats four">
-    <div class="stat static"><b>${list.length}</b><span>Weekly entries</span></div>
-    <div class="stat static"><b>${count('lpt','Approved')}</b><span>LPT approved</span></div>
-    <div class="stat static"><b>${count('ppt','Approved')}</b><span>PPT approved</span></div>
-    <div class="stat static"><b>${list.filter(e=>e.lpt==='Pending'||e.ppt==='Pending').length}</b><span>For validation</span></div></div>`;
-  if (!list.length) h += `<div class="empty">No submissions yet for Term ${SEL.term}${SEL.week==='all'?'':', Week '+SEL.week}.</div>`;
+  let h = gradeCards() + `<div class="gtools"><span class="hint">Tap a grade level to see its uploads.</span><button class="btn ghost small" onclick="PUBGRADE=PUBGRADE==='*'?'':'*';renderPublic()">${all?'Hide all uploads':'See uploads of all grades'}</button></div>`;
+  if (!PUBGRADE){ $('trkBody').innerHTML = h + `<p class="hint" style="margin-top:12px">As of ${esc(dTime(PUB.asOf))}</p>`; return; }
+  h += `<h3 class="gtitle">${all?'All grade levels':esc(PUBGRADE)}, Term ${SEL.term}${SEL.week==='all'?'':', Week '+SEL.week}</h3>`;
+  if (!list.length) h += `<div class="empty">No uploads yet${all?'':' for '+esc(PUBGRADE)}.</div>`;
   else h += `<div class="table-wrap"><table><thead><tr><th>Week</th><th>Grade level</th><th>Subject</th><th>LPT</th><th>PPT</th></tr></thead><tbody>${
     list.map(e=>`<tr><td>Week ${esc(e.week)}<small>${esc(rangeText(e.weekStart?{start:e.weekStart,end:e.weekEnd}:null))}</small></td><td>${esc(e.grade)}</td><td>${esc(e.subject)}</td>
       <td><span class="pill ${e.lpt==='Not uploaded'?'none':e.lpt}">${esc(STATE_LABEL[e.lpt]||e.lpt)}</span></td>
@@ -1035,7 +1087,7 @@ function renderPrivate(){
   if (head) h += teacherTable(scope);
   h += `<div class="filters">`;
   if (head) h += `<select onchange="FILTER.teacher=this.value;renderPrivate()" aria-label="Teacher"><option value="">All teachers</option>${(DATA.teachers||[]).map(t=>`<option value="${esc(t.email)}" ${FILTER.teacher===t.email?'selected':''}>${esc(t.name)}</option>`).join('')}</select>`;
-  h += `<input placeholder="Search grade or subject" value="${esc(FILTER.text)}" oninput="FILTER.text=this.value;renderList()" aria-label="Search">
+  h += `<input placeholder="Search grade or subject" value="${esc(FILTER.text)}" oninput="FILTER.text=this.value;clearTimeout(window._sq);window._sq=setTimeout(renderList,180)" aria-label="Search">
     <div class="tabs"><button class="${FILTER.view==='cards'?'on':''}" onclick="FILTER.view='cards';renderPrivate()">Cards</button><button class="${FILTER.view==='table'?'on':''}" onclick="FILTER.view='table';renderPrivate()">Table</button></div></div>
     <div id="entryList"></div>`;
   $('trkBody').innerHTML = h;
@@ -1092,7 +1144,7 @@ function docAction(e, K){
   const d = e[K.toLowerCase()], s = docState(d), id = esc(e.id);
   if (USER.role==='head'){
     if (!d.link) return '<span class="mk-wait">Waiting for the teacher</span>';
-    return (s==='Pending' ? `<button class="btn small" onclick="openVal('${id}','${K}')">Validate ${K}</button>`
+    return (s==='Pending' ? `<button class="btn small" onclick="quickValidate('${id}','${K}','Approved','')" title="Approve with no remarks">Approve</button><button class="btn ghost small" onclick="openVal('${id}','${K}')">Return or add remarks</button>`
       : `<span class="mk-ok" style="font-size:13px">Validated</span><button class="btn ghost small" onclick="openVal('${id}','${K}',true)">Edit validation</button>`)
       + `<button class="btn danger small" onclick="removeFile('${id}','${K}')">Delete ${K}</button>`;
   }
@@ -1296,10 +1348,10 @@ async function submitDocs(){
       if (j.x.needScan){ loading(true,'Reading the LPT'); try{ await W.scanPromise; }catch(e){} j.x.scan = W.scan; delete j.x.needScan; loading(true, 'Uploading LPT file'); }
       if (j.file && j.file.size > 8*1048576) loading(true, 'Uploading '+j.x.which+' file. Large files may take a minute');
       if (j.file){ j.x.fileName = j.file.name; j.x.mime = j.file.type; j.x.base64 = await readB64(j.file); }
-      await api('submitFile', {doc:j.x});
+      await apiData('submitFile', {doc:j.x});
     }
     closeModal('subModal'); SEL.term = W.term; SEL.week = W.week;
-    await loadData(); toast('Submitted for validation. The School Head can now see it.');
+    toast('Submitted for validation. The School Head can now see it.');
   }catch(e){ const m = String(e && e.message || e); if (m === MSG.NET || friendly(m) === MSG.BUSY) $('wErr').textContent = MSG.UPLOAD; else handleErr(e,'wErr'); try{ await loadData(); }catch(x){} }
   loading(false); $('wBtn').disabled = false;
 }
@@ -1307,14 +1359,14 @@ async function removeFile(id, K){
   const e = DATA.entries.find(x=>x.id===id);
   if (!confirm('Delete the '+K+' of '+e.teacher+' for '+e.grade+' '+e.subject+', Term '+e.term+' Week '+e.week+'? The teacher will be able to submit it again.')) return;
   loading(true,'Deleting');
-  try{ await api('deleteFile',{id, which:K}); await loadData(); toast(K+' deleted. The teacher can submit it again.'); }catch(err){ handleErr(err); }
+  try{ await apiData('deleteFile',{id, which:K}); toast(K+' deleted. The teacher can submit it again.'); }catch(err){ handleErr(err); }
   loading(false);
 }
 async function removeEntry(id){
   const e = DATA.entries.find(x=>x.id===id);
   if (!confirm('Delete the whole submission of '+e.teacher+' for '+e.grade+' '+e.subject+', Term '+e.term+' Week '+e.week+'? The teacher will be able to submit it again.')) return;
   loading(true,'Deleting');
-  try{ await api('deleteEntry',{id}); await loadData(); toast('Submission deleted. The teacher can submit it again.'); }catch(err){ handleErr(err); }
+  try{ await apiData('deleteEntry',{id}); toast('Submission deleted. The teacher can submit it again.'); }catch(err){ handleErr(err); }
   loading(false);
 }
 
@@ -1336,11 +1388,24 @@ function openVal(id, K, edit){
   openModal('valModal');
 }
 async function saveValidation(){
-  const dec = radioVal('vDec'); $('vErr').textContent=''; $('vBtn').disabled=true;
-  try{ await api('validateFile',{id:$('vId').value, which:$('vWhich').value, decision:dec, remarks:$('vRem').value, edit:V_EDIT});
-    closeModal('valModal'); await loadData(); toast($('vWhich').value+(dec==='Approved'?' approved and locked.':' returned to the teacher.')); }
-  catch(e){ handleErr(e,'vErr'); }
-  $('vBtn').disabled=false;
+  const dec = radioVal('vDec'), rem = $('vRem').value.trim();
+  if (dec === 'Returned' && !rem) return $('vErr').textContent = 'Add remarks so the teacher knows what to fix.';
+  closeModal('valModal');
+  await quickValidate($('vId').value, $('vWhich').value, dec, rem, V_EDIT);
+}
+// The screen updates right away. Saving happens in the background.
+async function quickValidate(id, K, dec, rem, edit){
+  const e = DATA.entries.find(x=>x.id===id); if (!e) return;
+  const d = e[K.toLowerCase()], before = JSON.stringify(d), on = nowLocal().replace('T',' ')+':00';
+  d.validation = dec; d.remarks = rem || ''; d.validatedOn = on;
+  d.history = (d.history||[]).slice();
+  if (edit){ for (let i = d.history.length-1; i >= 0; i--) if (/^Validated/.test(d.history[i].event)){ d.history[i] = {on, event:'Validated, '+dec+' (edited)', remarks:rem}; break; } }
+  else d.history.push({on, event:'Validated, '+dec, remarks:rem});
+  renderList(); toast(K+(dec==='Approved'?' approved and locked.':' returned to the teacher.'));
+  loading(true);
+  try{ await apiData('validateFile',{id, which:K, decision:dec, remarks:rem, edit:!!edit}); }
+  catch(err){ Object.assign(d, JSON.parse(before)); renderList(); handleErr(err); }
+  loading(false);
 }
 
 /* ---------- Print one week ---------- */
@@ -1507,7 +1572,7 @@ async function saveWeeks(){
     weeks.push(w);
   });
   $('wkErr').textContent=''; $('wkSave').disabled = true;
-  try{ DATA.weeks = await api('saveWeeks',{term:WK_TERM, weeks}); await loadData(); drawWeeks(); toast('Week schedule saved. Teachers now see these dates.'); }
+  try{ await apiData('saveWeeks',{term:WK_TERM, weeks}); drawWeeks(); toast('Week schedule saved. Teachers now see these dates.'); }
   catch(e){ handleErr(e,'wkErr'); }
   $('wkSave').disabled = false;
 }
@@ -1557,7 +1622,7 @@ async function doClear(){
   const options = { entries:$('clrEntries').checked, bank:$('clrBank').checked, log:$('clrLog').checked, pins:$('clrPins').checked };
   if (!Object.values(options).some(Boolean)) return $('clrErr').textContent = 'Tick at least one item to clear.';
   $('clrGo').disabled = true;
-  try{ await api('clearData',{options}); closeModal('clrModal'); await loadData(); toast('Selected data cleared. TALA is ready for your teachers.'); }
+  try{ await apiData('clearData',{options}); closeModal('clrModal'); toast('Selected data cleared. TALA is ready for your teachers.'); }
   catch(e){ handleErr(e,'clrErr'); }
   $('clrGo').disabled = false;
 }
@@ -1570,8 +1635,8 @@ function openSettings(){
 }
 async function saveSettings(){
   $('sErr').textContent=''; $('sBtn').disabled=true;
-  try{ await api('saveSettings',{settings:{t1:$('sT1').value,t2:$('sT2').value,t3:$('sT3').value,dueTime:$('sTime').value,graceDays:0,lateStart:$('sLate').value}});
-    closeModal('setModal'); await loadData(); toast('Settings saved. Days late are updated.'); }
+  try{ await apiData('saveSettings',{settings:{t1:$('sT1').value,t2:$('sT2').value,t3:$('sT3').value,dueTime:$('sTime').value,graceDays:0,lateStart:$('sLate').value}});
+    closeModal('setModal'); toast('Settings saved. Days late are updated.'); }
   catch(e){ handleErr(e,'sErr'); }
   $('sBtn').disabled=false;
 }
@@ -1730,7 +1795,7 @@ document.addEventListener('keydown', e => { if (e.key==='Escape') document.query
     const cd = saved && JSON.parse(localStorage.getItem('tala_data')||'null');
     const cp = JSON.parse(localStorage.getItem('tala_pub')||'null');
     if (cd && cd.user && cd.settings){ DATA = cd; USER = cd.user; TOKEN = saved; SEL.term = pickCurrentTerm(cd.settings); render(); renderAll(); }
-    else if (cp && cp.settings){ PUB = cp; SEL.term = pickCurrentTerm(cp.settings); loadPublic.done = true; renderAll(); }
+    else if (cp && cp.settings){ PUB = cp; SEL.term = pickCurrentTerm(cp.settings); SEL.week = pickCurrentWeek(SEL.term); loadPublic.done = true; renderAll(); }
   }catch(e){}
   if (saved){
     TOKEN = saved;
