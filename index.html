@@ -734,7 +734,7 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
 
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'2.0', date:'October 2, 2026' } };
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'2.1', date:'October 2, 2026' } };
 document.getElementById('verLine').textContent = 'First created on '+VERSION.first.date+'. Version '+VERSION.current.no+', updated '+VERSION.current.date+'.';
 const LOGO = document.querySelector('.mark img').src;
 document.getElementById('heroLogo').src = LOGO; document.getElementById('favicon').href = LOGO;
@@ -787,9 +787,23 @@ window.addEventListener('unhandledrejection', e => { console.warn('TALA page', e
 function netState(){ const b = $('offline'); if (b) b.hidden = navigator.onLine !== false; }
 window.addEventListener('online', () => { netState(); toast('You\u2019re back online.'); if (USER) loadData().catch(()=>{}); else loadPublic(); });
 window.addEventListener('offline', netState);
+// Before signing anyone out, TALA checks twice that the pass is really over.
+let CHECKING = false;
+async function confirmSignOut(quiet){
+  if (CHECKING || !TOKEN) return; CHECKING = true;
+  try{
+    for (let i = 0; i < 2; i++){
+      await wait(1200);
+      try{ const s = await api('checkSession'); if (s){ USER = s; render(); CHECKING = false; if (!quiet) toast(MSG.BUSY); return; } }
+      catch(e){ CHECKING = false; return; } // no connection: stay signed in
+    }
+    clearSession(); render(); await loadPublic();
+    toast('For your security, please sign in again.'); if (!quiet) openLogin();
+  } finally { CHECKING = false; }
+}
 function handleErr(e, box){
   const m = String(e && e.message ? e.message : e);
-  if (m.indexOf('SESSION_ENDED') > -1){ clearSession(); render(); loadPublic(); toast('Your session ended. Please sign in again.'); openLogin(); return; }
+  if (m.indexOf('SESSION_ENDED') > -1){ confirmSignOut(); return; }
   if (m.indexOf('PIN_CHANGE_REQUIRED') > -1){ openPin(true); return; }
   const f = friendly(m);
   if (box) $(box).textContent = f; else toast(f);
@@ -2010,7 +2024,7 @@ async function refreshSignedIn(first){
   catch(e){
     const m = String(e.message||'');
     if (m.indexOf('PIN_CHANGE_REQUIRED') > -1){ try{ USER = await api('checkSession'); render(); openPin(true); }catch(x){} return; }
-    if (m.indexOf('SESSION_ENDED') > -1){ clearSession(); render(); await loadPublic(); return; }
+    if (m.indexOf('SESSION_ENDED') > -1){ await confirmSignOut(true); return; }
     if (!DATA) $('trkBody').innerHTML = `<div class="empty">${esc(MSG.NET)}<br><button class="btn small" style="margin-top:10px" onclick="$('trkBody').innerHTML=skeleton();refreshSignedIn(true)">Try again</button></div>`;
     else toast(MSG.NET);
     setTimeout(() => { if (TOKEN && navigator.onLine !== false) refreshSignedIn(false); }, 15000);
