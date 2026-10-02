@@ -734,8 +734,12 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
 
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'2.1', date:'October 2, 2026' } };
-document.getElementById('verLine').textContent = 'First created on '+VERSION.first.date+'. Version '+VERSION.current.no+', updated '+VERSION.current.date+'.';
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'2.2', date:'October 2, 2026' } };
+function verLine(server){
+  const s = server ? (server === VERSION.current.no ? ' Server '+server+'.' : ' Server '+server+(USER && USER.role==='head' ? ', please deploy the new Code.gs.' : '.')) : '';
+  document.getElementById('verLine').textContent = 'First created on '+VERSION.first.date+'. Version '+VERSION.current.no+', updated '+VERSION.current.date+'.'+s;
+}
+verLine();
 const LOGO = document.querySelector('.mark img').src;
 document.getElementById('heroLogo').src = LOGO; document.getElementById('favicon').href = LOGO;
 const DOC_KEYS = ['LPT','PPT'];
@@ -1088,12 +1092,13 @@ function renderAll(){ try{ renderBar(); if (USER && DATA && DATA.settings) rende
 
 /* ---------- Loading data ---------- */
 async function loadPublic(){
-  try{ PUB = await api('publicData'); try{ localStorage.setItem('tala_pub', JSON.stringify(PUB)); }catch(e){}
+  try{ PUB = await api('publicData'); verLine(PUB.serverVersion || '2.1 or older'); try{ localStorage.setItem('tala_pub', JSON.stringify(PUB)); }catch(e){}
     if (!USER){ if (!loadPublic.done){ SEL.term = pickCurrentTerm(PUB.settings); SEL.week = pickCurrentWeek(SEL.term); } loadPublic.done = true; renderAll(); } }
   catch(e){ if (!PUB) $('trkBody').innerHTML = `<div class="empty">${esc(friendly(e.message))}<br><button class="btn small" style="margin-top:10px" onclick="$('trkBody').innerHTML=skeleton();loadPublic()">Try again</button></div>`; }
 }
 function applyData(d, first){
   if (!d) return;
+  verLine(d.serverVersion || '2.1 or older');
   if (first && d.user && d.user.role==='head' && (d.entries||[]).some(e => e.lpt.validation==='Pending' && e.lpt.link || e.ppt.validation==='Pending' && e.ppt.link)) FILTER.quick = 'Pending';
   DATA = d;
   if (DATA.user) USER = DATA.user;
@@ -1110,6 +1115,7 @@ async function apiData(action, payload){
 async function loadData(first){
   if (first) return applyData(await api('getData'), true);
   DATA = await api('getData');
+  verLine(DATA.serverVersion || '2.1 or older');
   if (DATA.user) USER = DATA.user;
   try{ localStorage.setItem('tala_data', JSON.stringify(DATA)); }catch(e){}
   if (first) SEL.term = pickCurrentTerm(DATA.settings);
