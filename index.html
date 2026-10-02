@@ -236,6 +236,47 @@ table.subs tr.nosub td:not(.wk){color:var(--muted);font-style:italic}
 .hist summary{cursor:pointer;color:var(--muted);font-weight:600}
 .hist ol{margin:4px 0 0;padding-left:18px}
 .pinv{font-weight:700;letter-spacing:1px}
+.bell{position:relative;background:rgba(255,255,255,.14);color:#fff;border:0;border-radius:50%;width:38px;height:38px;display:grid;place-items:center;cursor:pointer}
+.badge{position:absolute;top:-3px;right:-3px;min-width:18px;height:18px;border-radius:9px;background:#E53935;color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center;padding:0 4px}
+.badge.in{position:static;display:inline-grid;margin-left:6px}
+.badge[hidden]{display:none !important}
+.bellpanel{position:absolute;right:70px;top:64px;width:min(360px,calc(100vw - 20px));max-height:70vh;overflow:auto;background:var(--card);color:var(--ink);border-radius:var(--r-sm);box-shadow:0 10px 30px rgba(0,0,0,.2);display:none;padding-bottom:6px}
+.bellpanel.open{display:block}
+.bp-head{display:flex;justify-content:space-between;align-items:center;padding:12px}
+.bp-item{padding:9px 12px;border-top:1px solid var(--line);font-size:13.5px;display:flex;flex-direction:column;gap:2px}
+.bp-item.new{background:var(--sun-soft)}.bp-item small{color:var(--muted);font-size:11.5px}
+.bp-item.returned span::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--late);margin-right:6px}
+.bp-item.approved span::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--ok);margin-right:6px}
+.switch{display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer}
+.chatfab{position:fixed;right:18px;bottom:18px;z-index:60;width:56px;height:56px;border-radius:50%;border:0;background:var(--field);color:#fff;box-shadow:0 8px 22px rgba(0,0,0,.25);cursor:pointer;display:grid;place-items:center}
+.chat{position:fixed;right:18px;bottom:84px;z-index:61;width:min(370px,calc(100vw - 24px));height:min(520px,calc(100vh - 120px));background:var(--card);border-radius:14px;box-shadow:0 14px 40px rgba(0,0,0,.28);display:flex;flex-direction:column;overflow:hidden}
+.chat[hidden]{display:none}
+.chat-head{display:flex;align-items:center;gap:8px;padding:12px 14px;background:var(--field);color:#fff}
+.chat-head b{flex:1}.chat-head .linkbtn{color:#fff}
+.chat-body{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:6px}
+.chat-foot{display:flex;gap:8px;padding:10px;border-top:1px solid var(--line)}
+.chat-foot[hidden]{display:none}
+.chat-foot textarea{flex:1;resize:none;border:1.5px solid var(--line);border-radius:10px;padding:8px 10px;background:var(--card);max-height:90px}
+.thread{text-align:left;background:var(--page);border:0;border-radius:10px;padding:10px 12px;cursor:pointer;color:var(--ink);font:inherit;display:block;width:100%}
+.thread small{display:block;color:var(--muted);font-size:12.5px;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pick{display:flex;align-items:center;gap:8px;padding:8px 6px;border-bottom:1px solid var(--line);font-size:14px;cursor:pointer}
+.pick small{display:block;color:var(--muted);font-size:11.5px}
+.bub{max-width:82%;align-self:flex-start;background:var(--page);border-radius:12px 12px 12px 4px;padding:8px 10px;font-size:14px;white-space:pre-wrap;word-wrap:break-word}
+.bub.me{align-self:flex-end;background:var(--field);color:#fff;border-radius:12px 12px 4px 12px}
+.bub small{display:block;font-size:10.5px;opacity:.7;margin-top:3px}.bub .who{font-weight:700;opacity:.85;margin:0 0 2px}
+.ovwrap{padding:0 14px 14px}
+.ovgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
+.ov{background:var(--page);border-radius:10px;padding:10px;text-align:center}
+.ov b{display:block;font-size:22px}.ov span{font-size:12px;color:var(--muted)}
+.ov.g b{color:var(--ok)}.ov.r b{color:var(--late)}.ov.y b{color:var(--wait)}
+.wkstrip{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:12px}
+.wk{width:34px;height:34px;border-radius:8px;border:1.5px solid var(--line);background:var(--card);cursor:pointer;font-weight:700;color:var(--muted)}
+.wk.ok{background:var(--ok-soft);color:var(--ok);border-color:var(--ok)}.wk.wait{background:var(--sun-soft);color:var(--wait);border-color:var(--sun)}.wk.ret{background:var(--late-soft);color:var(--late);border-color:var(--late)}
+.wk.on{outline:3px solid var(--brandtxt);outline-offset:1px}
+.wklegend{margin-left:8px;display:flex;gap:8px;align-items:center}.wklegend i{display:inline-block;width:10px;height:10px;border-radius:3px;border:1px solid var(--line);margin-right:3px}
+.wklegend i.ok{background:var(--ok-soft)}.wklegend i.wait{background:var(--sun-soft)}.wklegend i.ret{background:var(--late-soft)}
+@media (max-width:760px){.ovgrid{grid-template-columns:repeat(4,1fr)}.chat{right:8px;bottom:76px;height:calc(100vh - 110px)}.chatfab{right:12px;bottom:12px}.bellpanel{right:10px}.bell{width:34px;height:34px}}
+@media print{.chatfab,.chat,.bellpanel{display:none !important}}
 body.signed .hero,body.signed .tag{display:none}
 body.signed .trk-head{margin-top:10px}
 .gcards{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px}
@@ -324,6 +365,19 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
   .p-small{font-size:8.5px;color:#333}
   .p-rmk{margin-top:6px;border-top:1px solid #999;padding-top:4px}
   .p-rule{margin:2px 0 6px;font-size:9.5px}
+  .p-sumtitle{font-weight:700;font-size:11px;margin:10px 0 6px}
+  .p-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .p-card{border:1px solid #000;padding:6px 8px;page-break-inside:avoid;break-inside:avoid}
+  .p-cname{font-weight:700;font-size:11px;margin-bottom:4px;text-transform:uppercase}
+  .p-mini{border-collapse:collapse;width:100%;min-width:0;font-size:8.5px;table-layout:fixed}
+  .p-cards{grid-template-columns:repeat(3,minmax(0,1fr)) !important}
+  .p-mini th,.p-mini td{border:1px solid #777 !important;padding:2px 2px;text-align:center;background:none;color:#000}
+  .p-mini th{font-size:7px;font-weight:700;line-height:1.2}
+  .p-csub{font-size:8.5px;margin-top:4px;min-height:22px}
+  .p-csign{display:flex;gap:14px;margin-top:22px;font-size:8.5px}
+  .p-csign span{border-top:1px solid #000;padding-top:2px;text-align:center}
+  .p-csign span:first-child{flex:2}.p-csign span:last-child{flex:1}
+  .p-break{page-break-after:always;break-after:page}
   .p-after{margin:8px 0 0;font-size:10px}
   .p-hist{margin:2px 0 0;padding-left:12px}
   .p-hist li{margin-bottom:2px}
@@ -352,10 +406,16 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
       <span class="clock" id="clock"></span>
       <span class="portal-pill" id="portalPill" style="display:none"></span>
       <button class="btn sun small" id="signInBtn" onclick="openLogin()">Sign in</button>
+      <button class="bell" id="bellBtn" style="display:none" onclick="toggleBell()" aria-label="Notifications"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 22a2.5 2.5 0 0 0 2.45-2h-4.9A2.5 2.5 0 0 0 12 22Zm7-6V11a7 7 0 0 0-5.5-6.84V3a1.5 1.5 0 0 0-3 0v1.16A7 7 0 0 0 5 11v5l-2 2v1h18v-1Z"/></svg><span class="badge" id="bellCount" hidden></span></button>
       <button class="user-btn" id="userBtn" style="display:none" onclick="toggleMenu()" aria-haspopup="true">
         <span class="avatar" id="avatar"></span><span id="userFirst"></span>
       </button>
     </div>
+  </div>
+  <div class="bellpanel" id="bellPanel">
+    <div class="bp-head"><b>Notifications</b><label class="switch"><input type="checkbox" id="myNotify" onchange="setMyNotify(this.checked)"><span></span>Notify me</label></div>
+    <p class="hint" id="bpHint" style="margin:0 12px 8px"></p>
+    <div id="bellList" class="bp-list"></div>
   </div>
   <div class="menu" id="menu">
     <div class="who" id="menuWho"></div>
@@ -661,6 +721,12 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
     </div>
   </div>
 </div>
+<button class="chatfab" id="chatFab" style="display:none" onclick="toggleChat()" aria-label="Messages"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path fill="currentColor" d="M4 4h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H8l-4 4V6a2 2 0 0 1 2-2Z"/></svg><span class="badge" id="chatCount" hidden></span></button>
+<div class="chat" id="chat" hidden>
+  <div class="chat-head"><button class="linkbtn chat-back" id="chatBack" onclick="chatHome()" hidden>Back</button><b id="chatTitle">Messages</b><button class="linkbtn" onclick="toggleChat()" aria-label="Close">Close</button></div>
+  <div class="chat-body" id="chatBody"></div>
+  <div class="chat-foot" id="chatFoot" hidden><textarea id="chatText" rows="1" placeholder="Type a message" maxlength="2000"></textarea><button class="btn small" id="chatSend" onclick="sendChat()">Send</button></div>
+</div>
 <div class="toast" id="toast"></div>
 <div class="topbar" id="loading" aria-hidden="true"><i></i></div><div class="loadchip" id="loadChip"><span class="spin"></span><span id="loadingText">Loading</span></div>
 <div class="offline" id="offline" hidden>You\u2019re offline. TALA will reconnect when your internet is back.</div>
@@ -668,7 +734,7 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
 
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'1.9', date:'October 1, 2026' } };
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'2.0', date:'October 2, 2026' } };
 document.getElementById('verLine').textContent = 'First created on '+VERSION.first.date+'. Version '+VERSION.current.no+', updated '+VERSION.current.date+'.';
 const LOGO = document.querySelector('.mark img').src;
 document.getElementById('heroLogo').src = LOGO; document.getElementById('favicon').href = LOGO;
@@ -940,6 +1006,9 @@ function render(){
   $('portalPill').textContent = role==='head' ? 'School Head Portal' : 'Teacher Portal';
   $('portalPill').style.display = USER ? '' : 'none';
   document.body.classList.toggle('signed', !!USER);
+  $('bellBtn').style.display = USER ? '' : 'none';
+  $('chatFab').style.display = USER ? '' : 'none';
+  if (!USER){ $('chat').hidden = true; $('bellPanel').classList.remove('open'); stopPoll(); } else startPoll();
   $('signInBtn').style.display = USER ? 'none' : '';
   $('userBtn').style.display = USER ? 'flex' : 'none';
   $('menuAcc').style.display = role==='head' ? '' : 'none';
@@ -1084,7 +1153,7 @@ function renderPrivate(){
   let h = '';
   if (!st.t1 && !st.t2 && !st.t3) h += `<div class="notice">${head ? 'Set the term start dates so TALA can show week dates and count days late. Tap Term dates and deadline.' : 'Week dates and days late will show once the School Head sets the term dates.'}</div>`;
   h += `<div class="stats">${quick.map(q=>`<button class="stat ${q.warn&&q.n?'warn':''} ${FILTER.quick===q.k?'on':''}" onclick="FILTER.quick='${q.k}';renderPrivate()"><b>${q.n}</b><span>${esc(q.label)}</span></button>`).join('')}</div>`;
-  if (head) h += teacherTable(scope);
+  if (head) h += teacherTable(scope); else h += myOverview();
   h += `<div class="filters">`;
   if (head) h += `<select onchange="FILTER.teacher=this.value;renderPrivate()" aria-label="Teacher"><option value="">All teachers</option>${(DATA.teachers||[]).map(t=>`<option value="${esc(t.email)}" ${FILTER.teacher===t.email?'selected':''}>${esc(t.name)}</option>`).join('')}</select>`;
   h += `<input placeholder="Search grade or subject" value="${esc(FILTER.text)}" oninput="FILTER.text=this.value;clearTimeout(window._sq);window._sq=setTimeout(renderList,180)" aria-label="Search">
@@ -1094,6 +1163,21 @@ function renderPrivate(){
   renderList();
 }
 
+function myOverview(){
+  const mine = DATA.entries.filter(e => e.term===SEL.term), files = [];
+  mine.forEach(e => ['lpt','ppt'].forEach(k => { if (e[k].link) files.push({ e, k, d:e[k] }); }));
+  const c = f => files.filter(f).length;
+  const lateF = x => x.d.upLate && x.d.upLate.late;
+  const box = (n, l, cls) => `<div class="ov ${cls||''}"><b>${n}</b><span>${l}</span></div>`;
+  const weeks = Array.from({length:DATA.options.weeks},(_,i)=>String(i+1)).map(w => {
+    const es = mine.filter(e=>e.week===w), st = es.length ? (es.some(e=>['lpt','ppt'].some(k=>e[k].validation==='Returned')) ? 'ret'
+      : es.every(e=>['lpt','ppt'].every(k=>!e[k].link || e[k].validation==='Approved')) ? 'ok' : 'wait') : '';
+    return `<button class="wk ${st} ${SEL.week===w?'on':''}" title="Week ${w}" onclick="SEL.week='${w}';renderAll()">${w}</button>`; }).join('');
+  return `<details class="byt" open><summary>My overview, Term ${SEL.term}</summary><div class="ovwrap">
+    <div class="ovgrid">${box(c(x=>x.k==='lpt'),'LPT submitted')}${box(c(x=>x.k==='ppt'),'PPT submitted')}${box(c(x=>x.d.validation==='Approved'),'Approved','g')}
+    ${box(c(x=>x.d.validation==='Returned'),'Returned','r')}${box(c(x=>x.d.validation==='Pending'),'For validation','y')}${box(c(x=>x.d.upLate && !x.d.upLate.late),'On time','g')}${box(c(lateF),'Late','r')}</div>
+    <div class="wkstrip"><span class="hint">Weeks:</span>${weeks}<span class="hint wklegend"><i class="ok"></i>Approved <i class="wait"></i>Waiting <i class="ret"></i>Returned <i></i>None</span></div></div></details>`;
+}
 function teacherTable(scope){
   const rows = (DATA.teachers||[]).map(t => {
     const m = scope.filter(e=>e.email===t.email);
@@ -1457,10 +1541,28 @@ function printWeek(){
   }
   const teacherName = head ? (FILTER.teacher ? ((DATA.teachers||[]).find(t=>t.email===FILTER.teacher)||{}).name : '') : USER.name;
   const headName = DATA.headName || (head ? USER.name : 'School Head');
+  // Page 1: one summary box per teacher, with a place to sign
+  const who = head ? (FILTER.teacher ? (DATA.teachers||[]).filter(t=>t.email===FILTER.teacher) : (DATA.teachers||[]))
+                   : [{ email:USER.email, name:USER.name }];
+  const sumCard = t => {
+    const es = list.filter(e=>e.email===t.email), fs = [];
+    es.forEach(e => ['lpt','ppt'].forEach(k => { if (e[k].link) fs.push({ k, d:e[k] }); }));
+    const c = f => fs.filter(f).length, late = x => x.d.upLate && x.d.upLate.late, ontime = x => x.d.upLate && !x.d.upLate.late;
+    const subj = es.map(e=>esc(e.grade)+', '+esc(e.subject)).join('; ');
+    return `<div class="p-card"><div class="p-cname">${esc(t.name)}</div>
+      <table class="p-mini"><tr><th></th><th>Submitted</th><th>On time</th><th>Late</th><th>Approved</th><th>Returned</th><th>For validation</th></tr>
+      ${['lpt','ppt'].map(k => `<tr><td><b>${k.toUpperCase()}</b></td><td>${c(x=>x.k===k)}</td><td>${c(x=>x.k===k&&ontime(x))}</td><td>${c(x=>x.k===k&&late(x))}</td><td>${c(x=>x.k===k&&x.d.validation==='Approved')}</td><td>${c(x=>x.k===k&&x.d.validation==='Returned')}</td><td>${c(x=>x.k===k&&x.d.validation==='Pending')}</td></tr>`).join('')}</table>
+      <div class="p-csub">${subj ? '<b>Subjects:</b> '+subj : '<b>No submission this week.</b>'}</div>
+      <div class="p-csign"><span>Signature over printed name</span><span>Date</span></div></div>`; };
+  const summary = `<div class="p-sumtitle">SUMMARY OF SUBMISSIONS</div><div class="p-cards">${who.map(sumCard).join('')}</div>`;
   $('printArea').innerHTML = `
     <div class="p-head"><img src="${LOGO}" alt=""><div>Republic of the Philippines<br><b>Department of Education</b><br>Region IX, Zamboanga Peninsula<br>Schools Division of Zamboanga Sibugay<br>Imelda District<br><b>BALUYAN ELEMENTARY SCHOOL</b><br>School ID 125592</div></div>
     <div class="p-title">LPT AND PPT WEEKLY TRACKING REPORT</div>
     ${teacherName?'<p class="p-sub">Teacher: <b>'+esc(teacherName)+'</b></p>':''}
+    <p class="p-sub">Term ${esc(SEL.term)}, Week ${esc(SEL.week)}${w?' ('+esc(rangeText(w))+')':''}. ${esc(DATA.settings.sy||'')}</p>
+    ${summary}
+    <div class="p-break"></div>
+    <div class="p-title">DETAILED REPORT</div>
     <table class="p-table"><thead><tr><th>No.</th>${head?'<th>Teacher</th>':''}<th>Grade Level</th><th>Subject</th><th>File</th><th>File Name</th><th>Source</th><th>Downloaded</th><th>Printed</th><th>Uploaded</th><th>Validation</th><th>Status and Remarks</th><th>Signature</th></tr></thead><tbody>${rows}</tbody></table>
     <p class="p-after">Term ${esc(SEL.term)}, Week ${esc(SEL.week)}${w?' ('+esc(rangeText(w))+'). '+esc(dueText(w)):''}. ${esc(DATA.settings.sy||'')}</p>
     <p class="p-rule" style="text-align:left"><b>Deadline:</b> The LPT and PPT must be submitted on or before the first class day of the week${w?' ('+esc(DAYNAMES[dow(w.due)])+', '+esc(dShort(w.due))+')':' (Monday)'}, preferably in the morning. Submitting the next day is 1 day late, two days after is 2 days late, and so on.</p>
@@ -1614,6 +1716,98 @@ function renderLog(){
      <p class="hint" style="margin-top:8px">Showing ${list.length} of the most recent actions.</p>`;
 }
 
+/* ---------- Notifications and messages ---------- */
+let NOTICES = [], MSGS = [], MSG_SINCE = '', POLL = null, CHAT_THREAD = null, LAST_UNREAD = 0;
+let LAST_POLL = 0;
+// Checks every 45 seconds, or every 10 seconds while the chat is open
+function startPoll(){ if (POLL) return; setTimeout(poll, 1500); POLL = setInterval(() => { if (document.hidden) return; const fast = !$('chat').hidden; if (fast || Date.now() - LAST_POLL > 44000) poll(); }, 10000); }
+function stopPoll(){ clearInterval(POLL); POLL = null; NOTICES = []; MSGS = []; MSG_SINCE = ''; }
+document.addEventListener('visibilitychange', () => { if (!document.hidden && USER) poll(); });
+async function poll(){
+  if (!USER || !TOKEN) return;
+  LAST_POLL = Date.now();
+  try{
+    const r = await api('poll', { since: MSG_SINCE });
+    NOTICES = r.notices || [];
+    mergeMsgs(r.messages || []); MSG_SINCE = r.now ? r.now.slice(0,16) : MSG_SINCE;
+    const un = r.unread || 0;
+    $('bellCount').hidden = !un; $('bellCount').textContent = un > 9 ? '9+' : un;
+    if (un > LAST_UNREAD && LAST_UNREAD >= 0 && NOTICES[0]) { toast(NOTICES[0].text.slice(0,120)); loadData().catch(()=>{}); }
+    LAST_UNREAD = un;
+    if ($('bellPanel').classList.contains('open')) drawBell();
+    chatBadge(); if (!$('chat').hidden) drawChat();
+  }catch(e){ console.warn('TALA poll', e); }
+}
+function toggleBell(){
+  const p = $('bellPanel'), open = !p.classList.contains('open');
+  p.classList.toggle('open', open); $('menu').classList.remove('open');
+  if (open){ drawBell(); if (NOTICES.some(n=>!n.read)){ api('readNotices').catch(()=>{}); setTimeout(()=>{ NOTICES.forEach(n=>n.read=true); $('bellCount').hidden = true; LAST_UNREAD = 0; }, 2500); } }
+}
+document.addEventListener('click', e => { if (!e.target.closest('#bellPanel') && !e.target.closest('#bellBtn')) $('bellPanel').classList.remove('open'); });
+function drawBell(){
+  $('myNotify').checked = !!(USER && USER.notify !== false);
+  $('bpHint').textContent = USER.role==='head' ? 'You are told when a teacher submits or reuploads an LPT or PPT.' : 'You are told when the School Head approves or returns your files.';
+  $('bellList').innerHTML = NOTICES.length ? NOTICES.map(n => `<div class="bp-item ${n.read?'':'new'} ${esc(n.type)}"><span>${esc(n.text)}</span><small>${esc(dTime(n.on))}</small></div>`).join('')
+    : '<div class="empty" style="padding:18px">No notifications yet.</div>';
+}
+async function setMyNotify(on){
+  try{ const r = await api('setNotify',{ on }); USER.notify = r.notify; toast(on ? 'Notifications are on. You will also get an email.' : 'Notifications are off.'); }
+  catch(e){ $('myNotify').checked = !on; handleErr(e); }
+}
+
+/* Chat: threads are grouped by the people in them. "Everyone" is one shared thread. */
+function mergeMsgs(list){ const seen = new Set(MSGS.map(m=>m.id)); list.forEach(m => { if (!seen.has(m.id)) MSGS.push(m); }); MSGS.sort((a,b)=>String(a.on).localeCompare(String(b.on))); }
+function threadKey(m){ if (m.to.indexOf('all') > -1) return 'all'; return [m.from].concat(m.to).map(x=>x.toLowerCase()).filter((x,i,a)=>a.indexOf(x)===i).sort().join(','); }
+function nameOf(email){ if (email===USER.email) return 'You'; const c = (DATA&&DATA.contacts||[]).find(x=>x.email===email); return c ? c.name : email; }
+function threadTitle(k){ if (k==='all') return 'Everyone'; return k.split(',').filter(x=>x!==USER.email).map(nameOf).join(', '); }
+function seenKey(k){ return 'tala_seen_'+USER.email+'_'+k; }
+function unreadIn(k){ let s=''; try{ s = localStorage.getItem(seenKey(k))||''; }catch(e){} return MSGS.filter(m => threadKey(m)===k && m.from!==USER.email && m.on > s).length; }
+function chatBadge(){ const keys = [...new Set(MSGS.map(threadKey))], n = keys.reduce((a,k)=>a+unreadIn(k),0); $('chatCount').hidden = !n; $('chatCount').textContent = n > 9 ? '9+' : n; }
+function toggleChat(){ const c = $('chat'); c.hidden = !c.hidden; if (!c.hidden){ CHAT_THREAD ? openThread(CHAT_THREAD) : chatHome(); poll(); } }
+function chatHome(){
+  CHAT_THREAD = null; $('chatBack').hidden = true; $('chatFoot').hidden = true; $('chatTitle').textContent = 'Messages';
+  const keys = [...new Set(MSGS.map(threadKey))].sort((a,b) => { const la = MSGS.filter(m=>threadKey(m)===a).pop(), lb = MSGS.filter(m=>threadKey(m)===b).pop(); return String(lb.on).localeCompare(String(la.on)); });
+  $('chatBody').innerHTML = `<button class="btn small" style="width:100%;margin-bottom:10px" onclick="chatNew()">New message</button>` + (keys.length ? keys.map(k => {
+    const last = MSGS.filter(m=>threadKey(m)===k).pop(), u = unreadIn(k);
+    return `<button class="thread" onclick="openThread('${esc(k)}')"><b>${esc(threadTitle(k))}</b>${u?`<span class="badge in">${u}</span>`:''}<small>${esc(nameOf(last.from))}: ${esc(last.text.slice(0,60))}</small></button>`; }).join('')
+    : '<p class="hint" style="text-align:center">No messages yet. Tap New message to write to your faculty and staff.</p>');
+}
+function chatNew(){
+  $('chatBack').hidden = false; $('chatTitle').textContent = 'New message'; $('chatFoot').hidden = true;
+  $('chatBody').innerHTML = `<p class="hint" style="margin:0 0 8px">Choose who will receive your message.</p>
+    <label class="pick all"><input type="checkbox" value="all" onchange="document.querySelectorAll('#chatBody .pick:not(.all) input').forEach(i=>{i.checked=false;i.disabled=this.checked})"><b>Everyone</b> (all faculty and staff)</label>
+    ${(DATA.contacts||[]).map(c => `<label class="pick"><input type="checkbox" value="${esc(c.email)}"><span>${esc(c.name)}<small>${c.role==='head'?'School Head':'Teacher'}</small></span></label>`).join('')}
+    <button class="btn" style="width:100%;margin-top:10px" onclick="startThread()">Continue</button>`;
+}
+function startThread(){
+  const to = [...document.querySelectorAll('#chatBody .pick input:checked')].map(i=>i.value);
+  if (!to.length) return toast('Choose at least one person.');
+  openThread(to.indexOf('all') > -1 ? 'all' : [USER.email].concat(to).sort().join(','));
+}
+function openThread(k){
+  CHAT_THREAD = k; $('chatBack').hidden = false; $('chatFoot').hidden = false; $('chatTitle').textContent = threadTitle(k);
+  drawChat(); setTimeout(()=>$('chatText').focus(), 50);
+}
+function drawChat(){
+  if (!CHAT_THREAD){ chatHome(); return; }
+  const list = MSGS.filter(m => threadKey(m)===CHAT_THREAD), b = $('chatBody');
+  b.innerHTML = list.length ? list.map(m => `<div class="bub ${m.from===USER.email?'me':''}">${m.from===USER.email||CHAT_THREAD.split(',').length<=2?'':`<small class="who">${esc(m.fromName||nameOf(m.from))}</small>`}${esc(m.text)}<small>${esc(dTime(m.on))}</small></div>`).join('')
+    : '<p class="hint" style="text-align:center">Say hello. Your message will be delivered when you tap Send.</p>';
+  b.scrollTop = b.scrollHeight;
+  if (list.length) try{ localStorage.setItem(seenKey(CHAT_THREAD), list[list.length-1].on); }catch(e){}
+  chatBadge();
+}
+async function sendChat(){
+  const text = $('chatText').value.trim(); if (!text || !CHAT_THREAD) return;
+  const to = CHAT_THREAD==='all' ? ['all'] : CHAT_THREAD.split(',').filter(x=>x!==USER.email);
+  const temp = { id:'tmp'+Date.now(), on:nowLocal().replace('T',' ')+':00', from:USER.email, fromName:USER.name, to, text };
+  MSGS.push(temp); $('chatText').value = ''; drawChat(); $('chatSend').disabled = true;
+  try{ const r = await api('sendMessage',{ to, text, since: MSG_SINCE }); MSGS = MSGS.filter(m=>m.id!==temp.id); mergeMsgs(r.messages||[]); MSG_SINCE = r.now ? r.now.slice(0,16) : MSG_SINCE; drawChat(); }
+  catch(e){ MSGS = MSGS.filter(m=>m.id!==temp.id); $('chatText').value = text; drawChat(); handleErr(e); }
+  $('chatSend').disabled = false;
+}
+$('chatText').addEventListener('keydown', e => { if (e.key==='Enter' && !e.shiftKey){ e.preventDefault(); sendChat(); } });
+
 /* ---------- Clear data for launch ---------- */
 function openClear(){ $('clrType').value=''; $('clrErr').textContent=''; openModal('clrModal'); }
 async function doClear(){
@@ -1723,7 +1917,7 @@ async function openAccounts(){
   loading(false);
 }
 function renderAcc(){
-  $('accBody').innerHTML = `<div class="table-wrap"><table><thead><tr><th>Name and email</th><th>Role</th><th>PIN</th><th>PIN status</th><th>Last sign in</th><th>Sign ins</th><th>Account</th><th>Test account</th><th></th></tr></thead><tbody>${
+  $('accBody').innerHTML = `<div class="table-wrap"><table><thead><tr><th>Name and email</th><th>Role</th><th>PIN</th><th>PIN status</th><th>Last sign in</th><th>Sign ins</th><th>Account</th><th>Notifications</th><th>Test account</th><th></th></tr></thead><tbody>${
     ACC.map(a=>`<tr><td><b>${esc(a.name)}</b><small>${esc(a.email)}</small></td>
       <td>${a.role==='head'?'School Head':'Teacher'}</td>
       <td style="white-space:nowrap"><span class="pinv" id="pin_${esc(a.email).replace(/[^a-z0-9]/gi,'_')}" data-pin="${esc(a.pin)}">••••</span> <button class="linkbtn" style="font-size:12.5px" onclick="togglePin(this)">Show</button></td>
@@ -1731,10 +1925,15 @@ function renderAcc(){
       <td>${a.lastSignIn?esc(dTime(a.lastSignIn)):'<span class="mk-wait">Never</span>'}</td>
       <td>${a.signIns}</td>
       <td>${a.active?'<span class="mk-ok">On</span>':'<span class="mk-late">Off</span>'}</td>
+      <td><label class="check" style="margin:0"><input type="checkbox" ${a.notify?'checked':''} onchange="setNotifyFor('${esc(a.email)}',this.checked)">${a.notify?'On':'Off'}</label></td>
       <td>${a.role==='head'?'':`<label class="check" style="margin:0"><input type="checkbox" ${a.test?'checked':''} onchange="setTest('${esc(a.email)}',this.checked)">${a.test?'Yes':'No'}</label>`}</td>
       <td style="white-space:nowrap">${a.email===USER.email?'<small>You</small>':`<button class="btn ghost small" onclick="openSetPin('${esc(a.email)}')">Set PIN</button> <button class="btn ghost small" onclick="resetPin('${esc(a.email)}')">Reset PIN</button>
         <button class="btn ghost small" onclick="toggleAcc('${esc(a.email)}',${!a.active})">${a.active?'Turn off':'Turn on'}</button>`}</td></tr>`).join('')}
     </tbody></table></div>`;
+}
+async function setNotifyFor(email, on){
+  try{ await api('setNotify',{ email, on }); ACC = await api('getAccounts'); renderAcc(); if (email===USER.email) USER.notify = on; toast(on ? 'Notifications turned on.' : 'Notifications turned off.'); }
+  catch(e){ handleErr(e); }
 }
 async function setTest(email, on){
   loading(true, on ? 'Marking as test account' : 'Updating');
