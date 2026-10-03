@@ -236,6 +236,12 @@ table.subs tr.nosub td:not(.wk){color:var(--muted);font-style:italic}
 .hist summary{cursor:pointer;color:var(--muted);font-weight:600}
 .hist ol{margin:4px 0 0;padding-left:18px}
 .pinv{font-weight:700;letter-spacing:1px}
+.sess{border-top:1px dashed var(--line);padding-top:8px;margin-top:8px}
+.tsess{border-top:1px dashed var(--line);padding-top:6px;margin-top:6px}.tsess > b{font-size:13px}
+.sgrid{display:grid;grid-template-columns:1fr;gap:8px}
+.sbox{border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--sun-soft)}
+.sbox > b{margin-right:8px}.sbox.done{background:var(--ok-soft)}.sbox.wait{background:var(--card)}
+.sbox .namerow{margin-top:6px}
 .bell{position:relative;background:rgba(255,255,255,.14);color:#fff;border:0;border-radius:50%;width:38px;height:38px;display:grid;place-items:center;cursor:pointer}
 .badge{position:absolute;top:-3px;right:-3px;min-width:18px;height:18px;border-radius:9px;background:#E53935;color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center;padding:0 4px}
 .badge.in{position:static;display:inline-grid;margin-left:6px}
@@ -734,7 +740,7 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
 
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'2.2', date:'October 2, 2026' } };
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'2.3', date:'October 2, 2026' } };
 function verLine(server){
   const s = server ? (server === VERSION.current.no ? ' Server '+server+'.' : ' Server '+server+(USER && USER.role==='head' ? ', please deploy the new Code.gs.' : '.')) : '';
   document.getElementById('verLine').textContent = 'First created on '+VERSION.first.date+'. Version '+VERSION.current.no+', updated '+VERSION.current.date+'.'+s;
@@ -885,7 +891,20 @@ function relDays(stamp, e, isUpload){
 }
 function docState(d){ return d.link ? (d.validation||'Pending') : ''; }
 function pill(d){ const s=docState(d); return `<span class="pill ${s||'none'}">${STATE_LABEL[s]}</span>`; }
-function isLate(e){ return ['lpt','ppt'].some(k => e[k].link && [e[k].downLate,e[k].printLate,e[k].upLate].some(x => x && x.late)); }
+// Every file of a submission: the LPT, then either one PPT for the week or one PPT per session
+function isSess(e){ return e.pptMode === 'session'; }
+function filesOf(e){
+  const f = [{ K:'LPT', s:0, label:'LPT', d:e.lpt }];
+  if (isSess(e)) (e.pptSessions||[]).forEach((d,i) => f.push({ K:'PPT', s:i+1, label:'PPT Session '+(i+1), d }));
+  else f.push({ K:'PPT', s:0, label:'PPT', d:e.ppt });
+  return f;
+}
+function docOf(e, K, s){ return K==='LPT' ? e.lpt : (s ? e.pptSessions[s-1] : e.ppt); }
+function fullyApproved(e){
+  const p = isSess(e) ? e.pptSessions.length && e.pptSessions.every(d=>d.link && d.validation==='Approved') : e.ppt.validation==='Approved';
+  return e.lpt.validation==='Approved' && p;
+}
+function isLate(e){ return filesOf(e).some(f => f.d.link && [f.d.downLate,f.d.printLate,f.d.upLate].some(x => x && x.late)); }
 function nowLocal(){ const d=new Date(); d.setMinutes(d.getMinutes()-d.getTimezoneOffset()); return d.toISOString().slice(0,16); }
 function code(s){ return String(s).replace(/[^A-Za-z0-9 ]/g,' ').split(/\s+/).filter(String).map(w=>w.charAt(0).toUpperCase()+w.slice(1)).join(''); }
 function expected(which,t,g,s,w){ return `${which}_Term${t}_${code(g)}_${code(s)}_Week${w}`; }
@@ -1099,7 +1118,7 @@ async function loadPublic(){
 function applyData(d, first){
   if (!d) return;
   verLine(d.serverVersion || '2.1 or older');
-  if (first && d.user && d.user.role==='head' && (d.entries||[]).some(e => e.lpt.validation==='Pending' && e.lpt.link || e.ppt.validation==='Pending' && e.ppt.link)) FILTER.quick = 'Pending';
+  if (first && d.user && d.user.role==='head' && (d.entries||[]).some(e => filesOf(e).some(f => f.d.link && f.d.validation==='Pending'))) FILTER.quick = 'Pending';
   DATA = d;
   if (DATA.user) USER = DATA.user;
   try{ localStorage.setItem('tala_data', JSON.stringify(DATA)); }catch(e){}
@@ -1161,13 +1180,13 @@ function renderPublic(){
 function inScope(){ return DATA.entries.filter(e => e.term===SEL.term && (SEL.week==='all' || e.week===SEL.week)); }
 function renderPrivate(){
   const head = USER.role==='head', scope = inScope(), st = DATA.settings;
-  const any = (e,v) => ['lpt','ppt'].some(k => docState(e[k])===v);
+  const any = (e,v) => filesOf(e).some(f => docState(f.d)===v);
   const n = f => scope.filter(f).length;
   const quick = [
     {k:'all', label: head?'All entries':'My entries', n: scope.length},
     {k:'Pending', label:'For validation', n: n(e=>any(e,'Pending'))},
     {k:'Returned', label:'Returned', n: n(e=>any(e,'Returned'))},
-    {k:'Approved', label:'Fully approved', n: n(e=>e.lpt.validation==='Approved' && e.ppt.validation==='Approved')},
+    {k:'Approved', label:'Fully approved', n: n(fullyApproved)},
     {k:'late', label:'With late items', n: n(isLate), warn:true}
   ];
   let h = '';
@@ -1185,13 +1204,13 @@ function renderPrivate(){
 
 function myOverview(){
   const mine = DATA.entries.filter(e => e.term===SEL.term), files = [];
-  mine.forEach(e => ['lpt','ppt'].forEach(k => { if (e[k].link) files.push({ e, k, d:e[k] }); }));
+  mine.forEach(e => filesOf(e).forEach(f => { if (f.d.link) files.push({ e, k:f.K.toLowerCase(), d:f.d }); }));
   const c = f => files.filter(f).length;
   const lateF = x => x.d.upLate && x.d.upLate.late;
   const box = (n, l, cls) => `<div class="ov ${cls||''}"><b>${n}</b><span>${l}</span></div>`;
   const weeks = Array.from({length:DATA.options.weeks},(_,i)=>String(i+1)).map(w => {
-    const es = mine.filter(e=>e.week===w), st = es.length ? (es.some(e=>['lpt','ppt'].some(k=>e[k].validation==='Returned')) ? 'ret'
-      : es.every(e=>['lpt','ppt'].every(k=>!e[k].link || e[k].validation==='Approved')) ? 'ok' : 'wait') : '';
+    const es = mine.filter(e=>e.week===w), st = es.length ? (es.some(e=>filesOf(e).some(f=>f.d.validation==='Returned')) ? 'ret'
+      : es.every(e=>filesOf(e).every(f=>!f.d.link || f.d.validation==='Approved')) ? 'ok' : 'wait') : '';
     return `<button class="wk ${st} ${SEL.week===w?'on':''}" title="Week ${w}" onclick="SEL.week='${w}';renderAll()">${w}</button>`; }).join('');
   return `<details class="byt" open><summary>My overview, Term ${SEL.term}</summary><div class="ovwrap">
     <div class="ovgrid">${box(c(x=>x.k==='lpt'),'LPT submitted')}${box(c(x=>x.k==='ppt'),'PPT submitted')}${box(c(x=>x.d.validation==='Approved'),'Approved','g')}
@@ -1201,7 +1220,7 @@ function myOverview(){
 function teacherTable(scope){
   const rows = (DATA.teachers||[]).map(t => {
     const m = scope.filter(e=>e.email===t.email);
-    const c = v => m.reduce((a,e)=>a+['lpt','ppt'].filter(k=>docState(e[k])===v).length,0);
+    const c = v => m.reduce((a,e)=>a+filesOf(e).filter(f=>docState(f.d)===v).length,0);
     return {t, total:m.length, pend:c('Pending'), ret:c('Returned'), app:c('Approved'), late:m.filter(isLate).length};
   });
   if (!rows.length) return '';
@@ -1217,15 +1236,15 @@ function teacherTable(scope){
 function filtered(){
   const q = FILTER.text.toLowerCase();
   return inScope().filter(e =>
-    (FILTER.quick==='all' || (FILTER.quick==='late' ? isLate(e) : FILTER.quick==='Approved' ? (e.lpt.validation==='Approved'&&e.ppt.validation==='Approved') : ['lpt','ppt'].some(k=>docState(e[k])===FILTER.quick))) &&
+    (FILTER.quick==='all' || (FILTER.quick==='late' ? isLate(e) : FILTER.quick==='Approved' ? fullyApproved(e) : filesOf(e).some(f=>docState(f.d)===FILTER.quick))) &&
     (!FILTER.teacher || e.email===FILTER.teacher) &&
     (!q || [e.subject,e.grade,e.teacher].join(' ').toLowerCase().indexOf(q) > -1))
     .sort((a,b) => Number(b.week)-Number(a.week) || String(b.updated).localeCompare(String(a.updated)));
 }
 
-function docBox(e, k){
-  const d = e[k], K = k.toUpperCase(), s = docState(d), head = USER.role==='head';
-  let h = `<div class="doc"><div class="doc-h"><span class="type ${K}">${K}</span>${d.source?`<span class="src">${esc(d.source)}</span>`:''}${pill(d)}</div>`;
+function docCore(e, f){
+  const d = f.d;
+  let h = '';
   if (d.link){
     h += `<div class="ln">File: ${fileLink(d)}</div>${qrBox(d.link, 84)}
       <div class="ln">Downloaded: ${esc(dTime(d.downloaded))} ${lateTag(d.downLate)}</div>
@@ -1235,7 +1254,13 @@ function docBox(e, k){
     if (d.remarks || d.validatedOn) h += `<div class="remarks"><b>${d.validation==='Pending'?'Earlier remarks, '+esc(dTime(d.validatedOn)):'Validated, '+esc(d.validation)+', on '+esc(dTime(d.validatedOn))}</b>${esc(d.remarks||'No remarks.')}</div>`;
     h += historyBox(d, e);
   } else h += `<div class="ln mk-wait">Not yet uploaded</div>`;
-  return h + `<div class="act">${docAction(e,K)}</div></div>`;
+  return h + `<div class="act">${docAction(e,f)}</div>`;
+}
+function docBox(e, k){
+  if (k==='ppt' && isSess(e)) return `<div class="doc"><div class="doc-h"><span class="type PPT">PPT</span><span class="src">By session</span></div>${
+    filesOf(e).filter(f=>f.s).map(f => `<div class="sess"><div class="doc-h"><b>Session ${f.s}</b>${f.d.source?`<span class="src">${esc(f.d.source)}</span>`:''}${pill(f.d)}</div>${docCore(e,f)}</div>`).join('')}</div>`;
+  const f = filesOf(e).find(x => x.K === k.toUpperCase()), K = f.K, d = f.d;
+  return `<div class="doc"><div class="doc-h"><span class="type ${K}">${K}</span>${d.source?`<span class="src">${esc(d.source)}</span>`:''}${pill(d)}</div>${docCore(e,f)}</div>`;
 }
 
 function dedupe(hs){ return hs.filter((x,i) => !(i>0 && hs[i-1].event===x.event && hs[i-1].remarks===x.remarks && String(hs[i-1].on).slice(0,16)===String(x.on).slice(0,16))); }
@@ -1244,18 +1269,18 @@ function historyBox(d, e){
   if (!hs.length) return '';
   return `<details class="hist"><summary>History (${hs.length})</summary><ol>${hs.map(x=>{ const rel = e && !/^Validated/.test(x.event) ? relDays(x.on, e, true) : ''; return `<li><b>${esc(dTime(x.on))}</b> ${esc(x.event)}${rel?' ('+esc(rel)+')':''}${x.remarks?': '+esc(x.remarks):''}</li>`; }).join('')}</ol></details>`;
 }
-function docAction(e, K){
-  const d = e[K.toLowerCase()], s = docState(d), id = esc(e.id);
+function docAction(e, f){
+  const d = f.d, s = docState(d), id = esc(e.id), K = f.K, sn = f.s, L = f.label;
   if (USER.role==='head'){
     if (!d.link) return '<span class="mk-wait">Waiting for the teacher</span>';
-    return (s==='Pending' ? `<button class="btn small" onclick="quickValidate('${id}','${K}','Approved','')" title="Approve with no remarks">Approve</button><button class="btn ghost small" onclick="openVal('${id}','${K}')">Return or add remarks</button>`
-      : `<span class="mk-ok" style="font-size:13px">Validated</span><button class="btn ghost small" onclick="openVal('${id}','${K}',true)">Edit validation</button>`)
-      + `<button class="btn danger small" onclick="removeFile('${id}','${K}')">Delete ${K}</button>`;
+    return (s==='Pending' ? `<button class="btn small" onclick="quickValidate('${id}','${K}',${sn},'Approved','')" title="Approve with no remarks">Approve</button><button class="btn ghost small" onclick="openVal('${id}','${K}',false,${sn})">Return or add remarks</button>`
+      : `<span class="mk-ok" style="font-size:13px">Validated</span><button class="btn ghost small" onclick="openVal('${id}','${K}',true,${sn})">Edit validation</button>`)
+      + `<button class="btn danger small" onclick="removeFile('${id}','${K}',${sn})">Delete ${L}</button>`;
   }
   if (s==='Approved') return '<span class="mk-ok">Approved and locked</span>';
-  if (s==='Pending') return '<span class="mk-wait">Waiting for validation</span>';
-  if (s==='Returned') return `<button class="btn small" onclick="openSubmit('${id}')">Reupload ${K}</button>`;
-  return `<button class="btn small" onclick="openSubmit('${id}')">Upload ${K}</button>`;
+  if (s==='Pending') return '<span class="mk-wait">Uploaded, waiting for validation</span>';
+  if (s==='Returned') return `<button class="btn small" onclick="openSubmit('${id}')">Reupload ${L}</button>`;
+  return `<button class="btn small" onclick="openSubmit('${id}')">Upload ${L}</button>`;
 }
 function renderList(){
   const head = USER.role==='head', list = filtered();
@@ -1265,8 +1290,12 @@ function renderList(){
     return;
   }
   if (FILTER.view==='table'){
-    const cell = (e,k) => { const d = e[k], K = k.toUpperCase();
-      if (!d.link) return `<span class="mk-wait">Not yet uploaded</span><div class="tact">${docAction(e,K)}</div>`;
+    const cell = (e,k) => {
+      if (k==='ppt' && isSess(e)) return `<div class="hint" style="margin:0 0 4px"><b>By session</b></div>` + filesOf(e).filter(f=>f.s).map(f => `<div class="tsess"><b>Session ${f.s}</b> ${cellCore(e,f)}</div>`).join('');
+      return cellCore(e, filesOf(e).find(x => x.K === k.toUpperCase()));
+    };
+    const cellCore = (e,f) => { const d = f.d;
+      if (!d.link) return `<span class="mk-wait">Not yet uploaded</span><div class="tact">${docAction(e,f)}</div>`;
       return `${pill(d)}<div class="fname" style="margin-top:4px">${fileLink(d)}</div>${qrBox(d.link, 76)}
         <small>${esc(d.source)}</small>
         <small>Downloaded ${esc(dTime(d.downloaded))}${d.downLate!==null?', '+lateTag(d.downLate):''}</small>
@@ -1274,7 +1303,7 @@ function renderList(){
         <small>Submitted ${esc(dTime(d.firstUpload))}${d.upLate!==null?', '+lateTag(d.upLate):''}</small>
         ${d.uploads>1?`<small>Revised file uploaded ${esc(dTime(d.lastUpload))}</small>`:''}
         ${d.validatedOn?`<div class="tval"><b>${d.validation==='Pending'?'Earlier remarks':'Validated, '+esc(d.validation)}</b> ${esc(dTime(d.validatedOn))}${d.remarks?`<div>${esc(d.remarks)}</div>`:''}</div>`:''}
-        ${historyBox(d, e)}<div class="tact">${docAction(e,K)}</div>`; };
+        ${historyBox(d, e)}<div class="tact">${docAction(e,f)}</div>`; };
     const weeks = SEL.week==='all' ? Array.from({length:DATA.options.weeks},(_,i)=>String(i+1)) : [SEL.week];
     let rows = '';
     weeks.forEach(wk => {
@@ -1297,14 +1326,13 @@ function renderList(){
     return;
   }
   $('entryList').innerHTML = '<div class="list">' + list.map(e => {
-    const lockedAny = e.lpt.validation==='Approved' || e.ppt.validation==='Approved';
     return `<article class="entry">
       <div class="entry-top"><span>Term ${esc(e.term)}, Week ${esc(e.week)}${e.weekStart?' ('+esc(rangeText({start:e.weekStart,end:e.weekEnd}))+')':''}</span>${e.due?`<span>${esc(dueText({due:e.due,dueTime:e.dueTime}))}</span>`:''}</div>
       <h4>${esc(e.grade)}, ${esc(e.subject)}</h4>
       ${head?`<div class="by">${esc(e.teacher)}</div>`:''}
       ${lcDetails(e)}
       <div class="docs">${docBox(e,'lpt')}${docBox(e,'ppt')}</div>
-      <div class="times"><span>First submitted ${esc(dTime(e.created))}</span><span>Last updated ${esc(dTime(e.updated))}</span>${(e.lpt.link||e.ppt.link) && !e.lateCounted ? '<span>Days late not counted yet</span>' : ''}
+      <div class="times"><span>First submitted ${esc(dTime(e.created))}</span><span>Last updated ${esc(dTime(e.updated))}</span>${filesOf(e).some(f=>f.d.link) && !e.lateCounted ? '<span>Days late not counted yet</span>' : ''}
         ${head ? `<button class="btn danger small" onclick="removeEntry('${esc(e.id)}')">Delete submission</button>` : ''}</div>
     </article>`;
   }).join('') + '</div>';
@@ -1312,6 +1340,7 @@ function renderList(){
 
 /* ---------- Submit wizard ---------- */
 function openSubmit(id){
+  if (typeof W === 'object' && W) W.pptMode = '';
   const e = id ? DATA.entries.find(x=>x.id===id) : null;
   W = e ? {term:e.term, grade:e.grade, subject:e.subject, week:e.week, fixed:true}
         : {term:SEL.term, grade:'', subject:'', week:SEL.week==='all'?'':SEL.week, fixed:false};
@@ -1340,7 +1369,8 @@ function drawWizard(){
   W.entry = DATA.entries.find(x => x.email===USER.email && x.term===W.term && x.grade===W.grade && x.subject===W.subject && x.week===W.week) || null;
   const key = [W.term,W.grade,W.subject,W.week].join('|');
   const other = (DATA.taken||[]).find(t => t.key === key);
-  const open = W.entry ? DOC_KEYS.filter(K => { const s = docState(W.entry[K.toLowerCase()]); return !s || s==='Returned'; }) : DOC_KEYS;
+  const openF = f => { const s = docState(f.d); return !s || s==='Returned'; };
+  const open = W.entry ? DOC_KEYS.filter(K => filesOf(W.entry).filter(f=>f.K===K).some(openF)) : DOC_KEYS;
   let note = '';
   if (other) note = `<b>Not allowed.</b> ${esc(W.grade)}, ${esc(W.subject)}, Term ${esc(W.term)} Week ${esc(W.week)} was already submitted by ${esc(other.name)}. Only one submission is allowed for each grade level, subject, term, and week. Please check your choices.`;
   else if (W.entry && !open.length) note = `<b>Already submitted.</b> Both your LPT and PPT for ${esc(W.grade)}, ${esc(W.subject)}, Term ${esc(W.term)} Week ${esc(W.week)} are already in TALA. You cannot upload them again unless the School Head returns a file or deletes the submission.`;
@@ -1357,15 +1387,77 @@ function drawWizard(){
   W.scan = null; drawLC();
 
   DOC_KEYS.forEach(K => { if ($(K+'Seg')) { segSync(K+'Seg'); syncSame(K); } });
+  if ($('pptModeSeg')) segSync('pptModeSeg');
 }
 function docBlock(K){
+  if (K==='PPT'){
+    const e = W.entry, sessMode = e ? isSess(e) || (!e.ppt.link && W.pptMode==='session') : W.pptMode==='session';
+    const locked = e && (e.ppt.link || (e.pptSessions||[]).some(d=>d.link)); // mode is fixed once a PPT is uploaded
+    if (!W.pptMode) W.pptMode = e && isSess(e) ? 'session' : 'week';
+    const mode = locked ? (isSess(e) ? 'session' : 'week') : W.pptMode;
+    const modeBox = `<div class="field"><span class="lbl">How is your PPT this week?</span><div class="seg" id="pptModeSeg">
+      <label><input type="radio" name="pptMode" value="week" ${mode==='week'?'checked':''} ${locked?'disabled':''} onchange="W.pptMode='week';redrawPPT()">One file for the whole week</label>
+      <label><input type="radio" name="pptMode" value="session" ${mode==='session'?'checked':''} ${locked?'disabled':''} onchange="W.pptMode='session';redrawPPT()">One file per session</label>
+    </div>${locked?'<div class="hint">This was set when you uploaded your first PPT for this week.</div>':''}</div>`;
+    if (mode==='session') return `<div id="pptWrap">${sessionBlock(modeBox)}</div>`;
+    return `<div id="pptWrap">${singleBlock('PPT', modeBox)}</div>`;
+  }
+  return singleBlock(K, '');
+}
+function redrawPPT(){ const w = $('pptWrap'); if (!w) return; w.outerHTML = docBlock('PPT'); segSync('pptModeSeg'); if ($('PPTSeg')){ segSync('PPTSeg'); syncSame('PPT'); } }
+// One PPT file per session: shared source and dates, one upload box per session
+function sessionBlock(modeBox){
+  const e = W.entry, n = sessionsFor(W.grade), base = expected('PPT', W.term, W.grade, W.subject, W.week);
+  const docs = e && isSess(e) ? e.pptSessions : [];
+  const any = Array.from({length:n},(_,i)=>docs[i]||{}).find(d=>d.link) || {};
+  const val = v => v ? String(v).replace(' ','T') : '';
+  const boxes = Array.from({length:n},(_,i) => {
+    const d = docs[i] || {}, st = docState(d), name = base+'_Session'+(i+1);
+    if (st==='Approved') return `<div class="sbox done"><b>Session ${i+1}</b>${pill(d)}<div class="hint">Approved and locked.</div></div>`;
+    if (st==='Pending') return `<div class="sbox wait"><b>Session ${i+1}</b>${pill(d)}<div class="hint">This session has been uploaded and is waiting for validation.</div></div>`;
+    return `<div class="sbox"><b>Session ${i+1}</b>${st==='Returned'?pill(d):''}
+      ${st==='Returned'?`<div class="remarks" style="margin:6px 0"><b>Returned. Upload the revised file. It will replace ${esc(d.fileName)}.</b>${esc(d.remarks||'')}</div>`:''}
+      <div class="namerow"><code>${esc(name)}</code><button type="button" class="btn small" onclick="copyText('${esc(name)}')">Copy name</button></div>
+      <input type="file" id="PPTS${i+1}File" accept=".pdf,.ppt,.pptx" style="margin-top:6px;width:100%" onchange="checkSess(${i+1})">
+      <div class="fcheck" id="PPTS${i+1}Check"></div></div>`; }).join('');
+  return `<div class="docblock" id="PPTBlockS"><h4><span class="type PPT">PPT</span>PPT (PowerPoint Presentation)</h4>${modeBox}
+    <p class="hint" style="margin:0 0 8px">Upload only the sessions you have now. You can upload the rest later. Up to 30 MB each. Tip: save each PPT as PDF first to make it lighter.</p>
+    <div class="field"><span class="lbl">Source</span><div class="seg" id="PPTSeg">
+      <label><input type="radio" name="PPTsrc" value="From DZIIS" ${any.source==='From DZIIS'?'checked':''} onchange="segSync('PPTSeg')">PPT from DZIIS</label>
+      <label><input type="radio" name="PPTsrc" value="Teacher-made" ${any.source==='Teacher-made'?'checked':''} onchange="segSync('PPTSeg')">PPT Teacher-made</label>
+    </div></div>
+    <div class="sgrid">${boxes}</div>
+    <div class="row2" style="margin-top:10px">
+      <div class="field"><label for="PPTDown">Date and time downloaded</label><input type="datetime-local" id="PPTDown" max="${nowLocal()}" value="" oninput="syncSame('PPT')"></div>
+      <div class="field"><label for="PPTPrint">Date and time printed (if printed)</label><input type="datetime-local" id="PPTPrint" max="${nowLocal()}" value=""></div>
+    </div>
+    <label class="check"><input type="checkbox" id="PPTSame" onchange="syncSame('PPT')">I printed it on the same date and time I downloaded it</label>
+    <div class="hint">These dates apply to the session files you are uploading now.</div>
+  </div>`;
+}
+function checkSess(n){
+  const input = $('PPTS'+n+'File'), f = input.files[0], out = $('PPTS'+n+'Check'); out.innerHTML='';
+  if (!f) return true;
+  const name = expected('PPT', W.term, W.grade, W.subject, W.week)+'_Session'+n;
+  const m = f.name.match(/^(.*)\.([A-Za-z0-9]+)$/), ext = m ? m[2].toLowerCase() : '';
+  if (['pdf','ppt','pptx'].indexOf(ext) < 0){ out.innerHTML = '<span class="mk-late">Upload a PDF or PowerPoint file.</span>'; input.value=''; return false; }
+  if (f.size > 30*1048576){ out.innerHTML = `<span class="mk-late">This file is ${(f.size/1048576).toFixed(1)} MB. The limit is 30 MB. Save it as PDF to make it lighter.</span>`; input.value=''; return false; }
+  if (m[1].toLowerCase() !== name.toLowerCase()){
+    out.innerHTML = `<span class="mk-late">Your file is named "${esc(f.name)}". It must be named ${esc(name)}.${esc(ext)}</span>`;
+    $('renSub').textContent = `Your PPT for Session ${n} is named "${f.name}". TALA only accepts files named exactly like this:`;
+    $('renName').textContent = name; input.value=''; openModal('renModal'); return false;
+  }
+  out.innerHTML = '<span class="mk-ok">The file name is correct.</span>'; return true;
+}
+function singleBlock(K, extra){
   const d = W.entry ? W.entry[K.toLowerCase()] : {};
   const name = expected(K, W.term, W.grade, W.subject, W.week), s = docState(d||{});
   const title = K==='LPT' ? 'LPT (Lesson Plan for Teachers)' : 'PPT (PowerPoint Presentation)';
-  if (s==='Approved') return `<div class="docblock"><h4><span class="type ${K}">${K}</span>${title}${pill(d)}</h4><div class="locked">Approved and locked. No need to upload again.</div></div>`;
-  if (s==='Pending') return `<div class="docblock"><h4><span class="type ${K}">${K}</span>${title}${pill(d)}</h4><div class="locked" style="background:var(--sun-soft);color:var(--wait)">Submitted ${esc(dTime(d.lastUpload))} and waiting for validation. You cannot change it now.</div></div>`;
+  if (s==='Approved') return `<div class="docblock"><h4><span class="type ${K}">${K}</span>${title}${pill(d)}</h4>${extra||''}<div class="locked">Approved and locked. No need to upload again.</div></div>`;
+  if (s==='Pending') return `<div class="docblock"><h4><span class="type ${K}">${K}</span>${title}${pill(d)}</h4>${extra||''}<div class="locked" style="background:var(--sun-soft);color:var(--wait)">Submitted ${esc(dTime(d.lastUpload))} and waiting for validation. You cannot change it now.</div></div>`;
   const val = v => v ? String(v).replace(' ','T') : '';
   return `<div class="docblock" id="${K}Block"><h4><span class="type ${K}">${K}</span>${title}${d && d.link ? pill(d) : ''}</h4>
+    ${extra||''}
     ${s==='Returned' ? `<div class="remarks" style="margin:0 0 10px"><b>Returned on ${esc(dTime(d.validatedOn))}. Upload the revised file. It will replace ${esc(d.fileName)}.</b>${esc(d.remarks||'')}</div>` : ''}
     <div class="field"><span class="lbl">Source</span><div class="seg" id="${K}Seg">
       <label><input type="radio" name="${K}src" value="From DZIIS" ${d.source==='From DZIIS'?'checked':''} onchange="segSync('${K}Seg')">${K} from DZIIS</label>
@@ -1425,8 +1517,21 @@ function readB64(file){
 async function submitDocs(){
   $('wErr').textContent='';
   const jobs = [];
+  if ($('PPTBlockS')){
+    const n = sessionsFor(W.grade), src = radioVal('PPTsrc'), down = $('PPTDown').value, same = $('PPTSame').checked, pr = same ? down : $('PPTPrint').value;
+    const picked = Array.from({length:n},(_,i)=>i+1).filter(s => $('PPTS'+s+'File') && $('PPTS'+s+'File').files[0]);
+    if (picked.length){
+      if (!src) return $('wErr').textContent = 'Choose where the PPT came from: from DZIIS or Teacher-made.';
+      if (!down) return $('wErr').textContent = 'Enter the date and time the PPT was downloaded.';
+      if (pr && pr < down) return $('wErr').textContent = 'The PPT cannot be printed before it was downloaded.';
+      for (const s of picked){
+        if (!checkSess(s)) return $('wErr').textContent = 'Rename the PPT file for Session '+s+' first, then choose it again.';
+        jobs.push({ x:{ which:'PPT', session:s, term:W.term, grade:W.grade, subject:W.subject, week:W.week, source:src, downloaded:down, same, printed:pr }, file:$('PPTS'+s+'File').files[0] });
+      }
+    }
+  }
   for (const K of DOC_KEYS){
-    if (!$(K+'Block')) continue; // approved and locked
+    if (!$(K+'Block')) continue; // approved and locked, or PPT by session
     const d = W.entry ? W.entry[K.toLowerCase()] : {};
     const file = $(K+'File').files[0];
     const x = { which:K, term:W.term, grade:W.grade, subject:W.subject, week:W.week, source:radioVal(K+'src'),
@@ -1444,26 +1549,27 @@ async function submitDocs(){
     jobs.push({x, file});
   }
   if (!jobs.length) return $('wErr').textContent = 'Nothing to submit yet. Choose your LPT or PPT file and fill in the dates.';
+  let done = 0;
 
   $('wBtn').disabled = true;
   try{
     for (const j of jobs){
-      loading(true, j.file ? 'Uploading '+j.x.which+' file' : 'Saving '+j.x.which+' details');
+      loading(true, 'Uploading '+j.x.which+(j.x.session?' Session '+j.x.session:'')+' file');
       if (j.x.needScan){ loading(true,'Reading the LPT'); try{ await W.scanPromise; }catch(e){} j.x.scan = W.scan; delete j.x.needScan; loading(true, 'Uploading LPT file'); }
       if (j.file && j.file.size > 8*1048576) loading(true, 'Uploading '+j.x.which+' file. Large files may take a minute');
       if (j.file){ j.x.fileName = j.file.name; j.x.mime = j.file.type; j.x.base64 = await readB64(j.file); }
-      await apiData('submitFile', {doc:j.x});
+      await apiData('submitFile', {doc:j.x}); done++;
     }
     closeModal('subModal'); SEL.term = W.term; SEL.week = W.week;
     toast('Submitted for validation. The School Head can now see it.');
-  }catch(e){ const m = String(e && e.message || e); if (m === MSG.NET || friendly(m) === MSG.BUSY) $('wErr').textContent = MSG.UPLOAD; else handleErr(e,'wErr'); try{ await loadData(); }catch(x){} }
+  }catch(e){ const m = String(e && e.message || e); if (m === MSG.NET || friendly(m) === MSG.BUSY) $('wErr').textContent = (done ? done+' file'+(done>1?'s were':' was')+' sent. ' : '') + MSG.UPLOAD; else handleErr(e,'wErr'); try{ await loadData(); W.entry = null; drawWizard(); }catch(x){} }
   loading(false); $('wBtn').disabled = false;
 }
-async function removeFile(id, K){
-  const e = DATA.entries.find(x=>x.id===id);
-  if (!confirm('Delete the '+K+' of '+e.teacher+' for '+e.grade+' '+e.subject+', Term '+e.term+' Week '+e.week+'? The teacher will be able to submit it again.')) return;
+async function removeFile(id, K, sn){
+  const e = DATA.entries.find(x=>x.id===id), L = K + (sn ? ' Session '+sn : '');
+  if (!confirm('Delete the '+L+' of '+e.teacher+' for '+e.grade+' '+e.subject+', Term '+e.term+' Week '+e.week+'? The teacher will be able to submit it again.')) return;
   loading(true,'Deleting');
-  try{ await apiData('deleteFile',{id, which:K}); toast(K+' deleted. The teacher can submit it again.'); }catch(err){ handleErr(err); }
+  try{ await apiData('deleteFile',{id, which:K, session:sn||0}); toast(L+' deleted. The teacher can submit it again.'); }catch(err){ handleErr(err); }
   loading(false);
 }
 async function removeEntry(id){
@@ -1480,12 +1586,12 @@ function vHint(){
     : radioVal('vDec')==='Returned' ? 'The teacher will be able to reupload this file.' : '';
 }
 document.querySelectorAll('input[name=vDec]').forEach(r => r.addEventListener('change', () => { segSync('vSeg'); vHint(); }));
-let V_EDIT = false;
-function openVal(id, K, edit){
-  const e = DATA.entries.find(x=>x.id===id), d = e[K.toLowerCase()];
-  V_EDIT = !!edit;
+let V_EDIT = false, V_SESS = 0;
+function openVal(id, K, edit, sn){
+  const e = DATA.entries.find(x=>x.id===id), d = docOf(e, K, sn);
+  V_EDIT = !!edit; V_SESS = sn || 0;
   $('vId').value=id; $('vWhich').value=K;
-  $('valTitle').textContent = (edit ? 'Edit validation of ' : 'Validate ')+K;
+  $('valTitle').textContent = (edit ? 'Edit validation of ' : 'Validate ')+K+(sn?' Session '+sn:'');
   $('valSub').innerHTML = `${esc(e.teacher)}: ${esc(e.grade)}, ${esc(e.subject)}, Term ${esc(e.term)} Week ${esc(e.week)}<br>File: ${fileLink(d)}`;
   document.querySelectorAll('input[name=vDec]').forEach(r => r.checked = r.value === (d.validation==='Returned'?'Returned':'Approved'));
   segSync('vSeg'); vHint(); $('vRem').value = d.remarks||''; $('vErr').textContent='';
@@ -1495,19 +1601,19 @@ async function saveValidation(){
   const dec = radioVal('vDec'), rem = $('vRem').value.trim();
   if (dec === 'Returned' && !rem) return $('vErr').textContent = 'Add remarks so the teacher knows what to fix.';
   closeModal('valModal');
-  await quickValidate($('vId').value, $('vWhich').value, dec, rem, V_EDIT);
+  await quickValidate($('vId').value, $('vWhich').value, V_SESS, dec, rem, V_EDIT);
 }
 // The screen updates right away. Saving happens in the background.
-async function quickValidate(id, K, dec, rem, edit){
+async function quickValidate(id, K, sn, dec, rem, edit){
   const e = DATA.entries.find(x=>x.id===id); if (!e) return;
-  const d = e[K.toLowerCase()], before = JSON.stringify(d), on = nowLocal().replace('T',' ')+':00';
+  const d = docOf(e, K, sn), L = K + (sn ? ' Session '+sn : ''), before = JSON.stringify(d), on = nowLocal().replace('T',' ')+':00';
   d.validation = dec; d.remarks = rem || ''; d.validatedOn = on;
   d.history = (d.history||[]).slice();
   if (edit){ for (let i = d.history.length-1; i >= 0; i--) if (/^Validated/.test(d.history[i].event)){ d.history[i] = {on, event:'Validated, '+dec+' (edited)', remarks:rem}; break; } }
   else d.history.push({on, event:'Validated, '+dec, remarks:rem});
-  renderList(); toast(K+(dec==='Approved'?' approved and locked.':' returned to the teacher.'));
+  renderList(); toast(L+(dec==='Approved'?' approved and locked.':' returned to the teacher.'));
   loading(true);
-  try{ await apiData('validateFile',{id, which:K, decision:dec, remarks:rem, edit:!!edit}); }
+  try{ await apiData('validateFile',{id, which:K, session:sn||0, decision:dec, remarks:rem, edit:!!edit}); }
   catch(err){ Object.assign(d, JSON.parse(before)); renderList(); handleErr(err); }
   loading(false);
 }
@@ -1537,16 +1643,17 @@ function printWeek(){
       ? esc(r.val.event.replace(/ \(edited\)$/,''))+(/edited/.test(r.val.event)?' (edited)':'')+' on '+esc(dTime(r.val.on))+(r.val.remarks?'. <i>\u201C'+esc(r.val.remarks)+'\u201D</i>':'.')
       : 'For validation.'}</li>`).join('');
     return `<b>${K}:</b> ${esc(txt.charAt(0).toUpperCase()+txt.slice(1))}${rs?`<ul class="p-hist">${rs}</ul>`:''}`; };
-  const remarks = e => `<div>${status(e.lpt,e,'LPT')}</div><div class="p-rmk">${status(e.ppt,e,'PPT')}</div>`;
+  const remarks = e => filesOf(e).map((f,i) => `<div class="${i?'p-rmk':''}">${status(f.d,e,f.label)}</div>`).join('');
   let rows = '', i = 0;
   list.forEach(e => { i++;
-    ['lpt','ppt'].forEach((k,j) => { const d=e[k];
-      rows += `<tr>${j===0?`<td rowspan="2" style="text-align:center">${i}</td>${head?`<td rowspan="2">${esc(e.teacher)}</td>`:''}<td rowspan="2">${esc(e.grade)}</td><td rowspan="2">${esc(e.subject)}</td>`:''}
-        <td style="text-align:center"><b>${k.toUpperCase()}</b></td><td>${esc(d.fileName||'')}${qrBox(d.link, 56)}</td><td>${esc(d.source||'')}</td>
+    const fs = filesOf(e), span = fs.length;
+    fs.forEach((f,j) => { const d=f.d;
+      rows += `<tr>${j===0?`<td rowspan="${span}" style="text-align:center">${i}</td>${head?`<td rowspan="${span}">${esc(e.teacher)}</td>`:''}<td rowspan="${span}">${esc(e.grade)}</td><td rowspan="${span}">${esc(e.subject)}</td>`:''}
+        <td style="text-align:center"><b>${f.K}</b>${f.s?'<br>Session '+f.s:''}</td><td>${esc(d.fileName||'')}${qrBox(d.link, 56)}</td><td>${esc(d.source||'')}</td>
         <td>${dt(d.downloaded,d.downLate)}</td><td>${d.printed?dt(d.printed,d.printLate)+(d.same?'<br>(same as download)':''):(d.link?'Not printed':'')}</td>
         <td>${dt(d.firstUpload,d.upLate)}</td><td>${valCell(d)}</td>
-        ${j===0?`<td rowspan="2" class="p-rem">${remarks(e)}</td>`:''}
-        ${j===0?`<td rowspan="2" class="p-sig"></td>`:''}</tr>`; });
+        ${j===0?`<td rowspan="${span}" class="p-rem">${remarks(e)}</td>`:''}
+        ${j===0?`<td rowspan="${span}" class="p-sig"></td>`:''}</tr>`; });
   });
   if (!rows){ // empty template rows
     for (let n = 1; n <= 5; n++) ['LPT','PPT'].forEach((K,j) => {
@@ -1566,7 +1673,7 @@ function printWeek(){
                    : [{ email:USER.email, name:USER.name }];
   const sumCard = t => {
     const es = list.filter(e=>e.email===t.email), fs = [];
-    es.forEach(e => ['lpt','ppt'].forEach(k => { if (e[k].link) fs.push({ k, d:e[k] }); }));
+    es.forEach(e => filesOf(e).forEach(f => { if (f.d.link) fs.push({ k:f.K.toLowerCase(), d:f.d }); }));
     const c = f => fs.filter(f).length, late = x => x.d.upLate && x.d.upLate.late, ontime = x => x.d.upLate && !x.d.upLate.late;
     const subj = es.map(e=>esc(e.grade)+', '+esc(e.subject)).join('; ');
     return `<div class="p-card"><div class="p-cname">${esc(t.name)}</div>
