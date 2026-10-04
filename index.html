@@ -118,6 +118,8 @@ main{max-width:1120px;margin:0 auto;padding:18px 18px 60px}
 .pill.none{background:var(--page);color:var(--muted)}
 .pill.Pending{background:var(--sun-soft);color:var(--wait)}
 .pill.Returned{background:var(--late-soft);color:var(--late)}
+.pill.Invalid{background:var(--late);color:#fff}
+.pill.Incomplete{background:var(--page);color:var(--wait);border:1px dashed var(--wait)}
 .pill.Approved{background:var(--ok-soft);color:var(--ok)}
 .remarks{margin-top:8px;background:var(--card);border-left:4px solid var(--sun);border-radius:6px;padding:8px 10px}
 .remarks b{display:block;font-size:12px;color:var(--wait)}
@@ -236,6 +238,8 @@ table.subs tr.nosub td:not(.wk){color:var(--muted);font-style:italic}
 .hist summary{cursor:pointer;color:var(--muted);font-weight:600}
 .hist ol{margin:4px 0 0;padding-left:18px}
 .pinv{font-weight:700;letter-spacing:1px}
+.confirmbox{align-items:flex-start;background:var(--sun-soft);border-radius:10px;padding:10px 12px;margin:12px 0 0;font-size:13.5px}
+.confirmbox input{margin-top:2px;flex:none}
 .sess{border-top:1px dashed var(--line);padding-top:8px;margin-top:8px}
 .tsess{border-top:1px dashed var(--line);padding-top:6px;margin-top:6px}.tsess > b{font-size:13px}
 .sgrid{display:grid;grid-template-columns:1fr;gap:8px}
@@ -271,7 +275,7 @@ table.subs tr.nosub td:not(.wk){color:var(--muted);font-style:italic}
 .bub.me{align-self:flex-end;background:var(--field);color:#fff;border-radius:12px 12px 4px 12px}
 .bub small{display:block;font-size:10.5px;opacity:.7;margin-top:3px}.bub .who{font-weight:700;opacity:.85;margin:0 0 2px}
 .ovwrap{padding:0 14px 14px}
-.ovgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
+.ovgrid{display:grid;grid-template-columns:repeat(8,1fr);gap:8px}
 .ov{background:var(--page);border-radius:10px;padding:10px;text-align:center}
 .ov b{display:block;font-size:22px}.ov span{font-size:12px;color:var(--muted)}
 .ov.g b{color:var(--ok)}.ov.r b{color:var(--late)}.ov.y b{color:var(--wait)}
@@ -379,8 +383,8 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
   .p-cards{grid-template-columns:repeat(3,minmax(0,1fr)) !important}
   .p-mini th,.p-mini td{border:1px solid #777 !important;padding:2px 2px;text-align:center;background:none;color:#000}
   .p-mini th{font-size:7px;font-weight:700;line-height:1.2}
-  .p-csub{font-size:8.5px;margin-top:4px;min-height:22px}
-  .p-csign{display:flex;gap:14px;margin-top:22px;font-size:8.5px}
+  .p-csub{font-size:8.5px;margin-top:3px;min-height:12px}
+  .p-csign{display:flex;gap:14px;margin-top:16px;font-size:8.5px}
   .p-csign span{border-top:1px solid #000;padding-top:2px;text-align:center}
   .p-csign span:first-child{flex:2}.p-csign span:last-child{flex:1}
   .p-break{page-break-after:always;break-after:page}
@@ -570,6 +574,7 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
       <div id="wDocs"></div>
     </div>
     <div class="step" id="stLC" style="display:none"><div class="step-t">6. Learning competencies and objectives, read from your LPT</div><div id="wLC"></div></div>
+    <label class="check confirmbox" id="wConfirmRow" style="display:none"><input type="checkbox" id="wConfirm"><span id="wConfirmText"></span></label>
     <div class="err" id="wErr"></div>
     <div class="modal-actions">
       <button class="btn ghost" onclick="closeModal('subModal')">Cancel</button>
@@ -602,6 +607,7 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
     <div class="field"><span class="lbl">Validation</span><div class="seg" id="vSeg">
       <label><input type="radio" name="vDec" value="Approved">Validated, Approved</label>
       <label><input type="radio" name="vDec" value="Returned">Validated, Returned</label>
+      <label><input type="radio" name="vDec" value="Invalid">Wrong file, not counted</label>
     </div><div class="hint" id="vHint"></div></div>
     <div class="field"><label for="vRem">Remarks and findings</label><textarea id="vRem" maxlength="800" placeholder="Required when returning the file"></textarea></div>
     <div class="err" id="vErr"></div>
@@ -740,7 +746,7 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
 
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'2.3', date:'October 2, 2026' } };
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'2.4', date:'October 3, 2026' } };
 function verLine(server){
   const s = server ? (server === VERSION.current.no ? ' Server '+server+'.' : ' Server '+server+(USER && USER.role==='head' ? ', please deploy the new Code.gs.' : '.')) : '';
   document.getElementById('verLine').textContent = 'First created on '+VERSION.first.date+'. Version '+VERSION.current.no+', updated '+VERSION.current.date+'.'+s;
@@ -749,7 +755,7 @@ verLine();
 const LOGO = document.querySelector('.mark img').src;
 document.getElementById('heroLogo').src = LOGO; document.getElementById('favicon').href = LOGO;
 const DOC_KEYS = ['LPT','PPT'];
-const STATE_LABEL = {'':'Not uploaded', 'Pending':'For validation', 'Returned':'Returned', 'Approved':'Approved'};
+const STATE_LABEL = {'':'Not uploaded', 'Not uploaded':'Not uploaded', 'Pending':'For checking', 'Returned':'Returned', 'Approved':'Approved', 'Invalid':'Wrong file, not counted', 'Incomplete':'Incomplete'};
 
 let TOKEN=null, USER=null, DATA=null, PUB=null, ACC=null, PIN_FORCED=false;
 let SEL={term:'1', week:'all'};
@@ -900,9 +906,21 @@ function filesOf(e){
   return f;
 }
 function docOf(e, K, s){ return K==='LPT' ? e.lpt : (s ? e.pptSessions[s-1] : e.ppt); }
+// The PPT counts as one. By session, it is complete only when every session has a correct file.
+function pptAgg(e){
+  if (!isSess(e)){ const d = e.ppt, s = docState(d); return { sess:false, n:1, done: d.link && s!=='Invalid' ? 1 : 0, status:s||'', complete: !!d.link && s!=='Invalid', late:d.upLate, last:d }; }
+  const ss = e.pptSessions||[], ok = ss.filter(d=>d.link && d.validation!=='Invalid'), n = ss.length;
+  const status = !ok.length ? (ss.some(d=>d.validation==='Invalid') ? 'Invalid' : '') : ss.some(d=>d.validation==='Returned') ? 'Returned'
+    : ok.length < n ? 'Incomplete' : ok.every(d=>d.validation==='Approved') ? 'Approved' : 'Pending';
+  const last = ok.slice().sort((a,b)=>String(a.countFrom||a.firstUpload).localeCompare(String(b.countFrom||b.firstUpload))).pop() || null;
+  const complete = ok.length === n;
+  return { sess:true, n, done:ok.length, status, complete, late: complete && last ? last.upLate : null, last };
+}
+// Two items per submission: the LPT and the PPT. Only approved items count as submitted.
+function itemsOf(e){ const l = e.lpt, s = docState(l); return [{ K:'LPT', status:s||'', complete: !!l.link && s!=='Invalid', late:l.upLate, done:0, n:0 }, Object.assign({ K:'PPT' }, pptAgg(e))]; }
+function aggPill(st){ return `<span class="pill ${st||'none'}">${STATE_LABEL[st||'']}</span>`; }
 function fullyApproved(e){
-  const p = isSess(e) ? e.pptSessions.length && e.pptSessions.every(d=>d.link && d.validation==='Approved') : e.ppt.validation==='Approved';
-  return e.lpt.validation==='Approved' && p;
+  return e.lpt.validation==='Approved' && pptAgg(e).status==='Approved';
 }
 function isLate(e){ return filesOf(e).some(f => f.d.link && [f.d.downLate,f.d.printLate,f.d.upLate].some(x => x && x.late)); }
 function nowLocal(){ const d=new Date(); d.setMinutes(d.getMinutes()-d.getTimezoneOffset()); return d.toISOString().slice(0,16); }
@@ -1153,13 +1171,13 @@ function gradeCards(){
   const scope = PUB.entries.filter(e => e.term===SEL.term && (SEL.week==='all' || e.week===SEL.week));
   return `<div class="gcards">${o.grades.map(g => {
     const subs = (o.subjectsByGrade[g]||[]).length, need = subs*weeks, mine = scope.filter(e=>e.grade===g);
-    const up = k => mine.filter(e=>e[k]!=='Not uploaded').length, ok = k => mine.filter(e=>e[k]==='Approved').length;
-    const pct = need ? Math.round((up('lpt')+up('ppt'))/(need*2)*100) : 0;
+    const ok = k => mine.filter(e=>e[k]==='Approved').length, chk = k => mine.filter(e=>e[k]==='Pending'||e[k]==='Incomplete').length;
+    const pct = need ? Math.round((ok('lpt')+ok('ppt'))/(need*2)*100) : 0;
     return `<button class="gcard ${PUBGRADE===g?'on':''}" onclick="PUBGRADE=PUBGRADE==='${esc(g)}'?'':'${esc(g)}';renderPublic()">
       <b>${esc(g)}</b><small>${subs} subject${subs>1?'s':''}${SEL.week==='all'?' \u00D7 12 weeks':''}</small>
       <span class="gbar"><i style="width:${pct}%"></i></span>
-      <span class="gnum">LPT <b>${up('lpt')}</b> of ${need}<em>${ok('lpt')} approved</em></span>
-      <span class="gnum">PPT <b>${up('ppt')}</b> of ${need}<em>${ok('ppt')} approved</em></span></button>`; }).join('')}</div>`;
+      <span class="gnum">LPT <b>${ok('lpt')}</b> of ${need} submitted<em>${chk('lpt')} for checking</em></span>
+      <span class="gnum">PPT <b>${ok('ppt')}</b> of ${need} submitted<em>${chk('ppt')} for checking</em></span></button>`; }).join('')}</div>`;
 }
 function renderPublic(){
   const all = PUBGRADE === '*';
@@ -1172,7 +1190,7 @@ function renderPublic(){
   else h += `<div class="table-wrap"><table><thead><tr><th>Week</th><th>Grade level</th><th>Subject</th><th>LPT</th><th>PPT</th></tr></thead><tbody>${
     list.map(e=>`<tr><td>Week ${esc(e.week)}<small>${esc(rangeText(e.weekStart?{start:e.weekStart,end:e.weekEnd}:null))}</small></td><td>${esc(e.grade)}</td><td>${esc(e.subject)}</td>
       <td><span class="pill ${e.lpt==='Not uploaded'?'none':e.lpt}">${esc(STATE_LABEL[e.lpt]||e.lpt)}</span></td>
-      <td><span class="pill ${e.ppt==='Not uploaded'?'none':e.ppt}">${esc(STATE_LABEL[e.ppt]||e.ppt)}</span></td></tr>`).join('')}</tbody></table></div>`;
+      <td><span class="pill ${e.ppt==='Not uploaded'?'none':e.ppt}">${esc(STATE_LABEL[e.ppt]||e.ppt)}</span>${e.pptOf?`<small>By session, ${e.pptDone}/${e.pptOf}</small>`:''}</td></tr>`).join('')}</tbody></table></div>`;
   $('trkBody').innerHTML = h + `<p class="hint" style="margin-top:12px">As of ${esc(dTime(PUB.asOf))}</p>`;
 }
 
@@ -1203,33 +1221,34 @@ function renderPrivate(){
 }
 
 function myOverview(){
-  const mine = DATA.entries.filter(e => e.term===SEL.term), files = [];
-  mine.forEach(e => filesOf(e).forEach(f => { if (f.d.link) files.push({ e, k:f.K.toLowerCase(), d:f.d }); }));
-  const c = f => files.filter(f).length;
-  const lateF = x => x.d.upLate && x.d.upLate.late;
+  const mine = DATA.entries.filter(e => e.term===SEL.term), items = [];
+  mine.forEach(e => itemsOf(e).forEach(x => items.push(x)));
+  const c = f => items.filter(f).length;
   const box = (n, l, cls) => `<div class="ov ${cls||''}"><b>${n}</b><span>${l}</span></div>`;
   const weeks = Array.from({length:DATA.options.weeks},(_,i)=>String(i+1)).map(w => {
-    const es = mine.filter(e=>e.week===w), st = es.length ? (es.some(e=>filesOf(e).some(f=>f.d.validation==='Returned')) ? 'ret'
-      : es.every(e=>filesOf(e).every(f=>!f.d.link || f.d.validation==='Approved')) ? 'ok' : 'wait') : '';
+    const es = mine.filter(e=>e.week===w), it = [].concat(...es.map(itemsOf)).filter(x=>x.status);
+    const st = !it.length ? '' : it.some(x=>x.status==='Returned'||x.status==='Invalid') ? 'ret' : it.every(x=>x.status==='Approved') ? 'ok' : 'wait';
     return `<button class="wk ${st} ${SEL.week===w?'on':''}" title="Week ${w}" onclick="SEL.week='${w}';renderAll()">${w}</button>`; }).join('');
   return `<details class="byt" open><summary>My overview, Term ${SEL.term}</summary><div class="ovwrap">
-    <div class="ovgrid">${box(c(x=>x.k==='lpt'),'LPT submitted')}${box(c(x=>x.k==='ppt'),'PPT submitted')}${box(c(x=>x.d.validation==='Approved'),'Approved','g')}
-    ${box(c(x=>x.d.validation==='Returned'),'Returned','r')}${box(c(x=>x.d.validation==='Pending'),'For validation','y')}${box(c(x=>x.d.upLate && !x.d.upLate.late),'On time','g')}${box(c(lateF),'Late','r')}</div>
+    <div class="ovgrid">${box(c(x=>x.K==='LPT'&&x.status==='Approved'),'LPT submitted','g')}${box(c(x=>x.K==='PPT'&&x.status==='Approved'),'PPT submitted','g')}
+    ${box(c(x=>x.status==='Pending'),'For checking','y')}${box(c(x=>x.status==='Incomplete'),'PPT incomplete','y')}${box(c(x=>x.status==='Returned'),'Returned','r')}
+    ${box(c(x=>x.status==='Invalid'),'Wrong file','r')}${box(c(x=>x.status==='Approved'&&x.late&&!x.late.late),'On time','g')}${box(c(x=>x.complete&&x.late&&x.late.late),'Late','r')}</div>
+    <p class="hint" style="margin:8px 0 0">A file counts as submitted once the School Head approves it. A PPT uploaded by session counts once all sessions are in.</p>
     <div class="wkstrip"><span class="hint">Weeks:</span>${weeks}<span class="hint wklegend"><i class="ok"></i>Approved <i class="wait"></i>Waiting <i class="ret"></i>Returned <i></i>None</span></div></div></details>`;
 }
 function teacherTable(scope){
   const rows = (DATA.teachers||[]).map(t => {
     const m = scope.filter(e=>e.email===t.email);
-    const c = v => m.reduce((a,e)=>a+filesOf(e).filter(f=>docState(f.d)===v).length,0);
-    return {t, total:m.length, pend:c('Pending'), ret:c('Returned'), app:c('Approved'), late:m.filter(isLate).length};
+    const c = f => m.reduce((a,e)=>a+itemsOf(e).filter(f).length,0);
+    return {t, total:m.length, lpt:c(x=>x.K==='LPT'&&x.status==='Approved'), ppt:c(x=>x.K==='PPT'&&x.status==='Approved'), pend:c(x=>x.status==='Pending'||x.status==='Incomplete'), ret:c(x=>x.status==='Returned'||x.status==='Invalid'), late:m.filter(isLate).length};
   });
   if (!rows.length) return '';
   const none = rows.filter(r=>!r.total).length;
   return `<details class="byt" ${FILTER.openByt?'open':''} ontoggle="FILTER.openByt=this.open">
     <summary>Progress by teacher, Term ${SEL.term}${SEL.week==='all'?'':', Week '+SEL.week}${none?` (${none} with no entries)`:''}</summary>
-    <div class="table-wrap"><table><thead><tr><th>Teacher</th><th>Entries</th><th>Files for validation</th><th>Files returned</th><th>Files approved</th><th>Entries with late items</th></tr></thead><tbody>${
+    <div class="table-wrap"><table><thead><tr><th>Teacher</th><th>Entries</th><th>LPT submitted</th><th>PPT submitted</th><th>For checking or incomplete</th><th>Returned or wrong file</th><th>With late items</th></tr></thead><tbody>${
     rows.map(r=>`<tr><td><button class="linkbtn" onclick="FILTER.teacher='${esc(r.t.email)}';FILTER.quick='all';renderPrivate()">${esc(r.t.name)}</button></td>
-      <td class="${r.total?'':'zero'}">${r.total}</td><td>${r.pend}</td><td>${r.ret}</td><td>${r.app}</td><td class="${r.late?'zero':''}">${r.late}</td></tr>`).join('')}
+      <td class="${r.total?'':'zero'}">${r.total}</td><td>${r.lpt}</td><td>${r.ppt}</td><td>${r.pend}</td><td>${r.ret}</td><td class="${r.late?'zero':''}">${r.late}</td></tr>`).join('')}
     </tbody></table></div></details>`;
 }
 
@@ -1257,17 +1276,18 @@ function docCore(e, f){
   return h + `<div class="act">${docAction(e,f)}</div>`;
 }
 function docBox(e, k){
-  if (k==='ppt' && isSess(e)) return `<div class="doc"><div class="doc-h"><span class="type PPT">PPT</span><span class="src">By session</span></div>${
-    filesOf(e).filter(f=>f.s).map(f => `<div class="sess"><div class="doc-h"><b>Session ${f.s}</b>${f.d.source?`<span class="src">${esc(f.d.source)}</span>`:''}${pill(f.d)}</div>${docCore(e,f)}</div>`).join('')}</div>`;
+  if (k==='ppt' && isSess(e)){ const a = pptAgg(e); return `<div class="doc"><div class="doc-h"><span class="type PPT">PPT</span><span class="src">By session, ${a.done}/${a.n}</span>${aggPill(a.status)}</div>${
+    filesOf(e).filter(f=>f.s).map(f => `<div class="sess"><div class="doc-h"><b>Session ${f.s}</b>${f.d.source?`<span class="src">${esc(f.d.source)}</span>`:''}${pill(f.d)}</div>${docCore(e,f)}</div>`).join('')}</div>`; }
   const f = filesOf(e).find(x => x.K === k.toUpperCase()), K = f.K, d = f.d;
   return `<div class="doc"><div class="doc-h"><span class="type ${K}">${K}</span>${d.source?`<span class="src">${esc(d.source)}</span>`:''}${pill(d)}</div>${docCore(e,f)}</div>`;
 }
 
+function evText(ev){ return String(ev||'').replace('Validated, Invalid','Marked as wrong file, not counted'); }
 function dedupe(hs){ return hs.filter((x,i) => !(i>0 && hs[i-1].event===x.event && hs[i-1].remarks===x.remarks && String(hs[i-1].on).slice(0,16)===String(x.on).slice(0,16))); }
 function historyBox(d, e){
   const hs = dedupe(d.history || []);
   if (!hs.length) return '';
-  return `<details class="hist"><summary>History (${hs.length})</summary><ol>${hs.map(x=>{ const rel = e && !/^Validated/.test(x.event) ? relDays(x.on, e, true) : ''; return `<li><b>${esc(dTime(x.on))}</b> ${esc(x.event)}${rel?' ('+esc(rel)+')':''}${x.remarks?': '+esc(x.remarks):''}</li>`; }).join('')}</ol></details>`;
+  return `<details class="hist"><summary>History (${hs.length})</summary><ol>${hs.map(x=>{ const rel = e && !/^Validated/.test(x.event) ? relDays(x.on, e, true) : ''; return `<li><b>${esc(dTime(x.on))}</b> ${esc(evText(x.event))}${rel?' ('+esc(rel)+')':''}${x.remarks?': '+esc(x.remarks):''}</li>`; }).join('')}</ol></details>`;
 }
 function docAction(e, f){
   const d = f.d, s = docState(d), id = esc(e.id), K = f.K, sn = f.s, L = f.label;
@@ -1280,6 +1300,7 @@ function docAction(e, f){
   if (s==='Approved') return '<span class="mk-ok">Approved and locked</span>';
   if (s==='Pending') return '<span class="mk-wait">Uploaded, waiting for validation</span>';
   if (s==='Returned') return `<button class="btn small" onclick="openSubmit('${id}')">Reupload ${L}</button>`;
+  if (s==='Invalid') return `<button class="btn small" onclick="openSubmit('${id}')">Upload the correct ${L}</button>`;
   return `<button class="btn small" onclick="openSubmit('${id}')">Upload ${L}</button>`;
 }
 function renderList(){
@@ -1291,7 +1312,7 @@ function renderList(){
   }
   if (FILTER.view==='table'){
     const cell = (e,k) => {
-      if (k==='ppt' && isSess(e)) return `<div class="hint" style="margin:0 0 4px"><b>By session</b></div>` + filesOf(e).filter(f=>f.s).map(f => `<div class="tsess"><b>Session ${f.s}</b> ${cellCore(e,f)}</div>`).join('');
+      if (k==='ppt' && isSess(e)){ const a = pptAgg(e); return `<div style="margin:0 0 4px">${aggPill(a.status)} <b>By session, ${a.done}/${a.n}</b></div>` + filesOf(e).filter(f=>f.s).map(f => `<div class="tsess"><b>Session ${f.s}</b> ${cellCore(e,f)}</div>`).join(''); }
       return cellCore(e, filesOf(e).find(x => x.K === k.toUpperCase()));
     };
     const cellCore = (e,f) => { const d = f.d;
@@ -1369,7 +1390,7 @@ function drawWizard(){
   W.entry = DATA.entries.find(x => x.email===USER.email && x.term===W.term && x.grade===W.grade && x.subject===W.subject && x.week===W.week) || null;
   const key = [W.term,W.grade,W.subject,W.week].join('|');
   const other = (DATA.taken||[]).find(t => t.key === key);
-  const openF = f => { const s = docState(f.d); return !s || s==='Returned'; };
+  const openF = f => { const s = docState(f.d); return !s || s==='Returned' || s==='Invalid'; };
   const open = W.entry ? DOC_KEYS.filter(K => filesOf(W.entry).filter(f=>f.K===K).some(openF)) : DOC_KEYS;
   let note = '';
   if (other) note = `<b>Not allowed.</b> ${esc(W.grade)}, ${esc(W.subject)}, Term ${esc(W.term)} Week ${esc(W.week)} was already submitted by ${esc(other.name)}. Only one submission is allowed for each grade level, subject, term, and week. Please check your choices.`;
@@ -1381,6 +1402,8 @@ function drawWizard(){
   const blocked = !!other || (W.entry && !open.length);
   $('wDocs').innerHTML = blocked ? '' : `<p class="hint" style="margin:0 0 4px">You can submit the <b>LPT only</b>, the <b>PPT only</b>, or <b>both</b>. Submit the other one later by choosing the same term, grade level, subject, and week.</p>` + DOC_KEYS.map(docBlock).join('');
   $('wBtn').style.display = blocked ? 'none' : '';
+  $('wConfirmRow').style.display = blocked ? 'none' : ''; $('wConfirm').checked = false;
+  $('wConfirmText').textContent = `I confirm that the files I am uploading are my own LPT or PPT for ${W.grade}, ${W.subject}, Term ${W.term} Week ${W.week}, and that their content matches their file names.`;
   if (blocked) return;
   const bk = DATA.bank[[W.term,W.grade,W.subject,W.week].join('|')];
   W.bank = bk && bk.competencies ? bk : null;
@@ -1415,8 +1438,9 @@ function sessionBlock(modeBox){
     const d = docs[i] || {}, st = docState(d), name = base+'_Session'+(i+1);
     if (st==='Approved') return `<div class="sbox done"><b>Session ${i+1}</b>${pill(d)}<div class="hint">Approved and locked.</div></div>`;
     if (st==='Pending') return `<div class="sbox wait"><b>Session ${i+1}</b>${pill(d)}<div class="hint">This session has been uploaded and is waiting for validation.</div></div>`;
-    return `<div class="sbox"><b>Session ${i+1}</b>${st==='Returned'?pill(d):''}
+    return `<div class="sbox"><b>Session ${i+1}</b>${st==='Returned'||st==='Invalid'?pill(d):''}
       ${st==='Returned'?`<div class="remarks" style="margin:6px 0"><b>Returned. Upload the revised file. It will replace ${esc(d.fileName)}.</b>${esc(d.remarks||'')}</div>`:''}
+      ${st==='Invalid'?`<div class="remarks" style="margin:6px 0"><b>Wrong file, not counted. Upload the correct file for this session.</b>${esc(d.remarks||'')}</div>`:''}
       <div class="namerow"><code>${esc(name)}</code><button type="button" class="btn small" onclick="copyText('${esc(name)}')">Copy name</button></div>
       <input type="file" id="PPTS${i+1}File" accept=".pdf,.ppt,.pptx" style="margin-top:6px;width:100%" onchange="checkSess(${i+1})">
       <div class="fcheck" id="PPTS${i+1}Check"></div></div>`; }).join('');
@@ -1459,6 +1483,7 @@ function singleBlock(K, extra){
   return `<div class="docblock" id="${K}Block"><h4><span class="type ${K}">${K}</span>${title}${d && d.link ? pill(d) : ''}</h4>
     ${extra||''}
     ${s==='Returned' ? `<div class="remarks" style="margin:0 0 10px"><b>Returned on ${esc(dTime(d.validatedOn))}. Upload the revised file. It will replace ${esc(d.fileName)}.</b>${esc(d.remarks||'')}</div>` : ''}
+    ${s==='Invalid' ? `<div class="remarks" style="margin:0 0 10px"><b>Marked as a wrong file on ${esc(dTime(d.validatedOn))}. It is not counted. Upload the correct ${K}.</b>${esc(d.remarks||'')}</div>` : ''}
     <div class="field"><span class="lbl">Source</span><div class="seg" id="${K}Seg">
       <label><input type="radio" name="${K}src" value="From DZIIS" ${d.source==='From DZIIS'?'checked':''} onchange="segSync('${K}Seg')">${K} from DZIIS</label>
       <label><input type="radio" name="${K}src" value="Teacher-made" ${d.source==='Teacher-made'?'checked':''} onchange="segSync('${K}Seg')">${K} Teacher-made</label>
@@ -1549,6 +1574,8 @@ async function submitDocs(){
     jobs.push({x, file});
   }
   if (!jobs.length) return $('wErr').textContent = 'Nothing to submit yet. Choose your LPT or PPT file and fill in the dates.';
+  if (!$('wConfirm').checked) return $('wErr').textContent = 'Please tick the box to confirm that these are the correct files.';
+  jobs.forEach(j => j.x.confirmed = true);
   let done = 0;
 
   $('wBtn').disabled = true;
@@ -1583,7 +1610,8 @@ async function removeEntry(id){
 /* ---------- Validation ---------- */
 function vHint(){
   $('vHint').textContent = radioVal('vDec')==='Approved' ? 'The file will be locked. The teacher no longer needs to reupload it.'
-    : radioVal('vDec')==='Returned' ? 'The teacher will be able to reupload this file.' : '';
+    : radioVal('vDec')==='Returned' ? 'The teacher will be able to reupload this file.'
+    : radioVal('vDec')==='Invalid' ? 'Use this when the file is not the LPT or PPT. It will not count as submitted, and days late keep counting until the correct file is uploaded.' : '';
 }
 document.querySelectorAll('input[name=vDec]').forEach(r => r.addEventListener('change', () => { segSync('vSeg'); vHint(); }));
 let V_EDIT = false, V_SESS = 0;
@@ -1593,7 +1621,7 @@ function openVal(id, K, edit, sn){
   $('vId').value=id; $('vWhich').value=K;
   $('valTitle').textContent = (edit ? 'Edit validation of ' : 'Validate ')+K+(sn?' Session '+sn:'');
   $('valSub').innerHTML = `${esc(e.teacher)}: ${esc(e.grade)}, ${esc(e.subject)}, Term ${esc(e.term)} Week ${esc(e.week)}<br>File: ${fileLink(d)}`;
-  document.querySelectorAll('input[name=vDec]').forEach(r => r.checked = r.value === (d.validation==='Returned'?'Returned':'Approved'));
+  document.querySelectorAll('input[name=vDec]').forEach(r => r.checked = r.value === (d.validation==='Returned'||d.validation==='Invalid'?d.validation:'Approved'));
   segSync('vSeg'); vHint(); $('vRem').value = d.remarks||''; $('vErr').textContent='';
   openModal('valModal');
 }
@@ -1611,7 +1639,7 @@ async function quickValidate(id, K, sn, dec, rem, edit){
   d.history = (d.history||[]).slice();
   if (edit){ for (let i = d.history.length-1; i >= 0; i--) if (/^Validated/.test(d.history[i].event)){ d.history[i] = {on, event:'Validated, '+dec+' (edited)', remarks:rem}; break; } }
   else d.history.push({on, event:'Validated, '+dec, remarks:rem});
-  renderList(); toast(L+(dec==='Approved'?' approved and locked.':' returned to the teacher.'));
+  renderList(); toast(L+(dec==='Approved'?' approved and locked.':dec==='Invalid'?' marked as wrong file. It is not counted.':' returned to the teacher.'));
   loading(true);
   try{ await apiData('validateFile',{id, which:K, session:sn||0, decision:dec, remarks:rem, edit:!!edit}); }
   catch(err){ Object.assign(d, JSON.parse(before)); renderList(); handleErr(err); }
@@ -1626,32 +1654,46 @@ function printWeek(){
   let list = DATA.entries.filter(e=>e.term===SEL.term && e.week===SEL.week && test.indexOf(e.email) < 0 && (!FILTER.teacher || e.email===FILTER.teacher))
     .sort((a,b)=>a.teacher.localeCompare(b.teacher)||a.grade.localeCompare(b.grade)||a.subject.localeCompare(b.subject));
   const dt = (v,l) => v ? esc(dTime(v))+(l!==null&&l!==undefined?'<br>'+lateText(l):'') : '';
-  const valCell = d => d.link ? (d.validation==='Pending'?'For validation':'Validated, '+esc(d.validation))+(d.validatedOn&&d.validation!=='Pending'?'<br>'+esc(dTime(d.validatedOn)):'') : 'Not uploaded';
+  const valCell = d => d.link ? (d.validation==='Pending'?'For checking':d.validation==='Invalid'?'Wrong file, not counted':'Validated, '+esc(d.validation))+(d.validatedOn&&d.validation!=='Pending'?'<br>'+esc(dTime(d.validatedOn)):'') : 'Not uploaded';
   // Every upload round with the School Head's remark, newest first
   const rounds = d => {
     const out = []; let cur = null;
     dedupe(d.history||[]).forEach(x => {
-      if (/^Submitted|^Revised/.test(x.event)){ cur = { n: out.length+1, on: x.on, val: null }; out.push(cur); }
+      if (/^Submitted|^Revised|^Correct file/.test(x.event)){ cur = { n: out.length+1, on: x.on, val: null }; out.push(cur); }
       else if (/^Validated/.test(x.event)){ if (!cur){ cur = { n: 1, on: d.firstUpload, val: null }; out.push(cur); } cur.val = x; }
     });
     return out.reverse();
   };
   const status = (d, e, K) => {
     if (!d.link) return `<b>${K}:</b> Not yet submitted`;
-    const o = d.upLate, txt = o ? o.text : (relDays(d.firstUpload, e, true) || '');
+    const o = d.upLate, txt = d.validation==='Invalid' ? 'wrong file, not counted' : o ? o.text : (relDays(d.countFrom||d.firstUpload, e, true) || '');
     const rs = rounds(d).map(r => `<li><b>Upload ${r.n}</b>, ${esc(dTime(r.on))}: ${r.val
-      ? esc(r.val.event.replace(/ \(edited\)$/,''))+(/edited/.test(r.val.event)?' (edited)':'')+' on '+esc(dTime(r.val.on))+(r.val.remarks?'. <i>\u201C'+esc(r.val.remarks)+'\u201D</i>':'.')
+      ? esc(evText(r.val.event).replace(/ \(edited\)$/,''))+(/edited/.test(r.val.event)?' (edited)':'')+' on '+esc(dTime(r.val.on))+(r.val.remarks?'. <i>\u201C'+esc(r.val.remarks)+'\u201D</i>':'.')
       : 'For validation.'}</li>`).join('');
     return `<b>${K}:</b> ${esc(txt.charAt(0).toUpperCase()+txt.slice(1))}${rs?`<ul class="p-hist">${rs}</ul>`:''}`; };
-  const remarks = e => filesOf(e).map((f,i) => `<div class="${i?'p-rmk':''}">${status(f.d,e,f.label)}</div>`).join('');
+  const pptStatus = e => {
+    const a = pptAgg(e);
+    if (!a.sess) return status(e.ppt, e, 'PPT');
+    const head = a.complete ? (a.late ? a.late.text : 'Complete') : 'Incomplete';
+    const lines = e.pptSessions.map((d,k) => { const lastV = dedupe(d.history||[]).filter(x=>/^Validated/.test(x.event)).pop();
+      return `<li><b>Session ${k+1}:</b> ${!d.link ? 'Not yet submitted.' : esc(STATE_LABEL[docState(d)])+(lastV && lastV.remarks ? '. <i>\u201C'+esc(lastV.remarks)+'\u201D</i>' : '.')}</li>`; }).join('');
+    return `<b>PPT (by session, ${a.done}/${a.n}):</b> ${esc(head.charAt(0).toUpperCase()+head.slice(1))}<ul class="p-hist">${lines}</ul>`; };
+  const remarks = e => `<div>${status(e.lpt,e,'LPT')}</div><div class="p-rmk">${pptStatus(e)}</div>`;
+  const pptRow = e => { const a = pptAgg(e);
+    if (!a.sess) return null;
+    const L = a.last || {}, names = e.pptSessions.map((d,k)=>d.link?esc(d.fileName):'').filter(Boolean);
+    return { file:`<b>By session, ${a.done}/${a.n}</b>${names.length?'<br><span class="p-small">'+names.join('<br>')+'</span>':''}`, source:esc(L.source||''),
+      down: L.link ? dt(L.downloaded, L.downLate) : '', print: L.link ? (L.printed ? dt(L.printed, L.printLate) : 'Not printed') : '',
+      up: a.complete ? dt(L.countFrom||L.firstUpload, a.late) : (a.done ? 'Incomplete, '+a.done+'/'+a.n : ''), val: esc(STATE_LABEL[a.status||'']) }; };
   let rows = '', i = 0;
   list.forEach(e => { i++;
-    const fs = filesOf(e), span = fs.length;
+    const fs = [{ K:'LPT', s:0, d:e.lpt }, { K:'PPT', s:0, d:e.ppt }], span = 2, pr = pptRow(e);
     fs.forEach((f,j) => { const d=f.d;
+      if (f.K==='PPT' && pr){ rows += `<tr><td style="text-align:center"><b>PPT</b></td><td>${pr.file}</td><td>${pr.source}</td><td>${pr.down}</td><td>${pr.print}</td><td>${pr.up}</td><td>${pr.val}</td></tr>`; return; }
       rows += `<tr>${j===0?`<td rowspan="${span}" style="text-align:center">${i}</td>${head?`<td rowspan="${span}">${esc(e.teacher)}</td>`:''}<td rowspan="${span}">${esc(e.grade)}</td><td rowspan="${span}">${esc(e.subject)}</td>`:''}
         <td style="text-align:center"><b>${f.K}</b>${f.s?'<br>Session '+f.s:''}</td><td>${esc(d.fileName||'')}${qrBox(d.link, 56)}</td><td>${esc(d.source||'')}</td>
         <td>${dt(d.downloaded,d.downLate)}</td><td>${d.printed?dt(d.printed,d.printLate)+(d.same?'<br>(same as download)':''):(d.link?'Not printed':'')}</td>
-        <td>${dt(d.firstUpload,d.upLate)}</td><td>${valCell(d)}</td>
+        <td>${dt(d.countFrom||d.firstUpload,d.upLate)}</td><td>${valCell(d)}</td>
         ${j===0?`<td rowspan="${span}" class="p-rem">${remarks(e)}</td>`:''}
         ${j===0?`<td rowspan="${span}" class="p-sig"></td>`:''}</tr>`; });
   });
@@ -1672,16 +1714,17 @@ function printWeek(){
   const who = head ? (FILTER.teacher ? (DATA.teachers||[]).filter(t=>t.email===FILTER.teacher) : (DATA.teachers||[]))
                    : [{ email:USER.email, name:USER.name }];
   const sumCard = t => {
-    const es = list.filter(e=>e.email===t.email), fs = [];
-    es.forEach(e => filesOf(e).forEach(f => { if (f.d.link) fs.push({ k:f.K.toLowerCase(), d:f.d }); }));
-    const c = f => fs.filter(f).length, late = x => x.d.upLate && x.d.upLate.late, ontime = x => x.d.upLate && !x.d.upLate.late;
+    const es = list.filter(e=>e.email===t.email), its = [];
+    es.forEach(e => itemsOf(e).forEach(x => its.push(x)));
+    const c = f => its.filter(f).length;
     const subj = es.map(e=>esc(e.grade)+', '+esc(e.subject)).join('; ');
     return `<div class="p-card"><div class="p-cname">${esc(t.name)}</div>
-      <table class="p-mini"><tr><th></th><th>Submitted</th><th>On time</th><th>Late</th><th>Approved</th><th>Returned</th><th>For validation</th></tr>
-      ${['lpt','ppt'].map(k => `<tr><td><b>${k.toUpperCase()}</b></td><td>${c(x=>x.k===k)}</td><td>${c(x=>x.k===k&&ontime(x))}</td><td>${c(x=>x.k===k&&late(x))}</td><td>${c(x=>x.k===k&&x.d.validation==='Approved')}</td><td>${c(x=>x.k===k&&x.d.validation==='Returned')}</td><td>${c(x=>x.k===k&&x.d.validation==='Pending')}</td></tr>`).join('')}</table>
+      <table class="p-mini"><tr><th></th><th>Submitted (approved)</th><th>On time</th><th>Late</th><th>For checking</th><th>Incomplete</th><th>Returned</th><th>Wrong file</th></tr>
+      ${['LPT','PPT'].map(K => `<tr><td><b>${K}</b></td><td>${c(x=>x.K===K&&x.status==='Approved')}</td><td>${c(x=>x.K===K&&x.status==='Approved'&&x.late&&!x.late.late)}</td><td>${c(x=>x.K===K&&x.complete&&x.late&&x.late.late)}</td><td>${c(x=>x.K===K&&x.status==='Pending')}</td><td>${K==='PPT'?c(x=>x.K===K&&x.status==='Incomplete'):''}</td><td>${c(x=>x.K===K&&x.status==='Returned')}</td><td>${c(x=>x.K===K&&x.status==='Invalid')}</td></tr>`).join('')}</table>
+
       <div class="p-csub">${subj ? '<b>Subjects:</b> '+subj : '<b>No submission this week.</b>'}</div>
       <div class="p-csign"><span>Signature over printed name</span><span>Date</span></div></div>`; };
-  const summary = `<div class="p-sumtitle">SUMMARY OF SUBMISSIONS</div><div class="p-cards">${who.map(sumCard).join('')}</div>`;
+  const summary = `<div class="p-sumtitle">SUMMARY OF SUBMISSIONS <span class="p-small" style="font-weight:400">Only approved files count as submitted. A PPT uploaded by session counts once all its sessions are in.</span></div><div class="p-cards">${who.map(sumCard).join('')}</div>`;
   $('printArea').innerHTML = `
     <div class="p-head"><img src="${LOGO}" alt=""><div>Republic of the Philippines<br><b>Department of Education</b><br>Region IX, Zamboanga Peninsula<br>Schools Division of Zamboanga Sibugay<br>Imelda District<br><b>BALUYAN ELEMENTARY SCHOOL</b><br>School ID 125592</div></div>
     <div class="p-title">LPT AND PPT WEEKLY TRACKING REPORT</div>
