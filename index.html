@@ -369,6 +369,11 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
   .p-table thead{display:table-header-group}
   .p-table tr,.p-table td{page-break-inside:auto;break-inside:auto}
   .p-table .qr{display:block;margin-top:4px}
+  .p-qrow{display:flex;flex-wrap:nowrap;gap:5px;margin-top:4px}
+  .p-qs{display:flex;flex-direction:column;align-items:center;font-size:7.5px;gap:1px}
+  .p-qs .qr{margin:0;padding:0}
+  .p-qs.none i{display:block;width:46px;height:46px;border:1px dashed #999}
+  .p-qs.none b{color:#777}
   .p-note{margin-top:8px}
   .p-lc{min-width:170px}
   .p-rem{min-width:150px}
@@ -746,9 +751,11 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
 
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'2.4', date:'October 3, 2026' } };
+const MIN_SERVER = '2.4'; // oldest Code.gs this page works with
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'2.5', date:'October 3, 2026' } };
 function verLine(server){
-  const s = server ? (server === VERSION.current.no ? ' Server '+server+'.' : ' Server '+server+(USER && USER.role==='head' ? ', please deploy the new Code.gs.' : '.')) : '';
+  const old = server && (server.indexOf('older') > -1 || parseFloat(server) < parseFloat(MIN_SERVER));
+  const s = server ? ' Server '+server+(old && USER && USER.role==='head' ? ', please deploy the new Code.gs.' : '.') : '';
   document.getElementById('verLine').textContent = 'First created on '+VERSION.first.date+'. Version '+VERSION.current.no+', updated '+VERSION.current.date+'.'+s;
 }
 verLine();
@@ -878,6 +885,15 @@ function lcHtml(lc){
 function lcDetails(e){ return `<details class="lcd"${FILTER.openLC?' open':''}><summary>Competencies and objectives</summary>${e.scanNote?`<div class="mk-late" style="font-size:12.5px;margin-top:4px">Could not read the LPT: ${esc(e.scanNote)}</div>`:''}${lcHtml(e.lc)}</details>`; }
 function showFile(name){ $('fvName').textContent = name; openModal('fileModal'); }
 const QRS = new Map(); // QR codes are drawn once and reused
+function qrSmall(d, size){
+  if (!d || !d.link || !window.qrcode) return '';
+  const url = d.fileId ? 'https://drive.google.com/open?id='+d.fileId : d.link, key = 'L|'+url;
+  try{
+    let svg = QRS.get(key);
+    if (!svg){ const q = qrcode(0,'L'); q.addData(url); q.make(); svg = q.createSvgTag({cellSize:2, margin:0, scalable:true}); QRS.set(key, svg); }
+    return `<span class="qr qrs" style="width:${size}px;height:${size}px">${svg}</span>`;
+  }catch(e){ return ''; }
+}
 function qrBox(link, size){
   if (!/^https?:/.test(link||'') || !window.qrcode) return '';
   try{
@@ -1681,8 +1697,11 @@ function printWeek(){
   const remarks = e => `<div>${status(e.lpt,e,'LPT')}</div><div class="p-rmk">${pptStatus(e)}</div>`;
   const pptRow = e => { const a = pptAgg(e);
     if (!a.sess) return null;
-    const L = a.last || {}, names = e.pptSessions.map((d,k)=>d.link?esc(d.fileName):'').filter(Boolean);
-    return { file:`<b>By session, ${a.done}/${a.n}</b>${names.length?'<br><span class="p-small">'+names.join('<br>')+'</span>':''}`, source:esc(L.source||''),
+    const L = a.last || {};
+    const tiles = e.pptSessions.map((d,k) => (d.link && d.validation!=='Invalid')
+      ? `<span class="p-qs">${qrSmall(d, 46)}<b>S${k+1}</b></span>`
+      : `<span class="p-qs none"><i></i><b>S${k+1}</b></span>`).join('');
+    return { file:`<b>${esc(expected('PPT', e.term, e.grade, e.subject, e.week))}_Session1 to ${a.n}</b><br>By session, ${a.done}/${a.n}<div class="p-qrow">${tiles}</div>`, source:esc(L.source||''),
       down: L.link ? dt(L.downloaded, L.downLate) : '', print: L.link ? (L.printed ? dt(L.printed, L.printLate) : 'Not printed') : '',
       up: a.complete ? dt(L.countFrom||L.firstUpload, a.late) : (a.done ? 'Incomplete, '+a.done+'/'+a.n : ''), val: esc(STATE_LABEL[a.status||'']) }; };
   let rows = '', i = 0;
