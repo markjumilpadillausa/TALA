@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>TALA | Baluyan Elementary School</title>
 <link rel="icon" type="image/png" href="" id="favicon">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#1F5130">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="TALA">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <script src="config.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js" defer></script>
 <link rel="preconnect" href="https://script.google.com">
@@ -238,6 +245,64 @@ table.subs tr.nosub td:not(.wk){color:var(--muted);font-style:italic}
 .hist summary{cursor:pointer;color:var(--muted);font-weight:600}
 .hist ol{margin:4px 0 0;padding-left:18px}
 .pinv{font-weight:700;letter-spacing:1px}
+.sdot{font-style:normal;background:#E53935;color:#fff;border-radius:999px;font-size:11px;font-weight:700;min-width:20px;height:20px;display:grid;place-items:center;padding:0 5px}
+.side-install{display:flex;align-items:center;gap:8px;margin:12px 8px 0;background:var(--card);border:1.5px solid var(--line);border-radius:10px;padding:8px 10px;font:inherit;font-size:13px;font-weight:600;color:var(--brandtxt);cursor:pointer;width:calc(100% - 16px)}
+.side-install img{width:26px;height:26px;border-radius:7px}
+.olist{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px;margin-top:14px}
+.ocard{position:relative;text-align:left;background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;font:inherit;color:var(--ink);cursor:pointer;display:flex;flex-direction:column;gap:3px}
+.ocard:hover{border-color:var(--leaf)}.ocard.new{border-color:#E53935}
+.ocard small{color:var(--muted);font-size:12.5px}
+.ocard-h{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+.opill{font-size:11.5px;font-weight:700;border-radius:999px;padding:3px 9px;white-space:nowrap;background:var(--page);color:var(--muted)}
+.opill.Sent{background:var(--sun-soft);color:var(--wait)}.opill.TeacherSigned{background:#e3f0fb;color:#1e5a8c}.opill.Completed{background:var(--ok-soft);color:var(--ok)}
+.newdot{position:absolute;top:-8px;right:10px;background:#E53935;color:#fff;font-size:11px;font-weight:700;border-radius:999px;padding:2px 8px}
+.unsynced{display:inline-block;background:#fff4e5;color:#8a5300;border:1px dashed #e0a040;border-radius:8px;font-size:12px;font-weight:600;padding:3px 8px;margin-bottom:4px}
+.unsynced.big{display:block;margin:12px 0 0;padding:8px 12px;font-size:13.5px}
+.obs-grid{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:16px;margin-top:14px;align-items:start}
+.obs-side{position:sticky;top:76px;max-height:calc(100vh - 90px);overflow-y:auto;background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:12px}
+.ocard2{background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:12px}
+.ocard2 h3{margin:0 0 10px;font-size:16px;color:var(--brandtxt)}
+.ocard2 textarea,.ocard2 input,.ocard2 select,.obs-side textarea,.obs-doc textarea,#viewObs textarea{width:100%;box-sizing:border-box;border:1.5px solid var(--line);border-radius:8px;padding:8px 10px;font:inherit;background:var(--card);color:var(--ink)}
+.inc{border:1.5px dashed var(--line);border-radius:12px;padding:10px 12px;margin-bottom:10px;background:var(--page)}
+.inc-h{display:flex;justify-content:space-between;margin-bottom:6px}
+.rate5{display:flex;gap:6px}.rate5 label{display:flex;align-items:center;gap:3px;border:1.5px solid var(--line);border-radius:8px;padding:5px 9px;background:var(--card);cursor:pointer}
+.obs-actions{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.btn.sun{background:var(--sun);color:var(--onsun)}
+.guide-h{display:flex;flex-direction:column;gap:3px;border-bottom:1px solid var(--line);padding-bottom:8px;margin-bottom:6px}
+.guide-h small{color:var(--muted)}.lvl{align-self:flex-start;background:var(--field);color:#fff;font-size:11.5px;border-radius:999px;padding:2px 9px}
+.guide-prog{font-size:12px;font-weight:700;color:var(--brandtxt);margin-bottom:6px}
+.legend{font-size:11.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+.tcoi,.tncoi{font-size:10.5px;font-weight:700;border-radius:6px;padding:1px 6px}.tcoi{background:#e3f0fb;color:#1e5a8c}.tncoi{background:#fff1d6;color:#8a5300}
+.kra{font-size:12px;font-weight:700;color:var(--brandtxt);background:var(--page);border-radius:8px;padding:6px 8px;margin:10px 0 6px}
+.ind{border:1.5px solid var(--line);border-radius:10px;padding:8px 10px;margin-bottom:8px}
+.ind.n{background:#fffaf0}.ind.done{border-color:var(--leaf)}
+.ind-h{display:flex;justify-content:space-between;align-items:center}
+.ind p{margin:4px 0 6px;font-size:13px;line-height:1.4}
+.rchips{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px}
+.rchips button{font:inherit;font-size:11.5px;border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:3px 8px;cursor:pointer;color:var(--ink)}
+.rchips button.on{background:var(--field);color:#fff;border-color:var(--field)}
+.obs-doc{margin-top:12px;overflow-x:auto;background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:12px}
+.pmcf{min-width:900px;font-size:12.5px}
+.pm-title{text-align:center;margin-bottom:8px}
+.pm-head{width:100%;border-collapse:collapse;margin-bottom:8px}.pm-head td{border:1px solid var(--line);padding:4px 6px;font-size:12px}
+.pm-grid{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,1.2fr);gap:8px}
+.pm-inc,.pm-ind,.pm-head{width:100%;border-collapse:collapse;min-width:0 !important}.pm-inc th,.pm-inc td,.pm-ind th,.pm-ind td{border:1px solid var(--line);padding:5px;vertical-align:top;font-size:12px}
+.pm-inc th,.pm-ind th{background:var(--page);font-size:11px}
+.tadd{margin-top:4px;background:var(--sun-soft);border-radius:6px;padding:3px 5px}
+.sigcell{display:flex;flex-direction:column;align-items:center;font-size:11px;text-align:center}
+.sigcell img{max-height:38px;max-width:140px}.sigcell small{color:var(--muted);margin-bottom:6px}
+.pm-signs{display:flex;justify-content:space-around;gap:20px;margin-top:16px;text-align:center}
+.pm-signs div{display:flex;flex-direction:column;align-items:center;min-width:220px}
+.pm-signs img{max-height:50px;max-width:200px}.pm-signs i{height:50px}
+.pm-signs b{border-top:1px solid #000;padding-top:3px;min-width:220px}.pm-signs small{font-size:10.5px;color:var(--muted)}
+.pm-comment{margin-top:8px}
+.nsec{margin-top:8px}.nsec p{margin:2px 0 0;white-space:pre-wrap}
+.sumt td,.sumt th{text-align:center;padding:6px}.sumt td:first-child,.sumt td:nth-child(2){text-align:left}.sumt .zero{color:var(--muted)}.sumt .tot td{background:var(--page)}
+@media (max-width:1000px){.obs-grid{grid-template-columns:1fr}.obs-side{position:static;max-height:none}}
+@media print{ .p-pmcf .pmcf{min-width:0;font-size:9px} .p-pmcf .pm-head td,.p-pmcf .pm-inc td,.p-pmcf .pm-inc th,.p-pmcf .pm-ind td,.p-pmcf .pm-ind th{border:1px solid #000;font-size:8.5px;padding:3px}
+  .p-pmcf .tcoi,.p-pmcf .tncoi{display:none} .p-pmcf .pm-signs b{min-width:200px} .p-notes .pm-head td{border:1px solid #000}
+  .p-pmcf .pm-grid{grid-template-columns:minmax(0,2.3fr) minmax(0,1.4fr)} .p-pmcf .pm-ind{table-layout:fixed} .p-pmcf .pm-ind th:last-child,.p-pmcf .pm-ind td:last-child{width:28%}
+  .p-pmcf td{word-wrap:break-word;overflow-wrap:anywhere} .p-pmcf .pm-signs img{max-height:40px} }
 .sync{display:flex;align-items:center;gap:6px;font-size:12px;white-space:nowrap;background:rgba(255,255,255,.12);border-radius:999px;padding:4px 10px}
 .sync i{width:9px;height:9px;border-radius:50%;background:#7CD992;flex:none}
 .sync.wait i{background:var(--sun)}.sync.off i{background:#ff8a80}.sync.sync i{background:#90caf9;animation:pulse 1s infinite}
@@ -486,6 +551,7 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
     <div class="who" id="menuWho"></div>
     <button id="menuAcc" onclick="openAccounts()" style="display:none">Teacher accounts</button>
     <button onclick="$('menu').classList.remove('open');openSig()">My e-signature</button>
+    <button onclick="installApp()">Install TALA app</button>
     <button id="menuSigBank" onclick="$('menu').classList.remove('open');openSigBank()" style="display:none">Signature bank</button>
     <button id="menuTour" onclick="$('menu').classList.remove('open');startTour(true)" style="display:none">Show the guide again</button>
     <button onclick="openPin(false)">Change my PIN</button>
@@ -498,6 +564,7 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
 <aside class="side" id="side" aria-label="TALA features">
   <div class="side-t">TALA features</div>
   <nav id="sideNav"></nav>
+  <button type="button" class="side-install" onclick="installApp()"><img src="icon-192.png" alt="">Install TALA app</button>
   <p class="side-note">TALA is growing. Each feature will be automated and come with its own printable report.</p>
 </aside>
 <main>
@@ -556,6 +623,8 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
   </section>
 
   <!-- SIGNATURE BANK -->
+  <section id="viewObs" style="display:none"></section>
+
   <section id="viewSig" style="display:none">
     <div class="trk-head">
       <div><h2>Signature Bank</h2><p>E-signature specimens of all personnel. Each person draws and saves their own in My e-signature.</p></div>
@@ -771,6 +840,19 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
   </div>
 </div>
 
+<!-- Install app -->
+<div class="overlay" id="installModal">
+  <div class="modal" role="dialog" aria-labelledby="instTitle">
+    <img src="icon-192.png" alt="" style="width:64px;height:64px;border-radius:14px">
+    <h3 id="instTitle" style="margin-top:8px">Add TALA to your phone</h3>
+    <div class="feat-sec"><b>Android (Chrome)</b><p>Tap the three dots at the top right, then <b>Add to Home screen</b> or <b>Install app</b>.</p></div>
+    <div class="feat-sec"><b>iPhone or iPad (Safari)</b><p>Tap the <b>Share</b> button at the bottom, then <b>Add to Home Screen</b>.</p></div>
+    <div class="feat-sec"><b>Computer (Chrome or Edge)</b><p>Click the install icon at the right end of the address bar.</p></div>
+    <p class="hint">TALA then opens like an app, with the star and pen icon, even without internet after the first visit.</p>
+    <div class="modal-actions"><button class="btn" onclick="closeModal('installModal')">Okay</button></div>
+  </div>
+</div>
+
 <!-- Feature under construction -->
 <div class="overlay" id="featModal">
   <div class="modal" role="dialog" aria-labelledby="featTitle">
@@ -874,8 +956,8 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
 
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
-const MIN_SERVER = '2.8'; // oldest Code.gs this page works with
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'2.8', date:'October 5, 2026' } };
+const MIN_SERVER = '2.9'; // oldest Code.gs this page works with
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'2.9', date:'October 5, 2026' } };
 function verLine(server){
   const old = server && (server.indexOf('older') > -1 || parseFloat(server) < parseFloat(MIN_SERVER));
   const s = server ? ' Server '+server+(old && USER && USER.role==='head' ? ', please deploy the new Code.gs.' : '.') : '';
@@ -1254,7 +1336,7 @@ function goMain(){
 /* ---------- TALA features (left side) ---------- */
 const FEATURES = [
   { id:'lpt', name:'LPT and PPT Tracking', ready:true, icon:'M4 4h16v4H4zm0 6h10v10H4zm12 0h4v10h-4z' },
-  { id:'obs', name:'Classroom Observations', icon:'M12 5c-5 0-9 4.5-10 7 1 2.5 5 7 10 7s9-4.5 10-7c-1-2.5-5-7-10-7zm0 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8z',
+  { id:'obs', name:'Classroom Observations', built:true, open:() => openObs(), icon:'M12 5c-5 0-9 4.5-10 7 1 2.5 5 7 10 7s9-4.5 10-7c-1-2.5-5-7-10-7zm0 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8z',
     do:'Record each classroom observation with the date and time, the observation tool, ratings, strengths, and areas to improve. Teachers read the feedback in their portal and acknowledge it.',
     auto:'Observation schedules, reminders, acknowledgment timestamps, and each teacher\u2019s rating summary across the school year are computed automatically.',
     report:'Observation record per teacher, and a quarterly summary of all observations with signatures.' },
@@ -1283,12 +1365,13 @@ function featOn(id){ const s = (DATA||PUB||{}).settings||{}; return !!(s.feature
 function drawSide(){
   const head = USER && USER.role==='head';
   $('sideNav').innerHTML = FEATURES.map(f => {
-    const tag = f.id==='lpt' ? '' : head ? (featOn(f.id) ? '<em class="vis">Shown</em>' : '<em class="hid">Hidden</em>') : (featOn(f.id) && f.built ? '' : '<em>Soon</em>');
+    const dot = f.id==='obs' && OBS && OBS.newCount ? `<i class="sdot">${OBS.newCount}</i>` : '';
+    const tag = f.id==='lpt' ? '' : head ? (featOn(f.id) ? '<em class="vis">Shown</em>' : '<em class="hid">Hidden</em>') : (featOn(f.id) && f.built ? dot : '<em>Soon</em>');
     return `<button type="button" class="side-i ${f.id===CUR_FEATURE?'on':''}" onclick="openFeature('${f.id}')">
     <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="${f.icon}"/></svg><span>${esc(f.name)}</span>${tag}</button>`; }).join('')
     + (head ? '<button type="button" class="linkbtn side-manage" onclick="openFV()">Show or hide features</button>' : '');
 }
-let CUR_FEATURE = 'lpt';
+var CUR_FEATURE = 'lpt';
 function openFV(){
   toggleSide(false);
   $('fvList').innerHTML = FEATURES.filter(f=>f.id!=='lpt').map(f => `<label class="check fvrow"><input type="checkbox" data-id="${f.id}" ${featOn(f.id)?'checked':''}><span><b>${esc(f.name)}</b><small>${f.built?'Ready to try':'Still being built'}</small></span></label>`).join('');
@@ -2117,6 +2200,7 @@ async function poll(){
     $('bellCount').hidden = !un; $('bellCount').textContent = un > 9 ? '9+' : un;
     if (un > LAST_UNREAD && LAST_UNREAD >= 0 && NOTICES[0]) { toast(NOTICES[0].text.slice(0,120)); loadData().catch(()=>{}); }
     LAST_UNREAD = un;
+    if (USER.role==='teacher' && typeof r.obsNew === 'number' && r.obsNew !== OBS.newCount){ OBS.newCount = r.obsNew; drawSide(); }
     if ($('bellPanel').classList.contains('open')) drawBell();
     chatBadge(); if (!$('chat').hidden) drawChat();
   }catch(e){ console.warn('TALA poll', e); }
@@ -2314,6 +2398,458 @@ window.addEventListener('offline', syncUI);
 setInterval(() => { if (navigator.onLine !== false) flushOut(); }, 30000);
 // Lets TALA open without internet after the first visit
 if ('serviceWorker' in navigator && location.protocol === 'https:') { navigator.serviceWorker.register('sw.js').catch(()=>{}); }
+
+/* =========================================================
+   CLASSROOM OBSERVATIONS (PMCF)
+   ========================================================= */
+const RATINGS = ['ROLE MODEL','CONSISTENTLY DEMONSTRATED','MOST OF THE TIME DEMONSTRATED','SOMETIMES DEMONSTRATED','RARELY DEMONSTRATED','NOT DEMONSTRATED'];
+const RATING_SHORT = {'ROLE MODEL':'Role model','CONSISTENTLY DEMONSTRATED':'Consistently','MOST OF THE TIME DEMONSTRATED':'Most of the time','SOMETIMES DEMONSTRATED':'Sometimes','RARELY DEMONSTRATED':'Rarely','NOT DEMONSTRATED':'Not demonstrated'};
+const SITUATIONS = ['Learning Experience','Learning Resources','Opportunities for Integration ','Formative Assessment ','Ways forward ','Extended learning opportunities'];
+// Guide for Teacher I to III (from the School Head). The Excel keeps the Division wording.
+const IND_P = [
+  { kra:'Content Knowledge and Pedagogy', code:'1.1.2', type:'COI', text:'Applies knowledge of content within and across curriculum teaching areas.' },
+  { kra:'Content Knowledge and Pedagogy', code:'1.4.2', type:'COI', text:'Designs, adapts, and implements teaching strategies that are responsive to learners with disabilities, giftedness, and talents.' },
+  { kra:'Content Knowledge and Pedagogy', code:'1.5.2', type:'COI', text:'Applies a range of successful strategies that maintain learning environments that motivate learners to work productively and assume responsibility for their own learning.' },
+  { kra:'Content Knowledge and Pedagogy', code:'1.7.2', type:'COI', text:'Uses effective verbal and non-verbal classroom communication strategies to support learner understanding, participation, engagement, and achievement.' },
+  { kra:'Learning Environment and Diversity of Learners', code:'1.6.2', type:'COI', text:'Uses Mother Language, Filipino, and English to facilitate teaching and learning.' },
+  { kra:'Learning Environment and Diversity of Learners', code:'2.1.2', type:'COI', text:'Manages classroom structure to engage learners, individually or in groups, in meaningful exploration, discovery, and hands-on activities within a range of physical learning environments.' },
+  { kra:'Learning Environment and Diversity of Learners', code:'2.2.2', type:'COI', text:'Uses a range of strategies to address every learner\u2019s need for developing critical and creative thinking as well as other higher-order thinking skills.' },
+  { kra:'Curriculum and Planning', code:'3.2.2', type:'COI', text:'Seeks professional learning opportunities to further enrich knowledge of the content area/s taught.' },
+  { kra:'Curriculum and Planning', code:'3.5.2', type:'COI', text:'Designs, selects, organizes, and uses diagnostic, formative, and summative assessment strategies consistent with curriculum requirements.' },
+  { kra:'Assessment and Reporting', code:'4.2.2', type:'NCOI', text:'Monitors and evaluates learner progress and achievement using learner attainment data.' },
+  { kra:'Assessment and Reporting', code:'5.3.2', type:'COI', text:'Uses strategies for providing timely, accurate, and constructive feedback to improve learner performance.' },
+  { kra:'Community Linkages and Professional Engagement', code:'5.5.2', type:'NCOI', text:'Adopts practices that uphold the dignity of teaching as a profession by exhibiting qualities such as caring attitude, respect, and integrity.' },
+  { kra:'Community Linkages and Professional Engagement', code:'6.2.2', type:'NCOI', text:'Demonstrates behaviors that promote the equitable use of the physical and virtual resources in the community.' },
+  { kra:'Personal Growth and Professional Development', code:'7.3.2', type:'NCOI', text:'Exhibits the needed skills, values, and attitudes for professional practice in the school setting.' },
+  { kra:'Personal Growth and Professional Development', code:'7.4.2', type:'NCOI', text:'Identifies personal and professional learning needs and opportunities to enrich knowledge and skills.' }
+];
+// Division file lists (rows 19 to 33 of the Encoding sheet). Used only when writing the Excel.
+const XL_P = ['1.1.2-Applied knowledge of content within and across curriculum teaching areas','1.4.2-Used a range of teaching strategies that enhance learner achievement in literacy and numeracy skills','1.5.2-Applied a range of teaching strategies to develop critical and creative thinking, as well as other higher-order thinking skills','1.6.2-Displayed proficient use of Mother Tongue, Filipino and English to facilitate teaching and learning','1.7.2-Used effective verbal and non-verbal classroom communication strategies to support learner understanding, participation, engagement and achievement','2.1.2-Established safe and secure learning environments to enhance learning through the consistent implementation of policies, guidelines and procedures','2.2.2-Maintained learning environments that promote fairness, respect and care to encourage learning','3.2.2-Established a learner- centered culture by using teaching strategies that respond to their linguistic, cultural, socioeconomic and religious backgrounds','3.5.2-Adapted and used culturally appropriate teaching strategies to address the needs of learners from indigenous groups','4.2.2-Set achievable and appropriate learning outcomes that are aligned with learning competencies.','5.3.2-Used strategies for providing timely, accurate and constructive feedback to improve learner performance','5.5.2-Utilize assessment data to inform the modification of teaching and learning practices and programs.','6.2.2-Build relationships with parents or guardians and the wider school community to facilitate their involvement in the educative process.','7.3.2-Participate in professional networks to share knowledge and to enhance practice.','7.4.2-Develop a personal professional improvement plan based on reflection of ones'];
+const XL_HP = ['1.1.3-Modelled effective applications of content knowledge within and across curriculum teaching areas','1.5.3-Developed and applied effective teaching strategies to promote critical and creative thinking, as well as other higher-order thinking skills','1.6.3-Modelled and supported colleagues in the proficient use of Mother Tongue, Filipino and English to improve teaching and learning, as well as to develop learners\u2019 pride of their language, heritage and culture','1.7.3-Displayed a wide range of effective verbal and non-verbal classroom communication strategies to support learner understanding, participation, engagement and achievement','2.1.3-Exhibited effective strategies that ensure safe and secure learning environments to enhance learning through the consistent implementation of policies, guidelines and procedures','2.2.3-Exhibited effective practices to foster learning environments that promote fairness, respect and care to encourage learning','2.3.3-Worked with colleagues to model and share effective techniques in the management of classroom structure to engage learners, individually or in groups, in meaningful exploration, discovery and hands-on activities within a range of physical learning environments','2.6.3-Exhibited effective and constructive behavior management skills by applying positive and non-violent discipline to ensure learning- focused environments','3.1.3-Worked with colleagues to share differentiated, developmentally appropriate opportunities to address learners\u2019 differences in gender, needs, strengths, interests and experiences','3.2.3-Exhibited a learner-centered culture that promotes success by using effective teaching strategies that respond to their linguistic, cultural, socioeconomic and religious backgrounds','3.3.3-Assisted colleagues to design, adapt and implement teaching strategies that are responsive to learners with disabilities, giftedness and talents','3.4.3-Evaluated with colleagues teaching strategies that are responsive to the special educational needs of learners in difficult circumstances*, including: geographic isolation; chronic illness; displacement due to armed conflict, urban resettlement or disasters; child abuse and child labor practices','3.5.3-Developed and applied teaching strategies to address effectively the needs of learners from indigenous groups','4.1.3-Developed and applied effective strategies in the planning and management of developmentally sequenced teaching and learning processes  to meet curriculum requirements and varied teaching\ncontexts','5.3.3-Used effective strategies for providing timely, accurate and constructive feedback to encourage learners to reflect on and improve their own learning'];
+function isHP(pos){ return /master teacher|head teacher/i.test(pos||''); }
+function indFor(pos){
+  if (!isHP(pos)) return { level:'Proficient (Teacher I to III)', list:IND_P, note: /teacher (iv|v|vi|vii)\b/i.test(pos||'') ? 'The list for this position is not yet added. TALA uses the Teacher I to III list for now.' : '' };
+  return { level:'Highly Proficient (Master Teacher)', list: XL_HP.map(s => ({ kra:'From the Division file', code:s.split('-')[0], type:'COI', text:s.slice(s.indexOf('-')+1) })), note:'Your own guide list for Master Teachers can be added later.' };
+}
+const NOTE_FIELDS = [
+  ['topic','Lesson or topic'],['objectives','Learning objectives of the lesson'],
+  ['intention','Intention: how the lesson objectives were introduced'],['experience','Learning experience: activities and learner engagement'],
+  ['resources','Learning resources used'],['integration','Opportunities for integration'],['assessment','Formative assessment'],
+  ['management','Classroom management and learning environment'],['strengths','Strengths observed'],['improve','Areas for improvement'],['forward','Ways forward and recommendations']
+];
+const OBS_STATUS = { Draft:'Draft, only you can see it', Sent:'Sent to teacher, waiting for her review and signature', TeacherSigned:'Signed by teacher, waiting for your signature', Completed:'Completed and signed by both' };
+const OBS_PILL = { Draft:'Draft', Sent:'For teacher\u2019s signature', TeacherSigned:'For School Head\u2019s signature', Completed:'Completed' };
+var OBS = { list:[], teachers:[], cur:null, term:'', week:'all', who:'', newCount:0 };
+
+function obsLocalSave(){ try{ localStorage.setItem('tala_obs_'+USER.email, JSON.stringify({ list:OBS.list, teachers:OBS.teachers })); }catch(e){} }
+function obsLocalLoad(){ try{ const x = JSON.parse(localStorage.getItem('tala_obs_'+USER.email)||'null'); if (x){ OBS.list = x.list||[]; OBS.teachers = x.teachers||[]; } }catch(e){} }
+function obsPending(id){ return myPending().some(x => (x.action==='obsSave' && x.payload.obs.id===id) || (x.action==='obsLock' && x.payload.id===id)); }
+function findTermWeek(date){
+  if (!date) return { term:'', week:'' };
+  for (const t of ['1','2','3']) for (let n = 1; n <= 12; n++){ const w = weekOf(t, String(n)); if (w && date >= w.start && date <= addDays(w.end,2)) return { term:t, week:String(n) }; }
+  return { term:'', week:'' };
+}
+function showObsView(){ ['viewTrk','viewAcc','viewBank','viewLog','viewWeeks','viewSig'].forEach(v => $(v).style.display='none'); $('viewObs').style.display=''; window.scrollTo(0,0); }
+const _showTracker = showTracker;
+showTracker = function(){ $('viewObs').style.display='none'; CUR_FEATURE='lpt'; drawSide(); _showTracker(); };
+const _showView2 = showView2;
+showView2 = function(id){ $('viewObs').style.display='none'; _showView2(id); };
+
+async function openObs(){
+  if (!USER){ toast('Please sign in to open Classroom Observations.'); openLogin(); return; }
+  showObsView(); if (!OBS.term) OBS.term = SEL.term || '1';
+  obsLocalLoad(); obsHome();
+  await obsRefresh();
+}
+async function obsRefresh(){
+  try{ const r = await api('obsList'); OBS.list = r.list; OBS.teachers = r.teachers; obsLocalSave(); }
+  catch(e){ /* offline: keep the saved copy */ }
+  // drafts saved on this device that are not yet on the server
+  myPending().filter(x=>x.action==='obsSave').forEach(x => { const i = OBS.list.findIndex(o=>o.id===x.payload.obs.id); const loc = Object.assign({ status:'Draft' }, x.payload.obs, { local:true });
+    if (i < 0) OBS.list.push(loc); else if (OBS.list[i].status==='Draft') OBS.list[i] = Object.assign(OBS.list[i], loc); });
+  OBS.newCount = USER.role==='teacher' ? OBS.list.filter(o=>!o.seen).length : 0; drawSide();
+  if (!OBS.cur) obsHome();
+}
+function obsHome(){
+  OBS.cur = null;
+  const head = USER.role==='head', admin = USER.role==='admin';
+  let list = OBS.list.filter(o => (!OBS.term || o.term===OBS.term || !o.term) && (OBS.week==='all' || o.week===OBS.week) && (!OBS.who || o.teacherEmail===OBS.who));
+  list.sort((a,b) => String(b.date||b.updated).localeCompare(String(a.date||a.updated)));
+  const weeks = Array.from({length:12},(_,i)=>`<option value="${i+1}" ${OBS.week===String(i+1)?'selected':''}>Week ${i+1}</option>`).join('');
+  const cnt = s => OBS.list.filter(o=>o.status===s).length;
+  $('viewObs').innerHTML = `
+    <div class="trk-head"><div><h2>Classroom Observations</h2><p>${head?'Write your observation notes, rate the indicators, and complete the PMCF. Drafts stay private until you lock and send them.':admin?'View completed observations and print the reports.':'Your classroom observations from the School Head. Review, add to the agreement, and sign.'}</p></div>
+      <div class="head-actions">${head?'<button class="btn" onclick="obsNew()">New observation</button>':''}${head||admin?'<button class="btn ghost" onclick="obsSummary()">Summary report</button>':''}</div></div>
+    ${head?`<div class="stats four" style="margin-top:12px"><div class="stat static"><b>${cnt('Draft')}</b><span>Drafts</span></div><div class="stat static"><b>${cnt('Sent')}</b><span>With teachers</span></div><div class="stat static"><b>${cnt('TeacherSigned')}</b><span>For your signature</span></div><div class="stat static"><b>${cnt('Completed')}</b><span>Completed</span></div></div>`:''}
+    <div class="bar" style="margin-top:12px"><div class="tabs">${['1','2','3'].map(t=>`<button class="${OBS.term===t?'on':''}" onclick="OBS.term='${t}';obsHome()">Term ${t}</button>`).join('')}</div>
+      <select onchange="OBS.week=this.value;obsHome()" aria-label="Week"><option value="all">All weeks</option>${weeks}</select>
+      ${head||admin?`<select onchange="OBS.who=this.value;obsHome()" aria-label="Teacher"><option value="">All teachers</option>${OBS.teachers.map(t=>`<option value="${esc(t.email)}" ${OBS.who===t.email?'selected':''}>${esc(t.name)}</option>`).join('')}</select>`:''}</div>
+    <div class="olist">${list.length ? list.map(o => `<button class="ocard ${USER.role==='teacher'&&!o.seen?'new':''}" onclick="obsOpen('${esc(o.id)}')">
+        ${obsPending(o.id)?'<span class="unsynced">Saved on this device, not yet synced</span>':''}
+        <div class="ocard-h"><b>${esc(o.teacherName||'No teacher chosen yet')}</b><span class="opill ${o.status}">${OBS_PILL[o.status]||o.status}</span></div>
+        <small>${o.date?esc(dShort(o.date)):'No date yet'}${o.term?' \u00B7 Term '+esc(o.term)+(o.week?', Week '+esc(o.week):''):''}</small>
+        <small>${esc([o.grade,o.subject].filter(Boolean).join(', ')||'Grade and subject not set')}</small>
+        ${USER.role==='teacher'&&!o.seen?'<span class="newdot">New</span>':''}</button>`).join('')
+      : `<div class="empty">${head?'No observations yet for this period. Tap New observation to start.':'No observations to show yet.'}</div>`}</div>`;
+}
+function obsNew(){
+  const id = 'O'+Date.now().toString(36)+Math.floor(Math.random()*1e4).toString(36);
+  OBS.cur = { id, status:'Draft', teacherEmail:'', date:todayPH(), grade:'', subject:'', data:{ notes:{}, ind:{}, inc:[{}] } };
+  obsEditor();
+}
+function obsOpen(id){
+  const o = OBS.list.find(x=>x.id===id); if (!o) return;
+  OBS.cur = JSON.parse(JSON.stringify(o)); OBS.cur.data = OBS.cur.data || { notes:{}, ind:{}, inc:[] };
+  if (USER.role==='head' && o.status==='Draft') obsEditor(); else obsViewer();
+  if (USER.role==='teacher' && !o.seen){ o.seen = true; obsLocalSave(); OBS.newCount = OBS.list.filter(x=>!x.seen).length; drawSide(); api('obsSeen',{ id }).catch(()=>{}); }
+}
+
+/* ----- Editor (School Head, drafts) ----- */
+function obsEditor(){
+  const o = OBS.cur, d = o.data, t = OBS.teachers.find(x=>x.email===o.teacherEmail), pos = t ? t.position : '';
+  const tw = findTermWeek(o.date);
+  $('viewObs').innerHTML = `
+    <div class="trk-head"><div><h2>Observation notes and PMCF</h2><p>${OBS_STATUS.Draft}.</p></div>
+      <div class="head-actions"><button class="btn ghost" onclick="obsBack()">Back to list</button></div></div>
+    ${obsPending(o.id)?'<div class="unsynced big">This draft is saved on this device and is not yet synced. It will sync when you are online.</div>':''}
+    <div class="obs-grid">
+      <div class="obs-main">
+        <section class="ocard2"><h3>1. Observation details</h3>
+          <div class="row2">
+            <div class="field"><label>Teacher (ratee)</label><select id="oTeacher" onchange="obsPickTeacher()"><option value="">Choose a teacher</option>${OBS.teachers.map(x=>`<option value="${esc(x.email)}" ${x.email===o.teacherEmail?'selected':''}>${esc(x.name)}${x.position?' ('+esc(x.position)+')':''}</option>`).join('')}</select>
+              <div class="hint" id="oPos">${t?(pos?'Position: '+esc(pos):'No position set yet. Set it in Teacher accounts.'):''}</div></div>
+            <div class="field"><label>Date of observation</label><input type="date" id="oDate" value="${esc(o.date||'')}" onchange="obsDateHint()"><div class="hint" id="oTW">${tw.term?'Term '+tw.term+', Week '+tw.week:'Outside the term weeks'}</div></div>
+          </div>
+          <div class="row2">
+            <div class="field"><label>Grade level</label><select id="oGrade" onchange="obsSubjects()"><option value="">Choose</option>${DATA.options.grades.map(g=>`<option ${g===o.grade?'selected':''}>${esc(g)}</option>`).join('')}</select></div>
+            <div class="field"><label>Subject</label><select id="oSubject"></select></div>
+          </div>
+          <div class="row2">
+            <div class="field"><label># of learners present</label><input type="number" min="0" id="oPresent" value="${esc(d.present||'')}"></div>
+            <div class="field"><label>Enrollment</label><input type="number" min="0" id="oEnrolled" value="${esc(d.enrolled||'')}"></div>
+          </div>
+          <div class="row2">
+            <div class="field"><label>Time started</label><input type="time" id="oStart" value="${esc((d.notes||{}).timeStart||'')}"></div>
+            <div class="field"><label>Time ended</label><input type="time" id="oEnd" value="${esc((d.notes||{}).timeEnd||'')}"></div>
+          </div>
+        </section>
+        <section class="ocard2"><h3>2. Observation notes</h3><p class="hint">Write what you see during the class. These notes are yours and will be shared with the teacher when you lock and send.</p>
+          ${NOTE_FIELDS.map(([k,l])=>`<div class="field"><label>${esc(l)}</label><textarea data-note="${k}" rows="${k==='topic'?1:3}">${esc((d.notes||{})[k]||'')}</textarea></div>`).join('')}
+        </section>
+        <section class="ocard2"><h3>3. PMCF: critical incidents</h3><p class="hint">Each row becomes one row in the Division PMCF (up to 16 rows).</p>
+          <div id="oInc"></div>
+          <button class="btn ghost small" onclick="obsAddInc()">Add a row</button>
+        </section>
+        <div class="obs-actions">
+          <button class="btn" onclick="obsSaveDraft()">Save draft</button>
+          <button class="btn sun" onclick="obsLockSend()">Lock and send to teacher</button>
+          <button class="btn ghost" onclick="obsCollect();printObsNotes(OBS.cur)">Print observation notes</button>
+          <button class="btn danger" onclick="obsDelete()">Delete</button>
+        </div>
+      </div>
+      <aside class="obs-side" id="oSide"></aside>
+    </div>`;
+  obsSubjects(); drawInc(); drawGuide();
+}
+function obsBack(){ obsHome(); obsRefresh(); }
+function obsPickTeacher(){ obsCollect(); const t = OBS.teachers.find(x=>x.email===OBS.cur.teacherEmail); $('oPos').textContent = t ? (t.position ? 'Position: '+t.position : 'No position set yet. Set it in Teacher accounts.') : '';
+  if (t && t.grade && !$('oGrade').value){ const g = DATA.options.grades.find(x=>x===t.grade); if (g){ $('oGrade').value = g; obsSubjects(); } } drawGuide(); }
+function obsDateHint(){ const tw = findTermWeek($('oDate').value); $('oTW').textContent = tw.term ? 'Term '+tw.term+', Week '+tw.week : 'Outside the term weeks'; }
+function obsSubjects(){ const g = $('oGrade').value, cur = OBS.cur.subject; $('oSubject').innerHTML = '<option value="">Choose</option>' + (DATA.options.subjectsByGrade[g]||[]).map(s=>`<option ${s===cur?'selected':''}>${esc(s)}</option>`).join(''); }
+function drawInc(){
+  const inc = OBS.cur.data.inc = OBS.cur.data.inc && OBS.cur.data.inc.length ? OBS.cur.data.inc : [{}];
+  $('oInc').innerHTML = inc.map((it,i) => `<div class="inc" data-i="${i}">
+    <div class="inc-h"><b>Row ${i+1}</b>${inc.length>1?`<button class="linkbtn" onclick="obsDelInc(${i})">Remove</button>`:''}</div>
+    <div class="row2"><div class="field"><label>Situation</label><select data-k="situation"><option value="">Choose</option>${SITUATIONS.map(s=>`<option value="${esc(s)}" ${s===it.situation?'selected':''}>${esc(s.trim())}</option>`).join('')}</select></div>
+      <div class="field"><label>Rating (5 is the highest)</label><div class="rate5">${[1,2,3,4,5].map(n=>`<label><input type="radio" name="r${i}" value="${n}" data-k="rating" ${String(it.rating)===String(n)?'checked':''}>${n}</label>`).join('')}</div></div></div>
+    <div class="field"><label>Task</label><textarea data-k="task" rows="2">${esc(it.task||'')}</textarea></div>
+    <div class="field"><label>Action</label><textarea data-k="action" rows="2">${esc(it.action||'')}</textarea></div>
+    <div class="field"><label>Result</label><textarea data-k="result" rows="2">${esc(it.result||'')}</textarea></div>
+    <div class="row2"><div class="field"><label>Agreement</label><textarea data-k="agreement" rows="2">${esc(it.agreement||'')}</textarea></div>
+      <div class="field"><label>Timeline</label><input type="date" data-k="timeline" value="${esc(it.timeline||'')}"></div></div></div>`).join('');
+}
+function obsAddInc(){ obsCollect(); if (OBS.cur.data.inc.length >= 16) return toast('The PMCF has room for 16 rows.'); OBS.cur.data.inc.push({}); drawInc(); }
+function obsDelInc(i){ obsCollect(); OBS.cur.data.inc.splice(i,1); drawInc(); }
+function drawGuide(){
+  const o = OBS.cur, t = OBS.teachers.find(x=>x.email===o.teacherEmail), g = indFor(t && t.position), ind = o.data.ind = o.data.ind || {};
+  let kra = '', h = `<div class="guide-h"><b>COI and NCOI guide</b><small>${esc(t?t.name+(t.position?', '+t.position:''):'Choose a teacher')}</small><span class="lvl">${esc(g.level)}</span>${g.note?`<p class="hint">${esc(g.note)}</p>`:''}
+    <div class="legend"><span class="tcoi">COI</span> observed in class <span class="tncoi">NCOI</span> seen in documents or other evidence</div></div>`;
+  g.list.forEach(x => {
+    if (x.kra !== kra){ kra = x.kra; h += `<div class="kra">${esc(kra)}</div>`; }
+    const v = ind[x.code] || {};
+    h += `<div class="ind ${x.type==='NCOI'?'n':''} ${v.r?'done':''}" data-code="${x.code}"><div class="ind-h"><b>${x.code}</b><span class="${x.type==='NCOI'?'tncoi':'tcoi'}">${x.type}</span></div>
+      <p>${esc(x.text)}</p>
+      <div class="rchips">${RATINGS.map(r=>`<button type="button" class="${v.r===r?'on':''}" onclick="obsRate('${x.code}','${r}',this)">${RATING_SHORT[r]}</button>`).join('')}</div>
+      <textarea rows="2" placeholder="Evidence or notes (optional)" oninput="obsEv('${x.code}',this.value)">${esc(v.ev||'')}</textarea></div>`;
+  });
+  const done = g.list.filter(x=>(ind[x.code]||{}).r).length;
+  $('oSide').innerHTML = `<div class="guide-prog">${done} of ${g.list.length} rated</div>` + h;
+}
+function obsRate(code, r, btn){ const ind = OBS.cur.data.ind; ind[code] = ind[code] || {}; ind[code].r = ind[code].r===r ? '' : r; drawGuideKeep(); }
+function obsEv(code, v){ const ind = OBS.cur.data.ind; ind[code] = ind[code] || {}; ind[code].ev = v; }
+function drawGuideKeep(){ const s = $('oSide').scrollTop; drawGuide(); $('oSide').scrollTop = s; }
+function obsCollect(){
+  const o = OBS.cur, d = o.data;
+  if (!$('oTeacher')) return o;
+  o.teacherEmail = $('oTeacher').value; const t = OBS.teachers.find(x=>x.email===o.teacherEmail); o.teacherName = t ? t.name : ''; o.position = t ? t.position : '';
+  o.date = $('oDate').value; const tw = findTermWeek(o.date); o.term = tw.term; o.week = tw.week;
+  o.grade = $('oGrade').value; o.subject = $('oSubject').value;
+  d.present = $('oPresent').value; d.enrolled = $('oEnrolled').value;
+  d.notes = d.notes || {}; d.notes.timeStart = $('oStart').value; d.notes.timeEnd = $('oEnd').value;
+  document.querySelectorAll('[data-note]').forEach(x => d.notes[x.dataset.note] = x.value);
+  d.inc = [...document.querySelectorAll('#oInc .inc')].map(row => { const it = {};
+    row.querySelectorAll('[data-k]').forEach(x => { if (x.type==='radio'){ if (x.checked) it.rating = x.value; } else it[x.dataset.k] = x.value; }); return it; });
+  return o;
+}
+async function obsSaveDraft(quiet){
+  const o = obsCollect(), payload = { obs:{ id:o.id, teacherEmail:o.teacherEmail, date:o.date, term:o.term, week:o.week, grade:o.grade, subject:o.subject, data:o.data } };
+  const i = OBS.list.findIndex(x=>x.id===o.id); const rec = Object.assign({}, o, { status:'Draft', updated:nowLocal().replace('T',' ') });
+  if (i < 0) OBS.list.push(rec); else OBS.list[i] = rec; obsLocalSave();
+  try{
+    if (navigator.onLine === false) throw new Error(MSG.NET);
+    const r = await api('obsSave', payload); OBS.list[OBS.list.findIndex(x=>x.id===o.id)] = r; obsLocalSave();
+    // a newer local copy replaces any older queued one
+    saveOut(outbox().filter(x => !(x.action==='obsSave' && x.payload.obs.id===o.id)));
+    if (!quiet) toast('Draft saved.'); return true;
+  }catch(e){
+    if (friendly(e.message) === MSG.NET || friendly(e.message) === MSG.BUSY){
+      saveOut(outbox().filter(x => !(x.action==='obsSave' && x.payload.obs.id===o.id)));
+      queueOut('obsSave', payload, 'Observation draft'); if (!quiet){ toast('Saved on this device. It will sync when you are online.'); obsEditor(); } return 'local';
+    }
+    handleErr(e); return false;
+  }
+}
+async function obsLockSend(){
+  const o = obsCollect();
+  if (!o.teacherEmail || !o.date) return toast('Choose the teacher and the date first.');
+  if (!confirm('Lock this observation and send it to '+o.teacherName+'? She will be able to read it, add to the agreement, and sign.')) return;
+  const saved = await obsSaveDraft(true); if (!saved) return;
+  if (saved === 'local'){ queueOut('obsLock', { id:o.id }, 'Send observation'); toast('Saved on this device. It will be sent when you are online.'); obsBack(); return; }
+  try{ await api('obsLock',{ id:o.id }); toast('Locked and sent. '+o.teacherName+' will be notified.'); obsBack(); }
+  catch(e){ handleErr(e); }
+}
+async function obsDelete(){
+  const o = OBS.cur; if (!confirm('Delete this observation? This cannot be undone.')) return;
+  saveOut(outbox().filter(x => !((x.action==='obsSave' && x.payload.obs.id===o.id) || (x.action==='obsLock' && x.payload.id===o.id))));
+  OBS.list = OBS.list.filter(x=>x.id!==o.id); obsLocalSave();
+  try{ await api('obsDelete',{ id:o.id }); }catch(e){}
+  toast('Observation deleted.'); obsBack();
+}
+
+/* ----- Viewer (teacher review and signing, School Head signing, printing) ----- */
+async function obsViewer(){
+  const o = OBS.cur, head = USER.role==='head', teacher = USER.role==='teacher';
+  let sigs = {}; try{ sigs = await api('obsSigs',{ id:o.id }); }catch(e){}
+  OBS.sigs = sigs;
+  const canTeacherSign = teacher && o.status==='Sent', canHeadSign = head && o.status==='TeacherSigned';
+  $('viewObs').innerHTML = `
+    <div class="trk-head"><div><h2>Classroom Observation</h2><p><span class="opill ${o.status}">${OBS_PILL[o.status]}</span> ${esc(OBS_STATUS[o.status]||'')}</p></div>
+      <div class="head-actions"><button class="btn ghost" onclick="obsBack()">Back to list</button>
+        ${head && o.status==='Sent'?'<button class="btn ghost" onclick="obsUnlock()">Unlock to edit</button>':''}
+        <button class="btn ghost" onclick="printObsNotes(OBS.cur)">Print observation notes</button>
+        ${o.status==='Completed'||head?`<button class="btn ghost" onclick="printPmcf()">${o.status==='Completed'?'Print PMCF (PDF)':'Preview PMCF'}</button>`:''}
+        ${o.status==='Completed'?'<button class="btn" onclick="downloadPmcf()">Download Excel for the Division</button>':''}</div></div>
+    ${canTeacherSign?`<div class="notice" style="margin-top:12px"><b>Please review this observation.</b> You may add to the agreement in each row, write a comment, then tap <b>Sign and return</b>. Your saved e-signature will be used.</div>`:''}
+    <div class="obs-doc">${pmcfBody(o, sigs, false, canTeacherSign)}</div>
+    ${canTeacherSign?`<div class="field" style="margin-top:12px"><label>Your comment (optional)</label><textarea id="oComment" rows="3"></textarea></div>
+      <div class="obs-actions"><button class="btn sun" onclick="obsTeacherSign()">Sign and return to the School Head</button></div>`:''}
+    ${canHeadSign?`<div class="obs-actions"><button class="btn sun" onclick="obsHeadSign()">Sign as rater</button></div>`:''}
+    <details class="byt" style="margin-top:14px"><summary>Observation notes</summary><div style="padding:0 14px 14px">${notesBody(o)}</div></details>`;
+}
+async function obsUnlock(){
+  if (!confirm('Unlock this observation? It goes back to your drafts and the teacher will no longer see it until you send it again.')) return;
+  try{ const r = await api('obsUnlock',{ id:OBS.cur.id }); OBS.list[OBS.list.findIndex(x=>x.id===r.id)] = r; obsLocalSave(); OBS.cur = JSON.parse(JSON.stringify(r)); obsEditor(); }
+  catch(e){ handleErr(e); }
+}
+async function obsTeacherSign(){
+  const additions = {}; document.querySelectorAll('[data-add]').forEach(x => { if (x.value.trim()) additions[x.dataset.add] = x.value.trim(); });
+  try{ const mine = await api('getMySig'); if (!mine || !mine.sig){ toast('Please save your e-signature first.'); openSig(); return; } }catch(e){ return handleErr(e); }
+  if (!confirm('Sign this observation with your saved e-signature?')) return;
+  loading(true,'Signing');
+  try{ const r = await api('obsTeacherSign',{ id:OBS.cur.id, additions, comment: $('oComment') ? $('oComment').value : '' });
+    OBS.list[OBS.list.findIndex(x=>x.id===r.id)] = r; obsLocalSave(); OBS.cur = JSON.parse(JSON.stringify(r)); toast('Signed and returned to the School Head.'); obsViewer(); }
+  catch(e){ handleErr(e); }
+  loading(false);
+}
+async function obsHeadSign(){
+  try{ const mine = await api('getMySig'); if (!mine || !mine.sig){ toast('Please save your e-signature first.'); openSig(); return; } }catch(e){ return handleErr(e); }
+  if (!confirm('Sign this observation as rater?')) return;
+  loading(true,'Signing');
+  try{ const r = await api('obsHeadSign',{ id:OBS.cur.id }); OBS.list[OBS.list.findIndex(x=>x.id===r.id)] = r; obsLocalSave(); OBS.cur = JSON.parse(JSON.stringify(r)); toast('Completed. You can now print the PMCF or download the Excel.'); obsViewer(); }
+  catch(e){ handleErr(e); }
+  loading(false);
+}
+function raterInfo(o){ const d = o.data||{}; return { name: d.raterName || (DATA.headName || 'School Head'), position: d.raterPosition || (USER.role==='head' ? (USER.position||'') : ''), email: d.raterEmail || '' }; }
+function taskAction(it){ return [it.task ? 'Task: '+it.task : '', it.action ? 'Action: '+it.action : ''].filter(Boolean).join('\n'); }
+function agreeText(it){ return [it.agreement||'', it.teacherAdd ? 'Teacher: '+it.teacherAdd : ''].filter(Boolean).join('\n'); }
+function pmcfBody(o, sigs, print, editable){
+  const d = o.data||{}, rt = raterInfo(o), inc = (d.inc||[]).filter(it => Object.values(it).some(v => String(v||'').trim()));
+  const g = indFor(o.position), xl = isHP(o.position) ? XL_HP : XL_P;
+  const sigCell = () => `<div class="sigcell">${sigs.Rater?`<img src="${sigs.Rater.sig}" alt="">`:''}<span>${esc(rt.name)}</span><small>Rater</small>${sigs.Ratee?`<img src="${sigs.Ratee.sig}" alt="">`:''}<span>${esc(o.teacherName||'')}</span><small>Ratee</small></div>`;
+  return `<div class="pmcf">
+    <div class="pm-title">Annex A<br><b>PERFORMANCE MONITORING AND COACHING FORM (PMCF)</b></div>
+    <table class="pm-head"><tr><td>RATEE:</td><td><b>${esc(o.teacherName||'')}</b></td><td>RATER:</td><td><b>${esc(rt.name)}</b></td><td>Ratee DepEd Email:</td><td>${esc(o.teacherEmail||'')}</td></tr>
+      <tr><td>POSITION:</td><td>${esc((o.position||'').toUpperCase())}</td><td>POSITION:</td><td>${esc((rt.position||'').toUpperCase())}</td><td>DATE OF MONITORING:</td><td>${o.date?esc(dShort(o.date)):''}</td></tr>
+      <tr><td>SCHOOL ID:</td><td>125592 &nbsp; GRADE LEVEL: ${esc(o.grade||'')}</td><td>SCHOOL NAME:</td><td>Baluyan ES</td><td>DISTRICT:</td><td>IMELDA</td></tr>
+      <tr><td># OF LEARNERS PRESENT:</td><td>${esc(d.present||'')} &nbsp; ENROLLMENT: ${esc(d.enrolled||'')}</td><td>RATING PERIOD:</td><td>${esc(syShort())} &nbsp; YEAR: TERM ${esc(o.term||'')}</td><td>Subject:</td><td>${esc(o.subject||'')}</td></tr></table>
+    <div class="pm-grid"><table class="pm-inc"><thead><tr><th colspan="3">Critical Incidence Description</th><th rowspan="2">RESULT</th><th rowspan="2">Rating<br>(5 is the Highest)</th><th rowspan="2">Agreement</th><th rowspan="2">Timeline<br>(MM/DD/YYYY)</th><th rowspan="2">Name and Signature of Rater and Ratee</th></tr><tr><th>SITUATION</th><th>TASK</th><th>ACTION</th></tr></thead>
+      <tbody>${inc.length ? inc.map((it,i) => `<tr><td>${esc((it.situation||'').trim())}</td><td>${esc(it.task||'')}</td><td>${esc(it.action||'')}</td><td>${esc(it.result||'')}</td><td style="text-align:center">${esc(it.rating||'')}</td>
+        <td>${esc(it.agreement||'')}${it.teacherAdd?`<div class="tadd"><b>Teacher:</b> ${esc(it.teacherAdd)}</div>`:''}${editable?`<textarea data-add="${(d.inc||[]).indexOf(it)}" rows="2" placeholder="Add to the agreement (optional)"></textarea>`:''}</td>
+        <td>${it.timeline?esc(dShort(it.timeline)):''}</td><td>${i===0?sigCell():`<span>${esc(rt.name)}</span><br><span>${esc(o.teacherName||'')}</span>`}</td></tr>`).join('') : '<tr><td colspan="8" style="text-align:center">No critical incidents recorded.</td></tr>'}</tbody></table>
+    <table class="pm-ind"><thead><tr><th>WITH PPST INDICATORS FOR<br>${isHP(o.position)?'HIGHLY PROFICIENT TEACHERS':'PROFICIENT TEACHERS'}</th><th>RATING</th></tr></thead>
+      <tbody>${xl.map(s => { const code = s.split('-')[0], r = ((d.ind||{})[code]||{}).r || ''; const gi = g.list.find(x=>x.code===code);
+        return `<tr><td><b>${code}</b> ${esc(print ? s.slice(s.indexOf('-')+1) : (gi ? gi.text : s.slice(s.indexOf('-')+1)))}${gi?` <span class="${gi.type==='NCOI'?'tncoi':'tcoi'}">${gi.type}</span>`:''}</td><td>${esc(r)}</td></tr>`; }).join('')}</tbody></table></div>
+    ${d.teacherComment?`<p class="pm-comment"><b>Teacher's comment:</b> ${esc(d.teacherComment)}</p>`:''}
+    <div class="pm-signs"><div>${sigs.Rater?`<img src="${sigs.Rater.sig}" alt="">`:'<i></i>'}<b>${esc(rt.name)}</b><span>Rater${rt.position?', '+esc(rt.position):''}</span>${sigs.Rater?`<small>Signed ${esc(dTime(sigs.Rater.on))}</small>`:''}</div>
+      <div>${sigs.Ratee?`<img src="${sigs.Ratee.sig}" alt="">`:'<i></i>'}<b>${esc(o.teacherName||'')}</b><span>Ratee${o.position?', '+esc(o.position):''}</span>${sigs.Ratee?`<small>Signed ${esc(dTime(sigs.Ratee.on))}</small>`:''}</div></div>
+  </div>`;
+}
+function syShort(){ const m = String((DATA&&DATA.settings.sy)||'').match(/(\d{4}).*?(\d{4})/); return m ? 'SY '+m[1]+'-'+m[2] : ''; }
+function notesBody(o){
+  const n = (o.data||{}).notes || {};
+  return `<table class="pm-head"><tr><td>Teacher:</td><td><b>${esc(o.teacherName||'')}</b>${o.position?', '+esc(o.position):''}</td><td>Date:</td><td>${o.date?esc(dShort(o.date)):''}${n.timeStart?' ('+esc(fmtTime(n.timeStart))+(n.timeEnd?' to '+esc(fmtTime(n.timeEnd)):'')+')':''}</td></tr>
+    <tr><td>Grade and subject:</td><td>${esc([o.grade,o.subject].filter(Boolean).join(', '))}</td><td>Term and week:</td><td>${o.term?'Term '+esc(o.term)+(o.week?', Week '+esc(o.week):''):''}</td></tr></table>
+    ${NOTE_FIELDS.map(([k,l]) => n[k] ? `<div class="nsec"><b>${esc(l)}</b><p>${esc(n[k])}</p></div>` : '').join('') || '<p class="hint">No notes written.</p>'}`;
+}
+function printHeader(){ return `<div class="p-head"><img src="${LOGO}" alt=""><div>Republic of the Philippines<br><b>Department of Education</b><br>Region IX, Zamboanga Peninsula<br>Schools Division of Zamboanga Sibugay<br>Imelda District<br><b>BALUYAN ELEMENTARY SCHOOL</b><br>School ID 125592</div></div>`; }
+async function printPmcf(){
+  const o = OBS.cur; let sigs = OBS.sigs || {}; try{ sigs = await api('obsSigs',{ id:o.id }); }catch(e){}
+  $('printArea').innerHTML = `${printHeader()}<div class="p-pmcf">${pmcfBody(o, sigs, true, false)}</div><div class="p-foot">Generated from TALA on ${esc(dTime(nowLocal().replace('T',' ')))}.${o.status!=='Completed'?' PREVIEW ONLY, not yet signed by both.':''}</div>`;
+  setTimeout(() => window.print(), 200);
+}
+function printObsNotes(o){
+  const rt = raterInfo(o);
+  $('printArea').innerHTML = `${printHeader()}<div class="p-title">CLASSROOM OBSERVATION NOTES</div><div class="p-notes">${notesBody(o)}</div>
+    <div class="p-sign"><div>Observed by:<b>${esc(rt.name)}</b>School Head</div><div>Received by:<b>${esc(o.teacherName||'')}</b>${esc(o.position||'Teacher')}</div></div>
+    <div class="p-foot">Generated from TALA on ${esc(dTime(nowLocal().replace('T',' ')))}.</div>`;
+  setTimeout(() => window.print(), 150);
+}
+
+/* ----- Summary report (School Head and Administrative Officer) ----- */
+function obsSummary(){
+  const term = OBS.term || '1', done = OBS.list.filter(o => o.status!=='Draft' && o.term===term);
+  const rows = OBS.teachers.map(t => { const mine = done.filter(o=>o.teacherEmail===t.email);
+    return { t, total:mine.length, completed:mine.filter(o=>o.status==='Completed').length, weeks:Array.from({length:12},(_,i)=>mine.filter(o=>o.week===String(i+1)).length),
+      terms:['1','2','3'].map(x => OBS.list.filter(o=>o.status!=='Draft' && o.term===x && o.teacherEmail===t.email).length) }; });
+  const wkTot = Array.from({length:12},(_,i)=>done.filter(o=>o.week===String(i+1)).length);
+  const table = `<div class="table-wrap"><table class="sumt"><thead><tr><th>Teacher</th><th>Position</th>${Array.from({length:12},(_,i)=>`<th>W${i+1}</th>`).join('')}<th>Term ${term}</th><th>Completed</th><th>T1</th><th>T2</th><th>T3</th></tr></thead>
+    <tbody>${rows.map(r=>`<tr><td>${esc(r.t.name)}</td><td>${esc(r.t.position||'')}</td>${r.weeks.map(n=>`<td class="${n?'':'zero'}">${n||''}</td>`).join('')}<td><b>${r.total}</b></td><td>${r.completed}</td>${r.terms.map(n=>`<td>${n}</td>`).join('')}</tr>`).join('')}
+    <tr class="tot"><td colspan="2"><b>Total</b></td>${wkTot.map(n=>`<td><b>${n||''}</b></td>`).join('')}<td><b>${done.length}</b></td><td><b>${done.filter(o=>o.status==='Completed').length}</b></td><td colspan="3"></td></tr></tbody></table></div>`;
+  $('viewObs').innerHTML = `<div class="trk-head"><div><h2>Observation Summary, Term ${term}</h2><p>Observations sent to teachers, counted per week and per term. Drafts are not counted.</p></div>
+    <div class="head-actions"><button class="btn ghost" onclick="obsBack()">Back to list</button><button class="btn" onclick="printObsSummary()">Print summary</button></div></div>
+    <div class="bar" style="margin-top:12px"><div class="tabs">${['1','2','3'].map(t=>`<button class="${term===t?'on':''}" onclick="OBS.term='${t}';obsSummary()">Term ${t}</button>`).join('')}</div></div>${table}`;
+  OBS.sumTable = table;
+}
+function printObsSummary(){
+  const term = OBS.term || '1', list = OBS.list.filter(o => o.status!=='Draft' && o.term===term).sort((a,b)=>String(a.date).localeCompare(String(b.date)));
+  $('printArea').innerHTML = `${printHeader()}<div class="p-title">SUMMARY OF CLASSROOM OBSERVATIONS</div><p class="p-sub">Term ${esc(term)}. ${esc((DATA&&DATA.settings.sy)||'')}</p>
+    ${OBS.sumTable.replace('class="table-wrap"','').replace('class="sumt"','class="p-table"')}
+    <div class="p-sumtitle" style="margin-top:12px">LIST OF OBSERVATIONS</div>
+    <table class="p-table"><thead><tr><th>No.</th><th>Date</th><th>Week</th><th>Teacher</th><th>Grade and Subject</th><th>Status</th></tr></thead><tbody>${list.map((o,i)=>`<tr><td style="text-align:center">${i+1}</td><td>${esc(dShort(o.date))}</td><td>${esc(o.week||'')}</td><td>${esc(o.teacherName)}</td><td>${esc([o.grade,o.subject].filter(Boolean).join(', '))}</td><td>${esc(OBS_PILL[o.status])}</td></tr>`).join('') || '<tr><td colspan="6" style="text-align:center">None</td></tr>'}</tbody></table>
+    <div class="p-sign">${USER.role==='admin'?`<div>Prepared by:<b>${esc(USER.name)}</b>Administrative Officer</div>`:''}<div>Noted by:<b>${esc(DATA.headName||'')}</b>School Head</div></div>
+    <div class="p-foot">Generated from TALA on ${esc(dTime(nowLocal().replace('T',' ')))}.</div>`;
+  setTimeout(() => window.print(), 150);
+}
+
+/* ----- Division Excel: fills the original template, keeps everything else ----- */
+const XLNS = 'http://schemas.openxmlformats.org/spreadsheetml/2006/main';
+function xlSerial(d){ const p = d.split('-').map(Number); return Math.round((Date.UTC(p[0],p[1]-1,p[2]) - Date.UTC(1899,11,30))/86400000); }
+function xlCells(doc){ const m = {}; const cs = doc.getElementsByTagName('c'); for (let i = 0; i < cs.length; i++) m[cs[i].getAttribute('r')] = cs[i]; return m; }
+function xlClear(c){ while (c.firstChild) c.removeChild(c.firstChild); c.removeAttribute('t'); c.removeAttribute('cm'); }
+function xlStr(doc, cells, ref, val){
+  const c = cells[ref]; if (!c) return; xlClear(c);
+  if (val === '' || val == null) return;
+  c.setAttribute('t','inlineStr'); const is = doc.createElementNS(XLNS,'is'), t = doc.createElementNS(XLNS,'t');
+  t.setAttribute('xml:space','preserve'); t.textContent = String(val); is.appendChild(t); c.appendChild(is);
+}
+function xlNum(doc, cells, ref, val){ const c = cells[ref]; if (!c) return; xlClear(c); if (val === '' || val == null || isNaN(Number(val))) return; const v = doc.createElementNS(XLNS,'v'); v.textContent = String(Number(val)); c.appendChild(v); }
+// Saved results of formulas, so the portal reads the right values even before Excel recalculates
+function xlCached(doc, cells, ref, val){
+  const c = cells[ref]; if (!c) return; let v = c.getElementsByTagName('v')[0];
+  if (!v){ v = doc.createElementNS(XLNS,'v'); c.appendChild(v); }
+  if (typeof val === 'number'){ c.removeAttribute('t'); v.textContent = String(val); }
+  else if (val === '#N/A'){ c.setAttribute('t','e'); v.textContent = '#N/A'; }
+  else { c.setAttribute('t','str'); v.textContent = String(val); }
+}
+async function downloadPmcf(){
+  const o = OBS.cur; loading(true,'Preparing the Excel file');
+  try{
+    await loadScript(LIBS.zip);
+    let sigs = OBS.sigs || {}; try{ sigs = await api('obsSigs',{ id:o.id }); }catch(e){}
+    const res = await fetch('pmcf-template.xlsm', { cache:'no-cache' }); if (!res.ok) throw new Error('The PMCF template file (pmcf-template.xlsm) was not found next to index.html.');
+    const zip = await JSZip.loadAsync(await res.arrayBuffer()), P = new DOMParser(), S = new XMLSerializer();
+    const read = async f => P.parseFromString(await zip.file(f).async('string'), 'application/xml');
+    const enc = await read('xl/worksheets/sheet1.xml'), db = await read('xl/worksheets/sheet4.xml'), pp = await read('xl/worksheets/sheet3.xml');
+    const E = xlCells(enc), D = xlCells(db), Q = xlCells(pp), d = o.data||{}, rt = raterInfo(o);
+    const pos = (o.position||'').toUpperCase(), rpos = (rt.position||'').toUpperCase(), sy = syShort(), sem = 'TERM '+(o.term||''), date = o.date ? xlSerial(o.date) : '';
+    const gradeNum = (o.grade||'').match(/\d/) ? Number(o.grade.match(/\d/)[0]) : (o.grade==='Kindergarten' ? 'K' : o.grade);
+    const prof = isHP(o.position) ? 'HP' : 'P', list = prof==='HP' ? XL_HP : XL_P;
+    const inc = (d.inc||[]).filter(it => Object.values(it).some(v => String(v||'').trim())).slice(0,16);
+    const names = rt.name+' (Rater)\n'+(o.teacherName||'')+' (Ratee)';
+    // Encoding sheet: only the cells you normally type in
+    xlStr(enc,E,'C12',o.teacherName||''); xlStr(enc,E,'H12',rt.name); xlStr(enc,E,'L12',o.teacherEmail||'');
+    xlStr(enc,E,'C13',pos); xlStr(enc,E,'H13',rpos); xlNum(enc,E,'M13',date);
+    xlNum(enc,E,'C14',125592); typeof gradeNum==='number' ? xlNum(enc,E,'E14',gradeNum) : xlStr(enc,E,'E14',gradeNum||'');
+    xlNum(enc,E,'C15',d.present); xlNum(enc,E,'E15',d.enrolled); xlStr(enc,E,'H15',sy); xlStr(enc,E,'J15',sem); xlStr(enc,E,'M15',o.subject||'');
+    xlCached(enc,E,'H14','Baluyan ES'); xlCached(enc,E,'M14','IMELDA'); xlCached(enc,E,'O17',prof); xlCached(enc,E,'P18', prof==='HP' ? 'HIGHLY PROFICIENT TEACHERS' : 'PROFICIENT TEACHERS');
+    for (let i = 0; i < 16; i++){
+      const r = 19+i, it = inc[i] || {};
+      xlStr(enc,E,'A'+r,it.situation||''); xlStr(enc,E,'C'+r,taskAction(it)); xlStr(enc,E,'H'+r,it.result||''); // Task and Action share one merged cell in the template
+      xlNum(enc,E,'J'+r,it.rating||''); xlStr(enc,E,'K'+r,agreeText(it)); it.timeline ? xlNum(enc,E,'L'+r,xlSerial(it.timeline)) : xlNum(enc,E,'L'+r,'');
+      xlStr(enc,E,'M'+r, inc[i] ? names : '');
+    }
+    for (let i = 0; i < 15; i++){ const r = 19+i, s = list[i]||'', code = s.split('-')[0]; xlCached(enc,E,'P'+r,s); xlStr(enc,E,'Q'+r, ((d.ind||{})[code]||{}).r || ''); }
+    // database sheet (rows 2 to 100 follow Encoding rows 19 to 117)
+    const subj = o.subject||'', ratee = o.teacherName||'';
+    for (let k = 2; k <= 100; k++){
+      const it = inc[k-2], z = v => (v === '' || v == null) ? 0 : v;
+      const vals = { A:125592, B:'Baluyan ES', C:'IMELDA', D:z(ratee), E:z(pos), F:z(rt.name), G:z(rpos), H:z(gradeNum), I:z(d.enrolled?Number(d.enrolled):''), J:z(d.present?Number(d.present):''), K:z(sy), L:z(sem), M: date===''?'':date, N:z(subj),
+        O: it ? z(it.situation) : 0, P: it ? z(taskAction(it)) : 0, Q: it ? z(it.result) : 0, R: it && it.rating ? Number(it.rating) : 0, S: it ? z(agreeText(it)) : 0, T: it && it.timeline ? xlSerial(it.timeline) : 0, U: it ? names : 0, X: z(o.teacherEmail) };
+      Object.keys(vals).forEach(col => xlCached(db,D,col+k, typeof vals[col]==='number' ? vals[col] : String(vals[col])));
+      const s = x => (x === 0 ? '0' : String(x));
+      xlCached(db,D,'V'+k, '125592'+s(vals.D)+s(vals.K)+s(vals.L)+s(vals.N)+s(vals.O)+s(vals.H));
+      xlCached(db,D,'W'+k, s(vals.H)+s(vals.N)+s(vals.L)+s(vals.K)+(date===''?'':String(date)));
+    }
+    // dbppst sheet (rows 2 to 40 follow Encoding P19 to P57)
+    for (let k = 2; k <= 40; k++){
+      const s = list[k-2] || '', code = s ? s.split('-')[0] : '', r = code ? (((d.ind||{})[code]||{}).r || '') : '';
+      const idx = r ? ['NOT DEMONSTRATED','RARELY DEMONSTRATED','SOMETIMES DEMONSTRATED','MOST OF THE TIME DEMONSTRATED','CONSISTENTLY DEMONSTRATED','ROLE MODEL'].indexOf(r) : -1;
+      xlCached(pp,Q,'A'+k, (ratee||'0')+'125592'+(subj||'0')+(date===''?'0':String(date))+code); xlCached(pp,Q,'B'+k, code);
+      xlCached(pp,Q,'C'+k, r || 0); xlCached(pp,Q,'D'+k, idx >= 0 ? idx : '#N/A'); xlCached(pp,Q,'E'+k,'IMELDA'); xlCached(pp,Q,'F'+k,125592);
+      xlCached(pp,Q,'G'+k, pos||0); xlCached(pp,Q,'H'+k, prof); xlCached(pp,Q,'I'+k, ratee||0); xlCached(pp,Q,'J'+k, o.teacherEmail||0); xlCached(pp,Q,'K'+k, date===''?0:date);
+    }
+    zip.file('xl/worksheets/sheet1.xml', S.serializeToString(enc)); zip.file('xl/worksheets/sheet4.xml', S.serializeToString(db)); zip.file('xl/worksheets/sheet3.xml', S.serializeToString(pp));
+    // Excel recalculates everything when the file is opened
+    let wb = await zip.file('xl/workbook.xml').async('string'); wb = wb.replace(/<calcPr ([^>]*?)\/>/, (m, a) => /fullCalcOnLoad/.test(a) ? m : `<calcPr ${a} fullCalcOnLoad="1"/>`); zip.file('xl/workbook.xml', wb);
+    // Signatures as pictures over the first row's Name and Signature cell
+    const pics = [sigs.Rater, sigs.Ratee].filter(Boolean);
+    if (pics.length){
+      let rels = await zip.file('xl/drawings/_rels/drawing1.xml.rels').async('string'), dr = await zip.file('xl/drawings/drawing1.xml').async('string');
+      pics.forEach((sg, i) => {
+        const n = 90+i, rid = 'rIdSig'+i; zip.file('xl/media/image'+n+'.png', sg.sig.split(',')[1], { base64:true });
+        rels = rels.replace('</Relationships>', `<Relationship Id="${rid}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="../media/image${n}.png"/></Relationships>`);
+        const rowFrom = 18, offTop = i ? 1300000 : 150000;
+        dr = dr.replace('</xdr:wsDr>', `<xdr:twoCellAnchor editAs="oneCell"><xdr:from><xdr:col>12</xdr:col><xdr:colOff>60000</xdr:colOff><xdr:row>${rowFrom}</xdr:row><xdr:rowOff>${offTop}</xdr:rowOff></xdr:from><xdr:to><xdr:col>13</xdr:col><xdr:colOff>400000</xdr:colOff><xdr:row>${rowFrom}</xdr:row><xdr:rowOff>${offTop+700000}</xdr:rowOff></xdr:to><xdr:pic><xdr:nvPicPr><xdr:cNvPr id="${200+i}" name="Signature ${i+1}"/><xdr:cNvPicPr><a:picLocks noChangeAspect="1"/></xdr:cNvPicPr></xdr:nvPicPr><xdr:blipFill><a:blip xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" r:embed="${rid}"/><a:stretch><a:fillRect/></a:stretch></xdr:blipFill><xdr:spPr><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></xdr:spPr></xdr:pic><xdr:clientData/></xdr:twoCellAnchor></xdr:wsDr>`);
+      });
+      zip.file('xl/drawings/_rels/drawing1.xml.rels', rels); zip.file('xl/drawings/drawing1.xml', dr);
+    }
+    const blob = await zip.generateAsync({ type:'blob', mimeType:'application/vnd.ms-excel.sheet.macroEnabled.12', compression:'DEFLATE' });
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+    a.download = 'PMCF_ClassroomObservation_'+(o.teacherName||'Teacher').replace(/[^A-Za-z0-9]+/g,'_')+'_'+(o.date||'')+'.xlsm';
+    document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 2000);
+    toast('Excel file downloaded. Upload it to the Division portal as usual.');
+  }catch(e){ handleErr(e); }
+  loading(false);
+}
+
+/* ----- Install TALA on phones ----- */
+let INSTALL_EVT = null;
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); INSTALL_EVT = e; });
+async function installApp(){
+  $('menu').classList.remove('open'); toggleSide(false);
+  if (INSTALL_EVT){ INSTALL_EVT.prompt(); await INSTALL_EVT.userChoice.catch(()=>{}); INSTALL_EVT = null; return; }
+  openModal('installModal');
+}
 
 /* ---------- Clear data for launch ---------- */
 function openClear(){ $('clrType').value=''; $('clrErr').textContent=''; openModal('clrModal'); }
