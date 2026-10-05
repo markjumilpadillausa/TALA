@@ -245,6 +245,64 @@ table.subs tr.nosub td:not(.wk){color:var(--muted);font-style:italic}
 .hist summary{cursor:pointer;color:var(--muted);font-weight:600}
 .hist ol{margin:4px 0 0;padding-left:18px}
 .pinv{font-weight:700;letter-spacing:1px}
+.gdrawer{position:fixed;top:0;right:0;bottom:0;width:min(400px,92vw);background:var(--page);z-index:78;box-shadow:-8px 0 26px rgba(0,0,0,.2);transform:translateX(105%);transition:transform .22s ease;display:flex;flex-direction:column}
+.gdrawer.open{transform:none}.gd-head{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:var(--field);color:#fff}.gd-head .linkbtn{color:#fff}
+.gd-body{overflow-y:auto;padding:12px;flex:1}
+.guidebg{display:none}.guidebg.open{display:block;position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:77}
+.gtab{position:fixed;right:0;top:45%;z-index:60;writing-mode:vertical-rl;transform:rotate(180deg);background:var(--field);color:#fff;border:0;border-radius:0 10px 10px 0;padding:14px 8px;font:inherit;font-size:13px;font-weight:700;cursor:pointer;box-shadow:-3px 0 12px rgba(0,0,0,.2)}
+.choice{display:flex;flex-direction:column;align-items:flex-start;gap:4px;width:100%;text-align:left;background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:14px;margin:8px 0;font:inherit;color:var(--ink);cursor:pointer}
+.choice:hover{border-color:var(--leaf)}.choice b{font-size:16px}.choice small{color:var(--muted)}
+.ktag{display:inline-block;font-size:11px;font-weight:700;border-radius:6px;padding:2px 8px;letter-spacing:.3px}
+.ktag.epmcf{background:#e3f0fb;color:#1e5a8c}.ktag.mwa{background:#f3e8fd;color:#6a2c99}
+.ocard .ktag{align-self:flex-start}
+.ktabs{display:flex;gap:6px;margin-top:14px;flex-wrap:wrap}
+.ktabs button{font:inherit;font-weight:700;border:1.5px solid var(--line);background:var(--card);border-radius:12px;padding:10px 14px;cursor:pointer;color:var(--ink)}
+.ktabs button.on{background:var(--field);color:#fff;border-color:var(--field)}.ktabs em{font-style:normal;font-size:12px;opacity:.75;margin-left:4px}
+.otile.warn{border-color:#f5b5ad;background:#fdecea}.otile.good{border-color:var(--leaf)}
+.ostat.static{cursor:default}.ostat.s-warn b{color:var(--late)}
+.row4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}@media (max-width:760px){.row4{grid-template-columns:repeat(2,1fr)}}
+.lfiles{margin-top:8px;background:var(--page);border-radius:10px;padding:8px 12px;font-size:13.5px;display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center}
+.lfiles a{font-weight:600}.lfiles.none{color:var(--muted)}
+.lowinf{min-height:200px;font-size:15px;line-height:1.55}
+.nsec2{border:1.5px solid var(--line);border-radius:10px;margin:6px 0;background:var(--card)}
+.nsec2 > summary{cursor:pointer;padding:9px 12px;font-weight:600;font-size:14px;list-style:none;display:flex;gap:8px;align-items:center}
+.nsec2 > summary::-webkit-details-marker{display:none}.nsec2 .tick{color:var(--muted)}.nsec2.has .tick{color:var(--ok)}
+.nsec2 textarea{margin:0 10px 10px;width:calc(100% - 20px) !important}
+.obs-actions.sticky{position:sticky;bottom:0;background:var(--page);padding:10px 0;z-index:5;border-top:1px solid var(--line)}
+.fchip{display:inline-flex;align-items:center;gap:5px;border:1.5px solid var(--line);border-radius:999px;padding:6px 11px;background:var(--card);cursor:pointer;font-size:13px}
+.fchip input{display:none}.fchip.on{background:var(--field);color:#fff;border-color:var(--field)}
+.cmts{display:flex;flex-direction:column;gap:6px;margin-bottom:8px}
+.cmt{background:var(--sun-soft);border-radius:10px;padding:8px 10px;max-width:85%}.cmt.h{background:#e3f0fb;align-self:flex-end}
+.cmt small{color:var(--muted);margin-left:6px;font-size:11.5px}.cmt p{margin:3px 0 0;white-space:pre-wrap}
+.calbar{display:flex;justify-content:space-between;align-items:center;margin:14px 0 8px}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.cdow{text-align:center;font-size:12px;font-weight:700;color:var(--muted)}
+.cday{min-height:68px;border:1.5px solid var(--line);border-radius:10px;background:var(--card);padding:6px;text-align:left;font:inherit;color:var(--ink);display:flex;flex-direction:column;gap:4px;cursor:pointer}
+.cday.empty{border:0;background:none;cursor:default}.cday.off{background:var(--page);color:var(--muted);cursor:default}
+.cday.ok{border-color:var(--ok);background:var(--ok-soft)}.cday.part{border-color:var(--sun);background:var(--sun-soft)}.cday.miss{border-color:#f5b5ad;background:#fdecea}
+.cday.out{background:#ececec;border-style:dashed}.cday.out small{font-size:11px;color:var(--muted)}.cday.today{box-shadow:inset 0 0 0 2px var(--brandtxt)}
+.cdots{display:flex;gap:3px;align-items:center}.cdots i{width:9px;height:9px;border-radius:50%;border:1.5px solid var(--muted)}.cdots i.on{background:var(--ok);border-color:var(--ok)}.cdots em{font-style:normal;font-size:11px}
+.clegend{display:flex;flex-wrap:wrap;gap:12px;margin-top:10px;font-size:12.5px;color:var(--muted)}
+.clegend i{display:inline-block;width:12px;height:12px;border-radius:4px;margin-right:4px;vertical-align:-1px;border:1px solid var(--line)}
+.clegend i.ok{background:var(--ok-soft)}.clegend i.part{background:var(--sun-soft)}.clegend i.miss{background:#fdecea}.clegend i.out{background:#ececec}.clegend i.off{background:var(--page)}
+.calo{margin:4px 0;font-size:13.5px}
+.hhero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;margin-top:6px}
+.hhero-t{background:linear-gradient(135deg,var(--field),#2f7a4a);color:#fff;border-radius:18px;padding:22px}
+.hhero-t h2{color:#fff;margin:0;font-size:28px}.hhero-t p{margin:8px 0 0;opacity:.92}
+.qcard{position:relative;overflow:hidden;background:linear-gradient(135deg,#fff8e1,#fdeeb8);border:1.5px solid #f2d27a;border-radius:18px;padding:20px 22px;display:flex;flex-direction:column;gap:8px}
+.qcard p{margin:0;font-family:Georgia,serif;font-style:italic;font-size:18px;line-height:1.45;color:#3b3200}
+.qcard small{color:#8a6d00}.qcard .btn{align-self:flex-start}
+.qstar{position:absolute;right:-6px;top:-24px;font-size:110px;color:rgba(244,196,48,.35)}
+.hgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px;margin-top:14px}
+.hcard{background:var(--card);border:1.5px solid var(--line);border-radius:16px;padding:14px 16px}
+.hcard.soon{margin-top:14px;display:flex;flex-direction:column;gap:4px;border-style:dashed}.hcard.soon small{color:var(--muted)}
+.hcard-h{display:flex;align-items:center;gap:10px;margin-bottom:10px}.hcard-h div{flex:1}.hcard-h small{display:block;color:var(--muted)}
+.hboxes{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px}
+.hbox{background:var(--page);border-radius:12px;padding:10px;text-align:center}.hbox b{display:block;font-size:22px}.hbox span{font-size:12px;color:var(--muted)}
+.hbox.g b{color:var(--ok)}.hbox.r b{color:var(--late)}.hbox.y b{color:var(--wait)}
+.hacts{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+@media (max-width:860px){.hhero{grid-template-columns:1fr}}
+@media print{.gdrawer,.gtab,.guidebg{display:none !important}}
 .srvwarn{background:#fdecea;color:#8a1c12;border:1.5px solid #f5b5ad;border-radius:12px;padding:12px 14px;margin:12px 0;font-size:14px}
 .ohero{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;background:linear-gradient(135deg,var(--field),#2f7a4a);color:#fff;border-radius:18px;padding:20px 22px;margin-top:6px}
 .ohero h2{color:#fff;margin:0}.ohero p{margin:6px 0 0;opacity:.9;max-width:640px}.ohero .btn.ghost{background:#fff}
@@ -659,6 +717,7 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
   </section>
 
   <!-- SIGNATURE BANK -->
+  <section id="viewHome" style="display:none"></section>
   <section id="viewObs" style="display:none"></section>
 
   <section id="viewSig" style="display:none">
@@ -876,6 +935,35 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
   </div>
 </div>
 
+<!-- COI and NCOI guide drawer (right side) -->
+<div class="guidebg" id="guideBg" onclick="closeGuide()"></div>
+<aside class="gdrawer" id="guideDrawer" aria-label="COI and NCOI guide">
+  <div class="gd-head"><b>COI and NCOI guide</b><button class="linkbtn" onclick="closeGuide()">Close</button></div>
+  <div id="oSide" class="gd-body"></div>
+</aside>
+<button class="gtab" id="guideTab" onclick="openGuide()" style="display:none">COI and NCOI</button>
+
+<!-- Choose observation type -->
+<div class="overlay" id="chooseModal">
+  <div class="modal" role="dialog" aria-labelledby="chTitle">
+    <h3 id="chTitle">What will you observe?</h3>
+    <button class="choice" onclick="obsNew('epmcf')"><span class="ktag epmcf">ePMCF</span><b>Classroom Observation</b><small>Lesson delivery in a class: low inference notes, STAR incidents, and COI and NCOI ratings.</small></button>
+    <button class="choice" onclick="obsNew('mwa')"><span class="ktag mwa">PMCF MWA</span><b>Monitoring by Walking Around</b><small>Things outside lesson delivery: cleanliness, learners' and teachers' behavior, safety, routines, and more.</small></button>
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal('chooseModal')">Cancel</button></div>
+  </div>
+</div>
+
+<!-- Calendar day -->
+<div class="overlay" id="calModal">
+  <div class="modal" role="dialog" aria-labelledby="calTitle">
+    <h3 id="calTitle"></h3><input type="hidden" id="calDate">
+    <div class="field"><label for="calType">Where were you this day?</label><select id="calType"></select></div>
+    <div class="field"><label for="calNote">Note (optional)</label><input id="calNote" maxlength="200" placeholder="Example: Division training on assessment"></div>
+    <div id="calObs"></div>
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal('calModal')">Cancel</button><button class="btn" onclick="calSave()">Save</button></div>
+  </div>
+</div>
+
 <!-- Install app -->
 <div class="overlay" id="installModal">
   <div class="modal" role="dialog" aria-labelledby="instTitle">
@@ -992,8 +1080,8 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
 
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
-const MIN_SERVER = '3.0'; // oldest Code.gs this page works with
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'3.0', date:'October 5, 2026' } };
+const MIN_SERVER = '3.1'; // oldest Code.gs this page works with
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'3.1', date:'October 6, 2026' } };
 function verLine(server){
   const old = server && (server.indexOf('older') > -1 || parseFloat(server) < parseFloat(MIN_SERVER));
   const s = server ? ' Server '+server+(old && USER && USER.role==='head' ? ', please deploy the new Code.gs.' : '.') : '';
@@ -1369,12 +1457,13 @@ document.addEventListener('click', e => { if (!e.target.closest('#menu') && !e.t
 function goMain(){
   $('menu').classList.remove('open');
   document.querySelectorAll('.overlay.open').forEach(o => closeModal(o.id));
-  showTracker(); window.scrollTo({ top:0, behavior:'smooth' });
+  if (USER && DATA) showHome(); else { showTracker(); window.scrollTo({ top:0, behavior:'smooth' }); }
 }
 /* ---------- TALA features (left side) ---------- */
 const FEATURES = [
+  { id:'home', name:'Home', ready:true, icon:'M12 3 2 12h3v8h5v-6h4v6h5v-8h3z' },
   { id:'lpt', name:'LPT and PPT Tracking', ready:true, icon:'M4 4h16v4H4zm0 6h10v10H4zm12 0h4v10h-4z' },
-  { id:'obs', name:'Classroom Observations', built:true, open:() => openObs(), icon:'M12 5c-5 0-9 4.5-10 7 1 2.5 5 7 10 7s9-4.5 10-7c-1-2.5-5-7-10-7zm0 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8z',
+  { id:'obs', name:'Observations (ePMCF and MWA)', built:true, open:() => openObs(), icon:'M12 5c-5 0-9 4.5-10 7 1 2.5 5 7 10 7s9-4.5 10-7c-1-2.5-5-7-10-7zm0 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8z',
     do:'Record each classroom observation with the date and time, the observation tool, ratings, strengths, and areas to improve. Teachers read the feedback in their portal and acknowledge it.',
     auto:'Observation schedules, reminders, acknowledgment timestamps, and each teacher\u2019s rating summary across the school year are computed automatically.',
     report:'Observation record per teacher, and a quarterly summary of all observations with signatures.' },
@@ -1404,7 +1493,7 @@ function drawSide(){
   const head = USER && USER.role==='head';
   $('sideNav').innerHTML = FEATURES.map(f => {
     const dot = f.id==='obs' && OBS && OBS.newCount ? `<i class="sdot">${OBS.newCount}</i>` : '';
-    const tag = f.id==='lpt' ? '' : head ? (featOn(f.id) ? '<em class="vis">Shown</em>' : '<em class="hid">Hidden</em>') : (featOn(f.id) && f.built ? dot : '<em>Soon</em>');
+    const tag = f.id==='lpt' || f.id==='home' ? '' : head ? (featOn(f.id) ? '<em class="vis">Shown</em>' : '<em class="hid">Hidden</em>') : (featOn(f.id) && f.built ? dot : '<em>Soon</em>');
     return `<button type="button" class="side-i ${f.id===CUR_FEATURE?'on':''}" onclick="openFeature('${f.id}')">
     <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="${f.icon}"/></svg><span>${esc(f.name)}</span>${tag}</button>`; }).join('')
     + (head ? '<button type="button" class="linkbtn side-manage" onclick="openFV()">Show or hide features</button>' : '');
@@ -1412,7 +1501,7 @@ function drawSide(){
 var CUR_FEATURE = 'lpt';
 function openFV(){
   toggleSide(false);
-  $('fvList').innerHTML = FEATURES.filter(f=>f.id!=='lpt').map(f => `<label class="check fvrow"><input type="checkbox" data-id="${f.id}" ${featOn(f.id)?'checked':''}><span><b>${esc(f.name)}</b><small>${f.built?'Ready to try':'Still being built'}</small></span></label>`).join('');
+  $('fvList').innerHTML = FEATURES.filter(f=>f.id!=='lpt'&&f.id!=='home').map(f => `<label class="check fvrow"><input type="checkbox" data-id="${f.id}" ${featOn(f.id)?'checked':''}><span><b>${esc(f.name)}</b><small>${f.built?'Ready to try':'Still being built'}</small></span></label>`).join('');
   $('fvErr').textContent=''; openModal('fvModal');
 }
 async function saveFeatures(){
@@ -1429,7 +1518,8 @@ function toggleSide(open){
 function openFeature(id){
   toggleSide(false);
   const f = FEATURES.find(x => x.id === id);
-  if (f.ready){ CUR_FEATURE = 'lpt'; drawSide(); goMain(); return; }
+  if (f.id==='home'){ if (USER) showHome(); else goMain(); return; }
+  if (f.ready){ CUR_FEATURE = 'lpt'; drawSide(); showTracker(); window.scrollTo(0,0); return; }
   const canOpen = f.built && (USER && USER.role==='head' || featOn(f.id));
   if (canOpen && f.open){ CUR_FEATURE = f.id; drawSide(); f.open(); return; }
   $('featTitle').textContent = f.name; $('featDo').textContent = f.do; $('featAuto').textContent = f.auto; $('featReport').textContent = f.report;
@@ -1472,6 +1562,7 @@ function applyData(d, first){
   try{ localStorage.setItem('tala_data', JSON.stringify(DATA)); }catch(e){}
   if (first) SEL.term = pickCurrentTerm(DATA.settings);
   render(); renderAll();
+  if (first) showHome(); else if ($('viewHome').style.display !== 'none') drawHome();
 }
 // Saves something and gets the updated page data back in the same trip
 async function apiData(action, payload){
@@ -1487,6 +1578,7 @@ async function loadData(first){
   try{ localStorage.setItem('tala_data', JSON.stringify(DATA)); }catch(e){}
   if (first) SEL.term = pickCurrentTerm(DATA.settings);
   render(); renderAll();
+  if (first) showHome(); else if ($('viewHome').style.display !== 'none') drawHome();
 }
 
 /* ---------- Public view ---------- */
@@ -2477,23 +2569,32 @@ const NOTE_FIELDS = [
   ['resources','Learning resources used'],['integration','Opportunities for integration'],['assessment','Formative assessment'],
   ['management','Classroom management and learning environment'],['strengths','Strengths observed'],['improve','Areas for improvement'],['forward','Ways forward and recommendations']
 ];
+const MWA_FOCUS = ['Cleanliness of the classroom','Cleanliness of school grounds and areas','Learners\u2019 behavior and discipline','Teacher\u2019s behavior and professionalism','Classroom management and routines','Learner attendance and punctuality','Teacher attendance and punctuality','Safety and security','Health, nutrition, and hygiene','Bulletin boards and learning displays','Use of learning resources','Flag ceremony and school programs','Others'];
+const OTYPE = { epmcf:'ePMCF Classroom Observation', mwa:'PMCF MWA (Monitoring by Walking Around)' };
+function otype(o){ return ((o||{}).data||{}).type === 'mwa' ? 'mwa' : 'epmcf'; }
 const OBS_STATUS = { Draft:'Draft, only you can see it', Sent:'Sent to teacher, waiting for her review and signature', TeacherSigned:'Signed by teacher, waiting for your signature', Completed:'Completed and signed by both' };
 const OBS_PILL = { Draft:'Draft', Sent:'For teacher\u2019s signature', TeacherSigned:'For School Head\u2019s signature', Completed:'Completed' };
-var OBS = { list:[], teachers:[], cur:null, term:'', week:'all', who:'', newCount:0 };
+var OBS = { list:[], teachers:[], cur:null, term:'', week:'all', who:'', newCount:0, kind:'epmcf', cal:[] };
 
-function obsLocalSave(){ try{ localStorage.setItem('tala_obs_'+USER.email, JSON.stringify({ list:OBS.list, teachers:OBS.teachers })); }catch(e){} }
-function obsLocalLoad(){ try{ const x = JSON.parse(localStorage.getItem('tala_obs_'+USER.email)||'null'); if (x){ OBS.list = x.list||[]; OBS.teachers = x.teachers||[]; } }catch(e){} }
+function obsLocalSave(){ try{ localStorage.setItem('tala_obs_'+USER.email, JSON.stringify({ list:OBS.list, teachers:OBS.teachers, cal:OBS.cal })); }catch(e){} }
+function obsLocalLoad(){ try{ const x = JSON.parse(localStorage.getItem('tala_obs_'+USER.email)||'null'); if (x){ OBS.list = x.list||[]; OBS.teachers = x.teachers||[]; OBS.cal = x.cal||[]; } }catch(e){} }
 function obsPending(id){ return myPending().some(x => (x.action==='obsSave' && x.payload.obs.id===id) || (x.action==='obsLock' && x.payload.id===id)); }
 function findTermWeek(date){
   if (!date) return { term:'', week:'' };
   for (const t of ['1','2','3']) for (let n = 1; n <= 12; n++){ const w = weekOf(t, String(n)); if (w && date >= w.start && date <= addDays(w.end,2)) return { term:t, week:String(n) }; }
   return { term:'', week:'' };
 }
-function showObsView(){ ['viewTrk','viewAcc','viewBank','viewLog','viewWeeks','viewSig'].forEach(v => $(v).style.display='none'); $('viewObs').style.display=''; window.scrollTo(0,0); }
+function guideTabSync(){ const t = $('guideTab'); if (t) t.style.display = $('viewObs').style.display !== 'none' && OBS.cur && otype(OBS.cur)==='epmcf' ? '' : 'none'; }
+// Swipe left from the right edge to open the guide, swipe right to close it
+(function(){ let x0 = null;
+  document.addEventListener('touchstart', e => { const x = e.touches[0].clientX; x0 = (x > window.innerWidth - 28 && $('guideTab').style.display !== 'none') || $('guideDrawer').classList.contains('open') ? x : null; }, { passive:true });
+  document.addEventListener('touchend', e => { if (x0 === null) return; const dx = e.changedTouches[0].clientX - x0; if (dx < -40 && !$('guideDrawer').classList.contains('open')) openGuide(); else if (dx > 60) closeGuide(); x0 = null; }, { passive:true });
+})();
+function showObsView(){ ['viewTrk','viewAcc','viewBank','viewLog','viewWeeks','viewSig','viewHome'].forEach(v => $(v).style.display='none'); $('viewObs').style.display=''; window.scrollTo(0,0); }
 const _showTracker = showTracker;
-showTracker = function(){ $('viewObs').style.display='none'; CUR_FEATURE='lpt'; drawSide(); _showTracker(); };
+showTracker = function(){ $('viewObs').style.display='none'; $('viewHome').style.display='none'; closeGuide(); CUR_FEATURE='lpt'; drawSide(); _showTracker(); };
 const _showView2 = showView2;
-showView2 = function(id){ $('viewObs').style.display='none'; _showView2(id); };
+showView2 = function(id){ $('viewObs').style.display='none'; $('viewHome').style.display='none'; closeGuide(); _showView2(id); };
 
 async function openObs(){
   if (!USER){ toast('Please sign in to open Classroom Observations.'); openLogin(); return; }
@@ -2502,57 +2603,66 @@ async function openObs(){
   await obsRefresh();
 }
 async function obsRefresh(){
-  try{ const r = await api('obsList'); OBS.list = r.list; OBS.teachers = r.teachers; obsLocalSave(); }
+  try{ const [r, cal] = await Promise.all([api('obsList'), api('calList').catch(()=>OBS.cal)]); OBS.list = r.list; OBS.teachers = r.teachers; OBS.cal = cal||[]; obsLocalSave(); }
   catch(e){ /* offline: keep the saved copy */ }
   // drafts saved on this device that are not yet on the server
   myPending().filter(x=>x.action==='obsSave').forEach(x => { const i = OBS.list.findIndex(o=>o.id===x.payload.obs.id); const loc = Object.assign({ status:'Draft' }, x.payload.obs, { local:true });
     if (i < 0) OBS.list.push(loc); else if (OBS.list[i].status==='Draft') OBS.list[i] = Object.assign(OBS.list[i], loc); });
   OBS.newCount = USER.role==='teacher' ? OBS.list.filter(o=>!o.seen).length : 0; drawSide();
-  if (!OBS.cur) obsHome();
+  if (!OBS.cur && $('viewObs').style.display !== 'none' && !OBS.sub) obsHome();
+  if ($('viewHome') && $('viewHome').style.display !== 'none') drawHome();
 }
 function obsHome(){
-  OBS.cur = null; stopAutosave();
-  const head = USER.role==='head', admin = USER.role==='admin';
+  OBS.cur = null; OBS.sub = ''; stopAutosave(); closeGuide(); setTimeout(guideTabSync);
+  const head = USER.role==='head', admin = USER.role==='admin', kind = OBS.kind;
   const st = OBS.status || '';
   const inPeriod = o => (!OBS.term || o.term===OBS.term || !o.term) && (OBS.week==='all' || o.week===OBS.week);
-  let list = OBS.list.filter(o => inPeriod(o) && (!OBS.who || o.teacherEmail===OBS.who) && (!st || o.status===st));
+  const ofKind = o => otype(o)===kind;
+  let list = OBS.list.filter(o => ofKind(o) && inPeriod(o) && (!OBS.who || o.teacherEmail===OBS.who) && (!st || o.status===st));
   list.sort((a,b) => String(b.updated||b.date).localeCompare(String(a.updated||a.date)));
   const weeks = Array.from({length:12},(_,i)=>`<option value="${i+1}" ${OBS.week===String(i+1)?'selected':''}>Week ${i+1}</option>`).join('');
-  const cnt = s => OBS.list.filter(o=>o.status===s && inPeriod(o)).length;
+  const cnt = s => OBS.list.filter(o=>ofKind(o) && o.status===s && inPeriod(o)).length;
   const lastDraft = OBS.list.filter(o=>o.status==='Draft').sort((a,b)=>String(b.updated).localeCompare(String(a.updated)))[0];
-  const termObs = OBS.list.filter(o => o.status!=='Draft' && o.term===OBS.term);
+  const termObs = OBS.list.filter(o => otype(o)==='epmcf' && o.status!=='Draft' && o.term===OBS.term);
   const notYet = OBS.teachers.filter(t => !termObs.some(o=>o.teacherEmail===t.email));
+  const q = obsQuota();
   const stat = (s, label, icon) => `<button class="ostat ${st===s?'on':''} s-${s}" onclick="OBS.status=OBS.status==='${s}'?'':'${s}';obsHome()"><span class="oico">${icon}</span><b>${cnt(s)}</b><span>${label}</span></button>`;
   const tile = (icon, title, sub, fn, cls) => `<button class="otile ${cls||''}" onclick="${fn}"><span class="oico">${icon}</span><b>${title}</b><small>${sub}</small></button>`;
-  const I = { plus:'\u002B', pen:'\u270E', sign:'\u2712', chart:'\u2630', book:'\u2605', print:'\u2399', user:'\u263A' };
   $('viewObs').innerHTML = `
-    <div class="ohero"><div><h2>Classroom Observations</h2><p>${head?'Observe, write notes, rate the COI and NCOI, and complete the PMCF. Drafts are saved on this device as you type.':admin?'View completed observations and print the reports.':'Your classroom observations from the School Head. Review, add to the agreement, and sign.'}</p></div>
-      ${head?`<button class="btn big sun" onclick="obsNew()">\u002B New observation</button>`:''}</div>
+    <div class="ohero"><div><h2>Observations</h2><p>${head?'Classroom observations (ePMCF) and Monitoring by Walking Around (PMCF MWA). Your target is 2 observations every school day you are in school.':admin?'View completed observations and print the reports.':'Your observations from the School Head. Review, comment on the agreement, and sign.'}</p></div>
+      ${head?`<button class="btn big sun" onclick="obsChooser()">\u002B New observation</button>`:''}</div>
     ${head?`<div class="otiles">
-      ${lastDraft?tile(I.pen,'Continue draft',esc(lastDraft.teacherName||'Untitled draft')+(lastDraft.date?', '+esc(dShort(lastDraft.date)):''),`obsOpen('${esc(lastDraft.id)}')`,'hl'):''}
-      ${tile(I.sign,'For your signature',cnt('TeacherSigned')+' waiting',"OBS.status='TeacherSigned';obsHome()")}
-      ${tile(I.chart,'Summary report','Per week, term, and teacher','obsSummary()')}
-      ${tile(I.book,'COI and NCOI guide','Read the indicators','obsGuideOnly()')}
-      ${tile(I.user,'Not yet observed',notYet.length+' teacher'+(notYet.length===1?'':'s')+' this term',"$('oNotYet').open=true;$('oNotYet').scrollIntoView({behavior:'smooth'})")}
-    </div>`:admin?`<div class="otiles">${tile(I.chart,'Summary report','Per week, term, and teacher','obsSummary()')}${tile(I.book,'COI and NCOI guide','Read the indicators','obsGuideOnly()')}</div>`:''}
+      ${tile('\u2637','Observation calendar', q.lack ? q.lack+' observation'+(q.lack>1?'s':'')+' lacking this term' : 'On target this term', 'openCal()', q.lack?'warn':'good')}
+      ${lastDraft?tile('\u270E','Continue draft',esc(lastDraft.teacherName||(otype(lastDraft)==='mwa'?'MWA visit':'Untitled draft'))+(lastDraft.date?', '+esc(dShort(lastDraft.date)):''),`obsOpen('${esc(lastDraft.id)}')`,'hl'):''}
+      ${tile('\u2712','For your signature',OBS.list.filter(o=>o.status==='TeacherSigned').length+' waiting',"OBS.status='TeacherSigned';obsHome()")}
+      ${tile('\u2630','Summary report','Per week, term, and teacher','obsSummary()')}
+      ${tile('\u2605','COI and NCOI guide','Read the indicators','openGuide(true)')}
+      ${tile('\u263A','Not yet observed',notYet.length+' teacher'+(notYet.length===1?'':'s')+' this term',"OBS.kind='epmcf';obsHome();setTimeout(()=>{const d=$('oNotYet');if(d){d.open=true;d.scrollIntoView({behavior:'smooth'})}},50)")}
+    </div>`:`<div class="otiles">${admin?tile('\u2630','Summary report','Per week, term, and teacher','obsSummary()')+tile('\u2637','Observation calendar','School Head\u2019s observations per day','openCal()'):''}${tile('\u2605','COI and NCOI guide','Read the indicators','openGuide(true)')}</div>`}
+    <div class="ktabs"><button class="${kind==='epmcf'?'on':''}" onclick="OBS.kind='epmcf';OBS.status='';obsHome()">ePMCF Classroom Observation <em>${OBS.list.filter(o=>otype(o)==='epmcf').length}</em></button>
+      <button class="${kind==='mwa'?'on':''}" onclick="OBS.kind='mwa';OBS.status='';obsHome()">PMCF MWA <em>${OBS.list.filter(o=>otype(o)==='mwa').length}</em></button></div>
     ${head||admin?`<div class="ostats">${head?stat('Draft','Drafts','\u270E'):''}${stat('Sent','With teachers','\u21E2')}${stat('TeacherSigned','For your signature','\u2712')}${stat('Completed','Completed','\u2714')}</div>`:''}
     <div class="bar" style="margin-top:12px"><div class="tabs">${['1','2','3'].map(t=>`<button class="${OBS.term===t?'on':''}" onclick="OBS.term='${t}';obsHome()">Term ${t}</button>`).join('')}</div>
       <select onchange="OBS.week=this.value;obsHome()" aria-label="Week"><option value="all">All weeks</option>${weeks}</select>
       ${head||admin?`<select onchange="OBS.who=this.value;obsHome()" aria-label="Teacher"><option value="">All teachers</option>${OBS.teachers.map(t=>`<option value="${esc(t.email)}" ${OBS.who===t.email?'selected':''}>${esc(t.name)}</option>`).join('')}</select>`:''}
+      ${kind==='mwa' && (head||admin)?`<button class="btn ghost small" onclick="downloadMwa()" ${OBS.week==='all'?'disabled title="Choose a week first"':''}>Download MWA Excel for ${OBS.week==='all'?'a week':'Week '+esc(OBS.week)}</button>`:''}
       ${st?`<button class="btn ghost small" onclick="OBS.status='';obsHome()">Show all statuses</button>`:''}</div>
     <div class="olist">${list.length ? list.map(o => `<button class="ocard s-${o.status} ${USER.role==='teacher'&&!o.seen?'new':''}" onclick="obsOpen('${esc(o.id)}')">
         ${obsPending(o.id)||obsWip(o.id)?'<span class="unsynced">Saved on this device, not yet synced</span>':''}
-        <div class="ocard-h"><span class="oav">${esc((o.teacherName||'?').trim().charAt(0))}</span><div><b>${esc(o.teacherName||'No teacher chosen yet')}</b><small>${o.date?esc(dShort(o.date)):'No date yet'}${o.term?' \u00B7 Term '+esc(o.term)+(o.week?', Week '+esc(o.week):''):''}</small></div></div>
-        <small>${esc([o.grade,o.subject].filter(Boolean).join(', ')||'Grade and subject not set')}</small>
+        <span class="ktag ${otype(o)}">${otype(o)==='mwa'?'PMCF MWA':'ePMCF'}</span>
+        <div class="ocard-h"><span class="oav">${esc((o.teacherName||'A').trim().charAt(0))}</span><div><b>${esc(o.teacherName||(otype(o)==='mwa'?'Area or school-wide visit':'No teacher chosen yet'))}</b><small>${o.date?esc(dShort(o.date)):'No date yet'}${o.term?' \u00B7 Term '+esc(o.term)+(o.week?', Week '+esc(o.week):''):''}</small></div></div>
+        <small>${esc(otype(o)==='mwa' ? ((o.data||{}).focus||'Focus not set') : ([o.grade,o.subject].filter(Boolean).join(', ')||'Grade and subject not set'))}</small>
         <span class="opill ${o.status}">${OBS_PILL[o.status]||o.status}</span>
         ${USER.role==='teacher'&&!o.seen?'<span class="newdot">New</span>':''}</button>`).join('')
-      : `<div class="empty">${head?'No observations here yet. Tap <b>New observation</b> to start.':'No observations to show yet.'}</div>`}</div>
-    ${head?`<details class="byt" id="oNotYet" style="margin-top:14px"><summary>Not yet observed in Term ${esc(OBS.term)} (${notYet.length})</summary><div class="chips2">${notYet.map(t=>`<button class="chip" onclick="obsNew('${esc(t.email)}')">${esc(t.name)} \u002B</button>`).join('') || '<span class="hint">Every teacher has been observed this term.</span>'}</div></details>`:''}`;
+      : `<div class="empty">${head?'Nothing here yet. Tap <b>New observation</b> to start.':'No observations to show yet.'}</div>`}</div>
+    ${head && kind==='epmcf'?`<details class="byt" id="oNotYet" style="margin-top:14px"><summary>Not yet observed in Term ${esc(OBS.term)} (${notYet.length})</summary><div class="chips2">${notYet.map(t=>`<button class="chip" onclick="obsNew('epmcf','${esc(t.email)}')">${esc(t.name)} \u002B</button>`).join('') || '<span class="hint">Every teacher has been observed this term.</span>'}</div></details>`:''}`;
 }
-
-function obsNew(email){
+function obsChooser(){ openModal('chooseModal'); }
+function obsNew(type, email){
+  closeModal('chooseModal');
+  type = type === 'mwa' ? 'mwa' : 'epmcf'; OBS.kind = type;
   const id = 'O'+Date.now().toString(36)+Math.floor(Math.random()*1e4).toString(36);
-  OBS.cur = { id, status:'Draft', teacherEmail:email||'', date:todayPH(), grade:'', subject:'', data:{ notes:{}, ind:{}, inc:[{}] } };
+  OBS.cur = { id, status:'Draft', teacherEmail:email||'', date:todayPH(), grade:'', subject:'', data:{ type, notes:{}, ind:{}, inc:[{}], open:{} } };
   obsEditor(); obsAutosave(true);
 }
 function obsOpen(id){
@@ -2565,51 +2675,102 @@ function obsOpen(id){
 
 /* ----- Editor (School Head, drafts) ----- */
 function obsEditor(){
-  const o = OBS.cur, d = o.data, t = OBS.teachers.find(x=>x.email===o.teacherEmail), pos = t ? t.position : '';
+  const o = OBS.cur, d = o.data; d.open = d.open || {};
+  if (otype(o)==='mwa') return mwaEditor();
+  const t = OBS.teachers.find(x=>x.email===o.teacherEmail), pos = t ? t.position : '';
   const tw = findTermWeek(o.date);
+  const sec = (k,l) => { const v = (d.notes||{})[k]||''; return `<details class="nsec2 ${v?'has':''}" ${d.open[k]||v?'open':''} ontoggle="OBS.cur.data.open['${k}']=this.open"><summary><span class="tick">${v?'\u2714':'\u25CB'}</span>${esc(l)}</summary>
+      <textarea spellcheck="true" lang="en" data-note="${k}" rows="3">${esc(v)}</textarea><div class="gfix" data-for="${k}"></div></details>`; };
   $('viewObs').innerHTML = `
-    <div class="trk-head"><div><h2>Observation notes and PMCF</h2><p>${OBS_STATUS.Draft}.</p></div>
+    <div class="trk-head"><div><span class="ktag epmcf">ePMCF Classroom Observation</span><h2>Observation notes and PMCF</h2><p>${OBS_STATUS.Draft}.</p></div>
+      <div class="head-actions"><button class="btn ghost" onclick="openGuide()">COI and NCOI guide</button><button class="btn ghost" onclick="obsBack()">Back to list</button></div></div>
+    <div class="autosave" id="oAuto">${obsPending(o.id)||obsWip(o.id)?'<span class="unsynced">Saved on this device, not yet synced</span>':'Autosave is on. Your notes are saved on this device as you type.'}</div>
+    <div class="obs-main">
+      <section class="ocard2"><h3>1. Observation details</h3>
+        <div class="row2">
+          <div class="field"><label>Teacher (ratee)</label><select id="oTeacher" onchange="obsPickTeacher()"><option value="">Choose a teacher</option>${OBS.teachers.map(x=>`<option value="${esc(x.email)}" ${x.email===o.teacherEmail?'selected':''}>${esc(x.name)}${x.position?' ('+esc(x.position)+')':''}</option>`).join('')}</select>
+            <div class="hint" id="oPos">${t?(pos?'Position: '+esc(pos):'No position set yet. Set it in Teacher accounts.'):''}</div></div>
+          <div class="field"><label>Date of observation</label><input type="date" id="oDate" value="${esc(o.date||'')}" onchange="obsDateHint();drawLessonFiles()"><div class="hint" id="oTW">${tw.term?'Term '+tw.term+', Week '+tw.week:'Outside the term weeks'}</div></div>
+        </div>
+        <div class="row2">
+          <div class="field"><label>Grade level</label><select id="oGrade" onchange="obsSubjects();drawLessonFiles()"><option value="">Choose</option>${OPTS().grades.map(g=>`<option ${g===o.grade?'selected':''}>${esc(g)}</option>`).join('')}</select></div>
+          <div class="field"><label>Subject</label><select id="oSubject" onchange="drawLessonFiles()"></select></div>
+        </div>
+        <div class="row4">
+          <div class="field"><label>Learners present</label><input type="number" min="0" id="oPresent" value="${esc(d.present||'')}"></div>
+          <div class="field"><label>Enrollment</label><input type="number" min="0" id="oEnrolled" value="${esc(d.enrolled||'')}"></div>
+          <div class="field"><label>Time started</label><input type="time" id="oStart" value="${esc((d.notes||{}).timeStart||'')}"></div>
+          <div class="field"><label>Time ended</label><input type="time" id="oEnd" value="${esc((d.notes||{}).timeEnd||'')}"></div>
+        </div>
+        <div id="oFiles"></div>
+      </section>
+      <section class="ocard2"><h3>2. What I see and hear</h3>
+        <p class="hint">Write low inference notes: exactly what the teacher and learners say and do, with times if you can. This is the main box.</p>
+        <div class="gtool"><button type="button" class="btn ghost small" onclick="grammarCheck()">Check spelling and grammar</button><span class="hint" id="gStatus">Spelling mistakes are underlined in red as you type.</span></div>
+        <textarea class="lowinf" spellcheck="true" lang="en" data-note="low" rows="10" placeholder="Example: 8:05 Teacher greeted learners and asked, 'What did we learn yesterday?' Three learners raised their hands...">${esc((d.notes||{}).low||'')}</textarea><div class="gfix" data-for="low"></div>
+        <p class="hint" style="margin-top:12px">Parts of the lesson you were able to observe (open only what you need):</p>
+        ${sec('topic','Lesson or topic')}${NOTE_FIELDS.filter(([k])=>k!=='topic').map(([k,l])=>sec(k,l)).join('')}
+      </section>
+      <section class="ocard2"><h3>3. PMCF: critical incidents (STAR)</h3><p class="hint">Each row becomes one row in the Division PMCF (up to 16 rows). Tap <b>Suggest agreement</b> to draft one from your notes, then edit it.</p>
+        <div id="oInc"></div>
+        <button class="btn ghost small" onclick="obsAddInc()">Add a row</button>
+      </section>
+      <div class="obs-actions sticky">
+        <button class="btn" onclick="obsSaveDraft()">Save draft</button>
+        <button class="btn sun" onclick="obsLockSend()">Lock and send to teacher</button>
+        <button class="btn ghost" onclick="obsCollect();printObsNotes(OBS.cur)">Print notes</button>
+        <button class="btn danger" onclick="obsDelete()">Delete</button>
+      </div>
+    </div>`;
+  obsSubjects(); drawInc(); drawGuide(); drawLessonFiles(); startAutosave(); guideTabSync();
+}
+// Shows the teacher's LPT and PPT for that grade, subject, term, and week, when uploaded
+function drawLessonFiles(){
+  const el = $('oFiles'); if (!el) return;
+  const em = $('oTeacher').value, g = $('oGrade').value, s = $('oSubject').value, tw = findTermWeek($('oDate').value);
+  if (!em || !g || !s || !tw.term){ el.innerHTML = ''; return; }
+  const e = (DATA && DATA.entries || []).find(x => x.email===em && x.grade===g && x.subject===s && x.term===tw.term && String(x.week)===tw.week);
+  if (!e){ el.innerHTML = `<div class="lfiles none">No LPT or PPT uploaded for ${esc(g)}, ${esc(s)}, Term ${tw.term} Week ${tw.week}.</div>`; return; }
+  const link = (d, label) => d && d.link ? `<a href="${esc(d.link)}" target="_blank" rel="noopener">${esc(label)}</a>` : `<span class="mk-wait">${esc(label)}: not uploaded</span>`;
+  const ppt = isSess(e) ? e.pptSessions.map((d,i)=>link(d,'PPT Session '+(i+1))).join(' ') : link(e.ppt,'PPT');
+  el.innerHTML = `<div class="lfiles"><b>Lesson files this week:</b> ${link(e.lpt,'LPT')} ${ppt}</div>`;
+}
+function mwaEditor(){
+  const o = OBS.cur, d = o.data, it = (d.inc = d.inc && d.inc.length ? d.inc : [{}])[0], tw = findTermWeek(o.date);
+  $('viewObs').innerHTML = `
+    <div class="trk-head"><div><span class="ktag mwa">PMCF MWA</span><h2>Monitoring by Walking Around</h2><p>For things outside lesson delivery: cleanliness, behavior, safety, routines, and more. ${OBS_STATUS.Draft}.</p></div>
       <div class="head-actions"><button class="btn ghost" onclick="obsBack()">Back to list</button></div></div>
     <div class="autosave" id="oAuto">${obsPending(o.id)||obsWip(o.id)?'<span class="unsynced">Saved on this device, not yet synced</span>':'Autosave is on. Your notes are saved on this device as you type.'}</div>
-    <div class="obs-grid">
-      <div class="obs-main">
-        <section class="ocard2"><h3>1. Observation details</h3>
-          <div class="row2">
-            <div class="field"><label>Teacher (ratee)</label><select id="oTeacher" onchange="obsPickTeacher()"><option value="">Choose a teacher</option>${OBS.teachers.map(x=>`<option value="${esc(x.email)}" ${x.email===o.teacherEmail?'selected':''}>${esc(x.name)}${x.position?' ('+esc(x.position)+')':''}</option>`).join('')}</select>
-              <div class="hint" id="oPos">${t?(pos?'Position: '+esc(pos):'No position set yet. Set it in Teacher accounts.'):''}</div></div>
-            <div class="field"><label>Date of observation</label><input type="date" id="oDate" value="${esc(o.date||'')}" onchange="obsDateHint()"><div class="hint" id="oTW">${tw.term?'Term '+tw.term+', Week '+tw.week:'Outside the term weeks'}</div></div>
-          </div>
-          <div class="row2">
-            <div class="field"><label>Grade level</label><select id="oGrade" onchange="obsSubjects()"><option value="">Choose</option>${OPTS().grades.map(g=>`<option ${g===o.grade?'selected':''}>${esc(g)}</option>`).join('')}</select></div>
-            <div class="field"><label>Subject</label><select id="oSubject"></select></div>
-          </div>
-          <div class="row2">
-            <div class="field"><label># of learners present</label><input type="number" min="0" id="oPresent" value="${esc(d.present||'')}"></div>
-            <div class="field"><label>Enrollment</label><input type="number" min="0" id="oEnrolled" value="${esc(d.enrolled||'')}"></div>
-          </div>
-          <div class="row2">
-            <div class="field"><label>Time started</label><input type="time" id="oStart" value="${esc((d.notes||{}).timeStart||'')}"></div>
-            <div class="field"><label>Time ended</label><input type="time" id="oEnd" value="${esc((d.notes||{}).timeEnd||'')}"></div>
-          </div>
-        </section>
-        <section class="ocard2"><h3>2. Observation notes</h3><p class="hint">Write what you see during the class. These notes are yours and will be shared with the teacher when you lock and send.</p>
-          <div class="gtool"><button type="button" class="btn ghost small" onclick="grammarCheck()">Check spelling and grammar</button><span class="hint" id="gStatus">Spelling mistakes are underlined in red as you type.</span></div>
-          ${NOTE_FIELDS.map(([k,l])=>`<div class="field"><label>${esc(l)}</label><textarea spellcheck="true" lang="en" data-note="${k}" rows="${k==='topic'?1:3}">${esc((d.notes||{})[k]||'')}</textarea><div class="gfix" data-for="${k}"></div></div>`).join('')}
-        </section>
-        <section class="ocard2"><h3>3. PMCF: critical incidents</h3><p class="hint">Each row becomes one row in the Division PMCF (up to 16 rows).</p>
-          <div id="oInc"></div>
-          <button class="btn ghost small" onclick="obsAddInc()">Add a row</button>
-        </section>
-        <div class="obs-actions">
-          <button class="btn" onclick="obsSaveDraft()">Save draft</button>
-          <button class="btn sun" onclick="obsLockSend()">Lock and send to teacher</button>
-          <button class="btn ghost" onclick="obsCollect();printObsNotes(OBS.cur)">Print observation notes</button>
-          <button class="btn danger" onclick="obsDelete()">Delete</button>
+    <div class="obs-main">
+      <section class="ocard2"><h3>1. Visit details</h3>
+        <div class="row2">
+          <div class="field"><label>Date monitored</label><input type="date" id="oDate" value="${esc(o.date||'')}" onchange="obsDateHint()"><div class="hint" id="oTW">${tw.term?'Term '+tw.term+', Week '+tw.week:'Outside the term weeks'}</div></div>
+          <div class="field"><label>Teacher concerned</label><select id="oTeacher"><option value="">No specific teacher (area or school-wide)</option>${OBS.teachers.map(x=>`<option value="${esc(x.email)}" ${x.email===o.teacherEmail?'selected':''}>${esc(x.name)}</option>`).join('')}</select>
+            <div class="hint">When a teacher is chosen, she reviews, comments, and signs like a classroom observation.</div></div>
         </div>
+        <div class="field"><label>Focus of monitoring</label><div class="chips2" style="padding:0">${MWA_FOCUS.map(f=>`<label class="fchip ${d.focus===f?'on':''}"><input type="radio" name="mfocus" value="${esc(f)}" ${d.focus===f?'checked':''} onchange="document.querySelectorAll('.fchip').forEach(x=>x.classList.toggle('on',x.contains(this)&&this.checked))">${esc(f)}</label>`).join('')}</div></div>
+        <div class="field"><label>Place or area</label><input id="mPlace" value="${esc(d.place||'')}" placeholder="Example: Grade 5 classroom, comfort room, school garden"></div>
+      </section>
+      <section class="ocard2"><h3>2. What I see and hear</h3>
+        <div class="gtool"><button type="button" class="btn ghost small" onclick="grammarCheck()">Check spelling and grammar</button><span class="hint" id="gStatus">Spelling mistakes are underlined in red as you type.</span></div>
+        <textarea class="lowinf" spellcheck="true" lang="en" data-note="low" rows="6" placeholder="Low inference notes of what you saw and heard during the walk.">${esc((d.notes||{}).low||'')}</textarea><div class="gfix" data-for="low"></div>
+      </section>
+      <section class="ocard2"><h3>3. MWA entry (one row in the Division MWA form)</h3>
+        <div class="field"><label>Situation</label><textarea spellcheck="true" lang="en" data-m="situation" rows="2">${esc(it.situation||'')}</textarea></div>
+        <div class="row2"><div class="field"><label>Task of the School Head</label><textarea spellcheck="true" lang="en" data-m="task" rows="2">${esc(it.task||'')}</textarea></div>
+          <div class="field"><label>Action by the teacher</label><textarea spellcheck="true" lang="en" data-m="action" rows="2">${esc(it.action||'')}</textarea></div></div>
+        <div class="row2"><div class="field"><label>Result of the action of the teacher</label><textarea spellcheck="true" lang="en" data-m="result" rows="2">${esc(it.result||'')}</textarea></div>
+          <div class="field"><label>Consequence of result</label><textarea spellcheck="true" lang="en" data-m="consequence" rows="2">${esc(it.consequence||'')}</textarea></div></div>
+        <div class="field"><label>Agreement <button type="button" class="linkbtn" onclick="suggestAgree(0)">Suggest agreement</button></label><textarea spellcheck="true" lang="en" data-m="agreement" id="agree0" rows="2">${esc(it.agreement||'')}</textarea></div>
+        <div class="field"><label>Second visit</label><input type="date" data-m="timeline" value="${esc(it.timeline||'')}"></div>
+      </section>
+      <div class="obs-actions sticky">
+        <button class="btn" onclick="obsSaveDraft()">Save draft</button>
+        <button class="btn sun" onclick="obsLockSend()">Lock and ${o.teacherEmail?'send to teacher':'save'}</button>
+        <button class="btn danger" onclick="obsDelete()">Delete</button>
       </div>
-      <aside class="obs-side" id="oSide"></aside>
     </div>`;
-  obsSubjects(); drawInc(); drawGuide(); startAutosave();
+  startAutosave();
 }
 function obsBack(){ if (OBS.cur && OBS.cur.status==='Draft' && $('oTeacher')) obsAutosave(true); obsHome(); obsRefresh(); }
 /* Autosave: every change is kept on this device right away, then sent to the server quietly */
@@ -2638,7 +2799,7 @@ async function obsSyncNow(){
   if (r === true){ AUTO.dirty = false; try{ localStorage.removeItem(wipKey(OBS.cur.id)); }catch(e){} const el = $('oAuto'); if (el) el.innerHTML = '<span class="synced">✔ Synced '+esc(fmtTime(nowLocal().slice(11,16)))+'</span>'; }
 }
 function obsPickTeacher(){ obsCollect(); const t = OBS.teachers.find(x=>x.email===OBS.cur.teacherEmail); $('oPos').textContent = t ? (t.position ? 'Position: '+t.position : 'No position set yet. Set it in Teacher accounts.') : '';
-  if (t && t.grade && !$('oGrade').value){ const g = OPTS().grades.find(x=>x===t.grade); if (g){ $('oGrade').value = g; obsSubjects(); } } drawGuide(); }
+  if (t && t.grade && !$('oGrade').value){ const g = OPTS().grades.find(x=>x===t.grade); if (g){ $('oGrade').value = g; obsSubjects(); } } drawGuide(); drawLessonFiles(); }
 function obsDateHint(){ const tw = findTermWeek($('oDate').value); $('oTW').textContent = tw.term ? 'Term '+tw.term+', Week '+tw.week : 'Outside the term weeks'; }
 function obsSubjects(){ const g = $('oGrade').value, cur = OBS.cur.subject; $('oSubject').innerHTML = '<option value="">Choose</option>' + (OPTS().subjectsByGrade[g]||[]).map(s=>`<option ${s===cur?'selected':''}>${esc(s)}</option>`).join(''); }
 function drawInc(){
@@ -2647,11 +2808,35 @@ function drawInc(){
     <div class="inc-h"><b>Row ${i+1}</b>${inc.length>1?`<button class="linkbtn" onclick="obsDelInc(${i})">Remove</button>`:''}</div>
     <div class="row2"><div class="field"><label>Situation</label><select data-k="situation"><option value="">Choose</option>${SITUATIONS.map(s=>`<option value="${esc(s)}" ${s===it.situation?'selected':''}>${esc(s.trim())}</option>`).join('')}</select></div>
       <div class="field"><label>Rating (5 is the highest)</label><div class="rate5">${[1,2,3,4,5].map(n=>`<label><input type="radio" name="r${i}" value="${n}" data-k="rating" ${String(it.rating)===String(n)?'checked':''}>${n}</label>`).join('')}</div></div></div>
-    <div class="field"><label>Task</label><textarea spellcheck="true" lang="en" data-k="task" rows="2">${esc(it.task||'')}</textarea></div>
-    <div class="field"><label>Action</label><textarea spellcheck="true" lang="en" data-k="action" rows="2">${esc(it.action||'')}</textarea></div>
+    <div class="row2"><div class="field"><label>Task</label><textarea spellcheck="true" lang="en" data-k="task" rows="2">${esc(it.task||'')}</textarea></div>
+      <div class="field"><label>Action</label><textarea spellcheck="true" lang="en" data-k="action" rows="2">${esc(it.action||'')}</textarea></div></div>
     <div class="field"><label>Result</label><textarea spellcheck="true" lang="en" data-k="result" rows="2">${esc(it.result||'')}</textarea></div>
-    <div class="row2"><div class="field"><label>Agreement</label><textarea spellcheck="true" lang="en" data-k="agreement" rows="2">${esc(it.agreement||'')}</textarea></div>
+    <div class="row2"><div class="field"><label>Agreement <button type="button" class="linkbtn" onclick="suggestAgree(${i})">Suggest agreement</button></label><textarea spellcheck="true" lang="en" data-k="agreement" id="agree${i}" rows="3">${esc(it.agreement||'')}</textarea></div>
       <div class="field"><label>Timeline</label><input type="date" data-k="timeline" value="${esc(it.timeline||'')}"></div></div></div>`).join('');
+}
+// Drafts an agreement from the STAR row and your notes. You can edit it freely.
+function suggestAgree(i){
+  const o = obsCollect(), d = o.data, it = (d.inc||[])[i] || {}, n = d.notes || {};
+  const due = it.timeline || addDays(o.date || todayPH(), 14);
+  const lc = s => String(s||'').trim().replace(/\.$/,''), first = s => { s = lc(s); return s ? s.charAt(0).toLowerCase()+s.slice(1) : ''; };
+  let txt;
+  if (otype(o)==='mwa'){
+    const who = o.teacherEmail ? 'The teacher' : 'The class adviser and the learners concerned', visit = it.timeline || addDays(o.date || todayPH(), 7);
+    const step = lc(it.task).replace(/^(remind|tell|ask) (the )?/i,'');
+    txt = `${who} will ${d.focus ? 'maintain '+first(d.focus) : 'address the concern observed'}${step ? ' and '+first(step) : ''}. The School Head will check again on the second visit on ${dShort(visit)}.`;
+    if (!it.timeline){ const tl = document.querySelector('[data-m=timeline]'); if (tl) tl.value = visit; }
+  } else {
+    const rate = Number(it.rating||0), area = lc(it.situation).toLowerCase() || 'this part of the lesson';
+    if (rate >= 4) txt = `The teacher will continue ${first(it.action) || 'this effective practice'} in ${area} and share it with colleagues during the LAC session.`;
+    else {
+      const fromNotes = lc(n.forward) || lc(n.improve), task = lc(it.task).replace(/^(the )?teacher (needs|has|is expected|should|must|ought) to /i,'');
+      const what = fromNotes ? 'work on '+first(fromNotes) : task ? first(task) : 'apply the strategies discussed in the post-conference';
+      txt = `In ${area}, the teacher will ${what}. The School Head will provide coaching and revisit the class by ${dShort(due)}.`;
+    }
+  }
+  const el = $('agree'+i); if (el){ el.value = el.value.trim() ? el.value.trim()+'\n'+txt : txt; el.focus(); }
+  if (!it.timeline && otype(o)!=='mwa'){ const tl = document.querySelector(`#oInc .inc[data-i="${i}"] [data-k=timeline]`); if (tl) tl.value = due; }
+  obsAutosave(false);
 }
 function obsAddInc(){ obsCollect(); if (OBS.cur.data.inc.length >= 16) return toast('The PMCF has room for 16 rows.'); OBS.cur.data.inc.push({}); drawInc(); }
 function obsDelInc(i){ obsCollect(); OBS.cur.data.inc.splice(i,1); drawInc(); }
@@ -2678,25 +2863,34 @@ function drawGuide(){
   });
   $('oSide').innerHTML = h;
 }
-function guideAll(open){ const o = OBS.cur, t = OBS.teachers.find(x=>x.email===o.teacherEmail); indFor(t && t.position).list.forEach(x => OBS.open[x.kra] = !Object.values(OBS.open).some(Boolean)); drawGuideKeep(); }
-function obsGuideOnly(){
-  const g = indFor(''), groups = {}; g.list.forEach(x => (groups[x.kra] = groups[x.kra] || []).push(x));
-  $('viewObs').innerHTML = `<div class="ohero"><div><h2>COI and NCOI Guide</h2><p>Indicators for Teacher I to III. COI are observed in class. NCOI are seen in documents or other evidence.</p></div><button class="btn ghost" onclick="obsBack()">Back</button></div>
-    ${Object.keys(groups).map(k => `<details class="kgrp big" open><summary><span>${esc(k)}</span><em>${groups[k].length}</em></summary>${groups[k].map(x=>`<div class="ind ${x.type==='NCOI'?'n':''}"><div class="ind-h"><b>${x.code}</b><span class="${x.type==='NCOI'?'tncoi':'tcoi'}">${x.type}</span></div><p>${esc(x.text)}</p></div>`).join('')}</details>`).join('')}`;
+function openGuide(readOnly){ if (readOnly || !OBS.cur || OBS.cur.status!=='Draft' || !$('oDate')) drawGuideRO(); else drawGuide(); $('guideDrawer').classList.add('open'); $('guideBg').classList.add('open'); }
+function closeGuide(){ const g = $('guideDrawer'); if (g){ g.classList.remove('open'); $('guideBg').classList.remove('open'); } const t = $('guideTab'); if (t && $('viewObs').style.display === 'none') t.style.display = 'none'; }
+function drawGuideRO(){
+  const pos = OBS.cur ? OBS.cur.position : (USER && USER.position), g = indFor(pos), groups = {}; g.list.forEach(x => (groups[x.kra] = groups[x.kra] || []).push(x));
+  const ind = OBS.cur && OBS.cur.data ? OBS.cur.data.ind || {} : {};
+  $('oSide').innerHTML = `<div class="guide-h"><b>COI and NCOI guide</b><span class="lvl">${esc(g.level)}</span><div class="legend"><span class="tcoi">COI</span> observed in class <span class="tncoi">NCOI</span> from documents or other evidence</div></div>`
+    + Object.keys(groups).map(k => `<details class="kgrp" open><summary><span>${esc(k)}</span><em>${groups[k].length}</em></summary>${groups[k].map(x=>{ const v = ind[x.code]||{}; return `<div class="ind ${x.type==='NCOI'?'n':''} ${v.r?'done':''}"><div class="ind-h"><b>${x.code}</b><span class="${x.type==='NCOI'?'tncoi':'tcoi'}">${x.type}</span>${v.r?`<span class="rsel">${RATING_SHORT[v.r]}</span>`:''}</div><p>${esc(x.text)}</p>${v.ev?`<p class="hint">${esc(v.ev)}</p>`:''}</div>`; }).join('')}</details>`).join('');
 }
-
+function guideAll(open){ const o = OBS.cur, t = OBS.teachers.find(x=>x.email===o.teacherEmail); indFor(t && t.position).list.forEach(x => OBS.open[x.kra] = !Object.values(OBS.open).some(Boolean)); drawGuideKeep(); }
+function obsGuideOnly(){ openGuide(true); }
 function obsRate(code, r){ const ind = OBS.cur.data.ind; ind[code] = ind[code] || {}; ind[code].r = ind[code].r===r ? '' : r; drawGuideKeep(); obsAutosave(false); }
 function obsEv(code, v){ const ind = OBS.cur.data.ind; ind[code] = ind[code] || {}; ind[code].ev = v; }
 function drawGuideKeep(){ const s = $('oSide').scrollTop; drawGuide(); $('oSide').scrollTop = s; }
 function obsCollect(){
   const o = OBS.cur, d = o.data;
-  if (!$('oTeacher')) return o;
+  if (!$('oDate')) return o;
   o.teacherEmail = $('oTeacher').value; const t = OBS.teachers.find(x=>x.email===o.teacherEmail); o.teacherName = t ? t.name : ''; o.position = t ? t.position : '';
   o.date = $('oDate').value; const tw = findTermWeek(o.date); o.term = tw.term; o.week = tw.week;
+  d.notes = d.notes || {};
+  document.querySelectorAll('[data-note]').forEach(x => d.notes[x.dataset.note] = x.value);
+  if (otype(o)==='mwa'){
+    const f = document.querySelector('input[name=mfocus]:checked'); d.focus = f ? f.value : ''; d.place = $('mPlace').value;
+    const it = {}; document.querySelectorAll('[data-m]').forEach(x => it[x.dataset.m] = x.value); d.inc = [it];
+    o.grade = ''; o.subject = d.focus; return o;
+  }
   o.grade = $('oGrade').value; o.subject = $('oSubject').value;
   d.present = $('oPresent').value; d.enrolled = $('oEnrolled').value;
-  d.notes = d.notes || {}; d.notes.timeStart = $('oStart').value; d.notes.timeEnd = $('oEnd').value;
-  document.querySelectorAll('[data-note]').forEach(x => d.notes[x.dataset.note] = x.value);
+  d.notes.timeStart = $('oStart').value; d.notes.timeEnd = $('oEnd').value;
   d.inc = [...document.querySelectorAll('#oInc .inc')].map(row => { const it = {};
     row.querySelectorAll('[data-k]').forEach(x => { if (x.type==='radio'){ if (x.checked) it.rating = x.value; } else it[x.dataset.k] = x.value; }); return it; });
   return o;
@@ -2722,12 +2916,12 @@ async function obsSaveDraft(quiet){
 }
 async function obsLockSend(){
   const o = obsCollect();
-  if (!o.teacherEmail || !o.date) return toast('Choose the teacher and the date first.');
-  if (!confirm('Lock this observation and send it to '+o.teacherName+'? She will be able to read it, add to the agreement, and sign.')) return;
+  if (!o.date || (!o.teacherEmail && otype(o)!=='mwa')) return toast('Choose the teacher and the date first.');
+  if (!confirm(o.teacherEmail ? 'Lock this observation and send it to '+o.teacherName+'? She will be able to read it, comment on the agreement, and sign.' : 'Lock and save this area visit? It will be included in the weekly MWA.')) return;
   stopAutosave(); const saved = await obsSaveDraft(true); if (!saved) return;
   try{ localStorage.removeItem(wipKey(o.id)); }catch(e){}
   if (saved === 'local'){ queueOut('obsLock', { id:o.id }, 'Send observation'); toast('Saved on this device. It will be sent when you are online.'); obsBack(); return; }
-  try{ await api('obsLock',{ id:o.id }); toast('Locked and sent. '+o.teacherName+' will be notified.'); obsBack(); }
+  try{ await api('obsLock',{ id:o.id }); toast(o.teacherEmail ? 'Locked and sent. '+o.teacherName+' will be notified.' : 'Area visit saved.'); obsBack(); }
   catch(e){ handleErr(e); }
 }
 async function obsDelete(){
@@ -2740,23 +2934,24 @@ async function obsDelete(){
 }
 
 async function grammarCheck(){
-  const fields = [...document.querySelectorAll('[data-note]')].filter(x => x.value.trim().length > 3);
+  const fields = [...document.querySelectorAll('[data-note],[data-m],[data-k]')].filter(x => x.tagName==='TEXTAREA' && x.value.trim().length > 3);
+  fields.forEach((f,i) => { if (!f.dataset.note){ f.dataset.gk = 'g'+i; if (!f.nextElementSibling || !f.nextElementSibling.classList.contains('gfix')) f.insertAdjacentHTML('afterend', `<div class="gfix" data-for="g${i}"></div>`); } });
   if (!fields.length) return toast('Write some notes first.');
   if (navigator.onLine === false) return $('gStatus').textContent = 'Grammar check needs internet. Spelling is still underlined in red.';
   $('gStatus').textContent = 'Checking...'; let total = 0;
   for (const f of fields){
-    const box = document.querySelector('.gfix[data-for="'+f.dataset.note+'"]'); box.innerHTML = '';
+    const key = f.dataset.note || f.dataset.gk, box = document.querySelector('.gfix[data-for="'+key+'"]'); box.innerHTML = '';
     try{
       const res = await fetch('https://api.languagetool.org/v2/check', { method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body:'language=en-US&text='+encodeURIComponent(f.value) });
       const j = await res.json(), ms = (j.matches||[]).slice(0,8); total += ms.length;
       box.innerHTML = ms.map((m,i) => { const bad = f.value.substr(m.offset, m.length), fix = (m.replacements[0]||{}).value;
-        return `<div class="gsug"><span>${esc(m.message)}</span>${fix!==undefined?` <button type="button" class="linkbtn" onclick="applyFix('${f.dataset.note}',${m.offset},${m.length},this)" data-fix="${esc(fix)}">Change “${esc(bad)}” to “${esc(fix)}”</button>`:''}</div>`; }).join('');
+        return `<div class="gsug"><span>${esc(m.message)}</span>${fix!==undefined?` <button type="button" class="linkbtn" onclick="applyFix('${key}',${m.offset},${m.length},this)" data-fix="${esc(fix)}">Change “${esc(bad)}” to “${esc(fix)}”</button>`:''}</div>`; }).join('');
     }catch(e){ $('gStatus').textContent = 'The grammar checker could not be reached. Spelling is still underlined in red.'; return; }
   }
   $('gStatus').textContent = total ? total+' suggestion'+(total>1?'s':'')+' found. Tap a suggestion to apply it.' : 'No problems found.';
 }
 function applyFix(key, off, len, btn){
-  const f = document.querySelector('[data-note="'+key+'"]'), fix = btn.dataset.fix, before = f.value;
+  const f = document.querySelector('[data-note="'+key+'"]') || document.querySelector('[data-gk="'+key+'"]'), fix = btn.dataset.fix, before = f.value;
   f.value = before.slice(0, off) + fix + before.slice(off + len);
   const box = btn.closest('.gfix'); box.innerHTML = '<div class="gsug ok">Applied. Tap Check spelling and grammar again to recheck.</div>';
   obsAutosave(false);
@@ -2764,35 +2959,56 @@ function applyFix(key, off, len, btn){
 
 /* ----- Viewer (teacher review and signing, School Head signing, printing) ----- */
 async function obsViewer(){
-  const o = OBS.cur, head = USER.role==='head', teacher = USER.role==='teacher';
+  setTimeout(guideTabSync);
+  const o = OBS.cur, head = USER.role==='head', teacher = USER.role==='teacher', mwa = otype(o)==='mwa';
   let sigs = {}; try{ sigs = await api('obsSigs',{ id:o.id }); }catch(e){}
   OBS.sigs = sigs;
-  const canTeacherSign = teacher && o.status==='Sent', canHeadSign = head && o.status==='TeacherSigned';
+  const canTeacherSign = teacher && o.status==='Sent', canHeadSign = head && o.status==='TeacherSigned', canRevise = head && o.status==='Sent';
+  const comments = (o.data.comments||[]);
   $('viewObs').innerHTML = `
-    <div class="trk-head"><div><h2>Classroom Observation</h2><p><span class="opill ${o.status}">${OBS_PILL[o.status]}</span> ${esc(OBS_STATUS[o.status]||'')}</p></div>
+    <div class="trk-head"><div><span class="ktag ${otype(o)}">${mwa?'PMCF MWA':'ePMCF Classroom Observation'}</span><h2>${mwa?'Monitoring by Walking Around':'Classroom Observation'}</h2><p><span class="opill ${o.status}">${OBS_PILL[o.status]}</span> ${esc(OBS_STATUS[o.status]||'')}</p></div>
       <div class="head-actions"><button class="btn ghost" onclick="obsBack()">Back to list</button>
+        ${mwa?'':'<button class="btn ghost" onclick="openGuide(true)">COI and NCOI guide</button>'}
         ${head && o.status==='Sent'?'<button class="btn ghost" onclick="obsUnlock()">Unlock to edit</button>':''}
-        <button class="btn ghost" onclick="printObsNotes(OBS.cur)">Print observation notes</button>
-        ${o.status==='Completed'||head?`<button class="btn ghost" onclick="printPmcf()">${o.status==='Completed'?'Print PMCF (PDF)':'Preview PMCF'}</button>`:''}
-        ${o.status==='Completed'?'<button class="btn" onclick="downloadPmcf()">Download Excel for the Division</button>':''}</div></div>
-    ${canTeacherSign?`<div class="notice" style="margin-top:12px"><b>Please review this observation.</b> You may add to the agreement in each row, write a comment, then tap <b>Sign and return</b>. Your saved e-signature will be used.</div>`:''}
-    <div class="obs-doc">${pmcfBody(o, sigs, false, canTeacherSign)}</div>
-    ${canTeacherSign?`<div class="field" style="margin-top:12px"><label>Your comment (optional)</label><textarea id="oComment" rows="3"></textarea></div>
-      <div class="obs-actions"><button class="btn sun" onclick="obsTeacherSign()">Sign and return to the School Head</button></div>`:''}
+        ${mwa?'':'<button class="btn ghost" onclick="printObsNotes(OBS.cur)">Print notes</button>'}
+        ${o.status==='Completed'||head?`<button class="btn ghost" onclick="printPmcf()">${o.status==='Completed'?'Print as PDF':'Preview PDF'}</button>`:''}
+        ${o.status==='Completed'&&!mwa?'<button class="btn" onclick="downloadPmcf()">Download Excel for the Division</button>':''}</div></div>
+    ${canTeacherSign?`<div class="notice" style="margin-top:12px"><b>Please review this observation.</b> If you want something added, changed, or removed in the agreement, write it in the comment box below. The School Head will see it and may revise the agreement. When you agree, tap <b>Sign and return</b>.</div>`:''}
+    ${canRevise && comments.some(c=>c.role==='teacher')?`<div class="notice" style="margin-top:12px"><b>The teacher commented on the agreement.</b> Revise the agreement below, then tap Save revised agreement. She will be notified to review and sign.</div>`:''}
+    <div class="obs-doc">${mwa ? mwaBody(o, sigs, false) : pmcfBody(o, sigs, false, false)}</div>
+    ${canRevise?`<section class="ocard2" style="margin-top:12px"><h3>Revise the agreement</h3>${(o.data.inc||[]).map((it,i)=>`<div class="field"><label>Row ${i+1}${it.situation?': '+esc(String(it.situation).trim()):''}</label><textarea spellcheck="true" lang="en" data-agr="${i}" rows="2">${esc(it.agreement||'')}</textarea></div>`).join('')}
+      <button class="btn" onclick="obsSaveAgree()">Save revised agreement</button></section>`:''}
+    ${o.teacherEmail && o.status!=='Draft'?`<section class="ocard2" style="margin-top:12px"><h3>Comments on the agreement</h3>
+      <div class="cmts">${comments.map(c=>`<div class="cmt ${c.role==='head'?'h':''}"><b>${esc(c.by)}</b><small>${esc(dTime(c.on))}</small><p>${esc(c.text)}</p></div>`).join('') || '<p class="hint">No comments yet.</p>'}</div>
+      ${(teacher && o.status==='Sent') || (head && o.status!=='Completed') ? `<textarea id="oCmt" spellcheck="true" lang="en" rows="2" placeholder="${teacher?'Suggest what to add, change, or remove in the agreement':'Reply to the teacher'}"></textarea><button class="btn ghost small" style="margin-top:6px" onclick="obsSendComment()">Send comment</button>`:''}</section>`:''}
+    ${canTeacherSign?`<div class="obs-actions"><button class="btn sun" onclick="obsTeacherSign()">Sign and return to the School Head</button></div>`:''}
     ${canHeadSign?`<div class="obs-actions"><button class="btn sun" onclick="obsHeadSign()">Sign as rater</button></div>`:''}
-    <details class="byt" style="margin-top:14px"><summary>Observation notes</summary><div style="padding:0 14px 14px">${notesBody(o)}</div></details>`;
+    ${mwa?'':`<details class="byt" style="margin-top:14px"><summary>Observation notes</summary><div style="padding:0 14px 14px">${notesBody(o)}</div></details>`}`;
 }
+async function obsSendComment(){
+  const text = $('oCmt').value.trim(); if (!text) return toast('Type your comment first.');
+  loading(true,'Sending');
+  try{ const r = await api('obsComment',{ id:OBS.cur.id, text }); obsPut(r); toast('Comment sent.'); obsViewer(); }catch(e){ handleErr(e); }
+  loading(false);
+}
+async function obsSaveAgree(){
+  const agreements = {}; document.querySelectorAll('[data-agr]').forEach(x => agreements[x.dataset.agr] = x.value);
+  loading(true,'Saving');
+  try{ const r = await api('obsAgree',{ id:OBS.cur.id, agreements }); obsPut(r); toast('Agreement revised. The teacher will be notified.'); obsViewer(); }catch(e){ handleErr(e); }
+  loading(false);
+}
+function obsPut(r){ const i = OBS.list.findIndex(x=>x.id===r.id); if (i<0) OBS.list.push(r); else OBS.list[i] = r; obsLocalSave(); OBS.cur = JSON.parse(JSON.stringify(r)); }
 async function obsUnlock(){
   if (!confirm('Unlock this observation? It goes back to your drafts and the teacher will no longer see it until you send it again.')) return;
   try{ const r = await api('obsUnlock',{ id:OBS.cur.id }); OBS.list[OBS.list.findIndex(x=>x.id===r.id)] = r; obsLocalSave(); OBS.cur = JSON.parse(JSON.stringify(r)); obsEditor(); }
   catch(e){ handleErr(e); }
 }
 async function obsTeacherSign(){
-  const additions = {}; document.querySelectorAll('[data-add]').forEach(x => { if (x.value.trim()) additions[x.dataset.add] = x.value.trim(); });
+  const additions = {};
   try{ const mine = await api('getMySig'); if (!mine || !mine.sig){ toast('Please save your e-signature first.'); openSig(); return; } }catch(e){ return handleErr(e); }
   if (!confirm('Sign this observation with your saved e-signature?')) return;
   loading(true,'Signing');
-  try{ const r = await api('obsTeacherSign',{ id:OBS.cur.id, additions, comment: $('oComment') ? $('oComment').value : '' });
+  try{ const r = await api('obsTeacherSign',{ id:OBS.cur.id, additions, comment: '' });
     OBS.list[OBS.list.findIndex(x=>x.id===r.id)] = r; obsLocalSave(); OBS.cur = JSON.parse(JSON.stringify(r)); toast('Signed and returned to the School Head.'); obsViewer(); }
   catch(e){ handleErr(e); }
   loading(false);
@@ -2820,10 +3036,10 @@ function pmcfBody(o, sigs, print, editable){
       <tr><td># OF LEARNERS PRESENT:</td><td>${esc(d.present||'')} &nbsp; ENROLLMENT: ${esc(d.enrolled||'')}</td><td>RATING PERIOD:</td><td>${esc(syShort())} &nbsp; YEAR: TERM ${esc(o.term||'')}</td><td>Subject:</td><td>${esc(o.subject||'')}</td></tr></table>
     <div class="pm-grid"><table class="pm-inc"><thead><tr><th colspan="3">Critical Incidence Description</th><th rowspan="2">RESULT</th><th rowspan="2">Rating<br>(5 is the Highest)</th><th rowspan="2">Agreement</th><th rowspan="2">Timeline<br>(MM/DD/YYYY)</th><th rowspan="2">Name and Signature of Rater and Ratee</th></tr><tr><th>SITUATION</th><th>TASK</th><th>ACTION</th></tr></thead>
       <tbody>${inc.length ? inc.map((it,i) => `<tr><td>${esc((it.situation||'').trim())}</td><td>${esc(it.task||'')}</td><td>${esc(it.action||'')}</td><td>${esc(it.result||'')}</td><td style="text-align:center">${esc(it.rating||'')}</td>
-        <td>${esc(it.agreement||'')}${it.teacherAdd?`<div class="tadd"><b>Teacher:</b> ${esc(it.teacherAdd)}</div>`:''}${editable?`<textarea data-add="${(d.inc||[]).indexOf(it)}" rows="2" placeholder="Add to the agreement (optional)"></textarea>`:''}</td>
+        <td>${esc(it.agreement||'')}${it.teacherAdd?`<div class="tadd"><b>Teacher:</b> ${esc(it.teacherAdd)}</div>`:''}</td>
         <td>${it.timeline?esc(dShort(it.timeline)):''}</td><td>${i===0?sigCell():`<span>${esc(rt.name)}</span><br><span>${esc(o.teacherName||'')}</span>`}</td></tr>`).join('') : '<tr><td colspan="8" style="text-align:center">No critical incidents recorded.</td></tr>'}</tbody></table>
     <table class="pm-ind"><thead><tr><th>WITH PPST INDICATORS FOR<br>${isHP(o.position)?'HIGHLY PROFICIENT TEACHERS':'PROFICIENT TEACHERS'}</th><th>RATING</th></tr></thead>
-      <tbody>${xl.map(s => { const code = s.split('-')[0], r = ((d.ind||{})[code]||{}).r || ''; const gi = g.list.find(x=>x.code===code);
+      <tbody>${xl.filter(s => { const code = s.split('-')[0]; return !(print || USER.role!=='head') || ((d.ind||{})[code]||{}).r; }).map(s => { const code = s.split('-')[0], r = ((d.ind||{})[code]||{}).r || ''; const gi = g.list.find(x=>x.code===code);
         return `<tr><td><b>${code}</b> ${esc(print ? s.slice(s.indexOf('-')+1) : (gi ? gi.text : s.slice(s.indexOf('-')+1)))}${gi?` <span class="${gi.type==='NCOI'?'tncoi':'tcoi'}">${gi.type}</span>`:''}</td><td>${esc(r)}</td></tr>`; }).join('')}</tbody></table></div>
     ${d.teacherComment?`<p class="pm-comment"><b>Teacher's comment:</b> ${esc(d.teacherComment)}</p>`:''}
     <div class="pm-signs"><div>${sigs.Rater?`<img src="${sigs.Rater.sig}" alt="">`:'<i></i>'}<b>${esc(rt.name)}</b><span>Rater${rt.position?', '+esc(rt.position):''}</span>${sigs.Rater?`<small>Signed ${esc(dTime(sigs.Rater.on))}</small>`:''}</div>
@@ -2835,13 +3051,24 @@ function notesBody(o){
   const n = (o.data||{}).notes || {};
   return `<table class="pm-head"><tr><td>Teacher:</td><td><b>${esc(o.teacherName||'')}</b>${o.position?', '+esc(o.position):''}</td><td>Date:</td><td>${o.date?esc(dShort(o.date)):''}${n.timeStart?' ('+esc(fmtTime(n.timeStart))+(n.timeEnd?' to '+esc(fmtTime(n.timeEnd)):'')+')':''}</td></tr>
     <tr><td>Grade and subject:</td><td>${esc([o.grade,o.subject].filter(Boolean).join(', '))}</td><td>Term and week:</td><td>${o.term?'Term '+esc(o.term)+(o.week?', Week '+esc(o.week):''):''}</td></tr></table>
-    ${NOTE_FIELDS.map(([k,l]) => n[k] ? `<div class="nsec"><b>${esc(l)}</b><p>${esc(n[k])}</p></div>` : '').join('') || '<p class="hint">No notes written.</p>'}`;
+    ${[['low','What I saw and heard']].concat(NOTE_FIELDS).map(([k,l]) => n[k] ? `<div class="nsec"><b>${esc(l)}</b><p>${esc(n[k])}</p></div>` : '').join('') || '<p class="hint">No notes written.</p>'}`;
 }
 function printHeader(){ return `<div class="p-head"><img src="${LOGO}" alt=""><div>Republic of the Philippines<br><b>Department of Education</b><br>Region IX, Zamboanga Peninsula<br>Schools Division of Zamboanga Sibugay<br>Imelda District<br><b>BALUYAN ELEMENTARY SCHOOL</b><br>School ID 125592</div></div>`; }
 async function printPmcf(){
   const o = OBS.cur; let sigs = OBS.sigs || {}; try{ sigs = await api('obsSigs',{ id:o.id }); }catch(e){}
-  $('printArea').innerHTML = `${printHeader()}<div class="p-pmcf">${pmcfBody(o, sigs, true, false)}</div><div class="p-foot">Generated from TALA on ${esc(dTime(nowLocal().replace('T',' ')))}.${o.status!=='Completed'?' PREVIEW ONLY, not yet signed by both.':''}</div>`;
+  $('printArea').innerHTML = `${printHeader()}<div class="p-pmcf">${otype(o)==='mwa' ? mwaBody(o, sigs, true) : pmcfBody(o, sigs, true, false)}</div><div class="p-foot">Generated from TALA on ${esc(dTime(nowLocal().replace('T',' ')))}.${o.status!=='Completed'?' PREVIEW ONLY, not yet signed by both.':''}</div>`;
   setTimeout(() => window.print(), 200);
+}
+function mwaBody(o, sigs, print){
+  const d = o.data||{}, it = (d.inc||[])[0]||{}, rt = raterInfo(o);
+  return `<div class="pmcf"><div class="pm-title"><b>PERFORMANCE MONITORING AND COACHING FORM (PMCF)</b><br>MANAGEMENT BY WALKING AROUND (MWA)</div>
+    <table class="pm-head"><tr><td>DATE MONITORED:</td><td>${o.date?esc(dShort(o.date)):''}</td><td>FOCUS:</td><td>${esc(d.focus||'')}</td><td>PLACE:</td><td>${esc(d.place||'')}</td></tr>
+      <tr><td>SCHOOL HEAD:</td><td>${esc(rt.name)}</td><td>TEACHER:</td><td>${esc(o.teacherName||'Area or school-wide')}</td><td>TERM AND WEEK:</td><td>${o.term?'Term '+esc(o.term)+', Week '+esc(o.week):''}</td></tr></table>
+    <table class="pm-inc"><thead><tr><th>SITUATION</th><th>TASK OF THE SCHOOL HEAD</th><th>ACTION BY THE TEACHER</th><th>RESULT OF THE ACTION OF THE TEACHER</th><th>CONSEQUENCE OF RESULT</th><th>AGREEMENT</th><th>SECOND VISIT</th></tr></thead>
+      <tbody><tr><td>${esc(it.situation||'')}</td><td>${esc(it.task||'')}</td><td>${esc(it.action||'')}</td><td>${esc(it.result||'')}</td><td>${esc(it.consequence||'')}</td><td>${esc(it.agreement||'')}</td><td>${it.timeline?esc(dShort(it.timeline)):''}</td></tr></tbody></table>
+    ${(d.notes||{}).low?`<div class="nsec"><b>What I saw and heard</b><p>${esc(d.notes.low)}</p></div>`:''}
+    <div class="pm-signs"><div>${sigs.Rater?`<img src="${sigs.Rater.sig}" alt="">`:'<i></i>'}<b>${esc(rt.name)}</b><span>School Head</span></div>
+      ${o.teacherName?`<div>${sigs.Ratee?`<img src="${sigs.Ratee.sig}" alt="">`:'<i></i>'}<b>${esc(o.teacherName)}</b><span>Teacher</span></div>`:''}</div></div>`;
 }
 function printObsNotes(o){
   const rt = raterInfo(o);
@@ -2853,22 +3080,23 @@ function printObsNotes(o){
 
 /* ----- Summary report (School Head and Administrative Officer) ----- */
 function obsSummary(){
-  const term = OBS.term || '1', done = OBS.list.filter(o => o.status!=='Draft' && o.term===term);
+  const term = OBS.term || '1', kind = OBS.kind, done = OBS.list.filter(o => o.status!=='Draft' && o.term===term && otype(o)===kind);
   const rows = OBS.teachers.map(t => { const mine = done.filter(o=>o.teacherEmail===t.email);
     return { t, total:mine.length, completed:mine.filter(o=>o.status==='Completed').length, weeks:Array.from({length:12},(_,i)=>mine.filter(o=>o.week===String(i+1)).length),
-      terms:['1','2','3'].map(x => OBS.list.filter(o=>o.status!=='Draft' && o.term===x && o.teacherEmail===t.email).length) }; });
+      terms:['1','2','3'].map(x => OBS.list.filter(o=>o.status!=='Draft' && o.term===x && o.teacherEmail===t.email && otype(o)===kind).length) }; });
   const wkTot = Array.from({length:12},(_,i)=>done.filter(o=>o.week===String(i+1)).length);
   const table = `<div class="table-wrap"><table class="sumt"><thead><tr><th>Teacher</th><th>Position</th>${Array.from({length:12},(_,i)=>`<th>W${i+1}</th>`).join('')}<th>Term ${term}</th><th>Completed</th><th>T1</th><th>T2</th><th>T3</th></tr></thead>
     <tbody>${rows.map(r=>`<tr><td>${esc(r.t.name)}</td><td>${esc(r.t.position||'')}</td>${r.weeks.map(n=>`<td class="${n?'':'zero'}">${n||''}</td>`).join('')}<td><b>${r.total}</b></td><td>${r.completed}</td>${r.terms.map(n=>`<td>${n}</td>`).join('')}</tr>`).join('')}
     <tr class="tot"><td colspan="2"><b>Total</b></td>${wkTot.map(n=>`<td><b>${n||''}</b></td>`).join('')}<td><b>${done.length}</b></td><td><b>${done.filter(o=>o.status==='Completed').length}</b></td><td colspan="3"></td></tr></tbody></table></div>`;
-  $('viewObs').innerHTML = `<div class="trk-head"><div><h2>Observation Summary, Term ${term}</h2><p>Observations sent to teachers, counted per week and per term. Drafts are not counted.</p></div>
+  OBS.sub = 'sum';
+  $('viewObs').innerHTML = `<div class="ktabs"><button class="${kind==='epmcf'?'on':''}" onclick="OBS.kind='epmcf';obsSummary()">ePMCF Classroom Observation</button><button class="${kind==='mwa'?'on':''}" onclick="OBS.kind='mwa';obsSummary()">PMCF MWA</button></div><div class="trk-head"><div><h2>${kind==='mwa'?'MWA':'Classroom Observation'} Summary, Term ${term}</h2><p>Observations sent to teachers, counted per week and per term. Drafts are not counted.</p></div>
     <div class="head-actions"><button class="btn ghost" onclick="obsBack()">Back to list</button><button class="btn" onclick="printObsSummary()">Print summary</button></div></div>
     <div class="bar" style="margin-top:12px"><div class="tabs">${['1','2','3'].map(t=>`<button class="${term===t?'on':''}" onclick="OBS.term='${t}';obsSummary()">Term ${t}</button>`).join('')}</div></div>${table}`;
   OBS.sumTable = table;
 }
 function printObsSummary(){
-  const term = OBS.term || '1', list = OBS.list.filter(o => o.status!=='Draft' && o.term===term).sort((a,b)=>String(a.date).localeCompare(String(b.date)));
-  $('printArea').innerHTML = `${printHeader()}<div class="p-title">SUMMARY OF CLASSROOM OBSERVATIONS</div><p class="p-sub">Term ${esc(term)}. ${esc((DATA&&DATA.settings.sy)||'')}</p>
+  const term = OBS.term || '1', kind = OBS.kind, list = OBS.list.filter(o => o.status!=='Draft' && o.term===term && otype(o)===kind).sort((a,b)=>String(a.date).localeCompare(String(b.date)));
+  $('printArea').innerHTML = `${printHeader()}<div class="p-title">SUMMARY OF ${kind==='mwa'?'MONITORING BY WALKING AROUND (MWA)':'CLASSROOM OBSERVATIONS (ePMCF)'}</div><p class="p-sub">Term ${esc(term)}. ${esc((DATA&&DATA.settings.sy)||'')}</p>
     ${OBS.sumTable.replace('class="table-wrap"','').replace('class="sumt"','class="p-table"')}
     <div class="p-sumtitle" style="margin-top:12px">LIST OF OBSERVATIONS</div>
     <table class="p-table"><thead><tr><th>No.</th><th>Date</th><th>Week</th><th>Teacher</th><th>Grade and Subject</th><th>Status</th></tr></thead><tbody>${list.map((o,i)=>`<tr><td style="text-align:center">${i+1}</td><td>${esc(dShort(o.date))}</td><td>${esc(o.week||'')}</td><td>${esc(o.teacherName)}</td><td>${esc([o.grade,o.subject].filter(Boolean).join(', '))}</td><td>${esc(OBS_PILL[o.status])}</td></tr>`).join('') || '<tr><td colspan="6" style="text-align:center">None</td></tr>'}</tbody></table>
@@ -2920,7 +3148,7 @@ async function downloadPmcf(){
     xlCached(enc,E,'H14','Baluyan ES'); xlCached(enc,E,'M14','IMELDA'); xlCached(enc,E,'O17',prof); xlCached(enc,E,'P18', prof==='HP' ? 'HIGHLY PROFICIENT TEACHERS' : 'PROFICIENT TEACHERS');
     for (let i = 0; i < 16; i++){
       const r = 19+i, it = inc[i] || {};
-      xlStr(enc,E,'A'+r,it.situation||''); xlStr(enc,E,'C'+r,taskAction(it)); xlStr(enc,E,'H'+r,it.result||''); // Task and Action share one merged cell in the template
+      xlStr(enc,E,'A'+r,it.situation||''); xlStr(enc,E,'C'+r,it.task||''); xlStr(enc,E,'E'+r,it.action||''); xlStr(enc,E,'H'+r,it.result||'');
       xlNum(enc,E,'J'+r,it.rating||''); xlStr(enc,E,'K'+r,agreeText(it)); it.timeline ? xlNum(enc,E,'L'+r,xlSerial(it.timeline)) : xlNum(enc,E,'L'+r,'');
       xlStr(enc,E,'M'+r, inc[i] ? names : '');
     }
@@ -2930,7 +3158,7 @@ async function downloadPmcf(){
     for (let k = 2; k <= 100; k++){
       const it = inc[k-2], z = v => (v === '' || v == null) ? 0 : v;
       const vals = { A:125592, B:'Baluyan ES', C:'IMELDA', D:z(ratee), E:z(pos), F:z(rt.name), G:z(rpos), H:z(gradeNum), I:z(d.enrolled?Number(d.enrolled):''), J:z(d.present?Number(d.present):''), K:z(sy), L:z(sem), M: date===''?'':date, N:z(subj),
-        O: it ? z(it.situation) : 0, P: it ? z(taskAction(it)) : 0, Q: it ? z(it.result) : 0, R: it && it.rating ? Number(it.rating) : 0, S: it ? z(agreeText(it)) : 0, T: it && it.timeline ? xlSerial(it.timeline) : 0, U: it ? names : 0, X: z(o.teacherEmail) };
+        O: it ? z(it.situation) : 0, P: it ? z(it.task) : 0, Q: it ? z(it.result) : 0, R: it && it.rating ? Number(it.rating) : 0, S: it ? z(agreeText(it)) : 0, T: it && it.timeline ? xlSerial(it.timeline) : 0, U: it ? names : 0, X: z(o.teacherEmail) };
       Object.keys(vals).forEach(col => xlCached(db,D,col+k, typeof vals[col]==='number' ? vals[col] : String(vals[col])));
       const s = x => (x === 0 ? '0' : String(x));
       xlCached(db,D,'V'+k, '125592'+s(vals.D)+s(vals.K)+s(vals.L)+s(vals.N)+s(vals.O)+s(vals.H));
@@ -2944,7 +3172,10 @@ async function downloadPmcf(){
       xlCached(pp,Q,'C'+k, r || 0); xlCached(pp,Q,'D'+k, idx >= 0 ? idx : '#N/A'); xlCached(pp,Q,'E'+k,'IMELDA'); xlCached(pp,Q,'F'+k,125592);
       xlCached(pp,Q,'G'+k, pos||0); xlCached(pp,Q,'H'+k, prof); xlCached(pp,Q,'I'+k, ratee||0); xlCached(pp,Q,'J'+k, o.teacherEmail||0); xlCached(pp,Q,'K'+k, date===''?0:date);
     }
-    zip.file('xl/worksheets/sheet1.xml', S.serializeToString(enc)); zip.file('xl/worksheets/sheet4.xml', S.serializeToString(db)); zip.file('xl/worksheets/sheet3.xml', S.serializeToString(pp));
+    // Task (C to D) and Action (E to G) get their own columns, matching the headings
+    let s1 = S.serializeToString(enc); for (let r = 19; r <= 36; r++) s1 = s1.replace(`<mergeCell ref="C${r}:G${r}"/>`, `<mergeCell ref="C${r}:D${r}"/><mergeCell ref="E${r}:G${r}"/>`);
+    s1 = s1.replace(/<mergeCells count="(\d+)"/, (m,n) => `<mergeCells count="${(s1.match(/<mergeCell /g)||[]).length}"`);
+    zip.file('xl/worksheets/sheet1.xml', s1); zip.file('xl/worksheets/sheet4.xml', S.serializeToString(db)); zip.file('xl/worksheets/sheet3.xml', S.serializeToString(pp));
     // Excel recalculates everything when the file is opened
     let wb = await zip.file('xl/workbook.xml').async('string'); wb = wb.replace(/<calcPr ([^>]*?)\/>/, (m, a) => /fullCalcOnLoad/.test(a) ? m : `<calcPr ${a} fullCalcOnLoad="1"/>`); zip.file('xl/workbook.xml', wb);
     // Signatures as pictures over the first row's Name and Signature cell
@@ -2966,6 +3197,207 @@ async function downloadPmcf(){
     toast('Excel file downloaded. Upload it to the Division portal as usual.');
   }catch(e){ handleErr(e); }
   loading(false);
+}
+
+
+/* ----- Weekly PMCF MWA Excel (Division template) ----- */
+async function downloadMwa(){
+  const term = OBS.term, week = OBS.week;
+  const list = OBS.list.filter(o => otype(o)==='mwa' && o.status!=='Draft' && o.term===term && o.week===week).sort((a,b)=>String(a.date).localeCompare(String(b.date))).slice(0,28);
+  if (!list.length) return toast('No locked MWA visits for Term '+term+' Week '+week+' yet.');
+  loading(true,'Preparing the MWA Excel file');
+  try{
+    await loadScript(LIBS.zip);
+    const res = await fetch('mwa-template.xlsm', { cache:'no-cache' }); if (!res.ok) throw new Error('The MWA template file (mwa-template.xlsm) was not found next to index.html.');
+    const zip = await JSZip.loadAsync(await res.arrayBuffer()), P = new DOMParser(), S = new XMLSerializer();
+    const enc = P.parseFromString(await zip.file('xl/worksheets/sheet1.xml').async('string'),'application/xml'), db = P.parseFromString(await zip.file('xl/worksheets/sheet3.xml').async('string'),'application/xml');
+    const E = xlCells(enc), D = xlCells(db), val = {};
+    const put = (ref, v, num) => { val[ref] = v; num ? xlNum(enc,E,ref,v) : xlStr(enc,E,ref,v); };
+    const w = weekOf(term, week), months = ['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE','JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'];
+    const ws = w ? w.start : list[0].date, month = months[Number(ws.slice(5,7))-1], wom = Math.ceil(Number(ws.slice(8,10))/7);
+    const rt = raterInfo(list[0]), teachers = (DATA.teachers||[]).length;
+    put('C13', month); put('E13', syShort()); put('G13', wom, true); put('D15', 125592, true);
+    put('D16', (DATA.headName || rt.name).toUpperCase()); put('H16', (USER.position || rt.position || '').toUpperCase()); put('K16', teachers, true);
+    xlCached(enc,E,'I15','Baluyan ES'); val.I15 = 'Baluyan ES'; xlCached(enc,E,'N15','IMELDA'); val.N15 = 'IMELDA';
+    for (let i = 0; i < 28; i++){
+      const r = 19+i, o = list[i]; if (!o){ ['A','B','E','G','J','K','L','M','N'].forEach(c => put(c+r, '')); continue; }
+      const it = (o.data.inc||[])[0]||{}, d = o.data;
+      put('A'+r, xlSerial(o.date), true);
+      put('B'+r, [d.focus ? d.focus+(d.place?' ('+d.place+')':'')+'.' : '', it.situation||''].filter(Boolean).join(' '));
+      put('E'+r, it.task||''); put('G'+r, it.action||''); put('J'+r, it.result||''); put('K'+r, it.consequence||''); put('L'+r, it.agreement||'');
+      it.timeline ? put('M'+r, xlSerial(it.timeline), true) : put('M'+r, '');
+      put('N'+r, (DATA.headName || rt.name)+' (School Head)'+(o.teacherName ? '\n'+o.teacherName+' (Teacher)' : ''));
+    }
+    // hidden database: each formula copies an ENCODING cell, so save the same values there
+    const cs = db.getElementsByTagName('c');
+    for (let i = 0; i < cs.length; i++){
+      const c = cs[i], f = c.getElementsByTagName('f')[0]; if (!f) continue;
+      const m = f.textContent.match(/^ENCODING!\$?([A-Z]+)\$?(\d+)$/); if (!m) continue;
+      const v = val[m[1]+m[2]]; xlCached(db, D, c.getAttribute('r'), v === undefined || v === '' ? 0 : v);
+    }
+    for (let k = 2; k <= 50; k++){
+      const g = col => { const c = D[col+k]; const v = c && c.getElementsByTagName('v')[0]; return v ? v.textContent : '0'; };
+      xlCached(db, D, 'S'+k, g('J')+g('I')+g('H')+g('K')+g('R')); xlCached(db, D, 'T'+k, g('I')+' WEEK '+g('J')+' '+g('H'));
+    }
+    zip.file('xl/worksheets/sheet1.xml', S.serializeToString(enc)); zip.file('xl/worksheets/sheet3.xml', S.serializeToString(db));
+    let wb = await zip.file('xl/workbook.xml').async('string'); wb = wb.replace(/<calcPr ([^>]*?)\/>/, (m, a) => /fullCalcOnLoad/.test(a) ? m : `<calcPr ${a} fullCalcOnLoad="1"/>`); zip.file('xl/workbook.xml', wb);
+    const blob = await zip.generateAsync({ type:'blob', mimeType:'application/vnd.ms-excel.sheet.macroEnabled.12', compression:'DEFLATE' });
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'PMCF_MWA_'+month+'_Week'+wom+'_Term'+term+'W'+week+'.xlsm';
+    document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 2000);
+    toast('MWA Excel downloaded with '+list.length+' visit'+(list.length>1?'s':'')+'.');
+  }catch(e){ handleErr(e); }
+  loading(false);
+}
+
+/* ----- Observation calendar: 2 observations each school day you are in school ----- */
+const OUT_TYPES = ['Training','Seminar','Orientation','Meeting','Official travel','Leave','No classes (holiday or suspension)','Other'];
+var CALM = '';
+function schoolDay(date){ const w = dow(date); if (w===0 || w===6) return false; return !!findTermWeek(date).term; }
+function calMark(date){ return (OBS.cal||[]).find(x=>x.date===date); }
+function obsOnDay(date){ return OBS.list.filter(o => o.date===date).length; }
+// Days in school from the first day of this term up to today
+function obsQuota(){
+  const term = OBS.term || (DATA && pickCurrentTerm(DATA.settings)) || '1', w1 = weekOf(term,'1'), today = todayPH();
+  let days = 0, need = 0, done = 0, lack = 0;
+  if (!w1) return { days, need, done, lack };
+  for (let d = w1.start; d <= today; d = addDays(d,1)){
+    if (!schoolDay(d) || calMark(d)) continue;
+    days++; need += 2; const n = Math.min(2, obsOnDay(d)); done += n; lack += 2 - n;
+  }
+  return { days, need, done, lack };
+}
+function openCal(){
+  OBS.sub = 'cal'; OBS.cur = null; stopAutosave(); closeGuide(); showObsView();
+  if (!CALM) CALM = todayPH().slice(0,7);
+  drawCal();
+}
+function drawCal(){
+  const head = USER.role==='head', [y,m] = CALM.split('-').map(Number), first = CALM+'-01', startDow = dow(first), days = new Date(Date.UTC(y,m,0)).getUTCDate(), today = todayPH();
+  const q = obsQuota();
+  let cells = ''; for (let i = 0; i < startDow; i++) cells += '<div class="cday empty"></div>';
+  for (let d = 1; d <= days; d++){
+    const date = CALM+'-'+String(d).padStart(2,'0'), mk = calMark(date), sd = schoolDay(date), n = obsOnDay(date), past = date <= today;
+    const st = mk ? 'out' : !sd ? 'off' : n >= 2 ? 'ok' : past ? (n ? 'part' : 'miss') : 'future';
+    cells += `<button class="cday ${st} ${date===today?'today':''}" ${head?`onclick="calDay('${date}')"`:''}><b>${d}</b>${mk?`<small>${esc(mk.type.replace(/ \(.*/,''))}</small>`:sd?`<span class="cdots">${[0,1].map(i=>`<i class="${i<n?'on':''}"></i>`).join('')}${n>2?'<em>+'+(n-2)+'</em>':''}</span>`:''}</button>`;
+  }
+  const mname = new Date(Date.UTC(y,m-1,1)).toLocaleString('en-US',{month:'long',year:'numeric',timeZone:'UTC'});
+  const prev = new Date(Date.UTC(y,m-2,1)).toISOString().slice(0,7), next = new Date(Date.UTC(y,m,1)).toISOString().slice(0,7);
+  $('viewObs').innerHTML = `<div class="trk-head"><div><h2>Observation Calendar</h2><p>Target: 2 observations (ePMCF or PMCF MWA) every school day you are in school. ${head?'Tap a day to mark yourself out of school.':''}</p></div>
+      <div class="head-actions"><button class="btn ghost" onclick="obsBack()">Back</button></div></div>
+    <div class="ostats"><div class="ostat static"><span class="oico">\u2637</span><b>${q.days}</b><span>School days in school, this term so far</span></div>
+      <div class="ostat static"><span class="oico">\u2714</span><b>${q.done}</b><span>Of ${q.need} required observations</span></div>
+      <div class="ostat static ${q.lack?'s-warn':''}"><span class="oico">!</span><b>${q.lack}</b><span>Observations lacking</span></div></div>
+    <div class="calbar"><button class="btn ghost small" onclick="CALM='${prev}';drawCal()">\u2039 Previous</button><b>${esc(mname)}</b><button class="btn ghost small" onclick="CALM='${next}';drawCal()">Next \u203A</button></div>
+    <div class="cal"><div class="cdow">Sun</div><div class="cdow">Mon</div><div class="cdow">Tue</div><div class="cdow">Wed</div><div class="cdow">Thu</div><div class="cdow">Fri</div><div class="cdow">Sat</div>${cells}</div>
+    <div class="clegend"><span><i class="ok"></i>2 or more done</span><span><i class="part"></i>1 done</span><span><i class="miss"></i>None done</span><span><i class="out"></i>Out of school</span><span><i class="off"></i>No school or outside the terms</span></div>`;
+}
+function calDay(date){
+  const mk = calMark(date) || {}, list = OBS.list.filter(o=>o.date===date);
+  $('calTitle').textContent = dShort(date); $('calDate').value = date;
+  $('calType').innerHTML = '<option value="">In school (no mark)</option>' + OUT_TYPES.map(t=>`<option ${t===mk.type?'selected':''}>${esc(t)}</option>`).join('');
+  $('calNote').value = mk.note || '';
+  $('calObs').innerHTML = list.length ? list.map(o=>`<div class="calo"><span class="ktag ${otype(o)}">${otype(o)==='mwa'?'MWA':'ePMCF'}</span> ${esc(o.teacherName||(o.data||{}).focus||'Visit')}</div>`).join('') : '<p class="hint">No observations recorded on this day.</p>';
+  openModal('calModal');
+}
+async function calSave(){
+  const date = $('calDate').value, type = $('calType').value, note = $('calNote').value;
+  OBS.cal = (OBS.cal||[]).filter(x=>x.date!==date); if (type) OBS.cal.push({ date, type, note }); obsLocalSave(); closeModal('calModal'); drawCal();
+  try{ OBS.cal = await api('calSave',{ date, type, note }); obsLocalSave(); drawCal(); toast(type ? 'Marked: '+type+'.' : 'Day cleared.'); }
+  catch(e){ handleErr(e); }
+}
+
+/* ----- Home: welcome, quote of the day, and summaries of every feature ----- */
+const QUOTES = [
+  'A good lesson is not what the teacher covers, but what the learners discover.',
+  'Every child you teach today carries a little of your light tomorrow.',
+  'Small steps every day still move a whole school forward.',
+  'Teach with your heart, plan with your head, and listen with both.',
+  'The best classrooms are built on patience, not perfection.',
+  'Your kindness today may be the lesson a learner remembers most.',
+  'Great teachers do not make learners copy them. They help learners find themselves.',
+  'A prepared teacher is a calm teacher, and a calm teacher is a powerful one.',
+  'Feedback is a gift. Give it kindly and receive it gladly.',
+  'When one teacher grows, every learner in that room grows too.',
+  'Reading opens doors that no one can close again.',
+  'Be the reason a child believes school is a safe place.',
+  'Good teaching is one part knowledge and nine parts care.',
+  'Today is a fresh page. Write a good lesson on it.',
+  'Learners may forget your words, but not how you made them feel.',
+  'A star does not compete with other stars. It simply shines.',
+  'Plan your lesson, then leave room for wonder.',
+  'Every question a child asks is a door you are invited to open.',
+  'Consistency in small things builds excellence in big things.',
+  'The goal is not to be better than other teachers, but better than yesterday.',
+  'Behind every confident reader is a patient teacher.',
+  'Teaching in a small school is still teaching a whole future.',
+  'Mistakes in class are not failures. They are the beginning of learning.',
+  'Inspire one learner today, and you have changed a family.',
+  'Celebrate progress, no matter how small.',
+  'A school is only as strong as the care its teachers give.',
+  'Lead with example, guide with patience, and grow with your learners.',
+  'The light you give your learners will guide them long after they leave your room.',
+  'Every LPT you prepare is a promise kept to your learners.',
+  'Rest well tonight. Your learners need your best self tomorrow.',
+  'Ask more, tell less, and watch learners think.',
+  'A warm greeting at the door can change a learner\u2019s whole day.'
+];
+function quoteToday(){ const d = todayPH(), n = Number(d.replace(/-/g,'')); return QUOTES[(n*7 + Number(d.slice(8,10))) % QUOTES.length]; }
+function showHome(){
+  ['viewTrk','viewAcc','viewBank','viewLog','viewWeeks','viewSig','viewObs'].forEach(v => $(v).style.display='none');
+  closeGuide(); $('viewHome').style.display=''; CUR_FEATURE = 'home'; drawSide(); drawHome(); window.scrollTo(0,0);
+  if ((USER.role==='head' || featOn('obs')) && !OBS.list.length){ obsLocalLoad(); obsRefresh().catch(()=>{}); }
+}
+function drawHome(){
+  if (!USER) return;
+  const hr = Number(new Date().toLocaleString('en-US',{timeZone:'Asia/Manila',hour:'numeric',hour12:false})), greet = hr < 12 ? 'Good morning' : hr < 18 ? 'Good afternoon' : 'Good evening';
+  const today = new Date().toLocaleString('en-US',{timeZone:'Asia/Manila',weekday:'long',month:'long',day:'numeric',year:'numeric'});
+  const first = USER.name.split(' ')[0].replace(/^./, c=>c.toUpperCase()), head = USER.role==='head', teacher = USER.role==='teacher';
+  // LPT and PPT this week
+  let lpt = '';
+  if (DATA && DATA.settings){
+    const term = pickCurrentTerm(DATA.settings), week = pickCurrentWeek(term), all = DATA.entries.filter(e => e.term===term && (week==='all' || e.week===week));
+    const items = []; all.forEach(e => itemsOf(e).forEach(x => items.push(x)));
+    const c = f => items.filter(f).length, files = []; all.forEach(e => filesOf(e).forEach(f => { if (f.d.link) files.push(f); }));
+    const box = (n, l, cls) => `<div class="hbox ${cls||''}"><b>${n}</b><span>${l}</span></div>`;
+    lpt = `<div class="hcard"><div class="hcard-h"><span class="oico">\u2637</span><div><b>LPT and PPT Tracking</b><small>Term ${term}${week==='all'?'':', Week '+week}</small></div><button class="btn small" onclick="openFeature('lpt')">Open</button></div>
+      <div class="hboxes">${box(c(x=>x.K==='LPT'&&x.status==='Approved'),'LPT submitted','g')}${box(c(x=>x.K==='PPT'&&x.status==='Approved'),'PPT submitted','g')}
+      ${box(files.filter(f=>docState(f.d)==='Pending').length, head?'Files for your checking':'Files for checking','y')}${box(c(x=>x.status==='Returned'||x.status==='Invalid'),'Returned or wrong file','r')}
+      ${head||USER.role==='admin' ? box((DATA.teachers||[]).filter(t=>!all.some(e=>e.email===t.email)).length,'Teachers with no upload yet','r') : box(c(x=>x.complete&&x.late&&x.late.late),'Late','r')}</div></div>`;
+  }
+  // Observations
+  let obs = '';
+  if (head || featOn('obs')){
+    const q = head ? obsQuota() : null, mine = OBS.list;
+    const box = (n, l, cls) => `<div class="hbox ${cls||''}"><b>${n}</b><span>${l}</span></div>`;
+    obs = `<div class="hcard"><div class="hcard-h"><span class="oico">\u25C9</span><div><b>Observations</b><small>ePMCF and PMCF MWA</small></div><button class="btn small" onclick="openFeature('obs')">Open</button></div>
+      <div class="hboxes">${head ? box(obsOnDay(todayPH())+' of 2','Observations today', obsOnDay(todayPH())>=2?'g':'y') + box(q.lack,'Lacking this term', q.lack?'r':'g') + box(mine.filter(o=>o.status==='TeacherSigned').length,'For your signature','y') + box(mine.filter(o=>o.status==='Draft').length,'Drafts') + box(mine.filter(o=>o.status==='Completed').length,'Completed','g')
+        : teacher ? box(mine.filter(o=>!o.seen).length,'New for you','r') + box(mine.filter(o=>o.status==='Sent').length,'Waiting for your signature','y') + box(mine.filter(o=>o.status==='Completed').length,'Completed','g')
+        : box(mine.filter(o=>o.status==='Completed').length,'Completed','g') + box(mine.filter(o=>o.status!=='Draft'&&o.status!=='Completed').length,'In progress','y')}</div>
+      ${head?`<div class="hacts"><button class="btn sun small" onclick="openFeature('obs');setTimeout(obsChooser,50)">\u002B New observation</button><button class="btn ghost small" onclick="openFeature('obs');setTimeout(openCal,50)">Observation calendar</button></div>`:''}</div>`;
+  }
+  $('viewHome').innerHTML = `
+    <div class="hhero"><div class="hhero-t"><h2>${greet}, ${esc(first)}!</h2><p>Today is ${esc(today)}. Enjoy your class, and be an inspiration.</p></div>
+      <div class="qcard" id="qCard"><span class="qstar">\u2605</span><p>\u201C${esc(quoteToday())}\u201D</p><small>TALA quote of the day</small>
+        <button class="btn ghost small" onclick="shareQuote()">Share this quote</button></div></div>
+    <div class="hgrid">${lpt}${obs}</div>
+    <div class="hcard soon"><b>More features are coming</b><small>Learner Reading Assessment, Attendance, Reimbursement Inventory, LAC and Teacher Development, and School M&amp;E Reports.</small></div>`;
+}
+// Makes a square picture of the quote that can be shared on social media
+async function shareQuote(){
+  const q = quoteToday(), c = document.createElement('canvas'); c.width = 1080; c.height = 1080; const g = c.getContext('2d');
+  const grd = g.createLinearGradient(0,0,1080,1080); grd.addColorStop(0,'#1F5130'); grd.addColorStop(1,'#2F7A4A'); g.fillStyle = grd; g.fillRect(0,0,1080,1080);
+  g.fillStyle = 'rgba(244,196,48,.18)'; g.beginPath(); g.arc(900,180,260,0,Math.PI*2); g.fill();
+  g.fillStyle = '#F4C430'; g.font = 'bold 120px Georgia, serif'; g.textAlign = 'center'; g.fillText('\u2605', 540, 230);
+  g.fillStyle = '#ffffff'; g.font = 'italic 54px Georgia, serif';
+  const words = ('\u201C'+q+'\u201D').split(' '), lines = []; let line = '';
+  words.forEach(w => { const t = line ? line+' '+w : w; if (g.measureText(t).width > 860){ lines.push(line); line = w; } else line = t; }); lines.push(line);
+  const y0 = 560 - (lines.length-1)*38; lines.forEach((l,i) => g.fillText(l, 540, y0 + i*76));
+  g.fillStyle = '#F4C430'; g.font = 'bold 34px Arial, sans-serif'; g.fillText('TALA \u00B7 Baluyan Elementary School', 540, 950);
+  g.fillStyle = 'rgba(255,255,255,.8)'; g.font = '28px Arial, sans-serif'; g.fillText(new Date().toLocaleDateString('en-US',{timeZone:'Asia/Manila',month:'long',day:'numeric',year:'numeric'}), 540, 995);
+  const blob = await new Promise(r => c.toBlob(r, 'image/png')), file = new File([blob], 'TALA-quote-'+todayPH()+'.png', { type:'image/png' });
+  try{ if (navigator.canShare && navigator.canShare({ files:[file] })){ await navigator.share({ files:[file], text: q+' #TALA #BaluyanES' }); return; } }catch(e){ if (e && e.name==='AbortError') return; }
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = file.name; document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+  toast('Quote picture saved. You can post it on social media.');
 }
 
 /* ----- Install TALA on phones ----- */
