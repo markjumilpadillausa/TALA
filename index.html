@@ -245,6 +245,41 @@ table.subs tr.nosub td:not(.wk){color:var(--muted);font-style:italic}
 .hist summary{cursor:pointer;color:var(--muted);font-weight:600}
 .hist ol{margin:4px 0 0;padding-left:18px}
 .pinv{font-weight:700;letter-spacing:1px}
+.srvwarn{background:#fdecea;color:#8a1c12;border:1.5px solid #f5b5ad;border-radius:12px;padding:12px 14px;margin:12px 0;font-size:14px}
+.ohero{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;background:linear-gradient(135deg,var(--field),#2f7a4a);color:#fff;border-radius:18px;padding:20px 22px;margin-top:6px}
+.ohero h2{color:#fff;margin:0}.ohero p{margin:6px 0 0;opacity:.9;max-width:640px}.ohero .btn.ghost{background:#fff}
+.btn.big{font-size:17px;padding:14px 22px;border-radius:14px;box-shadow:0 6px 16px rgba(0,0,0,.18)}
+.otiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin-top:12px}
+.otile{display:flex;flex-direction:column;align-items:flex-start;gap:3px;text-align:left;background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;font:inherit;color:var(--ink);cursor:pointer;transition:transform .12s,border-color .12s}
+.otile:hover,.ostat:hover,.ocard:hover{transform:translateY(-2px);border-color:var(--leaf)}.otile:active,.ostat:active,.ocard:active{transform:scale(.98)}
+.otile.hl{border-color:var(--sun);background:var(--sun-soft)}.otile small{color:var(--muted);font-size:12.5px}
+.oico{width:32px;height:32px;border-radius:10px;background:var(--page);display:grid;place-items:center;font-size:17px;color:var(--brandtxt)}
+.ostats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:12px}
+.ostat{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;column-gap:10px;align-items:center;text-align:left;background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:10px 12px;font:inherit;color:var(--ink);cursor:pointer;transition:transform .12s}
+.ostat .oico{grid-row:span 2}.ostat b{font-size:22px;line-height:1}.ostat span:last-child{font-size:12.5px;color:var(--muted)}
+.ostat.on{border-color:var(--brandtxt);box-shadow:inset 0 0 0 1px var(--brandtxt)}
+.ostat.s-Sent .oico{background:var(--sun-soft)}.ostat.s-TeacherSigned .oico{background:#e3f0fb}.ostat.s-Completed .oico{background:var(--ok-soft)}
+.ocard{border-left:5px solid var(--line);transition:transform .12s}
+.ocard.s-Draft{border-left-color:#9aa59a}.ocard.s-Sent{border-left-color:var(--sun)}.ocard.s-TeacherSigned{border-left-color:#5b9bd5}.ocard.s-Completed{border-left-color:var(--ok)}
+.ocard .ocard-h{justify-content:flex-start;align-items:center;gap:10px}.ocard .ocard-h small{display:block}
+.oav{width:36px;height:36px;border-radius:50%;background:var(--sun);color:var(--onsun);display:grid;place-items:center;font-weight:700;flex:none}
+.ocard .opill{align-self:flex-start;margin-top:4px}
+.chips2{display:flex;flex-wrap:wrap;gap:6px;padding:0 14px 14px}
+.autosave{margin-top:10px;font-size:13px;color:var(--muted)}.synced{color:var(--ok);font-weight:600}
+.gtool{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+.gfix:empty{display:none}.gfix{margin-top:4px;background:#fffaf0;border:1px dashed #e0a040;border-radius:8px;padding:6px 8px;font-size:12.5px}
+.gsug{margin:2px 0}.gsug.ok{color:var(--ok)}
+.guide-top{display:flex;justify-content:space-between;align-items:center}
+.gprog{height:6px;background:var(--line);border-radius:9px;overflow:hidden;margin-top:6px}.gprog i{display:block;height:100%;background:var(--leaf)}
+.kgrp{border:1.5px solid var(--line);border-radius:10px;margin:8px 0;background:var(--card)}
+.kgrp > summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:8px;padding:9px 10px;font-weight:700;font-size:13px;color:var(--brandtxt)}
+.kgrp > summary::-webkit-details-marker{display:none}
+.kgrp > summary::before{content:'\25B8';transition:transform .15s}.kgrp[open] > summary::before{transform:rotate(90deg)}
+.kgrp > summary span{flex:1}.kgrp > summary em{font-style:normal;font-size:11.5px;background:var(--page);border-radius:999px;padding:2px 8px;color:var(--muted)}
+.kgrp > summary em.ok{background:var(--ok-soft);color:var(--ok)}
+.kgrp .ind{margin:0 8px 8px}.kgrp.big .ind{margin:0 10px 10px}
+.rsel{margin-left:auto;margin-right:6px;font-size:11px;font-weight:700;color:var(--ok)}
+@media (max-width:760px){.ohero{padding:16px}.btn.big{width:100%}}
 .sdot{font-style:normal;background:#E53935;color:#fff;border-radius:999px;font-size:11px;font-weight:700;min-width:20px;height:20px;display:grid;place-items:center;padding:0 5px}
 .side-install{display:flex;align-items:center;gap:8px;margin:12px 8px 0;background:var(--card);border:1.5px solid var(--line);border-radius:10px;padding:8px 10px;font:inherit;font-size:13px;font-weight:600;color:var(--brandtxt);cursor:pointer;width:calc(100% - 16px)}
 .side-install img{width:26px;height:26px;border-radius:7px}
@@ -568,7 +603,8 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
   <p class="side-note">TALA is growing. Each feature will be automated and come with its own printable report.</p>
 </aside>
 <main>
-  <div class="setup-note" id="setupNote" style="display:none;background:var(--late-soft);color:var(--late);border-radius:10px;padding:12px 14px;margin-bottom:12px;font-size:14px">This page is not connected yet. Open config.js and paste your Apps Script Web app URL.</div>
+  <div class="srvwarn" id="srvWarn" style="display:none"><b>Your Apps Script is running an older Code.gs.</b> Some features will not work until you update it: open Apps Script, paste the new Code.gs, Save, then Deploy, Manage deployments, pencil, New version, Deploy. Then reload this page.</div>
+<div class="setup-note" id="setupNote" style="display:none;background:var(--late-soft);color:var(--late);border-radius:10px;padding:12px 14px;margin-bottom:12px;font-size:14px">This page is not connected yet. Open config.js and paste your Apps Script Web app URL.</div>
 
   <div class="hero">
     <img class="hero-logo" id="heroLogo" alt="Baluyan Elementary School logo">
@@ -956,11 +992,13 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
 
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
-const MIN_SERVER = '2.9'; // oldest Code.gs this page works with
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'2.9', date:'October 5, 2026' } };
+const MIN_SERVER = '3.0'; // oldest Code.gs this page works with
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'3.0', date:'October 5, 2026' } };
 function verLine(server){
   const old = server && (server.indexOf('older') > -1 || parseFloat(server) < parseFloat(MIN_SERVER));
   const s = server ? ' Server '+server+(old && USER && USER.role==='head' ? ', please deploy the new Code.gs.' : '.') : '';
+  const wb = document.getElementById('srvWarn');
+  if (wb) wb.style.display = old && USER && USER.role==='head' ? '' : 'none';
   document.getElementById('verLine').textContent = 'First created on '+VERSION.first.date+'. Version '+VERSION.current.no+', updated '+VERSION.current.date+'.'+s;
 }
 verLine();
@@ -1306,7 +1344,7 @@ function render(){
   const FLOW = ['Download from DZIIS or prepare your own','Print it','Rename: LPT_Term#_Grade_Subject_Week#','Submit on or before Monday, morning is best','School Head validates','If returned, revise and reupload'];
   const mine = ROLES.find(r => r[0]===role);
   $('roles').innerHTML = (role==='head' || role==='admin' ? '' : `<ol class="flow" aria-label="Steps for teachers">${FLOW.map((s,i)=>`<li><b>${i+1}</b>${esc(s)}</li>`).join('')}</ol>`)
-    + (USER && mine ? `<div class="mybox"><b>${esc(mine[1]==='Teachers'?'Teacher Portal':mine[1]+' Portal')}</b> ${esc(mine[2])}</div>` : '');
+    ;
   $('trkSub').textContent = role==='head' ? 'Teacher submissions appear here as soon as they upload. Validate each file and add remarks.'
     : role==='admin' ? 'Overview of all teacher submissions. Choose a week, then tap Print week for the weekly report.'
     : role==='teacher' ? 'Your weekly Lesson Plans for Teachers and PowerPoint Presentations.'
@@ -1416,7 +1454,7 @@ function renderBar(){
   const w = (DATA||PUB) ? weekOf(SEL.term, SEL.week) : null;
   $('weekDates').textContent = w ? `${rangeText(w)}. ${dueText(w)}.` : '';
 }
-function renderAll(){ try{ renderBar(); if (USER && DATA && DATA.settings) renderPrivate(); else if (PUB && PUB.settings) renderPublic(); }catch(e){ console.warn('TALA render', e); } }
+function renderAll(){ try{ renderBar(); if (USER && DATA && DATA.settings) renderPrivate(); else if (USER){ if (!/empty|skel/.test($('trkBody').innerHTML)) $('trkBody').innerHTML = skeleton(); } else if (PUB && PUB.settings) renderPublic(); }catch(e){ console.warn('TALA render', e); } }
 
 /* ---------- Loading data ---------- */
 async function loadPublic(){
@@ -2402,6 +2440,8 @@ if ('serviceWorker' in navigator && location.protocol === 'https:') { navigator.
 /* =========================================================
    CLASSROOM OBSERVATIONS (PMCF)
    ========================================================= */
+const OPTS_FALLBACK = { grades:['Kindergarten','Grade 1','Grade 2','Grade 3','Grade 4 Diamond','Grade 4 Emerald','Grade 5','Grade 6'], subjectsByGrade:{ 'Kindergarten':['Circle Time'], 'Grade 1':['GMRC','Mathematics','Reading and Literacy','Language','Makabansa'], 'Grade 2':['GMRC','Mathematics','Reading and Literacy','Language','Makabansa'], 'Grade 3':['GMRC','Filipino','English','Mathematics','Makabansa','Science'], 'Grade 4 Diamond':['GMRC','Filipino','English','Mathematics','Science','Araling Panlipunan','EPP','MAPEH'], 'Grade 4 Emerald':['GMRC','Filipino','English','Mathematics','Science','Araling Panlipunan','EPP','MAPEH'], 'Grade 5':['GMRC','Filipino','English','Mathematics','Science','Araling Panlipunan','EPP','MAPEH'], 'Grade 6':['GMRC','Filipino','English','Mathematics','Science','Araling Panlipunan','EPP','MAPEH'] }, weeks:12 };
+function OPTS(){ return (DATA && DATA.options) || OPTS_FALLBACK; }
 const RATINGS = ['ROLE MODEL','CONSISTENTLY DEMONSTRATED','MOST OF THE TIME DEMONSTRATED','SOMETIMES DEMONSTRATED','RARELY DEMONSTRATED','NOT DEMONSTRATED'];
 const RATING_SHORT = {'ROLE MODEL':'Role model','CONSISTENTLY DEMONSTRATED':'Consistently','MOST OF THE TIME DEMONSTRATED':'Most of the time','SOMETIMES DEMONSTRATED':'Sometimes','RARELY DEMONSTRATED':'Rarely','NOT DEMONSTRATED':'Not demonstrated'};
 const SITUATIONS = ['Learning Experience','Learning Resources','Opportunities for Integration ','Formative Assessment ','Ways forward ','Extended learning opportunities'];
@@ -2471,35 +2511,54 @@ async function obsRefresh(){
   if (!OBS.cur) obsHome();
 }
 function obsHome(){
-  OBS.cur = null;
+  OBS.cur = null; stopAutosave();
   const head = USER.role==='head', admin = USER.role==='admin';
-  let list = OBS.list.filter(o => (!OBS.term || o.term===OBS.term || !o.term) && (OBS.week==='all' || o.week===OBS.week) && (!OBS.who || o.teacherEmail===OBS.who));
-  list.sort((a,b) => String(b.date||b.updated).localeCompare(String(a.date||a.updated)));
+  const st = OBS.status || '';
+  const inPeriod = o => (!OBS.term || o.term===OBS.term || !o.term) && (OBS.week==='all' || o.week===OBS.week);
+  let list = OBS.list.filter(o => inPeriod(o) && (!OBS.who || o.teacherEmail===OBS.who) && (!st || o.status===st));
+  list.sort((a,b) => String(b.updated||b.date).localeCompare(String(a.updated||a.date)));
   const weeks = Array.from({length:12},(_,i)=>`<option value="${i+1}" ${OBS.week===String(i+1)?'selected':''}>Week ${i+1}</option>`).join('');
-  const cnt = s => OBS.list.filter(o=>o.status===s).length;
+  const cnt = s => OBS.list.filter(o=>o.status===s && inPeriod(o)).length;
+  const lastDraft = OBS.list.filter(o=>o.status==='Draft').sort((a,b)=>String(b.updated).localeCompare(String(a.updated)))[0];
+  const termObs = OBS.list.filter(o => o.status!=='Draft' && o.term===OBS.term);
+  const notYet = OBS.teachers.filter(t => !termObs.some(o=>o.teacherEmail===t.email));
+  const stat = (s, label, icon) => `<button class="ostat ${st===s?'on':''} s-${s}" onclick="OBS.status=OBS.status==='${s}'?'':'${s}';obsHome()"><span class="oico">${icon}</span><b>${cnt(s)}</b><span>${label}</span></button>`;
+  const tile = (icon, title, sub, fn, cls) => `<button class="otile ${cls||''}" onclick="${fn}"><span class="oico">${icon}</span><b>${title}</b><small>${sub}</small></button>`;
+  const I = { plus:'\u002B', pen:'\u270E', sign:'\u2712', chart:'\u2630', book:'\u2605', print:'\u2399', user:'\u263A' };
   $('viewObs').innerHTML = `
-    <div class="trk-head"><div><h2>Classroom Observations</h2><p>${head?'Write your observation notes, rate the indicators, and complete the PMCF. Drafts stay private until you lock and send them.':admin?'View completed observations and print the reports.':'Your classroom observations from the School Head. Review, add to the agreement, and sign.'}</p></div>
-      <div class="head-actions">${head?'<button class="btn" onclick="obsNew()">New observation</button>':''}${head||admin?'<button class="btn ghost" onclick="obsSummary()">Summary report</button>':''}</div></div>
-    ${head?`<div class="stats four" style="margin-top:12px"><div class="stat static"><b>${cnt('Draft')}</b><span>Drafts</span></div><div class="stat static"><b>${cnt('Sent')}</b><span>With teachers</span></div><div class="stat static"><b>${cnt('TeacherSigned')}</b><span>For your signature</span></div><div class="stat static"><b>${cnt('Completed')}</b><span>Completed</span></div></div>`:''}
+    <div class="ohero"><div><h2>Classroom Observations</h2><p>${head?'Observe, write notes, rate the COI and NCOI, and complete the PMCF. Drafts are saved on this device as you type.':admin?'View completed observations and print the reports.':'Your classroom observations from the School Head. Review, add to the agreement, and sign.'}</p></div>
+      ${head?`<button class="btn big sun" onclick="obsNew()">\u002B New observation</button>`:''}</div>
+    ${head?`<div class="otiles">
+      ${lastDraft?tile(I.pen,'Continue draft',esc(lastDraft.teacherName||'Untitled draft')+(lastDraft.date?', '+esc(dShort(lastDraft.date)):''),`obsOpen('${esc(lastDraft.id)}')`,'hl'):''}
+      ${tile(I.sign,'For your signature',cnt('TeacherSigned')+' waiting',"OBS.status='TeacherSigned';obsHome()")}
+      ${tile(I.chart,'Summary report','Per week, term, and teacher','obsSummary()')}
+      ${tile(I.book,'COI and NCOI guide','Read the indicators','obsGuideOnly()')}
+      ${tile(I.user,'Not yet observed',notYet.length+' teacher'+(notYet.length===1?'':'s')+' this term',"$('oNotYet').open=true;$('oNotYet').scrollIntoView({behavior:'smooth'})")}
+    </div>`:admin?`<div class="otiles">${tile(I.chart,'Summary report','Per week, term, and teacher','obsSummary()')}${tile(I.book,'COI and NCOI guide','Read the indicators','obsGuideOnly()')}</div>`:''}
+    ${head||admin?`<div class="ostats">${head?stat('Draft','Drafts','\u270E'):''}${stat('Sent','With teachers','\u21E2')}${stat('TeacherSigned','For your signature','\u2712')}${stat('Completed','Completed','\u2714')}</div>`:''}
     <div class="bar" style="margin-top:12px"><div class="tabs">${['1','2','3'].map(t=>`<button class="${OBS.term===t?'on':''}" onclick="OBS.term='${t}';obsHome()">Term ${t}</button>`).join('')}</div>
       <select onchange="OBS.week=this.value;obsHome()" aria-label="Week"><option value="all">All weeks</option>${weeks}</select>
-      ${head||admin?`<select onchange="OBS.who=this.value;obsHome()" aria-label="Teacher"><option value="">All teachers</option>${OBS.teachers.map(t=>`<option value="${esc(t.email)}" ${OBS.who===t.email?'selected':''}>${esc(t.name)}</option>`).join('')}</select>`:''}</div>
-    <div class="olist">${list.length ? list.map(o => `<button class="ocard ${USER.role==='teacher'&&!o.seen?'new':''}" onclick="obsOpen('${esc(o.id)}')">
-        ${obsPending(o.id)?'<span class="unsynced">Saved on this device, not yet synced</span>':''}
-        <div class="ocard-h"><b>${esc(o.teacherName||'No teacher chosen yet')}</b><span class="opill ${o.status}">${OBS_PILL[o.status]||o.status}</span></div>
-        <small>${o.date?esc(dShort(o.date)):'No date yet'}${o.term?' \u00B7 Term '+esc(o.term)+(o.week?', Week '+esc(o.week):''):''}</small>
+      ${head||admin?`<select onchange="OBS.who=this.value;obsHome()" aria-label="Teacher"><option value="">All teachers</option>${OBS.teachers.map(t=>`<option value="${esc(t.email)}" ${OBS.who===t.email?'selected':''}>${esc(t.name)}</option>`).join('')}</select>`:''}
+      ${st?`<button class="btn ghost small" onclick="OBS.status='';obsHome()">Show all statuses</button>`:''}</div>
+    <div class="olist">${list.length ? list.map(o => `<button class="ocard s-${o.status} ${USER.role==='teacher'&&!o.seen?'new':''}" onclick="obsOpen('${esc(o.id)}')">
+        ${obsPending(o.id)||obsWip(o.id)?'<span class="unsynced">Saved on this device, not yet synced</span>':''}
+        <div class="ocard-h"><span class="oav">${esc((o.teacherName||'?').trim().charAt(0))}</span><div><b>${esc(o.teacherName||'No teacher chosen yet')}</b><small>${o.date?esc(dShort(o.date)):'No date yet'}${o.term?' \u00B7 Term '+esc(o.term)+(o.week?', Week '+esc(o.week):''):''}</small></div></div>
         <small>${esc([o.grade,o.subject].filter(Boolean).join(', ')||'Grade and subject not set')}</small>
+        <span class="opill ${o.status}">${OBS_PILL[o.status]||o.status}</span>
         ${USER.role==='teacher'&&!o.seen?'<span class="newdot">New</span>':''}</button>`).join('')
-      : `<div class="empty">${head?'No observations yet for this period. Tap New observation to start.':'No observations to show yet.'}</div>`}</div>`;
+      : `<div class="empty">${head?'No observations here yet. Tap <b>New observation</b> to start.':'No observations to show yet.'}</div>`}</div>
+    ${head?`<details class="byt" id="oNotYet" style="margin-top:14px"><summary>Not yet observed in Term ${esc(OBS.term)} (${notYet.length})</summary><div class="chips2">${notYet.map(t=>`<button class="chip" onclick="obsNew('${esc(t.email)}')">${esc(t.name)} \u002B</button>`).join('') || '<span class="hint">Every teacher has been observed this term.</span>'}</div></details>`:''}`;
 }
-function obsNew(){
+
+function obsNew(email){
   const id = 'O'+Date.now().toString(36)+Math.floor(Math.random()*1e4).toString(36);
-  OBS.cur = { id, status:'Draft', teacherEmail:'', date:todayPH(), grade:'', subject:'', data:{ notes:{}, ind:{}, inc:[{}] } };
-  obsEditor();
+  OBS.cur = { id, status:'Draft', teacherEmail:email||'', date:todayPH(), grade:'', subject:'', data:{ notes:{}, ind:{}, inc:[{}] } };
+  obsEditor(); obsAutosave(true);
 }
 function obsOpen(id){
   const o = OBS.list.find(x=>x.id===id); if (!o) return;
   OBS.cur = JSON.parse(JSON.stringify(o)); OBS.cur.data = OBS.cur.data || { notes:{}, ind:{}, inc:[] };
+  try{ const w = JSON.parse(localStorage.getItem(wipKey(id))||'null'); if (w && o.status==='Draft' && String(w.updated) >= String(o.updated||'')) OBS.cur = w; }catch(e){}
   if (USER.role==='head' && o.status==='Draft') obsEditor(); else obsViewer();
   if (USER.role==='teacher' && !o.seen){ o.seen = true; obsLocalSave(); OBS.newCount = OBS.list.filter(x=>!x.seen).length; drawSide(); api('obsSeen',{ id }).catch(()=>{}); }
 }
@@ -2511,7 +2570,7 @@ function obsEditor(){
   $('viewObs').innerHTML = `
     <div class="trk-head"><div><h2>Observation notes and PMCF</h2><p>${OBS_STATUS.Draft}.</p></div>
       <div class="head-actions"><button class="btn ghost" onclick="obsBack()">Back to list</button></div></div>
-    ${obsPending(o.id)?'<div class="unsynced big">This draft is saved on this device and is not yet synced. It will sync when you are online.</div>':''}
+    <div class="autosave" id="oAuto">${obsPending(o.id)||obsWip(o.id)?'<span class="unsynced">Saved on this device, not yet synced</span>':'Autosave is on. Your notes are saved on this device as you type.'}</div>
     <div class="obs-grid">
       <div class="obs-main">
         <section class="ocard2"><h3>1. Observation details</h3>
@@ -2521,7 +2580,7 @@ function obsEditor(){
             <div class="field"><label>Date of observation</label><input type="date" id="oDate" value="${esc(o.date||'')}" onchange="obsDateHint()"><div class="hint" id="oTW">${tw.term?'Term '+tw.term+', Week '+tw.week:'Outside the term weeks'}</div></div>
           </div>
           <div class="row2">
-            <div class="field"><label>Grade level</label><select id="oGrade" onchange="obsSubjects()"><option value="">Choose</option>${DATA.options.grades.map(g=>`<option ${g===o.grade?'selected':''}>${esc(g)}</option>`).join('')}</select></div>
+            <div class="field"><label>Grade level</label><select id="oGrade" onchange="obsSubjects()"><option value="">Choose</option>${OPTS().grades.map(g=>`<option ${g===o.grade?'selected':''}>${esc(g)}</option>`).join('')}</select></div>
             <div class="field"><label>Subject</label><select id="oSubject"></select></div>
           </div>
           <div class="row2">
@@ -2534,7 +2593,8 @@ function obsEditor(){
           </div>
         </section>
         <section class="ocard2"><h3>2. Observation notes</h3><p class="hint">Write what you see during the class. These notes are yours and will be shared with the teacher when you lock and send.</p>
-          ${NOTE_FIELDS.map(([k,l])=>`<div class="field"><label>${esc(l)}</label><textarea data-note="${k}" rows="${k==='topic'?1:3}">${esc((d.notes||{})[k]||'')}</textarea></div>`).join('')}
+          <div class="gtool"><button type="button" class="btn ghost small" onclick="grammarCheck()">Check spelling and grammar</button><span class="hint" id="gStatus">Spelling mistakes are underlined in red as you type.</span></div>
+          ${NOTE_FIELDS.map(([k,l])=>`<div class="field"><label>${esc(l)}</label><textarea spellcheck="true" lang="en" data-note="${k}" rows="${k==='topic'?1:3}">${esc((d.notes||{})[k]||'')}</textarea><div class="gfix" data-for="${k}"></div></div>`).join('')}
         </section>
         <section class="ocard2"><h3>3. PMCF: critical incidents</h3><p class="hint">Each row becomes one row in the Division PMCF (up to 16 rows).</p>
           <div id="oInc"></div>
@@ -2549,43 +2609,83 @@ function obsEditor(){
       </div>
       <aside class="obs-side" id="oSide"></aside>
     </div>`;
-  obsSubjects(); drawInc(); drawGuide();
+  obsSubjects(); drawInc(); drawGuide(); startAutosave();
 }
-function obsBack(){ obsHome(); obsRefresh(); }
+function obsBack(){ if (OBS.cur && OBS.cur.status==='Draft' && $('oTeacher')) obsAutosave(true); obsHome(); obsRefresh(); }
+/* Autosave: every change is kept on this device right away, then sent to the server quietly */
+let AUTO = { t:null, srv:null, dirty:false };
+function wipKey(id){ return 'tala_obs_wip_'+id; }
+function obsWip(id){ try{ return !!localStorage.getItem(wipKey(id)); }catch(e){ return false; } }
+function startAutosave(){
+  stopAutosave();
+  const v = $('viewObs');
+  v.oninput = v.onchange = () => { AUTO.dirty = true; clearTimeout(AUTO.t); AUTO.t = setTimeout(() => obsAutosave(false), 800); };
+  AUTO.srv = setInterval(() => { if (AUTO.dirty === 'local' && navigator.onLine !== false) obsSyncNow(); }, 20000);
+}
+function stopAutosave(){ clearTimeout(AUTO.t); clearInterval(AUTO.srv); const v = $('viewObs'); if (v){ v.oninput = v.onchange = null; } }
+function obsAutosave(quiet){
+  if (!OBS.cur || OBS.cur.status!=='Draft') return;
+  const o = $('oTeacher') ? obsCollect() : OBS.cur;
+  try{ localStorage.setItem(wipKey(o.id), JSON.stringify(Object.assign({}, o, { updated:nowLocal().replace('T',' ') }))); }catch(e){}
+  const i = OBS.list.findIndex(x=>x.id===o.id), rec = Object.assign({}, o, { status:'Draft', updated:nowLocal().replace('T',' ') });
+  if (i < 0) OBS.list.push(rec); else OBS.list[i] = rec; obsLocalSave();
+  AUTO.dirty = 'local';
+  const el = $('oAuto'); if (el && !quiet) el.innerHTML = '<span class="unsynced">Saved on this device '+esc(fmtTime(nowLocal().slice(11,16)))+', not yet synced</span>';
+}
+async function obsSyncNow(){
+  if (!OBS.cur || OBS.cur.status!=='Draft') return;
+  const r = await obsSaveDraft(true);
+  if (r === true){ AUTO.dirty = false; try{ localStorage.removeItem(wipKey(OBS.cur.id)); }catch(e){} const el = $('oAuto'); if (el) el.innerHTML = '<span class="synced">✔ Synced '+esc(fmtTime(nowLocal().slice(11,16)))+'</span>'; }
+}
 function obsPickTeacher(){ obsCollect(); const t = OBS.teachers.find(x=>x.email===OBS.cur.teacherEmail); $('oPos').textContent = t ? (t.position ? 'Position: '+t.position : 'No position set yet. Set it in Teacher accounts.') : '';
-  if (t && t.grade && !$('oGrade').value){ const g = DATA.options.grades.find(x=>x===t.grade); if (g){ $('oGrade').value = g; obsSubjects(); } } drawGuide(); }
+  if (t && t.grade && !$('oGrade').value){ const g = OPTS().grades.find(x=>x===t.grade); if (g){ $('oGrade').value = g; obsSubjects(); } } drawGuide(); }
 function obsDateHint(){ const tw = findTermWeek($('oDate').value); $('oTW').textContent = tw.term ? 'Term '+tw.term+', Week '+tw.week : 'Outside the term weeks'; }
-function obsSubjects(){ const g = $('oGrade').value, cur = OBS.cur.subject; $('oSubject').innerHTML = '<option value="">Choose</option>' + (DATA.options.subjectsByGrade[g]||[]).map(s=>`<option ${s===cur?'selected':''}>${esc(s)}</option>`).join(''); }
+function obsSubjects(){ const g = $('oGrade').value, cur = OBS.cur.subject; $('oSubject').innerHTML = '<option value="">Choose</option>' + (OPTS().subjectsByGrade[g]||[]).map(s=>`<option ${s===cur?'selected':''}>${esc(s)}</option>`).join(''); }
 function drawInc(){
   const inc = OBS.cur.data.inc = OBS.cur.data.inc && OBS.cur.data.inc.length ? OBS.cur.data.inc : [{}];
   $('oInc').innerHTML = inc.map((it,i) => `<div class="inc" data-i="${i}">
     <div class="inc-h"><b>Row ${i+1}</b>${inc.length>1?`<button class="linkbtn" onclick="obsDelInc(${i})">Remove</button>`:''}</div>
     <div class="row2"><div class="field"><label>Situation</label><select data-k="situation"><option value="">Choose</option>${SITUATIONS.map(s=>`<option value="${esc(s)}" ${s===it.situation?'selected':''}>${esc(s.trim())}</option>`).join('')}</select></div>
       <div class="field"><label>Rating (5 is the highest)</label><div class="rate5">${[1,2,3,4,5].map(n=>`<label><input type="radio" name="r${i}" value="${n}" data-k="rating" ${String(it.rating)===String(n)?'checked':''}>${n}</label>`).join('')}</div></div></div>
-    <div class="field"><label>Task</label><textarea data-k="task" rows="2">${esc(it.task||'')}</textarea></div>
-    <div class="field"><label>Action</label><textarea data-k="action" rows="2">${esc(it.action||'')}</textarea></div>
-    <div class="field"><label>Result</label><textarea data-k="result" rows="2">${esc(it.result||'')}</textarea></div>
-    <div class="row2"><div class="field"><label>Agreement</label><textarea data-k="agreement" rows="2">${esc(it.agreement||'')}</textarea></div>
+    <div class="field"><label>Task</label><textarea spellcheck="true" lang="en" data-k="task" rows="2">${esc(it.task||'')}</textarea></div>
+    <div class="field"><label>Action</label><textarea spellcheck="true" lang="en" data-k="action" rows="2">${esc(it.action||'')}</textarea></div>
+    <div class="field"><label>Result</label><textarea spellcheck="true" lang="en" data-k="result" rows="2">${esc(it.result||'')}</textarea></div>
+    <div class="row2"><div class="field"><label>Agreement</label><textarea spellcheck="true" lang="en" data-k="agreement" rows="2">${esc(it.agreement||'')}</textarea></div>
       <div class="field"><label>Timeline</label><input type="date" data-k="timeline" value="${esc(it.timeline||'')}"></div></div></div>`).join('');
 }
 function obsAddInc(){ obsCollect(); if (OBS.cur.data.inc.length >= 16) return toast('The PMCF has room for 16 rows.'); OBS.cur.data.inc.push({}); drawInc(); }
 function obsDelInc(i){ obsCollect(); OBS.cur.data.inc.splice(i,1); drawInc(); }
 function drawGuide(){
   const o = OBS.cur, t = OBS.teachers.find(x=>x.email===o.teacherEmail), g = indFor(t && t.position), ind = o.data.ind = o.data.ind || {};
-  let kra = '', h = `<div class="guide-h"><b>COI and NCOI guide</b><small>${esc(t?t.name+(t.position?', '+t.position:''):'Choose a teacher')}</small><span class="lvl">${esc(g.level)}</span>${g.note?`<p class="hint">${esc(g.note)}</p>`:''}
-    <div class="legend"><span class="tcoi">COI</span> observed in class <span class="tncoi">NCOI</span> seen in documents or other evidence</div></div>`;
-  g.list.forEach(x => {
-    if (x.kra !== kra){ kra = x.kra; h += `<div class="kra">${esc(kra)}</div>`; }
-    const v = ind[x.code] || {};
-    h += `<div class="ind ${x.type==='NCOI'?'n':''} ${v.r?'done':''}" data-code="${x.code}"><div class="ind-h"><b>${x.code}</b><span class="${x.type==='NCOI'?'tncoi':'tcoi'}">${x.type}</span></div>
-      <p>${esc(x.text)}</p>
-      <div class="rchips">${RATINGS.map(r=>`<button type="button" class="${v.r===r?'on':''}" onclick="obsRate('${x.code}','${r}',this)">${RATING_SHORT[r]}</button>`).join('')}</div>
-      <textarea rows="2" placeholder="Evidence or notes (optional)" oninput="obsEv('${x.code}',this.value)">${esc(v.ev||'')}</textarea></div>`;
-  });
+  OBS.open = OBS.open || {};
+  const groups = []; g.list.forEach(x => { let gr = groups.find(y=>y.kra===x.kra); if (!gr){ gr = { kra:x.kra, items:[] }; groups.push(gr); } gr.items.push(x); });
   const done = g.list.filter(x=>(ind[x.code]||{}).r).length;
-  $('oSide').innerHTML = `<div class="guide-prog">${done} of ${g.list.length} rated</div>` + h;
+  let h = `<div class="guide-h"><div class="guide-top"><b>COI and NCOI guide</b><button class="linkbtn" onclick="guideAll(${done===g.list.length?0:1})">${Object.values(OBS.open).some(Boolean)?'Collapse all':'Expand all'}</button></div>
+    <small>${esc(t?t.name+(t.position?', '+t.position:''):'Choose a teacher')}</small><span class="lvl">${esc(g.level)}</span>${g.note?`<p class="hint">${esc(g.note)}</p>`:''}
+    <div class="gprog"><i style="width:${Math.round(done/g.list.length*100)}%"></i></div><small>${done} of ${g.list.length} rated</small>
+    <div class="legend"><span class="tcoi">COI</span> observed in class <span class="tncoi">NCOI</span> from documents or other evidence</div></div>`;
+  groups.forEach(gr => {
+    const rated = gr.items.filter(x=>(ind[x.code]||{}).r).length;
+    h += `<details class="kgrp" ${OBS.open[gr.kra]?'open':''} ontoggle="OBS.open['${esc(gr.kra)}']=this.open"><summary><span>${esc(gr.kra)}</span><em class="${rated===gr.items.length?'ok':''}">${rated}/${gr.items.length}</em></summary>`;
+    gr.items.forEach(x => {
+      const v = ind[x.code] || {};
+      h += `<div class="ind ${x.type==='NCOI'?'n':''} ${v.r?'done':''}"><div class="ind-h"><b>${x.code}</b><span class="${x.type==='NCOI'?'tncoi':'tcoi'}">${x.type}</span>${v.r?`<span class="rsel">${RATING_SHORT[v.r]}</span>`:''}</div>
+        <p>${esc(x.text)}</p>
+        <div class="rchips">${RATINGS.map(r=>`<button type="button" class="${v.r===r?'on':''}" onclick="obsRate('${x.code}','${r}')">${RATING_SHORT[r]}</button>`).join('')}</div>
+        <textarea rows="1" spellcheck="true" lang="en" placeholder="Evidence or notes (optional)" oninput="obsEv('${x.code}',this.value)">${esc(v.ev||'')}</textarea></div>`;
+    });
+    h += `</details>`;
+  });
+  $('oSide').innerHTML = h;
 }
-function obsRate(code, r, btn){ const ind = OBS.cur.data.ind; ind[code] = ind[code] || {}; ind[code].r = ind[code].r===r ? '' : r; drawGuideKeep(); }
+function guideAll(open){ const o = OBS.cur, t = OBS.teachers.find(x=>x.email===o.teacherEmail); indFor(t && t.position).list.forEach(x => OBS.open[x.kra] = !Object.values(OBS.open).some(Boolean)); drawGuideKeep(); }
+function obsGuideOnly(){
+  const g = indFor(''), groups = {}; g.list.forEach(x => (groups[x.kra] = groups[x.kra] || []).push(x));
+  $('viewObs').innerHTML = `<div class="ohero"><div><h2>COI and NCOI Guide</h2><p>Indicators for Teacher I to III. COI are observed in class. NCOI are seen in documents or other evidence.</p></div><button class="btn ghost" onclick="obsBack()">Back</button></div>
+    ${Object.keys(groups).map(k => `<details class="kgrp big" open><summary><span>${esc(k)}</span><em>${groups[k].length}</em></summary>${groups[k].map(x=>`<div class="ind ${x.type==='NCOI'?'n':''}"><div class="ind-h"><b>${x.code}</b><span class="${x.type==='NCOI'?'tncoi':'tcoi'}">${x.type}</span></div><p>${esc(x.text)}</p></div>`).join('')}</details>`).join('')}`;
+}
+
+function obsRate(code, r){ const ind = OBS.cur.data.ind; ind[code] = ind[code] || {}; ind[code].r = ind[code].r===r ? '' : r; drawGuideKeep(); obsAutosave(false); }
 function obsEv(code, v){ const ind = OBS.cur.data.ind; ind[code] = ind[code] || {}; ind[code].ev = v; }
 function drawGuideKeep(){ const s = $('oSide').scrollTop; drawGuide(); $('oSide').scrollTop = s; }
 function obsCollect(){
@@ -2610,11 +2710,12 @@ async function obsSaveDraft(quiet){
     const r = await api('obsSave', payload); OBS.list[OBS.list.findIndex(x=>x.id===o.id)] = r; obsLocalSave();
     // a newer local copy replaces any older queued one
     saveOut(outbox().filter(x => !(x.action==='obsSave' && x.payload.obs.id===o.id)));
-    if (!quiet) toast('Draft saved.'); return true;
+    try{ localStorage.removeItem(wipKey(o.id)); }catch(e){} AUTO.dirty = false;
+    if (!quiet){ toast('Draft saved.'); const el = $('oAuto'); if (el) el.innerHTML = '<span class="synced">\u2714 Synced '+esc(fmtTime(nowLocal().slice(11,16)))+'</span>'; } return true;
   }catch(e){
     if (friendly(e.message) === MSG.NET || friendly(e.message) === MSG.BUSY){
       saveOut(outbox().filter(x => !(x.action==='obsSave' && x.payload.obs.id===o.id)));
-      queueOut('obsSave', payload, 'Observation draft'); if (!quiet){ toast('Saved on this device. It will sync when you are online.'); obsEditor(); } return 'local';
+      queueOut('obsSave', payload, 'Observation draft'); if (!quiet){ toast('Saved on this device. It will sync when you are online.'); const el = $('oAuto'); if (el) el.innerHTML = '<span class="unsynced">Saved on this device, not yet synced</span>'; } return 'local';
     }
     handleErr(e); return false;
   }
@@ -2623,17 +2724,42 @@ async function obsLockSend(){
   const o = obsCollect();
   if (!o.teacherEmail || !o.date) return toast('Choose the teacher and the date first.');
   if (!confirm('Lock this observation and send it to '+o.teacherName+'? She will be able to read it, add to the agreement, and sign.')) return;
-  const saved = await obsSaveDraft(true); if (!saved) return;
+  stopAutosave(); const saved = await obsSaveDraft(true); if (!saved) return;
+  try{ localStorage.removeItem(wipKey(o.id)); }catch(e){}
   if (saved === 'local'){ queueOut('obsLock', { id:o.id }, 'Send observation'); toast('Saved on this device. It will be sent when you are online.'); obsBack(); return; }
   try{ await api('obsLock',{ id:o.id }); toast('Locked and sent. '+o.teacherName+' will be notified.'); obsBack(); }
   catch(e){ handleErr(e); }
 }
 async function obsDelete(){
   const o = OBS.cur; if (!confirm('Delete this observation? This cannot be undone.')) return;
+  stopAutosave(); try{ localStorage.removeItem(wipKey(o.id)); }catch(e){}
   saveOut(outbox().filter(x => !((x.action==='obsSave' && x.payload.obs.id===o.id) || (x.action==='obsLock' && x.payload.id===o.id))));
   OBS.list = OBS.list.filter(x=>x.id!==o.id); obsLocalSave();
   try{ await api('obsDelete',{ id:o.id }); }catch(e){}
   toast('Observation deleted.'); obsBack();
+}
+
+async function grammarCheck(){
+  const fields = [...document.querySelectorAll('[data-note]')].filter(x => x.value.trim().length > 3);
+  if (!fields.length) return toast('Write some notes first.');
+  if (navigator.onLine === false) return $('gStatus').textContent = 'Grammar check needs internet. Spelling is still underlined in red.';
+  $('gStatus').textContent = 'Checking...'; let total = 0;
+  for (const f of fields){
+    const box = document.querySelector('.gfix[data-for="'+f.dataset.note+'"]'); box.innerHTML = '';
+    try{
+      const res = await fetch('https://api.languagetool.org/v2/check', { method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body:'language=en-US&text='+encodeURIComponent(f.value) });
+      const j = await res.json(), ms = (j.matches||[]).slice(0,8); total += ms.length;
+      box.innerHTML = ms.map((m,i) => { const bad = f.value.substr(m.offset, m.length), fix = (m.replacements[0]||{}).value;
+        return `<div class="gsug"><span>${esc(m.message)}</span>${fix!==undefined?` <button type="button" class="linkbtn" onclick="applyFix('${f.dataset.note}',${m.offset},${m.length},this)" data-fix="${esc(fix)}">Change “${esc(bad)}” to “${esc(fix)}”</button>`:''}</div>`; }).join('');
+    }catch(e){ $('gStatus').textContent = 'The grammar checker could not be reached. Spelling is still underlined in red.'; return; }
+  }
+  $('gStatus').textContent = total ? total+' suggestion'+(total>1?'s':'')+' found. Tap a suggestion to apply it.' : 'No problems found.';
+}
+function applyFix(key, off, len, btn){
+  const f = document.querySelector('[data-note="'+key+'"]'), fix = btn.dataset.fix, before = f.value;
+  f.value = before.slice(0, off) + fix + before.slice(off + len);
+  const box = btn.closest('.gfix'); box.innerHTML = '<div class="gsug ok">Applied. Tap Check spelling and grammar again to recheck.</div>';
+  obsAutosave(false);
 }
 
 /* ----- Viewer (teacher review and signing, School Head signing, printing) ----- */
@@ -2931,7 +3057,7 @@ function openBank(){
 }
 function drawBank(gradeChanged){
   const g = $('bGrade').value;
-  if (gradeChanged) $('bSubj').innerHTML = (DATA.options.subjectsByGrade[g]||[]).map(s=>`<option>${esc(s)}</option>`).join('');
+  if (gradeChanged) $('bSubj').innerHTML = (OPTS().subjectsByGrade[g]||[]).map(s=>`<option>${esc(s)}</option>`).join('');
   const t = $('bTerm').value, s = $('bSubj').value, key = w => [t,g,s,w].join('|');
   $('bWeeks').innerHTML = Array.from({length:DATA.options.weeks},(_,i)=>String(i+1)).map(w =>
     `<button type="button" class="chip ${BW===w?'on':''}" onclick="BW='${w}';drawBank()">Week ${w}${DATA.bank[key(w)]?' \u2022':''}</button>`).join('');
