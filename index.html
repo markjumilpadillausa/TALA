@@ -34,7 +34,7 @@ a{color:var(--brandtxt)}
 :focus-visible{outline:3px solid var(--sun);outline-offset:2px}
 
 .top{background:var(--field);color:#fff;position:sticky;top:env(safe-area-inset-top,0px);z-index:20}
-.top-in{max-width:1120px;margin:0 auto;padding:10px 18px;display:flex;align-items:center;gap:12px}
+.top-in{max-width:1400px;margin:0 auto;padding:10px 18px;display:flex;align-items:center;gap:12px}
 .homebtn{display:flex;align-items:center;gap:12px;background:none;border:0;color:inherit;padding:0;cursor:pointer;text-align:left;font:inherit;min-width:0}
 .homebtn .brand span{display:block}
 .mark{display:block;width:44px;height:44px;flex:none;border-radius:50%;background:#fff;padding:2px}
@@ -238,6 +238,33 @@ table.subs tr.nosub td:not(.wk){color:var(--muted);font-style:italic}
 .hist summary{cursor:pointer;color:var(--muted);font-weight:600}
 .hist ol{margin:4px 0 0;padding-left:18px}
 .pinv{font-weight:700;letter-spacing:1px}
+.layout{display:flex;align-items:flex-start;max-width:1400px;margin:0 auto}
+.layout > main{flex:1;min-width:0}
+.side{position:sticky;top:76px;width:236px;flex:none;padding:18px 8px 18px 14px;max-height:calc(100vh - 90px);overflow-y:auto}
+.side-t{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin:0 8px 8px}
+.side-i{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:none;border:0;border-radius:10px;padding:10px;color:var(--ink);font:inherit;font-size:14px;cursor:pointer;margin-bottom:2px}
+.side-i:hover{background:var(--card)}
+.side-i svg{flex:none;color:var(--muted)}
+.side-i span{flex:1;line-height:1.3}
+.side-i em{font-style:normal;font-size:11px;color:var(--wait);background:var(--sun-soft);border-radius:999px;padding:1px 7px}
+.side-i.on{background:var(--card);box-shadow:inset 3px 0 0 var(--sun);font-weight:600}
+.side-i.on svg{color:var(--brandtxt)}
+.side-note{font-size:12px;color:var(--muted);margin:14px 8px 0;line-height:1.5}
+.sidebg{display:none}
+.menubtn{display:none;background:rgba(255,255,255,.14);color:#fff;border:0;border-radius:10px;width:38px;height:38px;place-items:center;cursor:pointer;flex:none}
+#signInBtn{white-space:nowrap}
+@media (max-width:760px){.homebtn .brand span{display:none}}
+@media (max-width:420px){.clock{font-size:11px}}
+.uc{display:inline-block;background:var(--sun);color:var(--onsun);font-weight:700;font-size:12px;border-radius:999px;padding:4px 12px}
+.feat-sec{background:var(--page);border-radius:10px;padding:10px 12px;margin-bottom:8px}
+.feat-sec b{display:block;font-size:13px;color:var(--brandtxt);margin-bottom:2px}.feat-sec p{margin:0;font-size:14px}
+@media (max-width:1000px){
+  .menubtn{display:grid}
+  .side{position:fixed;left:0;top:0;bottom:0;max-height:none;z-index:75;background:var(--page);width:270px;transform:translateX(-105%);transition:transform .22s ease;box-shadow:6px 0 24px rgba(0,0,0,.18);padding-top:22px}
+  .side.open{transform:none}
+  .sidebg.open{display:block;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:74}
+}
+@media print{.side,.sidebg,.menubtn{display:none !important}}
 .confirmbox{align-items:flex-start;background:var(--sun-soft);border-radius:10px;padding:10px 12px;margin:12px 0 0;font-size:13.5px}
 .confirmbox input{margin-top:2px;flex:none}
 .sess{border-top:1px dashed var(--line);padding-top:8px;margin-top:8px}
@@ -416,6 +443,7 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
 
 <header class="top">
   <div class="top-in">
+    <button type="button" class="menubtn" onclick="toggleSide()" aria-label="Open TALA features"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg></button>
     <button type="button" class="homebtn" onclick="goMain()" aria-label="Go to the main page"><span class="mark"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAACWCAMAAAAL34HQAAAA/1BMVEX816CXp5xGMTVnVVguFhuEdnn7xXPq6eDCu7yczbT4nRL6vF0AbiY+oHFSPkJ+waCLfYBasYS+4NDGv8D9/f0AAAADAQEkBg8HhEcAejjo6OgXFxf5pyvJx8goJyfX19d4d3eQx6upp6iIh4e3t7dIR0dwtpKXlpZLpHfK5dhXV1c3NzdoZme12sc3mWfa7OMAAAAAAAAAAACl0rsAAABarIMqklwAAAAAAABCnW0jjVT4oBz6tlD96swCf0BhrYYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACRnchGAAAAQHRSTlP///////////////////////////8A/f/////+//////////////////////////8ujNH/bP//s1H/////////qo/pSgAAFw5JREFUeNrNXAlX28iyliGQZZLMvPd0hSVF+76DNzBJ4P//q1tLtxZbks2SOU/nDGQAt76urvpq6epW/vO25/Zhc3e/Wmnts1rd320ebt84rPIGRJu7Pp7hs1rdbW7/dVi3m3vt9LO6fy2018B6uOsJybSj3A0SP6THTwI3j2yzB+3u4d+AddthsnPXtwx15DEs383tDtntH4a1WbWQEks98VhJC221+XOwWkEV7kBIYVnkqhrYRYHfXTcxemJzi9eITHkBKCEntxWTX0aAQ81Bwwy1JE1THfhaIlS/FZorZPYCYMoLQeUhv8sJy1B14Qfw9gi+OQCrcBxHtTQBMlKT3HeEPPMXAjsTFoMypaCSyESZ+PCzSDVM09RCAGInvgU/sxFrrrkqLJ8ZBY4QGVvn3TvCYkU3g1Zn4M34vlCzbc0ytCjSEpUEEoEEyxwQF/ATKyAoQr4G/995yn8GrNt7lhSBYmSuZgIo0CMTUDiai7LJNbPMEV0AAnNMQmNrUW4bqPn0WZbY/e17wNqQ8EtaCys36XsI1ogvtjXfNgPNd7Uc8ET4KxCToWkBahsuMit+pEX0D4fsQtu8GRaLKqLZ4qqBWHDeaFtFCBj8QDM1K9AKlFaeByqijeBnNvxZicrPpqppLGerOEtgyhmiMhMhKQteaIsXkdhg8Qw0Qx+YISL2AH6w1IS0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" alt="Baluyan Elementary School logo"></span><span class="brand"><b>TALA</b><span>Baluyan Elementary School</span></span></button>
     <div class="top-right">
       <span class="clock" id="clock"></span>
@@ -441,6 +469,13 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
   </div>
 </header>
 
+<div class="layout">
+<div class="sidebg" id="sideBg" onclick="toggleSide(false)"></div>
+<aside class="side" id="side" aria-label="TALA features">
+  <div class="side-t">TALA features</div>
+  <nav id="sideNav"></nav>
+  <p class="side-note">TALA is growing. Each feature will be automated and come with its own printable report.</p>
+</aside>
 <main>
   <div class="setup-note" id="setupNote" style="display:none;background:var(--late-soft);color:var(--late);border-radius:10px;padding:12px 14px;margin-bottom:12px;font-size:14px">This page is not connected yet. Open config.js and paste your Apps Script Web app URL.</div>
 
@@ -537,11 +572,8 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
     <div id="accBody" style="margin-top:18px"></div>
   </section>
 
-  <div class="later">
-    <h3>Coming next in TALA</h3>
-    <div class="later-list"><span>Classroom Observations</span><span>Learner Reading Assessment</span><span>Attendance</span><span>Reimbursement Inventory</span><span>LAC and Teacher Development</span><span>School M&amp;E Reports</span></div>
-  </div>
 </main>
+</div>
 
 <footer>
   <div><b class="f-brand">TALA Project</b>, Baluyan Elementary School</div>
@@ -661,6 +693,19 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
   </div>
 </div>
 
+<!-- Feature under construction -->
+<div class="overlay" id="featModal">
+  <div class="modal" role="dialog" aria-labelledby="featTitle">
+    <span class="uc">Under construction</span>
+    <h3 id="featTitle" style="margin-top:10px"></h3>
+    <p class="sub" style="margin-top:6px">This feature is still being built. Here is what it will do.</p>
+    <div class="feat-sec"><b>What it will do</b><p id="featDo"></p></div>
+    <div class="feat-sec"><b>Automated</b><p id="featAuto"></p></div>
+    <div class="feat-sec"><b>Printable report</b><p id="featReport"></p></div>
+    <div class="modal-actions"><button class="btn" onclick="closeModal('featModal')">Okay</button></div>
+  </div>
+</div>
+
 <!-- Clear data for launch -->
 <div class="overlay" id="clrModal">
   <div class="modal" role="dialog" aria-labelledby="clrTitle">
@@ -713,7 +758,7 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
     <div class="field"><label for="aName">Full name</label><input id="aName" maxlength="120"></div>
     <div class="field"><label for="aEmail">DepEd email</label><input id="aEmail" type="email" maxlength="120"></div>
     <div class="row2">
-      <div class="field"><label for="aRole">Role</label><select id="aRole"><option>Teacher</option><option>School Head</option></select></div>
+      <div class="field"><label for="aRole">Role</label><select id="aRole"><option>Teacher</option><option>Administrative Officer</option><option>School Head</option></select></div>
       <div class="field"><label for="aGrade">Grade handled (optional)</label><input id="aGrade" maxlength="40"></div>
     </div>
     <div class="err" id="aErr"></div>
@@ -751,8 +796,8 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
 
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
-const MIN_SERVER = '2.4'; // oldest Code.gs this page works with
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'2.5', date:'October 3, 2026' } };
+const MIN_SERVER = '2.6'; // oldest Code.gs this page works with
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'2.7', date:'October 5, 2026' } };
 function verLine(server){
   const old = server && (server.indexOf('older') > -1 || parseFloat(server) < parseFloat(MIN_SERVER));
   const s = server ? ' Server '+server+(old && USER && USER.role==='head' ? ', please deploy the new Code.gs.' : '.') : '';
@@ -1074,7 +1119,7 @@ async function scanLPT(file, max){
 /* ---------- Header ---------- */
 function render(){
   const role = USER ? USER.role : 'public';
-  $('portalPill').textContent = role==='head' ? 'School Head Portal' : 'Teacher Portal';
+  $('portalPill').textContent = role==='head' ? 'School Head Portal' : role==='admin' ? 'Administrative Officer Portal' : 'Teacher Portal';
   $('portalPill').style.display = USER ? '' : 'none';
   document.body.classList.toggle('signed', !!USER);
   $('bellBtn').style.display = USER ? '' : 'none';
@@ -1094,12 +1139,14 @@ function render(){
   $('addBtn').style.display = role==='teacher' ? '' : 'none';
   const ROLES = [['public','Public','See how many weekly LPT and PPT files were submitted and approved.'],
     ['teacher','Teachers','Submit your weekly LPT and PPT, rename and upload the files, and read the School Head\u2019s remarks.'],
-    ['head','School Head','Check each file, validate it as Approved or Returned, give remarks, lock approved files, and see who is late.']];
+    ['head','School Head','Check each file, validate it as Approved or Returned, give remarks, lock approved files, and see who is late.'],
+    ['admin','Administrative Officer','View the dashboard and the number of submissions, and print the weekly reports.']];
   const FLOW = ['Download from DZIIS or prepare your own','Print it','Rename: LPT_Term#_Grade_Subject_Week#','Submit on or before Monday, morning is best','School Head validates','If returned, revise and reupload'];
   const mine = ROLES.find(r => r[0]===role);
-  $('roles').innerHTML = (role==='head' ? '' : `<ol class="flow" aria-label="Steps for teachers">${FLOW.map((s,i)=>`<li><b>${i+1}</b>${esc(s)}</li>`).join('')}</ol>`)
-    + (USER && mine ? `<div class="mybox"><b>${esc(mine[1]==='Teachers'?'Teacher Portal':'School Head Portal')}</b> ${esc(mine[2])}</div>` : '');
+  $('roles').innerHTML = (role==='head' || role==='admin' ? '' : `<ol class="flow" aria-label="Steps for teachers">${FLOW.map((s,i)=>`<li><b>${i+1}</b>${esc(s)}</li>`).join('')}</ol>`)
+    + (USER && mine ? `<div class="mybox"><b>${esc(mine[1]==='Teachers'?'Teacher Portal':mine[1]+' Portal')}</b> ${esc(mine[2])}</div>` : '');
   $('trkSub').textContent = role==='head' ? 'Teacher submissions appear here as soon as they upload. Validate each file and add remarks.'
+    : role==='admin' ? 'Overview of all teacher submissions. Choose a week, then tap Print week for the weekly report.'
     : role==='teacher' ? 'Your weekly Lesson Plans for Teachers and PowerPoint Presentations.'
     : 'Public view of weekly submissions. Teachers and the School Head sign in for more tools.';
   if (USER){
@@ -1124,6 +1171,50 @@ function goMain(){
   document.querySelectorAll('.overlay.open').forEach(o => closeModal(o.id));
   showTracker(); window.scrollTo({ top:0, behavior:'smooth' });
 }
+/* ---------- TALA features (left side) ---------- */
+const FEATURES = [
+  { id:'lpt', name:'LPT and PPT Tracking', ready:true, icon:'M4 4h16v4H4zm0 6h10v10H4zm12 0h4v10h-4z' },
+  { id:'obs', name:'Classroom Observations', icon:'M12 5c-5 0-9 4.5-10 7 1 2.5 5 7 10 7s9-4.5 10-7c-1-2.5-5-7-10-7zm0 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8z',
+    do:'Record each classroom observation with the date and time, the observation tool, ratings, strengths, and areas to improve. Teachers read the feedback in their portal and acknowledge it.',
+    auto:'Observation schedules, reminders, acknowledgment timestamps, and each teacher\u2019s rating summary across the school year are computed automatically.',
+    report:'Observation record per teacher, and a quarterly summary of all observations with signatures.' },
+  { id:'read', name:'Learner Reading Assessment', icon:'M4 5h7a3 3 0 0 1 3 3v12a2 2 0 0 0-2-2H4zm16 0h-7a3 3 0 0 0-3 3v12a2 2 0 0 1 2-2h8z',
+    do:'Record CRLA results for Key Stage 1 and Phil-IRI results for Key Stage 2 for every learner, linked with Project e-READ.',
+    auto:'Reading levels per class, grade, and school, and progress from pretest to posttest, are computed automatically.',
+    report:'Class reading profile, school reading summary, and the list of learners needing intervention.' },
+  { id:'att', name:'Attendance', icon:'M7 2v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2zm-2 8h14v10H5z',
+    do:'Record learner attendance every school day by class.',
+    auto:'Daily, monthly, and term totals, attendance rates, and learners with frequent absences are computed automatically.',
+    report:'Monthly SF2 and SF4 summaries, and the list of learners at risk of dropping out.' },
+  { id:'reimb', name:'Reimbursement Inventory', icon:'M3 6h18v12H3zm9 3a3 3 0 1 0 0 6 3 3 0 0 0 0-6z',
+    do:'Record what teachers spend from their own pocket for school programs, projects, and activities, with receipts.',
+    auto:'Totals per teacher, per activity, and per month, and the status of each reimbursement are computed automatically.',
+    report:'Monthly reimbursement summary and liquidation list.' },
+  { id:'lac', name:'LAC and Teacher Development', icon:'M12 3 1 9l11 6 9-4.9V17h2V9zm-6 9.2V16l6 3 6-3v-3.8l-6 3.3z',
+    do:'Plan LAC sessions from the teachers\u2019 IDP needs (IPCRF and e-SAT), record attendance, and keep outputs.',
+    auto:'Session attendance, hours of training per teacher, and needs addressed are tallied automatically.',
+    report:'LAC plan, attendance sheet, and LAC accomplishment report.' },
+  { id:'mne', name:'School M&E Reports', icon:'M4 20V10h3v10zm6 0V4h3v16zm6 0v-7h3v7z',
+    do:'Bring together results from all TALA trackers into one school monitoring and evaluation view.',
+    auto:'Figures for SMEA, PIR, and AIP progress are pulled from the other features automatically.',
+    report:'Quarterly SMEA and PIR tables, ready to print.' }
+];
+function drawSide(){
+  $('sideNav').innerHTML = FEATURES.map(f => `<button type="button" class="side-i ${f.ready?'on':''}" onclick="openFeature('${f.id}')">
+    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="${f.icon}"/></svg><span>${esc(f.name)}</span>${f.ready?'':'<em>Soon</em>'}</button>`).join('');
+}
+function toggleSide(open){
+  const s = $('side'), on = open === undefined ? !s.classList.contains('open') : open;
+  s.classList.toggle('open', on); $('sideBg').classList.toggle('open', on);
+}
+function openFeature(id){
+  toggleSide(false);
+  const f = FEATURES.find(x => x.id === id);
+  if (f.ready){ goMain(); return; }
+  $('featTitle').textContent = f.name; $('featDo').textContent = f.do; $('featAuto').textContent = f.auto; $('featReport').textContent = f.report;
+  openModal('featModal');
+}
+drawSide();
 function showTracker(){ ['viewAcc','viewBank','viewLog','viewWeeks'].forEach(v => $(v).style.display='none'); $('viewTrk').style.display=''; }
 
 /* ---------- Term and week bar ---------- */
@@ -1213,7 +1304,7 @@ function renderPublic(){
 /* ---------- Teacher and School Head view ---------- */
 function inScope(){ return DATA.entries.filter(e => e.term===SEL.term && (SEL.week==='all' || e.week===SEL.week)); }
 function renderPrivate(){
-  const head = USER.role==='head', scope = inScope(), st = DATA.settings;
+  const head = USER.role!=='teacher', scope = inScope(), st = DATA.settings;
   const any = (e,v) => filesOf(e).some(f => docState(f.d)===v);
   const n = f => scope.filter(f).length;
   const quick = [
@@ -1307,6 +1398,7 @@ function historyBox(d, e){
 }
 function docAction(e, f){
   const d = f.d, s = docState(d), id = esc(e.id), K = f.K, sn = f.s, L = f.label;
+  if (USER.role==='admin') return d.link ? '' : '<span class="mk-wait">Waiting for the teacher</span>';
   if (USER.role==='head'){
     if (!d.link) return '<span class="mk-wait">Waiting for the teacher</span>';
     return (s==='Pending' ? `<button class="btn small" onclick="quickValidate('${id}','${K}',${sn},'Approved','')" title="Approve with no remarks">Approve</button><button class="btn ghost small" onclick="openVal('${id}','${K}',false,${sn})">Return or add remarks</button>`
@@ -1320,7 +1412,7 @@ function docAction(e, f){
   return `<button class="btn small" onclick="openSubmit('${id}')">Upload ${L}</button>`;
 }
 function renderList(){
-  const head = USER.role==='head', list = filtered();
+  const head = USER.role!=='teacher', isHead = USER.role==='head', list = filtered();
   if (!list.length && FILTER.view!=='table'){
     $('entryList').innerHTML = `<div class="empty">${inScope().length ? 'No entries match this filter.' :
       (head ? 'No submissions yet for this term and week.' : 'No submissions yet for this term and week. Tap Submit LPT and PPT to upload your files.')}</div>`;
@@ -1353,13 +1445,13 @@ function renderList(){
       }
       inWeek.forEach((e,i) => {
         rows += `<tr>${i===0?wcell:''}${head?`<td>${esc(e.teacher)}</td>`:''}
-          <td><b>${esc(e.grade)}</b><small>${esc(e.subject)}</small>${lcDetails(e)}${head?`<button class="linkbtn" style="margin-top:8px;font-size:12.5px;color:var(--late)" onclick="removeEntry('${esc(e.id)}')">Delete submission</button>`:''}</td>
+          <td><b>${esc(e.grade)}</b><small>${esc(e.subject)}</small>${lcDetails(e)}${isHead?`<button class="linkbtn" style="margin-top:8px;font-size:12.5px;color:var(--late)" onclick="removeEntry('${esc(e.id)}')">Delete submission</button>`:''}</td>
           <td>${cell(e,'lpt')}</td><td>${cell(e,'ppt')}</td></tr>`;
       });
     });
     if (!rows) rows = `<tr><td colspan="${head?5:4}" style="text-align:center;color:var(--muted)">No submissions match this filter.</td></tr>`;
     $('entryList').innerHTML = `<div class="table-wrap"><table class="subs"><thead><tr><th>Week</th>${head?'<th>Teacher</th>':''}<th>Grade and subject</th><th>LPT (Lesson Plan for Teachers)</th><th>PPT (PowerPoint Presentation)</th></tr></thead><tbody>${rows}</tbody></table></div>
-      <p class="hint" style="margin-top:8px">Term ${esc(SEL.term)}. ${USER.role==='head'?'Delete a file or a whole submission only on special occasions so the teacher can redo it.':'Your files are locked while waiting for validation. If a file is returned, upload the revised file and it replaces the old one.'}</p>`;
+      <p class="hint" style="margin-top:8px">Term ${esc(SEL.term)}. ${USER.role==='admin'?'View only. Tap Print week to print the weekly report.':USER.role==='head'?'Delete a file or a whole submission only on special occasions so the teacher can redo it.':'Your files are locked while waiting for validation. If a file is returned, upload the revised file and it replaces the old one.'}</p>`;
     return;
   }
   $('entryList').innerHTML = '<div class="list">' + list.map(e => {
@@ -1370,7 +1462,7 @@ function renderList(){
       ${lcDetails(e)}
       <div class="docs">${docBox(e,'lpt')}${docBox(e,'ppt')}</div>
       <div class="times"><span>First submitted ${esc(dTime(e.created))}</span><span>Last updated ${esc(dTime(e.updated))}</span>${filesOf(e).some(f=>f.d.link) && !e.lateCounted ? '<span>Days late not counted yet</span>' : ''}
-        ${head ? `<button class="btn danger small" onclick="removeEntry('${esc(e.id)}')">Delete submission</button>` : ''}</div>
+        ${isHead ? `<button class="btn danger small" onclick="removeEntry('${esc(e.id)}')">Delete submission</button>` : ''}</div>
     </article>`;
   }).join('') + '</div>';
 }
@@ -1665,7 +1757,7 @@ async function quickValidate(id, K, sn, dec, rem, edit){
 /* ---------- Print one week ---------- */
 function printWeek(){
   if (SEL.week==='all'){ toast('Choose a week first, then tap Print week.'); $('weekSel').focus(); return; }
-  const head = USER.role==='head', w = weekOf(SEL.term, SEL.week);
+  const head = USER.role!=='teacher', w = weekOf(SEL.term, SEL.week);
   const test = head ? (DATA.testEmails||[]) : [];
   let list = DATA.entries.filter(e=>e.term===SEL.term && e.week===SEL.week && test.indexOf(e.email) < 0 && (!FILTER.teacher || e.email===FILTER.teacher))
     .sort((a,b)=>a.teacher.localeCompare(b.teacher)||a.grade.localeCompare(b.grade)||a.subject.localeCompare(b.subject));
@@ -1728,7 +1820,7 @@ function printWeek(){
     if (none.length) missing = `<p class="p-note"><b>No submission this week:</b> ${esc(none.join(', '))}</p>`;
   }
   const teacherName = head ? (FILTER.teacher ? ((DATA.teachers||[]).find(t=>t.email===FILTER.teacher)||{}).name : '') : USER.name;
-  const headName = DATA.headName || (head ? USER.name : 'School Head');
+  const headName = DATA.headName || (USER.role==='head' ? USER.name : 'School Head');
   // Page 1: one summary box per teacher, with a place to sign
   const who = head ? (FILTER.teacher ? (DATA.teachers||[]).filter(t=>t.email===FILTER.teacher) : (DATA.teachers||[]))
                    : [{ email:USER.email, name:USER.name }];
@@ -1757,7 +1849,7 @@ function printWeek(){
     <p class="p-rule" style="text-align:left"><b>Deadline:</b> The LPT and PPT must be submitted on or before the first class day of the week${w?' ('+esc(DAYNAMES[dow(w.due)])+', '+esc(dShort(w.due))+')':' (Monday)'}, preferably in the morning. Submitting the next day is 1 day late, two days after is 2 days late, and so on.</p>
     ${missing}
     <div class="p-sign">
-      ${teacherName?`<div>Prepared by:<b>${esc(teacherName)}</b>Teacher</div>`:''}
+      ${teacherName?`<div>Prepared by:<b>${esc(teacherName)}</b>Teacher</div>`:USER.role==='admin'?`<div>Prepared by:<b>${esc(USER.name)}</b>Administrative Officer</div>`:''}
       <div>Validated by:<b>${esc(headName)}</b>School Head</div>
     </div>
     <div class="p-foot">Generated from TALA on ${esc(dTime(nowLocal().replace('T',' ')))}.</div>`;
@@ -1935,7 +2027,7 @@ function toggleBell(){
 document.addEventListener('click', e => { if (!e.target.closest('#bellPanel') && !e.target.closest('#bellBtn')) $('bellPanel').classList.remove('open'); });
 function drawBell(){
   $('myNotify').checked = !!(USER && USER.notify !== false);
-  $('bpHint').textContent = USER.role==='head' ? 'You are told when a teacher submits or reuploads an LPT or PPT.' : 'You are told when the School Head approves or returns your files.';
+  $('bpHint').textContent = USER.role==='head' ? 'You are told when a teacher submits or reuploads an LPT or PPT.' : USER.role==='admin' ? 'Notices for your account appear here.' : 'You are told when the School Head approves or returns your files.';
   $('bellList').innerHTML = NOTICES.length ? NOTICES.map(n => `<div class="bp-item ${n.read?'':'new'} ${esc(n.type)}"><span>${esc(n.text)}</span><small>${esc(dTime(n.on))}</small></div>`).join('')
     : '<div class="empty" style="padding:18px">No notifications yet.</div>';
 }
@@ -1965,7 +2057,7 @@ function chatNew(){
   $('chatBack').hidden = false; $('chatTitle').textContent = 'New message'; $('chatFoot').hidden = true;
   $('chatBody').innerHTML = `<p class="hint" style="margin:0 0 8px">Choose who will receive your message.</p>
     <label class="pick all"><input type="checkbox" value="all" onchange="document.querySelectorAll('#chatBody .pick:not(.all) input').forEach(i=>{i.checked=false;i.disabled=this.checked})"><b>Everyone</b> (all faculty and staff)</label>
-    ${(DATA.contacts||[]).map(c => `<label class="pick"><input type="checkbox" value="${esc(c.email)}"><span>${esc(c.name)}<small>${c.role==='head'?'School Head':'Teacher'}</small></span></label>`).join('')}
+    ${(DATA.contacts||[]).map(c => `<label class="pick"><input type="checkbox" value="${esc(c.email)}"><span>${esc(c.name)}<small>${c.role==='head'?'School Head':c.role==='admin'?'Administrative Officer':'Teacher'}</small></span></label>`).join('')}
     <button class="btn" style="width:100%;margin-top:10px" onclick="startThread()">Continue</button>`;
 }
 function startThread(){
@@ -2108,14 +2200,14 @@ async function openAccounts(){
 function renderAcc(){
   $('accBody').innerHTML = `<div class="table-wrap"><table><thead><tr><th>Name and email</th><th>Role</th><th>PIN</th><th>PIN status</th><th>Last sign in</th><th>Sign ins</th><th>Account</th><th>Notifications</th><th>Test account</th><th></th></tr></thead><tbody>${
     ACC.map(a=>`<tr><td><b>${esc(a.name)}</b><small>${esc(a.email)}</small></td>
-      <td>${a.role==='head'?'School Head':'Teacher'}</td>
+      <td>${a.role==='head'?'School Head':a.role==='admin'?'Administrative Officer':'Teacher'}</td>
       <td style="white-space:nowrap"><span class="pinv" id="pin_${esc(a.email).replace(/[^a-z0-9]/gi,'_')}" data-pin="${esc(a.pin)}">••••</span> <button class="linkbtn" style="font-size:12.5px" onclick="togglePin(this)">Show</button></td>
       <td><span class="${a.pinStatus.indexOf('Default')===0?'mk-wait':'mk-ok'}">${esc(a.pinStatus)}</span>${a.pinChangedOn?`<small>Changed ${esc(dTime(a.pinChangedOn))}</small>`:''}</td>
       <td>${a.lastSignIn?esc(dTime(a.lastSignIn)):'<span class="mk-wait">Never</span>'}</td>
       <td>${a.signIns}</td>
       <td>${a.active?'<span class="mk-ok">On</span>':'<span class="mk-late">Off</span>'}</td>
       <td><label class="check" style="margin:0"><input type="checkbox" ${a.notify?'checked':''} onchange="setNotifyFor('${esc(a.email)}',this.checked)">${a.notify?'On':'Off'}</label></td>
-      <td>${a.role==='head'?'':`<label class="check" style="margin:0"><input type="checkbox" ${a.test?'checked':''} onchange="setTest('${esc(a.email)}',this.checked)">${a.test?'Yes':'No'}</label>`}</td>
+      <td>${a.role!=='teacher'?'':`<label class="check" style="margin:0"><input type="checkbox" ${a.test?'checked':''} onchange="setTest('${esc(a.email)}',this.checked)">${a.test?'Yes':'No'}</label>`}</td>
       <td style="white-space:nowrap">${a.email===USER.email?'<small>You</small>':`<button class="btn ghost small" onclick="openSetPin('${esc(a.email)}')">Set PIN</button> <button class="btn ghost small" onclick="resetPin('${esc(a.email)}')">Reset PIN</button>
         <button class="btn ghost small" onclick="toggleAcc('${esc(a.email)}',${!a.active})">${a.active?'Turn off':'Turn on'}</button>`}</td></tr>`).join('')}
     </tbody></table></div>`;
