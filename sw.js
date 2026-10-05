@@ -1,0 +1,24 @@
+// TALA offline helper. Upload this to GitHub next to index.html and config.js.
+// It keeps a copy of the page so TALA opens even without internet.
+const CACHE = 'tala-v2';
+self.addEventListener('install', e => {
+  self.skipWaiting();
+  e.waitUntil(caches.open(CACHE).then(c => c.addAll(['./', './index.html', './config.js']).catch(() => {})));
+});
+self.addEventListener('activate', e => {
+  e.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim()));
+});
+self.addEventListener('fetch', e => {
+  const req = e.request;
+  if (req.method !== 'GET') return;
+  const url = new URL(req.url);
+  if (/script\.google|googleusercontent|drive\.google/.test(url.hostname)) return; // TALA data always goes online
+  if (req.mode === 'navigate' || url.origin === self.location.origin) {
+    // Page files: try the internet first, use the saved copy when offline
+    e.respondWith(fetch(req).then(res => { const copy = res.clone(); caches.open(CACHE).then(c => c.put(req, copy)); return res; })
+      .catch(() => caches.match(req).then(r => r || caches.match('./index.html'))));
+  } else {
+    // Fonts and reader tools: use the saved copy first
+    e.respondWith(caches.match(req).then(r => r || fetch(req).then(res => { const copy = res.clone(); caches.open(CACHE).then(c => c.put(req, copy)); return res; })));
+  }
+});

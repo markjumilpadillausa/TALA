@@ -238,6 +238,27 @@ table.subs tr.nosub td:not(.wk){color:var(--muted);font-style:italic}
 .hist summary{cursor:pointer;color:var(--muted);font-weight:600}
 .hist ol{margin:4px 0 0;padding-left:18px}
 .pinv{font-weight:700;letter-spacing:1px}
+.sync{display:flex;align-items:center;gap:6px;font-size:12px;white-space:nowrap;background:rgba(255,255,255,.12);border-radius:999px;padding:4px 10px}
+.sync i{width:9px;height:9px;border-radius:50%;background:#7CD992;flex:none}
+.sync.wait i{background:var(--sun)}.sync.off i{background:#ff8a80}.sync.sync i{background:#90caf9;animation:pulse 1s infinite}
+@keyframes pulse{50%{opacity:.3}}
+@media (max-width:900px){.sync b{display:none}.sync{padding:6px}}
+.side-i em.vis{color:var(--ok);background:var(--ok-soft)}.side-i em.hid{color:var(--muted);background:var(--page);border:1px dashed var(--line)}
+.side-manage{display:block;margin:10px 10px 0;font-size:13px}
+.fvrow{align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--line);margin:0}.fvrow small{display:block;color:var(--muted);font-size:12px}
+.sigpad{position:relative;border:1.5px dashed var(--line);border-radius:12px;background:repeating-linear-gradient(45deg,var(--card),var(--card) 12px,var(--page) 12px,var(--page) 24px)}
+.sigpad canvas{display:block;width:100%;height:220px;touch-action:none;cursor:crosshair}
+.sigline{position:absolute;left:24px;right:24px;bottom:42px;border-top:1.5px solid var(--muted);font-size:11px;color:var(--muted);padding-top:2px;pointer-events:none}
+.sigtools{display:flex;align-items:center;gap:8px;margin:10px 0;font-size:13px}
+.pen{width:26px;height:26px;border-radius:50%;border:3px solid var(--card);background:var(--c);box-shadow:0 0 0 1.5px var(--line);cursor:pointer}
+.pen.on{box-shadow:0 0 0 2.5px var(--sun)}
+.sigsaved{background:var(--page);border-radius:10px;padding:10px 12px;font-size:13px;display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+.sigsaved img{max-height:80px;max-width:100%;background:repeating-linear-gradient(45deg,#fff,#fff 8px,#f1f1f1 8px,#f1f1f1 16px);border-radius:6px;padding:4px}
+.sbank{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.sbcard{background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:3px}
+.sbcard small{color:var(--muted);font-size:12px}
+.sbimg{height:90px;display:grid;place-items:center;background:repeating-linear-gradient(45deg,#fff,#fff 8px,#f4f4f4 8px,#f4f4f4 16px);border-radius:8px;margin-bottom:6px}
+.sbimg img{max-height:80px;max-width:95%}
 .layout{display:flex;align-items:flex-start;max-width:1400px;margin:0 auto}
 .layout > main{flex:1;min-width:0}
 .side{position:sticky;top:76px;width:236px;flex:none;padding:18px 8px 18px 14px;max-height:calc(100vh - 90px);overflow-y:auto}
@@ -447,6 +468,7 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
     <button type="button" class="homebtn" onclick="goMain()" aria-label="Go to the main page"><span class="mark"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAACWCAMAAAAL34HQAAAA/1BMVEX816CXp5xGMTVnVVguFhuEdnn7xXPq6eDCu7yczbT4nRL6vF0AbiY+oHFSPkJ+waCLfYBasYS+4NDGv8D9/f0AAAADAQEkBg8HhEcAejjo6OgXFxf5pyvJx8goJyfX19d4d3eQx6upp6iIh4e3t7dIR0dwtpKXlpZLpHfK5dhXV1c3NzdoZme12sc3mWfa7OMAAAAAAAAAAACl0rsAAABarIMqklwAAAAAAABCnW0jjVT4oBz6tlD96swCf0BhrYYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACRnchGAAAAQHRSTlP///////////////////////////8A/f/////+//////////////////////////8ujNH/bP//s1H/////////qo/pSgAAFw5JREFUeNrNXAlX28iyliGQZZLMvPd0hSVF+76DNzBJ4P//q1tLtxZbks2SOU/nDGQAt76urvpq6epW/vO25/Zhc3e/Wmnts1rd320ebt84rPIGRJu7Pp7hs1rdbW7/dVi3m3vt9LO6fy2018B6uOsJybSj3A0SP6THTwI3j2yzB+3u4d+AddthsnPXtwx15DEs383tDtntH4a1WbWQEks98VhJC221+XOwWkEV7kBIYVnkqhrYRYHfXTcxemJzi9eITHkBKCEntxWTX0aAQ81Bwwy1JE1THfhaIlS/FZorZPYCYMoLQeUhv8sJy1B14Qfw9gi+OQCrcBxHtTQBMlKT3HeEPPMXAjsTFoMypaCSyESZ+PCzSDVM09RCAGInvgU/sxFrrrkqLJ8ZBY4QGVvn3TvCYkU3g1Zn4M34vlCzbc0ytCjSEpUEEoEEyxwQF/ATKyAoQr4G/995yn8GrNt7lhSBYmSuZgIo0CMTUDiai7LJNbPMEV0AAnNMQmNrUW4bqPn0WZbY/e17wNqQ8EtaCys36XsI1ogvtjXfNgPNd7Uc8ET4KxCToWkBahsuMit+pEX0D4fsQtu8GRaLKqLZ4qqBWHDeaFtFCBj8QDM1K9AKlFaeByqijeBnNvxZicrPpqppLGerOEtgyhmiMhMhKQteaIsXkdhg8Qw0Qx+YISL2AH6w1IS0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" alt="Baluyan Elementary School logo"></span><span class="brand"><b>TALA</b><span>Baluyan Elementary School</span></span></button>
     <div class="top-right">
       <span class="clock" id="clock"></span>
+      <span class="sync" id="syncSt" role="status"><i></i><b></b></span>
       <span class="portal-pill" id="portalPill" style="display:none"></span>
       <button class="btn sun small" id="signInBtn" onclick="openLogin()">Sign in</button>
       <button class="bell" id="bellBtn" style="display:none" onclick="toggleBell()" aria-label="Notifications"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 22a2.5 2.5 0 0 0 2.45-2h-4.9A2.5 2.5 0 0 0 12 22Zm7-6V11a7 7 0 0 0-5.5-6.84V3a1.5 1.5 0 0 0-3 0v1.16A7 7 0 0 0 5 11v5l-2 2v1h18v-1Z"/></svg><span class="badge" id="bellCount" hidden></span></button>
@@ -463,6 +485,8 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
   <div class="menu" id="menu">
     <div class="who" id="menuWho"></div>
     <button id="menuAcc" onclick="openAccounts()" style="display:none">Teacher accounts</button>
+    <button onclick="$('menu').classList.remove('open');openSig()">My e-signature</button>
+    <button id="menuSigBank" onclick="$('menu').classList.remove('open');openSigBank()" style="display:none">Signature bank</button>
     <button id="menuTour" onclick="$('menu').classList.remove('open');startTour(true)" style="display:none">Show the guide again</button>
     <button onclick="openPin(false)">Change my PIN</button>
     <button onclick="signOut()">Sign out</button>
@@ -529,6 +553,15 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
     <div class="chips weeks" id="bWeeks" style="margin:10px 0 4px"></div>
     <p class="hint" style="margin:0 0 12px">Weeks with a dot are already filled in.</p>
     <div class="entry" id="bEditor"></div>
+  </section>
+
+  <!-- SIGNATURE BANK -->
+  <section id="viewSig" style="display:none">
+    <div class="trk-head">
+      <div><h2>Signature Bank</h2><p>E-signature specimens of all personnel. Each person draws and saves their own in My e-signature.</p></div>
+      <div class="head-actions"><button class="btn ghost" onclick="showTracker()">Back to tracker</button><button class="btn" onclick="printSigBank()">Print specimen sheet</button></div>
+    </div>
+    <div id="sigBody" style="margin-top:16px"></div>
   </section>
 
   <!-- WEEK SCHEDULE -->
@@ -693,6 +726,51 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
   </div>
 </div>
 
+<!-- Edit personnel -->
+<div class="overlay" id="editAccModal">
+  <div class="modal" role="dialog" aria-labelledby="eaTitle">
+    <h3 id="eaTitle">Edit personnel</h3>
+    <p class="sub" id="eaEmail"></p>
+    <div class="field"><label for="eaName">Full name (as it should appear on reports)</label><input id="eaName" maxlength="120"></div>
+    <div class="field"><label for="eaPos">Position</label><input id="eaPos" list="posList" maxlength="60" placeholder="Choose or type a position">
+      <datalist id="posList"></datalist></div>
+    <div class="field"><label for="eaGrade">Grade handled (optional)</label><input id="eaGrade" maxlength="40"></div>
+    <div class="err" id="eaErr"></div>
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal('editAccModal')">Cancel</button><button class="btn" id="eaBtn" onclick="saveEditAcc()">Save</button></div>
+  </div>
+</div>
+
+<!-- Feature visibility -->
+<div class="overlay" id="fvModal">
+  <div class="modal" role="dialog" aria-labelledby="fvTitle2">
+    <h3 id="fvTitle2">Show features to personnel</h3>
+    <p class="sub">Only ticked features appear for teachers and the Administrative Officer. You can always open every feature, so you can try it first without anyone noticing.</p>
+    <div id="fvList"></div>
+    <div class="err" id="fvErr"></div>
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal('fvModal')">Cancel</button><button class="btn" id="fvBtn" onclick="saveFeatures()">Save</button></div>
+  </div>
+</div>
+
+<!-- My e-signature -->
+<div class="overlay" id="sigModal">
+  <div class="modal wide" role="dialog" aria-labelledby="sigTitle">
+    <h3 id="sigTitle">My e-signature</h3>
+    <p class="sub">Sign inside the box using your finger, stylus, or mouse. It is saved with a transparent background and used on TALA documents you sign.</p>
+    <div class="sigpad"><canvas id="sigCanvas"></canvas><span class="sigline">Sign above the line</span></div>
+    <div class="sigtools">
+      <span>Pen:</span>
+      <button type="button" class="pen on" data-c="#0b2a6f" onclick="setPen(this)" style="--c:#0b2a6f" aria-label="Blue"></button>
+      <button type="button" class="pen" data-c="#111111" onclick="setPen(this)" style="--c:#111" aria-label="Black"></button>
+      <span style="margin-left:auto"></span>
+      <button class="btn ghost small" onclick="sigUndo()">Undo</button>
+      <button class="btn ghost small" onclick="sigClear()">Clear</button>
+    </div>
+    <div class="sigsaved" id="sigSaved"></div>
+    <div class="err" id="sigErr"></div>
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal('sigModal')">Close</button><button class="btn" id="sigBtn" onclick="saveSig()">Save signature</button></div>
+  </div>
+</div>
+
 <!-- Feature under construction -->
 <div class="overlay" id="featModal">
   <div class="modal" role="dialog" aria-labelledby="featTitle">
@@ -796,8 +874,8 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
 
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
-const MIN_SERVER = '2.6'; // oldest Code.gs this page works with
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'2.7', date:'October 5, 2026' } };
+const MIN_SERVER = '2.8'; // oldest Code.gs this page works with
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'2.8', date:'October 5, 2026' } };
 function verLine(server){
   const old = server && (server.indexOf('older') > -1 || parseFloat(server) < parseFloat(MIN_SERVER));
   const s = server ? ' Server '+server+(old && USER && USER.role==='head' ? ', please deploy the new Code.gs.' : '.') : '';
@@ -1129,6 +1207,8 @@ function render(){
   $('userBtn').style.display = USER ? 'flex' : 'none';
   $('menuAcc').style.display = role==='head' ? '' : 'none';
   $('menuTour').style.display = role==='teacher' ? '' : 'none';
+  $('menuSigBank').style.display = role==='head' ? '' : 'none';
+  drawSide(); syncUI();
   $('accBtn').style.display = role==='head' ? '' : 'none';
   $('logBtn').style.display = role==='head' ? '' : 'none';
   $('wkBtn').style.display = role==='head' ? '' : 'none';
@@ -1199,9 +1279,27 @@ const FEATURES = [
     auto:'Figures for SMEA, PIR, and AIP progress are pulled from the other features automatically.',
     report:'Quarterly SMEA and PIR tables, ready to print.' }
 ];
+function featOn(id){ const s = (DATA||PUB||{}).settings||{}; return !!(s.features||{})[id]; }
 function drawSide(){
-  $('sideNav').innerHTML = FEATURES.map(f => `<button type="button" class="side-i ${f.ready?'on':''}" onclick="openFeature('${f.id}')">
-    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="${f.icon}"/></svg><span>${esc(f.name)}</span>${f.ready?'':'<em>Soon</em>'}</button>`).join('');
+  const head = USER && USER.role==='head';
+  $('sideNav').innerHTML = FEATURES.map(f => {
+    const tag = f.id==='lpt' ? '' : head ? (featOn(f.id) ? '<em class="vis">Shown</em>' : '<em class="hid">Hidden</em>') : (featOn(f.id) && f.built ? '' : '<em>Soon</em>');
+    return `<button type="button" class="side-i ${f.id===CUR_FEATURE?'on':''}" onclick="openFeature('${f.id}')">
+    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="${f.icon}"/></svg><span>${esc(f.name)}</span>${tag}</button>`; }).join('')
+    + (head ? '<button type="button" class="linkbtn side-manage" onclick="openFV()">Show or hide features</button>' : '');
+}
+let CUR_FEATURE = 'lpt';
+function openFV(){
+  toggleSide(false);
+  $('fvList').innerHTML = FEATURES.filter(f=>f.id!=='lpt').map(f => `<label class="check fvrow"><input type="checkbox" data-id="${f.id}" ${featOn(f.id)?'checked':''}><span><b>${esc(f.name)}</b><small>${f.built?'Ready to try':'Still being built'}</small></span></label>`).join('');
+  $('fvErr').textContent=''; openModal('fvModal');
+}
+async function saveFeatures(){
+  const features = {}; document.querySelectorAll('#fvList input').forEach(i => features[i.dataset.id] = i.checked);
+  $('fvBtn').disabled = true;
+  try{ await apiData('saveFeatures',{ features }); closeModal('fvModal'); drawSide(); toast('Feature visibility saved.'); }
+  catch(e){ handleErr(e,'fvErr'); }
+  $('fvBtn').disabled = false;
 }
 function toggleSide(open){
   const s = $('side'), on = open === undefined ? !s.classList.contains('open') : open;
@@ -1210,12 +1308,15 @@ function toggleSide(open){
 function openFeature(id){
   toggleSide(false);
   const f = FEATURES.find(x => x.id === id);
-  if (f.ready){ goMain(); return; }
+  if (f.ready){ CUR_FEATURE = 'lpt'; drawSide(); goMain(); return; }
+  const canOpen = f.built && (USER && USER.role==='head' || featOn(f.id));
+  if (canOpen && f.open){ CUR_FEATURE = f.id; drawSide(); f.open(); return; }
   $('featTitle').textContent = f.name; $('featDo').textContent = f.do; $('featAuto').textContent = f.auto; $('featReport').textContent = f.report;
   openModal('featModal');
 }
 drawSide();
-function showTracker(){ ['viewAcc','viewBank','viewLog','viewWeeks'].forEach(v => $(v).style.display='none'); $('viewTrk').style.display=''; }
+function showTracker(){ ['viewAcc','viewBank','viewLog','viewWeeks','viewSig'].forEach(v => $(v).style.display='none'); $('viewTrk').style.display=''; }
+function showView2(id){ ['viewTrk','viewAcc','viewBank','viewLog','viewWeeks','viewSig'].forEach(v => $(v).style.display = v===id ? '' : 'none'); window.scrollTo(0,0); }
 
 /* ---------- Term and week bar ---------- */
 function pickCurrentTerm(st){
@@ -1242,6 +1343,7 @@ async function loadPublic(){
 }
 function applyData(d, first){
   if (!d) return;
+  LAST_SYNC = nowLocal(); setTimeout(flushOut, 500);
   verLine(d.serverVersion || '2.1 or older');
   if (first && d.user && d.user.role==='head' && (d.entries||[]).some(e => filesOf(e).some(f => f.d.link && f.d.validation==='Pending'))) FILTER.quick = 'Pending';
   DATA = d;
@@ -2089,6 +2191,130 @@ async function sendChat(){
 }
 $('chatText').addEventListener('keydown', e => { if (e.key==='Enter' && !e.shiftKey){ e.preventDefault(); sendChat(); } });
 
+/* ---------- E-signature ---------- */
+let SIG = { strokes:[], cur:null, color:'#0b2a6f' };
+function setPen(b){ document.querySelectorAll('.pen').forEach(x=>x.classList.remove('on')); b.classList.add('on'); SIG.color = b.dataset.c; }
+function sigSize(){
+  const c = $('sigCanvas'), r = c.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
+  c.width = Math.round(r.width*dpr); c.height = Math.round(r.height*dpr); sigDraw();
+}
+function sigDraw(target, scale, ox, oy){
+  const c = target || $('sigCanvas'), g = c.getContext('2d'), dpr = scale || window.devicePixelRatio || 1;
+  if (!target) g.clearRect(0,0,c.width,c.height);
+  g.lineCap = 'round'; g.lineJoin = 'round';
+  SIG.strokes.forEach(s => {
+    g.strokeStyle = s.c; g.lineWidth = 2.6*dpr; g.beginPath();
+    s.p.forEach((pt,i) => { const x = (pt[0]-(ox||0))*dpr, y = (pt[1]-(oy||0))*dpr;
+      if (!i) g.moveTo(x,y); else { const pr = s.p[i-1], mx = ((pr[0]+pt[0])/2-(ox||0))*dpr, my = ((pr[1]+pt[1])/2-(oy||0))*dpr; g.quadraticCurveTo((pr[0]-(ox||0))*dpr,(pr[1]-(oy||0))*dpr,mx,my); } });
+    if (s.p.length===1){ const x=(s.p[0][0]-(ox||0))*dpr, y=(s.p[0][1]-(oy||0))*dpr; g.lineTo(x+0.1,y+0.1); }
+    g.stroke(); });
+}
+(function(){
+  const c = $('sigCanvas'), pos = e => { const r = c.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+  c.addEventListener('pointerdown', e => { e.preventDefault(); c.setPointerCapture(e.pointerId); SIG.cur = { c:SIG.color, p:[pos(e)] }; SIG.strokes.push(SIG.cur); sigDraw(); });
+  c.addEventListener('pointermove', e => { if (!SIG.cur) return; e.preventDefault(); SIG.cur.p.push(pos(e)); sigDraw(); });
+  ['pointerup','pointercancel','pointerleave'].forEach(t => c.addEventListener(t, () => SIG.cur = null));
+  window.addEventListener('resize', () => { if ($('sigModal').classList.contains('open')) sigSize(); });
+})();
+function sigUndo(){ SIG.strokes.pop(); sigDraw(); }
+function sigClear(){ SIG.strokes = []; sigDraw(); }
+// Crops to the signature, keeps the background transparent, and keeps the file small
+function sigExport(){
+  if (!SIG.strokes.length) return '';
+  let x1=1e9,y1=1e9,x2=-1e9,y2=-1e9;
+  SIG.strokes.forEach(s=>s.p.forEach(p=>{ x1=Math.min(x1,p[0]); y1=Math.min(y1,p[1]); x2=Math.max(x2,p[0]); y2=Math.max(y2,p[1]); }));
+  const pad = 8, w = (x2-x1)+pad*2, hgt = (y2-y1)+pad*2;
+  for (const scale of [2, 1.5, 1.1, 0.8]){
+    const out = document.createElement('canvas'); out.width = Math.ceil(w*scale); out.height = Math.ceil(hgt*scale);
+    sigDraw(out, scale, x1-pad, y1-pad);
+    const url = out.toDataURL('image/png'); if (url.length < 45000) return url;
+  }
+  return '';
+}
+async function openSig(){
+  SIG.strokes = []; $('sigErr').textContent=''; $('sigSaved').innerHTML = '<span class="hint">Checking your saved signature</span>';
+  openModal('sigModal'); setTimeout(sigSize, 30);
+  const local = pendingSig();
+  if (local){ $('sigSaved').innerHTML = `<b>Saved on this device, waiting to sync:</b><img src="${local}" alt="Your signature">`; return; }
+  try{ const r = await api('getMySig');
+    $('sigSaved').innerHTML = r && r.sig ? `<b>Your saved signature (${esc(dTime(r.on))}):</b><img src="${r.sig}" alt="Your signature"><button class="linkbtn" onclick="removeSig()">Remove it</button>` : '<span class="hint">You have no saved signature yet.</span>'; }
+  catch(e){ $('sigSaved').innerHTML = '<span class="hint">You are offline. You can still draw and save. It will sync later.</span>'; }
+}
+function pendingSig(){ const it = outbox().find(x => x.action==='saveSig' && x.email===(USER&&USER.email)); return it ? it.payload.sig : ''; }
+async function saveSig(){
+  const sig = sigExport();
+  if (!sig) return $('sigErr').textContent = 'Please sign inside the box first.';
+  $('sigBtn').disabled = true;
+  try{
+    if (navigator.onLine === false) throw new Error(MSG.NET);
+    const r = await api('saveSig',{ sig });
+    $('sigSaved').innerHTML = `<b>Your saved signature (${esc(dTime(r.on))}):</b><img src="${sig}" alt="Your signature">`; SIG.strokes = []; sigDraw(); toast('Your e-signature is saved.');
+  }catch(e){
+    if (friendly(e.message) === MSG.NET || friendly(e.message) === MSG.BUSY){
+      queueOut('saveSig', { sig }, 'E-signature'); $('sigSaved').innerHTML = `<b>Saved on this device, waiting to sync:</b><img src="${sig}" alt="Your signature">`;
+      SIG.strokes = []; sigDraw(); toast('Saved on this device. It will sync when you are online.');
+    } else handleErr(e,'sigErr');
+  }
+  $('sigBtn').disabled = false;
+}
+async function removeSig(){
+  if (!confirm('Remove your saved e-signature?')) return;
+  try{ await api('deleteSig'); $('sigSaved').innerHTML = '<span class="hint">You have no saved signature yet.</span>'; toast('Signature removed.'); }catch(e){ handleErr(e,'sigErr'); }
+}
+let SIGBANK = [];
+async function openSigBank(){
+  showView2('viewSig'); $('sigBody').innerHTML = skeleton(); loading(true);
+  try{ SIGBANK = await api('sigBank');
+    $('sigBody').innerHTML = `<div class="sbank">${SIGBANK.map(p => `<div class="sbcard"><div class="sbimg">${p.sig?`<img src="${p.sig}" alt="Signature of ${esc(p.name)}">`:'<span class="mk-wait">No signature yet</span>'}</div>
+      <b>${esc(p.name)}</b><small>${esc(p.position || (p.role==='head'?'School Head':p.role==='admin'?'Administrative Officer':'Teacher'))}</small>${p.on?`<small>Saved ${esc(dTime(p.on))}</small>`:''}
+      ${p.sig?`<a class="linkbtn" download="Signature_${esc(p.name.replace(/[^A-Za-z0-9]+/g,'_'))}.png" href="${p.sig}">Download PNG</a>`:''}</div>`).join('')}</div>`; }
+  catch(e){ handleErr(e); }
+  loading(false);
+}
+function printSigBank(){
+  $('printArea').innerHTML = `<div class="p-head"><img src="${LOGO}" alt=""><div>Republic of the Philippines<br><b>Department of Education</b><br>Region IX, Zamboanga Peninsula<br>Schools Division of Zamboanga Sibugay<br>Imelda District<br><b>BALUYAN ELEMENTARY SCHOOL</b><br>School ID 125592</div></div>
+    <div class="p-title">SIGNATURE SPECIMEN OF PERSONNEL</div><p class="p-sub">${esc((DATA&&DATA.settings.sy)||'')}</p>
+    <table class="p-table"><thead><tr><th>No.</th><th>Name</th><th>Position</th><th>Specimen Signature</th></tr></thead><tbody>${SIGBANK.map((p,i)=>`<tr><td style="text-align:center">${i+1}</td><td>${esc(p.name)}</td><td>${esc(p.position||'')}</td><td style="height:60px;text-align:center">${p.sig?`<img src="${p.sig}" style="max-height:52px;max-width:220px">`:''}</td></tr>`).join('')}</tbody></table>
+    <div class="p-sign"><div>Certified true and correct:<b>${esc(USER.name)}</b>School Head</div></div>
+    <div class="p-foot">Generated from TALA on ${esc(dTime(nowLocal().replace('T',' ')))}.</div>`;
+  setTimeout(() => window.print(), 150);
+}
+
+/* ---------- Offline: things saved on this device, waiting to sync ---------- */
+const OUT_KEY = 'tala_outbox';
+let SYNCING = false, LAST_SYNC = '';
+function outbox(){ try{ return JSON.parse(localStorage.getItem(OUT_KEY)||'[]'); }catch(e){ return []; } }
+function saveOut(o){ try{ localStorage.setItem(OUT_KEY, JSON.stringify(o)); }catch(e){} syncUI(); }
+function queueOut(action, payload, label){
+  const o = outbox().filter(x => !(x.action==='saveSig' && action==='saveSig' && x.email===USER.email));
+  o.push({ id: Date.now()+''+Math.floor(Math.random()*1000), email: USER.email, action, payload, label, on: nowLocal().replace('T',' ') });
+  saveOut(o);
+}
+function myPending(){ return USER ? outbox().filter(x => x.email===USER.email) : []; }
+async function flushOut(){
+  if (SYNCING || !USER || !TOKEN || navigator.onLine === false) return;
+  const mine = myPending(); if (!mine.length) return;
+  SYNCING = true; syncUI();
+  for (const it of mine){
+    try{ await api(it.action, it.payload); saveOut(outbox().filter(x => x.id !== it.id)); }
+    catch(e){ if (friendly(e.message) === MSG.NET || friendly(e.message) === MSG.BUSY) break; saveOut(outbox().filter(x => x.id !== it.id)); toast(it.label+' could not be synced: '+friendly(e.message)); }
+  }
+  SYNCING = false; LAST_SYNC = nowLocal(); syncUI();
+  if (!myPending().length) toast('All your offline work is synced.');
+}
+function syncUI(){
+  const el = $('syncSt'); if (!el) return;
+  const off = navigator.onLine === false, n = myPending().length;
+  const st = SYNCING ? 'sync' : off ? 'off' : n ? 'wait' : 'ok';
+  const txt = SYNCING ? 'Syncing' : off ? (n ? 'Offline, '+n+' waiting to sync' : 'Offline') : n ? n+' waiting to sync' : 'Online, all synced';
+  el.className = 'sync '+st; el.querySelector('b').textContent = txt; el.title = txt + (LAST_SYNC ? '. Last synced '+dTime(LAST_SYNC.replace('T',' ')) : '');
+}
+window.addEventListener('online', () => { syncUI(); flushOut(); });
+window.addEventListener('offline', syncUI);
+setInterval(() => { if (navigator.onLine !== false) flushOut(); }, 30000);
+// Lets TALA open without internet after the first visit
+if ('serviceWorker' in navigator && location.protocol === 'https:') { navigator.serviceWorker.register('sw.js').catch(()=>{}); }
+
 /* ---------- Clear data for launch ---------- */
 function openClear(){ $('clrType').value=''; $('clrErr').textContent=''; openModal('clrModal'); }
 async function doClear(){
@@ -2198,9 +2424,9 @@ async function openAccounts(){
   loading(false);
 }
 function renderAcc(){
-  $('accBody').innerHTML = `<div class="table-wrap"><table><thead><tr><th>Name and email</th><th>Role</th><th>PIN</th><th>PIN status</th><th>Last sign in</th><th>Sign ins</th><th>Account</th><th>Notifications</th><th>Test account</th><th></th></tr></thead><tbody>${
-    ACC.map(a=>`<tr><td><b>${esc(a.name)}</b><small>${esc(a.email)}</small></td>
-      <td>${a.role==='head'?'School Head':a.role==='admin'?'Administrative Officer':'Teacher'}</td>
+  $('accBody').innerHTML = `<div class="table-wrap"><table><thead><tr><th>Name and email</th><th>Role and position</th><th>PIN</th><th>PIN status</th><th>Last sign in</th><th>Sign ins</th><th>Account</th><th>Notifications</th><th>Test account</th><th></th></tr></thead><tbody>${
+    ACC.map(a=>`<tr><td><b>${esc(a.name)}</b><small>${esc(a.email)}</small><button class="linkbtn" style="font-size:12.5px;margin-top:4px" onclick="openEditAcc('${esc(a.email)}')">Edit name and position</button></td>
+      <td>${a.role==='head'?'School Head':a.role==='admin'?'Administrative Officer':'Teacher'}<small>${esc(a.position||'No position set')}</small></td>
       <td style="white-space:nowrap"><span class="pinv" id="pin_${esc(a.email).replace(/[^a-z0-9]/gi,'_')}" data-pin="${esc(a.pin)}">••••</span> <button class="linkbtn" style="font-size:12.5px" onclick="togglePin(this)">Show</button></td>
       <td><span class="${a.pinStatus.indexOf('Default')===0?'mk-wait':'mk-ok'}">${esc(a.pinStatus)}</span>${a.pinChangedOn?`<small>Changed ${esc(dTime(a.pinChangedOn))}</small>`:''}</td>
       <td>${a.lastSignIn?esc(dTime(a.lastSignIn)):'<span class="mk-wait">Never</span>'}</td>
@@ -2211,6 +2437,21 @@ function renderAcc(){
       <td style="white-space:nowrap">${a.email===USER.email?'<small>You</small>':`<button class="btn ghost small" onclick="openSetPin('${esc(a.email)}')">Set PIN</button> <button class="btn ghost small" onclick="resetPin('${esc(a.email)}')">Reset PIN</button>
         <button class="btn ghost small" onclick="toggleAcc('${esc(a.email)}',${!a.active})">${a.active?'Turn off':'Turn on'}</button>`}</td></tr>`).join('')}
     </tbody></table></div>`;
+}
+const POSITIONS = ['Teacher I','Teacher II','Teacher III','Teacher IV','Teacher V','Teacher VI','Teacher VII','Master Teacher I','Master Teacher II','Master Teacher III','Master Teacher IV','Master Teacher V',
+  'Head Teacher I','Head Teacher II','Head Teacher III','Head Teacher IV','Head Teacher V','Head Teacher VI','School Principal I','School Principal II','School Principal III','School Principal IV',
+  'Administrative Officer I','Administrative Officer II','Administrative Officer III','Administrative Officer IV','Administrative Officer V','Administrative Assistant I','Administrative Assistant II','Administrative Assistant III'];
+function openEditAcc(email){
+  const a = ACC.find(x=>x.email===email);
+  $('eaEmail').textContent = a.email; $('eaName').value = a.name; $('eaPos').value = a.position||''; $('eaGrade').value = a.grade||'';
+  $('posList').innerHTML = POSITIONS.map(p=>`<option value="${p}">`).join(''); $('eaErr').textContent=''; openModal('editAccModal');
+}
+async function saveEditAcc(){
+  $('eaErr').textContent=''; $('eaBtn').disabled=true;
+  try{ await api('updateAccount',{ email:$('eaEmail').textContent, name:$('eaName').value, position:$('eaPos').value, grade:$('eaGrade').value });
+    closeModal('editAccModal'); ACC = await api('getAccounts'); renderAcc(); loadData().catch(()=>{}); toast('Personnel details saved.'); }
+  catch(e){ handleErr(e,'eaErr'); }
+  $('eaBtn').disabled=false;
 }
 async function setNotifyFor(email, on){
   try{ await api('setNotify',{ email, on }); ACC = await api('getAccounts'); renderAcc(); if (email===USER.email) USER.notify = on; toast(on ? 'Notifications turned on.' : 'Notifications turned off.'); }
