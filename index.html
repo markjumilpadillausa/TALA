@@ -245,6 +245,24 @@ table.subs tr.nosub td:not(.wk){color:var(--muted);font-style:italic}
 .hist summary{cursor:pointer;color:var(--muted);font-weight:600}
 .hist ol{margin:4px 0 0;padding-left:18px}
 .pinv{font-weight:700;letter-spacing:1px}
+.cfrow{background:var(--page);border-radius:10px;padding:8px 10px;margin:6px 0}.cfrow p{margin:3px 0;white-space:pre-wrap}.cfrow small{color:var(--muted)}
+.cfsig{display:flex;flex-direction:column;align-items:center;margin:10px 0 4px}.cfsig img{max-height:60px;max-width:220px;border-bottom:1px solid var(--ink);padding-bottom:2px}.cfsig small{color:var(--muted)}
+.cmthint{margin:0 0 6px;color:#8a8f88;font-style:italic}
+.seg3{grid-template-columns:repeat(3,1fr)}.seg3 label{font-size:13px;text-align:center}
+@media (max-width:560px){.seg3{grid-template-columns:1fr}}
+.sol{display:flex;gap:12px;overflow-x:auto;padding:4px 2px 14px;margin-top:14px;align-items:flex-start;scroll-snap-type:x proximity}
+.solcol{flex:0 0 250px;display:flex;flex-direction:column;gap:8px;background:var(--page);border:1.5px solid var(--line);border-radius:14px;padding:8px;scroll-snap-align:start}
+.solhead{display:flex;align-items:center;gap:8px;background:var(--card);border:1.5px solid var(--line);border-radius:10px;padding:8px;font:inherit;text-align:left;cursor:pointer;color:var(--ink)}
+.solhead small{display:block;color:var(--muted);font-size:12px}
+.ocard.sc{gap:2px;padding:10px 12px}.sc-top{display:flex;justify-content:space-between;gap:6px;align-items:center;margin-bottom:4px}.ocard.sc .opill{margin-top:0}
+.ohero.sbhero{background:linear-gradient(135deg,#b04500,#d35400)}
+.sbtoday{background:rgba(255,255,255,.15);border-radius:14px;padding:12px 16px;display:flex;flex-direction:column;gap:2px;min-width:220px}.sbtoday small{opacity:.85}.sbtoday b{font-size:17px}
+.sbgrid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+.sbd{min-height:84px;border:1.5px solid var(--line);border-radius:10px;background:var(--card);padding:6px;text-align:left;font:inherit;color:var(--ink);display:flex;flex-direction:column;gap:3px;cursor:pointer;overflow:hidden}
+.sbd.empty{border:0;background:none;cursor:default}.sbd.wkend{background:var(--page);cursor:default}.sbd.today{box-shadow:inset 0 0 0 2px var(--sun)}
+.sbd.has{border-color:#e08a4c;background:#fff4ea}.sbmenu{font-size:12px;font-weight:600;color:#8a3a00;line-height:1.3}.sbgrade{font-size:11px;color:var(--muted)}
+.sbcopy{display:flex;flex-wrap:wrap;gap:5px;max-height:120px;overflow-y:auto}.sbc{display:flex;align-items:center;gap:4px;border:1px solid var(--line);border-radius:8px;padding:3px 7px;font-size:12px;background:var(--card)}
+@media (max-width:760px){.sbd{min-height:62px}.sbmenu{font-size:10px}.solcol{flex-basis:220px}}
 .evid{margin-top:4px;font-size:11.5px;background:var(--page);border-radius:6px;padding:3px 6px}
 .starguide{background:#f6f8f3;border:1px dashed var(--line);border-radius:10px;padding:8px 12px;font-size:13px;color:var(--muted);margin-bottom:10px}
 textarea::placeholder,input::placeholder{color:#a8aea6;font-style:italic}
@@ -667,7 +685,7 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
     <button onclick="installApp()">Install TALA app</button>
     <button id="menuSigBank" onclick="$('menu').classList.remove('open');openSigBank()" style="display:none">Signature bank</button>
     <button id="menuNewSY" onclick="openNewSY()" style="display:none">Start a new school year</button>
-    <button id="menuTour" onclick="$('menu').classList.remove('open');startTour(true)" style="display:none">Show the guide again</button>
+    <button id="menuTour" onclick="openGuides()">Guides</button>
     <button onclick="openPin(false)">Change my PIN</button>
     <button onclick="signOut()">Sign out</button>
   </div>
@@ -739,6 +757,7 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
 
   <!-- SIGNATURE BANK -->
   <section id="viewHome" style="display:none"></section>
+  <section id="viewSbfp" style="display:none"></section>
   <section id="viewObs" style="display:none"></section>
 
   <section id="viewSig" style="display:none">
@@ -999,7 +1018,10 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
     <div class="field"><label for="evTitle">Title</label><input id="evTitle" maxlength="120" placeholder="Example: Parents and teachers meeting"></div>
     <div class="row2"><div class="field"><label for="evDate">Date</label><input type="date" id="evDate"></div><div class="field"><label for="evEnd">Until (optional)</label><input type="date" id="evEnd"></div></div>
     <div class="row2"><div class="field"><label for="evTime">Time (optional)</label><input id="evTime" maxlength="20" placeholder="Example: 1:00 PM"></div><div class="field"><label for="evType">Type</label><select id="evType"></select></div></div>
-    <div class="field"><span class="lbl">Who can see this?</span><div class="seg"><label><input type="radio" name="evAud" value="Everyone">Everyone (all personnel and the public)</label><label><input type="radio" name="evAud" value="Only me">Only me</label></div></div>
+    <div class="field"><span class="lbl">Who can see this?</span><div class="seg seg3" id="evAudSeg">
+      <label><input type="radio" name="evAud" value="Only me" onchange="segSync('evAudSeg')">Only me</label>
+      <label><input type="radio" name="evAud" value="Personnel" onchange="segSync('evAudSeg')">Me and all personnel</label>
+      <label><input type="radio" name="evAud" value="Everyone" onchange="segSync('evAudSeg')">Me, all personnel, and the public</label></div></div>
     <div class="field"><label for="evDetails">Details (optional)</label><textarea id="evDetails" rows="3" maxlength="1000"></textarea></div>
     <div class="err" id="evErr"></div>
     <div class="modal-actions"><button class="btn ghost" onclick="closeModal('evModal')">Cancel</button><button class="btn" id="evBtn" onclick="eventSave()">Save</button></div>
@@ -1024,6 +1046,58 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
     <div class="field"><label for="nsConfirm">Type NEW SCHOOL YEAR to confirm</label><input id="nsConfirm" autocomplete="off"></div>
     <div class="err" id="nsErr"></div>
     <div class="modal-actions"><button class="btn ghost" onclick="closeModal('nsModal')">Cancel</button><button class="btn danger" id="nsBtn" onclick="newSchoolYear()">Start the new school year</button></div>
+  </div>
+</div>
+
+<!-- Clear observation data -->
+<div class="overlay" id="ocModal">
+  <div class="modal" role="dialog" aria-labelledby="ocTitle">
+    <h3 id="ocTitle">Clear observation data</h3>
+    <p class="sub">TALA first saves a backup copy of your Google Sheet in your Drive, then removes what you tick. LPT and PPT, accounts, the school calendar, and e-signatures are not touched.</p>
+    <div id="ocList">
+      <label class="check"><input type="checkbox" data-k="epmcf" checked>All ePMCF Classroom Observations and their signatures</label>
+      <label class="check"><input type="checkbox" data-k="mwa" checked>All PMCF MWA visits and their signatures</label>
+      <label class="check"><input type="checkbox" data-k="cal">Observation calendar marks (out of school days)</label>
+    </div>
+    <div class="field"><label for="ocConfirm">Type CLEAR to confirm</label><input id="ocConfirm" autocomplete="off"></div>
+    <div class="err" id="ocErr"></div>
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal('ocModal')">Cancel</button><button class="btn danger" id="ocBtn" onclick="obsClearRun()">Clear</button></div>
+  </div>
+</div>
+
+<!-- SBFP day -->
+<div class="overlay" id="sbModal">
+  <div class="modal" role="dialog" aria-labelledby="sbTitle">
+    <h3 id="sbTitle">SBFP menu of the day</h3><input type="hidden" id="sbDate">
+    <p class="sub" id="sbDay"></p>
+    <div class="field"><label for="sbMenu">Menu of the day</label><textarea id="sbMenu" rows="2" maxlength="300" placeholder="Example: Chicken arroz caldo with malunggay, banana"></textarea></div>
+    <div class="field"><label for="sbGrade">Assigned grade level of parents</label><input id="sbGrade" list="sbGrades" maxlength="80" placeholder="Example: Grade 3 parents"><datalist id="sbGrades"></datalist></div>
+    <div class="field"><label for="sbNotes">Notes (optional)</label><input id="sbNotes" maxlength="500" placeholder="Example: Bring own ladle and serving bowls"></div>
+    <div class="field"><span class="lbl">Copy the same menu to other days this month (optional)</span><div class="sbcopy" id="sbCopy"></div></div>
+    <div class="err" id="sbErr"></div>
+    <div class="modal-actions"><button class="btn danger" id="sbDel" onclick="sbfpDelete()">Remove</button><span style="flex:1"></span><button class="btn ghost" onclick="closeModal('sbModal')">Cancel</button><button class="btn" id="sbBtn" onclick="sbfpSave()">Save</button></div>
+  </div>
+</div>
+
+<!-- Guides list -->
+<div class="overlay" id="guidesModal">
+  <div class="modal" role="dialog" aria-labelledby="gTitle">
+    <h3 id="gTitle">Guides</h3><p class="sub">Short step by step guides. Tap one to start.</p>
+    <div id="gList"></div>
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal('guidesModal')">Close</button></div>
+  </div>
+</div>
+
+<!-- Teacher conformity before signing -->
+<div class="overlay" id="cfModal">
+  <div class="modal" role="dialog" aria-labelledby="cfTitle">
+    <h3 id="cfTitle">Conformity to the agreement</h3>
+    <p class="sub">Please read the agreement and the dates once more.</p>
+    <div id="cfList"></div>
+    <label class="check confirmbox"><input type="checkbox" id="cfAgree" onchange="$('cfBtn').disabled=!this.checked"><span>I have read, understood, and <b>agree</b> with the agreement and its date, and I affix my e-signature below.</span></label>
+    <div class="cfsig"><img id="cfSig" alt="Your e-signature"><small>Your e-signature</small></div>
+    <p class="hint">If you do not agree, tap Cancel and write your suggestion in the comment box. The School Head will see it first.</p>
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal('cfModal')">Cancel</button><button class="btn sun" id="cfBtn" onclick="obsTeacherSignGo()" disabled>I agree, sign now</button></div>
   </div>
 </div>
 
@@ -1143,8 +1217,8 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
 
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
-const MIN_SERVER = '3.2'; // oldest Code.gs this page works with
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'3.2', date:'October 6, 2026' } };
+const MIN_SERVER = '3.4'; // oldest Code.gs this page works with
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'3.4', date:'October 6, 2026' } };
 function verLine(server){
   const old = server && (server.indexOf('older') > -1 || parseFloat(server) < parseFloat(MIN_SERVER));
   const s = server ? ' Server '+server+(old && USER && USER.role==='head' ? ', please deploy the new Code.gs.' : '.') : '';
@@ -1477,7 +1551,7 @@ function render(){
   $('signInBtn').style.display = USER ? 'none' : '';
   $('userBtn').style.display = USER ? 'flex' : 'none';
   $('menuAcc').style.display = role==='head' ? '' : 'none';
-  $('menuTour').style.display = role==='teacher' ? '' : 'none';
+
   $('menuSigBank').style.display = role==='head' ? '' : 'none';
   $('menuNewSY').style.display = role==='head' ? '' : 'none';
   drawSide(); syncUI();
@@ -1531,6 +1605,7 @@ const FEATURES = [
     do:'Record each classroom observation with the date and time, the observation tool, ratings, strengths, and areas to improve. Teachers read the feedback in their portal and acknowledge it.',
     auto:'Observation schedules, reminders, acknowledgment timestamps, and each teacher\u2019s rating summary across the school year are computed automatically.',
     report:'Observation record per teacher, and a quarterly summary of all observations with signatures.' },
+  { id:'sbfp', name:'SBFP', built:true, open:() => openSbfp(), icon:'M4 11h16a8 8 0 0 1-16 0zm3-6c0 1 1 1 1 2s-1 1-1 2m4-4c0 1 1 1 1 2s-1 1-1 2m4-4c0 1 1 1 1 2s-1 1-1 2M3 19h18v2H3z' },
   { id:'read', name:'Learner Reading Assessment', icon:'M4 5h7a3 3 0 0 1 3 3v12a2 2 0 0 0-2-2H4zm16 0h-7a3 3 0 0 0-3 3v12a2 2 0 0 1 2-2h8z',
     do:'Record CRLA results for Key Stage 1 and Phil-IRI results for Key Stage 2 for every learner, linked with Project e-READ.',
     auto:'Reading levels per class, grade, and school, and progress from pretest to posttest, are computed automatically.',
@@ -1593,8 +1668,8 @@ function openFeature(id){
   toggleSide(false);
   const f = FEATURES.find(x => x.id === id);
   if (f.id==='home'){ showHome(); return; }
-  if (f.ready){ CUR_FEATURE = 'lpt'; drawSide(); showTracker(); window.scrollTo(0,0); return; }
-  const canOpen = f.built && (USER && USER.role==='head' || featOn(f.id));
+  if (f.ready){ CUR_FEATURE = 'lpt'; drawSide(); showTracker(); window.scrollTo(0,0); maybeGuide('lpt'); return; }
+  const canOpen = f.built && ((USER && (USER.role==='head' || (USER.role==='admin' && f.id==='sbfp'))) || (featOn(f.id) && (USER || f.id==='sbfp')));
   if (canOpen && f.open){ CUR_FEATURE = f.id; drawSide(); f.open(); return; }
   $('featTitle').textContent = f.name; $('featDo').textContent = f.do; $('featAuto').textContent = f.auto; $('featReport').textContent = f.report;
   openModal('featModal');
@@ -2246,17 +2321,74 @@ function printWeek(){
 }
 
 /* ---------- First time guide for teachers ---------- */
-const TOUR = [
-  { t:'Welcome to TALA', x:'This short guide shows you where to submit your LPT and PPT and where to print your weekly tracking. Tap Next to continue.' },
-  { el:'#roles .flow', t:'Your weekly steps', x:'Every week: download from DZIIS or prepare your own, print it, rename it, then submit it on or before Monday, preferably in the morning.' },
-  { el:'#addBtn', t:'Submit your LPT and PPT here', x:'Tap Submit LPT and PPT. Choose the term, grade level, subject, and week, then upload your renamed files and enter when you downloaded and printed them.' },
-  { el:'.bar', t:'Choose the term and week', x:'Pick a term and a week to see your submissions for that week. All weeks shows Weeks 1 to 12 in one table.' },
-  { el:'.stats', t:'Your summary', x:'See how many of your files are for validation, returned, approved, or late. Tap a box to show only those.' },
-  { el:'#entryList', t:'Your submissions', x:'Each file shows its status, the School Head\u2019s remarks, the history, and a QR code for viewing. If a file is returned, tap Reupload here.' },
-  { el:'#printBtn', t:'Download or print your tracking', x:'Choose a week first, then tap Print week. To download it, choose Save as PDF in the print window.' },
-  { el:'#userBtn', t:'Your account', x:'Tap your name to change your PIN, sign out, or open this guide again.' },
-  { t:'You are all set!', x:'Tick Do not show this again if you no longer need this guide. You can always open it from your name at the top.' }
-];
+const GUIDES = {
+  home: { name:'Home', steps: [
+    { t:'Welcome to TALA!', x:'This is Home, your starting page. Here is a quick look around. It takes less than a minute.' },
+    { el:'#side .side-i|.menubtn', t:'The menu', x:'Open any feature here: LPT and PPT Tracking, Observations, SBFP, and more as they are added.' },
+    { el:'.hgrid', t:'Your summary', x:'Quick numbers from each feature. Tap Open on a card to go there.' },
+    { el:'#homeCal', t:'Calendars', x:'School activities, and the SBFP menu of the day. Tap a day to see more, or add your own entry.' },
+    { el:'#userBtn', t:'Your name', x:'Your e-signature, PIN, these guides, and Sign out are here.' } ] },
+  lpt_teacher: { name:'LPT and PPT Tracking', steps: [
+    { el:'#roles .flow', t:'Your weekly steps', x:'Prepare, print, rename, then submit your LPT and PPT on or before Monday, preferably in the morning.' },
+    { el:'#addBtn', t:'Submit here', x:'Choose the term, grade, subject, and week, then upload your renamed files.' },
+    { el:'#entryList', t:'Your files', x:'See each file\u2019s status and the School Head\u2019s remarks. If a file is returned, reupload it here.' },
+    { el:'#printBtn', t:'Print your week', x:'Choose a week, then Print week. Choose Save as PDF to download.' } ] },
+  lpt_head: { name:'LPT and PPT Tracking', steps: [
+    { el:'.stats', t:'Summary', x:'Tap a box to show only those files, like For validation.' },
+    { el:'#entryList', t:'Validate', x:'Tap Approve, or Return or add remarks. You can Edit validation later.' },
+    { el:'#printBtn', t:'Weekly report', x:'Choose a week, then Print week for the signed report.' } ] },
+  lpt_admin: { name:'LPT and PPT Tracking', steps: [
+    { el:'.stats', t:'Summary', x:'See all submissions for the chosen week.' },
+    { el:'#printBtn', t:'Weekly report', x:'Choose a week, then Print week.' } ] },
+  obs_head: { name:'Observations', steps: [
+    { el:'#viewObs .btn.big', t:'New observation', x:'Choose ePMCF Classroom Observation or PMCF MWA. Your notes save on this device as you type.' },
+    { el:'.otiles', t:'Shortcuts', x:'Your observation calendar, drafts, signatures, summary report, and the COI and NCOI guide.' },
+    { el:'.ktabs', t:'Two kinds', x:'ePMCF and MWA are kept in separate tabs.' },
+    { el:'.sol|#viewObs .empty', t:'One column per teacher', x:'Newest observation on top. Tap a card to open it, or a name to see only that teacher.' } ] },
+  obs_teacher: { name:'Observations', steps: [
+    { el:'.sol|#viewObs .empty', t:'Your observations', x:'A red New tag means the School Head sent you one. Tap it to read.' },
+    { t:'Review and sign', x:'Read the notes and the agreement. Comment if you want something changed, then tap Sign and return.' },
+    { el:'.otiles', t:'COI and NCOI guide', x:'Open the guide anytime to read the indicators.' } ] },
+  obs_admin: { name:'Observations', steps: [
+    { el:'.otiles', t:'Reports', x:'Open the summary report and print it per week, term, or teacher.' } ] },
+  sbfp_head: { name:'SBFP', steps: [
+    { el:'.sbgrid', t:'Post the menu', x:'Tap a school day to type the menu and the grade level of parents assigned. You can copy it to other days.' },
+    { el:'#viewSbfp .obs-actions', t:'Print', x:'Print the month\u2019s SBFP calendar for posting.' } ] },
+  sbfp_teacher: { name:'SBFP', steps: [
+    { el:'.sbtoday', t:'Today\u2019s menu', x:'See today\u2019s menu and which grade\u2019s parents are assigned.' },
+    { el:'.sbgrid', t:'The month', x:'Check the coming days so you can remind your learners\u2019 parents.' } ] }
+};
+GUIDES.sbfp_admin = GUIDES.sbfp_head;
+var TOUR = [], GKEY = '';
+function guideId(f){ const r = USER ? USER.role : 'public'; return f==='home' ? 'home' : GUIDES[f+'_'+r] ? f+'_'+r : GUIDES[f+'_teacher'] && r==='public' ? '' : ''; }
+function tourKey(){ return 'tala_guide_hide_' + (USER ? USER.email : '') + '_' + GKEY; }
+// Shows a feature's guide the first time it is opened (once per session until hidden)
+function maybeGuide(f){
+  if (!USER || USER.mustChange) return;
+  const id = guideId(f); if (!id) return;
+  try{ if (localStorage.getItem('tala_guide_hide_'+USER.email+'_'+id) === '1' || sessionStorage.getItem('tala_guide_seen_'+id) === '1') return; }catch(e){}
+  setTimeout(() => startGuide(id), 700);
+}
+function maybeTour(){}
+function startGuide(id){
+  if (!GUIDES[id] || !$('tour').hidden) return;
+  GKEY = id; TOUR = GUIDES[id].steps; TI = 0; closeModal('guidesModal');
+  try{ $('tourHide').checked = localStorage.getItem(tourKey()) === '1'; sessionStorage.setItem('tala_guide_seen_'+id,'1'); }catch(e){}
+  $('tour').hidden = false; drawTour();
+}
+function startTour(){ openGuides(); }
+function openGuides(){
+  $('menu').classList.remove('open');
+  const r = USER ? USER.role : 'public', ids = ['home'].concat(['lpt','obs','sbfp'].map(f => f+'_'+r).filter(id => GUIDES[id]));
+  $('gList').innerHTML = ids.map(id => `<button class="choice" onclick="openGuideFor('${id}')"><b>${esc(GUIDES[id].name)}</b><small>${GUIDES[id].steps.length} short steps</small></button>`).join('');
+  openModal('guidesModal');
+}
+function openGuideFor(id){
+  closeModal('guidesModal'); const f = id.split('_')[0];
+  if (f==='home') showHome(); else if (f==='lpt') openFeature('lpt'); else if (f==='obs') openObs(); else if (f==='sbfp') openSbfp();
+  try{ sessionStorage.removeItem('tala_guide_seen_'+id); }catch(e){}
+  setTimeout(() => startGuide(id), 800);
+}
 let TI = 0;
 function tourKey(){ return 'tala_tour_hide_' + (USER ? USER.email : ''); }
 function maybeTour(){
@@ -2275,7 +2407,10 @@ function endTour(){
 }
 function tourGo(d){ TI += d; if (TI >= TOUR.length){ endTour(); return; } if (TI < 0) TI = 0; drawTour(); }
 function drawTour(){
-  const s = TOUR[TI], el = s.el ? document.querySelector(s.el) : null, show = el && el.offsetParent !== null;
+  if (!TOUR[TI]){ $('tour').hidden = true; return; }
+  const s = TOUR[TI]; let el = null;
+  if (s.el) for (const q of s.el.split('|')){ const x = document.querySelector(q); if (x && x.offsetParent !== null){ el = x; break; } }
+  const show = !!el;
   $('tourCount').textContent = 'Step '+(TI+1)+' of '+TOUR.length;
   $('tourTitle').textContent = s.t; $('tourText').textContent = s.x;
   $('tourBack').style.visibility = TI ? 'visible' : 'hidden';
@@ -2664,15 +2799,16 @@ function guideTabSync(){ const t = $('guideTab'); if (t) t.style.display = $('vi
   document.addEventListener('touchstart', e => { const x = e.touches[0].clientX; x0 = (x > window.innerWidth - 28 && $('guideTab').style.display !== 'none') || $('guideDrawer').classList.contains('open') ? x : null; }, { passive:true });
   document.addEventListener('touchend', e => { if (x0 === null) return; const dx = e.changedTouches[0].clientX - x0; if (dx < -40 && !$('guideDrawer').classList.contains('open')) openGuide(); else if (dx > 60) closeGuide(); x0 = null; }, { passive:true });
 })();
-function showObsView(){ ['viewTrk','viewAcc','viewBank','viewLog','viewWeeks','viewSig','viewHome'].forEach(v => $(v).style.display='none'); $('viewObs').style.display=''; window.scrollTo(0,0); }
+function showObsView(){ ['viewTrk','viewAcc','viewBank','viewLog','viewWeeks','viewSig','viewHome','viewSbfp'].forEach(v => $(v).style.display='none'); $('viewObs').style.display=''; window.scrollTo(0,0); }
 const _showTracker = showTracker;
-showTracker = function(){ $('viewObs').style.display='none'; $('viewHome').style.display='none'; closeGuide(); CUR_FEATURE='lpt'; drawSide(); _showTracker(); };
+showTracker = function(){ $('viewObs').style.display='none'; $('viewHome').style.display='none'; $('viewSbfp').style.display='none'; closeGuide(); CUR_FEATURE='lpt'; drawSide(); _showTracker(); };
 const _showView2 = showView2;
-showView2 = function(id){ $('viewObs').style.display='none'; $('viewHome').style.display='none'; closeGuide(); _showView2(id); };
+showView2 = function(id){ $('viewObs').style.display='none'; $('viewHome').style.display='none'; $('viewSbfp').style.display='none'; closeGuide(); _showView2(id); };
 
 async function openObs(){
   if (!USER){ toast('Please sign in to open Classroom Observations.'); openLogin(); return; }
   showObsView(); if (!OBS.term) OBS.term = SEL.term || '1';
+  setTimeout(() => maybeGuide('obs'), 300);
   obsLocalLoad(); obsHome();
   await obsRefresh();
 }
@@ -2711,6 +2847,7 @@ function obsHome(){
       ${tile('\u2712','For your signature',OBS.list.filter(o=>o.status==='TeacherSigned').length+' waiting',"OBS.status='TeacherSigned';obsHome()")}
       ${tile('\u2630','Summary report','Per week, term, and teacher','obsSummary()')}
       ${tile('\u2605','COI and NCOI guide','Read the indicators','openGuide(true)')}
+      ${tile('\u2672','Clear observation data','Start fresh, with a backup first','openObsClear()')}
       ${tile('\u263A','Not yet observed',notYet.length+' teacher'+(notYet.length===1?'':'s')+' this term',"OBS.kind='epmcf';obsHome();setTimeout(()=>{const d=$('oNotYet');if(d){d.open=true;d.scrollIntoView({behavior:'smooth'})}},50)")}
     </div>`:`<div class="otiles">${admin?tile('\u2630','Summary report','Per week, term, and teacher','obsSummary()')+tile('\u2637','Observation calendar','School Head\u2019s observations per day','openCal()'):''}${tile('\u2605','COI and NCOI guide','Read the indicators','openGuide(true)')}</div>`}
     <div class="ktabs"><button class="${kind==='epmcf'?'on':''}" onclick="OBS.kind='epmcf';OBS.status='';obsHome()">ePMCF Classroom Observation <em>${OBS.list.filter(o=>otype(o)==='epmcf').length}</em></button>
@@ -2724,17 +2861,37 @@ function obsHome(){
         : `<button class="btn ghost small" onclick="printWeekPmcf()">All ePMCF as PDF, Week ${esc(OBS.week)}</button><button class="btn ghost small" onclick="zipWeekPmcf()">All ePMCF Excel (ZIP), Week ${esc(OBS.week)}</button>`)
         : (head||admin ? '<span class="hint">Choose a week to download that week\u2019s files.</span>' : '')}
       ${st?`<button class="btn ghost small" onclick="OBS.status='';obsHome()">Show all statuses</button>`:''}</div>
-    <div class="olist">${list.length ? list.map(o => `<button class="ocard s-${o.status} ${USER.role==='teacher'&&!o.seen?'new':''}" onclick="obsOpen('${esc(o.id)}')">
-        ${obsPending(o.id)||obsWip(o.id)?'<span class="unsynced">Saved on this device, not yet synced</span>':''}
-        <span class="ktag ${otype(o)}">${otype(o)==='mwa'?'PMCF MWA':'ePMCF'}</span>
-        <div class="ocard-h"><span class="oav">${esc((o.teacherName||'A').trim().charAt(0))}</span><div><b>${esc(o.teacherName||(otype(o)==='mwa'?'Area or school-wide visit':'No teacher chosen yet'))}</b><small>${o.date?esc(dShort(o.date)):'No date yet'}${o.term?' \u00B7 Term '+esc(o.term)+(o.week?', Week '+esc(o.week):''):''}</small></div></div>
-        <small>${esc(otype(o)==='mwa' ? ((o.data||{}).focus||'Focus not set') : ([o.grade,o.subject].filter(Boolean).join(', ')||'Grade and subject not set'))}</small>
-        <span class="opill ${o.status}">${OBS_PILL[o.status]||o.status}</span>
-        ${USER.role==='teacher'&&!o.seen?'<span class="newdot">New</span>':''}</button>`).join('')
-      : `<div class="empty">${head?'Nothing here yet. Tap <b>New observation</b> to start.':'No observations to show yet.'}</div>`}</div>
+    ${solitaire(list)}
     ${head && kind==='epmcf'?`<details class="byt" id="oNotYet" style="margin-top:14px"><summary>Not yet observed in Term ${esc(OBS.term)} (${notYet.length})</summary><div class="chips2">${notYet.map(t=>`<button class="chip" onclick="obsNew('epmcf','${esc(t.email)}')">${esc(t.name)} \u002B</button>`).join('') || '<span class="hint">Every teacher has been observed this term.</span>'}</div></details>`:''}`;
 }
 function obsChooser(){ openModal('chooseModal'); }
+function openObsClear(){ $('ocConfirm').value=''; $('ocErr').textContent=''; openModal('ocModal'); }
+async function obsClearRun(){
+  const options = {}; document.querySelectorAll('#ocList input').forEach(i => options[i.dataset.k] = i.checked);
+  $('ocBtn').disabled = true; loading(true,'Making a backup and clearing');
+  try{ const r = await api('obsClear',{ options, confirm:$('ocConfirm').value }); closeModal('ocModal');
+    Object.keys(localStorage).filter(k=>k.indexOf('tala_obs_wip_')===0).forEach(k=>localStorage.removeItem(k));
+    await obsRefresh(); obsHome(); alert(r.removed+' observation'+(r.removed===1?' was':'s were')+' cleared.\n\nA backup was saved in your Google Drive as:\n'+r.backupName); }
+  catch(e){ handleErr(e,'ocErr'); }
+  $('ocBtn').disabled = false; loading(false);
+}
+// One column per teacher, newest card on top
+function solitaire(list){
+  if (!list.length) return `<div class="empty" style="margin-top:14px">${USER.role==='head'?'Nothing here yet. Tap <b>New observation</b> to start.':'No observations to show yet.'}</div>`;
+  const key = o => o.teacherEmail || '_area', cols = {};
+  list.forEach(o => (cols[key(o)] = cols[key(o)] || []).push(o));
+  const order = OBS.teachers.map(t=>t.email).filter(e=>cols[e]).concat(Object.keys(cols).filter(k => k!=='_area' && !OBS.teachers.some(t=>t.email===k))).concat(cols._area?['_area']:[]);
+  const card = o => `<button class="ocard sc s-${o.status} ${USER.role==='teacher'&&!o.seen?'new':''}" onclick="obsOpen('${esc(o.id)}')">
+      ${obsPending(o.id)||obsWip(o.id)?'<span class="unsynced">Not yet synced</span>':''}
+      <span class="sc-top"><span class="ktag ${otype(o)}">${otype(o)==='mwa'?'MWA':'ePMCF'}</span><span class="opill ${o.status}">${OBS_PILL[o.status]||o.status}</span></span>
+      <b>${o.date?esc(dShort(o.date)):'No date yet'}</b>
+      <small>${esc(otype(o)==='mwa' ? ((o.data||{}).focus||'Focus not set') : ([o.grade,o.subject].filter(Boolean).join(', ')||'Grade and subject not set'))}</small>
+      ${o.term?`<small>Term ${esc(o.term)}${o.week?', Week '+esc(o.week):''}</small>`:''}
+      ${USER.role==='teacher'&&!o.seen?'<span class="newdot">New</span>':''}</button>`;
+  return `<div class="sol">${order.map(k => { const c = cols[k].sort((a,b)=>String(b.date||b.updated).localeCompare(String(a.date||a.updated))||String(b.updated).localeCompare(String(a.updated)));
+    const name = k==='_area' ? 'Area or school-wide visits' : (c[0].teacherName || k);
+    return `<div class="solcol"><button class="solhead" onclick="OBS.who=OBS.who==='${k==='_area'?'':esc(k)}'?'':'${k==='_area'?'':esc(k)}';obsHome()"><span class="oav">${esc(name.trim().charAt(0))}</span><span><b>${esc(name)}</b><small>${c.length} observation${c.length>1?'s':''}</small></span></button>${c.map(card).join('')}</div>`; }).join('')}</div>`;
+}
 function obsNew(type, email){
   closeModal('chooseModal');
   type = type === 'mwa' ? 'mwa' : 'epmcf'; OBS.kind = type;
@@ -2762,6 +2919,7 @@ function obsEditor(){
     <div class="trk-head"><div><span class="ktag epmcf">ePMCF Classroom Observation</span><h2>Observation notes and PMCF</h2><p>${OBS_STATUS.Draft}.</p></div>
       <div class="head-actions"><button class="btn ghost" onclick="openGuide()">COI and NCOI guide</button><button class="btn ghost" onclick="obsBack()">Back to list</button></div></div>
     <div class="autosave" id="oAuto">${obsPending(o.id)||obsWip(o.id)?'<span class="unsynced">Saved on this device, not yet synced</span>':'Autosave is on. Your notes are saved on this device as you type.'}</div>
+    ${(d.revisions||[]).length?`<div class="notice" style="margin-top:10px"><b>Revision ${(d.revisions||[]).length}.</b> The earlier signatures were cleared. When you lock and send it again, the teacher will be told it was revised and must sign again.</div>`:''}
     <div class="obs-main">
       <section class="ocard2"><h3>1. Observation details</h3>
         <div class="row2">
@@ -3058,10 +3216,12 @@ async function obsViewer(){
     <div class="trk-head"><div><span class="ktag ${otype(o)}">${mwa?'PMCF MWA':'ePMCF Classroom Observation'}</span><h2>${mwa?'Monitoring by Walking Around':'Classroom Observation'}</h2><p><span class="opill ${o.status}">${OBS_PILL[o.status]}</span> ${esc(OBS_STATUS[o.status]||'')}</p></div>
       <div class="head-actions"><button class="btn ghost" onclick="obsBack()">Back to list</button>
         ${mwa?'':'<button class="btn ghost" onclick="openGuide(true)">COI and NCOI guide</button>'}
-        ${head && o.status==='Sent'?'<button class="btn ghost" onclick="obsUnlock()">Unlock to edit</button>':''}
+        ${head && o.status!=='Draft'?'<button class="btn ghost" onclick="obsEdit()">Edit</button>':''}
+        ${head?'<button class="btn danger" onclick="obsDeleteAny()">Delete</button>':''}
         ${mwa?'':'<button class="btn ghost" onclick="printObsNotes(OBS.cur)">Print notes</button>'}
         ${o.status==='Completed'||head?`<button class="btn ghost" onclick="printPmcf()">${o.status==='Completed'?'Print as PDF':'Preview PDF'}</button>`:''}
         ${o.status==='Completed'&&!mwa?'<button class="btn" onclick="downloadPmcf()">Download Excel for the Division</button>':''}</div></div>
+    ${(o.data.revisions||[]).length && o.status!=='Completed'?`<div class="notice" style="margin-top:12px"><b>This observation was revised</b> on ${esc(dTime(o.data.revisions[o.data.revisions.length-1].on))}. ${canTeacherSign?'Please read it again before signing.':'Both signatures are needed again.'}</div>`:''}
     ${canTeacherSign?`<div class="notice" style="margin-top:12px"><b>Please review this observation.</b> If you want something added, changed, or removed in the agreement, write it in the comment box below. The School Head will see it and may revise the agreement. When you agree, tap <b>Sign and return</b>.</div>`:''}
     ${canRevise && comments.some(c=>c.role==='teacher')?`<div class="notice" style="margin-top:12px"><b>The teacher commented on the agreement.</b> Revise the agreement below, then tap Save revised agreement. She will be notified to review and sign.</div>`:''}
     <div class="obs-doc">${mwa ? mwaBody(o, sigs, false) : pmcfBody(o, sigs, false, false)}</div>
@@ -3069,10 +3229,18 @@ async function obsViewer(){
       <button class="btn" onclick="obsSaveAgree()">Save revised agreement</button></section>`:''}
     ${o.teacherEmail && o.status!=='Draft'?`<section class="ocard2" style="margin-top:12px"><h3>Comments on the agreement</h3>
       <div class="cmts">${comments.map(c=>`<div class="cmt ${c.role==='head'?'h':''}"><b>${esc(c.by)}</b><small>${esc(dTime(c.on))}</small><p>${esc(c.text)}</p></div>`).join('') || '<p class="hint">No comments yet.</p>'}</div>
-      ${(teacher && o.status==='Sent') || (head && o.status!=='Completed') ? `<textarea id="oCmt" spellcheck="true" lang="en" rows="2" placeholder="${teacher?'Suggest what to add, change, or remove in the agreement':'Reply to the teacher'}"></textarea><button class="btn ghost small" style="margin-top:6px" onclick="obsSendComment()">Send comment</button>`:''}</section>`:''}
+      ${(teacher && o.status==='Sent') || (head && o.status!=='Completed') ? `${teacher?'<p class="hint cmthint">This box is to inform the School Head of a possible change in the agreement or its date, before you are asked to sign. If you have no comment or suggestion, you may go straight to Sign and return.</p>':''}<textarea id="oCmt" spellcheck="true" lang="en" rows="2" placeholder="${teacher?'Example: May I change the timeline to October 20 because of our school program?':'Reply to the teacher'}"></textarea><button class="btn ghost small" style="margin-top:6px" onclick="obsSendComment()">Send comment</button>`:''}</section>`:''}
     ${canTeacherSign?`<div class="obs-actions"><button class="btn sun" onclick="obsTeacherSign()">Sign and return to the School Head</button></div>`:''}
     ${canHeadSign?`<div class="obs-actions"><button class="btn sun" onclick="obsHeadSign()">Sign as rater</button></div>`:''}
     ${mwa?'':`<details class="byt" style="margin-top:14px"><summary>Observation notes</summary><div style="padding:0 14px 14px">${notesBody(o)}</div></details>`}`;
+}
+async function obsDeleteAny(){
+  const o = OBS.cur, signed = o.status==='TeacherSigned' || o.status==='Completed';
+  if (!confirm('Delete this '+(otype(o)==='mwa'?'MWA visit':'ePMCF observation')+(o.teacherName?' of '+o.teacherName:'')+'?'+(signed?' The teacher\u2019s and your signatures on it will also be removed.':'')+' This cannot be undone.')) return;
+  loading(true,'Deleting');
+  try{ await api('obsDelete',{ id:o.id }); OBS.list = OBS.list.filter(x=>x.id!==o.id); obsLocalSave(); OBS.cur = null; toast('Deleted.'); obsHome(); obsRefresh(); }
+  catch(e){ handleErr(e); }
+  loading(false);
 }
 async function obsSendComment(){
   const text = $('oCmt').value.trim(); if (!text) return toast('Type your comment first.');
@@ -3087,6 +3255,15 @@ async function obsSaveAgree(){
   loading(false);
 }
 function obsPut(r){ const i = OBS.list.findIndex(x=>x.id===r.id); if (i<0) OBS.list.push(r); else OBS.list[i] = r; obsLocalSave(); OBS.cur = JSON.parse(JSON.stringify(r)); }
+async function obsEdit(){
+  const o = OBS.cur;
+  if (o.status === 'Sent') return obsUnlock();
+  if (!confirm('Edit this observation? Both signatures will be cleared. After you save and send it again, '+(o.teacherName||'the teacher')+' will be told it was revised and must sign again, then you sign again.')) return;
+  loading(true,'Opening for editing');
+  try{ const r = await api('obsRevise',{ id:o.id }); obsPut(r); obsEditor(); toast('You can now edit it. Tap Lock and send when done.'); }
+  catch(e){ handleErr(e); }
+  loading(false);
+}
 async function obsUnlock(){
   if (!confirm('Unlock this observation? It goes back to your drafts and the teacher will no longer see it until you send it again.')) return;
   try{ const r = await api('obsUnlock',{ id:OBS.cur.id }); OBS.list[OBS.list.findIndex(x=>x.id===r.id)] = r; obsLocalSave(); OBS.cur = JSON.parse(JSON.stringify(r)); obsEditor(); }
@@ -3094,8 +3271,14 @@ async function obsUnlock(){
 }
 async function obsTeacherSign(){
   const additions = {};
-  try{ const mine = await api('getMySig'); if (!mine || !mine.sig){ toast('Please save your e-signature first.'); openSig(); return; } }catch(e){ return handleErr(e); }
-  if (!confirm('Sign this observation with your saved e-signature?')) return;
+  let sig;
+  try{ const mine = await api('getMySig'); if (!mine || !mine.sig){ toast('Please save your e-signature first.'); openSig(); return; } sig = mine.sig; }catch(e){ return handleErr(e); }
+  const o = OBS.cur, inc = (o.data.inc||[]).filter(it => (it.agreement||'').trim());
+  $('cfList').innerHTML = inc.length ? inc.map((it,i)=>`<div class="cfrow"><b>${otype(o)==='mwa'?'Agreement':'Row '+(i+1)}</b><p>${esc(it.agreement)}</p>${it.timeline?`<small>${otype(o)==='mwa'?'Second visit':'Timeline'}: ${esc(dShort(it.timeline))}</small>`:''}</div>`).join('') : '<p class="hint">No agreement was written.</p>';
+  $('cfSig').src = sig; $('cfAgree').checked = false; $('cfBtn').disabled = true; openModal('cfModal');
+}
+async function obsTeacherSignGo(){
+  const additions = {}; closeModal('cfModal');
   loading(true,'Signing');
   try{ const r = await api('obsTeacherSign',{ id:OBS.cur.id, additions, comment: '' });
     OBS.list[OBS.list.findIndex(x=>x.id===r.id)] = r; obsLocalSave(); OBS.cur = JSON.parse(JSON.stringify(r)); toast('Signed and returned to the School Head.'); obsViewer(); }
@@ -3472,8 +3655,8 @@ const QUOTES = [
 ];
 function quoteToday(){ const d = todayPH(), n = Number(d.replace(/-/g,'')); return QUOTES[(n*7 + Number(d.slice(8,10))) % QUOTES.length]; }
 function showHome(){
-  ['viewTrk','viewAcc','viewBank','viewLog','viewWeeks','viewSig','viewObs'].forEach(v => $(v).style.display='none');
-  closeGuide(); $('viewHome').style.display=''; CUR_FEATURE = 'home'; drawSide(); drawHome(); window.scrollTo(0,0);
+  ['viewTrk','viewAcc','viewBank','viewLog','viewWeeks','viewSig','viewObs','viewSbfp'].forEach(v => $(v).style.display='none');
+  closeGuide(); $('viewHome').style.display=''; CUR_FEATURE = 'home'; drawSide(); drawHome(); window.scrollTo(0,0); maybeGuide('home');
   if (USER && (USER.role==='head' || featOn('obs')) && !OBS.list.length){ obsLocalLoad(); obsRefresh().catch(()=>{}); }
 }
 function drawHome(){
@@ -3531,7 +3714,7 @@ function drawPublicHome(){
 }
 
 /* ----- School calendar on Home: events for everyone or only me, plus observation days ----- */
-var SCM = '';
+var SCM = '', HCT = 'school';
 const EV_TYPES = ['Event','Activity','Meeting','Training or seminar','Holiday or no classes','Deadline','Reminder','Other'];
 const EV_COLOR = { 'Event':'#1e5a8c','Activity':'#2f7a4a','Meeting':'#6a2c99','Training or seminar':'#b06000','Holiday or no classes':'#a3271b','Deadline':'#c0392b','Reminder':'#7a6a00','Other':'#555' };
 function allEvents(){ return ((DATA||PUB||{}).events)||[]; }
@@ -3543,23 +3726,28 @@ function drawSchoolCal(){
   let cells = ''; for (let i = 0; i < startDow; i++) cells += '<div class="sday empty"></div>';
   for (let d = 1; d <= days; d++){
     const date = SCM+'-'+String(d).padStart(2,'0'), ev = eventsOn(date), mk = head ? calMark(date) : null, n = head ? obsOnDay(date) : 0, sd = head && schoolDay(date);
-    cells += `<button class="sday ${date===today?'today':''} ${dow(date)===0||dow(date)===6?'wkend':''}" onclick="dayModal('${date}')"><b>${d}</b>
+    cells += `<button class="sday ${date===today?'today':''} ${dow(date)===0||dow(date)===6?'wkend':''}" onclick="${HCT==='sbfp'?`sbfpForm('${date}')`:`dayModal('${date}')`}"><b>${d}</b>
       ${mk?`<span class="evchip" style="background:#777">Out: ${esc(mk.type.replace(/ \(.*/,''))}</span>`:''}
-      ${ev.slice(0,2).map(e=>`<span class="evchip" style="background:${EV_COLOR[e.type]||'#555'}">${esc(e.title)}</span>`).join('')}${ev.length>2?`<span class="evmore">+${ev.length-2} more</span>`:''}
+      ${HCT==='sbfp' ? (sbfpOn(date)?`<span class="evchip" style="background:#d35400">${esc(sbfpOn(date).menu)}</span><span class="evmore">${esc(sbfpOn(date).grade||'')}</span>`:'')
+        : (sbfpOn(date)?'<span class="evchip" style="background:#d35400">SBFP</span>':'') + ev.slice(0,2).map(e=>`<span class="evchip" style="background:${EV_COLOR[e.type]||'#555'}">${esc(e.title)}</span>`).join('')+(ev.length>2?`<span class="evmore">+${ev.length-2} more</span>`:'')}
       ${sd && !mk ? `<span class="cdots">${[0,1].map(i=>`<i class="${i<n?'on':''}"></i>`).join('')}</span>`:''}</button>`;
   }
   const mname = new Date(Date.UTC(y,m-1,1)).toLocaleString('en-US',{month:'long',year:'numeric',timeZone:'UTC'});
   const prev = new Date(Date.UTC(y,m-2,1)).toISOString().slice(0,7), next = new Date(Date.UTC(y,m,1)).toISOString().slice(0,7);
-  const upcoming = allEvents().filter(e => (e.end||e.date) >= today).sort((a,b)=>a.date.localeCompare(b.date)).slice(0,5);
-  el.innerHTML = `<div class="hcard scal"><div class="hcard-h"><span class="oico">\u2637</span><div><b>School Calendar</b><small>Events and activities${head?', with your observation days':''}</small></div>${USER?`<button class="btn small sun" onclick="eventForm('${today}')">\u002B Add</button>`:''}</div>
+  const upcoming = HCT==='sbfp' ? [] : allEvents().filter(e => (e.end||e.date) >= today).sort((a,b)=>a.date.localeCompare(b.date)).slice(0,5);
+  const sbOk = canSbfp() || featOn('sbfp');
+  el.innerHTML = `<div class="hcard scal">${sbOk?`<div class="ktabs" style="margin:0 0 10px"><button class="${HCT==='school'?'on':''}" onclick="HCT='school';drawSchoolCal()">School Calendar</button><button class="${HCT==='sbfp'?'on':''}" onclick="HCT='sbfp';drawSchoolCal()">SBFP Calendar</button></div>`:''}
+    <div class="hcard-h"><span class="oico">\u2637</span><div><b>${HCT==='sbfp'?'SBFP Calendar':'School Calendar'}</b><small>${HCT==='sbfp'?'Menu of the day and the assigned grade level of parents':'Events and activities'+(head?', with your observation days':'')}</small></div>
+      ${HCT==='sbfp' ? `<button class="btn small" onclick="openSbfp()">Open SBFP</button>` : USER?`<button class="btn small sun" onclick="eventForm('${today}')">\u002B Add</button>`:''}</div>
     <div class="calbar"><button class="btn ghost small" onclick="SCM='${prev}';drawSchoolCal()">\u2039</button><b>${esc(mname)}</b><button class="btn ghost small" onclick="SCM='${next}';drawSchoolCal()">\u203A</button></div>
     <div class="scal-grid"><div class="cdow">Sun</div><div class="cdow">Mon</div><div class="cdow">Tue</div><div class="cdow">Wed</div><div class="cdow">Thu</div><div class="cdow">Fri</div><div class="cdow">Sat</div>${cells}</div>
-    ${upcoming.length?`<div class="upc"><b>Coming up</b>${upcoming.map(e=>`<button class="upi" onclick="dayModal('${e.date}')"><i style="background:${EV_COLOR[e.type]||'#555'}"></i><span>${esc(dShort(e.date))}${e.end&&e.end!==e.date?' to '+esc(dShort(e.end)):''}${e.time?', '+esc(e.time):''}</span><b>${esc(e.title)}</b>${e.audience!=='Everyone'?'<em>Only me</em>':''}</button>`).join('')}</div>`:''}</div>`;
+    ${upcoming.length?`<div class="upc"><b>Coming up</b>${upcoming.map(e=>`<button class="upi" onclick="dayModal('${e.date}')"><i style="background:${EV_COLOR[e.type]||'#555'}"></i><span>${esc(dShort(e.date))}${e.end&&e.end!==e.date?' to '+esc(dShort(e.end)):''}${e.time?', '+esc(e.time):''}</span><b>${esc(e.title)}</b>${e.audience==='Only me'?'<em>Only me</em>':e.audience==='Personnel'?'<em>Personnel</em>':''}</button>`).join('')}</div>`:''}</div>`;
 }
 function dayModal(date){
   const ev = eventsOn(date), head = USER && USER.role==='head', mk = head ? calMark(date) : null, obs = head ? OBS.list.filter(o=>o.date===date) : [];
   $('dayTitle').textContent = new Date(date+'T00:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
-  $('dayBody').innerHTML = (ev.length ? ev.map(e => `<div class="evrow" style="border-left-color:${EV_COLOR[e.type]||'#555'}"><b>${esc(e.title)}</b><small>${esc(e.type||'')}${e.time?' \u00B7 '+esc(e.time):''}${e.end&&e.end!==e.date?' \u00B7 until '+esc(dShort(e.end)):''} \u00B7 ${e.audience==='Everyone'?'For everyone':'Only me'} \u00B7 by ${esc(e.byName||'')}</small>${e.details?`<p>${esc(e.details)}</p>`:''}
+  const sb = sbfpOn(date);
+  $('dayBody').innerHTML = (sb ? `<div class="evrow" style="border-left-color:#d35400"><b>SBFP: ${esc(sb.menu)}</b><small>${esc(sb.grade||'No grade assigned')}${sb.notes?' \u00B7 '+esc(sb.notes):''}</small></div>` : '') + (ev.length ? ev.map(e => `<div class="evrow" style="border-left-color:${EV_COLOR[e.type]||'#555'}"><b>${esc(e.title)}</b><small>${esc(e.type||'')}${e.time?' \u00B7 '+esc(e.time):''}${e.end&&e.end!==e.date?' \u00B7 until '+esc(dShort(e.end)):''} \u00B7 ${e.audience==='Everyone'?'Personnel and the public':e.audience==='Personnel'?'All personnel':'Only me'} \u00B7 by ${esc(e.byName||'')}</small>${e.details?`<p>${esc(e.details)}</p>`:''}
       ${USER && (e.byEmail===USER.email || head) ? `<span><button class="linkbtn" onclick="eventForm('${date}','${esc(e.id)}')">Edit</button> <button class="linkbtn" style="color:var(--late)" onclick="eventDelete('${esc(e.id)}')">Remove</button></span>`:''}</div>`).join('') : '<p class="hint">No events on this day.</p>')
     + (head ? `<div class="evrow obsrow"><b>Observations: ${obs.length} of 2</b>${mk?`<small>You were out: ${esc(mk.type)}${mk.note?', '+esc(mk.note):''}</small>`:''}${obs.map(o=>`<small>${otype(o)==='mwa'?'MWA':'ePMCF'}: ${esc(o.teacherName||(o.data||{}).focus||'Visit')}</small>`).join('')}<span><button class="linkbtn" onclick="closeModal('dayModal');calDay('${date}')">Mark in or out of school</button></span></div>` : '');
   $('dayAdd').style.display = USER ? '' : 'none'; $('dayAdd').onclick = () => { closeModal('dayModal'); eventForm(date); };
@@ -3570,7 +3758,7 @@ function eventForm(date, id){
   $('evId').value = e ? e.id : ''; $('evTitle').value = e ? e.title : ''; $('evDate').value = e ? e.date : date; $('evEnd').value = e ? (e.end||e.date) : date;
   $('evTime').value = e ? e.time : ''; $('evDetails').value = e ? e.details : '';
   $('evType').innerHTML = EV_TYPES.map(t=>`<option ${e && e.type===t?'selected':''}>${t}</option>`).join('');
-  document.querySelectorAll('input[name=evAud]').forEach(r => r.checked = r.value === (e ? e.audience : 'Everyone'));
+  document.querySelectorAll('input[name=evAud]').forEach(r => r.checked = r.value === (e ? e.audience : 'Personnel')); segSync('evAudSeg');
   $('evErr').textContent = ''; $('evModalTitle').textContent = e ? 'Edit calendar entry' : 'Add to the school calendar';
   openModal('evModal'); setTimeout(()=>$('evTitle').focus(), 60);
 }
@@ -3579,13 +3767,74 @@ async function eventSave(){
     audience: (document.querySelector('input[name=evAud]:checked')||{}).value || 'Only me', details:$('evDetails').value };
   if (!event.title.trim()) return $('evErr').textContent = 'Type the title first.';
   $('evBtn').disabled = true;
-  try{ const list = await api('evSave',{ event }); (DATA||PUB).events = list; if (DATA) DATA.events = list; closeModal('evModal'); drawSchoolCal(); if (OBS.sub==='cal') drawCal(); toast(event.audience==='Everyone' ? 'Added. Everyone can now see it.' : 'Added to your calendar.'); }
+  try{ const list = await api('evSave',{ event }); (DATA||PUB).events = list; if (DATA) DATA.events = list; closeModal('evModal'); drawSchoolCal(); if (OBS.sub==='cal') drawCal(); toast(event.audience==='Everyone' ? 'Added. All personnel and the public can see it.' : event.audience==='Personnel' ? 'Added. All personnel can see it.' : 'Added to your calendar.'); }
   catch(e){ handleErr(e,'evErr'); }
   $('evBtn').disabled = false;
 }
 async function eventDelete(id){
   if (!confirm('Remove this from the calendar?')) return;
   try{ const list = await api('evDelete',{ id }); DATA.events = list; closeModal('dayModal'); drawSchoolCal(); toast('Removed.'); }catch(e){ handleErr(e); }
+}
+
+/* ----- SBFP: menu of the day and assigned grade level of parents ----- */
+var SBM = '';
+function sbfpList(){ return ((DATA||PUB||{}).sbfp)||[]; }
+function sbfpOn(date){ return sbfpList().find(x=>x.date===date); }
+function canSbfp(){ return USER && (USER.role==='head' || USER.role==='admin'); }
+function openSbfp(){
+  ['viewTrk','viewAcc','viewBank','viewLog','viewWeeks','viewSig','viewObs','viewHome'].forEach(v => $(v).style.display='none');
+  closeGuide(); $('viewSbfp').style.display=''; CUR_FEATURE='sbfp'; drawSide(); if (!SBM) SBM = todayPH().slice(0,7); drawSbfp(); window.scrollTo(0,0); maybeGuide('sbfp');
+}
+function drawSbfp(){
+  const [y,m] = SBM.split('-').map(Number), first = SBM+'-01', startDow = dow(first), days = new Date(Date.UTC(y,m,0)).getUTCDate(), today = todayPH(), t = sbfpOn(today);
+  let cells = ''; for (let i = 0; i < startDow; i++) cells += '<div class="sbd empty"></div>';
+  for (let d = 1; d <= days; d++){
+    const date = SBM+'-'+String(d).padStart(2,'0'), s = sbfpOn(date), wk = dow(date)===0||dow(date)===6;
+    cells += `<button class="sbd ${s?'has':''} ${wk?'wkend':''} ${date===today?'today':''}" ${canSbfp()&&!wk?`onclick="sbfpForm('${date}')"`:s?`onclick="sbfpForm('${date}')"`:''}><b>${d}</b>${s?`<span class="sbmenu">${esc(s.menu)}</span>${s.grade?`<span class="sbgrade">${esc(s.grade)}</span>`:''}`:''}</button>`;
+  }
+  const mname = new Date(Date.UTC(y,m-1,1)).toLocaleString('en-US',{month:'long',year:'numeric',timeZone:'UTC'});
+  const prev = new Date(Date.UTC(y,m-2,1)).toISOString().slice(0,7), next = new Date(Date.UTC(y,m,1)).toISOString().slice(0,7);
+  $('viewSbfp').innerHTML = `<div class="ohero sbhero"><div><h2>SBFP Calendar</h2><p>School-Based Feeding Program: the menu of the day and the grade level whose parents are assigned to cook and serve.${canSbfp()?' Tap a school day to post or change it.':''}</p></div>
+      <div class="sbtoday"><small>Today</small>${t?`<b>${esc(t.menu)}</b><span>${esc(t.grade||'No grade assigned')}</span>`:'<b>No feeding posted today</b>'}</div></div>
+    <div class="calbar"><button class="btn ghost small" onclick="SBM='${prev}';drawSbfp()">\u2039 Previous</button><b>${esc(mname)}</b><button class="btn ghost small" onclick="SBM='${next}';drawSbfp()">Next \u203A</button></div>
+    <div class="sbgrid"><div class="cdow">Sun</div><div class="cdow">Mon</div><div class="cdow">Tue</div><div class="cdow">Wed</div><div class="cdow">Thu</div><div class="cdow">Fri</div><div class="cdow">Sat</div>${cells}</div>
+    <div class="obs-actions"><button class="btn ghost" onclick="printSbfp()">Print ${esc(mname)} SBFP calendar</button></div>`;
+}
+function sbfpForm(date){
+  const s = sbfpOn(date) || {}, can = canSbfp();
+  if (!can){ if (!s.menu) return; $('sbTitle').textContent = 'SBFP, '+dShort(date); }
+  else $('sbTitle').textContent = s.menu ? 'Change the SBFP menu' : 'Post the SBFP menu';
+  $('sbDate').value = date; $('sbDay').textContent = new Date(date+'T00:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+  $('sbMenu').value = s.menu||''; $('sbGrade').value = s.grade||''; $('sbNotes').value = s.notes||'';
+  ['sbMenu','sbGrade','sbNotes'].forEach(id => $(id).readOnly = !can);
+  $('sbGrades').innerHTML = OPTS().grades.map(g=>`<option value="${esc(g)} parents">`).join('');
+  const [y,m] = date.slice(0,7).split('-').map(Number), n = new Date(Date.UTC(y,m,0)).getUTCDate();
+  $('sbCopy').innerHTML = can ? Array.from({length:n},(_,i)=>date.slice(0,8)+String(i+1).padStart(2,'0')).filter(d => d!==date && dow(d)>0 && dow(d)<6)
+    .map(d=>`<label class="sbc"><input type="checkbox" value="${d}">${Number(d.slice(8))} ${['','Mon','Tue','Wed','Thu','Fri'][dow(d)]}</label>`).join('') : '';
+  $('sbCopy').parentElement.style.display = can ? '' : 'none';
+  $('sbBtn').style.display = can ? '' : 'none'; $('sbDel').style.display = can && s.menu ? '' : 'none'; $('sbErr').textContent = '';
+  openModal('sbModal');
+}
+async function sbfpSave(){
+  const dates = [$('sbDate').value].concat([...document.querySelectorAll('#sbCopy input:checked')].map(i=>i.value));
+  $('sbBtn').disabled = true;
+  try{ const list = await api('sbfpSave',{ dates, menu:$('sbMenu').value, grade:$('sbGrade').value, notes:$('sbNotes').value }); DATA.sbfp = list; closeModal('sbModal'); drawSbfp(); drawSchoolCal(); toast('SBFP menu posted'+(dates.length>1?' for '+dates.length+' days':'')+'.'); }
+  catch(e){ handleErr(e,'sbErr'); }
+  $('sbBtn').disabled = false;
+}
+async function sbfpDelete(){
+  if (!confirm('Remove the SBFP menu for this day?')) return;
+  try{ DATA.sbfp = await api('sbfpDelete',{ date:$('sbDate').value }); closeModal('sbModal'); drawSbfp(); drawSchoolCal(); toast('Removed.'); }catch(e){ handleErr(e,'sbErr'); }
+}
+function printSbfp(){
+  const [y,m] = SBM.split('-').map(Number), days = new Date(Date.UTC(y,m,0)).getUTCDate(), mname = new Date(Date.UTC(y,m-1,1)).toLocaleString('en-US',{month:'long',year:'numeric',timeZone:'UTC'});
+  const rows = Array.from({length:days},(_,i)=>SBM+'-'+String(i+1).padStart(2,'0')).filter(d=>sbfpOn(d)).map((d,i)=>{ const s = sbfpOn(d);
+    return `<tr><td style="text-align:center">${i+1}</td><td>${esc(new Date(d+'T00:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'}))}</td><td>${esc(s.menu)}</td><td>${esc(s.grade||'')}</td><td>${esc(s.notes||'')}</td></tr>`; }).join('');
+  $('printArea').innerHTML = `${printHeader()}<div class="p-title">SCHOOL-BASED FEEDING PROGRAM (SBFP) CALENDAR</div><p class="p-sub">${esc(mname)}. ${esc(((DATA||PUB||{}).settings||{}).sy||'')}</p>
+    <table class="p-table"><thead><tr><th>No.</th><th>Date</th><th>Menu of the Day</th><th>Assigned Grade Level (Parents)</th><th>Notes</th></tr></thead><tbody>${rows || '<tr><td colspan="5" style="text-align:center">No feeding days posted for this month.</td></tr>'}</tbody></table>
+    <div class="p-sign"><div>Prepared by:<b>${esc(USER && USER.role==='admin' ? USER.name : '')}</b>${USER && USER.role==='admin' ? 'Administrative Officer' : 'SBFP Coordinator'}</div><div>Noted by:<b>${esc(((DATA||{}).headName)||'')}</b>School Head</div></div>
+    <div class="p-foot">Generated from TALA on ${esc(dTime(nowLocal().replace('T',' ')))}.</div>`;
+  setTimeout(() => window.print(), 150);
 }
 
 /* ----- New school year: clean slate (LPT and PPT files and records are kept) ----- */
