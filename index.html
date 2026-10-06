@@ -245,6 +245,12 @@ table.subs tr.nosub td:not(.wk){color:var(--muted);font-style:italic}
 .hist summary{cursor:pointer;color:var(--muted);font-weight:600}
 .hist ol{margin:4px 0 0;padding-left:18px}
 .pinv{font-weight:700;letter-spacing:1px}
+.sborig{margin:0 0 2px;font-size:13px;color:var(--muted)}.sborig span,.sbchg span{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-right:6px;color:var(--muted)}.sbchg{margin:2px 0 0}.sbchg span{color:#6a2c99}
+.sbday{text-align:center;line-height:1.25}
+.sbd.has.chg{border-color:#b892d6 !important;background:#f7f0fc !important}.sbmenu.orig{color:var(--muted);font-weight:400}.sbmenu.new{color:#6a2c99}.sbdn{font-size:9.5px;color:var(--muted);font-weight:600}
+.sblock{background:#eef4ee;border:1.5px solid var(--leaf);border-radius:10px;padding:8px 12px;margin:6px 0 10px;font-size:13.5px}
+.sbattbar{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.sbtg button:disabled{opacity:.6;cursor:not-allowed}
 .stacks{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;margin-top:12px}
 .stackbox{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}.stackbox b{font-size:13.5px}
 .stack{position:relative;width:120px;height:120px;border:0;background:none;cursor:pointer;padding:0}
@@ -1271,7 +1277,8 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
 <div class="overlay" id="smModal">
   <div class="modal wide" role="dialog" aria-labelledby="smTitle">
     <h3 id="smTitle">SBFP menu list</h3><p class="sub">The menus follow this order, one per school day, and start again after the last one. Each menu is assigned to a grade level group of parents.</p>
-    <div class="row2"><div class="field"><label for="smStart">Feeding starts on</label><input type="date" id="smStart"></div><div class="field"><label for="smDay">Menu day number on that date</label><input type="number" id="smDay" min="1" max="25"></div></div>
+    <div class="field"><label for="smFirst">First feeding day of the school year (Cycle 1, Day 1)</label><input type="date" id="smFirst"></div>
+    <div class="row2"><div class="field"><label for="smStart">A date to set the order</label><input type="date" id="smStart"></div><div class="field"><label for="smDay">Menu day number on that date</label><input type="number" id="smDay" min="1" max="25"></div></div>
     <div id="smList" class="smlist"></div>
     <div class="err" id="smErr"></div>
     <div class="modal-actions"><button class="btn ghost" onclick="closeModal('smModal')">Cancel</button><button class="btn" onclick="sbMenuSave()">Save</button></div>
@@ -1313,7 +1320,7 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
         <div class="field"><label for="colGrade">Grade level assigned</label><input id="colGrade" oninput="colDraw()"></div>
         <button class="btn ghost small" onclick="$('colStep1').hidden=false;$('colStep2').hidden=true">\u2039 Change photos</button></div>
       <canvas id="colCanvas" class="colcanvas"></canvas></div>
-      <div class="modal-actions"><button class="btn ghost" onclick="closeModal('colModal')">Close</button><button class="btn ghost" onclick="colPdf()">Download as PDF</button><button class="btn" onclick="colPng()">Download as photo</button></div></div>
+      <div class="modal-actions"><button class="btn ghost" onclick="closeModal('colModal')">Close</button><button class="btn ghost" onclick="colPdf()">Download as PDF</button><button class="btn ghost" onclick="colPng()">Download as photo</button><button class="btn" onclick="colSave()">Save to the Collage stack</button></div></div>
   </div>
 </div>
 <!-- SBFP print -->
@@ -1453,8 +1460,8 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
 
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
-const MIN_SERVER = '4.0'; // oldest Code.gs this page works with
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'4.0', date:'October 7, 2026' } };
+const MIN_SERVER = '4.1'; // oldest Code.gs this page works with
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'4.1', date:'October 7, 2026' } };
 function verLine(server){
   const old = server && (server.indexOf('older') > -1 || parseFloat(server) < parseFloat(MIN_SERVER));
   const s = server ? ' Server '+server+('.') : '';
@@ -4213,7 +4220,7 @@ function canSbfp(){ return USER && (USER.role==='head' || USER.role==='admin'); 
 var SB = { tab:'today', date:'', people:null, month:'' };
 const SB_STATUS = ['Implemented','Not implemented','Holiday','End of term','No class','Others'];
 const SB_COLOR = { 'Implemented':'#2f7a4a','Not implemented':'#c0392b','Holiday':'#a3271b','End of term':'#6a2c99','No class':'#777','Others':'#b06000' };
-const SB_PHOTO_TAGS = ['Attendance sheet','Before','During','After'];
+const SB_PHOTO_TAGS = ['Attendance sheet','Before','During','After','Collage'];
 const SB_GROUPS = ['Kindergarten','Grade 1','Grade 2','Grade 3','Grade 4','Grade 5','Grade 6'];
 function sbfpList(){ return ((DATA||PUB||{}).sbfp)||[]; }
 function sbRec(date){ return sbfpList().find(x=>x.date===date) || {}; }
@@ -4222,15 +4229,21 @@ function sbStart(){ return sbSet().sbfpStart || '2026-09-14'; }
 function sbStartDay(){ return Number(sbSet().sbfpStartDay || 1); }
 function libMenu(i){ const o = (sbSet().sbfpMenus||[])[i] || {}, m = SBFP_MENUS[i]; return { n:o.n||m.n, g:o.g||m.g, r:m }; }
 // The menu follows the guide in order, one per school day (Monday to Friday), and starts again after Day 25
-function sbDayNo(date){
-  const st = sbStart(); if (!date || date < st || dow(date)===0 || dow(date)===6) return -1;
-  let n = 0; for (let d = st; d <= date; d = addDays(d,1)) if (dow(d) > 0 && dow(d) < 6) n++;
-  return (n - 1 + sbStartDay() - 1) % SBFP_MENUS.length;
+function sbFirst(){ return sbSet().sbfpFirst || '2026-07-20'; }
+function wkBetween(a, b){ // school days from a to b (b after a gives a positive count)
+  let n = 0; if (a <= b){ for (let d = a; d < b; d = addDays(d,1)) if (dow(d) > 0 && dow(d) < 6) n++; return n; }
+  for (let d = b; d < a; d = addDays(d,1)) if (dow(d) > 0 && dow(d) < 6) n--; return n;
 }
+function sbDayNo(date){
+  if (!date || date < sbFirst() || dow(date)===0 || dow(date)===6) return -1;
+  const k = SBFP_MENUS.length, off = wkBetween(sbStart(), date);
+  return (((sbStartDay() - 1 + off) % k) + k) % k;
+}
+function sbCycle(date){ return Math.floor(wkBetween(sbFirst(), date) / SBFP_MENUS.length) + 1; }
 function sbSched(date){
   const i = sbDayNo(date); if (i < 0) return null;
   const m = libMenu(i), r = sbRec(date);
-  return { i, day:i+1, n: r.menu || m.n, g: r.grade || m.g, changed: !!(r.menu || r.grade), recipe: r.menu ? null : m.r, rec:r };
+  return { i, day:i+1, n: r.menu || m.n, g: r.grade || m.g, on: m.n, og: m.g, changed: !!(r.menu || r.grade), recipe: r.menu ? null : m.r, rec:r, cycle: sbCycle(date) };
 }
 function sbfpOn(date){ const s = sbSched(date); return s ? { menu:s.n, grade:s.g+' parents', notes:(s.rec||{}).notes } : null; }
 function isStaff(){ return USER && ['teacher','head','admin'].indexOf(USER.role) > -1; }
@@ -4294,24 +4307,27 @@ function sbGo(date){ SB.date = date; SB.tab = 'today'; drawSbfp(); window.scroll
 function sbDayView(){
   const d = SB.date, s = sbSched(d), r = sbRec(d), staff = isStaff(), can = canSbfp();
   const nav = `<div class="calbar"><button class="btn ghost small" onclick="sbGo(addDays('${d}',${dow(d)===1?-3:-1}))">\u2039 Previous day</button><input type="date" value="${d}" onchange="sbGo(this.value)" class="sbdate"><button class="btn ghost small" onclick="sbGo(addDays('${d}',${dow(d)===5?3:1}))">Next day \u203A</button></div>`;
-  if (!s){ $('sbBody').innerHTML = nav + `<div class="empty">${dow(d)===0||dow(d)===6?'No feeding on weekends.':'The SBFP schedule starts on '+esc(dShort(sbStart()))+'.'}</div>`; return; }
+  if (!s){ $('sbBody').innerHTML = nav + `<div class="empty">${dow(d)===0||dow(d)===6?'No feeding on weekends.':'The SBFP schedule starts on '+esc(dShort(sbFirst()))+'.'}</div>`; return; }
   const rc = s.recipe;
   const recipe = rc ? `<details class="byt recipe"><summary>Recipe: ingredients and procedure</summary><div class="rcp">
       <p class="hint">Serving size 10${rc.cost?' \u00B7 \u20B1'+esc(rc.cost)+' per serving':''}${rc.kcal?' \u00B7 '+esc(rc.kcal)+' with 1 cup of rice':''}${rc.src?' \u00B7 '+esc(rc.src):''}</p>
       <b>Ingredients</b><ul>${rc.ing.split('; ').map(x=>`<li>${esc(x)}</li>`).join('')}</ul><b>Procedure</b><ol>${rc.proc.split('|').map(x=>`<li>${esc(x)}</li>`).join('')}</ol></div></details>` : '';
   const st = r.status || '', g = sbGroupOf(s.g), parents = sbParents(g), att = r.att || {};
+  const locked = !!att._lock;
   const extras = Object.keys(att).filter(k => k.indexOf('x|') === 0).map(k => { const [, parent, grp] = k.split('|'); return { key:k, parent, group:grp }; });
   const val = k => String(att[k]||''), kind = k => val(k).charAt(0);
   const cnt = { P:0, R:0, E:0, N:0 }; parents.forEach(p => { const v = kind(p.key); if (cnt[v] !== undefined) cnt[v]++; });
   const photos = (r.photos||[]);
   const row = (key, name, sub, extra) => { const v = kind(key), rv = v==='R' ? val(key).slice(2).split('|') : ['',''], rep = rv[0], kidsFor = (rv[1]||'').split(';').filter(Boolean), kidList = sub ? sub.split(', ') : [];
-    return `<details class="sbp" ${v==='R'?'open':''}><summary><span class="sbpn">${esc(name)}${v==='R'&&rep?` <small class="sbrepby">by ${esc(rep)}</small>`:''}${extra?` <button class="linkbtn sbrm" onclick="event.preventDefault();sbRemoveExtra('${esc(key)}')">Remove</button>`:''}${extra?` <span class="ktag mwa">${esc(extra)}</span>`:''}</span>
+    return `<details class="sbp" ${v==='R'?'open':''}><summary><span class="sbpn">${esc(name)}${v==='R'&&rep?` <small class="sbrepby">by ${esc(rep)}</small>`:''}${extra && !locked?` <button class="linkbtn sbrm" onclick="event.preventDefault();sbRemoveExtra('${esc(key)}')">Remove</button>`:''}${extra?` <span class="ktag mwa">${esc(extra)}</span>`:''}</span>
       <span class="sbtg" data-key="${esc(key)}">${[['P','Present'],['R','Representative'],['E','Excused'],['N','Not participating']].map(([c,l])=>`<button type="button" class="${v===c?'on '+c:''}" onclick="event.preventDefault();sbMark(this,'${c}')">${l}</button>`).join('')}</span></summary>
-      <div class="sbrep" style="display:${v==='R'?'':'none'}"><input class="sbrepn" placeholder="Name of the guardian or representative, and relationship. Example: Lola Maria (grandmother)" value="${esc(rep)}">
+      <div class="sbrep" style="display:${v==='R'?'':'none'}"><input class="sbrepn" list="sbRepBank" placeholder="Name of the guardian or representative. Example: Maria L. Ytang (grandmother)" value="${esc(rep)}">
         ${kidList.length?`<div class="sbkids"><span class="hint">On behalf of which learner?</span>${kidList.map(k=>`<label class="sbc"><input type="checkbox" value="${esc(k)}" ${!kidsFor.length||kidsFor.indexOf(k)>-1?'checked':''}>${esc(k)}</label>`).join('')}</div>`:''}</div>
       ${sub?`<small>Learners: ${esc(sub)}</small>`:''}</details>`; };
   $('sbBody').innerHTML = nav + `
-    <div class="sbcard"><div class="sbcard-h"><span class="sbday">Day ${s.day}</span><div><h3>${esc(s.n)}</h3><p><b>${esc(s.g)} parents</b> prepare the food${s.changed?' <span class="ktag mwa">Changed by '+esc(r.by||'School Head')+'</span>':''}</p>${r.notes?`<p class="hint">${esc(r.notes)}</p>`:''}</div>
+    <div class="sbcard"><div class="sbcard-h"><span class="sbday">Cycle ${s.cycle}<br>Day ${s.day}</span><div>
+      ${s.changed?`<p class="sborig"><span>Original menu</span><s>${esc(s.on)}</s> \u00B7 <s>${esc(s.og)} parents</s></p><p class="sbchg"><span>Changed to</span></p>`:''}
+      <h3>${esc(s.n)}</h3><p><b>${esc(s.g)} parents</b> ${s.changed?'cooked and served':'prepare the food'}${s.changed?' <span class="ktag mwa">Changed by '+esc(r.by||'School Head')+'</span>':''}</p>${r.notes?`<p class="hint">${esc(r.notes)}</p>`:''}</div>
       ${can?`<button class="btn ghost small" onclick="sbfpForm('${d}')">Change menu or group</button>`:''}</div>${recipe}</div>
     <section class="ocard2 sbstatus"><div class="sbst-row"><div><span class="lbl">Status of feeding</span>
         ${st?`<span class="sbbadge" style="--c:${SB_COLOR[st]||'#777'}">${esc(st)}</span>${r.reason?`<p class="hint" style="margin:6px 0 0">Reason: ${esc(r.reason)}</p>`:''}<p class="hint" style="margin:4px 0 0">Updated by ${esc(r.by||'')}, ${esc(dTime(r.on||''))}</p>`:'<span class="sbbadge none">No status yet</span>'}</div>
@@ -4319,16 +4335,20 @@ function sbDayView(){
     ${staff?`<section class="ocard2"><div class="sbst-row"><h3 style="margin:0">Attendance Sheet, Before, During, and After Photos</h3>${can && photos.length?`<button class="btn sun small" onclick="openCollage()">\u2726 Make a photo collage</button>`:''}</div>
       <div class="stacks">${SB_PHOTO_TAGS.map(t => { const ps = photos.map((p,i)=>({p,i})).filter(x => (x.p.tag||'Attendance sheet')===t);
         return `<div class="stackbox"><button class="stack ${ps.length?'':'empty'}" ${ps.length?`onclick="sbInsta('${t}')"`:''}>${ps.slice(-3).map((x,k)=>`<img src="https://drive.google.com/thumbnail?id=${esc(x.p.id)}&sz=w300" alt="" loading="lazy" style="--r:${[-7,5,-2][k]}deg">`).join('') || '<span class="stack0">\u{1F4F7}</span>'}${ps.length?`<em>${ps.length}</em>`:''}</button>
-          <b>${t}</b><label class="btn ghost small stackadd"><input type="file" accept="image/*" multiple onchange="sbUpload(this,'${t}')">\uFF0B Add</label></div>`; }).join('')}</div>
+          <b>${t}</b>${t==='Collage' ? (can?`<button class="btn ghost small" onclick="openCollage()">\u2726 Make</button>`:'') : `<label class="btn ghost small stackadd"><input type="file" accept="image/*" multiple onchange="sbUpload(this,'${t}')">\uFF0B Add</label>`}</div>`; }).join('')}</div>
       <p class="hint" style="margin:8px 0 0">Tap a stack to view its photos one by one. Photos stay until the uploader, the School Head, or the AO removes them.</p></section>
     <section class="ocard2"><h3>${esc(g)} parents who prepare today <small class="hint">(${parents.length})</small></h3>
       <p class="hint" style="margin-top:0">Present ${cnt.P} \u00B7 Representative ${cnt.R} \u00B7 Excused ${cnt.E} \u00B7 Not participating ${cnt.N} \u00B7 Not yet marked ${parents.length-cnt.P-cnt.R-cnt.E-cnt.N}${extras.length?' \u00B7 Helpers from other groups '+extras.length:''}</p>
-      ${SB.people===null?`<div class="loader"><span class="spin"></span>Loading the list of parents</div>`:`<button class="btn ghost small" onclick="sbAllPresent()">Mark all present</button>
+      ${locked?`<div class="sblock">\u{1F512} Attendance is locked${att._lock?' by '+esc(att._lock.split('|')[0])+', '+esc(dTime(att._lock.split('|')[1]||'')):''}. Tap <b>Unlock to edit</b> to change it.</div>`:''}
+      ${SB.people===null?`<div class="loader"><span class="spin"></span>Loading the list of parents</div>`:`
       <div class="sbpar">${parents.map(p=>row(p.key, p.parent, p.kids.join(', '))).join('') || '<p class="hint">No parents listed for this group yet. Add them in Learners and parents.</p>'}</div>
       <h4 class="sbh4">Parents from other groups who also helped</h4>
       <div class="sbpar">${extras.map(x=>row(x.key, x.parent, '', x.group+' group')).join('') || '<p class="hint">None yet.</p>'}</div>
-      <div class="sbextra"><input id="sbExtraQ" list="sbExtraList" placeholder="Type a parent\u2019s name from any group"><datalist id="sbExtraList">${SB_GROUPS.filter(x=>x!==g).flatMap(x=>sbParents(x).map(p=>`<option value="${esc(p.parent)} (${esc(x)})">`)).join('')}</datalist><button class="btn ghost small" onclick="sbAddExtra()">Add helper</button></div>
-      <button class="btn" style="margin-top:12px" onclick="sbSaveAtt()">Save attendance</button>`}</section>`:''}`;
+      ${locked?'':`<div class="sbextra"><input id="sbExtraQ" list="sbExtraList" placeholder="Type a parent\u2019s name from any group"><datalist id="sbExtraList">${SB_GROUPS.filter(x=>x!==g).flatMap(x=>sbParents(x).map(p=>`<option value="${esc(p.parent)} (${esc(x)})">`)).join('')}</datalist><button class="btn ghost small" onclick="sbAddExtra()">Add helper</button></div>`}
+      <div class="sbattbar">${locked ? `<button class="btn sun" onclick="sbUnlock()">\u{1F513} Unlock to edit</button>`
+        : `<button class="btn ghost" onclick="sbClearSel()">Clear selections</button><button class="btn ghost" onclick="sbSaveAtt(false)">Save attendance</button><button class="btn" onclick="sbSaveAtt(true)">\u{1F512} Save and lock</button>`}</div>`}</section>`:''}
+    <datalist id="sbRepBank">${[...new Set((SB.people||[]).map(p=>p.parent))].sort().map(n=>`<option value="${esc(n)}">`).join('')}</datalist>`;
+  if (locked) document.querySelectorAll('#sbBody .sbtg button, #sbBody .sbrep input, #sbExtraQ').forEach(x => x.disabled = true);
 }
 function sbStatusForm(){
   const r = sbRec(SB.date), s = sbSched(SB.date);
@@ -4352,18 +4372,29 @@ function sbStatus(x){ if (x === 'Implemented') return sbDay({ status:x, reason:'
 function sbSaveReason(){ sbDay({ reason:$('sbReason').value }, 'Reason saved.'); }
 function sbMark(btn, v){ const t = btn.parentElement; t.querySelectorAll('button').forEach(b => b.className=''); btn.className = 'on '+v;
   const rep = t.closest('.sbp').querySelector('.sbrep'); rep.style.display = v==='R' ? '' : 'none'; if (v==='R'){ t.closest('.sbp').open = true; setTimeout(()=>rep.querySelector('input').focus(), 50); } }
-function sbAllPresent(){ document.querySelectorAll('.sbtg').forEach(t => { t.querySelectorAll('button').forEach(b=>b.className=''); t.querySelector('button').className = 'on P'; }); }
-function sbSaveAtt(){
-  const att = {}, prev = sbRec(SB.date).att || {};
+
+async function sbSaveAtt(lock){
+  const att = {}, prev = sbRec(SB.date).att || {}, s = sbSched(SB.date), newReps = [];
   Object.keys(prev).forEach(k => att[k] = '');
-  let missing = false;
+  let missing = false, noKid = false;
   document.querySelectorAll('.sbtg').forEach(t => { const on = t.querySelector('button.on'), k = t.dataset.key;
     if (!on){ att[k] = k.indexOf('x|')===0 ? 'P' : ''; return; }
     const c = ['P','R','E','N'].find(x => on.classList.contains(x));
-    if (c==='R'){ const box = t.closest('.sbp'), n = box.querySelector('.sbrepn').value.trim().replace(/\|/g,' '); if (!n) missing = true; const kids = [...box.querySelectorAll('.sbkids input:checked')].map(x=>x.value.replace(/[;|]/g,' ')); att[k] = 'R:'+n+(kids.length?'|'+kids.join(';'):''); } else att[k] = c; });
-  if (missing) return toast('Type the name of each representative.');
-  sbDay({ att }, 'Attendance saved.');
+    if (c==='R'){ const box = t.closest('.sbp'), n = box.querySelector('.sbrepn').value.trim().replace(/\|/g,' '); if (!n) missing = true;
+      const kids = [...box.querySelectorAll('.sbkids input:checked')].map(x=>x.value.replace(/[;|]/g,' ')); if (box.querySelector('.sbkids') && !kids.length) noKid = true;
+      att[k] = 'R:'+n+(kids.length?'|'+kids.join(';'):'');
+      // a new name goes to the bank of guardians, linked to the learners it represents
+      if (n && !(SB.people||[]).some(p => p.parent.toLowerCase()===n.toLowerCase())) kids.forEach(kd => { const m = kd.match(/^(.*) \((.*)\)$/); newReps.push({ learner: m?m[1]:kd, grade: m?m[2]:'', parent:n, group: k.split('|')[1], counted:false }); });
+    } else att[k] = c; });
+  if (missing) return toast('Type the name of each guardian or representative.');
+  if (noKid) return toast('Tick the learner each representative came for.');
+  const marked = Object.keys(att).filter(k => k.charAt(0)!=='_' && att[k]).length;
+  if (lock){ if (!marked) return toast('Mark the attendance first.'); if (!confirm('Save and lock the attendance? It can only be changed after tapping Unlock to edit.')) return; att._lock = USER.name+'|'+nowLocal().replace('T',' ').slice(0,16); }
+  for (const p of newReps){ try{ SB.people = await api('sbfpPersonSave',{ person:p }); }catch(e){} }
+  sbDay({ att }, lock ? 'Attendance saved and locked.' : 'Attendance saved.' + (newReps.length ? ' New guardian added to the list.' : ''));
 }
+async function sbUnlock(){ if (!confirm('Unlock the attendance for editing?')) return; sbDay({ att:{ _lock:'' } }, 'Unlocked. Save or lock again when done.'); }
+function sbClearSel(){ if (!confirm('Clear the selections on screen? Saved attendance is not changed until you save.')) return; document.querySelectorAll('.sbtg button').forEach(b => b.className=''); document.querySelectorAll('.sbrep').forEach(x => x.style.display='none'); toast('Selections cleared. Mark the attendance again, then save.'); }
 function sbRemoveExtra(key){
   if (!confirm('Remove this helper from today\u2019s list?')) return;
   const r = sbRec(SB.date); if (r.att) delete r.att[key];
@@ -4386,6 +4417,7 @@ async function shrinkImage(f){
   const b = await new Promise(r => c.toBlob(r, 'image/jpeg', 0.85)); return new File([b], f.name.replace(/\.\w+$/,'')+'.jpg', { type:'image/jpeg' });
 }
 function sbInsta(tag){
+  if (tag==='Collage' && !(sbRec(SB.date).photos||[]).some(p=>p.tag==='Collage')) return;
   const r = sbRec(SB.date), list = (r.photos||[]).filter(p => (p.tag||'Attendance sheet')===tag).map(p => ({ id:p.id, url:p.url, video:/video/.test(p.mime||''), caption:tag+' \u00B7 '+dShort(SB.date), sub:'Uploaded by '+(p.byName||'')+' \u00B7 '+dTime(p.on||''), canRemove: USER && (p.by===USER.email || canSbfp()), removeFn:`sbRemovePhoto('${p.id}')` }));
   openInsta(list, 0);
 }
@@ -4395,7 +4427,7 @@ function sbCalView(){
   let cells = ''; for (let i = 0; i < sd; i++) cells += '<div class="sbd empty"></div>';
   for (let d = 1; d <= days; d++){
     const date = SB.month+'-'+String(d).padStart(2,'0'), s = sbSched(date), r = sbRec(date), wk = dow(date)===0||dow(date)===6;
-    cells += `<button class="sbd ${s?'has':''} ${wk?'wkend':''} ${date===today?'today':''}" ${s?`onclick="sbGo('${date}')"`:''}><b>${d}</b>${s?`<span class="sbmenu">${esc(s.n)}</span><span class="sbgrade">${esc(s.g)}</span>${r.status?`<span class="sbstat" style="background:${SB_COLOR[r.status]||'#777'}">${esc(r.status)}</span>`:''}`:''}</button>`;
+    cells += `<button class="sbd ${s?'has':''} ${s&&s.changed?'chg':''} ${wk?'wkend':''} ${date===today?'today':''}" ${s?`onclick="sbGo('${date}')"`:''}><b>${d}${s?` <small class="sbdn">C${s.cycle} D${s.day}</small>`:''}</b>${s?((s.changed?`<span class="sbmenu orig"><s>${esc(s.on)}</s></span><span class="sbgrade"><s>${esc(s.og)}</s></span><span class="sbmenu new">\u2192 ${esc(s.n)}</span><span class="sbgrade">${esc(s.g)}</span>`:`<span class="sbmenu">${esc(s.n)}</span><span class="sbgrade">${esc(s.g)}</span>`)+(r.status?`<span class="sbstat" style="background:${SB_COLOR[r.status]||'#777'}">${esc(r.status)}</span>`:'')):''}</button>`;
   }
   const mname = new Date(Date.UTC(y,m-1,1)).toLocaleString('en-US',{month:'long',year:'numeric',timeZone:'UTC'});
   const prev = new Date(Date.UTC(y,m-2,1)).toISOString().slice(0,7), next = new Date(Date.UTC(y,m,1)).toISOString().slice(0,7);
@@ -4406,7 +4438,7 @@ function sbCalView(){
 // Which menus were implemented, skipped, or repeated, from the start until today
 function sbHistory(){
   const out = [], today = todayPH();
-  for (let d = sbStart(); d <= today; d = addDays(d,1)){ const s = sbSched(d); if (s) out.push({ date:d, s, st:sbRec(d).status||'' }); }
+  for (let d = sbFirst(); d <= today; d = addDays(d,1)){ const s = sbSched(d); if (s) out.push({ date:d, s, st:sbRec(d).status||'' }); }
   return out;
 }
 function sbSumView(){
@@ -4419,6 +4451,7 @@ function sbSumView(){
   $('sbBody').innerHTML = `<div class="ostats"><div class="ostat static"><span class="oico">\u2714</span><b>${done.length} of ${h.length}</b><span>Feeding days implemented (${pct}%)</span></div>
       <div class="ostat static s-warn"><span class="oico">!</span><b>${owed.length}</b><span>Menus to implement later</span></div><div class="ostat static"><span class="oico">\u21BB</span><b>${repeated.length}</b><span>Menus served more than once</span></div><div class="ostat static"><span class="oico">?</span><b>${none.length}</b><span>Days with no status yet</span></div></div>
     <details class="byt" open><summary>Not implemented, to be served once the regular schedule is over (${owed.length})</summary><div style="padding:0 14px 12px">${owed.map(row).join('') || '<p class="hint">None. Every scheduled menu so far was served.</p>'}</div></details>
+    <details class="byt"><summary>Days with a changed menu or group (${h.filter(x=>x.s.changed).length})</summary><div style="padding:0 14px 12px">${h.filter(x=>x.s.changed).map(x=>`<button class="upi" onclick="sbGo('${x.date}')"><span class="upico" style="background:#6a2c99">${x.s.day}</span><span class="uptxt"><b>${esc(x.s.n)} (${esc(x.s.g)})</b><small>${esc(dShort(x.date))} \u00B7 Original: ${esc(x.s.on)} (${esc(x.s.og)})</small></span></button>`).join('') || '<p class="hint">No changes. Every day followed the original menu.</p>'}</div></details>
     <details class="byt"><summary>Served more than once (${repeated.length})</summary><div style="padding:0 14px 12px">${repeated.map(n=>`<div class="upi"><span class="uptxt"><b>${esc(n)}</b><small>${byName[n].map(dShort).join(', ')}</small></span></div>`).join('') || '<p class="hint">None yet.</p>'}</div></details>
     <details class="byt"><summary>No status yet (${none.length})</summary><div style="padding:0 14px 12px">${none.map(row).join('') || '<p class="hint">Every day has a status.</p>'}</div></details>
     <details class="byt"><summary>All days from ${esc(dShort(sbStart()))} (${h.length})</summary><div style="padding:0 14px 12px">${h.slice().reverse().map(row).join('')}</div></details>`;
@@ -4470,13 +4503,13 @@ function printSbPart(){
   setTimeout(() => window.print(), 150);
 }
 function sbMenuList(){
-  $('smStart').value = sbStart(); $('smDay').value = sbStartDay();
+  $('smFirst').value = sbFirst(); $('smStart').value = sbStart(); $('smDay').value = sbStartDay();
   $('smList').innerHTML = SBFP_MENUS.map((m,i)=>{ const x = libMenu(i); return `<div class="smrow"><span class="sbday">${i+1}</span><input data-i="${i}" class="smn" value="${esc(x.n)}"><select class="smg">${SB_GROUPS.map(g=>`<option ${g===x.g?'selected':''}>${g}</option>`).join('')}</select></div>`; }).join('');
   $('smErr').textContent=''; openModal('smModal');
 }
 async function sbMenuSave(){
   const menus = [...document.querySelectorAll('#smList .smrow')].map(r => ({ n:r.querySelector('.smn').value.trim(), g:r.querySelector('.smg').value }));
-  try{ await apiData('sbfpSettings',{ start:$('smStart').value, startDay:$('smDay').value, menus }); closeModal('smModal'); drawSbfp(); toast('Menu list saved.'); }catch(e){ handleErr(e,'smErr'); }
+  try{ await apiData('sbfpSettings',{ first:$('smFirst').value, start:$('smStart').value, startDay:$('smDay').value, menus }); closeModal('smModal'); drawSbfp(); toast('Menu list saved.'); }catch(e){ handleErr(e,'smErr'); }
 }
 function sbfpForm(date){
   const s = sbSched(date); if (!s) return toast('No feeding scheduled on this day.');
@@ -4516,7 +4549,7 @@ function printSbfp(){
 var COL = { pick:[], data:{}, title:'', grade:'', date:'', caption:'', layout:'auto' };
 function openCollage(){
   const r = sbRec(SB.date), s = sbSched(SB.date); COL.pick = []; COL.title = s ? s.n : ''; COL.grade = s ? s.g+' parents' : ''; COL.date = new Date(SB.date+'T00:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'}); COL.caption = 'School-Based Feeding Program';
-  $('colPick').innerHTML = (r.photos||[]).map(p=>`<label class="colp"><input type="checkbox" value="${esc(p.id)}" onchange="colToggle(this)"><img src="https://drive.google.com/thumbnail?id=${esc(p.id)}&sz=w300" alt=""><small>${esc(p.tag||'')}</small></label>`).join('');
+  $('colPick').innerHTML = (r.photos||[]).filter(p => p.tag!=='Collage').map(p=>`<label class="colp"><input type="checkbox" value="${esc(p.id)}" onchange="colToggle(this)"><img src="https://drive.google.com/thumbnail?id=${esc(p.id)}&sz=w300" alt=""><small>${esc(p.tag||'')}</small></label>`).join('');
   $('colMenu').value = COL.title; $('colGrade').value = COL.grade; $('colDate').value = COL.date; $('colCap').value = COL.caption;
   $('colStep1').hidden = false; $('colStep2').hidden = true; $('colCount').textContent = '0 selected'; openModal('colModal');
 }
@@ -4534,6 +4567,12 @@ function colDraw(){
   COL.title = $('colMenu').value; COL.grade = $('colGrade').value; COL.date = $('colDate').value; COL.caption = $('colCap').value;
   const W = 1240, H = 1754, c = $('colCanvas'); c.width = W; c.height = H; const g = c.getContext('2d');
   g.fillStyle = '#fbfaf5'; g.fillRect(0,0,W,H);
+  // soft food and nutrition backdrop, about 20 to 30 percent visible
+  g.save(); g.globalAlpha = 0.22; g.font = '64px "Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji",sans-serif'; g.textAlign = 'center';
+  const foods = ['\u{1F955}','\u{1F35A}','\u{1F966}','\u{1F41F}','\u{1F34C}','\u{1F95A}','\u{1F96C}','\u{1F375}','\u{1F33D}','\u{1F96D}','\u{1F357}','\u{1F345}'];
+  for (let y = 300, row = 0; y < H; y += 120, row++) for (let x = (row%2?60:120), k = row; x < W; x += 150, k++) g.fillText(foods[k % foods.length], x, y);
+  g.restore();
+  const veil = g.createLinearGradient(0,0,0,H); veil.addColorStop(0,'rgba(251,250,245,.55)'); veil.addColorStop(1,'rgba(251,250,245,.35)'); g.fillStyle = veil; g.fillRect(0,0,W,H);
   // header band: school identity
   const grd = g.createLinearGradient(0,0,W,0); grd.addColorStop(0,'#1F5130'); grd.addColorStop(1,'#2f7a4a'); g.fillStyle = grd; g.fillRect(0,0,W,250);
   g.fillStyle = '#F4C430'; g.fillRect(0,250,W,12);
@@ -4562,6 +4601,10 @@ function colDraw(){
 }
 function roundRect(g,x,y,w,h,r){ g.beginPath(); g.moveTo(x+r,y); g.arcTo(x+w,y,x+w,y+h,r); g.arcTo(x+w,y+h,x,y+h,r); g.arcTo(x,y+h,x,y,r); g.arcTo(x,y,x+w,y,r); g.closePath(); }
 function wrapText(g, t, x, y, maxW, lh){ const w = String(t||'').split(' '); let line = '', yy = y; w.forEach(word => { const test = line ? line+' '+word : word; if (g.measureText(test).width > maxW && line){ g.fillText(line, x, yy); line = word; yy += lh; } else line = test; }); g.fillText(line, x, yy); }
+async function colSave(){
+  const b64 = $('colCanvas').toDataURL('image/jpeg', 0.9).split(',')[1];
+  closeModal('colModal'); await sbDay({ uploads:[{ name:'SBFP_Collage_'+SB.date+'.jpg', mime:'image/jpeg', tag:'Collage', base64:b64 }] }, 'Collage saved. Find it in the Collage stack to view or download again.');
+}
 function colPng(){ $('colCanvas').toBlob(b => saveBlob(b, 'SBFP_Collage_'+SB.date+'.png'), 'image/png'); }
 function colPdf(){ const url = $('colCanvas').toDataURL('image/jpeg', 0.92); $('printArea').innerHTML = `<div class="colprint"><img src="${url}" alt=""></div>`; document.body.classList.add('portrait-print'); setTimeout(() => { window.print(); setTimeout(()=>document.body.classList.remove('portrait-print'), 800); }, 300); }
 
