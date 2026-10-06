@@ -245,6 +245,37 @@ table.subs tr.nosub td:not(.wk){color:var(--muted);font-style:italic}
 .hist summary{cursor:pointer;color:var(--muted);font-weight:600}
 .hist ol{margin:4px 0 0;padding-left:18px}
 .pinv{font-weight:700;letter-spacing:1px}
+.agrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.acard{background:#f3f6f1;border-radius:16px;padding:16px 18px;border-top:8px solid var(--c)}.acard b{display:block;font-size:22px;color:var(--c);margin:6px 0 4px}.acard p{margin:0;font-size:16px;line-height:1.4}
+.aico{font-size:30px}.ah3{font-size:24px;color:#1F5130;margin:0 0 8px}
+.alist{margin:0;padding-left:26px}.alist li{font-size:21px;line-height:1.4;margin-bottom:12px}
+.aflow{display:flex;flex-direction:column;gap:12px;justify-content:center}.aflow span{display:flex;align-items:center;gap:14px;font-size:24px;font-weight:700;color:#1F5130;background:#f3f6f1;border-radius:14px;padding:12px 18px}
+.aflow b{width:42px;height:42px;border-radius:50%;background:#f4c430;display:grid;place-items:center;color:#1d2a1f}
+.awho{display:grid;grid-template-columns:380px 1fr;gap:40px;height:560px;align-items:center}
+.awho-l{background:linear-gradient(160deg,var(--c),#1F5130);color:#fff;border-radius:24px;height:100%;display:flex;flex-direction:column;justify-content:center;padding:30px}
+.awho-l span{font-size:90px}.awho-l h2{color:#fff;font-size:40px;margin:14px 0 0;line-height:1.15}
+.aopen{display:grid;grid-template-columns:330px 1fr;gap:40px;align-items:center}.aqr svg{width:320px;height:320px}
+.abig{font-size:26px;margin:0}.aurl{font-size:28px;font-weight:700;color:#1e5a8c;margin:6px 0 20px;word-break:break-all}
+.sbstatus .sbst-row{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.sbbadge{display:inline-block;margin-top:6px;background:var(--c);color:#fff;font-weight:700;border-radius:999px;padding:6px 14px}.sbbadge.none{background:var(--page);color:var(--muted);border:1px dashed var(--line)}
+.sbtg{flex-wrap:wrap}.sbtg button.on.R{background:#1e5a8c;color:#fff;border-color:#1e5a8c}
+.sbrep{padding:0 12px 10px}.sbrep input,.sbextra input{width:100%;box-sizing:border-box;border:1.5px solid var(--line);border-radius:8px;padding:8px 10px;font:inherit}
+.sbextra{display:flex;gap:8px;margin-top:8px}.sbh4{margin:14px 0 4px;font-size:14px;color:var(--brandtxt)}
+.sbchip{background:#fff1e6 !important;color:#8a3a00 !important;border:1px solid #f0c39b}.sbchip i{font-style:normal;display:block;font-size:9.5px;opacity:.85}
+.loader{display:flex;align-items:center;gap:10px;justify-content:center;padding:22px;color:var(--muted)}
+.spin{width:18px;height:18px;border-radius:50%;border:3px solid var(--line);border-top-color:var(--leaf);animation:sp .8s linear infinite}@keyframes sp{to{transform:rotate(360deg)}}
+.pirload{display:flex;flex-direction:column;align-items:center;gap:12px;padding:60px 20px;background:var(--card);border:1.5px solid var(--line);border-radius:18px;margin-top:14px;text-align:center}
+.pirstar{font-size:54px;color:var(--sun);animation:pst 1.4s ease-in-out infinite}@keyframes pst{50%{transform:scale(1.25) rotate(20deg)}}
+.pirdots{display:flex;gap:6px}.pirdots i{width:9px;height:9px;border-radius:50%;background:var(--leaf);animation:pdo 1s infinite}.pirdots i:nth-child(2){animation-delay:.15s}.pirdots i:nth-child(3){animation-delay:.3s}@keyframes pdo{50%{opacity:.2;transform:translateY(-4px)}}
+.pir-tools .present{background:var(--sun);border-color:var(--sun);font-weight:700}
+.pirshow{position:fixed;inset:0;z-index:200;background:#111;overflow:auto}.pirshow[hidden]{display:none}
+.ps-stagebox{display:flex;align-items:center;justify-content:center}.pirshow .pir-scale{transform-origin:center center;flex:none}
+.ps-bar{position:fixed;left:50%;bottom:10px;transform:translateX(-50%);display:flex;align-items:center;gap:4px;background:rgba(20,30,22,.92);padding:6px 8px;border-radius:14px;z-index:5;flex-wrap:wrap;justify-content:center;max-width:96vw;opacity:.35;transition:opacity .2s}
+.ps-bar:hover,.ps-bar:focus-within{opacity:1}.ps-bar span{color:#fff;font-size:13px;min-width:40px;text-align:center}.ps-bar i{width:1px;height:22px;background:rgba(255,255,255,.25);margin:0 4px}
+.ps-bar button{background:rgba(255,255,255,.1);color:#fff;border:0;border-radius:8px;padding:7px 10px;font:inherit;font-size:14px;cursor:pointer}.ps-bar button.on{background:var(--sun);color:#1d2a1f}.ps-bar button.end{background:#c0392b}
+.ps-bar .pir-c{width:24px;height:24px;padding:0;border-radius:50%;background:var(--c) !important;box-shadow:0 0 0 2px rgba(255,255,255,.3)}.ps-bar .pir-c.on{box-shadow:0 0 0 3px #fff}
+.ptab.small{font-size:15px}.ps-free{font-size:24px;line-height:1.5;min-height:300px}
+@media (max-width:760px){.pir-tools{position:static}.sbextra{flex-direction:column}.ps-bar{opacity:1}}
 .pir-tools{display:flex;flex-wrap:wrap;gap:6px;align-items:center;background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:8px;margin:12px 0;position:sticky;top:70px;z-index:6}
 .pir-tools button{border:1.5px solid var(--line);background:var(--card);border-radius:8px;padding:6px 10px;font:inherit;font-size:13px;cursor:pointer;color:var(--ink)}
 .pir-tools button.on{background:var(--field);color:#fff;border-color:var(--field)}.pir-tools .sep{width:1px;height:24px;background:var(--line);margin:0 4px}
@@ -1173,8 +1204,9 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
   <div class="modal" role="dialog" aria-labelledby="sbTitle">
     <h3 id="sbTitle">SBFP menu of the day</h3><input type="hidden" id="sbDate">
     <p class="sub" id="sbDay"></p>
-    <div class="field"><label for="sbMenu">Menu of the day</label><textarea id="sbMenu" rows="2" maxlength="300" placeholder="Example: Chicken arroz caldo with malunggay, banana"></textarea></div>
-    <div class="field"><label for="sbGrade">Assigned grade level of parents</label><input id="sbGrade" list="sbGrades" maxlength="80" placeholder="Example: Grade 3 parents"><datalist id="sbGrades"></datalist></div>
+    <div class="field"><label for="sbMenuSel">Menu of the day</label><select id="sbMenuSel" onchange="$('sbMenuOther').style.display=this.value==='__other'?'':'none'"></select></div>
+    <div class="field" id="sbMenuOther" style="display:none"><label for="sbMenu">Type the menu</label><input id="sbMenu" maxlength="300" placeholder="Example: Chicken arroz caldo with malunggay"></div>
+    <div class="field"><label for="sbGrade">Grade level parents assigned</label><select id="sbGrade"></select></div>
     <div class="field"><label for="sbNotes">Notes (optional)</label><input id="sbNotes" maxlength="500" placeholder="Example: Bring own ladle and serving bowls"></div>
     <div class="field"><span class="lbl">Copy the same menu to other days this month (optional)</span><div class="sbcopy" id="sbCopy"></div></div>
     <div class="err" id="sbErr"></div>
@@ -1221,7 +1253,7 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
 <div class="overlay" id="smModal">
   <div class="modal wide" role="dialog" aria-labelledby="smTitle">
     <h3 id="smTitle">SBFP menu list</h3><p class="sub">The menus follow this order, one per school day, and start again after the last one. Each menu is assigned to a grade level group of parents.</p>
-    <div class="field"><label for="smStart">Day 1 of the schedule</label><input type="date" id="smStart"></div>
+    <div class="row2"><div class="field"><label for="smStart">Feeding starts on</label><input type="date" id="smStart"></div><div class="field"><label for="smDay">Menu day number on that date</label><input type="number" id="smDay" min="1" max="25"></div></div>
     <div id="smList" class="smlist"></div>
     <div class="err" id="smErr"></div>
     <div class="modal-actions"><button class="btn ghost" onclick="closeModal('smModal')">Cancel</button><button class="btn" onclick="sbMenuSave()">Save</button></div>
@@ -1236,10 +1268,19 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
   <div class="insta-cap" id="instaCap"></div><div class="insta-act" id="instaAct"></div>
 </div>
 
+<div class="pirshow" id="pirShow" hidden></div>
 <!-- Saved PIR presentations -->
 <div class="overlay" id="pirModal">
   <div class="modal" role="dialog" aria-labelledby="pirTitle"><h3 id="pirTitle">Saved presentations</h3><p class="sub">Each is kept as it was on the day you saved it, with your edits and drawings.</p><div id="pirList"></div>
     <div class="modal-actions"><button class="btn ghost" onclick="closeModal('pirModal')">Close</button></div></div>
+</div>
+
+<!-- SBFP status -->
+<div class="overlay" id="ssModal">
+  <div class="modal" role="dialog" aria-labelledby="ssTitle"><h3 id="ssTitle">Status of feeding</h3><p class="sub" id="ssDay"></p>
+    <div class="field"><label for="ssSel">Status</label><select id="ssSel" onchange="sbStatusSync()"></select></div>
+    <div class="field" id="ssReasonRow"><label for="ssReason" id="ssLbl">Reason</label><textarea id="ssReason" rows="3" placeholder="Example: Classes suspended due to heavy rain"></textarea></div>
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal('ssModal')">Cancel</button><button class="btn" onclick="sbStatusSave()">Save</button></div></div>
 </div>
 
 <!-- Install app -->
@@ -1358,13 +1399,13 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
 
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
-const MIN_SERVER = '3.7'; // oldest Code.gs this page works with
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'3.7', date:'October 7, 2026' } };
+const MIN_SERVER = '3.8'; // oldest Code.gs this page works with
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'3.9', date:'October 7, 2026' } };
 function verLine(server){
   const old = server && (server.indexOf('older') > -1 || parseFloat(server) < parseFloat(MIN_SERVER));
-  const s = server ? ' Server '+server+(old && USER && USER.role==='head' ? ', please deploy the new Code.gs.' : '.') : '';
+  const s = server ? ' Server '+server+('.') : '';
   const wb = document.getElementById('srvWarn');
-  if (wb) wb.style.display = old && USER && USER.role==='head' ? '' : 'none';
+  if (wb) wb.style.display = 'none';
   document.getElementById('verLine').textContent = 'First created on '+VERSION.first.date+'. Version '+VERSION.current.no+', updated '+VERSION.current.date+'.'+s;
 }
 verLine();
@@ -1426,12 +1467,18 @@ async function confirmSignOut(quiet){
   try{
     for (let i = 0; i < 2; i++){
       await wait(1200);
-      try{ const s = await api('checkSession'); if (s){ USER = s; render(); CHECKING = false; if (!quiet) toast(MSG.BUSY); return; } }
+      try{ const s = await api('checkSession'); if (s){ USER = s; render(); CHECKING = false; if (!DATA) loadData(true).catch(()=>{}); return; } }
       catch(e){ CHECKING = false; return; } // no connection: stay signed in
     }
     clearSession(); render(); await loadPublic();
     toast('For your security, please sign in again.'); if (!quiet) openLogin();
   } finally { CHECKING = false; }
+}
+// Makes sure the signed in data is here before a feature uses it
+async function ensureData(){
+  if (DATA && DATA.settings) return true;
+  for (let i = 0; i < 3; i++){ try{ await loadData(true); if (DATA && DATA.settings) return true; }catch(e){} await wait(800); }
+  return !!(DATA && DATA.settings);
 }
 function handleErr(e, box){
   const m = String(e && e.message ? e.message : e);
@@ -1748,7 +1795,6 @@ const FEATURES = [
     auto:'Observation schedules, reminders, acknowledgment timestamps, and each teacher\u2019s rating summary across the school year are computed automatically.',
     report:'Observation record per teacher, and a quarterly summary of all observations with signatures.' },
   { id:'sbfp', name:'SBFP Monitoring', built:true, open:() => openSbfp(), icon:'M4 11h16a8 8 0 0 1-16 0zm3-6c0 1 1 1 1 2s-1 1-1 2m4-4c0 1 1 1 1 2s-1 1-1 2m4-4c0 1 1 1 1 2s-1 1-1 2M3 19h18v2H3z' },
-  { id:'pir', name:'PIR Presentation', built:true, headOnly:true, open:() => openPir('pir'), icon:'M3 4h18v12H3zm8 12h2v3h4v2H7v-2h4zM6 7h6v2H6zm0 4h9v2H6z' },
   { id:'read', name:'Learner Reading Assessment', icon:'M4 5h7a3 3 0 0 1 3 3v12a2 2 0 0 0-2-2H4zm16 0h-7a3 3 0 0 0-3 3v12a2 2 0 0 1 2-2h8z',
     do:'Record CRLA results for Key Stage 1 and Phil-IRI results for Key Stage 2 for every learner, linked with Project e-READ.',
     auto:'Reading levels per class, grade, and school, and progress from pretest to posttest, are computed automatically.',
@@ -1765,7 +1811,7 @@ const FEATURES = [
     do:'Plan LAC sessions from the teachers\u2019 IDP needs (IPCRF and e-SAT), record attendance, and keep outputs.',
     auto:'Session attendance, hours of training per teacher, and needs addressed are tallied automatically.',
     report:'LAC plan, attendance sheet, and LAC accomplishment report.' },
-  { id:'mne', name:'School M&E Reports', icon:'M4 20V10h3v10zm6 0V4h3v16zm6 0v-7h3v7z',
+  { id:'mne', name:'School M&E Reports', built:true, open:() => openPir(USER && USER.role==='head' ? 'pir' : 'me'), icon:'M4 20V10h3v10zm6 0V4h3v16zm6 0v-7h3v7z',
     do:'Bring together results from all TALA trackers into one school monitoring and evaluation view.',
     auto:'Figures for SMEA, PIR, and AIP progress are pulled from the other features automatically.',
     report:'Quarterly SMEA and PIR tables, ready to print.' }
@@ -3852,7 +3898,7 @@ function drawHome(){
       ${head?`<div class="hacts"><button class="btn sun small" onclick="openFeature('obs');setTimeout(obsChooser,50)">\u002B New observation</button><button class="btn ghost small" onclick="openFeature('obs');setTimeout(openCal,50)">Observation calendar</button></div>`:''}</div>`;
   }
   $('viewHome').innerHTML = `
-    <div class="hhero"><div class="hhero-t"><h2>${greet}, ${esc(first)}!</h2><p>Today is ${esc(today)}. Enjoy your class, and be an inspiration.</p>${head?`<button class="btn sun small" style="margin-top:12px" onclick="openPir('pir')">PIR Presentation</button>`:`<button class="btn sun small" style="margin-top:12px" onclick="openPir('me')">My status presentation</button>`}</div>
+    <div class="hhero"><div class="hhero-t"><h2>${greet}, ${esc(first)}!</h2><p>Today is ${esc(today)}. Enjoy your class, and be an inspiration.</p>${head?`<button class="btn sun small" style="margin-top:12px" onclick="openFeature('mne')">PIR Presentation</button>`:`<button class="btn sun small" style="margin-top:12px" onclick="openPir('me')">My status presentation</button>`}</div>
       <div class="qcard" id="qCard"><span class="qstar">\u2605</span><p>\u201C${esc(quoteToday())}\u201D</p><small>TALA quote of the day</small>
         <button class="btn ghost small" onclick="shareQuote()">Share this quote</button></div></div>
     <div class="hgrid">${lpt}${obs}</div>
@@ -3894,15 +3940,15 @@ function drawSchoolCal(){
     cells += `<button class="sday ${date===today?'today':''} ${dow(date)===0||dow(date)===6?'wkend':''}" onclick="${HCT==='sbfp'?`SB.date='${date}';SB.tab='today';openSbfp()`:`dayModal('${date}')`}"><b>${d}</b>
       ${mk?`<span class="evchip" style="background:#777">Out: ${esc(mk.type.replace(/ \(.*/,''))}</span>`:''}
       ${HCT==='sbfp' ? (sbfpOn(date)?`<span class="evchip" style="background:#d35400">${esc(sbfpOn(date).menu)}</span><span class="evmore">${esc(sbfpOn(date).grade||'')}</span>`:'')
-        : (sbfpOn(date)?'<span class="evchip" style="background:#d35400">SBFP</span>':'') + ev.slice(0,2).map(e=>`<span class="evchip" style="background:${EV_COLOR[e.type]||'#555'}">${esc(e.title)}</span>`).join('')+(ev.length>2?`<span class="evmore">+${ev.length-2} more</span>`:'')}
+        : (sbfpOn(date) && (canSbfp()||featOn('sbfp'))?`<span class="evchip sbchip" title="SBFP: ${esc(sbfpOn(date).menu)}, ${esc(sbfpOn(date).grade)}">\u{1F372} ${esc(sbfpOn(date).menu)}<i>${esc(sbfpOn(date).grade.replace(' parents',''))}</i></span>`:'') + ev.slice(0,2).map(e=>`<span class="evchip" style="background:${EV_COLOR[e.type]||'#555'}">${esc(e.title)}</span>`).join('')+(ev.length>2?`<span class="evmore">+${ev.length-2} more</span>`:'')}
       ${sd && !mk ? `<span class="cdots">${[0,1].map(i=>`<i class="${i<n?'on':''}"></i>`).join('')}</span>`:''}</button>`;
   }
   const mname = new Date(Date.UTC(y,m-1,1)).toLocaleString('en-US',{month:'long',year:'numeric',timeZone:'UTC'});
   const prev = new Date(Date.UTC(y,m-2,1)).toISOString().slice(0,7), next = new Date(Date.UTC(y,m,1)).toISOString().slice(0,7);
   const upcoming = HCT==='sbfp' ? [] : allEvents().filter(e => (e.end||e.date) >= today).sort((a,b)=>a.date.localeCompare(b.date)).slice(0,5);
-  const sbOk = canSbfp() || featOn('sbfp');
+  const sbOk = false; HCT = 'school';
   el.innerHTML = `<div class="hcard scal">${sbOk?`<div class="ktabs" style="margin:0 0 10px"><button class="${HCT==='school'?'on':''}" onclick="HCT='school';drawSchoolCal()">School Calendar</button><button class="${HCT==='sbfp'?'on':''}" onclick="HCT='sbfp';drawSchoolCal()">SBFP Calendar</button></div>`:''}
-    <div class="hcard-h"><span class="oico">\u2637</span><div><b>${HCT==='sbfp'?'SBFP Calendar':'School Calendar'}</b><small>${HCT==='sbfp'?'Menu of the day and the assigned grade level of parents':'Events and activities'+(head?', with your observation days':'')}</small></div>
+    <div class="hcard-h"><span class="oico">\u2637</span><div><b>School Calendar</b><small>Events, activities${(canSbfp()||featOn('sbfp'))?', SBFP menus':''}${head?', and your observation days':''}</small></div>
       ${HCT==='sbfp' ? `<button class="btn small" onclick="openSbfp()">Open SBFP Monitoring</button>` : USER?`<button class="btn small sun" onclick="eventForm('${today}')">\u002B Add</button>`:''}</div>
     <div class="calbar"><button class="btn ghost small" onclick="SCM='${prev}';drawSchoolCal()">\u2039</button><b>${esc(mname)}</b><button class="btn ghost small" onclick="SCM='${next}';drawSchoolCal()">\u203A</button></div>
     <div class="scal-grid"><div class="cdow">Sun</div><div class="cdow">Mon</div><div class="cdow">Tue</div><div class="cdow">Wed</div><div class="cdow">Thu</div><div class="cdow">Fri</div><div class="cdow">Sat</div>${cells}</div>
@@ -3951,8 +3997,8 @@ function printSchoolCal(){
 function dayModal(date){
   const ev = eventsOn(date), head = USER && USER.role==='head', mk = head ? calMark(date) : null, obs = head ? OBS.list.filter(o=>o.date===date) : [];
   $('dayTitle').textContent = new Date(date+'T00:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
-  const sb = sbfpOn(date);
-  $('dayBody').innerHTML = (sb ? `<div class="evrow" style="border-left-color:#d35400"><b>SBFP: ${esc(sb.menu)}</b><small>${esc(sb.grade||'No grade assigned')}${sb.notes?' \u00B7 '+esc(sb.notes):''}</small></div>` : '') + (ev.length ? ev.map(e => `<div class="evrow" style="border-left-color:${EV_COLOR[e.type]||'#555'}"><b>${esc(e.title)}</b><small>${EV_ICON[e.type]||''} ${esc(e.type||'')}${e.time?' \u00B7 '+esc(evTimeText(e)):''}${e.end&&e.end!==e.date?' \u00B7 until '+esc(dShort(e.end)):''} \u00B7 ${e.audience==='Everyone'?'Personnel and the public':e.audience==='Personnel'?'All personnel':'Only me'} \u00B7 by ${esc(e.byName||'')}</small>${e.details?`<p>${esc(e.details)}</p>`:''}
+  const sb = (canSbfp()||featOn('sbfp')) ? sbfpOn(date) : null;
+  $('dayBody').innerHTML = (sb ? `<div class="evrow" style="border-left-color:#d35400"><b>SBFP: ${esc(sb.menu)}</b><small>${esc(sb.grade||'No grade assigned')}${sb.notes?' \u00B7 '+esc(sb.notes):''}${sbRec(date).status?' \u00B7 '+esc(sbRec(date).status):''}</small>${USER?`<span><button class="linkbtn" onclick="closeModal('dayModal');SB.date='${date}';SB.tab='today';openSbfp()">Open in SBFP Monitoring</button></span>`:''}</div>` : '') + (ev.length ? ev.map(e => `<div class="evrow" style="border-left-color:${EV_COLOR[e.type]||'#555'}"><b>${esc(e.title)}</b><small>${EV_ICON[e.type]||''} ${esc(e.type||'')}${e.time?' \u00B7 '+esc(evTimeText(e)):''}${e.end&&e.end!==e.date?' \u00B7 until '+esc(dShort(e.end)):''} \u00B7 ${e.audience==='Everyone'?'Personnel and the public':e.audience==='Personnel'?'All personnel':'Only me'} \u00B7 by ${esc(e.byName||'')}</small>${e.details?`<p>${esc(e.details)}</p>`:''}
       ${(e.files||[]).length?`<div class="evfiles">${e.files.map((f,k)=>f.id && /image|video/.test(f.mime||'') ? `<button class="evthumb" onclick="evInsta('${esc(e.id)}',${k})">${/video/.test(f.mime)?'<span class="vplay">\u25B6</span>':''}<img src="https://drive.google.com/thumbnail?id=${esc(f.id)}&sz=w240" alt="${esc(f.name)}" loading="lazy"></button>` : `<a class="attc" href="${esc(f.url)}" target="_blank" rel="noopener">${attIcon(f)} ${esc(f.name.slice(0,40))}</a>`).join('')}</div>`:''}
       ${USER && (e.byEmail===USER.email || head) ? `<span><button class="linkbtn" onclick="eventForm('${date}','${esc(e.id)}')">Edit</button> <button class="linkbtn" style="color:var(--late)" onclick="eventDelete('${esc(e.id)}')">Remove</button></span>`:''}</div>`).join('') : '<p class="hint">No events on this day.</p>')
     + (head ? `<div class="evrow obsrow"><b>Observations: ${obs.length} of 2</b>${mk?`<small>You were out: ${esc(mk.type)}${mk.note?', '+esc(mk.note):''}</small>`:''}${obs.map(o=>`<small>${otype(o)==='mwa'?'MWA':'ePMCF'}: ${esc(o.teacherName||(o.data||{}).focus||'Visit')}</small>`).join('')}<span><button class="linkbtn" onclick="closeModal('dayModal');calDay('${date}')">Mark in or out of school</button></span></div>` : '');
@@ -4107,13 +4153,14 @@ const SB_GROUPS = ['Kindergarten','Grade 1','Grade 2','Grade 3','Grade 4','Grade
 function sbfpList(){ return ((DATA||PUB||{}).sbfp)||[]; }
 function sbRec(date){ return sbfpList().find(x=>x.date===date) || {}; }
 function sbSet(){ return ((DATA||PUB||{}).settings)||{}; }
-function sbStart(){ return sbSet().sbfpStart || '2026-10-05'; }
+function sbStart(){ return sbSet().sbfpStart || '2026-09-14'; }
+function sbStartDay(){ return Number(sbSet().sbfpStartDay || 1); }
 function libMenu(i){ const o = (sbSet().sbfpMenus||[])[i] || {}, m = SBFP_MENUS[i]; return { n:o.n||m.n, g:o.g||m.g, r:m }; }
 // The menu follows the guide in order, one per school day (Monday to Friday), and starts again after Day 25
 function sbDayNo(date){
   const st = sbStart(); if (!date || date < st || dow(date)===0 || dow(date)===6) return -1;
   let n = 0; for (let d = st; d <= date; d = addDays(d,1)) if (dow(d) > 0 && dow(d) < 6) n++;
-  return (n - 1) % SBFP_MENUS.length;
+  return (n - 1 + sbStartDay() - 1) % SBFP_MENUS.length;
 }
 function sbSched(date){
   const i = sbDayNo(date); if (i < 0) return null;
@@ -4154,37 +4201,72 @@ function sbDayView(){
   const recipe = rc ? `<details class="byt recipe"><summary>Recipe: ingredients and procedure</summary><div class="rcp">
       <p class="hint">Serving size 10${rc.cost?' \u00B7 \u20B1'+esc(rc.cost)+' per serving':''}${rc.kcal?' \u00B7 '+esc(rc.kcal)+' with 1 cup of rice':''}${rc.src?' \u00B7 '+esc(rc.src):''}</p>
       <b>Ingredients</b><ul>${rc.ing.split('; ').map(x=>`<li>${esc(x)}</li>`).join('')}</ul><b>Procedure</b><ol>${rc.proc.split('|').map(x=>`<li>${esc(x)}</li>`).join('')}</ol></div></details>` : '';
-  const st = r.status || '', parents = sbParents(sbGroupOf(s.g)), att = r.att || {};
-  const marks = { P:0, E:0, N:0 }; parents.forEach(p => { const v = att[p.key]; if (marks[v] !== undefined) marks[v]++; });
+  const st = r.status || '', g = sbGroupOf(s.g), parents = sbParents(g), att = r.att || {};
+  const extras = Object.keys(att).filter(k => k.indexOf('x|') === 0).map(k => { const [, parent, grp] = k.split('|'); return { key:k, parent, group:grp }; });
+  const val = k => String(att[k]||''), kind = k => val(k).charAt(0);
+  const cnt = { P:0, R:0, E:0, N:0 }; parents.forEach(p => { const v = kind(p.key); if (cnt[v] !== undefined) cnt[v]++; });
   const photos = (r.photos||[]);
+  const row = (key, name, sub, extra) => { const v = kind(key), rep = v==='R' ? val(key).slice(2) : '';
+    return `<details class="sbp" ${v==='R'?'open':''}><summary><span class="sbpn">${esc(name)}${extra?` <span class="ktag mwa">${esc(extra)}</span>`:''}</span>
+      <span class="sbtg" data-key="${esc(key)}">${[['P','Present'],['R','Representative'],['E','Excused'],['N','Not participating']].map(([c,l])=>`<button type="button" class="${v===c?'on '+c:''}" onclick="event.preventDefault();sbMark(this,'${c}')">${l}</button>`).join('')}</span></summary>
+      <div class="sbrep" style="display:${v==='R'?'':'none'}"><input class="sbrepn" placeholder="Name of the representative and relationship, for example Lola Maria (grandmother)" value="${esc(rep)}"></div>
+      ${sub?`<small>Learners: ${esc(sub)}</small>`:''}</details>`; };
   $('sbBody').innerHTML = nav + `
     <div class="sbcard"><div class="sbcard-h"><span class="sbday">Day ${s.day}</span><div><h3>${esc(s.n)}</h3><p><b>${esc(s.g)} parents</b> prepare the food${s.changed?' <span class="ktag mwa">Changed by '+esc(r.by||'School Head')+'</span>':''}</p>${r.notes?`<p class="hint">${esc(r.notes)}</p>`:''}</div>
       ${can?`<button class="btn ghost small" onclick="sbfpForm('${d}')">Change menu or group</button>`:''}</div>${recipe}</div>
-    ${staff?`<section class="ocard2"><h3>Status of feeding</h3><div class="sbst">${SB_STATUS.map(x=>`<button class="sbs ${st===x?'on':''}" style="--c:${SB_COLOR[x]}" onclick="sbStatus('${x}')">${esc(x)}</button>`).join('')}</div>
-      <div id="sbReasonRow" style="display:${st && st!=='Implemented'?'':'none'}"><label class="lbl" for="sbReason" style="margin-top:10px;display:block">Reason${st==='Others'?' (please specify)':''}</label><textarea id="sbReason" rows="2" placeholder="Example: Classes suspended due to heavy rain">${esc(r.reason||'')}</textarea>
-      <button class="btn small" style="margin-top:6px" onclick="sbSaveReason()">Save reason</button></div>
-      ${st?`<p class="hint" style="margin:8px 0 0">Last updated by ${esc(r.by||'')} on ${esc(dTime(r.on||''))}.</p>`:''}</section>`
-      : (st?`<div class="notice">Status: <b>${esc(st)}</b>${r.reason?', '+esc(r.reason):''}</div>`:'')}
+    <section class="ocard2 sbstatus"><div class="sbst-row"><div><span class="lbl">Status of feeding</span>
+        ${st?`<span class="sbbadge" style="--c:${SB_COLOR[st]||'#777'}">${esc(st)}</span>${r.reason?`<p class="hint" style="margin:6px 0 0">Reason: ${esc(r.reason)}</p>`:''}<p class="hint" style="margin:4px 0 0">Updated by ${esc(r.by||'')}, ${esc(dTime(r.on||''))}</p>`:'<span class="sbbadge none">No status yet</span>'}</div>
+      ${staff?`<button class="btn sun small" onclick="sbStatusForm()">${st?'Edit status':'Set status'}</button>`:''}</div></section>
     ${staff?`<section class="ocard2"><h3>Attendance sheet photos</h3><div class="sbphotos">${photos.map((p,i)=>`<button class="sbph" onclick="sbInsta(${i})"><img src="https://drive.google.com/thumbnail?id=${esc(p.id)}&sz=w300" alt="Attendance sheet ${i+1}" loading="lazy"></button>`).join('')}
         <label class="sbadd"><input type="file" accept="image/*" multiple onchange="sbUpload(this)"><span>\uFF0B</span><small>Add photo</small></label></div>
       <p class="hint" style="margin:6px 0 0">Scan or take a clear photo of the signed attendance sheet. Tap a photo to view it full screen.</p></section>
-    <section class="ocard2"><h3>${esc(sbGroupOf(s.g))} parents who prepare today <small class="hint">(${parents.length})</small></h3>
-      <p class="hint" style="margin-top:0">Present ${marks.P} \u00B7 Excused ${marks.E} \u00B7 Not participating ${marks.N} \u00B7 Not yet marked ${parents.length-marks.P-marks.E-marks.N}</p>
-      ${SB.people===null?'<div class="empty">Loading the list of parents</div>':`<button class="btn ghost small" onclick="sbAllPresent()">Mark all present</button>
-      <div class="sbpar">${parents.map(p=>`<details class="sbp"><summary><span class="sbpn">${esc(p.parent)}</span><span class="sbtg" data-key="${esc(p.key)}">${['P','E','N'].map(v=>`<button type="button" class="${att[p.key]===v?'on '+v:''}" onclick="event.preventDefault();sbMark(this,'${v}')">${{P:'Present',E:'Excused',N:'Not participating'}[v]}</button>`).join('')}</span></summary><small>Learners: ${esc(p.kids.join(', '))}</small></details>`).join('') || '<p class="hint">No parents listed for this group yet. Add them in Learners and parents.</p>'}</div>
-      <button class="btn" style="margin-top:10px" onclick="sbSaveAtt()">Save attendance</button>`}</section>`:''}`;
+    <section class="ocard2"><h3>${esc(g)} parents who prepare today <small class="hint">(${parents.length})</small></h3>
+      <p class="hint" style="margin-top:0">Present ${cnt.P} \u00B7 Representative ${cnt.R} \u00B7 Excused ${cnt.E} \u00B7 Not participating ${cnt.N} \u00B7 Not yet marked ${parents.length-cnt.P-cnt.R-cnt.E-cnt.N}${extras.length?' \u00B7 Helpers from other groups '+extras.length:''}</p>
+      ${SB.people===null?`<div class="loader"><span class="spin"></span>Loading the list of parents</div>`:`<button class="btn ghost small" onclick="sbAllPresent()">Mark all present</button>
+      <div class="sbpar">${parents.map(p=>row(p.key, p.parent, p.kids.join(', '))).join('') || '<p class="hint">No parents listed for this group yet. Add them in Learners and parents.</p>'}</div>
+      <h4 class="sbh4">Parents from other groups who also helped</h4>
+      <div class="sbpar">${extras.map(x=>row(x.key, x.parent, '', x.group+' group')).join('') || '<p class="hint">None yet.</p>'}</div>
+      <div class="sbextra"><input id="sbExtraQ" list="sbExtraList" placeholder="Type a parent\u2019s name from any group"><datalist id="sbExtraList">${SB_GROUPS.filter(x=>x!==g).flatMap(x=>sbParents(x).map(p=>`<option value="${esc(p.parent)} (${esc(x)})">`)).join('')}</datalist><button class="btn ghost small" onclick="sbAddExtra()">Add helper</button></div>
+      <button class="btn" style="margin-top:12px" onclick="sbSaveAtt()">Save attendance</button>`}</section>`:''}`;
+}
+function sbStatusForm(){
+  const r = sbRec(SB.date), s = sbSched(SB.date);
+  $('ssDay').textContent = new Date(SB.date+'T00:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'})+' \u00B7 '+(s?s.n:'');
+  $('ssSel').innerHTML = '<option value="">Choose the status</option>'+SB_STATUS.map(x=>`<option ${r.status===x?'selected':''}>${x}</option>`).join('');
+  $('ssReason').value = r.reason||''; sbStatusSync(); openModal('ssModal');
+}
+function sbStatusSync(){ const v = $('ssSel').value; $('ssReasonRow').style.display = v && v!=='Implemented' ? '' : 'none'; $('ssLbl').textContent = v==='Others' ? 'Please specify' : 'Reason'; }
+async function sbStatusSave(){
+  const status = $('ssSel').value; if (!status) return toast('Choose the status first.');
+  if (status!=='Implemented' && !$('ssReason').value.trim()) return toast('Please type the reason.');
+  closeModal('ssModal'); sbDay({ status, reason: status==='Implemented' ? '' : $('ssReason').value }, 'Status saved.');
 }
 async function sbDay(payload, msg){
   loading(true,'Saving');
-  try{ const list = await api('sbfpDay', Object.assign({ date:SB.date }, payload)); DATA.sbfp = list; drawSbfp(); if (msg) toast(msg); }
+  try{ const list = await api('sbfpDay', Object.assign({ date:SB.date }, payload)); (DATA||PUB||{}).sbfp = list; if (DATA) DATA.sbfp = list; drawSbfp(); if (msg) toast(msg); }
   catch(e){ handleErr(e); }
   loading(false);
 }
 function sbStatus(x){ if (x === 'Implemented') return sbDay({ status:x, reason:'' }, 'Marked as implemented.'); sbRec(SB.date).status = x; sbDay({ status:x }, 'Status saved. Add the reason below.'); }
 function sbSaveReason(){ sbDay({ reason:$('sbReason').value }, 'Reason saved.'); }
-function sbMark(btn, v){ btn.parentElement.querySelectorAll('button').forEach(b => b.className=''); btn.className = 'on '+v; }
+function sbMark(btn, v){ const t = btn.parentElement; t.querySelectorAll('button').forEach(b => b.className=''); btn.className = 'on '+v;
+  const rep = t.closest('.sbp').querySelector('.sbrep'); rep.style.display = v==='R' ? '' : 'none'; if (v==='R'){ t.closest('.sbp').open = true; setTimeout(()=>rep.querySelector('input').focus(), 50); } }
 function sbAllPresent(){ document.querySelectorAll('.sbtg').forEach(t => { t.querySelectorAll('button').forEach(b=>b.className=''); t.querySelector('button').className = 'on P'; }); }
-function sbSaveAtt(){ const att = {}; document.querySelectorAll('.sbtg').forEach(t => { const on = t.querySelector('button.on'); att[t.dataset.key] = on ? (on.classList.contains('P')?'P':on.classList.contains('E')?'E':'N') : ''; }); sbDay({ att }, 'Attendance saved.'); }
+function sbSaveAtt(){
+  const att = {}, prev = sbRec(SB.date).att || {};
+  Object.keys(prev).forEach(k => att[k] = '');
+  let missing = false;
+  document.querySelectorAll('.sbtg').forEach(t => { const on = t.querySelector('button.on'), k = t.dataset.key;
+    if (!on){ att[k] = k.indexOf('x|')===0 ? 'P' : ''; return; }
+    const c = ['P','R','E','N'].find(x => on.classList.contains(x));
+    if (c==='R'){ const n = t.closest('.sbp').querySelector('.sbrepn').value.trim(); if (!n) missing = true; att[k] = 'R:'+n; } else att[k] = c; });
+  if (missing) return toast('Type the name of each representative.');
+  sbDay({ att }, 'Attendance saved.');
+}
+function sbAddExtra(){
+  const v = $('sbExtraQ').value.trim(), m = v.match(/^(.*) \((.*)\)$/); if (!m) return toast('Choose a parent from the list.');
+  const r = sbRec(SB.date); r.att = r.att || {}; r.att['x|'+m[1]+'|'+m[2]] = 'P'; sbDayView(); toast('Added. Tap Save attendance to keep it.');
+}
 async function sbUpload(inp){
   const files = [...inp.files].slice(0,8); if (!files.length) return; const uploads = [];
   for (const f of files){ loading(true,'Preparing '+f.name); uploads.push({ name:f.name, mime:f.type, base64: await readB64(await shrinkImage(f)) }); }
@@ -4259,18 +4341,20 @@ async function sbPersonDelete(){ if (!confirm('Remove this learner from the list
 // Participation: Present out of the implemented feeding days of each parent's group
 function sbPart(){
   const h = sbHistory().filter(x => x.st==='Implemented'), rows = [];
-  SB_GROUPS.forEach(g => sbParents(g).forEach(p => { const days = h.filter(x => sbGroupOf(x.s.g)===g); const c = { P:0, E:0, N:0 };
-    days.forEach(x => { const v = (sbRec(x.date).att||{})[p.key]; if (c[v] !== undefined) c[v]++; });
-    rows.push({ p, days:days.length, c, rate: days.length ? Math.round(c.P/days.length*100) : 0 }); }));
+  SB_GROUPS.forEach(g => sbParents(g).forEach(p => { const days = h.filter(x => sbGroupOf(x.s.g)===g); const c = { P:0, R:0, E:0, N:0, X:0 };
+    days.forEach(x => { const v = String((sbRec(x.date).att||{})[p.key]||'').charAt(0); if (c[v] !== undefined) c[v]++; });
+    h.forEach(x => { if ((sbRec(x.date).att||{})['x|'+p.parent+'|'+g]) c.X++; });
+    c.P += c.R; rows.push({ p, days:days.length, c, rate: days.length ? Math.round(c.P/days.length*100) : 0 }); }));
   return rows;
 }
 function sbPartView(){
   if (!SB.people){ $('sbBody').innerHTML = '<div class="empty">Loading</div>'; return; }
   const rows = sbPart(), tot = rows.reduce((a,r)=>({ d:a.d+r.days, p:a.p+r.c.P }),{ d:0, p:0 });
   $('sbBody').innerHTML = `<div class="ostats"><div class="ostat static"><span class="oico">\u263A</span><b>${tot.d?Math.round(tot.p/tot.d*100):0}%</b><span>Overall parents\u2019 attendance (${tot.p} of ${tot.d} expected)</span></div></div>
+    <p class="hint">Present includes parents who sent a representative. Extra help counts the days a parent helped outside the schedule of the group.</p>
     ${SB_GROUPS.map(g => { const gr = rows.filter(r=>r.p.group===g), gd = gr.reduce((a,r)=>a+r.days,0), gp = gr.reduce((a,r)=>a+r.c.P,0), pct = gd?Math.round(gp/gd*100):0;
-      return `<details class="byt"><summary><span style="flex:1">${esc(g)} parents</span><span class="gbar" style="width:120px;display:inline-block;vertical-align:middle"><i style="width:${pct}%"></i></span> <b>${pct}%</b></summary><div class="table-wrap" style="margin:0 12px 12px"><table><thead><tr><th>Parent or guardian</th><th>Days</th><th>Present</th><th>Excused</th><th>Not participating</th><th>Rate</th></tr></thead><tbody>
-        ${gr.map(r=>`<tr><td>${esc(r.p.parent)}</td><td>${r.days}</td><td>${r.c.P}</td><td>${r.c.E}</td><td>${r.c.N}</td><td><b class="${r.rate>=75?'mk-ok':r.rate>=50?'':'mk-late'}">${r.rate}%</b></td></tr>`).join('')}</tbody></table></div></details>`; }).join('')}
+      return `<details class="byt"><summary><span style="flex:1">${esc(g)} parents</span><span class="gbar" style="width:120px;display:inline-block;vertical-align:middle"><i style="width:${pct}%"></i></span> <b>${pct}%</b></summary><div class="table-wrap" style="margin:0 12px 12px"><table><thead><tr><th>Parent or guardian</th><th>Days</th><th>Present</th><th>By representative</th><th>Excused</th><th>Not participating</th><th>Extra help</th><th>Rate</th></tr></thead><tbody>
+        ${gr.map(r=>`<tr><td>${esc(r.p.parent)}</td><td>${r.days}</td><td>${r.c.P-r.c.R}</td><td>${r.c.R}</td><td>${r.c.E}</td><td>${r.c.N}</td><td>${r.c.X}</td><td><b class="${r.rate>=75?'mk-ok':r.rate>=50?'':'mk-late'}">${r.rate}%</b></td></tr>`).join('')}</tbody></table></div></details>`; }).join('')}
     <div class="obs-actions"><button class="btn ghost" onclick="printSbPart()">Print participation report</button></div>`;
 }
 function printSbPart(){
@@ -4281,34 +4365,36 @@ function printSbPart(){
   setTimeout(() => window.print(), 150);
 }
 function sbMenuList(){
-  $('smStart').value = sbStart();
+  $('smStart').value = sbStart(); $('smDay').value = sbStartDay();
   $('smList').innerHTML = SBFP_MENUS.map((m,i)=>{ const x = libMenu(i); return `<div class="smrow"><span class="sbday">${i+1}</span><input data-i="${i}" class="smn" value="${esc(x.n)}"><select class="smg">${SB_GROUPS.map(g=>`<option ${g===x.g?'selected':''}>${g}</option>`).join('')}</select></div>`; }).join('');
   $('smErr').textContent=''; openModal('smModal');
 }
 async function sbMenuSave(){
   const menus = [...document.querySelectorAll('#smList .smrow')].map(r => ({ n:r.querySelector('.smn').value.trim(), g:r.querySelector('.smg').value }));
-  try{ await apiData('sbfpSettings',{ start:$('smStart').value, menus }); closeModal('smModal'); drawSbfp(); toast('Menu list saved.'); }catch(e){ handleErr(e,'smErr'); }
+  try{ await apiData('sbfpSettings',{ start:$('smStart').value, startDay:$('smDay').value, menus }); closeModal('smModal'); drawSbfp(); toast('Menu list saved.'); }catch(e){ handleErr(e,'smErr'); }
 }
 function sbfpForm(date){
   const s = sbSched(date); if (!s) return toast('No feeding scheduled on this day.');
   if (!canSbfp()){ sbGo(date); return; }
   const r = sbRec(date); $('sbTitle').textContent = 'Change the menu or group for this day';
   $('sbDate').value = date; $('sbDay').textContent = new Date(date+'T00:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'})+' \u00B7 Scheduled: '+libMenu(s.i).n+' ('+libMenu(s.i).g+')';
-  $('sbMenu').value = r.menu||''; $('sbGrade').value = r.grade||''; $('sbNotes').value = r.notes||'';
-  ['sbMenu','sbGrade','sbNotes'].forEach(id => $(id).readOnly = false);
-  $('sbGrades').innerHTML = SB_GROUPS.map(g=>`<option value="${esc(g)}">`).join(''); $('sbMenu').placeholder = 'Leave blank to follow the schedule: '+libMenu(s.i).n; $('sbGrade').placeholder = 'Leave blank to follow the schedule: '+libMenu(s.i).g;
+  const names = [...new Set(SBFP_MENUS.map((m,i)=>libMenu(i).n))];
+  $('sbMenuSel').innerHTML = `<option value="">Follow the schedule: ${esc(libMenu(s.i).n)}</option>`+names.map(n=>`<option ${r.menu===n?'selected':''}>${esc(n)}</option>`).join('')+`<option value="__other" ${r.menu && names.indexOf(r.menu)<0?'selected':''}>Other (type it below)</option>`;
+  $('sbMenu').value = r.menu && names.indexOf(r.menu)<0 ? r.menu : ''; $('sbMenuOther').style.display = $('sbMenuSel').value==='__other' ? '' : 'none';
+  $('sbGrade').innerHTML = `<option value="">Follow the schedule: ${esc(libMenu(s.i).g)}</option>`+SB_GROUPS.map(x=>`<option ${r.grade===x?'selected':''}>${x}</option>`).join(''); $('sbNotes').value = r.notes||'';
+
   $('sbCopy').innerHTML = ''; $('sbCopy').parentElement.style.display = 'none';
   $('sbBtn').style.display = ''; $('sbDel').style.display = r.menu||r.grade ? '' : 'none'; $('sbDel').textContent = 'Back to schedule'; $('sbErr').textContent = '';
   openModal('sbModal');
 }
 async function sbfpSave(){
   $('sbBtn').disabled = true;
-  try{ const list = await api('sbfpSave',{ dates:[$('sbDate').value], menu:$('sbMenu').value, grade:$('sbGrade').value, notes:$('sbNotes').value }); DATA.sbfp = list; closeModal('sbModal'); drawSbfp(); drawSchoolCal(); toast('Saved.'); }
+  try{ const list = await api('sbfpSave',{ dates:[$('sbDate').value], menu: $('sbMenuSel').value==='__other' ? $('sbMenu').value : $('sbMenuSel').value, grade:$('sbGrade').value, notes:$('sbNotes').value }); (DATA||PUB).sbfp = list; closeModal('sbModal'); drawSbfp(); drawSchoolCal(); toast('Saved.'); }
   catch(e){ handleErr(e,'sbErr'); }
   $('sbBtn').disabled = false;
 }
 async function sbfpDelete(){
-  try{ DATA.sbfp = await api('sbfpDelete',{ date:$('sbDate').value }); closeModal('sbModal'); drawSbfp(); drawSchoolCal(); toast('This day follows the schedule again.'); }catch(e){ handleErr(e,'sbErr'); }
+  try{ (DATA||PUB).sbfp = await api('sbfpDelete',{ date:$('sbDate').value }); closeModal('sbModal'); drawSbfp(); drawSchoolCal(); toast('This day follows the schedule again.'); }catch(e){ handleErr(e,'sbErr'); }
 }
 function printSbfp(){
   const [y,m] = SB.month.split('-').map(Number), days = new Date(Date.UTC(y,m,0)).getUTCDate(), mname = new Date(Date.UTC(y,m-1,1)).toLocaleString('en-US',{month:'long',year:'numeric',timeZone:'UTC'});
@@ -4340,6 +4426,7 @@ document.addEventListener('keydown', e => { if ($('insta') && !$('insta').hidden
 /* =========================================================
    PRESENTATIONS: PIR for the School Head, and My status for every personnel
    ========================================================= */
+const PIR_TOOLS = [['pen','\u270E Pen'],['hl','\u2588 Highlight'],['circle','\u25EF Circle'],['rect','\u25AD Box'],['arrow','\u2794 Arrow'],['line','\u2571 Line'],['erase','\u232B Eraser']];
 var PIR = { mode:'pir', ptype:'term', term:'1', q:'', from:'', to:'', slides:[], i:0, ann:{}, zoom:1, tool:'', color:'#e53935', edit:false, saved:null };
 function pirRange(){
   if (PIR.ptype==='range') return { from:PIR.from, to:PIR.to, label:dShort(PIR.from)+' to '+dShort(PIR.to) };
@@ -4390,6 +4477,7 @@ function waysForward(D){
 
 /* ----- slides ----- */
 function pirSlides(){
+  if (PIR.mode==='about') return aboutSlides();
   const me = PIR.mode==='me' && USER.role==='teacher' ? USER.email : '', D = pirData(me), R = D.R, W = waysForward(D), S = [];
   const head = `<div class="ps-head"><img src="${LOGO}" alt=""><span>Baluyan Elementary School \u00B7 ${esc(R.label)}</span></div>`;
   const wrap = (title, body, cls) => S.push(`<div class="slide ${cls||''}">${head}<h2 class="ps-t" data-edit>${title}</h2><div class="ps-b">${body}</div></div>`);
@@ -4413,29 +4501,89 @@ function pirSlides(){
       <p class="pnote">${D.owed.length} menu${D.owed.length===1?'':'s'} not yet implemented${D.owed.length?': '+[...new Set(D.owed.map(x=>esc(x.s.n)))].join(', '):''}.</p></div>
       <div>${g.map(x=>bar(x.g+' parents',x.p,x.d,'#d35400')).join('')}</div></div>`);
   }
+  if (!me && PIR.mode!=='me'){
+    const tObs = (DATA.teachers||[]).map(t => { const o = D.ep.filter(x=>x.teacherEmail===t.email), rs = []; o.forEach(x => (x.data.inc||[]).forEach(it => { if (it.rating) rs.push(Number(it.rating)); }));
+      return { t, n:o.length, done:o.filter(x=>x.status==='Completed').length, mwa:D.mw.filter(x=>x.teacherEmail===t.email).length, avg: rs.length ? (rs.reduce((a,b)=>a+b,0)/rs.length).toFixed(1) : '' }; });
+    wrap('Observations by Teacher', `<table class="ptab"><thead><tr><th>Teacher</th><th>Position</th><th>ePMCF</th><th>Completed</th><th>MWA</th><th>Average STAR rating</th></tr></thead><tbody>${tObs.map(r=>`<tr><td>${esc(r.t.name)}</td><td>${esc(r.t.position||'')}</td><td>${r.n}</td><td>${r.done}</td><td>${r.mwa}</td><td>${r.avg||'none'}</td></tr>`).join('')}</tbody></table>`);
+    const fk = Object.keys(D.focus).sort((a,b)=>D.focus[b]-D.focus[a]), fmax = Math.max(1, ...fk.map(k=>D.focus[k]));
+    wrap('MWA Focus Areas', fk.length ? fk.slice(0,8).map(k=>`<div class="pbar"><span class="pl">${esc(k)}</span><span class="pt"><i style="width:${Math.round(D.focus[k]/fmax*100)}%;background:#6a2c99"></i></span><b>${D.focus[k]}</b><small>visit${D.focus[k]>1?'s':''}</small></div>`).join('') : '<p class="pnote">No MWA visits recorded in this period.</p>');
+    const menus = {}; D.sb.forEach(x => { const m = menus[x.s.n] = menus[x.s.n] || { s:0, d:0 }; m.s++; if (x.st==='Implemented') m.d++; });
+    wrap('SBFP Menus Served', `<table class="ptab small"><thead><tr><th>Menu</th><th>Scheduled</th><th>Served</th><th>Not served</th></tr></thead><tbody>${Object.keys(menus).slice(0,14).map(n=>`<tr><td>${esc(n)}</td><td>${menus[n].s}</td><td>${menus[n].d}</td><td>${menus[n].s-menus[n].d}</td></tr>`).join('') || '<tr><td colspan="4">No feeding days in this period.</td></tr>'}</tbody></table>`);
+    const evs = allEvents().filter(e => e.audience!=='Only me' && e.date >= R.from && e.date <= R.to).sort((a,b)=>a.date.localeCompare(b.date));
+    wrap('Activities in this Period', evs.length ? `<table class="ptab small"><thead><tr><th>Date</th><th>Activity</th><th>Type</th></tr></thead><tbody>${evs.slice(0,14).map(e=>`<tr><td>${esc(dShort(e.date))}</td><td>${esc(e.title)}</td><td>${esc(e.type||'')}</td></tr>`).join('')}</tbody></table>` : '<p class="pnote">No activities recorded in the School Calendar for this period.</p>');
+  }
   const wfBlock = (t, list) => `<div class="pwf"><h3 data-edit>${t}</h3><ul>${list.map(x=>`<li data-edit>${esc(x)}</li>`).join('')}</ul></div>`;
   wrap('Ways Forward', `<div class="pcols3">${PIR.mode==='me' && USER.role==='admin' ? wfBlock('SBFP',W.sbfp) : wfBlock('LPT and PPT',W.lpt)+wfBlock('Observations',W.obs)+(me?'':wfBlock('SBFP',W.sbfp))}</div><p class="pnote">These are suggestions from the data. Tap Edit text to change them.</p>`, 'wf');
   S.push(`<div class="slide cover end"><img src="${LOGO}" alt="" class="ps-logo"><h1 data-edit>Thank you!</h1><p data-edit>Together, we guide every learner like a star.</p></div>`);
   return S;
 }
 
+/* ----- About TALA: a ready presentation for meetings with stakeholders ----- */
+function aboutSlides(){
+  const S = [], hd = `<div class="ps-head"><img src="${LOGO}" alt=""><span>TALA \u00B7 Baluyan Elementary School</span></div>`;
+  const wrap = (title, body, cls) => S.push(`<div class="slide ${cls||''}">${hd}<h2 class="ps-t" data-edit>${title}</h2><div class="ps-b">${body}</div></div>`);
+  const card = (ico, t, x, c) => `<div class="acard" style="--c:${c||'#1F5130'}"><span class="aico">${ico}</span><b data-edit>${t}</b><p data-edit>${x}</p></div>`;
+  const list = (items) => `<ul class="alist">${items.map(x=>`<li data-edit>${x}</li>`).join('')}</ul>`;
+  const who = (ico, t, items, c) => S.push(`<div class="slide">${hd}<div class="awho"><div class="awho-l" style="--c:${c}"><span>${ico}</span><h2 data-edit>${t}</h2></div><div class="awho-r">${list(items)}</div></div></div>`);
+  S.push(`<div class="slide cover"><img src="${LOGO}" alt="" class="ps-logo"><h1 data-edit>TALA</h1><p data-edit>Teacher Assistance, Learning, and Accountability</p>
+    <p class="ps-sub" data-edit><b>tala</b> (noun): a star that guides travelers on their way. <b>itala, magtala</b> (verb): to write down or record.</p><p class="ps-date" data-edit>Baluyan Elementary School, Imelda District, Schools Division of Zamboanga Sibugay</p></div>`);
+  wrap('Why TALA?', `<div class="pcols"><div><h3 class="ah3" data-edit>What we needed</h3>${list(['Weekly LPT and PPT were hard to track and validate on time.','Observation notes, PMCF, and MWA forms took long to prepare and sign.','SBFP menus, parents\u2019 schedules, and attendance sheets were kept on paper.','Reports for the Division and the PIR took days to gather.'])}</div>
+    <div><h3 class="ah3" data-edit>What TALA does</h3>${list(['Keeps everything in one place, online and even offline.','Records every action with the date and time, so we are accountable.','Computes totals, percentages, and lateness automatically.','Prints DepEd ready reports and Division templates in one tap.'])}</div></div>`);
+  wrap('One Portal, Many Programs', `<div class="agrid">${card('\u2637','LPT and PPT Tracking','Weekly upload, validation, lateness, QR codes, and the weekly report.','#1e5a8c')}${card('\u25C9','Observations','ePMCF classroom observation and PMCF MWA, with e-signatures and Division Excel.','#6a2c99')}
+    ${card('\u{1F372}','SBFP Monitoring','Menu of the day, parents\u2019 schedule, attendance sheets, and participation.','#d35400')}${card('\u{1F4C5}','School Calendar','Activities, SBFP menus, and memos with photos and MOVs.','#2f7a4a')}
+    ${card('\u{1F4CA}','School M&amp;E Reports','PIR presentation with data, ways forward, and annotation tools.','#b06000')}${card('\u2712','E-signatures and Chat','Sign documents online, message the team, and get notified.','#a3271b')}</div>
+    <p class="pnote" data-edit>Coming next: Learner Reading Assessment, Attendance, Reimbursement Inventory, and LAC and Teacher Development.</p>`);
+  wrap('LPT and PPT Tracking', `<div class="pcols"><div>${list(['Teachers upload the LPT and PPT with the correct file name, for the whole week or by session.','The School Head validates: Approved, Returned with remarks, or Wrong file.','TALA counts on time and late submissions from the Monday deadline.','Every file gets a QR code for monitoring visitors.'])}</div>
+    <div class="aflow">${['Prepare','Rename','Upload','Validate','Report'].map((x,i)=>`<span><b>${i+1}</b>${x}</span>`).join('')}</div></div>`);
+  wrap('Observations: ePMCF and MWA', `<div class="pcols"><div>${list(['Low inference notes, STAR incidents, and COI and NCOI ratings in one form.','Autosave on the phone, even without internet.','Teacher reviews, comments on the agreement, agrees, and signs.','Weekly and term summaries, and the observation calendar of 2 per day.'])}</div>
+    <div>${list(['Prints the PMCF and MWA as PDF with signatures.','Downloads the exact Division Excel files for uploading.','Shows coaching needs through the ways forward.'])}</div></div>`);
+  wrap('SBFP Monitoring', `<div class="pcols"><div>${list(['Follows the SBFP guide: 25 menus, each assigned to a grade level group of parents.','Shows the recipe, cost, and procedure of the day.','Records the status of feeding and the reason when not implemented.'])}</div>
+    <div>${list(['Attendance sheet photos kept like stories, never lost.','Marks parents as Present, Representative, Excused, or Not participating.','Counts helpers from other groups and the participation rate of every parent.'])}</div></div>`);
+  who('\u{1F469}\u200D\u{1F3EB}', 'How Teachers Benefit', ['A clear weekly routine: submit once, see the status anytime.','Remarks from the School Head come with a notification, no need to ask.','Fair and transparent observation: read the notes, comment, then sign.','Their own status presentation guides what to improve.','Works on the phone, even offline, and installs like an app.'], '#1e5a8c');
+  who('\u{1F5C2}', 'How the Administrative Officer Benefits', ['Prints weekly reports without collecting papers.','Posts and updates the SBFP menu and monitors parents\u2019 attendance.','Sees the school calendar and coming activities in one view.','Keeps records safe in Google Drive with automatic backups.'], '#6a2c99');
+  who('\u{1F3EB}', 'How the School Head Benefits', ['Validates submissions and observations quickly, anywhere.','Meets the 2 observations per day target with the observation calendar.','Ready Division files: PMCF and MWA Excel, and PDFs with signatures.','One click PIR presentation with real data and ways forward.','Decisions based on data, with every action recorded.'], '#b06000');
+  who('\u{1F46A}', 'How Parents and Learners Benefit', ['Learners get lessons that are prepared, checked, and on time.','Teachers receive coaching that improves classroom teaching.','Parents know the SBFP menu and their schedule ahead of time.','Their help is recorded and recognized fairly, even through a representative.','The public can view the school calendar and weekly submission summary.'], '#2f7a4a');
+  wrap('Safe and Accountable', `<div class="agrid">${card('\u{1F512}','Secure sign in','Each personnel uses a DepEd email and a private PIN.','#1F5130')}${card('\u{1F441}','View only files','Shared files can be viewed but not changed by visitors.','#1e5a8c')}
+    ${card('\u{1F4DD}','Activity log','Every upload, validation, and signature has a date and time.','#b06000')}${card('\u{1F4BE}','Backups','A full backup is saved before any reset or new school year.','#2f7a4a')}</div>`);
+  const url = location.origin + location.pathname, qr = (() => { try{ const q = qrcode(0,'M'); q.addData(url); q.make(); return q.createSvgTag({ cellSize:6, margin:2 }); }catch(e){ return ''; } })();
+  wrap('Open TALA Now', `<div class="aopen"><div class="aqr">${qr}</div><div><p class="abig" data-edit>Scan the code or visit</p><p class="aurl">${esc(url)}</p>${list(['Tap Sign in and use your DepEd email and PIN.','Tap Install TALA app to add it to your phone.','Tap your name, then Guides, anytime you need help.'])}</div></div>`);
+  S.push(`<div class="slide cover end"><img src="${LOGO}" alt="" class="ps-logo"><h1 data-edit>Thank you!</h1><p data-edit>Like a star, TALA guides us. Like a record, TALA keeps us accountable.</p></div>`);
+  return S;
+}
+
 /* ----- viewer ----- */
 async function openPir(mode){
-  PIR.mode = mode || 'pir'; $('menu').classList.remove('open');
+  const prevMode = PIR.mode; PIR.mode = mode || 'pir'; if (prevMode !== PIR.mode){ PIR.slides = []; PIR.built = ''; } $('menu').classList.remove('open');
   ['viewTrk','viewAcc','viewBank','viewLog','viewWeeks','viewSig','viewObs','viewHome','viewSbfp'].forEach(v => $(v).style.display='none');
-  $('viewPir').style.display=''; CUR_FEATURE = PIR.mode==='pir' ? 'pir' : CUR_FEATURE; drawSide(); window.scrollTo(0,0);
-  if (!PIR.q){ const t = todayPH(); PIR.q = t.slice(0,4)+'-Q'+(Math.floor((Number(t.slice(5,7))-1)/3)+1); PIR.term = pickCurrentTerm(DATA.settings); PIR.from = addDays(t,-30); PIR.to = t; }
-  $('viewPir').innerHTML = '<div class="empty">Preparing the presentation</div>';
-  try{ if (USER.role!=='teacher' || featOn('obs')) { obsLocalLoad(); await obsRefresh(); } }catch(e){}
-  if (!SB.people && isStaff()){ try{ SB.people = await api('sbfpPeople'); }catch(e){} }
+  $('viewPir').style.display=''; CUR_FEATURE = 'mne'; drawSide(); window.scrollTo(0,0);
+  if (!PIR.q){ const t = todayPH(); PIR.q = t.slice(0,4)+'-Q'+(Math.floor((Number(t.slice(5,7))-1)/3)+1); PIR.term = pickCurrentTerm((DATA||PUB).settings); PIR.from = addDays(t,-30); PIR.to = t; }
+  if (PIR.slides.length && PIR.built === PIR.mode){ pirDraw(); return; }
+  if (PIR.mode==='about'){ for (let i = 0; i < 10 && !window.qrcode; i++) await wait(200); pirBuild(); return; }
+  pirLoader();
+  if (!(await ensureData())){ $('viewPir').innerHTML = `<div class="empty">TALA could not load the data right now. <button class="btn small" onclick="PIR.built='';openPir('${PIR.mode}')">Try again</button></div>`; return; }
+  obsLocalLoad(); if (!SB.people){ try{ SB.people = JSON.parse(localStorage.getItem('tala_sbp')||'null'); }catch(e){} }
+  const fresh = Promise.all([ (USER.role!=='teacher' || featOn('obs')) ? obsRefresh().catch(()=>{}) : null, isStaff() ? api('sbfpPeople').then(x=>{ SB.people = x; try{ localStorage.setItem('tala_sbp', JSON.stringify(x)); }catch(e){} }).catch(()=>{}) : null ]);
+  if (!OBS.list.length || !SB.people) await fresh; else fresh.then(()=>{ if (PIR.i===0 && !PIR.dirty) pirBuild(); });
   pirBuild();
 }
-function pirBuild(){ PIR.slides = pirSlides(); PIR.i = 0; PIR.ann = {}; PIR.saved = null; pirDraw(); }
+function pirLoader(){
+  const msgs = ['Gathering LPT and PPT submissions','Counting observations and MWA visits','Checking SBFP feeding days','Computing parents\u2019 participation','Writing ways forward','Designing the slides'];
+  $('viewPir').innerHTML = `<div class="pirload"><div class="pirstar">\u2605</div><b id="pirMsg">${msgs[0]}</b><div class="pirdots"><i></i><i></i><i></i></div></div>`;
+  let k = 0; clearInterval(PIR.lt); PIR.lt = setInterval(() => { const el = $('pirMsg'); if (!el){ clearInterval(PIR.lt); return; } k = (k+1) % msgs.length; el.textContent = msgs[k]; }, 700);
+}
+function pirBuild(){
+  try{ PIR.slides = pirSlides(); }catch(e){ console.warn(e); PIR.slides = ['<div class="slide cover"><h1>Program Implementation Review</h1><p>Some data could not be read. Tap Make slides to try again.</p></div>']; }
+  clearInterval(PIR.lt); PIR.i = 0; PIR.ann = {}; PIR.saved = null; PIR.dirty = false; PIR.built = PIR.mode; pirDraw();
+}
+function pirAddSlide(){ pirSaveSlide(); PIR.slides.splice(PIR.i+1, 0, `<div class="slide"><div class="ps-head"><img src="${LOGO}" alt=""><span>Baluyan Elementary School</span></div><h2 class="ps-t" data-edit>New slide title</h2><div class="ps-b ps-free" data-edit>Tap Edit text, then type here.</div></div>`); PIR.i++; PIR.edit = true; PIR.dirty = true; pirDraw(); }
+function pirDelSlide(){ if (PIR.slides.length < 2 || !confirm('Remove this slide?')) return; PIR.slides.splice(PIR.i,1); const a = {}; Object.keys(PIR.ann).forEach(k => { k = Number(k); if (k < PIR.i) a[k] = PIR.ann[k]; else if (k > PIR.i) a[k-1] = PIR.ann[k]; }); PIR.ann = a; PIR.i = Math.min(PIR.i, PIR.slides.length-1); PIR.dirty = true; pirDraw(); }
 function pirDraw(){
-  const head = USER.role==='head' && PIR.mode==='pir';
-  $('viewPir').innerHTML = `<div class="trk-head"><div><h2>${PIR.mode==='pir'?'PIR Presentation':'My Status Presentation'}</h2><p>${PIR.mode==='pir'?'Ready to present to stakeholders and teachers. The data updates automatically.':'Your own progress, to guide you.'}${PIR.saved?' Opened: <b>'+esc(PIR.saved.name)+'</b>':''}</p></div>
+  const head = USER.role==='head' && PIR.mode!=='me', about = PIR.mode==='about';
+  const decks = [[USER.role==='head'?'pir':'me', USER.role==='head'?'PIR Presentation':'My Status'],['about','About TALA']];
+  $('viewPir').innerHTML = `<div class="ktabs" style="margin-top:0">${decks.map(([k,l])=>`<button class="${PIR.mode===k?'on':''}" onclick="openPir('${k}')">${l}</button>`).join('')}</div>
+    <div class="trk-head"><div><h2>${about?'About TALA':PIR.mode==='pir'?'PIR Presentation':'My Status Presentation'}</h2><p>${about?'A ready presentation for meetings with stakeholders: the purpose of TALA, its features, and how everyone benefits. Edit any text before presenting.':PIR.mode==='pir'?'Ready to present to stakeholders and teachers. The data updates automatically.':'Your own progress, to guide you.'}${PIR.saved?' Opened: <b>'+esc(PIR.saved.name)+'</b>':''}</p></div>
       <div class="head-actions">${head?'<button class="btn ghost" onclick="pirSaved()">Saved presentations</button><button class="btn ghost" onclick="pirSave()">Save as of today</button>':''}<button class="btn" onclick="pirPrint()">Print as PDF</button></div></div>
-    <div class="bar"><div class="tabs">${[['term','Term'],['quarter','Quarter'],['range','Date range']].map(([k,l])=>`<button class="${PIR.ptype===k?'on':''}" onclick="PIR.ptype='${k}';pirDraw()">${l}</button>`).join('')}</div>
+    <div class="bar" style="${about?'display:none':''}"><div class="tabs">${[['term','Term'],['quarter','Quarter'],['range','Date range']].map(([k,l])=>`<button class="${PIR.ptype===k?'on':''}" onclick="PIR.ptype='${k}';pirDraw()">${l}</button>`).join('')}</div>
       ${PIR.ptype==='term'?`<select onchange="PIR.term=this.value">${['1','2','3'].map(t=>`<option ${PIR.term===t?'selected':''} value="${t}">Term ${t}</option>`).join('')}</select>`
         : PIR.ptype==='quarter'?`<select onchange="PIR.q=this.value">${(()=>{ const y = Number(todayPH().slice(0,4)); return [y-1,y].map(yy=>[1,2,3,4].map(q=>`<option value="${yy}-Q${q}" ${PIR.q===yy+'-Q'+q?'selected':''}>Quarter ${q}, ${yy}</option>`).join('')).join(''); })()}</select>`
         : `<input type="date" value="${PIR.from}" onchange="PIR.from=this.value"> to <input type="date" value="${PIR.to}" onchange="PIR.to=this.value">`}
@@ -4445,19 +4593,20 @@ function pirDraw(){
       <span class="sep"></span>
       <button onclick="pirZoom(-0.1)" title="Zoom out">\u2212</button><span class="pir-n">${Math.round(PIR.zoom*100)}%</span><button onclick="pirZoom(0.1)" title="Zoom in">\uFF0B</button>
       <span class="sep"></span>
-      ${[['pen','\u270E Pen'],['hl','\u2588 Highlight'],['circle','\u25EF Circle'],['erase','\u232B Eraser']].map(([k,l])=>`<button class="${PIR.tool===k?'on':''}" onclick="pirTool('${k}')">${l}</button>`).join('')}
+      ${PIR_TOOLS.map(([k,l])=>`<button class="${PIR.tool===k?'on':''}" onclick="pirTool('${k}')">${l}</button>`).join('')}
       ${['#e53935','#1e5a8c','#2f7a4a','#f4c430','#111111'].map(c=>`<button class="pir-c ${PIR.color===c?'on':''}" style="--c:${c}" onclick="PIR.color='${c}';pirDraw()" aria-label="Color"></button>`).join('')}
       <button onclick="pirClearInk()">Clear drawings</button>
       <span class="sep"></span>
       <button class="${PIR.edit?'on':''}" onclick="pirEdit()">${PIR.edit?'\u2714 Done editing':'\u270D Edit text'}</button>
-      <button onclick="pirFull()">\u26F6 Full screen</button>
+      <button onclick="pirAddSlide()">\uFF0B Slide</button><button onclick="pirDelSlide()">\u2212 Slide</button>
+      <button class="present" onclick="pirPresent()">\u25B6 Present</button>
     </div>
     <div class="pir-stagewrap" id="pirWrap"><div class="pir-scale" id="pirScale"><div class="pir-stage" id="pirStage">${PIR.slides[PIR.i]}<canvas id="pirInk" width="1280" height="720"></canvas></div></div></div>
     <div class="pir-thumbs">${PIR.slides.map((s,k)=>`<button class="${k===PIR.i?'on':''}" onclick="pirSaveSlide();PIR.i=${k};pirDraw()">${k+1}</button>`).join('')}</div>`;
   pirFit(); pirInk();
   document.querySelectorAll('#pirStage [data-edit]').forEach(el => el.contentEditable = PIR.edit ? 'true' : 'false');
 }
-function pirFit(){ const w = $('pirWrap'); if (!w) return; const base = Math.min(1, (w.clientWidth-4)/1280), s = base*PIR.zoom; const sc = $('pirScale'); sc.style.transform = `scale(${s})`; sc.style.width = '1280px'; sc.style.height = '720px'; w.style.height = (720*s+8)+'px'; }
+function pirFit(){ const w = $('pirWrap'); if (!w || !$('pirScale') || PIR.presenting) return; const base = Math.min(1, (w.clientWidth-4)/1280), s = base*PIR.zoom; const sc = $('pirScale'); sc.style.transform = `scale(${s})`; sc.style.width = '1280px'; sc.style.height = '720px'; w.style.height = (720*s+8)+'px'; }
 window.addEventListener('resize', () => { if ($('viewPir') && $('viewPir').style.display!=='none') pirFit(); });
 function pirZoom(d){ PIR.zoom = Math.min(2.5, Math.max(0.5, Math.round((PIR.zoom+d)*10)/10)); pirSaveSlide(); pirDraw(); }
 function pirGo(d){ const n = PIR.i+d; if (n < 0 || n >= PIR.slides.length) return; pirSaveSlide(); PIR.i = n; pirDraw(); }
@@ -4475,13 +4624,39 @@ function pirInk(){
     g.globalCompositeOperation = PIR.tool==='erase' ? 'destination-out' : 'source-over'; g.strokeStyle = PIR.color; g.lineCap = g.lineJoin = 'round';
     g.lineWidth = PIR.tool==='hl' ? 26 : PIR.tool==='erase' ? 40 : 4; g.globalAlpha = PIR.tool==='hl' ? 0.32 : 1; pts = [down]; };
   cv.onpointermove = e => { if (!down) return; const p = pos(e);
-    if (PIR.tool==='circle'){ g.putImageData(snap,0,0); g.beginPath(); g.globalAlpha = 1; g.lineWidth = 4; g.ellipse((down[0]+p[0])/2,(down[1]+p[1])/2,Math.abs(p[0]-down[0])/2,Math.abs(p[1]-down[1])/2,0,0,Math.PI*2); g.stroke(); }
+    if (['circle','rect','arrow','line'].indexOf(PIR.tool) > -1){ g.putImageData(snap,0,0); g.beginPath(); g.globalAlpha = 1; g.lineWidth = 5;
+      if (PIR.tool==='circle') g.ellipse((down[0]+p[0])/2,(down[1]+p[1])/2,Math.abs(p[0]-down[0])/2,Math.abs(p[1]-down[1])/2,0,0,Math.PI*2);
+      else if (PIR.tool==='rect') g.rect(down[0],down[1],p[0]-down[0],p[1]-down[1]);
+      else { g.moveTo(down[0],down[1]); g.lineTo(p[0],p[1]); if (PIR.tool==='arrow'){ const a = Math.atan2(p[1]-down[1],p[0]-down[0]); g.moveTo(p[0],p[1]); g.lineTo(p[0]-22*Math.cos(a-0.45),p[1]-22*Math.sin(a-0.45)); g.moveTo(p[0],p[1]); g.lineTo(p[0]-22*Math.cos(a+0.45),p[1]-22*Math.sin(a+0.45)); } }
+      g.stroke(); }
     else { pts.push(p); g.putImageData(snap,0,0); g.beginPath(); g.moveTo(pts[0][0], pts[0][1]); pts.forEach(q => g.lineTo(q[0], q[1])); g.stroke(); } };
   cv.onpointerup = cv.onpointercancel = () => { down = null; g.globalAlpha = 1; g.globalCompositeOperation = 'source-over'; PIR.ann[PIR.i] = cv.toDataURL('image/png'); };
 }
+function pirPresent(){
+  pirSaveSlide(); PIR.presenting = true; if ($('pirWrap')) $('pirWrap').innerHTML = ''; const L = $('pirShow'); L.hidden = false; document.body.style.overflow = 'hidden';
+  (L.requestFullscreen || L.webkitRequestFullscreen || (()=>{})).call(L); pirShowDraw();
+}
+function pirShowDraw(){
+  const L = $('pirShow');
+  L.innerHTML = `<div class="ps-stagebox" id="psBox"><div class="pir-scale" id="psScale"><div class="pir-stage" id="pirStage">${PIR.slides[PIR.i]}<canvas id="pirInk" width="1280" height="720"></canvas></div></div></div>
+    <div class="ps-bar"><button onclick="pirShowGo(-1)" title="Previous (Left arrow)">\u2039</button><span>${PIR.i+1} / ${PIR.slides.length}</span><button onclick="pirShowGo(1)" title="Next (Right arrow or Space)">\u203A</button><i></i>
+      <button onclick="pirShowZoom(-0.15)" title="Zoom out">\u2212</button><span>${Math.round(PIR.zoom*100)}%</span><button onclick="pirShowZoom(0.15)" title="Zoom in">\uFF0B</button><i></i>
+      ${PIR_TOOLS.map(([k,l])=>`<button class="${PIR.tool===k?'on':''}" onclick="pirSaveSlide();PIR.tool=PIR.tool==='${k}'?'':'${k}';pirShowDraw()" title="${l}">${l.split(' ')[0]}</button>`).join('')}
+      ${['#e53935','#1e5a8c','#2f7a4a','#f4c430','#ffffff','#111111'].map(c=>`<button class="pir-c ${PIR.color===c?'on':''}" style="--c:${c}" onclick="PIR.color='${c}';pirSaveSlide();pirShowDraw()"></button>`).join('')}
+      <button onclick="pirClearInk()" title="Clear drawings on this slide">\u2672</button><i></i><button class="end" onclick="pirEndShow()">End (Esc)</button></div>`;
+  const s = Math.min(innerWidth/1280, (innerHeight-64)/720) * PIR.zoom; $('psScale').style.transform = `scale(${s})`; $('psScale').style.width = '1280px'; $('psScale').style.height = '720px';
+  $('psBox').style.width = Math.max(innerWidth, 1280*s)+'px'; $('psBox').style.height = Math.max(innerHeight-64, 720*s)+'px';
+  pirInk();
+}
+function pirShowGo(d){ const n = PIR.i+d; if (n < 0 || n >= PIR.slides.length) return; pirSaveSlide(); PIR.i = n; pirShowDraw(); }
+function pirShowZoom(d){ pirSaveSlide(); PIR.zoom = Math.min(3, Math.max(0.5, Math.round((PIR.zoom+d)*100)/100)); pirShowDraw(); }
+function pirEndShow(){ if (!PIR.presenting) return; pirSaveSlide(); PIR.presenting = false; $('pirShow').hidden = true; $('pirShow').innerHTML = ''; document.body.style.overflow = ''; if (document.fullscreenElement) document.exitFullscreen().catch(()=>{}); PIR.zoom = 1; pirDraw(); }
+document.addEventListener('keydown', e => { if (!PIR.presenting) return; if (e.key==='Escape'){ e.preventDefault(); pirEndShow(); } else if (e.key==='ArrowRight' || e.key===' ' || e.key==='PageDown'){ e.preventDefault(); pirShowGo(1); } else if (e.key==='ArrowLeft' || e.key==='PageUp'){ e.preventDefault(); pirShowGo(-1); } else if (e.key==='+' || e.key==='='){ pirShowZoom(0.15); } else if (e.key==='-'){ pirShowZoom(-0.15); } }, true);
+document.addEventListener('fullscreenchange', () => { if (PIR.presenting && !document.fullscreenElement) setTimeout(() => { if (PIR.presenting) pirShowDraw(); }, 100); });
+window.addEventListener('resize', () => { if (PIR.presenting) pirShowDraw(); });
 function pirFull(){ pirSaveSlide(); const w = $('pirWrap'); (w.requestFullscreen || w.webkitRequestFullscreen || (()=>{})).call(w); setTimeout(pirFit, 300); }
-document.addEventListener('fullscreenchange', () => { if ($('viewPir') && $('viewPir').style.display!=='none'){ const w = $('pirWrap'); if (document.fullscreenElement === w){ const s = Math.min(innerWidth/1280, innerHeight/720); $('pirScale').style.transform = `scale(${s})`; w.style.height = '100vh'; } else pirFit(); } });
-document.addEventListener('keydown', e => { if ($('viewPir') && $('viewPir').style.display!=='none' && !PIR.edit && !/INPUT|TEXTAREA|SELECT/.test((e.target||{}).tagName||'')){ if (e.key==='ArrowRight' || e.key===' ') pirGo(1); else if (e.key==='ArrowLeft') pirGo(-1); } });
+document.addEventListener('fullscreenchange', () => { if (!PIR.presenting && $('pirScale') && $('viewPir') && $('viewPir').style.display!=='none'){ const w = $('pirWrap'); if (document.fullscreenElement === w){ const s = Math.min(innerWidth/1280, innerHeight/720); $('pirScale').style.transform = `scale(${s})`; w.style.height = '100vh'; } else pirFit(); } });
+document.addEventListener('keydown', e => { if (!PIR.presenting && $('viewPir') && $('viewPir').style.display!=='none' && !PIR.edit && !/INPUT|TEXTAREA|SELECT/.test((e.target||{}).tagName||'')){ if (e.key==='ArrowRight' || e.key===' ') pirGo(1); else if (e.key==='ArrowLeft') pirGo(-1); } });
 function pirPrint(){
   pirSaveSlide();
   $('printArea').innerHTML = PIR.slides.map((s,k)=>`<div class="pir-page"><div class="pir-pscale"><div class="pir-stage">${s}${PIR.ann[k]?`<img class="pir-inkimg" src="${PIR.ann[k]}" alt="">`:''}</div></div></div>`).join('');
