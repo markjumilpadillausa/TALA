@@ -245,6 +245,30 @@ table.subs tr.nosub td:not(.wk){color:var(--muted);font-style:italic}
 .hist summary{cursor:pointer;color:var(--muted);font-weight:600}
 .hist ol{margin:4px 0 0;padding-left:18px}
 .pinv{font-weight:700;letter-spacing:1px}
+.evm-head{display:flex;gap:12px;align-items:center;margin-bottom:10px}.evm-head h3{margin:0}
+.evm-ico{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;color:#fff;font-size:22px;flex:none;transition:background .2s}
+.evtypes{display:flex;flex-wrap:wrap;gap:6px}
+.evt{display:inline-flex;align-items:center;gap:5px;border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:6px 11px;font:inherit;font-size:13px;cursor:pointer;color:var(--ink)}
+.evt.on{background:var(--c);border-color:var(--c);color:#fff}
+.evdrop{display:flex;flex-direction:column;align-items:center;gap:2px;border:2px dashed var(--line);border-radius:12px;padding:14px;cursor:pointer;text-align:center;background:var(--page)}
+.evdrop:hover{border-color:var(--leaf)}.evdrop small{color:var(--muted)}.evdrop input{display:none}
+.evlink{display:flex;gap:8px;margin-top:8px}.evlink input{flex:1;border:1.5px solid var(--line);border-radius:8px;padding:8px 10px;font:inherit}
+.evatt{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.attc{display:inline-flex;align-items:center;gap:5px;background:var(--page);border:1px solid var(--line);border-radius:8px;padding:4px 8px;font-size:12.5px;max-width:100%}
+.attc.new{background:var(--sun-soft)}.attc a{color:var(--brandtxt);font-weight:600;text-decoration:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:220px}
+.attc button{border:0;background:none;font-size:16px;cursor:pointer;color:var(--muted);padding:0 2px}
+.evfiles{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}.evthumb img{width:110px;height:80px;object-fit:cover;border-radius:8px;border:1px solid var(--line)}
+.upc{margin-top:14px;display:flex;flex-direction:column;gap:10px}
+.upl{font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--brandtxt);margin-bottom:4px}
+.upi{display:flex;align-items:center;gap:10px;width:100%;background:var(--page);border:1.5px solid transparent;border-radius:12px;padding:8px 10px;font:inherit;text-align:left;cursor:pointer;color:var(--ink);margin-bottom:5px}
+.upi:hover{border-color:var(--leaf)}
+.upi .upico{min-width:0;color:#fff;font-size:16px}.upi .uptxt{min-width:0;color:var(--ink);font-size:inherit}.upi .uptxt small{min-width:0}
+.field label.evdrop{display:flex}
+.upico{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;color:#fff;font-size:16px;flex:none}
+.uptxt{flex:1;min-width:0;display:flex;flex-direction:column}.uptxt b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.uptxt small{color:var(--muted);font-size:12px}
+.upbadge{font-style:normal;font-size:11.5px;font-weight:700;border-radius:999px;padding:3px 9px;background:var(--card);border:1px solid var(--line);white-space:nowrap}
+.upbadge.now{background:var(--sun);border-color:var(--sun);color:var(--onsun)}
+.mquota{margin-top:12px;background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;font-size:14px}
 .cfrow{background:var(--page);border-radius:10px;padding:8px 10px;margin:6px 0}.cfrow p{margin:3px 0;white-space:pre-wrap}.cfrow small{color:var(--muted)}
 .cfsig{display:flex;flex-direction:column;align-items:center;margin:10px 0 4px}.cfsig img{max-height:60px;max-width:220px;border-bottom:1px solid var(--ink);padding-bottom:2px}.cfsig small{color:var(--muted)}
 .cmthint{margin:0 0 6px;color:#8a8f88;font-style:italic}
@@ -433,7 +457,10 @@ textarea::placeholder,input::placeholder{color:#a8aea6;font-style:italic}
   .p-pmcf .tcoi,.p-pmcf .tncoi{display:none} .p-pmcf .pm-signs b{min-width:200px} .p-notes .pm-head td{border:1px solid #000}
   .p-pmcf .pm-grid{grid-template-columns:minmax(0,2.3fr) minmax(0,1.4fr)} .p-pmcf .pm-ind{table-layout:fixed} .p-pmcf .pm-ind th:last-child,.p-pmcf .pm-ind td:last-child{width:28%}
   .p-pmcf td{word-wrap:break-word;overflow-wrap:anywhere} .p-pmcf .pm-signs img{max-height:40px}
-  .p-pg{page-break-before:always;break-before:page} .p-sigs div{display:flex;flex-direction:column;align-items:center;margin-bottom:4px} .p-sigs img{max-height:26px;max-width:110px} .p-sigs small{font-size:7.5px} }
+  .p-pg{page-break-before:always;break-before:page}
+  .p-cal{width:100%;border-collapse:collapse;table-layout:fixed} .p-cal th{border:1px solid #000;padding:3px;font-size:9px;background:#eee} .p-cal td{border:1px solid #000;height:62px;vertical-align:top;padding:2px 3px;font-size:8px}
+  .p-cal td b{font-size:9px} .pc-e{background:#f6f6f6} .pc-i{border-left:3px solid #555;padding-left:3px;margin-top:2px;line-height:1.25}
+  .pc-qrs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px} .pc-qr{display:flex;gap:6px;align-items:flex-start;font-size:8.5px;page-break-inside:avoid;border:1px solid #ccc;padding:4px} .p-sigs div{display:flex;flex-direction:column;align-items:center;margin-bottom:4px} .p-sigs img{max-height:26px;max-width:110px} .p-sigs small{font-size:7.5px} }
 .sync{display:flex;align-items:center;gap:6px;font-size:12px;white-space:nowrap;background:rgba(255,255,255,.12);border-radius:999px;padding:4px 10px}
 .sync i{width:9px;height:9px;border-radius:50%;background:#7CD992;flex:none}
 .sync.wait i{background:var(--sun)}.sync.off i{background:#ff8a80}.sync.sync i{background:#90caf9;animation:pulse 1s infinite}
@@ -998,6 +1025,7 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
   <div class="modal" role="dialog" aria-labelledby="calTitle">
     <h3 id="calTitle"></h3><input type="hidden" id="calDate">
     <div class="field"><label for="calType">Where were you this day?</label><select id="calType"></select></div>
+    <div class="field" id="calOtherRow" style="display:none"><label for="calOther">Please specify</label><input id="calOther" maxlength="40" placeholder="Example: Division sports meet"><div class="hint">It will be added to the choices for next time.</div></div>
     <div class="field"><label for="calNote">Note (optional)</label><input id="calNote" maxlength="200" placeholder="Example: Division training on assessment"></div>
     <div id="calObs"></div>
     <div class="modal-actions"><button class="btn ghost" onclick="closeModal('calModal')">Cancel</button><button class="btn" onclick="calSave()">Save</button></div>
@@ -1013,16 +1041,24 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
 </div>
 <!-- Calendar: add or edit -->
 <div class="overlay" id="evModal">
-  <div class="modal" role="dialog" aria-labelledby="evModalTitle">
-    <h3 id="evModalTitle">Add to the school calendar</h3><input type="hidden" id="evId">
+  <div class="modal wide evm" role="dialog" aria-labelledby="evModalTitle">
+    <div class="evm-head"><span class="evm-ico" id="evIco">★</span><div><h3 id="evModalTitle">Add to the school calendar</h3><p class="sub" style="margin:0">Fill in the details. Photos, videos, memos, and orders are optional.</p></div></div>
+    <input type="hidden" id="evId">
     <div class="field"><label for="evTitle">Title</label><input id="evTitle" maxlength="120" placeholder="Example: Parents and teachers meeting"></div>
+    <div class="field"><span class="lbl">Type</span><div class="evtypes" id="evTypes"></div><input type="hidden" id="evType"></div>
     <div class="row2"><div class="field"><label for="evDate">Date</label><input type="date" id="evDate"></div><div class="field"><label for="evEnd">Until (optional)</label><input type="date" id="evEnd"></div></div>
-    <div class="row2"><div class="field"><label for="evTime">Time (optional)</label><input id="evTime" maxlength="20" placeholder="Example: 1:00 PM"></div><div class="field"><label for="evType">Type</label><select id="evType"></select></div></div>
+    <div class="row2"><div class="field"><label for="evTime">Starts (optional)</label><input type="time" id="evTime"></div><div class="field"><label for="evTime2">Ends (optional)</label><input type="time" id="evTime2"></div></div>
+    <div class="field"><label for="evPlace">Venue (optional)</label><input id="evPlace" maxlength="120" placeholder="Example: Roderics Resort, Taway, Ipil"></div>
     <div class="field"><span class="lbl">Who can see this?</span><div class="seg seg3" id="evAudSeg">
-      <label><input type="radio" name="evAud" value="Only me" onchange="segSync('evAudSeg')">Only me</label>
-      <label><input type="radio" name="evAud" value="Personnel" onchange="segSync('evAudSeg')">Me and all personnel</label>
-      <label><input type="radio" name="evAud" value="Everyone" onchange="segSync('evAudSeg')">Me, all personnel, and the public</label></div></div>
-    <div class="field"><label for="evDetails">Details (optional)</label><textarea id="evDetails" rows="3" maxlength="1000"></textarea></div>
+      <label><input type="radio" name="evAud" value="Only me" onchange="segSync('evAudSeg')">🔒 Only me</label>
+      <label><input type="radio" name="evAud" value="Personnel" onchange="segSync('evAudSeg')">👥 Me and all personnel</label>
+      <label><input type="radio" name="evAud" value="Everyone" onchange="segSync('evAudSeg')">🌐 Me, all personnel, and the public</label></div></div>
+    <div class="field"><label for="evDetails">Details or message (optional)</label><textarea id="evDetails" rows="3" maxlength="1000" placeholder="Example: Please bring your laptop and the updated class records."></textarea></div>
+    <div class="field"><span class="lbl">Attachments for validation (optional)</span>
+      <label class="evdrop" for="evFiles"><b>📎 Add photos, videos, memos, or orders</b><small>Images, videos, PDF, Word, PowerPoint, or Excel. Up to 30 MB each.</small><input type="file" id="evFiles" multiple accept="image/*,video/*,.pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx" onchange="evAddFiles(this)"></label>
+      <div class="evlink"><input id="evLink" placeholder="Or paste a link, for example a Google Drive video or a Facebook post"><button type="button" class="btn ghost small" onclick="evAddLink()">Add link</button></div>
+      <div id="evAtt" class="evatt"></div></div>
+    <label class="check" id="evOutRow" style="display:none"><input type="checkbox" id="evOut">I will be out of school on these dates (mark them in my observation calendar)</label>
     <div class="err" id="evErr"></div>
     <div class="modal-actions"><button class="btn ghost" onclick="closeModal('evModal')">Cancel</button><button class="btn" id="evBtn" onclick="eventSave()">Save</button></div>
   </div>
@@ -1217,8 +1253,8 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
 
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
-const MIN_SERVER = '3.4'; // oldest Code.gs this page works with
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'3.4', date:'October 6, 2026' } };
+const MIN_SERVER = '3.5'; // oldest Code.gs this page works with
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'3.5', date:'October 7, 2026' } };
 function verLine(server){
   const old = server && (server.indexOf('older') > -1 || parseFloat(server) < parseFloat(MIN_SERVER));
   const s = server ? ' Server '+server+(old && USER && USER.role==='head' ? ', please deploy the new Code.gs.' : '.') : '';
@@ -3561,12 +3597,20 @@ async function downloadMwa(){
 }
 
 /* ----- Observation calendar: 2 observations each school day you are in school ----- */
-const OUT_TYPES = ['Training','Seminar','Orientation','Meeting','Official travel','Leave','No classes (holiday or suspension)','Other'];
+const OUT_TYPES = ['Training','Seminar','Orientation','Meeting','Official travel','Leave','No classes (holiday or suspension)'];
+function outTypes(){ const own = [...new Set((OBS.cal||[]).map(x=>x.type).filter(t => t && OUT_TYPES.indexOf(t) < 0))]; return OUT_TYPES.concat(own); }
 var CALM = '';
 function schoolDay(date){ const w = dow(date); if (w===0 || w===6) return false; return !!findTermWeek(date).term; }
 function calMark(date){ return (OBS.cal||[]).find(x=>x.date===date); }
 function obsOnDay(date){ return OBS.list.filter(o => o.date===date).length; }
 // Days in school from the first day of this term up to today
+function monthQuota(ym){
+  const [y,m] = ym.split('-').map(Number), days = new Date(Date.UTC(y,m,0)).getUTCDate(), today = todayPH();
+  let school = 0, out = 0, need = 0, done = 0, lack = 0;
+  for (let i = 1; i <= days; i++){ const d = ym+'-'+String(i).padStart(2,'0'); if (!schoolDay(d)) continue; school++;
+    if (calMark(d)){ out++; continue; } need += 2; const n = Math.min(2, obsOnDay(d)); done += n; if (d <= today) lack += 2 - n; }
+  return { school, out, need, done, lack };
+}
 function obsQuota(){
   const term = OBS.term || (DATA && pickCurrentTerm(DATA.settings)) || '1', w1 = weekOf(term,'1'), today = todayPH();
   let days = 0, need = 0, done = 0, lack = 0;
@@ -3596,6 +3640,7 @@ function drawCal(){
   const prev = new Date(Date.UTC(y,m-2,1)).toISOString().slice(0,7), next = new Date(Date.UTC(y,m,1)).toISOString().slice(0,7);
   $('viewObs').innerHTML = `<div class="trk-head"><div><h2>Observation Calendar</h2><p>Target: 2 observations (ePMCF or PMCF MWA) every school day you are in school. ${head?'Tap a day to mark yourself out of school.':''}</p></div>
       <div class="head-actions"><button class="btn ghost" onclick="obsBack()">Back</button></div></div>
+    ${(() => { const mq = monthQuota(CALM); return `<div class="mquota"><b>This month:</b> ${mq.school} school days, <b>${mq.out} out of school (excused, minus ${mq.out*2})</b>, ${mq.need} observations needed, ${mq.done} done, <b class="${mq.lack?'mk-late':'mk-ok'}">${mq.lack} lacking so far</b></div>`; })()}
     <div class="ostats"><div class="ostat static"><span class="oico">\u2637</span><b>${q.days}</b><span>School days in school, this term so far</span></div>
       <div class="ostat static"><span class="oico">\u2714</span><b>${q.done}</b><span>Of ${q.need} required observations</span></div>
       <div class="ostat static ${q.lack?'s-warn':''}"><span class="oico">!</span><b>${q.lack}</b><span>Observations lacking</span></div></div>
@@ -3606,13 +3651,17 @@ function drawCal(){
 function calDay(date){
   const mk = calMark(date) || {}, list = OBS.list.filter(o=>o.date===date);
   $('calTitle').textContent = dShort(date); $('calDate').value = date;
-  $('calType').innerHTML = '<option value="">In school (no mark)</option>' + OUT_TYPES.map(t=>`<option ${t===mk.type?'selected':''}>${esc(t)}</option>`).join('');
+  $('calType').innerHTML = '<option value="">In school (no mark)</option>' + outTypes().map(t=>`<option ${t===mk.type?'selected':''}>${esc(t)}</option>`).join('') + '<option value="__other">Other (type it below)</option>';
+  $('calOther').value = ''; $('calOtherRow').style.display = 'none';
+  $('calType').onchange = () => { const o = $('calType').value === '__other'; $('calOtherRow').style.display = o ? '' : 'none'; if (o) $('calOther').focus(); };
   $('calNote').value = mk.note || '';
   $('calObs').innerHTML = list.length ? list.map(o=>`<div class="calo"><span class="ktag ${otype(o)}">${otype(o)==='mwa'?'MWA':'ePMCF'}</span> ${esc(o.teacherName||(o.data||{}).focus||'Visit')}</div>`).join('') : '<p class="hint">No observations recorded on this day.</p>';
   openModal('calModal');
 }
 async function calSave(){
-  const date = $('calDate').value, type = $('calType').value, note = $('calNote').value;
+  const date = $('calDate').value, note = $('calNote').value;
+  let type = $('calType').value;
+  if (type === '__other'){ type = $('calOther').value.trim(); if (!type) return toast('Type where you were.'); const same = outTypes().find(t => t.toLowerCase() === type.toLowerCase()); if (same) type = same; }
   OBS.cal = (OBS.cal||[]).filter(x=>x.date!==date); if (type) OBS.cal.push({ date, type, note }); obsLocalSave(); closeModal('calModal'); if (OBS.sub==='cal') drawCal(); drawSchoolCal();
   try{ OBS.cal = await api('calSave',{ date, type, note }); obsLocalSave(); if (OBS.sub==='cal') drawCal(); drawSchoolCal(); toast(type ? 'Marked: '+type+'.' : 'Day cleared.'); }
   catch(e){ handleErr(e); }
@@ -3716,6 +3765,7 @@ function drawPublicHome(){
 /* ----- School calendar on Home: events for everyone or only me, plus observation days ----- */
 var SCM = '', HCT = 'school';
 const EV_TYPES = ['Event','Activity','Meeting','Training or seminar','Holiday or no classes','Deadline','Reminder','Other'];
+const EV_ICON = { 'Event':'\u2605','Activity':'\u26F9','Meeting':'\u{1F465}','Training or seminar':'\u{1F393}','Holiday or no classes':'\u{1F334}','Deadline':'\u23F0','Reminder':'\u{1F514}','Other':'\u2022' };
 const EV_COLOR = { 'Event':'#1e5a8c','Activity':'#2f7a4a','Meeting':'#6a2c99','Training or seminar':'#b06000','Holiday or no classes':'#a3271b','Deadline':'#c0392b','Reminder':'#7a6a00','Other':'#555' };
 function allEvents(){ return ((DATA||PUB||{}).events)||[]; }
 function eventsOn(date){ return allEvents().filter(e => e.date <= date && date <= (e.end||e.date)); }
@@ -3741,35 +3791,108 @@ function drawSchoolCal(){
       ${HCT==='sbfp' ? `<button class="btn small" onclick="openSbfp()">Open SBFP</button>` : USER?`<button class="btn small sun" onclick="eventForm('${today}')">\u002B Add</button>`:''}</div>
     <div class="calbar"><button class="btn ghost small" onclick="SCM='${prev}';drawSchoolCal()">\u2039</button><b>${esc(mname)}</b><button class="btn ghost small" onclick="SCM='${next}';drawSchoolCal()">\u203A</button></div>
     <div class="scal-grid"><div class="cdow">Sun</div><div class="cdow">Mon</div><div class="cdow">Tue</div><div class="cdow">Wed</div><div class="cdow">Thu</div><div class="cdow">Fri</div><div class="cdow">Sat</div>${cells}</div>
-    ${upcoming.length?`<div class="upc"><b>Coming up</b>${upcoming.map(e=>`<button class="upi" onclick="dayModal('${e.date}')"><i style="background:${EV_COLOR[e.type]||'#555'}"></i><span>${esc(dShort(e.date))}${e.end&&e.end!==e.date?' to '+esc(dShort(e.end)):''}${e.time?', '+esc(e.time):''}</span><b>${esc(e.title)}</b>${e.audience==='Only me'?'<em>Only me</em>':e.audience==='Personnel'?'<em>Personnel</em>':''}</button>`).join('')}</div>`:''}</div>`;
+    ${HCT==='sbfp' ? '' : upcomingHtml()}
+    <div class="obs-actions" style="margin:10px 0 0"><button class="btn ghost small" onclick="printSchoolCal()">\u2399 Print ${esc(mname)} calendar</button></div></div>`;
+}
+function upcomingHtml(){
+  const today = todayPH(), tmr = addDays(today,1), wkEnd = addDays(today, 7 - dow(today));
+  const list = allEvents().filter(e => (e.end||e.date) >= today).sort((a,b)=>(a.date+(a.time||'')).localeCompare(b.date+(b.time||'')));
+  const groups = [['On this day', e => e.date <= today], ['Tomorrow', e => e.date === tmr], ['This week', e => e.date > tmr && e.date <= wkEnd], ['Coming next', e => e.date > wkEnd]];
+  const days = d => { const n = dayDiffC(d, today); return n === 0 ? 'Today' : n === 1 ? 'Tomorrow' : 'In '+n+' days'; };
+  const item = e => `<button class="upi" onclick="dayModal('${e.date <= today ? today : e.date}')"><span class="upico" style="background:${EV_COLOR[e.type]||'#555'}">${EV_ICON[e.type]||'\u2022'}</span>
+      <span class="uptxt"><b>${esc(e.title)}</b><small>${esc(dShort(e.date))}${e.end&&e.end!==e.date?' to '+esc(dShort(e.end)):''}${e.time?' \u00B7 '+esc(evTimeText(e)):''}${(e.files||[]).length?' \u00B7 \u{1F4CE} '+e.files.length:''}${e.audience==='Only me'?' \u00B7 Only me':e.audience==='Personnel'?' \u00B7 Personnel':''}</small></span>
+      <em class="upbadge ${e.date <= today ? 'now' : ''}">${e.date <= today ? (e.date < today ? 'Ongoing' : 'Today') : days(e.date)}</em></button>`;
+  let out = '', shown = 0;
+  groups.forEach(([label, test]) => { const g = list.filter(test).slice(0, label==='Coming next'?4:6); if (!g.length) return; shown += g.length; out += `<div class="upg"><div class="upl">${label}</div>${g.map(item).join('')}</div>`; });
+  return `<div class="upc">${shown ? out : '<div class="upg"><div class="upl">On this day</div><p class="hint" style="margin:4px 0">Nothing scheduled. Enjoy a calm day.</p></div>'}</div>`;
+}
+// Printable month calendar. QR codes of attachments are listed below the calendar, by date.
+function printSchoolCal(){
+  const [y,m] = SCM.split('-').map(Number), first = SCM+'-01', startDow = dow(first), days = new Date(Date.UTC(y,m,0)).getUTCDate(), head = USER && USER.role==='head';
+  const mname = new Date(Date.UTC(y,m-1,1)).toLocaleString('en-US',{month:'long',year:'numeric',timeZone:'UTC'});
+  let cells = '', qrs = [];
+  for (let i = 0; i < startDow; i++) cells += '<td class="pc-e"></td>';
+  for (let d = 1; d <= days; d++){
+    const date = SCM+'-'+String(d).padStart(2,'0'), ev = HCT==='sbfp' ? [] : eventsOn(date), sb = sbfpOn(date), mk = head ? calMark(date) : null;
+    cells += `<td><b>${d}</b>${HCT==='sbfp' ? (sb?`<div class="pc-i" style="border-color:#d35400">${esc(sb.menu)}<br><i>${esc(sb.grade||'')}</i></div>`:'')
+      : (mk?`<div class="pc-i" style="border-color:#777">Out: ${esc(mk.type)}</div>`:'') + (sb?`<div class="pc-i" style="border-color:#d35400">SBFP</div>`:'') + ev.map(e=>`<div class="pc-i" style="border-color:${EV_COLOR[e.type]||'#555'}">${esc(e.title)}${e.time?' ('+esc(evTimeText(e))+')':''}${(e.files||[]).length?' \u{1F4CE}':''}</div>`).join('')}</td>`;
+    if ((startDow + d) % 7 === 0 && d < days) cells += '</tr><tr>';
+    if (HCT!=='sbfp') ev.filter(e => e.date === date).forEach(e => (e.files||[]).forEach(f => qrs.push({ date, title:e.title, f })));
+  }
+  const rest = (7 - (startDow + days) % 7) % 7; for (let i = 0; i < rest; i++) cells += '<td class="pc-e"></td>';
+  const qrHtml = qrs.length ? `<div class="p-sumtitle" style="margin-top:12px">ATTACHMENTS AND MOVs (scan to view)</div><div class="pc-qrs">${qrs.map(q => `<div class="pc-qr">${qrSmall({ link:q.f.url, fileId:q.f.id }, 70)}<div><b>${esc(dShort(q.date))}</b><br>${esc(q.title)}<br><i>${esc(q.f.name.slice(0,60))}</i></div></div>`).join('')}</div>` : '';
+  $('printArea').innerHTML = `${printHeader()}<div class="p-title">${HCT==='sbfp'?'SBFP CALENDAR':'SCHOOL CALENDAR'}, ${esc(mname.toUpperCase())}</div>
+    <table class="p-cal"><thead><tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr></thead><tbody><tr>${cells}</tr></tbody></table>
+    ${qrHtml}
+    <div class="p-sign"><div></div><div>Noted by:<b>${esc(((DATA||{}).headName)||'')}</b>School Head</div></div>
+    <div class="p-foot">Generated from TALA on ${esc(dTime(nowLocal().replace('T',' ')))}.</div>`;
+  setTimeout(() => window.print(), 250);
 }
 function dayModal(date){
   const ev = eventsOn(date), head = USER && USER.role==='head', mk = head ? calMark(date) : null, obs = head ? OBS.list.filter(o=>o.date===date) : [];
   $('dayTitle').textContent = new Date(date+'T00:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
   const sb = sbfpOn(date);
-  $('dayBody').innerHTML = (sb ? `<div class="evrow" style="border-left-color:#d35400"><b>SBFP: ${esc(sb.menu)}</b><small>${esc(sb.grade||'No grade assigned')}${sb.notes?' \u00B7 '+esc(sb.notes):''}</small></div>` : '') + (ev.length ? ev.map(e => `<div class="evrow" style="border-left-color:${EV_COLOR[e.type]||'#555'}"><b>${esc(e.title)}</b><small>${esc(e.type||'')}${e.time?' \u00B7 '+esc(e.time):''}${e.end&&e.end!==e.date?' \u00B7 until '+esc(dShort(e.end)):''} \u00B7 ${e.audience==='Everyone'?'Personnel and the public':e.audience==='Personnel'?'All personnel':'Only me'} \u00B7 by ${esc(e.byName||'')}</small>${e.details?`<p>${esc(e.details)}</p>`:''}
+  $('dayBody').innerHTML = (sb ? `<div class="evrow" style="border-left-color:#d35400"><b>SBFP: ${esc(sb.menu)}</b><small>${esc(sb.grade||'No grade assigned')}${sb.notes?' \u00B7 '+esc(sb.notes):''}</small></div>` : '') + (ev.length ? ev.map(e => `<div class="evrow" style="border-left-color:${EV_COLOR[e.type]||'#555'}"><b>${esc(e.title)}</b><small>${EV_ICON[e.type]||''} ${esc(e.type||'')}${e.time?' \u00B7 '+esc(evTimeText(e)):''}${e.end&&e.end!==e.date?' \u00B7 until '+esc(dShort(e.end)):''} \u00B7 ${e.audience==='Everyone'?'Personnel and the public':e.audience==='Personnel'?'All personnel':'Only me'} \u00B7 by ${esc(e.byName||'')}</small>${e.details?`<p>${esc(e.details)}</p>`:''}
+      ${(e.files||[]).length?`<div class="evfiles">${e.files.map(f=>f.id && /image/.test(f.mime||'') ? `<a href="${esc(f.url)}" target="_blank" rel="noopener" class="evthumb"><img src="https://drive.google.com/thumbnail?id=${esc(f.id)}&sz=w240" alt="${esc(f.name)}" loading="lazy"></a>` : `<a class="attc" href="${esc(f.url)}" target="_blank" rel="noopener">${attIcon(f)} ${esc(f.name.slice(0,40))}</a>`).join('')}</div>`:''}
       ${USER && (e.byEmail===USER.email || head) ? `<span><button class="linkbtn" onclick="eventForm('${date}','${esc(e.id)}')">Edit</button> <button class="linkbtn" style="color:var(--late)" onclick="eventDelete('${esc(e.id)}')">Remove</button></span>`:''}</div>`).join('') : '<p class="hint">No events on this day.</p>')
     + (head ? `<div class="evrow obsrow"><b>Observations: ${obs.length} of 2</b>${mk?`<small>You were out: ${esc(mk.type)}${mk.note?', '+esc(mk.note):''}</small>`:''}${obs.map(o=>`<small>${otype(o)==='mwa'?'MWA':'ePMCF'}: ${esc(o.teacherName||(o.data||{}).focus||'Visit')}</small>`).join('')}<span><button class="linkbtn" onclick="closeModal('dayModal');calDay('${date}')">Mark in or out of school</button></span></div>` : '');
   $('dayAdd').style.display = USER ? '' : 'none'; $('dayAdd').onclick = () => { closeModal('dayModal'); eventForm(date); };
   openModal('dayModal');
 }
+var EVF = { files:[], links:[], keep:[] };
+function evTimeText(e){ const t = String(e.time||''), m = t.match(/^(\d{2}:\d{2})(?:-(\d{2}:\d{2}))?$/); return m ? fmtTime(m[1]) + (m[2] ? ' to '+fmtTime(m[2]) : '') : t; }
 function eventForm(date, id){
-  const e = id ? allEvents().find(x=>x.id===id) : null;
+  const e = id ? allEvents().find(x=>x.id===id) : null, tm = String(e && e.time || '').match(/^(\d{2}:\d{2})(?:-(\d{2}:\d{2}))?$/);
   $('evId').value = e ? e.id : ''; $('evTitle').value = e ? e.title : ''; $('evDate').value = e ? e.date : date; $('evEnd').value = e ? (e.end||e.date) : date;
-  $('evTime').value = e ? e.time : ''; $('evDetails').value = e ? e.details : '';
-  $('evType').innerHTML = EV_TYPES.map(t=>`<option ${e && e.type===t?'selected':''}>${t}</option>`).join('');
+  $('evTime').value = tm ? tm[1] : ''; $('evTime2').value = tm && tm[2] ? tm[2] : '';
+  const det = e ? String(e.details||'') : '', pm = det.match(/^Venue: (.*)\n?/);
+  $('evPlace').value = pm ? pm[1] : ''; $('evDetails').value = pm ? det.slice(pm[0].length) : det;
+  evPickType(e ? (e.type||'Event') : 'Event');
   document.querySelectorAll('input[name=evAud]').forEach(r => r.checked = r.value === (e ? e.audience : 'Personnel')); segSync('evAudSeg');
+  EVF = { files:[], links:[], keep:(e && e.files || []).slice() }; evDrawAtt(); $('evFiles').value = ''; $('evLink').value = '';
+  $('evOutRow').style.display = USER && USER.role==='head' && !e ? '' : 'none'; $('evOut').checked = false;
   $('evErr').textContent = ''; $('evModalTitle').textContent = e ? 'Edit calendar entry' : 'Add to the school calendar';
   openModal('evModal'); setTimeout(()=>$('evTitle').focus(), 60);
 }
+function evPickType(t){
+  $('evType').value = t; $('evIco').textContent = EV_ICON[t]||'\u2605'; $('evIco').style.background = EV_COLOR[t]||'#555';
+  $('evTypes').innerHTML = EV_TYPES.map(x=>`<button type="button" class="evt ${x===t?'on':''}" style="--c:${EV_COLOR[x]}" onclick="evPickType('${x}')"><span>${EV_ICON[x]||''}</span>${esc(x)}</button>`).join('');
+  if (/Training|Holiday/.test(t) && USER && USER.role==='head') $('evOut').checked = /Training/.test(t);
+}
+function evAddFiles(inp){
+  for (const f of inp.files){ if (f.size > 30*1048576){ toast(f.name+' is larger than 30 MB. Share it as a link instead.'); continue; } EVF.files.push(f); }
+  inp.value = ''; evDrawAtt();
+}
+function evAddLink(){ const url = $('evLink').value.trim(); if (!/^https?:\/\//.test(url)) return toast('Paste a full link that starts with https://'); EVF.links.push({ url, name:url }); $('evLink').value=''; evDrawAtt(); }
+function attIcon(f){ const m = (f.mime||'') + ' ' + (f.name||''); return f.link ? '\u{1F517}' : /image/.test(m) ? '\u{1F5BC}' : /video/.test(m) ? '\u{1F3AC}' : /pdf/i.test(m) ? '\u{1F4C4}' : '\u{1F4CE}'; }
+function evDrawAtt(){
+  const kept = EVF.keep.map((f,i)=>`<span class="attc">${attIcon(f)} <a href="${esc(f.url)}" target="_blank" rel="noopener">${esc(f.name)}</a><button type="button" onclick="EVF.keep.splice(${i},1);evDrawAtt()" aria-label="Remove">\u00D7</button></span>`);
+  const nf = EVF.files.map((f,i)=>`<span class="attc new">${attIcon({mime:f.type,name:f.name})} ${esc(f.name)} <small>${(f.size/1048576).toFixed(1)} MB</small><button type="button" onclick="EVF.files.splice(${i},1);evDrawAtt()" aria-label="Remove">\u00D7</button></span>`);
+  const nl = EVF.links.map((l,i)=>`<span class="attc new">\u{1F517} ${esc(l.url.slice(0,48))}<button type="button" onclick="EVF.links.splice(${i},1);evDrawAtt()" aria-label="Remove">\u00D7</button></span>`);
+  $('evAtt').innerHTML = kept.concat(nf, nl).join('');
+}
 async function eventSave(){
-  const event = { id:$('evId').value, title:$('evTitle').value, date:$('evDate').value, end:$('evEnd').value||$('evDate').value, time:$('evTime').value, type:$('evType').value,
-    audience: (document.querySelector('input[name=evAud]:checked')||{}).value || 'Only me', details:$('evDetails').value };
+  const t1 = $('evTime').value, t2 = $('evTime2').value, place = $('evPlace').value.trim();
+  const event = { id:$('evId').value, title:$('evTitle').value, date:$('evDate').value, end:$('evEnd').value||$('evDate').value, time: t1 ? t1 + (t2 ? '-'+t2 : '') : '', type:$('evType').value,
+    audience: (document.querySelector('input[name=evAud]:checked')||{}).value || 'Only me', details: (place ? 'Venue: '+place+'\n' : '') + $('evDetails').value,
+    keep: EVF.keep.map(f => String(f.id || f.url)), links: EVF.links, uploads: [] };
   if (!event.title.trim()) return $('evErr').textContent = 'Type the title first.';
+  if (event.end < event.date) return $('evErr').textContent = 'The end date is before the start date.';
+  if (EVF.files.reduce((a,f)=>a+f.size,0) > 40*1048576) return $('evErr').textContent = 'The files are too large together. Upload fewer at a time, or share big videos as links.';
   $('evBtn').disabled = true;
-  try{ const list = await api('evSave',{ event }); (DATA||PUB).events = list; if (DATA) DATA.events = list; closeModal('evModal'); drawSchoolCal(); if (OBS.sub==='cal') drawCal(); toast(event.audience==='Everyone' ? 'Added. All personnel and the public can see it.' : event.audience==='Personnel' ? 'Added. All personnel can see it.' : 'Added to your calendar.'); }
-  catch(e){ handleErr(e,'evErr'); }
-  $('evBtn').disabled = false;
+  try{
+    for (const f of EVF.files){ loading(true, 'Uploading '+f.name); event.uploads.push({ name:f.name, mime:f.type, base64: await readB64(f) }); }
+    loading(true,'Saving');
+    const list = await api('evSave',{ event }); if (DATA) DATA.events = list; else PUB.events = list;
+    if ($('evOut').checked && USER && USER.role==='head'){
+      const ty = /Training/.test(event.type) ? 'Training' : /Meeting/.test(event.type) ? 'Meeting' : 'Official travel';
+      for (let d = event.date; d <= event.end; d = addDays(d,1)) if (dow(d) > 0 && dow(d) < 6){ OBS.cal = (OBS.cal||[]).filter(x=>x.date!==d); OBS.cal.push({ date:d, type:ty, note:event.title }); try{ OBS.cal = await api('calSave',{ date:d, type:ty, note:event.title }); }catch(e){} }
+      obsLocalSave();
+    }
+    closeModal('evModal'); drawSchoolCal(); if (OBS.sub==='cal') drawCal();
+    toast(event.audience==='Everyone' ? 'Saved. All personnel and the public can see it.' : event.audience==='Personnel' ? 'Saved. All personnel can see it.' : 'Saved to your calendar.');
+  }catch(e){ handleErr(e,'evErr'); }
+  loading(false); $('evBtn').disabled = false;
 }
 async function eventDelete(id){
   if (!confirm('Remove this from the calendar?')) return;
