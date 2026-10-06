@@ -245,6 +245,71 @@ table.subs tr.nosub td:not(.wk){color:var(--muted);font-style:italic}
 .hist summary{cursor:pointer;color:var(--muted);font-weight:600}
 .hist ol{margin:4px 0 0;padding-left:18px}
 .pinv{font-weight:700;letter-spacing:1px}
+.pir-tools{display:flex;flex-wrap:wrap;gap:6px;align-items:center;background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:8px;margin:12px 0;position:sticky;top:70px;z-index:6}
+.pir-tools button{border:1.5px solid var(--line);background:var(--card);border-radius:8px;padding:6px 10px;font:inherit;font-size:13px;cursor:pointer;color:var(--ink)}
+.pir-tools button.on{background:var(--field);color:#fff;border-color:var(--field)}.pir-tools .sep{width:1px;height:24px;background:var(--line);margin:0 4px}
+.pir-n{font-size:13px;color:var(--muted);min-width:44px;text-align:center}
+.pir-c{width:26px;height:26px;padding:0 !important;border-radius:50% !important;background:var(--c) !important;border:3px solid var(--card) !important;box-shadow:0 0 0 1.5px var(--line)}.pir-c.on{box-shadow:0 0 0 2.5px var(--ink)}
+.pir-stagewrap{overflow:auto;background:#d9ddd5;border-radius:12px;padding:4px}
+.pir-stagewrap:fullscreen{background:#000;display:flex;align-items:center;justify-content:center;padding:0}
+.pir-scale{transform-origin:top left}
+.pir-stage{position:relative;width:1280px;height:720px;background:#fff;overflow:hidden;font-family:Arial,Helvetica,sans-serif;color:#1d2a1f}
+.pir-stage canvas{position:absolute;inset:0;width:1280px;height:720px;touch-action:none}
+.pir-thumbs{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.pir-thumbs button{width:38px;height:30px;border:1.5px solid var(--line);border-radius:8px;background:var(--card);cursor:pointer;font:inherit}.pir-thumbs button.on{background:var(--sun);border-color:var(--sun)}
+.slide{position:absolute;inset:0;padding:70px 64px 40px}
+.slide.cover{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:linear-gradient(135deg,#1F5130,#2f7a4a);color:#fff;padding:40px}
+.slide.cover h1{font-size:64px;margin:16px 0 8px;color:#fff}.slide.cover p{font-size:26px;margin:4px 0}.slide.cover .ps-sub{font-size:20px;opacity:.85}.slide.cover .ps-date{font-size:18px;opacity:.75;margin-top:18px}
+.slide.cover.end{background:linear-gradient(135deg,#b06000,#f4c430)}
+.ps-logo{width:130px;height:130px;border-radius:50%;background:#fff;padding:6px}
+.ps-head{position:absolute;top:18px;left:64px;right:64px;display:flex;align-items:center;gap:10px;font-size:15px;color:#5b6b5e;border-bottom:2px solid #f4c430;padding-bottom:8px}.ps-head img{width:34px;height:34px}
+.ps-t{font-size:40px;margin:14px 0 22px;color:#1F5130}
+.pbigs{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.pbig{border-radius:18px;padding:20px 22px;background:#f3f6f1;border-left:10px solid var(--c)}.pbig b{display:block;font-size:52px;color:var(--c);line-height:1.05}.pbig span{font-size:19px}
+.pcols{display:grid;grid-template-columns:1fr 1fr;gap:36px}.pcols3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.pbar{display:grid;grid-template-columns:230px 1fr 64px;grid-template-rows:auto auto;column-gap:12px;align-items:center;margin-bottom:16px;font-size:18px}
+.pbar .pt{height:24px;background:#e4e9e1;border-radius:12px;overflow:hidden}.pbar .pt i{display:block;height:100%;border-radius:12px}.pbar b{font-size:22px}.pbar small{grid-column:2;font-size:14px;color:#6b776d}
+.pnote{font-size:18px;color:#3b4a3e;background:#fff8e1;border-radius:12px;padding:14px 16px;margin-top:10px}
+.ptab{width:100%;border-collapse:collapse;font-size:17px}.ptab th{background:#1F5130;color:#fff;padding:9px;text-align:left}.ptab td{padding:8px 9px;border-bottom:1px solid #dfe5dc}
+.pwf{background:#f3f6f1;border-radius:16px;padding:16px 18px;border-top:8px solid #f4c430}.pwf h3{margin:0 0 8px;font-size:24px;color:#1F5130}.pwf li{font-size:18px;margin-bottom:8px;line-height:1.35}
+[contenteditable=true]{outline:2px dashed #f4c430;outline-offset:3px;border-radius:4px}
+.pirrow{display:flex;gap:10px;align-items:center;border-bottom:1px solid var(--line);padding:8px 0}.pirrow small{color:var(--muted);flex:1}
+@media print{ body.pir-printing #printArea{font-family:Arial} .pir-page{width:277mm;height:190mm;page-break-after:always;break-after:page;overflow:hidden} .pir-pscale{transform:scale(.818);transform-origin:top left;width:1280px;height:720px}
+  .pir-page .pir-stage{-webkit-print-color-adjust:exact;print-color-adjust:exact} .pir-inkimg{position:absolute;inset:0;width:1280px;height:720px} }
+.sbcard{background:var(--card);border:1.5px solid #f0c39b;border-radius:16px;padding:14px 16px;margin-top:12px}
+.sbcard-h{display:flex;gap:12px;align-items:flex-start}.sbcard-h h3{margin:0;color:#8a3a00;font-size:20px}.sbcard-h p{margin:4px 0 0}.sbcard-h > div{flex:1}
+.sbday{background:#d35400;color:#fff;border-radius:12px;padding:8px 10px;font-weight:700;font-size:13px;white-space:nowrap}
+.recipe{margin-top:10px}.rcp{padding:0 14px 12px;font-size:14px}.rcp ul,.rcp ol{margin:4px 0 10px 18px;padding:0}
+.sbdate{border:1.5px solid var(--line);border-radius:8px;padding:6px 10px;font:inherit}
+.sbst{display:flex;flex-wrap:wrap;gap:6px}.sbs{border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:7px 13px;font:inherit;font-size:13.5px;cursor:pointer;color:var(--ink)}
+.sbs.on{background:var(--c);border-color:var(--c);color:#fff;font-weight:700}
+#sbReasonRow textarea{width:100%;box-sizing:border-box;border:1.5px solid var(--line);border-radius:8px;padding:8px 10px;font:inherit}
+.sbphotos{display:flex;gap:8px;overflow-x:auto;padding:4px 0}
+.sbph{flex:none;width:84px;height:84px;border-radius:50%;padding:3px;border:0;cursor:pointer;background:conic-gradient(#f9ce34,#ee2a7b,#6228d7,#f9ce34)}
+.sbph img{width:100%;height:100%;object-fit:cover;border-radius:50%;border:3px solid var(--card);display:block}
+.sbadd{flex:none;width:84px;height:84px;border-radius:50%;border:2px dashed var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;color:var(--muted)}
+.sbadd input{display:none}.sbadd span{font-size:24px;line-height:1}.sbadd small{font-size:11px}
+.sbpar{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.sbp{border:1.5px solid var(--line);border-radius:10px;background:var(--card)}.sbp > summary{display:flex;align-items:center;gap:8px;padding:8px 10px;cursor:pointer;list-style:none;flex-wrap:wrap}
+.sbp > summary::-webkit-details-marker{display:none}.sbp small{display:block;padding:0 12px 8px;color:var(--muted)}
+.sbpn{flex:1;font-weight:600;min-width:160px}.sbtg{display:flex;gap:4px}
+.sbtg button{border:1.5px solid var(--line);background:var(--page);border-radius:999px;padding:4px 10px;font:inherit;font-size:12px;cursor:pointer}
+.sbtg button.on.P{background:var(--ok);color:#fff;border-color:var(--ok)}.sbtg button.on.E{background:var(--sun);color:var(--onsun);border-color:var(--sun)}.sbtg button.on.N{background:var(--late);color:#fff;border-color:var(--late)}
+.sbstat{font-size:10px;color:#fff;border-radius:5px;padding:1px 5px;margin-top:auto;align-self:flex-start}
+.smlist{max-height:50vh;overflow-y:auto;display:flex;flex-direction:column;gap:6px}
+.smrow{display:flex;gap:8px;align-items:center}.smrow input{flex:1;border:1.5px solid var(--line);border-radius:8px;padding:7px 9px;font:inherit}.smrow select{border:1.5px solid var(--line);border-radius:8px;padding:7px;font:inherit}.smrow .sbday{padding:5px 8px;min-width:22px;text-align:center}
+.insta{position:fixed;inset:0;z-index:120;background:#000;display:flex;align-items:center;justify-content:center}
+.insta[hidden]{display:none}
+.insta-bars{position:absolute;top:10px;left:10px;right:10px;display:flex;gap:4px;z-index:3}
+.insta-bars i{flex:1;height:3px;background:rgba(255,255,255,.35);border-radius:3px;overflow:hidden}.insta-bars i b{display:block;height:100%;width:0;background:#fff}
+.insta-bars i.done b{width:100%}
+.insta-x{position:absolute;top:20px;right:14px;z-index:4;background:none;border:0;color:#fff;font-size:34px;cursor:pointer;line-height:1}
+.insta-media{max-width:100%;max-height:100%;width:min(560px,100vw);height:100%;display:flex;align-items:center;justify-content:center}
+.insta-media img{max-width:100%;max-height:92vh;object-fit:contain}.insta-media iframe{width:100%;height:80vh;border:0}
+.instalink{color:#fff;font-size:18px}
+.insta-l,.insta-r{position:absolute;top:60px;bottom:90px;width:35%;background:none;border:0;cursor:pointer;z-index:2}.insta-l{left:0}.insta-r{right:0}
+.insta-cap{position:absolute;left:0;right:0;bottom:44px;padding:10px 16px;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.7));display:flex;flex-direction:column;z-index:3}.insta-cap small{opacity:.8}
+.insta-act{position:absolute;bottom:12px;left:16px;right:16px;display:flex;gap:16px;z-index:3}.insta-act a,.insta-act .linkbtn{color:#fff}
+.evthumb{position:relative;border:0;padding:0;background:none;cursor:pointer}.vplay{position:absolute;inset:0;display:grid;place-items:center;color:#fff;font-size:26px;text-shadow:0 0 8px #000}
 .evm-head{display:flex;gap:12px;align-items:center;margin-bottom:10px}.evm-head h3{margin:0}
 .evm-ico{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;color:#fff;font-size:22px;flex:none;transition:background .2s}
 .evtypes{display:flex;flex-wrap:wrap;gap:6px}
@@ -709,6 +774,7 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
     <div class="who" id="menuWho"></div>
     <button id="menuAcc" onclick="openAccounts()" style="display:none">Teacher accounts</button>
     <button onclick="$('menu').classList.remove('open');openSig()">My e-signature</button>
+    <button id="menuMine" onclick="openPir('me')" style="display:none">My status presentation</button>
     <button onclick="installApp()">Install TALA app</button>
     <button id="menuSigBank" onclick="$('menu').classList.remove('open');openSigBank()" style="display:none">Signature bank</button>
     <button id="menuNewSY" onclick="openNewSY()" style="display:none">Start a new school year</button>
@@ -785,6 +851,7 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
   <!-- SIGNATURE BANK -->
   <section id="viewHome" style="display:none"></section>
   <section id="viewSbfp" style="display:none"></section>
+  <section id="viewPir" style="display:none"></section>
   <section id="viewObs" style="display:none"></section>
 
   <section id="viewSig" style="display:none">
@@ -1137,6 +1204,44 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
   </div>
 </div>
 
+<!-- SBFP learner or parent -->
+<div class="overlay" id="spModal">
+  <div class="modal" role="dialog" aria-labelledby="spTitle">
+    <h3 id="spTitle">Learner and parent</h3><input type="hidden" id="spId">
+    <div class="field"><label for="spLearner">Learner (Last name, First name)</label><input id="spLearner" maxlength="120" placeholder="Example: Ytang, Mario Jr."></div>
+    <div class="row2"><div class="field"><label for="spGrade">Learner's grade</label><input id="spGrade" list="spGradeList" maxlength="40"><datalist id="spGradeList"></datalist></div>
+      <div class="field"><label for="spGroup">Parent helps with this group</label><select id="spGroup"></select></div></div>
+    <div class="field"><label for="spParent">Parent, guardian, or representative</label><input id="spParent" maxlength="160" placeholder="Example: Ma. Liza A. Ytang"></div>
+    <label class="check"><input type="checkbox" id="spCounted">Count this parent in this group (untick for a sibling already counted)</label>
+    <div class="err" id="spErr"></div>
+    <div class="modal-actions"><button class="btn danger" id="spDel" onclick="sbPersonDelete()">Remove</button><span style="flex:1"></span><button class="btn ghost" onclick="closeModal('spModal')">Cancel</button><button class="btn" onclick="sbPersonSave()">Save</button></div>
+  </div>
+</div>
+<!-- SBFP menu list -->
+<div class="overlay" id="smModal">
+  <div class="modal wide" role="dialog" aria-labelledby="smTitle">
+    <h3 id="smTitle">SBFP menu list</h3><p class="sub">The menus follow this order, one per school day, and start again after the last one. Each menu is assigned to a grade level group of parents.</p>
+    <div class="field"><label for="smStart">Day 1 of the schedule</label><input type="date" id="smStart"></div>
+    <div id="smList" class="smlist"></div>
+    <div class="err" id="smErr"></div>
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal('smModal')">Cancel</button><button class="btn" onclick="sbMenuSave()">Save</button></div>
+  </div>
+</div>
+<!-- Instants viewer -->
+<div class="insta" id="insta" hidden>
+  <div class="insta-bars" id="instaBars"></div>
+  <button class="insta-x" onclick="closeInsta()" aria-label="Close">×</button>
+  <div class="insta-media" id="instaMedia"></div>
+  <button class="insta-l" onclick="instaGo(-1)" aria-label="Previous"></button><button class="insta-r" onclick="instaGo(1)" aria-label="Next"></button>
+  <div class="insta-cap" id="instaCap"></div><div class="insta-act" id="instaAct"></div>
+</div>
+
+<!-- Saved PIR presentations -->
+<div class="overlay" id="pirModal">
+  <div class="modal" role="dialog" aria-labelledby="pirTitle"><h3 id="pirTitle">Saved presentations</h3><p class="sub">Each is kept as it was on the day you saved it, with your edits and drawings.</p><div id="pirList"></div>
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal('pirModal')">Close</button></div></div>
+</div>
+
 <!-- Install app -->
 <div class="overlay" id="installModal">
   <div class="modal" role="dialog" aria-labelledby="instTitle">
@@ -1253,8 +1358,8 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
 
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
-const MIN_SERVER = '3.5'; // oldest Code.gs this page works with
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'3.5', date:'October 7, 2026' } };
+const MIN_SERVER = '3.7'; // oldest Code.gs this page works with
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'3.7', date:'October 7, 2026' } };
 function verLine(server){
   const old = server && (server.indexOf('older') > -1 || parseFloat(server) < parseFloat(MIN_SERVER));
   const s = server ? ' Server '+server+(old && USER && USER.role==='head' ? ', please deploy the new Code.gs.' : '.') : '';
@@ -1590,6 +1695,7 @@ function render(){
 
   $('menuSigBank').style.display = role==='head' ? '' : 'none';
   $('menuNewSY').style.display = role==='head' ? '' : 'none';
+  $('menuMine').style.display = role==='teacher' || role==='admin' ? '' : 'none';
   drawSide(); syncUI();
   $('accBtn').style.display = role==='head' ? '' : 'none';
   $('logBtn').style.display = role==='head' ? '' : 'none';
@@ -1641,7 +1747,8 @@ const FEATURES = [
     do:'Record each classroom observation with the date and time, the observation tool, ratings, strengths, and areas to improve. Teachers read the feedback in their portal and acknowledge it.',
     auto:'Observation schedules, reminders, acknowledgment timestamps, and each teacher\u2019s rating summary across the school year are computed automatically.',
     report:'Observation record per teacher, and a quarterly summary of all observations with signatures.' },
-  { id:'sbfp', name:'SBFP', built:true, open:() => openSbfp(), icon:'M4 11h16a8 8 0 0 1-16 0zm3-6c0 1 1 1 1 2s-1 1-1 2m4-4c0 1 1 1 1 2s-1 1-1 2m4-4c0 1 1 1 1 2s-1 1-1 2M3 19h18v2H3z' },
+  { id:'sbfp', name:'SBFP Monitoring', built:true, open:() => openSbfp(), icon:'M4 11h16a8 8 0 0 1-16 0zm3-6c0 1 1 1 1 2s-1 1-1 2m4-4c0 1 1 1 1 2s-1 1-1 2m4-4c0 1 1 1 1 2s-1 1-1 2M3 19h18v2H3z' },
+  { id:'pir', name:'PIR Presentation', built:true, headOnly:true, open:() => openPir('pir'), icon:'M3 4h18v12H3zm8 12h2v3h4v2H7v-2h4zM6 7h6v2H6zm0 4h9v2H6z' },
   { id:'read', name:'Learner Reading Assessment', icon:'M4 5h7a3 3 0 0 1 3 3v12a2 2 0 0 0-2-2H4zm16 0h-7a3 3 0 0 0-3 3v12a2 2 0 0 1 2-2h8z',
     do:'Record CRLA results for Key Stage 1 and Phil-IRI results for Key Stage 2 for every learner, linked with Project e-READ.',
     auto:'Reading levels per class, grade, and school, and progress from pretest to posttest, are computed automatically.',
@@ -1666,9 +1773,9 @@ const FEATURES = [
 function featOn(id){ const s = (DATA||PUB||{}).settings||{}; return !!(s.features||{})[id]; }
 function drawSide(){
   const head = USER && USER.role==='head';
-  $('sideNav').innerHTML = orderedFeatures().map(f => {
+  $('sideNav').innerHTML = orderedFeatures().filter(f => !f.headOnly || (USER && USER.role==='head')).map(f => {
     const dot = f.id==='obs' && OBS && OBS.newCount ? `<i class="sdot">${OBS.newCount}</i>` : '';
-    const tag = f.id==='lpt' || f.id==='home' ? '' : head ? (featOn(f.id) ? '<em class="vis">Shown</em>' : '<em class="hid">Hidden</em>') : (featOn(f.id) && f.built ? dot : '<em>Soon</em>');
+    const tag = f.id==='lpt' || f.id==='home' ? '' : f.headOnly ? '<em class="vis">Only you</em>' : head ? (featOn(f.id) ? '<em class="vis">Shown</em>' : '<em class="hid">Hidden</em>') : (featOn(f.id) && f.built ? dot : '<em>Soon</em>');
     return `<button type="button" class="side-i ${f.id===CUR_FEATURE?'on':''}" onclick="openFeature('${f.id}')">
     <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="${f.icon}"/></svg><span>${esc(f.name)}</span>${tag}</button>`; }).join('')
     + (head ? '<button type="button" class="linkbtn side-manage" onclick="openFV()">Arrange, show, or hide features</button>' : '');
@@ -1680,7 +1787,7 @@ function orderedFeatures(){ const ord = (((DATA||PUB||{}).settings)||{}).order |
 function drawFV(){
   $('fvList').innerHTML = FV_ORDER.map((id,i) => { const f = FEATURES.find(x=>x.id===id);
     return `<div class="fvrow2"><span class="fvord"><button type="button" ${i?'':'disabled'} onclick="moveFV(${i},-1)" aria-label="Move up">\u25B2</button><button type="button" ${i<FV_ORDER.length-1?'':'disabled'} onclick="moveFV(${i},1)" aria-label="Move down">\u25BC</button></span>
-      ${f.id==='lpt'?`<span class="fvname"><b>${esc(f.name)}</b><small>Always shown</small></span>`:`<label class="check" style="margin:0;flex:1"><input type="checkbox" data-id="${f.id}" ${featOn(f.id)?'checked':''}><span class="fvname"><b>${esc(f.name)}</b><small>${f.built?'Ready':'Still being built'}</small></span></label>`}</div>`; }).join('');
+      ${f.id==='lpt'||f.headOnly?`<span class="fvname"><b>${esc(f.name)}</b><small>${f.headOnly?'Only for you':'Always shown'}</small></span>`:`<label class="check" style="margin:0;flex:1"><input type="checkbox" data-id="${f.id}" ${featOn(f.id)?'checked':''}><span class="fvname"><b>${esc(f.name)}</b><small>${f.built?'Ready':'Still being built'}</small></span></label>`}</div>`; }).join('');
 }
 function moveFV(i, d){ document.querySelectorAll('#fvList input').forEach(x => { const f = FEATURES.find(y=>y.id===x.dataset.id); f._on = x.checked; }); const t = FV_ORDER[i]; FV_ORDER[i] = FV_ORDER[i+d]; FV_ORDER[i+d] = t; drawFV();
   document.querySelectorAll('#fvList input').forEach(x => { const f = FEATURES.find(y=>y.id===x.dataset.id); if (f._on !== undefined) x.checked = f._on; }); }
@@ -2387,12 +2494,17 @@ const GUIDES = {
     { el:'.otiles', t:'COI and NCOI guide', x:'Open the guide anytime to read the indicators.' } ] },
   obs_admin: { name:'Observations', steps: [
     { el:'.otiles', t:'Reports', x:'Open the summary report and print it per week, term, or teacher.' } ] },
-  sbfp_head: { name:'SBFP', steps: [
-    { el:'.sbgrid', t:'Post the menu', x:'Tap a school day to type the menu and the grade level of parents assigned. You can copy it to other days.' },
-    { el:'#viewSbfp .obs-actions', t:'Print', x:'Print the month\u2019s SBFP calendar for posting.' } ] },
-  sbfp_teacher: { name:'SBFP', steps: [
-    { el:'.sbtoday', t:'Today\u2019s menu', x:'See today\u2019s menu and which grade\u2019s parents are assigned.' },
-    { el:'.sbgrid', t:'The month', x:'Check the coming days so you can remind your learners\u2019 parents.' } ] }
+  sbfp_head: { name:'SBFP Monitoring', steps: [
+    { el:'.sbcard', t:'Menu of the day', x:'The menu and the grade level parents follow the guide in order. Tap Change menu or group when needed.' },
+    { el:'.sbst', t:'Status', x:'Mark if feeding was implemented. If not, choose why and type the reason.' },
+    { el:'.sbphotos', t:'Attendance sheet', x:'Add photos of the signed attendance sheet. Tap a photo to view it.' },
+    { el:'.sbpar', t:'Parents', x:'Mark each parent as Present, Excused, or Not participating, then Save attendance.' },
+    { el:'#viewSbfp .ktabs', t:'More', x:'See the calendar, the menu summary, the list of learners and parents, and participation rates.' } ] },
+  sbfp_teacher: { name:'SBFP Monitoring', steps: [
+    { el:'.sbcard', t:'Menu of the day', x:'See today\u2019s menu, the parents assigned, and the recipe.' },
+    { el:'.sbst', t:'Status', x:'Mark if feeding was implemented. If not, choose why and type the reason.' },
+    { el:'.sbpar', t:'Parents', x:'Mark the parents who helped prepare, then Save attendance.' },
+    { el:'#viewSbfp .ktabs', t:'More', x:'Calendar, menu summary, learners and parents, and participation.' } ] }
 };
 GUIDES.sbfp_admin = GUIDES.sbfp_head;
 var TOUR = [], GKEY = '';
@@ -2402,6 +2514,7 @@ function tourKey(){ return 'tala_guide_hide_' + (USER ? USER.email : '') + '_' +
 function maybeGuide(f){
   if (!USER || USER.mustChange) return;
   const id = guideId(f); if (!id) return;
+  if ((USER.guides||[]).indexOf(id) > -1) return;
   try{ if (localStorage.getItem('tala_guide_hide_'+USER.email+'_'+id) === '1' || sessionStorage.getItem('tala_guide_seen_'+id) === '1') return; }catch(e){}
   setTimeout(() => startGuide(id), 700);
 }
@@ -2409,7 +2522,7 @@ function maybeTour(){}
 function startGuide(id){
   if (!GUIDES[id] || !$('tour').hidden) return;
   GKEY = id; TOUR = GUIDES[id].steps; TI = 0; closeModal('guidesModal');
-  try{ $('tourHide').checked = localStorage.getItem(tourKey()) === '1'; sessionStorage.setItem('tala_guide_seen_'+id,'1'); }catch(e){}
+  try{ $('tourHide').checked = (USER && (USER.guides||[]).indexOf(id) > -1) || localStorage.getItem(tourKey()) === '1'; sessionStorage.setItem('tala_guide_seen_'+id,'1'); }catch(e){}
   $('tour').hidden = false; drawTour();
 }
 function startTour(){ openGuides(); }
@@ -2438,8 +2551,10 @@ function startTour(manual){
   $('tour').hidden = false; drawTour();
 }
 function endTour(){
-  try{ if ($('tourHide').checked) localStorage.setItem(tourKey(),'1'); else localStorage.removeItem(tourKey()); }catch(e){}
+  const hide = $('tourHide').checked, id = GKEY;
+  try{ if (hide) localStorage.setItem(tourKey(),'1'); else localStorage.removeItem(tourKey()); }catch(e){}
   $('tour').hidden = true;
+  if (USER && id){ const had = (USER.guides||[]).indexOf(id) > -1; if (hide !== had){ USER.guides = (USER.guides||[]).filter(x=>x!==id); if (hide) USER.guides.push(id); api('hideGuide',{ id, hide }).catch(()=>{}); } }
 }
 function tourGo(d){ TI += d; if (TI >= TOUR.length){ endTour(); return; } if (TI < 0) TI = 0; drawTour(); }
 function drawTour(){
@@ -2835,11 +2950,11 @@ function guideTabSync(){ const t = $('guideTab'); if (t) t.style.display = $('vi
   document.addEventListener('touchstart', e => { const x = e.touches[0].clientX; x0 = (x > window.innerWidth - 28 && $('guideTab').style.display !== 'none') || $('guideDrawer').classList.contains('open') ? x : null; }, { passive:true });
   document.addEventListener('touchend', e => { if (x0 === null) return; const dx = e.changedTouches[0].clientX - x0; if (dx < -40 && !$('guideDrawer').classList.contains('open')) openGuide(); else if (dx > 60) closeGuide(); x0 = null; }, { passive:true });
 })();
-function showObsView(){ ['viewTrk','viewAcc','viewBank','viewLog','viewWeeks','viewSig','viewHome','viewSbfp'].forEach(v => $(v).style.display='none'); $('viewObs').style.display=''; window.scrollTo(0,0); }
+function showObsView(){ ['viewTrk','viewAcc','viewBank','viewLog','viewWeeks','viewSig','viewHome','viewSbfp','viewPir'].forEach(v => $(v).style.display='none'); $('viewObs').style.display=''; window.scrollTo(0,0); }
 const _showTracker = showTracker;
-showTracker = function(){ $('viewObs').style.display='none'; $('viewHome').style.display='none'; $('viewSbfp').style.display='none'; closeGuide(); CUR_FEATURE='lpt'; drawSide(); _showTracker(); };
+showTracker = function(){ $('viewObs').style.display='none'; $('viewHome').style.display='none'; $('viewSbfp').style.display='none'; $('viewPir').style.display='none'; closeGuide(); CUR_FEATURE='lpt'; drawSide(); _showTracker(); };
 const _showView2 = showView2;
-showView2 = function(id){ $('viewObs').style.display='none'; $('viewHome').style.display='none'; $('viewSbfp').style.display='none'; closeGuide(); _showView2(id); };
+showView2 = function(id){ $('viewObs').style.display='none'; $('viewHome').style.display='none'; $('viewSbfp').style.display='none'; $('viewPir').style.display='none'; closeGuide(); _showView2(id); };
 
 async function openObs(){
   if (!USER){ toast('Please sign in to open Classroom Observations.'); openLogin(); return; }
@@ -3704,7 +3819,7 @@ const QUOTES = [
 ];
 function quoteToday(){ const d = todayPH(), n = Number(d.replace(/-/g,'')); return QUOTES[(n*7 + Number(d.slice(8,10))) % QUOTES.length]; }
 function showHome(){
-  ['viewTrk','viewAcc','viewBank','viewLog','viewWeeks','viewSig','viewObs','viewSbfp'].forEach(v => $(v).style.display='none');
+  ['viewTrk','viewAcc','viewBank','viewLog','viewWeeks','viewSig','viewObs','viewSbfp','viewPir'].forEach(v => $(v).style.display='none');
   closeGuide(); $('viewHome').style.display=''; CUR_FEATURE = 'home'; drawSide(); drawHome(); window.scrollTo(0,0); maybeGuide('home');
   if (USER && (USER.role==='head' || featOn('obs')) && !OBS.list.length){ obsLocalLoad(); obsRefresh().catch(()=>{}); }
 }
@@ -3737,7 +3852,7 @@ function drawHome(){
       ${head?`<div class="hacts"><button class="btn sun small" onclick="openFeature('obs');setTimeout(obsChooser,50)">\u002B New observation</button><button class="btn ghost small" onclick="openFeature('obs');setTimeout(openCal,50)">Observation calendar</button></div>`:''}</div>`;
   }
   $('viewHome').innerHTML = `
-    <div class="hhero"><div class="hhero-t"><h2>${greet}, ${esc(first)}!</h2><p>Today is ${esc(today)}. Enjoy your class, and be an inspiration.</p></div>
+    <div class="hhero"><div class="hhero-t"><h2>${greet}, ${esc(first)}!</h2><p>Today is ${esc(today)}. Enjoy your class, and be an inspiration.</p>${head?`<button class="btn sun small" style="margin-top:12px" onclick="openPir('pir')">PIR Presentation</button>`:`<button class="btn sun small" style="margin-top:12px" onclick="openPir('me')">My status presentation</button>`}</div>
       <div class="qcard" id="qCard"><span class="qstar">\u2605</span><p>\u201C${esc(quoteToday())}\u201D</p><small>TALA quote of the day</small>
         <button class="btn ghost small" onclick="shareQuote()">Share this quote</button></div></div>
     <div class="hgrid">${lpt}${obs}</div>
@@ -3776,7 +3891,7 @@ function drawSchoolCal(){
   let cells = ''; for (let i = 0; i < startDow; i++) cells += '<div class="sday empty"></div>';
   for (let d = 1; d <= days; d++){
     const date = SCM+'-'+String(d).padStart(2,'0'), ev = eventsOn(date), mk = head ? calMark(date) : null, n = head ? obsOnDay(date) : 0, sd = head && schoolDay(date);
-    cells += `<button class="sday ${date===today?'today':''} ${dow(date)===0||dow(date)===6?'wkend':''}" onclick="${HCT==='sbfp'?`sbfpForm('${date}')`:`dayModal('${date}')`}"><b>${d}</b>
+    cells += `<button class="sday ${date===today?'today':''} ${dow(date)===0||dow(date)===6?'wkend':''}" onclick="${HCT==='sbfp'?`SB.date='${date}';SB.tab='today';openSbfp()`:`dayModal('${date}')`}"><b>${d}</b>
       ${mk?`<span class="evchip" style="background:#777">Out: ${esc(mk.type.replace(/ \(.*/,''))}</span>`:''}
       ${HCT==='sbfp' ? (sbfpOn(date)?`<span class="evchip" style="background:#d35400">${esc(sbfpOn(date).menu)}</span><span class="evmore">${esc(sbfpOn(date).grade||'')}</span>`:'')
         : (sbfpOn(date)?'<span class="evchip" style="background:#d35400">SBFP</span>':'') + ev.slice(0,2).map(e=>`<span class="evchip" style="background:${EV_COLOR[e.type]||'#555'}">${esc(e.title)}</span>`).join('')+(ev.length>2?`<span class="evmore">+${ev.length-2} more</span>`:'')}
@@ -3788,11 +3903,16 @@ function drawSchoolCal(){
   const sbOk = canSbfp() || featOn('sbfp');
   el.innerHTML = `<div class="hcard scal">${sbOk?`<div class="ktabs" style="margin:0 0 10px"><button class="${HCT==='school'?'on':''}" onclick="HCT='school';drawSchoolCal()">School Calendar</button><button class="${HCT==='sbfp'?'on':''}" onclick="HCT='sbfp';drawSchoolCal()">SBFP Calendar</button></div>`:''}
     <div class="hcard-h"><span class="oico">\u2637</span><div><b>${HCT==='sbfp'?'SBFP Calendar':'School Calendar'}</b><small>${HCT==='sbfp'?'Menu of the day and the assigned grade level of parents':'Events and activities'+(head?', with your observation days':'')}</small></div>
-      ${HCT==='sbfp' ? `<button class="btn small" onclick="openSbfp()">Open SBFP</button>` : USER?`<button class="btn small sun" onclick="eventForm('${today}')">\u002B Add</button>`:''}</div>
+      ${HCT==='sbfp' ? `<button class="btn small" onclick="openSbfp()">Open SBFP Monitoring</button>` : USER?`<button class="btn small sun" onclick="eventForm('${today}')">\u002B Add</button>`:''}</div>
     <div class="calbar"><button class="btn ghost small" onclick="SCM='${prev}';drawSchoolCal()">\u2039</button><b>${esc(mname)}</b><button class="btn ghost small" onclick="SCM='${next}';drawSchoolCal()">\u203A</button></div>
     <div class="scal-grid"><div class="cdow">Sun</div><div class="cdow">Mon</div><div class="cdow">Tue</div><div class="cdow">Wed</div><div class="cdow">Thu</div><div class="cdow">Fri</div><div class="cdow">Sat</div>${cells}</div>
     ${HCT==='sbfp' ? '' : upcomingHtml()}
-    <div class="obs-actions" style="margin:10px 0 0"><button class="btn ghost small" onclick="printSchoolCal()">\u2399 Print ${esc(mname)} calendar</button></div></div>`;
+    ${USER?`<div class="obs-actions" style="margin:10px 0 0"><button class="btn ghost small" onclick="printSchoolCal()">\u2399 Print ${esc(mname)} calendar</button></div>`:''}</div>`;
+}
+function evInsta(id, k){
+  const e = allEvents().find(x=>x.id===id); if (!e) return;
+  const media = (e.files||[]).map((f,i)=>({ f, i })).filter(x => x.f.id && /image|video/.test(x.f.mime||''));
+  openInsta(media.map(x => ({ id:x.f.id, url:x.f.url, video:/video/.test(x.f.mime), caption:e.title, sub:dShort(e.date)+' \u00B7 '+(e.byName||'') })), Math.max(0, media.findIndex(x=>x.i===k)));
 }
 function upcomingHtml(){
   const today = todayPH(), tmr = addDays(today,1), wkEnd = addDays(today, 7 - dow(today));
@@ -3833,7 +3953,7 @@ function dayModal(date){
   $('dayTitle').textContent = new Date(date+'T00:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
   const sb = sbfpOn(date);
   $('dayBody').innerHTML = (sb ? `<div class="evrow" style="border-left-color:#d35400"><b>SBFP: ${esc(sb.menu)}</b><small>${esc(sb.grade||'No grade assigned')}${sb.notes?' \u00B7 '+esc(sb.notes):''}</small></div>` : '') + (ev.length ? ev.map(e => `<div class="evrow" style="border-left-color:${EV_COLOR[e.type]||'#555'}"><b>${esc(e.title)}</b><small>${EV_ICON[e.type]||''} ${esc(e.type||'')}${e.time?' \u00B7 '+esc(evTimeText(e)):''}${e.end&&e.end!==e.date?' \u00B7 until '+esc(dShort(e.end)):''} \u00B7 ${e.audience==='Everyone'?'Personnel and the public':e.audience==='Personnel'?'All personnel':'Only me'} \u00B7 by ${esc(e.byName||'')}</small>${e.details?`<p>${esc(e.details)}</p>`:''}
-      ${(e.files||[]).length?`<div class="evfiles">${e.files.map(f=>f.id && /image/.test(f.mime||'') ? `<a href="${esc(f.url)}" target="_blank" rel="noopener" class="evthumb"><img src="https://drive.google.com/thumbnail?id=${esc(f.id)}&sz=w240" alt="${esc(f.name)}" loading="lazy"></a>` : `<a class="attc" href="${esc(f.url)}" target="_blank" rel="noopener">${attIcon(f)} ${esc(f.name.slice(0,40))}</a>`).join('')}</div>`:''}
+      ${(e.files||[]).length?`<div class="evfiles">${e.files.map((f,k)=>f.id && /image|video/.test(f.mime||'') ? `<button class="evthumb" onclick="evInsta('${esc(e.id)}',${k})">${/video/.test(f.mime)?'<span class="vplay">\u25B6</span>':''}<img src="https://drive.google.com/thumbnail?id=${esc(f.id)}&sz=w240" alt="${esc(f.name)}" loading="lazy"></button>` : `<a class="attc" href="${esc(f.url)}" target="_blank" rel="noopener">${attIcon(f)} ${esc(f.name.slice(0,40))}</a>`).join('')}</div>`:''}
       ${USER && (e.byEmail===USER.email || head) ? `<span><button class="linkbtn" onclick="eventForm('${date}','${esc(e.id)}')">Edit</button> <button class="linkbtn" style="color:var(--late)" onclick="eventDelete('${esc(e.id)}')">Remove</button></span>`:''}</div>`).join('') : '<p class="hint">No events on this day.</p>')
     + (head ? `<div class="evrow obsrow"><b>Observations: ${obs.length} of 2</b>${mk?`<small>You were out: ${esc(mk.type)}${mk.note?', '+esc(mk.note):''}</small>`:''}${obs.map(o=>`<small>${otype(o)==='mwa'?'MWA':'ePMCF'}: ${esc(o.teacherName||(o.data||{}).focus||'Visit')}</small>`).join('')}<span><button class="linkbtn" onclick="closeModal('dayModal');calDay('${date}')">Mark in or out of school</button></span></div>` : '');
   $('dayAdd').style.display = USER ? '' : 'none'; $('dayAdd').onclick = () => { closeModal('dayModal'); eventForm(date); };
@@ -3899,66 +4019,498 @@ async function eventDelete(id){
   try{ const list = await api('evDelete',{ id }); DATA.events = list; closeModal('dayModal'); drawSchoolCal(); toast('Removed.'); }catch(e){ handleErr(e); }
 }
 
-/* ----- SBFP: menu of the day and assigned grade level of parents ----- */
-var SBM = '';
-function sbfpList(){ return ((DATA||PUB||{}).sbfp)||[]; }
-function sbfpOn(date){ return sbfpList().find(x=>x.date===date); }
+// From the SBFP guide (DepEd Zamboanga Sibugay, SY 2026 to 2027). Serving size 10 each.
+const SBFP_MENUS = [
+ { n:'Native Tinolang Manok with Malunggay', g:'Kindergarten', cost:'21.50', kcal:'450 Kcal', src:'BLT Recipe Book',
+   ing:'4 Tbsp cooking oil; 40 g onion, chopped; 2 Tbsp ginger, crushed; 6 cloves garlic, minced; 2 cups chicken breast, cubed; 1/4 tsp pepper, crushed; 6 Tbsp fish sauce; 8 cups water; 1 cup potato, cubed; 5 cups green papaya, sliced; 2 cups moringa leaves',
+   proc:'In a pan, heat the cooking oil and saute the onion, ginger, and garlic until softened.|Add the chicken and season with pepper and fish sauce. Pour in the water and bring to a boil.|Add the potatoes and cook for 5 minutes. Add the papaya and boil for another 3 minutes.|Add the moringa leaves. Remove from heat.' },
+ { n:'Ginataang Mixed Vegetables', g:'Grade 1', cost:'20.00', kcal:'', src:'Standardized Recipes using Indigenous Foods',
+   ing:'1 cup green munggo; 8 cups water; 1/4 cup cooking oil; 2 tbsp garlic, minced; 2 cups squash, cubed; 2 tbsp bagoong alamang; 1 cup dried dilis; 3 cups coco milk diluted in 1 1/2 cups water; 2 cups kulitis leaves; 1 cup pure coco milk',
+   proc:'Boil munggo in 8 cups water until tender. Set aside.|Saute garlic, add squash, bagoong, and dilis. Cook until squash is almost done.|Add diluted coco milk and kulitis leaves. Cover and cook until done.|Add coco cream. Simmer uncovered for a few minutes.|Serve hot.' },
+ { n:'Ukoy Makalhip', g:'Grade 2', cost:'21.00', kcal:'', src:'Standardized Recipes using Malunggay',
+   ing:'2 1/2 cups small shrimp (hipon) or dried shrimp (hibe); 2 1/2 cups kalabasa, julienned; 2 1/2 cups sweet potato or carrots, julienned; 1 cup malunggay leaves; 1 cup all-purpose flour; 1 cup cornstarch; 2 eggs; 1 1/4 cup ice-cold water; 1 tsp baking powder; 1/2 tsp salt; 1 tsp ground black pepper; 2 onions; 1 tsp achuete powder in water (optional); 1/2 cup evaporated milk; cooking oil for deep frying',
+   proc:'Mix all ingredients except cooking oil. Set aside.|Measure about 90 grams of the mixture and flatten.|Heat cooking oil on low to medium flame.|Fry until golden brown.|Serve hot with vinegar mixture or sauce.' },
+ { n:'Chicken Curry', g:'Grade 3', cost:'23.00 to 25.00', kcal:'300 cal', src:'Standardized Recipe, FNRI',
+   ing:'750 g to 1 kg bone-in chicken, bite-sized; 2 cups pure coconut milk; 1 1/2 cups potatoes, cubed; 1 cup carrots, cubed; 1 cup bell peppers, diced; 1 cup malunggay leaves or celery; 1 1/2 tbsp mild curry powder; 1 onion, chopped; 4 cloves garlic, minced; 1 thumb ginger, julienned; 3 tbsp cooking oil; 1 1/2 tbsp fish sauce; 1 1/2 cups water or chicken broth',
+   proc:'Pan-fry the potatoes and carrots for 2 to 3 minutes, then set aside. Saute garlic, onion, and ginger. Sear the chicken for 3 to 4 minutes.|Add fish sauce and cook 1 minute. Add the water and half the coconut milk. Boil, then simmer covered for 15 to 20 minutes until tender.|Add the curry powder, potatoes, carrots, and the rest of the coconut milk. Simmer uncovered 5 minutes. Add bell peppers and cook 2 more minutes.' },
+ { n:'Bihon with Shredded Chicken', g:'Grade 4', cost:'20.00', kcal:'417.6 Kcal', src:'Lutong Nanay',
+   ing:'3 tbsp cooking oil; 6 cloves garlic, minced; 2 onions, chopped; 400 g chicken breast, shredded; 100 g chicken liver, sliced; 2 small carrots, cut into strips; 2 seasoning cubes; 2 packs (200 g) bihon noodles; 1/2 wedge (400 g) cabbage, cut into strips',
+   proc:'Saute the onion and garlic in oil. Add the chicken.|Add the chicken liver and cook until done.|Add the carrots, seasoning cube, and water. Bring to a boil.|Add the bihon and cabbage. Simmer until the noodles are soft and the water is absorbed.' },
+ { n:'Fish Fillet Escabeche', g:'Grade 5', cost:'21.50', kcal:'400 Kcal', src:'BLT Recipe Book',
+   ing:'500 g fish (dalagang bukid), cut into pieces; 2 tsp salt; cooking oil for sauteing; 10 g ginger strips; 40 g onion, sliced; 140 g tomato, sliced; 4 cups water; 1 cup sayote strips; 3/4 cup bell pepper strips; 1/4 cup vinegar; 1 tsp patis; 2 tsp white sugar; 1/2 cup cornstarch dissolved in 1 cup water',
+   proc:'Salt the fish and let stand for 5 minutes.|Fry in hot oil until golden brown. Set aside.|Saute garlic, ginger, onion, and tomato.|Add water and simmer.|Add sayote and bell pepper. Simmer until done.|Season with vinegar, patis, and sugar.|Add the cornstarch solution. Mix well.|Pour over the fried fish.' },
+ { n:'Vegetable Mix paired with Fried Fish', g:'Grade 6', cost:'20.00', kcal:'', src:'Busog, Lusog, Talino (BLT)',
+   ing:'1 cup green munggo; 6 cups water; 2/3 cup cooking oil; 4 seg garlic, crushed; 1/2 cup onion, sliced; 1/2 cup tomato, sliced; bagoong alamang; 1 cup dried dilis; 2 cups squash, diced; 1/2 cup sitaw; 1 cup okra, sliced; 4 cups kangkong leaves; 6 cups malunggay leaves',
+   proc:'Boil mung beans in 6 cups water until soft. Mash and set aside.|Boil gabi in 2 cups water until cooked. Set aside.|Saute garlic, onion, and tomatoes. Add bagoong and dilis.|Add 4 cups of water and boil.|Add squash, mung beans, gabi, and kangkong.|Add malunggay leaves. Simmer for 1 minute.|Serve hot with fried fish.' },
+ { n:'Ginisang Sayote with Chicken and Sotanghon', g:'Kindergarten', cost:'21.15', kcal:'350.8 Kcal', src:'Lutong FNRI',
+   ing:'3 Tbsp cooking oil; 2 onions, chopped; 2 cloves garlic, chopped; 300 g chicken cut ups; 2 sayote, thin strips; 2 seasoning cubes; 4 cups water; 2 cans tuna flakes; 1 pack (90 g) sotanghon, soaked in hot water',
+   proc:'Saute the onion and garlic. Add the chicken and saute until cooked.|Add the sayote, seasoning cube, and water. Bring to a boil, then add the sotanghon. Boil for 2 minutes.' },
+ { n:'Miswa Patola with Shredded Chicken', g:'Grade 1', cost:'14.30', kcal:'311 Kcal', src:'Lutong Nanay',
+   ing:'1 Tbsp cooking oil; 100 g onion, chopped; 10 g garlic, chopped; 200 g chicken breast, boiled and shredded; 4 cups water; 2 chicken seasoning; 400 g patola, sliced; 2 tali miswa',
+   proc:'Saute onion and garlic, then add the chicken. Pour in the water and add the chicken cube. Simmer.|Add the patola and cook until tender.|Add the miswa and boil for 2 minutes.' },
+ { n:'Chicken Adobo', g:'Grade 2', cost:'20.00', kcal:'417.6 Kcal', src:'Lutong FNRI',
+   ing:'3 tsp cooking oil; 4 to 6 cloves garlic, minced; 77 g onion, chopped; 700 g chicken, serving pieces; 2 bay leaves; 2 tsp black peppercorns; 92 ml soy sauce; 276 ml water; 92 ml vinegar',
+   proc:'Marinate the chicken in soy sauce and garlic for at least 30 minutes.|Sear the chicken in hot oil until lightly browned.|Add the marinade, water, onion, peppercorns, and bay leaf.|Add the vinegar. Do not stir. Boil uncovered for 2 to 3 minutes.|Cover and simmer 20 to 30 minutes until tender.' },
+ { n:'Sinabawang Kalabasa with Fried Fish', g:'Grade 3', cost:'21.00', kcal:'336 Kcal', src:'Lutong Nanay',
+   ing:'450 to 500 g whole fish (galunggong or tilapia); 400 g squash, cubed; 50 g malunggay leaves; 150 g sitaw (optional); 30 g onions; 1500 ml water; cooking oil for frying; salt or patis to taste; chicken cube (optional)',
+   proc:'Combine the water, squash, onion, fried fish, and chicken cube in a pot.|Simmer on low heat until the squash is tender.|Add the string beans.|Add the malunggay leaves last and cook for 1 minute.' },
+ { n:'Adobong Sitaw with Fish Flakes', g:'Grade 4', cost:'20.85', kcal:'371 Kcal', src:'Lutong FNRI',
+   ing:'6 Tbsp cooking oil; 1/2 cup onion, chopped; 12 cloves garlic, minced; 9 cups string beans, sliced; 4/3 cup soy sauce; 4/3 cup vinegar; 1/4 cup water; 2 cans tuna flakes; 1/2 tsp salt; 2 pinch black pepper',
+   proc:'Saute onion and garlic. Add the string beans and cook for 1 minute.|Add soy sauce, vinegar, and water. Boil without stirring. Cook until tender.|Add the tuna flakes. Season with salt and pepper. Boil for 3 minutes.' },
+ { n:'Chicken Afritada ala Moringa', g:'Grade 5', cost:'20.00', kcal:'417 Kcal', src:'Lutong FNRI',
+   ing:'660 g chicken breast; 220 g potato, cubed; 95 g carrot, cubed; 71.4 g malunggay leaves; 2 bay leaves; 30 g onion; 4 cloves garlic; 1 g black pepper; 35 g sugar; 9.4 g iodized salt; 270 ml water; 100 ml oil for sauteing; 100 ml oil for frying; 40 g tomato paste; 40 g red bell pepper',
+   proc:'Fry the sweet potato until slightly brown. Set aside.|Boil the carrots 4 to 5 minutes. Set aside.|Saute onions, garlic, and bay leaves.|Add chicken, season with salt, cover and cook 10 to 15 minutes.|Add tomato paste. Cook 3 to 5 minutes.|Add water and carrots. Cook 15 minutes on low heat.|Add salt, sugar, and pepper. Cook 5 minutes.|Add bell pepper, malunggay, and sweet potatoes. Cook 2 to 3 minutes.' },
+ { n:'Chicken Sotanghon Soup', g:'Grade 6', cost:'16.30', kcal:'311 Kcal', src:'Lutong Nanay',
+   ing:'3 tbsp cooking oil; 2 onions; 2 cloves garlic; 200 g chicken cut ups; 2 chicken cubes; 4 cups water; 2 packs (90 g) sotanghon; 2 tali pechay',
+   proc:'Saute onion, garlic, and chicken.|Add the chicken cube and water. Bring to a boil.|Add the sotanghon and pechay and let them cook.' },
+ { n:'Ginataang Malunggay at Kalabasa', g:'Kindergarten', cost:'19.50', kcal:'', src:'Standardized Recipes, FNRI',
+   ing:'5 cups squash, cubed; 3 cups malunggay leaves; 4 cups coconut milk; 250 g shrimp or dried fish; 1 red onion, chopped; 4 cloves garlic; 1 thumb ginger, strips; 2 tbsp patis or bagoong; 2 tbsp cooking oil; 2 green chilis (optional)',
+   proc:'Saute garlic, onions, and ginger. Add the shrimp or dried fish.|Add 3 cups coconut milk, boil, add squash, cover and simmer 8 to 10 minutes.|Add 1 cup thick coconut cream. Season. Simmer 3 to 5 minutes.|Turn off the heat. Add malunggay, cover 1 to 2 minutes.' },
+ { n:'Nilagang Baka with Saba (Pochero)', g:'Grade 1', cost:'25.00', kcal:'369 Kcal', src:'Standardized Recipe, DOST FNRI',
+   ing:'350 g lean beef; 400 g ripe saba (about 5 pcs); 400 g pechay; 200 g potato; 200 g cabbage; 2.5 tsp whole peppercorns; 100 g onion; iodized salt or patis to taste; 15 cups water',
+   proc:'Boil the beef in 15 cups of water. Skim off the scum.|Add onions and peppercorns. Simmer covered 1.5 hours until tender.|Add potatoes. Simmer 7 minutes.|Add saba. Simmer 4 to 5 minutes.|Season. Add cabbage and pechay. Cover, turn off the heat, and steam for 3 minutes.' },
+ { n:'Fish Tinola ala Moringa', g:'Grade 2', cost:'21.00', kcal:'', src:'Standardized Recipe, FNRI',
+   ing:'450 g fish (galunggong, tangigue, or tilapia); 300 g sayote or green papaya; 50 g malunggay leaves; 30 g ginger strips; lemon grass and tomatoes; 50 g onion and garlic; 1600 ml water or rice wash',
+   proc:'Saute the aromatics and boil the ginger and lemongrass broth first.|Add the fish in the last 5 to 7 minutes. Avoid stirring.|Turn off the heat, add the malunggay, and cover.' },
+ { n:'Malunggay Vege Mix', g:'Grade 3', cost:'', kcal:'', src:'Busog, Lusog, Talino (BLT)',
+   ing:'1 cup green munggo; 6 cups water; 2/3 cup cooking oil; 4 seg garlic; 1/2 cup onion; 1/2 cup tomato; bagoong alamang; 1 cup dried dilis; 2 cups squash, diced; 1/2 cup sitaw; 1 cup okra; 6 cups malunggay leaves',
+   proc:'Boil mung beans in 6 cups water until soft. Mash and set aside.|Boil gabi in 2 cups water. Set aside.|Saute garlic, onion, and tomatoes. Add bagoong and dilis.|Add 4 cups water and boil.|Add squash, mung beans, and gabi.|Add malunggay. Simmer 1 minute. Serve hot.' },
+ { n:'Ginisang Togue', g:'Grade 4', cost:'', kcal:'300 cal', src:'Standardized Recipe, FNRI',
+   ing:'4 cups togue; 2 blocks tokwa, diced; 2 eggs; 1 cup carrots, julienned; 1 cup squash, grated; 1 cup green beans or cabbage; 1 onion; 3 cloves garlic; 2 tomatoes; 2 tbsp soy or oyster sauce; 3 tbsp cooking oil; salt and pepper; 1/4 cup water',
+   proc:'Fry the tokwa until golden. Cook the egg as a thin omelet and slice into strips.|Saute garlic, onion, and tomatoes.|Add carrots, green beans, and squash with 1/4 cup water. Steam 2 minutes.|Add togue and tokwa. Season with soy sauce, salt, and pepper.|Stir-fry 1 to 2 minutes on high heat. Keep it crunchy.|Top with egg strips. Serve with rice.' },
+ { n:'Arroz Caldo Royale', g:'Grade 5', cost:'21.00', kcal:'310 cal', src:'Standardized Recipe, FNRI',
+   ing:'1 1/2 cups glutinous rice; 1/2 cup white rice; 400 g chicken, boiled and shredded; 5 hard-boiled eggs; 1 cup squash, grated; 1 cup malunggay, chopped; 8 to 10 cups broth; 3 thumbs ginger; 1 onion; 6 cloves garlic; 2 tbsp patis; 1 tbsp kasubha or turmeric; 2 tbsp cooking oil; 5 calamansi',
+   proc:'Fry half the garlic until crisp for topping.|Saute garlic, onion, and ginger.|Add the washed rice and stir-fry 2 minutes.|Add broth, patis, kasubha, and squash. Simmer 25 to 30 minutes, stirring often.|Add chicken. Turn off heat, add malunggay, cover 2 minutes.|Serve with half an egg, fried garlic, and calamansi.' },
+ { n:'Chicken Afritada ala Moringa', g:'Grade 6', cost:'20.00', kcal:'417 Kcal', src:'Lutong FNRI',
+   ing:'660 g chicken breast; 220 g potato; 95 g carrot; 71.4 g malunggay; 2 bay leaves; 30 g onion; 4 cloves garlic; 1 g black pepper; 35 g sugar; 9.4 g salt; 270 ml water; 100 ml oil for sauteing; 100 ml oil for frying; 40 g tomato paste; 40 g red bell pepper',
+   proc:'Fry the sweet potato until slightly brown. Set aside.|Boil the carrots 4 to 5 minutes.|Saute onions, garlic, and bay leaves.|Add chicken, season, cover and cook 10 to 15 minutes.|Add tomato paste. Cook 3 to 5 minutes.|Add water and carrots. Cook 15 minutes.|Add salt, sugar, and pepper. Cook 5 minutes.|Add bell pepper, malunggay, and sweet potatoes. Cook 2 to 3 minutes.' },
+ { n:'Malu Pinakbet', g:'Kindergarten', cost:'16.50', kcal:'300 cal', src:'BLT',
+   ing:'4 cups squash, cubed; 2 cups malunggay; 1 1/2 cups sitaw; 1 1/2 cups eggplant; 1 cup okra; 100 g ground pork or chicken; 3 tomatoes; 1 onion; 3 cloves garlic; 2 tbsp cooking oil; 1 1/2 tbsp bagoong alamang; 1 1/2 cups rice-wash water',
+   proc:'Saute garlic and onion. Add the ground meat and cook.|Add tomatoes and bagoong. Simmer 3 minutes.|Add rice-wash water, squash, and sitaw. Simmer 5 minutes.|Add eggplant and okra. Cook 3 to 4 minutes.|Turn off the heat. Fold in malunggay and cover 1 minute.' },
+ { n:'Chicken Liver Adobo with Potato', g:'Grade 1', cost:'22.00', kcal:'381 Kcal', src:'Lutong FNRI',
+   ing:'60 ml cooking oil; 70 g onion; 5 cloves garlic; 500 g chicken liver; 2 pinch black pepper; 120 ml soy sauce; 120 ml vinegar; 2 cups water; 200 g potato',
+   proc:'Clean the chicken liver. Set aside.|Saute onion and garlic.|Add liver and cook until it changes color.|Add pepper and soy sauce. Simmer 3 to 5 minutes.|Add vinegar without mixing. Cover and cook 3 to 5 minutes.|Garnish with fried potato.' },
+ { n:'Upo/Sayote Guisado', g:'Grade 2', cost:'18.65 (chicken), 26.25 (beef), 21.85 (pork)', kcal:'362.3 Kcal', src:'Lutong Nanay',
+   ing:'3 Tbsp cooking oil; 200 g onion; 2 cloves garlic; 400 g ground beef; 600 g upo, sliced; 2 seasoning cubes; 2 cups water',
+   proc:'Saute onion and garlic until softened.|Saute the ground meat until cooked.|Add the upo, seasoning cube, and water.|Cook and bring to a boil.' },
+ { n:'Pancit Canton con Moringa', g:'Grade 3', cost:'26.35', kcal:'454 Kcal', src:'DepEd Standardized Recipe',
+   ing:'50 ml cooking oil; 4 tsp garlic, minced; 72 g onion; 300 g chicken breast, shredded; 250 g baguio beans; 180 g carrots; 580 g cabbage; 110 g malunggay leaves; 960 ml water; 30 ml soy sauce; 10 g salt; 250 g pancit canton',
+   proc:'Prepare and wash the vegetables.|Heat oil. Saute garlic, then onions.|Add baguio beans, carrots, cabbage, and malunggay.|Add 4 cups of water and boil. Add soy sauce and salt.|Add the pancit noodles. Mix in half of the sauteed ingredients. Cook 3 minutes.|Serve hot with calamansi.' }
+];
+
 function canSbfp(){ return USER && (USER.role==='head' || USER.role==='admin'); }
-function openSbfp(){
-  ['viewTrk','viewAcc','viewBank','viewLog','viewWeeks','viewSig','viewObs','viewHome'].forEach(v => $(v).style.display='none');
-  closeGuide(); $('viewSbfp').style.display=''; CUR_FEATURE='sbfp'; drawSide(); if (!SBM) SBM = todayPH().slice(0,7); drawSbfp(); window.scrollTo(0,0); maybeGuide('sbfp');
+/* ----- SBFP Monitoring ----- */
+var SB = { tab:'today', date:'', people:null, month:'' };
+const SB_STATUS = ['Implemented','Not implemented','Holiday','End of term','No class','Others'];
+const SB_COLOR = { 'Implemented':'#2f7a4a','Not implemented':'#c0392b','Holiday':'#a3271b','End of term':'#6a2c99','No class':'#777','Others':'#b06000' };
+const SB_GROUPS = ['Kindergarten','Grade 1','Grade 2','Grade 3','Grade 4','Grade 5','Grade 6'];
+function sbfpList(){ return ((DATA||PUB||{}).sbfp)||[]; }
+function sbRec(date){ return sbfpList().find(x=>x.date===date) || {}; }
+function sbSet(){ return ((DATA||PUB||{}).settings)||{}; }
+function sbStart(){ return sbSet().sbfpStart || '2026-10-05'; }
+function libMenu(i){ const o = (sbSet().sbfpMenus||[])[i] || {}, m = SBFP_MENUS[i]; return { n:o.n||m.n, g:o.g||m.g, r:m }; }
+// The menu follows the guide in order, one per school day (Monday to Friday), and starts again after Day 25
+function sbDayNo(date){
+  const st = sbStart(); if (!date || date < st || dow(date)===0 || dow(date)===6) return -1;
+  let n = 0; for (let d = st; d <= date; d = addDays(d,1)) if (dow(d) > 0 && dow(d) < 6) n++;
+  return (n - 1) % SBFP_MENUS.length;
+}
+function sbSched(date){
+  const i = sbDayNo(date); if (i < 0) return null;
+  const m = libMenu(i), r = sbRec(date);
+  return { i, day:i+1, n: r.menu || m.n, g: r.grade || m.g, changed: !!(r.menu || r.grade), recipe: r.menu ? null : m.r, rec:r };
+}
+function sbfpOn(date){ const s = sbSched(date); return s ? { menu:s.n, grade:s.g+' parents', notes:(s.rec||{}).notes } : null; }
+function isStaff(){ return USER && ['teacher','head','admin'].indexOf(USER.role) > -1; }
+function sbGroupOf(g){ return /^Grade 4/.test(g) ? 'Grade 4' : g; }
+function sbParents(group){
+  const seen = {}, out = [];
+  (SB.people||[]).filter(p => p.group===group).forEach(p => { const k = p.parent+'|'+group;
+    if (!seen[k]){ seen[k] = { key:k, parent:p.parent, group, kids:[], counted:false }; out.push(seen[k]); }
+    seen[k].kids.push(p.learner+' ('+p.grade+')'); if (p.counted) seen[k].counted = true; });
+  return out.filter(x=>x.counted);
+}
+async function openSbfp(){
+  ['viewTrk','viewAcc','viewBank','viewLog','viewWeeks','viewSig','viewObs','viewHome','viewPir'].forEach(v => $(v).style.display='none');
+  closeGuide(); $('viewSbfp').style.display=''; CUR_FEATURE='sbfp'; drawSide();
+  if (!SB.date) SB.date = todayPH(); if (!SB.month) SB.month = SB.date.slice(0,7);
+  drawSbfp(); window.scrollTo(0,0); maybeGuide('sbfp');
+  if (isStaff() && !SB.people){ try{ SB.people = await api('sbfpPeople'); drawSbfp(); }catch(e){} }
 }
 function drawSbfp(){
-  const [y,m] = SBM.split('-').map(Number), first = SBM+'-01', startDow = dow(first), days = new Date(Date.UTC(y,m,0)).getUTCDate(), today = todayPH(), t = sbfpOn(today);
-  let cells = ''; for (let i = 0; i < startDow; i++) cells += '<div class="sbd empty"></div>';
+  const t = sbSched(todayPH()), staff = isStaff(), tabs = [['today','Day'],['cal','Calendar'],['sum','Menu summary']].concat(staff?[['people','Learners and parents'],['part','Participation']]:[]);
+  $('viewSbfp').innerHTML = `<div class="ohero sbhero"><div><h2>SBFP Monitoring</h2><p>School-Based Feeding Program: the menu of the day, the grade level whose parents prepare it, the status of feeding, attendance sheets, and parents\u2019 participation.</p></div>
+      <div class="sbtoday"><small>Today</small>${t?`<b>${esc(t.n)}</b><span>${esc(t.g)} parents \u00B7 Day ${t.day} of ${SBFP_MENUS.length}</span>`:'<b>No feeding scheduled today</b>'}</div></div>
+    <div class="ktabs">${tabs.map(([k,l])=>`<button class="${SB.tab===k?'on':''}" onclick="SB.tab='${k}';drawSbfp()">${l}</button>`).join('')}</div>
+    <div id="sbBody"></div>`;
+  ({ today:sbDayView, cal:sbCalView, sum:sbSumView, people:sbPeopleView, part:sbPartView })[SB.tab]();
+}
+function sbGo(date){ SB.date = date; SB.tab = 'today'; drawSbfp(); window.scrollTo(0,0); }
+function sbDayView(){
+  const d = SB.date, s = sbSched(d), r = sbRec(d), staff = isStaff(), can = canSbfp();
+  const nav = `<div class="calbar"><button class="btn ghost small" onclick="sbGo(addDays('${d}',${dow(d)===1?-3:-1}))">\u2039 Previous day</button><input type="date" value="${d}" onchange="sbGo(this.value)" class="sbdate"><button class="btn ghost small" onclick="sbGo(addDays('${d}',${dow(d)===5?3:1}))">Next day \u203A</button></div>`;
+  if (!s){ $('sbBody').innerHTML = nav + `<div class="empty">${dow(d)===0||dow(d)===6?'No feeding on weekends.':'The SBFP schedule starts on '+esc(dShort(sbStart()))+'.'}</div>`; return; }
+  const rc = s.recipe;
+  const recipe = rc ? `<details class="byt recipe"><summary>Recipe: ingredients and procedure</summary><div class="rcp">
+      <p class="hint">Serving size 10${rc.cost?' \u00B7 \u20B1'+esc(rc.cost)+' per serving':''}${rc.kcal?' \u00B7 '+esc(rc.kcal)+' with 1 cup of rice':''}${rc.src?' \u00B7 '+esc(rc.src):''}</p>
+      <b>Ingredients</b><ul>${rc.ing.split('; ').map(x=>`<li>${esc(x)}</li>`).join('')}</ul><b>Procedure</b><ol>${rc.proc.split('|').map(x=>`<li>${esc(x)}</li>`).join('')}</ol></div></details>` : '';
+  const st = r.status || '', parents = sbParents(sbGroupOf(s.g)), att = r.att || {};
+  const marks = { P:0, E:0, N:0 }; parents.forEach(p => { const v = att[p.key]; if (marks[v] !== undefined) marks[v]++; });
+  const photos = (r.photos||[]);
+  $('sbBody').innerHTML = nav + `
+    <div class="sbcard"><div class="sbcard-h"><span class="sbday">Day ${s.day}</span><div><h3>${esc(s.n)}</h3><p><b>${esc(s.g)} parents</b> prepare the food${s.changed?' <span class="ktag mwa">Changed by '+esc(r.by||'School Head')+'</span>':''}</p>${r.notes?`<p class="hint">${esc(r.notes)}</p>`:''}</div>
+      ${can?`<button class="btn ghost small" onclick="sbfpForm('${d}')">Change menu or group</button>`:''}</div>${recipe}</div>
+    ${staff?`<section class="ocard2"><h3>Status of feeding</h3><div class="sbst">${SB_STATUS.map(x=>`<button class="sbs ${st===x?'on':''}" style="--c:${SB_COLOR[x]}" onclick="sbStatus('${x}')">${esc(x)}</button>`).join('')}</div>
+      <div id="sbReasonRow" style="display:${st && st!=='Implemented'?'':'none'}"><label class="lbl" for="sbReason" style="margin-top:10px;display:block">Reason${st==='Others'?' (please specify)':''}</label><textarea id="sbReason" rows="2" placeholder="Example: Classes suspended due to heavy rain">${esc(r.reason||'')}</textarea>
+      <button class="btn small" style="margin-top:6px" onclick="sbSaveReason()">Save reason</button></div>
+      ${st?`<p class="hint" style="margin:8px 0 0">Last updated by ${esc(r.by||'')} on ${esc(dTime(r.on||''))}.</p>`:''}</section>`
+      : (st?`<div class="notice">Status: <b>${esc(st)}</b>${r.reason?', '+esc(r.reason):''}</div>`:'')}
+    ${staff?`<section class="ocard2"><h3>Attendance sheet photos</h3><div class="sbphotos">${photos.map((p,i)=>`<button class="sbph" onclick="sbInsta(${i})"><img src="https://drive.google.com/thumbnail?id=${esc(p.id)}&sz=w300" alt="Attendance sheet ${i+1}" loading="lazy"></button>`).join('')}
+        <label class="sbadd"><input type="file" accept="image/*" multiple onchange="sbUpload(this)"><span>\uFF0B</span><small>Add photo</small></label></div>
+      <p class="hint" style="margin:6px 0 0">Scan or take a clear photo of the signed attendance sheet. Tap a photo to view it full screen.</p></section>
+    <section class="ocard2"><h3>${esc(sbGroupOf(s.g))} parents who prepare today <small class="hint">(${parents.length})</small></h3>
+      <p class="hint" style="margin-top:0">Present ${marks.P} \u00B7 Excused ${marks.E} \u00B7 Not participating ${marks.N} \u00B7 Not yet marked ${parents.length-marks.P-marks.E-marks.N}</p>
+      ${SB.people===null?'<div class="empty">Loading the list of parents</div>':`<button class="btn ghost small" onclick="sbAllPresent()">Mark all present</button>
+      <div class="sbpar">${parents.map(p=>`<details class="sbp"><summary><span class="sbpn">${esc(p.parent)}</span><span class="sbtg" data-key="${esc(p.key)}">${['P','E','N'].map(v=>`<button type="button" class="${att[p.key]===v?'on '+v:''}" onclick="event.preventDefault();sbMark(this,'${v}')">${{P:'Present',E:'Excused',N:'Not participating'}[v]}</button>`).join('')}</span></summary><small>Learners: ${esc(p.kids.join(', '))}</small></details>`).join('') || '<p class="hint">No parents listed for this group yet. Add them in Learners and parents.</p>'}</div>
+      <button class="btn" style="margin-top:10px" onclick="sbSaveAtt()">Save attendance</button>`}</section>`:''}`;
+}
+async function sbDay(payload, msg){
+  loading(true,'Saving');
+  try{ const list = await api('sbfpDay', Object.assign({ date:SB.date }, payload)); DATA.sbfp = list; drawSbfp(); if (msg) toast(msg); }
+  catch(e){ handleErr(e); }
+  loading(false);
+}
+function sbStatus(x){ if (x === 'Implemented') return sbDay({ status:x, reason:'' }, 'Marked as implemented.'); sbRec(SB.date).status = x; sbDay({ status:x }, 'Status saved. Add the reason below.'); }
+function sbSaveReason(){ sbDay({ reason:$('sbReason').value }, 'Reason saved.'); }
+function sbMark(btn, v){ btn.parentElement.querySelectorAll('button').forEach(b => b.className=''); btn.className = 'on '+v; }
+function sbAllPresent(){ document.querySelectorAll('.sbtg').forEach(t => { t.querySelectorAll('button').forEach(b=>b.className=''); t.querySelector('button').className = 'on P'; }); }
+function sbSaveAtt(){ const att = {}; document.querySelectorAll('.sbtg').forEach(t => { const on = t.querySelector('button.on'); att[t.dataset.key] = on ? (on.classList.contains('P')?'P':on.classList.contains('E')?'E':'N') : ''; }); sbDay({ att }, 'Attendance saved.'); }
+async function sbUpload(inp){
+  const files = [...inp.files].slice(0,8); if (!files.length) return; const uploads = [];
+  for (const f of files){ loading(true,'Preparing '+f.name); uploads.push({ name:f.name, mime:f.type, base64: await readB64(await shrinkImage(f)) }); }
+  inp.value = ''; sbDay({ uploads }, files.length+' photo'+(files.length>1?'s':'')+' uploaded.');
+}
+// Makes phone photos lighter before upload, keeping them readable
+async function shrinkImage(f){
+  if (!/^image\/(jpeg|png|webp)/.test(f.type) || f.size < 900*1024) return f;
+  const img = await new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = rej; i.src = URL.createObjectURL(f); });
+  const sc = Math.min(1, 1800 / Math.max(img.width, img.height)), c = document.createElement('canvas'); c.width = Math.round(img.width*sc); c.height = Math.round(img.height*sc);
+  c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+  const b = await new Promise(r => c.toBlob(r, 'image/jpeg', 0.85)); return new File([b], f.name.replace(/\.\w+$/,'')+'.jpg', { type:'image/jpeg' });
+}
+function sbInsta(i){
+  const r = sbRec(SB.date), list = (r.photos||[]).map(p => ({ id:p.id, url:p.url, video:/video/.test(p.mime||''), caption:'Attendance sheet \u00B7 '+dShort(SB.date), sub:'Uploaded by '+(p.byName||'')+' \u00B7 '+dTime(p.on||''), canRemove: USER && (p.by===USER.email || canSbfp()), removeFn:`sbRemovePhoto('${p.id}')` }));
+  openInsta(list, i);
+}
+async function sbRemovePhoto(id){ if (!confirm('Remove this photo?')) return; closeInsta(); sbDay({ removePhoto:id }, 'Photo removed.'); }
+function sbCalView(){
+  const [y,m] = SB.month.split('-').map(Number), first = SB.month+'-01', sd = dow(first), days = new Date(Date.UTC(y,m,0)).getUTCDate(), today = todayPH();
+  let cells = ''; for (let i = 0; i < sd; i++) cells += '<div class="sbd empty"></div>';
   for (let d = 1; d <= days; d++){
-    const date = SBM+'-'+String(d).padStart(2,'0'), s = sbfpOn(date), wk = dow(date)===0||dow(date)===6;
-    cells += `<button class="sbd ${s?'has':''} ${wk?'wkend':''} ${date===today?'today':''}" ${canSbfp()&&!wk?`onclick="sbfpForm('${date}')"`:s?`onclick="sbfpForm('${date}')"`:''}><b>${d}</b>${s?`<span class="sbmenu">${esc(s.menu)}</span>${s.grade?`<span class="sbgrade">${esc(s.grade)}</span>`:''}`:''}</button>`;
+    const date = SB.month+'-'+String(d).padStart(2,'0'), s = sbSched(date), r = sbRec(date), wk = dow(date)===0||dow(date)===6;
+    cells += `<button class="sbd ${s?'has':''} ${wk?'wkend':''} ${date===today?'today':''}" ${s?`onclick="sbGo('${date}')"`:''}><b>${d}</b>${s?`<span class="sbmenu">${esc(s.n)}</span><span class="sbgrade">${esc(s.g)}</span>${r.status?`<span class="sbstat" style="background:${SB_COLOR[r.status]||'#777'}">${esc(r.status)}</span>`:''}`:''}</button>`;
   }
   const mname = new Date(Date.UTC(y,m-1,1)).toLocaleString('en-US',{month:'long',year:'numeric',timeZone:'UTC'});
   const prev = new Date(Date.UTC(y,m-2,1)).toISOString().slice(0,7), next = new Date(Date.UTC(y,m,1)).toISOString().slice(0,7);
-  $('viewSbfp').innerHTML = `<div class="ohero sbhero"><div><h2>SBFP Calendar</h2><p>School-Based Feeding Program: the menu of the day and the grade level whose parents are assigned to cook and serve.${canSbfp()?' Tap a school day to post or change it.':''}</p></div>
-      <div class="sbtoday"><small>Today</small>${t?`<b>${esc(t.menu)}</b><span>${esc(t.grade||'No grade assigned')}</span>`:'<b>No feeding posted today</b>'}</div></div>
-    <div class="calbar"><button class="btn ghost small" onclick="SBM='${prev}';drawSbfp()">\u2039 Previous</button><b>${esc(mname)}</b><button class="btn ghost small" onclick="SBM='${next}';drawSbfp()">Next \u203A</button></div>
+  $('sbBody').innerHTML = `<div class="calbar"><button class="btn ghost small" onclick="SB.month='${prev}';drawSbfp()">\u2039 Previous</button><b>${esc(mname)}</b><button class="btn ghost small" onclick="SB.month='${next}';drawSbfp()">Next \u203A</button></div>
     <div class="sbgrid"><div class="cdow">Sun</div><div class="cdow">Mon</div><div class="cdow">Tue</div><div class="cdow">Wed</div><div class="cdow">Thu</div><div class="cdow">Fri</div><div class="cdow">Sat</div>${cells}</div>
-    <div class="obs-actions"><button class="btn ghost" onclick="printSbfp()">Print ${esc(mname)} SBFP calendar</button></div>`;
+    ${USER?`<div class="obs-actions">${canSbfp()?'<button class="btn ghost" onclick="sbMenuList()">Edit the menu list and start date</button>':''}<button class="btn ghost" onclick="printSbfp()">Print ${esc(mname)} SBFP calendar</button></div>`:''}`;
+}
+// Which menus were implemented, skipped, or repeated, from the start until today
+function sbHistory(){
+  const out = [], today = todayPH();
+  for (let d = sbStart(); d <= today; d = addDays(d,1)){ const s = sbSched(d); if (s) out.push({ date:d, s, st:sbRec(d).status||'' }); }
+  return out;
+}
+function sbSumView(){
+  const h = sbHistory(), done = h.filter(x=>x.st==='Implemented'), skipped = h.filter(x=>x.st && x.st!=='Implemented'), none = h.filter(x=>!x.st);
+  const byName = {}; done.forEach(x => (byName[x.s.n] = byName[x.s.n] || []).push(x.date));
+  const repeated = Object.keys(byName).filter(n => byName[n].length > 1);
+  const owed = skipped.filter(x => !done.some(y => y.s.n === x.s.n && y.date > x.date));
+  const pct = h.length ? Math.round(done.length / h.length * 100) : 0;
+  const row = x => `<button class="upi" onclick="sbGo('${x.date}')"><span class="upico" style="background:${SB_COLOR[x.st]||'#999'}">${x.s.day}</span><span class="uptxt"><b>${esc(x.s.n)}</b><small>${esc(dShort(x.date))} \u00B7 ${esc(x.s.g)} parents${x.st?' \u00B7 '+esc(x.st):''}${sbRec(x.date).reason?': '+esc(sbRec(x.date).reason):''}</small></span></button>`;
+  $('sbBody').innerHTML = `<div class="ostats"><div class="ostat static"><span class="oico">\u2714</span><b>${done.length} of ${h.length}</b><span>Feeding days implemented (${pct}%)</span></div>
+      <div class="ostat static s-warn"><span class="oico">!</span><b>${owed.length}</b><span>Menus to implement later</span></div><div class="ostat static"><span class="oico">\u21BB</span><b>${repeated.length}</b><span>Menus served more than once</span></div><div class="ostat static"><span class="oico">?</span><b>${none.length}</b><span>Days with no status yet</span></div></div>
+    <details class="byt" open><summary>Not implemented, to be served once the regular schedule is over (${owed.length})</summary><div style="padding:0 14px 12px">${owed.map(row).join('') || '<p class="hint">None. Every scheduled menu so far was served.</p>'}</div></details>
+    <details class="byt"><summary>Served more than once (${repeated.length})</summary><div style="padding:0 14px 12px">${repeated.map(n=>`<div class="upi"><span class="uptxt"><b>${esc(n)}</b><small>${byName[n].map(dShort).join(', ')}</small></span></div>`).join('') || '<p class="hint">None yet.</p>'}</div></details>
+    <details class="byt"><summary>No status yet (${none.length})</summary><div style="padding:0 14px 12px">${none.map(row).join('') || '<p class="hint">Every day has a status.</p>'}</div></details>
+    <details class="byt"><summary>All days from ${esc(dShort(sbStart()))} (${h.length})</summary><div style="padding:0 14px 12px">${h.slice().reverse().map(row).join('')}</div></details>`;
+}
+function sbPeopleView(){
+  if (!SB.people){ $('sbBody').innerHTML = '<div class="empty">Loading</div>'; return; }
+  const q = (SB.q||'').toLowerCase();
+  $('sbBody').innerHTML = `<div class="bar" style="margin-top:12px"><input id="sbQ" placeholder="Search learner or parent" value="${esc(SB.q||'')}" oninput="SB.q=this.value;clearTimeout(window._sbq);window._sbq=setTimeout(()=>{sbPeopleView();$('sbQ').focus();$('sbQ').setSelectionRange(99,99)},250)" style="flex:1"><button class="btn small sun" onclick="sbPersonForm()">\uFF0B Add learner or parent</button></div>
+    <p class="hint">A parent marked <b>Counted</b> helps with that group. The same parent listed again under a sibling is not counted twice.</p>
+    ${SB_GROUPS.map(g => { const rows = SB.people.filter(p => p.group===g && (!q || (p.learner+' '+p.parent+' '+p.grade).toLowerCase().indexOf(q) > -1));
+      return `<details class="byt" ${q?'open':''}><summary>${esc(g)} parents group (${rows.length} learners, ${sbParents(g).length} parents)</summary><div class="table-wrap" style="margin:0 12px 12px"><table><thead><tr><th>Learner</th><th>Grade</th><th>Parent or guardian</th><th></th></tr></thead><tbody>
+        ${rows.map(p=>`<tr><td>${esc(p.learner)}</td><td>${esc(p.grade)}</td><td>${esc(p.parent)} ${p.counted?'<span class="ktag epmcf">Counted</span>':'<small class="hint">sibling</small>'}</td><td><button class="linkbtn" onclick="sbPersonForm('${esc(p.id)}')">Edit</button></td></tr>`).join('')}</tbody></table></div></details>`; }).join('')}`;
+}
+function sbPersonForm(id){
+  const p = id ? SB.people.find(x=>x.id===id) : { group:'Kindergarten', counted:true };
+  $('spId').value = id||''; $('spLearner').value = p.learner||''; $('spGrade').value = p.grade||''; $('spParent').value = p.parent||''; $('spCounted').checked = !!p.counted;
+  $('spGroup').innerHTML = SB_GROUPS.map(g=>`<option ${g===p.group?'selected':''}>${g}</option>`).join(''); $('spGradeList').innerHTML = OPTS().grades.map(g=>`<option value="${esc(g)}">`).join('');
+  $('spDel').style.display = id ? '' : 'none'; $('spErr').textContent = ''; openModal('spModal');
+}
+async function sbPersonSave(){
+  const person = { id:$('spId').value, learner:$('spLearner').value, grade:$('spGrade').value, parent:$('spParent').value, group:$('spGroup').value, counted:$('spCounted').checked };
+  try{ SB.people = await api('sbfpPersonSave',{ person }); closeModal('spModal'); drawSbfp(); toast('Saved.'); }catch(e){ handleErr(e,'spErr'); }
+}
+async function sbPersonDelete(){ if (!confirm('Remove this learner from the list?')) return; try{ SB.people = await api('sbfpPersonDelete',{ id:$('spId').value }); closeModal('spModal'); drawSbfp(); toast('Removed.'); }catch(e){ handleErr(e,'spErr'); } }
+// Participation: Present out of the implemented feeding days of each parent's group
+function sbPart(){
+  const h = sbHistory().filter(x => x.st==='Implemented'), rows = [];
+  SB_GROUPS.forEach(g => sbParents(g).forEach(p => { const days = h.filter(x => sbGroupOf(x.s.g)===g); const c = { P:0, E:0, N:0 };
+    days.forEach(x => { const v = (sbRec(x.date).att||{})[p.key]; if (c[v] !== undefined) c[v]++; });
+    rows.push({ p, days:days.length, c, rate: days.length ? Math.round(c.P/days.length*100) : 0 }); }));
+  return rows;
+}
+function sbPartView(){
+  if (!SB.people){ $('sbBody').innerHTML = '<div class="empty">Loading</div>'; return; }
+  const rows = sbPart(), tot = rows.reduce((a,r)=>({ d:a.d+r.days, p:a.p+r.c.P }),{ d:0, p:0 });
+  $('sbBody').innerHTML = `<div class="ostats"><div class="ostat static"><span class="oico">\u263A</span><b>${tot.d?Math.round(tot.p/tot.d*100):0}%</b><span>Overall parents\u2019 attendance (${tot.p} of ${tot.d} expected)</span></div></div>
+    ${SB_GROUPS.map(g => { const gr = rows.filter(r=>r.p.group===g), gd = gr.reduce((a,r)=>a+r.days,0), gp = gr.reduce((a,r)=>a+r.c.P,0), pct = gd?Math.round(gp/gd*100):0;
+      return `<details class="byt"><summary><span style="flex:1">${esc(g)} parents</span><span class="gbar" style="width:120px;display:inline-block;vertical-align:middle"><i style="width:${pct}%"></i></span> <b>${pct}%</b></summary><div class="table-wrap" style="margin:0 12px 12px"><table><thead><tr><th>Parent or guardian</th><th>Days</th><th>Present</th><th>Excused</th><th>Not participating</th><th>Rate</th></tr></thead><tbody>
+        ${gr.map(r=>`<tr><td>${esc(r.p.parent)}</td><td>${r.days}</td><td>${r.c.P}</td><td>${r.c.E}</td><td>${r.c.N}</td><td><b class="${r.rate>=75?'mk-ok':r.rate>=50?'':'mk-late'}">${r.rate}%</b></td></tr>`).join('')}</tbody></table></div></details>`; }).join('')}
+    <div class="obs-actions"><button class="btn ghost" onclick="printSbPart()">Print participation report</button></div>`;
+}
+function printSbPart(){
+  const rows = sbPart();
+  $('printArea').innerHTML = `${printHeader()}<div class="p-title">SBFP PARENTS\u2019 PARTICIPATION REPORT</div><p class="p-sub">From ${esc(dShort(sbStart()))} to ${esc(dShort(todayPH()))}. ${esc(sbSet().sy||'')}</p>
+    <table class="p-table"><thead><tr><th>Group</th><th>Parent or Guardian</th><th>Feeding Days</th><th>Present</th><th>Excused</th><th>Not Participating</th><th>Rate</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${esc(r.p.group)}</td><td>${esc(r.p.parent)}</td><td style="text-align:center">${r.days}</td><td style="text-align:center">${r.c.P}</td><td style="text-align:center">${r.c.E}</td><td style="text-align:center">${r.c.N}</td><td style="text-align:center">${r.rate}%</td></tr>`).join('')}</tbody></table>
+    <div class="p-sign"><div>Prepared by:<b>${esc(USER.name)}</b>${esc(USER.position||'')}</div><div>Noted by:<b>${esc((DATA||{}).headName||'')}</b>School Head</div></div><div class="p-foot">Generated from TALA on ${esc(dTime(nowLocal().replace('T',' ')))}.</div>`;
+  setTimeout(() => window.print(), 150);
+}
+function sbMenuList(){
+  $('smStart').value = sbStart();
+  $('smList').innerHTML = SBFP_MENUS.map((m,i)=>{ const x = libMenu(i); return `<div class="smrow"><span class="sbday">${i+1}</span><input data-i="${i}" class="smn" value="${esc(x.n)}"><select class="smg">${SB_GROUPS.map(g=>`<option ${g===x.g?'selected':''}>${g}</option>`).join('')}</select></div>`; }).join('');
+  $('smErr').textContent=''; openModal('smModal');
+}
+async function sbMenuSave(){
+  const menus = [...document.querySelectorAll('#smList .smrow')].map(r => ({ n:r.querySelector('.smn').value.trim(), g:r.querySelector('.smg').value }));
+  try{ await apiData('sbfpSettings',{ start:$('smStart').value, menus }); closeModal('smModal'); drawSbfp(); toast('Menu list saved.'); }catch(e){ handleErr(e,'smErr'); }
 }
 function sbfpForm(date){
-  const s = sbfpOn(date) || {}, can = canSbfp();
-  if (!can){ if (!s.menu) return; $('sbTitle').textContent = 'SBFP, '+dShort(date); }
-  else $('sbTitle').textContent = s.menu ? 'Change the SBFP menu' : 'Post the SBFP menu';
-  $('sbDate').value = date; $('sbDay').textContent = new Date(date+'T00:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
-  $('sbMenu').value = s.menu||''; $('sbGrade').value = s.grade||''; $('sbNotes').value = s.notes||'';
-  ['sbMenu','sbGrade','sbNotes'].forEach(id => $(id).readOnly = !can);
-  $('sbGrades').innerHTML = OPTS().grades.map(g=>`<option value="${esc(g)} parents">`).join('');
-  const [y,m] = date.slice(0,7).split('-').map(Number), n = new Date(Date.UTC(y,m,0)).getUTCDate();
-  $('sbCopy').innerHTML = can ? Array.from({length:n},(_,i)=>date.slice(0,8)+String(i+1).padStart(2,'0')).filter(d => d!==date && dow(d)>0 && dow(d)<6)
-    .map(d=>`<label class="sbc"><input type="checkbox" value="${d}">${Number(d.slice(8))} ${['','Mon','Tue','Wed','Thu','Fri'][dow(d)]}</label>`).join('') : '';
-  $('sbCopy').parentElement.style.display = can ? '' : 'none';
-  $('sbBtn').style.display = can ? '' : 'none'; $('sbDel').style.display = can && s.menu ? '' : 'none'; $('sbErr').textContent = '';
+  const s = sbSched(date); if (!s) return toast('No feeding scheduled on this day.');
+  if (!canSbfp()){ sbGo(date); return; }
+  const r = sbRec(date); $('sbTitle').textContent = 'Change the menu or group for this day';
+  $('sbDate').value = date; $('sbDay').textContent = new Date(date+'T00:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'})+' \u00B7 Scheduled: '+libMenu(s.i).n+' ('+libMenu(s.i).g+')';
+  $('sbMenu').value = r.menu||''; $('sbGrade').value = r.grade||''; $('sbNotes').value = r.notes||'';
+  ['sbMenu','sbGrade','sbNotes'].forEach(id => $(id).readOnly = false);
+  $('sbGrades').innerHTML = SB_GROUPS.map(g=>`<option value="${esc(g)}">`).join(''); $('sbMenu').placeholder = 'Leave blank to follow the schedule: '+libMenu(s.i).n; $('sbGrade').placeholder = 'Leave blank to follow the schedule: '+libMenu(s.i).g;
+  $('sbCopy').innerHTML = ''; $('sbCopy').parentElement.style.display = 'none';
+  $('sbBtn').style.display = ''; $('sbDel').style.display = r.menu||r.grade ? '' : 'none'; $('sbDel').textContent = 'Back to schedule'; $('sbErr').textContent = '';
   openModal('sbModal');
 }
 async function sbfpSave(){
-  const dates = [$('sbDate').value].concat([...document.querySelectorAll('#sbCopy input:checked')].map(i=>i.value));
   $('sbBtn').disabled = true;
-  try{ const list = await api('sbfpSave',{ dates, menu:$('sbMenu').value, grade:$('sbGrade').value, notes:$('sbNotes').value }); DATA.sbfp = list; closeModal('sbModal'); drawSbfp(); drawSchoolCal(); toast('SBFP menu posted'+(dates.length>1?' for '+dates.length+' days':'')+'.'); }
+  try{ const list = await api('sbfpSave',{ dates:[$('sbDate').value], menu:$('sbMenu').value, grade:$('sbGrade').value, notes:$('sbNotes').value }); DATA.sbfp = list; closeModal('sbModal'); drawSbfp(); drawSchoolCal(); toast('Saved.'); }
   catch(e){ handleErr(e,'sbErr'); }
   $('sbBtn').disabled = false;
 }
 async function sbfpDelete(){
-  if (!confirm('Remove the SBFP menu for this day?')) return;
-  try{ DATA.sbfp = await api('sbfpDelete',{ date:$('sbDate').value }); closeModal('sbModal'); drawSbfp(); drawSchoolCal(); toast('Removed.'); }catch(e){ handleErr(e,'sbErr'); }
+  try{ DATA.sbfp = await api('sbfpDelete',{ date:$('sbDate').value }); closeModal('sbModal'); drawSbfp(); drawSchoolCal(); toast('This day follows the schedule again.'); }catch(e){ handleErr(e,'sbErr'); }
 }
 function printSbfp(){
-  const [y,m] = SBM.split('-').map(Number), days = new Date(Date.UTC(y,m,0)).getUTCDate(), mname = new Date(Date.UTC(y,m-1,1)).toLocaleString('en-US',{month:'long',year:'numeric',timeZone:'UTC'});
-  const rows = Array.from({length:days},(_,i)=>SBM+'-'+String(i+1).padStart(2,'0')).filter(d=>sbfpOn(d)).map((d,i)=>{ const s = sbfpOn(d);
-    return `<tr><td style="text-align:center">${i+1}</td><td>${esc(new Date(d+'T00:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'}))}</td><td>${esc(s.menu)}</td><td>${esc(s.grade||'')}</td><td>${esc(s.notes||'')}</td></tr>`; }).join('');
-  $('printArea').innerHTML = `${printHeader()}<div class="p-title">SCHOOL-BASED FEEDING PROGRAM (SBFP) CALENDAR</div><p class="p-sub">${esc(mname)}. ${esc(((DATA||PUB||{}).settings||{}).sy||'')}</p>
-    <table class="p-table"><thead><tr><th>No.</th><th>Date</th><th>Menu of the Day</th><th>Assigned Grade Level (Parents)</th><th>Notes</th></tr></thead><tbody>${rows || '<tr><td colspan="5" style="text-align:center">No feeding days posted for this month.</td></tr>'}</tbody></table>
-    <div class="p-sign"><div>Prepared by:<b>${esc(USER && USER.role==='admin' ? USER.name : '')}</b>${USER && USER.role==='admin' ? 'Administrative Officer' : 'SBFP Coordinator'}</div><div>Noted by:<b>${esc(((DATA||{}).headName)||'')}</b>School Head</div></div>
+  const [y,m] = SB.month.split('-').map(Number), days = new Date(Date.UTC(y,m,0)).getUTCDate(), mname = new Date(Date.UTC(y,m-1,1)).toLocaleString('en-US',{month:'long',year:'numeric',timeZone:'UTC'});
+  const rows = Array.from({length:days},(_,i)=>SB.month+'-'+String(i+1).padStart(2,'0')).filter(d=>sbSched(d)).map((d,i)=>{ const s = sbSched(d), r = sbRec(d);
+    return `<tr><td style="text-align:center">${s.day}</td><td>${esc(new Date(d+'T00:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'}))}</td><td>${esc(s.n)}</td><td>${esc(s.g)}</td><td>${esc(r.status||'')}${r.reason?': '+esc(r.reason):''}</td></tr>`; }).join('');
+  $('printArea').innerHTML = `${printHeader()}<div class="p-title">SCHOOL-BASED FEEDING PROGRAM (SBFP) CALENDAR</div><p class="p-sub">${esc(mname)}. ${esc(sbSet().sy||'')}</p>
+    <table class="p-table"><thead><tr><th>Day</th><th>Date</th><th>Menu</th><th>Parents Assigned</th><th>Status</th></tr></thead><tbody>${rows || '<tr><td colspan="5" style="text-align:center">No feeding days this month.</td></tr>'}</tbody></table>
+    <div class="p-sign"><div>Prepared by:<b>${esc(USER.name)}</b>${esc(USER.position||'')}</div><div>Noted by:<b>${esc(((DATA||{}).headName)||'')}</b>School Head</div></div>
     <div class="p-foot">Generated from TALA on ${esc(dTime(nowLocal().replace('T',' ')))}.</div>`;
   setTimeout(() => window.print(), 150);
 }
+
+/* ----- Instants viewer: pictures and videos full screen, one at a time ----- */
+var INSTA = { list:[], i:0, t:null };
+function openInsta(list, i){ if (!list.length) return; INSTA.list = list; INSTA.i = i||0; $('insta').hidden = false; document.body.style.overflow = 'hidden'; drawInsta(); }
+function closeInsta(){ clearTimeout(INSTA.t); $('insta').hidden = true; document.body.style.overflow = ''; $('instaMedia').innerHTML = ''; }
+function instaGo(d){ const n = INSTA.i + d; if (n < 0) return; if (n >= INSTA.list.length) return closeInsta(); INSTA.i = n; drawInsta(); }
+function drawInsta(){
+  clearTimeout(INSTA.t); const it = INSTA.list[INSTA.i];
+  $('instaBars').innerHTML = INSTA.list.map((_,k)=>`<i class="${k<INSTA.i?'done':k===INSTA.i?'now':''}"><b></b></i>`).join('');
+  $('instaMedia').innerHTML = it.video ? `<iframe src="https://drive.google.com/file/d/${esc(it.id)}/preview" allow="autoplay" allowfullscreen></iframe>`
+    : it.id ? `<img src="https://drive.google.com/thumbnail?id=${esc(it.id)}&sz=w1600" alt="${esc(it.caption||'')}">` : `<a class="instalink" href="${esc(it.url)}" target="_blank" rel="noopener">Open this attachment</a>`;
+  $('instaCap').innerHTML = `<b>${esc(it.caption||'')}</b><small>${esc(it.sub||'')}</small>`;
+  $('instaAct').innerHTML = `<a href="${esc(it.url)}" target="_blank" rel="noopener">Open original</a>${it.canRemove?` <button class="linkbtn" onclick="${it.removeFn}">Remove</button>`:''}`;
+  if (!it.video){ const bar = $('instaBars').querySelector('i.now b'); if (bar){ bar.style.transition = 'none'; bar.style.width = '0'; requestAnimationFrame(()=>{ bar.style.transition = 'width 6s linear'; bar.style.width = '100%'; }); } INSTA.t = setTimeout(() => instaGo(1), 6000); }
+}
+document.addEventListener('keydown', e => { if ($('insta') && !$('insta').hidden){ if (e.key==='ArrowRight') instaGo(1); else if (e.key==='ArrowLeft') instaGo(-1); else if (e.key==='Escape') closeInsta(); } });
+
+/* =========================================================
+   PRESENTATIONS: PIR for the School Head, and My status for every personnel
+   ========================================================= */
+var PIR = { mode:'pir', ptype:'term', term:'1', q:'', from:'', to:'', slides:[], i:0, ann:{}, zoom:1, tool:'', color:'#e53935', edit:false, saved:null };
+function pirRange(){
+  if (PIR.ptype==='range') return { from:PIR.from, to:PIR.to, label:dShort(PIR.from)+' to '+dShort(PIR.to) };
+  if (PIR.ptype==='quarter'){ const [y,q] = PIR.q.split('-Q').map(Number), m1 = (q-1)*3+1, from = y+'-'+String(m1).padStart(2,'0')+'-01', to = addDays(new Date(Date.UTC(y,m1+2,1)).toISOString().slice(0,10),-1);
+    return { from, to, label:'Quarter '+q+' ('+new Date(Date.UTC(y,m1-1,1)).toLocaleString('en-US',{month:'long',timeZone:'UTC'})+' to '+new Date(Date.UTC(y,m1+1,1)).toLocaleString('en-US',{month:'long',year:'numeric',timeZone:'UTC'})+')' }; }
+  const w1 = weekOf(PIR.term,'1'), w12 = weekOf(PIR.term,'12');
+  return { from: w1 ? w1.start : '2000-01-01', to: w12 ? w12.end : '2100-01-01', label:'Term '+PIR.term+(w1?' ('+dShort(w1.start)+' to '+dShort(w12.end)+')':'') };
+}
+function pct(a,b){ return b ? Math.round(a/b*100) : 0; }
+function bar(label, a, b, color){ const p = pct(a,b); return `<div class="pbar"><span class="pl">${esc(label)}</span><span class="pt"><i style="width:${p}%;background:${color||'#2f7a4a'}"></i></span><b>${p}%</b><small>${a} of ${b}</small></div>`; }
+function big(n, l, c){ return `<div class="pbig" style="--c:${c||'#1F5130'}"><b>${n}</b><span>${esc(l)}</span></div>`; }
+
+/* ----- the numbers ----- */
+function pirData(email){
+  const R = pirRange(), inR = d => d && d >= R.from && d <= R.to;
+  const ents = (DATA.entries||[]).filter(e => { const w = weekOf(e.term, String(e.week)); return w && inR(w.start) && (!email || e.email===email); });
+  const items = []; ents.forEach(e => itemsOf(e).forEach(x => items.push(Object.assign({ e }, x))));
+  const lpt = items.filter(x=>x.K==='LPT'), ppt = items.filter(x=>x.K==='PPT'), c = (l,f) => l.filter(f).length;
+  const teachers = (DATA.teachers||[]).filter(t => !email || t.email===email);
+  const byT = teachers.map(t => { const m = items.filter(x=>x.e.email===t.email); return { t, entries: ents.filter(e=>e.email===t.email).length, lptA: c(m,x=>x.K==='LPT'&&x.status==='Approved'), pptA: c(m,x=>x.K==='PPT'&&x.status==='Approved'), ontime: c(m,x=>x.status==='Approved'&&x.late&&!x.late.late), late: c(m,x=>x.complete&&x.late&&x.late.late), ret: c(m,x=>x.status==='Returned'||x.status==='Invalid') }; });
+  const obs = (OBS.list||[]).filter(o => o.status!=='Draft' && inR(o.date) && (!email || o.teacherEmail===email));
+  const ep = obs.filter(o=>otype(o)==='epmcf'), mw = obs.filter(o=>otype(o)==='mwa');
+  let need = 0, done = 0, out = 0; if (!email) for (let d = R.from; d <= R.to && d <= todayPH(); d = addDays(d,1)){ if (!schoolDay(d)) continue; if (calMark(d)){ out++; continue; } need += 2; done += Math.min(2, OBS.list.filter(o=>o.date===d).length); }
+  const ratings = []; ep.forEach(o => (o.data.inc||[]).forEach(it => { if (it.rating) ratings.push(Number(it.rating)); }));
+  const covered = (DATA.teachers||[]).filter(t => ep.some(o=>o.teacherEmail===t.email));
+  const focus = {}; mw.forEach(o => { const f = o.data.focus||'Others'; focus[f] = (focus[f]||0)+1; });
+  const sb = sbHistory().filter(x => inR(x.date)), sbDone = sb.filter(x=>x.st==='Implemented');
+  const owed = sb.filter(x => x.st && x.st!=='Implemented' && !sbDone.some(y=>y.s.n===x.s.n && y.date>x.date));
+  const part = SB.people ? sbPart().map(r => { const days = sbDone.filter(x => sbGroupOf(x.s.g)===r.p.group), c2 = { P:0 }; days.forEach(x => { if ((sbRec(x.date).att||{})[r.p.key]==='P') c2.P++; }); return { p:r.p, days:days.length, P:c2.P }; }) : [];
+  const grp = SB_GROUPS.map(g => { const rs = part.filter(r=>r.p.group===g); return { g, d: rs.reduce((a,r)=>a+r.days,0), p: rs.reduce((a,r)=>a+r.P,0) }; });
+  return { R, ents, lpt, ppt, c, byT, obs, ep, mw, need, done, out, ratings, covered, focus, sb, sbDone, owed, grp, partTot: grp.reduce((a,g)=>({ d:a.d+g.d, p:a.p+g.p }),{ d:0, p:0 }) };
+}
+function waysForward(D){
+  const w = { lpt:[], obs:[], sbfp:[] }, lA = D.c(D.lpt,x=>x.status==='Approved'), on = D.c(D.lpt.concat(D.ppt),x=>x.status==='Approved'&&x.late&&!x.late.late), ap = D.c(D.lpt.concat(D.ppt),x=>x.status==='Approved');
+  if (pct(on,ap) < 80) w.lpt.push('Send a reminder every Friday afternoon so LPT and PPT are uploaded on or before Monday morning.');
+  if (pct(D.c(D.lpt.concat(D.ppt),x=>x.status==='Returned'||x.status==='Invalid'), D.lpt.length+D.ppt.length) > 10) w.lpt.push('Hold a short LAC session on preparing and renaming LPT and PPT correctly, to lessen returned files.');
+  const low = D.byT.filter(r => r.entries && pct(r.lptA, r.entries) < 75).map(r=>r.t.name); if (low.length) w.lpt.push('Provide one on one coaching to '+low.join(', ')+' on timely and complete submission.');
+  if (!w.lpt.length) w.lpt.push('Sustain the timely and complete submission of LPT and PPT, and recognize teachers with consistent on time submissions.');
+  if (D.need && D.done < D.need) w.obs.push('Schedule at least 2 observations every school day in school to cover the '+(D.need-D.done)+' lacking observations.');
+  const notObs = (DATA.teachers||[]).filter(t => !D.covered.includes(t)).map(t=>t.name); if (notObs.length) w.obs.push('Observe the teachers not yet observed: '+notObs.join(', ')+'.');
+  if (D.ratings.length && D.ratings.reduce((a,b)=>a+b,0)/D.ratings.length < 3.5) w.obs.push('Follow up the agreements through coaching and a second visit within two weeks.');
+  if (!w.obs.length) w.obs.push('Continue regular observations and share effective practices during LAC sessions.');
+  if (D.owed.length) w.sbfp.push('Serve the menus not yet implemented after the regular schedule: '+[...new Set(D.owed.map(x=>x.s.n))].join(', ')+'.');
+  const lowG = D.grp.filter(g => g.d && pct(g.p,g.d) < 75).map(g=>g.g); if (lowG.length) w.sbfp.push('Talk with the parents of '+lowG.join(', ')+' during the next homeroom PTA meeting to raise participation.');
+  if (!w.sbfp.length) w.sbfp.push('Sustain the feeding schedule and thank the parents for their active participation.');
+  return w;
+}
+
+/* ----- slides ----- */
+function pirSlides(){
+  const me = PIR.mode==='me' && USER.role==='teacher' ? USER.email : '', D = pirData(me), R = D.R, W = waysForward(D), S = [];
+  const head = `<div class="ps-head"><img src="${LOGO}" alt=""><span>Baluyan Elementary School \u00B7 ${esc(R.label)}</span></div>`;
+  const wrap = (title, body, cls) => S.push(`<div class="slide ${cls||''}">${head}<h2 class="ps-t" data-edit>${title}</h2><div class="ps-b">${body}</div></div>`);
+  const lA = D.c(D.lpt,x=>x.status==='Approved'), pA = D.c(D.ppt,x=>x.status==='Approved'), apAll = lA+pA, onAll = D.c(D.lpt.concat(D.ppt),x=>x.status==='Approved'&&x.late&&!x.late.late);
+  const pirTitle = PIR.mode==='me' ? 'My Status Report' : 'Program Implementation Review';
+  S.push(`<div class="slide cover"><img src="${LOGO}" alt="" class="ps-logo"><h1 data-edit>${pirTitle}</h1><p data-edit>${esc(R.label)}</p><p class="ps-sub" data-edit>${PIR.mode==='me'?esc(USER.name)+(USER.position?', '+esc(USER.position):''):'Baluyan Elementary School, Imelda District, Schools Division of Zamboanga Sibugay'}</p><p class="ps-date">As of ${esc(dShort(todayPH()))}</p></div>`);
+  if (PIR.mode!=='me' || USER.role!=='admin'){
+    wrap('Overview', `<div class="pbigs">${big(pct(lA,D.lpt.length)+'%','LPT submitted and approved','#1e5a8c')}${big(pct(pA,D.ppt.length)+'%','PPT submitted and approved','#6a2c99')}${big(pct(onAll,apAll)+'%','Submitted on time','#2f7a4a')}
+      ${me?big(D.ep.length,'Classroom observations','#b06000')+big(D.mw.length,'MWA visits','#a3271b'):big(pct(D.done,D.need)+'%','Observation target met','#b06000')+big(pct(D.sbDone.length,D.sb.length)+'%','SBFP feeding days implemented','#d35400')+big(pct(D.partTot.p,D.partTot.d)+'%','Parents\u2019 SBFP attendance','#c0392b')}</div>`);
+    wrap('LPT and PPT Submission', `<div class="pcols"><div>${bar('LPT approved',lA,D.lpt.length,'#1e5a8c')}${bar('PPT approved',pA,D.ppt.length,'#6a2c99')}${bar('On time (approved files)',onAll,apAll,'#2f7a4a')}
+      ${bar('Late (complete files)',D.c(D.lpt.concat(D.ppt),x=>x.complete&&x.late&&x.late.late),D.c(D.lpt.concat(D.ppt),x=>x.complete),'#c0392b')}${bar('Returned or wrong file',D.c(D.lpt.concat(D.ppt),x=>x.status==='Returned'||x.status==='Invalid'),D.lpt.length+D.ppt.length,'#a3271b')}</div>
+      <div class="pnote"><b>${D.ents.length}</b> weekly submissions in this period. A file counts once the School Head approves it. A PPT by session counts once all sessions are in.</div></div>`);
+    if (!me) wrap('LPT and PPT by Teacher', `<table class="ptab"><thead><tr><th>Teacher</th><th>Weekly entries</th><th>LPT approved</th><th>PPT approved</th><th>On time</th><th>Late</th><th>Returned</th></tr></thead><tbody>${D.byT.map(r=>`<tr><td>${esc(r.t.name)}</td><td>${r.entries}</td><td>${r.lptA} (${pct(r.lptA,r.entries)}%)</td><td>${r.pptA} (${pct(r.pptA,r.entries)}%)</td><td>${r.ontime}</td><td>${r.late}</td><td>${r.ret}</td></tr>`).join('')}</tbody></table>`);
+    const avg = D.ratings.length ? (D.ratings.reduce((a,b)=>a+b,0)/D.ratings.length).toFixed(1) : 'none';
+    wrap(me?'My Observations':'Classroom Observations and MWA', `<div class="pbigs">${big(D.ep.length,'ePMCF classroom observations','#1e5a8c')}${big(D.mw.length,'PMCF MWA visits','#6a2c99')}${big(avg,'Average STAR rating (5 highest)','#b06000')}${me?big(D.ep.filter(o=>o.status==='Completed').length,'Completed and signed','#2f7a4a'):big(D.covered.length+' of '+(DATA.teachers||[]).length,'Teachers observed','#2f7a4a')}</div>
+      ${me?'':`${bar('Observation target (2 per school day in school)',D.done,D.need,'#b06000')}<p class="pnote">${D.out} school day${D.out===1?'':'s'} out of school were excused. Top MWA focus: ${Object.keys(D.focus).sort((a,b)=>D.focus[b]-D.focus[a]).slice(0,3).map(f=>esc(f)+' ('+D.focus[f]+')').join(', ')||'none yet'}.</p>`}`);
+  }
+  if (!me){
+    const g = D.grp;
+    wrap('School-Based Feeding Program', `<div class="pcols"><div>${bar('Feeding days implemented',D.sbDone.length,D.sb.length,'#d35400')}${bar('Parents\u2019 attendance, all groups',D.partTot.p,D.partTot.d,'#2f7a4a')}
+      <p class="pnote">${D.owed.length} menu${D.owed.length===1?'':'s'} not yet implemented${D.owed.length?': '+[...new Set(D.owed.map(x=>esc(x.s.n)))].join(', '):''}.</p></div>
+      <div>${g.map(x=>bar(x.g+' parents',x.p,x.d,'#d35400')).join('')}</div></div>`);
+  }
+  const wfBlock = (t, list) => `<div class="pwf"><h3 data-edit>${t}</h3><ul>${list.map(x=>`<li data-edit>${esc(x)}</li>`).join('')}</ul></div>`;
+  wrap('Ways Forward', `<div class="pcols3">${PIR.mode==='me' && USER.role==='admin' ? wfBlock('SBFP',W.sbfp) : wfBlock('LPT and PPT',W.lpt)+wfBlock('Observations',W.obs)+(me?'':wfBlock('SBFP',W.sbfp))}</div><p class="pnote">These are suggestions from the data. Tap Edit text to change them.</p>`, 'wf');
+  S.push(`<div class="slide cover end"><img src="${LOGO}" alt="" class="ps-logo"><h1 data-edit>Thank you!</h1><p data-edit>Together, we guide every learner like a star.</p></div>`);
+  return S;
+}
+
+/* ----- viewer ----- */
+async function openPir(mode){
+  PIR.mode = mode || 'pir'; $('menu').classList.remove('open');
+  ['viewTrk','viewAcc','viewBank','viewLog','viewWeeks','viewSig','viewObs','viewHome','viewSbfp'].forEach(v => $(v).style.display='none');
+  $('viewPir').style.display=''; CUR_FEATURE = PIR.mode==='pir' ? 'pir' : CUR_FEATURE; drawSide(); window.scrollTo(0,0);
+  if (!PIR.q){ const t = todayPH(); PIR.q = t.slice(0,4)+'-Q'+(Math.floor((Number(t.slice(5,7))-1)/3)+1); PIR.term = pickCurrentTerm(DATA.settings); PIR.from = addDays(t,-30); PIR.to = t; }
+  $('viewPir').innerHTML = '<div class="empty">Preparing the presentation</div>';
+  try{ if (USER.role!=='teacher' || featOn('obs')) { obsLocalLoad(); await obsRefresh(); } }catch(e){}
+  if (!SB.people && isStaff()){ try{ SB.people = await api('sbfpPeople'); }catch(e){} }
+  pirBuild();
+}
+function pirBuild(){ PIR.slides = pirSlides(); PIR.i = 0; PIR.ann = {}; PIR.saved = null; pirDraw(); }
+function pirDraw(){
+  const head = USER.role==='head' && PIR.mode==='pir';
+  $('viewPir').innerHTML = `<div class="trk-head"><div><h2>${PIR.mode==='pir'?'PIR Presentation':'My Status Presentation'}</h2><p>${PIR.mode==='pir'?'Ready to present to stakeholders and teachers. The data updates automatically.':'Your own progress, to guide you.'}${PIR.saved?' Opened: <b>'+esc(PIR.saved.name)+'</b>':''}</p></div>
+      <div class="head-actions">${head?'<button class="btn ghost" onclick="pirSaved()">Saved presentations</button><button class="btn ghost" onclick="pirSave()">Save as of today</button>':''}<button class="btn" onclick="pirPrint()">Print as PDF</button></div></div>
+    <div class="bar"><div class="tabs">${[['term','Term'],['quarter','Quarter'],['range','Date range']].map(([k,l])=>`<button class="${PIR.ptype===k?'on':''}" onclick="PIR.ptype='${k}';pirDraw()">${l}</button>`).join('')}</div>
+      ${PIR.ptype==='term'?`<select onchange="PIR.term=this.value">${['1','2','3'].map(t=>`<option ${PIR.term===t?'selected':''} value="${t}">Term ${t}</option>`).join('')}</select>`
+        : PIR.ptype==='quarter'?`<select onchange="PIR.q=this.value">${(()=>{ const y = Number(todayPH().slice(0,4)); return [y-1,y].map(yy=>[1,2,3,4].map(q=>`<option value="${yy}-Q${q}" ${PIR.q===yy+'-Q'+q?'selected':''}>Quarter ${q}, ${yy}</option>`).join('')).join(''); })()}</select>`
+        : `<input type="date" value="${PIR.from}" onchange="PIR.from=this.value"> to <input type="date" value="${PIR.to}" onchange="PIR.to=this.value">`}
+      <button class="btn small" onclick="pirBuild()">Make slides</button></div>
+    <div class="pir-tools" id="pirTools">
+      <button onclick="pirGo(-1)" title="Previous">\u2039</button><span class="pir-n">${PIR.i+1} / ${PIR.slides.length}</span><button onclick="pirGo(1)" title="Next">\u203A</button>
+      <span class="sep"></span>
+      <button onclick="pirZoom(-0.1)" title="Zoom out">\u2212</button><span class="pir-n">${Math.round(PIR.zoom*100)}%</span><button onclick="pirZoom(0.1)" title="Zoom in">\uFF0B</button>
+      <span class="sep"></span>
+      ${[['pen','\u270E Pen'],['hl','\u2588 Highlight'],['circle','\u25EF Circle'],['erase','\u232B Eraser']].map(([k,l])=>`<button class="${PIR.tool===k?'on':''}" onclick="pirTool('${k}')">${l}</button>`).join('')}
+      ${['#e53935','#1e5a8c','#2f7a4a','#f4c430','#111111'].map(c=>`<button class="pir-c ${PIR.color===c?'on':''}" style="--c:${c}" onclick="PIR.color='${c}';pirDraw()" aria-label="Color"></button>`).join('')}
+      <button onclick="pirClearInk()">Clear drawings</button>
+      <span class="sep"></span>
+      <button class="${PIR.edit?'on':''}" onclick="pirEdit()">${PIR.edit?'\u2714 Done editing':'\u270D Edit text'}</button>
+      <button onclick="pirFull()">\u26F6 Full screen</button>
+    </div>
+    <div class="pir-stagewrap" id="pirWrap"><div class="pir-scale" id="pirScale"><div class="pir-stage" id="pirStage">${PIR.slides[PIR.i]}<canvas id="pirInk" width="1280" height="720"></canvas></div></div></div>
+    <div class="pir-thumbs">${PIR.slides.map((s,k)=>`<button class="${k===PIR.i?'on':''}" onclick="pirSaveSlide();PIR.i=${k};pirDraw()">${k+1}</button>`).join('')}</div>`;
+  pirFit(); pirInk();
+  document.querySelectorAll('#pirStage [data-edit]').forEach(el => el.contentEditable = PIR.edit ? 'true' : 'false');
+}
+function pirFit(){ const w = $('pirWrap'); if (!w) return; const base = Math.min(1, (w.clientWidth-4)/1280), s = base*PIR.zoom; const sc = $('pirScale'); sc.style.transform = `scale(${s})`; sc.style.width = '1280px'; sc.style.height = '720px'; w.style.height = (720*s+8)+'px'; }
+window.addEventListener('resize', () => { if ($('viewPir') && $('viewPir').style.display!=='none') pirFit(); });
+function pirZoom(d){ PIR.zoom = Math.min(2.5, Math.max(0.5, Math.round((PIR.zoom+d)*10)/10)); pirSaveSlide(); pirDraw(); }
+function pirGo(d){ const n = PIR.i+d; if (n < 0 || n >= PIR.slides.length) return; pirSaveSlide(); PIR.i = n; pirDraw(); }
+function pirSaveSlide(){ const st = $('pirStage'), cv = $('pirInk'); if (!st || !cv) return; PIR.ann[PIR.i] = cv.toDataURL('image/png'); const c = st.cloneNode(true); c.querySelector('canvas').remove(); PIR.slides[PIR.i] = c.innerHTML; }
+function pirEdit(){ pirSaveSlide(); PIR.edit = !PIR.edit; if (PIR.edit) PIR.tool = ''; pirDraw(); }
+function pirTool(t){ pirSaveSlide(); PIR.tool = PIR.tool===t ? '' : t; PIR.edit = false; pirDraw(); }
+function pirClearInk(){ PIR.ann[PIR.i] = ''; const cv = $('pirInk'); cv.getContext('2d').clearRect(0,0,1280,720); }
+function pirInk(){
+  const cv = $('pirInk'), g = cv.getContext('2d');
+  cv.style.pointerEvents = PIR.tool ? 'auto' : 'none'; cv.style.cursor = PIR.tool ? 'crosshair' : 'default';
+  if (PIR.ann[PIR.i]){ const im = new Image(); im.onload = () => g.drawImage(im,0,0); im.src = PIR.ann[PIR.i]; }
+  let down = null, snap = null, pts = [];
+  const pos = e => { const r = cv.getBoundingClientRect(); return [(e.clientX-r.left)*1280/r.width, (e.clientY-r.top)*720/r.height]; };
+  cv.onpointerdown = e => { if (!PIR.tool) return; e.preventDefault(); cv.setPointerCapture(e.pointerId); down = pos(e); snap = g.getImageData(0,0,1280,720);
+    g.globalCompositeOperation = PIR.tool==='erase' ? 'destination-out' : 'source-over'; g.strokeStyle = PIR.color; g.lineCap = g.lineJoin = 'round';
+    g.lineWidth = PIR.tool==='hl' ? 26 : PIR.tool==='erase' ? 40 : 4; g.globalAlpha = PIR.tool==='hl' ? 0.32 : 1; pts = [down]; };
+  cv.onpointermove = e => { if (!down) return; const p = pos(e);
+    if (PIR.tool==='circle'){ g.putImageData(snap,0,0); g.beginPath(); g.globalAlpha = 1; g.lineWidth = 4; g.ellipse((down[0]+p[0])/2,(down[1]+p[1])/2,Math.abs(p[0]-down[0])/2,Math.abs(p[1]-down[1])/2,0,0,Math.PI*2); g.stroke(); }
+    else { pts.push(p); g.putImageData(snap,0,0); g.beginPath(); g.moveTo(pts[0][0], pts[0][1]); pts.forEach(q => g.lineTo(q[0], q[1])); g.stroke(); } };
+  cv.onpointerup = cv.onpointercancel = () => { down = null; g.globalAlpha = 1; g.globalCompositeOperation = 'source-over'; PIR.ann[PIR.i] = cv.toDataURL('image/png'); };
+}
+function pirFull(){ pirSaveSlide(); const w = $('pirWrap'); (w.requestFullscreen || w.webkitRequestFullscreen || (()=>{})).call(w); setTimeout(pirFit, 300); }
+document.addEventListener('fullscreenchange', () => { if ($('viewPir') && $('viewPir').style.display!=='none'){ const w = $('pirWrap'); if (document.fullscreenElement === w){ const s = Math.min(innerWidth/1280, innerHeight/720); $('pirScale').style.transform = `scale(${s})`; w.style.height = '100vh'; } else pirFit(); } });
+document.addEventListener('keydown', e => { if ($('viewPir') && $('viewPir').style.display!=='none' && !PIR.edit && !/INPUT|TEXTAREA|SELECT/.test((e.target||{}).tagName||'')){ if (e.key==='ArrowRight' || e.key===' ') pirGo(1); else if (e.key==='ArrowLeft') pirGo(-1); } });
+function pirPrint(){
+  pirSaveSlide();
+  $('printArea').innerHTML = PIR.slides.map((s,k)=>`<div class="pir-page"><div class="pir-pscale"><div class="pir-stage">${s}${PIR.ann[k]?`<img class="pir-inkimg" src="${PIR.ann[k]}" alt="">`:''}</div></div></div>`).join('');
+  document.body.classList.add('pir-printing'); setTimeout(() => { window.print(); setTimeout(()=>document.body.classList.remove('pir-printing'), 800); }, 300);
+}
+async function pirSave(){
+  pirSaveSlide();
+  const name = prompt('Name this presentation', (PIR.saved && PIR.saved.name) || ('PIR '+pirRange().label+', as of '+dShort(todayPH())));
+  if (!name) return;
+  loading(true,'Saving');
+  try{ const r = await api('pirSave',{ id: PIR.saved && PIR.saved.name===name ? PIR.saved.id : '', name, json: JSON.stringify({ slides:PIR.slides, ann:PIR.ann, ptype:PIR.ptype, term:PIR.term, q:PIR.q, from:PIR.from, to:PIR.to }) }); PIR.saved = r; pirDraw(); toast('Saved: '+r.name); }
+  catch(e){ handleErr(e); }
+  loading(false);
+}
+async function pirSaved(){
+  loading(true);
+  try{ const list = await api('pirList');
+    $('pirList').innerHTML = list.length ? list.map(x=>`<div class="pirrow"><button class="linkbtn" onclick="pirOpen('${esc(x.id)}','${esc(x.name).replace(/'/g,'&#39;')}')"><b>${esc(x.name)}</b></button><small>${esc(x.on)}</small><button class="linkbtn" style="color:var(--late)" onclick="pirDel('${esc(x.id)}')">Delete</button></div>`).join('') : '<p class="hint">No saved presentations yet.</p>';
+    openModal('pirModal'); }
+  catch(e){ handleErr(e); }
+  loading(false);
+}
+async function pirOpen(id, name){
+  loading(true,'Opening');
+  try{ const j = JSON.parse(await api('pirLoad',{ id })); Object.assign(PIR, { slides:j.slides, ann:j.ann||{}, ptype:j.ptype, term:j.term, q:j.q, from:j.from, to:j.to, i:0, saved:{ id, name } }); closeModal('pirModal'); pirDraw(); }
+  catch(e){ handleErr(e); }
+  loading(false);
+}
+async function pirDel(id){ if (!confirm('Delete this saved presentation?')) return; try{ await api('pirDelete',{ id }); pirSaved(); }catch(e){ handleErr(e); } }
 
 /* ----- New school year: clean slate (LPT and PPT files and records are kept) ----- */
 function openNewSY(){ $('menu').classList.remove('open'); $('nsErr').textContent=''; $('nsConfirm').value=''; openModal('nsModal'); }
@@ -4045,7 +4597,7 @@ async function afterSignIn(){
 async function signOut(){
   $('menu').classList.remove('open');
   try{ await api('logout'); }catch(e){}
-  clearSession(); PIN_FORCED=false; $('pinModal').classList.remove('open'); showTracker(); render(); loadPublic(); toast('You are signed out.');
+  clearSession(); PIN_FORCED=false; $('pinModal').classList.remove('open'); render(); SB.people = null; OBS.list = []; await loadPublic(); showHome(); toast('You are signed out.');
 }
 function openPin(forced){
   PIN_FORCED = !!forced; $('menu').classList.remove('open');
