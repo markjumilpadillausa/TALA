@@ -245,6 +245,21 @@ table.subs tr.nosub td:not(.wk){color:var(--muted);font-style:italic}
 .hist summary{cursor:pointer;color:var(--muted);font-weight:600}
 .hist ol{margin:4px 0 0;padding-left:18px}
 .pinv{font-weight:700;letter-spacing:1px}
+.stacks{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;margin-top:12px}
+.stackbox{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}.stackbox b{font-size:13.5px}
+.stack{position:relative;width:120px;height:120px;border:0;background:none;cursor:pointer;padding:0}
+.stack img{position:absolute;inset:8px;width:104px;height:104px;object-fit:cover;border-radius:12px;border:3px solid #fff;box-shadow:0 4px 12px rgba(0,0,0,.25);transform:rotate(var(--r))}
+.stack.empty{border:2px dashed var(--line);border-radius:16px;cursor:default}.stack0{font-size:34px;opacity:.5;display:grid;place-items:center;height:100%}
+.stack em{position:absolute;right:-4px;top:-4px;background:var(--late);color:#fff;font-style:normal;font-size:12px;font-weight:700;border-radius:999px;padding:2px 8px;z-index:3}
+.stackadd input{display:none}
+.sbtools{display:flex;gap:8px;justify-content:flex-end;margin-top:8px;flex-wrap:wrap}.btn.small.danger{color:var(--late);border-color:#f5b5ad}
+.sbkids{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;align-items:center}.sbrm{margin-left:6px;color:var(--late);font-size:12.5px}.sbrepby{color:#1e5a8c;font-weight:400}
+.colgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;max-height:50vh;overflow:auto}
+.colp{position:relative;cursor:pointer;display:block}.colp img{width:100%;height:110px;object-fit:cover;border-radius:10px;border:3px solid transparent}.colp input{position:absolute;top:8px;left:8px;width:20px;height:20px}
+.colp input:checked + img{border-color:var(--sun)}.colp small{display:block;font-size:11px;color:var(--muted)}
+.colwrap{display:grid;grid-template-columns:260px 1fr;gap:14px;align-items:start}.colcanvas{width:100%;max-height:65vh;object-fit:contain;border:1px solid var(--line);border-radius:8px;background:#fff}
+@media (max-width:760px){.colwrap{grid-template-columns:1fr}}
+@media print{ body.portrait-print .colprint img{width:100%;max-height:270mm;object-fit:contain} }
 .agrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .acard{background:#f3f6f1;border-radius:16px;padding:16px 18px;border-top:8px solid var(--c)}.acard b{display:block;font-size:22px;color:var(--c);margin:6px 0 4px}.acard p{margin:0;font-size:16px;line-height:1.4}
 .aico{font-size:30px}.ah3{font-size:24px;color:#1F5130;margin:0 0 8px}
@@ -556,7 +571,8 @@ textarea::placeholder,input::placeholder{color:#a8aea6;font-style:italic}
   .p-pg{page-break-before:always;break-before:page}
   .p-cal{width:100%;border-collapse:collapse;table-layout:fixed} .p-cal th{border:1px solid #000;padding:3px;font-size:9px;background:#eee} .p-cal td{border:1px solid #000;height:62px;vertical-align:top;padding:2px 3px;font-size:8px}
   .p-cal td b{font-size:9px} .pc-e{background:#f6f6f6} .pc-i{border-left:3px solid #555;padding-left:3px;margin-top:2px;line-height:1.25}
-  .pc-qrs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px} .pc-qr{display:flex;gap:6px;align-items:flex-start;font-size:8.5px;page-break-inside:avoid;border:1px solid #ccc;padding:4px} .p-sigs div{display:flex;flex-direction:column;align-items:center;margin-bottom:4px} .p-sigs img{max-height:26px;max-width:110px} .p-sigs small{font-size:7.5px} }
+  .pc-qrs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+  .p-annex{display:grid;grid-template-columns:repeat(2,1fr);gap:10px} .p-annex figure{margin:0;page-break-inside:avoid;text-align:center} .p-annex img{max-width:100%;max-height:150mm;object-fit:contain;border:1px solid #ccc} .p-annex figcaption{font-size:8px;color:#555} .pc-qr{display:flex;gap:6px;align-items:flex-start;font-size:8.5px;page-break-inside:avoid;border:1px solid #ccc;padding:4px} .p-sigs div{display:flex;flex-direction:column;align-items:center;margin-bottom:4px} .p-sigs img{max-height:26px;max-width:110px} .p-sigs small{font-size:7.5px} }
 .sync{display:flex;align-items:center;gap:6px;font-size:12px;white-space:nowrap;background:rgba(255,255,255,.12);border-radius:999px;padding:4px 10px}
 .sync i{width:9px;height:9px;border-radius:50%;background:#7CD992;flex:none}
 .sync.wait i{background:var(--sun)}.sync.off i{background:#ff8a80}.sync.sync i{background:#90caf9;animation:pulse 1s infinite}
@@ -722,6 +738,8 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
 /* Printed weekly report */
 #printArea{display:none}
 @page{size:A4 landscape;margin:10mm}
+@page portraitpg{size:A4 portrait;margin:8mm}
+.colprint{page:portraitpg;text-align:center}
 @media print{
   body{background:#fff}
   body > *:not(#printArea){display:none !important}
@@ -1156,7 +1174,7 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
       <label class="evdrop" for="evFiles"><b>📎 Add photos, videos, memos, or orders</b><small>Images, videos, PDF, Word, PowerPoint, or Excel. Up to 30 MB each.</small><input type="file" id="evFiles" multiple accept="image/*,video/*,.pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx" onchange="evAddFiles(this)"></label>
       <div class="evlink"><input id="evLink" placeholder="Or paste a link, for example a Google Drive video or a Facebook post"><button type="button" class="btn ghost small" onclick="evAddLink()">Add link</button></div>
       <div id="evAtt" class="evatt"></div></div>
-    <label class="check" id="evOutRow" style="display:none"><input type="checkbox" id="evOut">I will be out of school on these dates (mark them in my observation calendar)</label>
+    <label class="check" id="evOutRow" style="display:none"><input type="checkbox" id="evOut">I am away from school on these dates (they are excused from the 2 observations a day). Attach the memo or certificate above as MOVs.</label>
     <div class="err" id="evErr"></div>
     <div class="modal-actions"><button class="btn ghost" onclick="closeModal('evModal')">Cancel</button><button class="btn" id="evBtn" onclick="eventSave()">Save</button></div>
   </div>
@@ -1283,6 +1301,42 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
     <div class="modal-actions"><button class="btn ghost" onclick="closeModal('ssModal')">Cancel</button><button class="btn" onclick="sbStatusSave()">Save</button></div></div>
 </div>
 
+<!-- SBFP collage -->
+<div class="overlay" id="colModal">
+  <div class="modal wide" role="dialog" aria-labelledby="colTitle"><h3 id="colTitle">SBFP photo collage</h3>
+    <div id="colStep1"><p class="sub">Choose 4 to 6 photos. <b id="colCount">0 selected</b></p><div class="colgrid" id="colPick"></div>
+      <div class="modal-actions"><button class="btn ghost" onclick="closeModal('colModal')">Cancel</button><button class="btn" onclick="colNext()">Next: edit and preview</button></div></div>
+    <div id="colStep2" hidden><div class="colwrap"><div class="colform">
+        <div class="field"><label for="colCap">Heading</label><input id="colCap" oninput="colDraw()"></div>
+        <div class="field"><label for="colMenu">Menu</label><input id="colMenu" oninput="colDraw()"></div>
+        <div class="field"><label for="colDate">Date</label><input id="colDate" oninput="colDraw()"></div>
+        <div class="field"><label for="colGrade">Grade level assigned</label><input id="colGrade" oninput="colDraw()"></div>
+        <button class="btn ghost small" onclick="$('colStep1').hidden=false;$('colStep2').hidden=true">\u2039 Change photos</button></div>
+      <canvas id="colCanvas" class="colcanvas"></canvas></div>
+      <div class="modal-actions"><button class="btn ghost" onclick="closeModal('colModal')">Close</button><button class="btn ghost" onclick="colPdf()">Download as PDF</button><button class="btn" onclick="colPng()">Download as photo</button></div></div>
+  </div>
+</div>
+<!-- SBFP print -->
+<div class="overlay" id="sbPrintModal">
+  <div class="modal" role="dialog" aria-labelledby="spTitle2"><h3 id="spTitle2">Print SBFP reports</h3><p class="sub">The daily report uses the day you are viewing.</p>
+    <button class="choice" onclick="sbPrint('day')"><b>Daily report</b><small>Menu, status, parents\u2019 attendance, and photos of the day</small></button>
+    <button class="choice" onclick="sbPrint('cal')"><b>Monthly SBFP calendar</b><small>Menus, assigned parents, and status for the month</small></button>
+    <button class="choice" onclick="sbPrint('sum')"><b>Feeding summary</b><small>Every feeding day from the start, with status and reasons</small></button>
+    <button class="choice" onclick="sbPrint('part')"><b>Parents\u2019 participation</b><small>Attendance rate of every parent and group</small></button>
+    <button class="choice" onclick="sbPrint('people')"><b>Learners and parents list</b><small>The full list by group</small></button>
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal('sbPrintModal')">Close</button></div></div>
+</div>
+<!-- SBFP clear -->
+<div class="overlay" id="scModal">
+  <div class="modal" role="dialog" aria-labelledby="scTitle"><h3 id="scTitle">Clear SBFP data</h3><p class="sub">TALA saves a backup of the Google Sheet in your Drive first, then clears what you tick.</p>
+    <div id="scList"><label class="check"><input type="checkbox" data-k="photos" checked>All photos (attendance sheets, before, during, and after)</label>
+      <label class="check"><input type="checkbox" data-k="records" checked>Status of feeding, reasons, and parents\u2019 attendance</label>
+      <label class="check"><input type="checkbox" data-k="menus">Menu and group changes (days go back to the schedule)</label>
+      <label class="check"><input type="checkbox" data-k="people">Learners and parents list (goes back to the SBFP guide list)</label></div>
+    <div class="field"><label for="scConfirm">Type CLEAR to confirm</label><input id="scConfirm" autocomplete="off"></div><div class="err" id="scErr"></div>
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal('scModal')">Cancel</button><button class="btn danger" onclick="sbClearRun()">Clear</button></div></div>
+</div>
+
 <!-- Install app -->
 <div class="overlay" id="installModal">
   <div class="modal" role="dialog" aria-labelledby="instTitle">
@@ -1399,8 +1453,8 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
 
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
-const MIN_SERVER = '3.8'; // oldest Code.gs this page works with
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'3.9', date:'October 7, 2026' } };
+const MIN_SERVER = '4.0'; // oldest Code.gs this page works with
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'4.0', date:'October 7, 2026' } };
 function verLine(server){
   const old = server && (server.indexOf('older') > -1 || parseFloat(server) < parseFloat(MIN_SERVER));
   const s = server ? ' Server '+server+('.') : '';
@@ -1853,6 +1907,13 @@ function toggleSide(open){
   const s = $('side'), on = open === undefined ? !s.classList.contains('open') : open;
   s.classList.toggle('open', on); $('sideBg').classList.toggle('open', on);
 }
+function openSoon(f){
+  ['viewTrk','viewAcc','viewBank','viewLog','viewWeeks','viewSig','viewObs','viewHome','viewSbfp','viewPir'].forEach(v => $(v).style.display='none');
+  CUR_FEATURE = f.id; drawSide(); closeGuide(); window.scrollTo(0,0);
+  $('viewPir').style.display = ''; $('viewPir').innerHTML = `<div class="ohero"><div><h2>${esc(f.name)}</h2><p>${esc(f.do||'')}</p></div></div>
+    <div class="hgrid"><div class="hcard"><b>What TALA will compute for you</b><p>${esc(f.auto||'')}</p></div><div class="hcard"><b>Reports you can print</b><p>${esc(f.report||'')}</p></div></div>
+    <div class="hcard" style="margin-top:14px"><b>Getting this ready</b><p class="hint">The forms for this feature are being prepared and will appear here automatically after an update. Your other features are ready to use.</p></div>`;
+}
 function openFeature(id){
   toggleSide(false);
   const f = FEATURES.find(x => x.id === id);
@@ -1860,8 +1921,7 @@ function openFeature(id){
   if (f.ready){ CUR_FEATURE = 'lpt'; drawSide(); showTracker(); window.scrollTo(0,0); maybeGuide('lpt'); return; }
   const canOpen = f.built && ((USER && (USER.role==='head' || (USER.role==='admin' && f.id==='sbfp'))) || (featOn(f.id) && (USER || f.id==='sbfp')));
   if (canOpen && f.open){ CUR_FEATURE = f.id; drawSide(); f.open(); return; }
-  $('featTitle').textContent = f.name; $('featDo').textContent = f.do; $('featAuto').textContent = f.auto; $('featReport').textContent = f.report;
-  openModal('featModal');
+  openSoon(f);
 }
 drawSide();
 function showTracker(){ ['viewAcc','viewBank','viewLog','viewWeeks','viewSig'].forEach(v => $(v).style.display='none'); $('viewTrk').style.display=''; }
@@ -3938,9 +3998,9 @@ function drawSchoolCal(){
   for (let d = 1; d <= days; d++){
     const date = SCM+'-'+String(d).padStart(2,'0'), ev = eventsOn(date), mk = head ? calMark(date) : null, n = head ? obsOnDay(date) : 0, sd = head && schoolDay(date);
     cells += `<button class="sday ${date===today?'today':''} ${dow(date)===0||dow(date)===6?'wkend':''}" onclick="${HCT==='sbfp'?`SB.date='${date}';SB.tab='today';openSbfp()`:`dayModal('${date}')`}"><b>${d}</b>
-      ${mk?`<span class="evchip" style="background:#777">Out: ${esc(mk.type.replace(/ \(.*/,''))}</span>`:''}
+      ${mk && !ev.some(e => e.title===mk.note)?`<span class="evchip" style="background:#777">Out: ${esc(mk.type.replace(/ \(.*/,''))}</span>`:''}
       ${HCT==='sbfp' ? (sbfpOn(date)?`<span class="evchip" style="background:#d35400">${esc(sbfpOn(date).menu)}</span><span class="evmore">${esc(sbfpOn(date).grade||'')}</span>`:'')
-        : (sbfpOn(date) && (canSbfp()||featOn('sbfp'))?`<span class="evchip sbchip" title="SBFP: ${esc(sbfpOn(date).menu)}, ${esc(sbfpOn(date).grade)}">\u{1F372} ${esc(sbfpOn(date).menu)}<i>${esc(sbfpOn(date).grade.replace(' parents',''))}</i></span>`:'') + ev.slice(0,2).map(e=>`<span class="evchip" style="background:${EV_COLOR[e.type]||'#555'}">${esc(e.title)}</span>`).join('')+(ev.length>2?`<span class="evmore">+${ev.length-2} more</span>`:'')}
+        : (sbfpOn(date)?`<span class="evchip sbchip" title="SBFP: ${esc(sbfpOn(date).menu)}, ${esc(sbfpOn(date).grade)}">\u{1F372} ${esc(sbfpOn(date).menu)}<i>${esc(sbfpOn(date).grade.replace(' parents',''))}</i></span>`:'') + ev.slice(0,2).map(e=>`<span class="evchip" style="background:${EV_COLOR[e.type]||'#555'}">${mk && mk.note===e.title?'\u2708 ':''}${esc(e.title)}</span>`).join('')+(ev.length>2?`<span class="evmore">+${ev.length-2} more</span>`:'')}
       ${sd && !mk ? `<span class="cdots">${[0,1].map(i=>`<i class="${i<n?'on':''}"></i>`).join('')}</span>`:''}</button>`;
   }
   const mname = new Date(Date.UTC(y,m-1,1)).toLocaleString('en-US',{month:'long',year:'numeric',timeZone:'UTC'});
@@ -3948,7 +4008,7 @@ function drawSchoolCal(){
   const upcoming = HCT==='sbfp' ? [] : allEvents().filter(e => (e.end||e.date) >= today).sort((a,b)=>a.date.localeCompare(b.date)).slice(0,5);
   const sbOk = false; HCT = 'school';
   el.innerHTML = `<div class="hcard scal">${sbOk?`<div class="ktabs" style="margin:0 0 10px"><button class="${HCT==='school'?'on':''}" onclick="HCT='school';drawSchoolCal()">School Calendar</button><button class="${HCT==='sbfp'?'on':''}" onclick="HCT='sbfp';drawSchoolCal()">SBFP Calendar</button></div>`:''}
-    <div class="hcard-h"><span class="oico">\u2637</span><div><b>School Calendar</b><small>Events, activities${(canSbfp()||featOn('sbfp'))?', SBFP menus':''}${head?', and your observation days':''}</small></div>
+    <div class="hcard-h"><span class="oico">\u2637</span><div><b>School Calendar</b><small>Events, activities, SBFP menus${head?', and your observation days':''}</small></div>
       ${HCT==='sbfp' ? `<button class="btn small" onclick="openSbfp()">Open SBFP Monitoring</button>` : USER?`<button class="btn small sun" onclick="eventForm('${today}')">\u002B Add</button>`:''}</div>
     <div class="calbar"><button class="btn ghost small" onclick="SCM='${prev}';drawSchoolCal()">\u2039</button><b>${esc(mname)}</b><button class="btn ghost small" onclick="SCM='${next}';drawSchoolCal()">\u203A</button></div>
     <div class="scal-grid"><div class="cdow">Sun</div><div class="cdow">Mon</div><div class="cdow">Tue</div><div class="cdow">Wed</div><div class="cdow">Thu</div><div class="cdow">Fri</div><div class="cdow">Sat</div>${cells}</div>
@@ -3981,12 +4041,16 @@ function printSchoolCal(){
   for (let d = 1; d <= days; d++){
     const date = SCM+'-'+String(d).padStart(2,'0'), ev = HCT==='sbfp' ? [] : eventsOn(date), sb = sbfpOn(date), mk = head ? calMark(date) : null;
     cells += `<td><b>${d}</b>${HCT==='sbfp' ? (sb?`<div class="pc-i" style="border-color:#d35400">${esc(sb.menu)}<br><i>${esc(sb.grade||'')}</i></div>`:'')
-      : (mk?`<div class="pc-i" style="border-color:#777">Out: ${esc(mk.type)}</div>`:'') + (sb?`<div class="pc-i" style="border-color:#d35400">SBFP</div>`:'') + ev.map(e=>`<div class="pc-i" style="border-color:${EV_COLOR[e.type]||'#555'}">${esc(e.title)}${e.time?' ('+esc(evTimeText(e))+')':''}${(e.files||[]).length?' \u{1F4CE}':''}</div>`).join('')}</td>`;
+      : (mk && !ev.some(e=>e.title===mk.note)?`<div class="pc-i" style="border-color:#777">Out: ${esc(mk.type)}</div>`:'') + (sb?`<div class="pc-i" style="border-color:#d35400">SBFP: ${esc(sb.menu)}<br><i>${esc(sb.grade||'')}</i></div>`:'') + ev.map(e=>`<div class="pc-i" style="border-color:${EV_COLOR[e.type]||'#555'}">${esc(e.title)}${e.time?' ('+esc(evTimeText(e))+')':''}${(e.files||[]).length?' \u{1F4CE}':''}</div>`).join('')}</td>`;
     if ((startDow + d) % 7 === 0 && d < days) cells += '</tr><tr>';
     if (HCT!=='sbfp') ev.filter(e => e.date === date).forEach(e => (e.files||[]).forEach(f => qrs.push({ date, title:e.title, f })));
   }
   const rest = (7 - (startDow + days) % 7) % 7; for (let i = 0; i < rest; i++) cells += '<td class="pc-e"></td>';
-  const qrHtml = qrs.length ? `<div class="p-sumtitle" style="margin-top:12px">ATTACHMENTS AND MOVs (scan to view)</div><div class="pc-qrs">${qrs.map(q => `<div class="pc-qr">${qrSmall({ link:q.f.url, fileId:q.f.id }, 70)}<div><b>${esc(dShort(q.date))}</b><br>${esc(q.title)}<br><i>${esc(q.f.name.slice(0,60))}</i></div></div>`).join('')}</div>` : '';
+  // MOVs follow the calendar as annexes, in order of date. Pictures print in full; other files get a QR code.
+  const byEv = []; qrs.forEach(q => { let g = byEv.find(x => x.date===q.date && x.title===q.title); if (!g){ g = { date:q.date, title:q.title, files:[] }; byEv.push(g); } g.files.push(q.f); });
+  const annex = byEv.map((g,i) => `<div class="p-pg"><div class="p-title">ANNEX ${String.fromCharCode(65+(i%26))}${i>=26?Math.floor(i/26):''}: ${esc(dShort(g.date).toUpperCase())}</div><p class="p-sub">${esc(g.title)}</p>
+    <div class="p-annex">${g.files.map(f => f.id && /image/.test(f.mime||'') ? `<figure><img src="https://drive.google.com/thumbnail?id=${esc(f.id)}&sz=w1400" alt=""><figcaption>${esc(f.name)}</figcaption></figure>` : `<div class="pc-qr">${qrSmall({ link:f.url, fileId:f.id }, 80)}<div><b>${esc(f.name.slice(0,60))}</b><br>Scan to view</div></div>`).join('')}</div></div>`).join('');
+  const qrHtml = annex; const _unused = qrs.length ? `<div class="p-sumtitle" style="margin-top:12px">ATTACHMENTS AND MOVs (scan to view)</div><div class="pc-qrs">${qrs.map(q => `<div class="pc-qr">${qrSmall({ link:q.f.url, fileId:q.f.id }, 70)}<div><b>${esc(dShort(q.date))}</b><br>${esc(q.title)}<br><i>${esc(q.f.name.slice(0,60))}</i></div></div>`).join('')}</div>` : '';
   $('printArea').innerHTML = `${printHeader()}<div class="p-title">${HCT==='sbfp'?'SBFP CALENDAR':'SCHOOL CALENDAR'}, ${esc(mname.toUpperCase())}</div>
     <table class="p-cal"><thead><tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr></thead><tbody><tr>${cells}</tr></tbody></table>
     ${qrHtml}
@@ -3997,7 +4061,7 @@ function printSchoolCal(){
 function dayModal(date){
   const ev = eventsOn(date), head = USER && USER.role==='head', mk = head ? calMark(date) : null, obs = head ? OBS.list.filter(o=>o.date===date) : [];
   $('dayTitle').textContent = new Date(date+'T00:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
-  const sb = (canSbfp()||featOn('sbfp')) ? sbfpOn(date) : null;
+  const sb = sbfpOn(date);
   $('dayBody').innerHTML = (sb ? `<div class="evrow" style="border-left-color:#d35400"><b>SBFP: ${esc(sb.menu)}</b><small>${esc(sb.grade||'No grade assigned')}${sb.notes?' \u00B7 '+esc(sb.notes):''}${sbRec(date).status?' \u00B7 '+esc(sbRec(date).status):''}</small>${USER?`<span><button class="linkbtn" onclick="closeModal('dayModal');SB.date='${date}';SB.tab='today';openSbfp()">Open in SBFP Monitoring</button></span>`:''}</div>` : '') + (ev.length ? ev.map(e => `<div class="evrow" style="border-left-color:${EV_COLOR[e.type]||'#555'}"><b>${esc(e.title)}</b><small>${EV_ICON[e.type]||''} ${esc(e.type||'')}${e.time?' \u00B7 '+esc(evTimeText(e)):''}${e.end&&e.end!==e.date?' \u00B7 until '+esc(dShort(e.end)):''} \u00B7 ${e.audience==='Everyone'?'Personnel and the public':e.audience==='Personnel'?'All personnel':'Only me'} \u00B7 by ${esc(e.byName||'')}</small>${e.details?`<p>${esc(e.details)}</p>`:''}
       ${(e.files||[]).length?`<div class="evfiles">${e.files.map((f,k)=>f.id && /image|video/.test(f.mime||'') ? `<button class="evthumb" onclick="evInsta('${esc(e.id)}',${k})">${/video/.test(f.mime)?'<span class="vplay">\u25B6</span>':''}<img src="https://drive.google.com/thumbnail?id=${esc(f.id)}&sz=w240" alt="${esc(f.name)}" loading="lazy"></button>` : `<a class="attc" href="${esc(f.url)}" target="_blank" rel="noopener">${attIcon(f)} ${esc(f.name.slice(0,40))}</a>`).join('')}</div>`:''}
       ${USER && (e.byEmail===USER.email || head) ? `<span><button class="linkbtn" onclick="eventForm('${date}','${esc(e.id)}')">Edit</button> <button class="linkbtn" style="color:var(--late)" onclick="eventDelete('${esc(e.id)}')">Remove</button></span>`:''}</div>`).join('') : '<p class="hint">No events on this day.</p>')
@@ -4016,14 +4080,14 @@ function eventForm(date, id){
   evPickType(e ? (e.type||'Event') : 'Event');
   document.querySelectorAll('input[name=evAud]').forEach(r => r.checked = r.value === (e ? e.audience : 'Personnel')); segSync('evAudSeg');
   EVF = { files:[], links:[], keep:(e && e.files || []).slice() }; evDrawAtt(); $('evFiles').value = ''; $('evLink').value = '';
-  $('evOutRow').style.display = USER && USER.role==='head' && !e ? '' : 'none'; $('evOut').checked = false;
+  $('evOutRow').style.display = USER && USER.role==='head' ? '' : 'none'; $('evOut').checked = !!(e && (OBS.cal||[]).some(x => x.note===e.title && x.date===e.date));
   $('evErr').textContent = ''; $('evModalTitle').textContent = e ? 'Edit calendar entry' : 'Add to the school calendar';
   openModal('evModal'); setTimeout(()=>$('evTitle').focus(), 60);
 }
 function evPickType(t){
   $('evType').value = t; $('evIco').textContent = EV_ICON[t]||'\u2605'; $('evIco').style.background = EV_COLOR[t]||'#555';
   $('evTypes').innerHTML = EV_TYPES.map(x=>`<button type="button" class="evt ${x===t?'on':''}" style="--c:${EV_COLOR[x]}" onclick="evPickType('${x}')"><span>${EV_ICON[x]||''}</span>${esc(x)}</button>`).join('');
-  if (/Training|Holiday/.test(t) && USER && USER.role==='head') $('evOut').checked = /Training/.test(t);
+  if (USER && USER.role==='head' && !$('evId').value) $('evOut').checked = /Training/.test(t);
 }
 function evAddFiles(inp){
   for (const f of inp.files){ if (f.size > 30*1048576){ toast(f.name+' is larger than 30 MB. Share it as a link instead.'); continue; } EVF.files.push(f); }
@@ -4149,6 +4213,7 @@ function canSbfp(){ return USER && (USER.role==='head' || USER.role==='admin'); 
 var SB = { tab:'today', date:'', people:null, month:'' };
 const SB_STATUS = ['Implemented','Not implemented','Holiday','End of term','No class','Others'];
 const SB_COLOR = { 'Implemented':'#2f7a4a','Not implemented':'#c0392b','Holiday':'#a3271b','End of term':'#6a2c99','No class':'#777','Others':'#b06000' };
+const SB_PHOTO_TAGS = ['Attendance sheet','Before','During','After'];
 const SB_GROUPS = ['Kindergarten','Grade 1','Grade 2','Grade 3','Grade 4','Grade 5','Grade 6'];
 function sbfpList(){ return ((DATA||PUB||{}).sbfp)||[]; }
 function sbRec(date){ return sbfpList().find(x=>x.date===date) || {}; }
@@ -4189,8 +4254,41 @@ function drawSbfp(){
   $('viewSbfp').innerHTML = `<div class="ohero sbhero"><div><h2>SBFP Monitoring</h2><p>School-Based Feeding Program: the menu of the day, the grade level whose parents prepare it, the status of feeding, attendance sheets, and parents\u2019 participation.</p></div>
       <div class="sbtoday"><small>Today</small>${t?`<b>${esc(t.n)}</b><span>${esc(t.g)} parents \u00B7 Day ${t.day} of ${SBFP_MENUS.length}</span>`:'<b>No feeding scheduled today</b>'}</div></div>
     <div class="ktabs">${tabs.map(([k,l])=>`<button class="${SB.tab===k?'on':''}" onclick="SB.tab='${k}';drawSbfp()">${l}</button>`).join('')}</div>
+    ${staff?`<div class="sbtools"><button class="btn ghost small" onclick="openModal('sbPrintModal')">\u2399 Print reports</button>${USER.role==='head'?'<button class="btn ghost small danger" onclick="sbClearOpen()">Clear SBFP data</button>':''}</div>`:''}
     <div id="sbBody"></div>`;
   ({ today:sbDayView, cal:sbCalView, sum:sbSumView, people:sbPeopleView, part:sbPartView })[SB.tab]();
+}
+function sbClearOpen(){ $('scConfirm').value=''; $('scErr').textContent=''; openModal('scModal'); }
+async function sbClearRun(){
+  const options = {}; document.querySelectorAll('#scList input').forEach(i => options[i.dataset.k] = i.checked);
+  loading(true,'Making a backup and clearing');
+  try{ const r = await api('sbfpClear',{ options, confirm:$('scConfirm').value }); closeModal('scModal'); if (options.people) SB.people = null; await loadData(true); SB.people = SB.people || await api('sbfpPeople'); drawSbfp();
+    alert('SBFP data cleared.\n\nA backup was saved in your Google Drive as:\n'+r.backupName); }
+  catch(e){ handleErr(e,'scErr'); }
+  loading(false);
+}
+function sbPrint(kind){
+  closeModal('sbPrintModal'); const d = SB.date, s = sbSched(d), r = sbRec(d), foot = `<div class="p-sign"><div>Prepared by:<b>${esc(USER.name)}</b>${esc(USER.position||'')}</div><div>Noted by:<b>${esc((DATA||{}).headName||'')}</b>School Head</div></div><div class="p-foot">Generated from TALA on ${esc(dTime(nowLocal().replace('T',' ')))}.</div>`;
+  if (kind==='cal') return printSbfp();
+  if (kind==='part') return printSbPart();
+  let body = '';
+  if (kind==='day'){
+    if (!s) return toast('No feeding scheduled on the chosen day.');
+    const att = r.att||{}, lab = v => ({P:'Present',R:'Representative',E:'Excused',N:'Not participating'})[String(v).charAt(0)] || 'Not marked';
+    const rows = sbParents(sbGroupOf(s.g)).map((p,i)=>{ const v = String(att[p.key]||''); return `<tr><td style="text-align:center">${i+1}</td><td>${esc(p.parent)}</td><td>${esc(p.kids.join(', '))}</td><td>${lab(v)}${v.charAt(0)==='R'?': '+esc(v.slice(2).split('|')[0]):''}</td></tr>`; }).join('');
+    const extra = Object.keys(att).filter(k=>k.indexOf('x|')===0).map(k=>`<tr><td></td><td>${esc(k.split('|')[1])}</td><td>${esc(k.split('|')[2])} group</td><td>Helped (extra)</td></tr>`).join('');
+    body = `<div class="p-title">SBFP DAILY REPORT</div><p class="p-sub">${esc(new Date(d+'T00:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'}))}. Day ${s.day}.</p>
+      <table class="p-table"><tr><td><b>Menu</b></td><td>${esc(s.n)}</td><td><b>Parents assigned</b></td><td>${esc(s.g)}</td></tr><tr><td><b>Status</b></td><td>${esc(r.status||'No status yet')}</td><td><b>Reason</b></td><td>${esc(r.reason||'')}</td></tr></table>
+      <div class="p-sumtitle" style="margin-top:10px">PARENTS\u2019 ATTENDANCE</div><table class="p-table"><thead><tr><th>No.</th><th>Parent or Guardian</th><th>Learners</th><th>Attendance</th></tr></thead><tbody>${rows}${extra}</tbody></table>
+      ${(r.photos||[]).length?`<div class="p-pg"><div class="p-sumtitle">PHOTOS</div><div class="p-annex">${r.photos.map(p=>`<figure><img src="https://drive.google.com/thumbnail?id=${esc(p.id)}&sz=w1000" alt=""><figcaption>${esc(p.tag||'Attendance sheet')}</figcaption></figure>`).join('')}</div></div>`:''}`;
+  } else if (kind==='sum'){
+    const H = sbHistory(), done = H.filter(x=>x.st==='Implemented');
+    body = `<div class="p-title">SBFP FEEDING SUMMARY</div><p class="p-sub">${esc(dShort(sbStart()))} to ${esc(dShort(todayPH()))}. ${done.length} of ${H.length} feeding days implemented (${pct(done.length,H.length)}%).</p>
+      <table class="p-table"><thead><tr><th>Date</th><th>Day</th><th>Menu</th><th>Parents</th><th>Status</th><th>Reason</th></tr></thead><tbody>${H.map(x=>`<tr><td>${esc(dShort(x.date))}</td><td style="text-align:center">${x.s.day}</td><td>${esc(x.s.n)}</td><td>${esc(x.s.g)}</td><td>${esc(x.st||'No status')}</td><td>${esc(sbRec(x.date).reason||'')}</td></tr>`).join('')}</tbody></table>`;
+  } else if (kind==='people'){
+    body = `<div class="p-title">SBFP LEARNERS AND PARENTS</div><table class="p-table"><thead><tr><th>Group</th><th>Learner</th><th>Grade</th><th>Parent or Guardian</th><th>Counted</th></tr></thead><tbody>${(SB.people||[]).map(p=>`<tr><td>${esc(p.group)}</td><td>${esc(p.learner)}</td><td>${esc(p.grade)}</td><td>${esc(p.parent)}</td><td>${p.counted?'Yes':'Sibling'}</td></tr>`).join('')}</tbody></table>`;
+  }
+  $('printArea').innerHTML = printHeader() + body + foot; setTimeout(() => window.print(), 300);
 }
 function sbGo(date){ SB.date = date; SB.tab = 'today'; drawSbfp(); window.scrollTo(0,0); }
 function sbDayView(){
@@ -4206,10 +4304,11 @@ function sbDayView(){
   const val = k => String(att[k]||''), kind = k => val(k).charAt(0);
   const cnt = { P:0, R:0, E:0, N:0 }; parents.forEach(p => { const v = kind(p.key); if (cnt[v] !== undefined) cnt[v]++; });
   const photos = (r.photos||[]);
-  const row = (key, name, sub, extra) => { const v = kind(key), rep = v==='R' ? val(key).slice(2) : '';
-    return `<details class="sbp" ${v==='R'?'open':''}><summary><span class="sbpn">${esc(name)}${extra?` <span class="ktag mwa">${esc(extra)}</span>`:''}</span>
+  const row = (key, name, sub, extra) => { const v = kind(key), rv = v==='R' ? val(key).slice(2).split('|') : ['',''], rep = rv[0], kidsFor = (rv[1]||'').split(';').filter(Boolean), kidList = sub ? sub.split(', ') : [];
+    return `<details class="sbp" ${v==='R'?'open':''}><summary><span class="sbpn">${esc(name)}${v==='R'&&rep?` <small class="sbrepby">by ${esc(rep)}</small>`:''}${extra?` <button class="linkbtn sbrm" onclick="event.preventDefault();sbRemoveExtra('${esc(key)}')">Remove</button>`:''}${extra?` <span class="ktag mwa">${esc(extra)}</span>`:''}</span>
       <span class="sbtg" data-key="${esc(key)}">${[['P','Present'],['R','Representative'],['E','Excused'],['N','Not participating']].map(([c,l])=>`<button type="button" class="${v===c?'on '+c:''}" onclick="event.preventDefault();sbMark(this,'${c}')">${l}</button>`).join('')}</span></summary>
-      <div class="sbrep" style="display:${v==='R'?'':'none'}"><input class="sbrepn" placeholder="Name of the representative and relationship, for example Lola Maria (grandmother)" value="${esc(rep)}"></div>
+      <div class="sbrep" style="display:${v==='R'?'':'none'}"><input class="sbrepn" placeholder="Name of the guardian or representative, and relationship. Example: Lola Maria (grandmother)" value="${esc(rep)}">
+        ${kidList.length?`<div class="sbkids"><span class="hint">On behalf of which learner?</span>${kidList.map(k=>`<label class="sbc"><input type="checkbox" value="${esc(k)}" ${!kidsFor.length||kidsFor.indexOf(k)>-1?'checked':''}>${esc(k)}</label>`).join('')}</div>`:''}</div>
       ${sub?`<small>Learners: ${esc(sub)}</small>`:''}</details>`; };
   $('sbBody').innerHTML = nav + `
     <div class="sbcard"><div class="sbcard-h"><span class="sbday">Day ${s.day}</span><div><h3>${esc(s.n)}</h3><p><b>${esc(s.g)} parents</b> prepare the food${s.changed?' <span class="ktag mwa">Changed by '+esc(r.by||'School Head')+'</span>':''}</p>${r.notes?`<p class="hint">${esc(r.notes)}</p>`:''}</div>
@@ -4217,9 +4316,11 @@ function sbDayView(){
     <section class="ocard2 sbstatus"><div class="sbst-row"><div><span class="lbl">Status of feeding</span>
         ${st?`<span class="sbbadge" style="--c:${SB_COLOR[st]||'#777'}">${esc(st)}</span>${r.reason?`<p class="hint" style="margin:6px 0 0">Reason: ${esc(r.reason)}</p>`:''}<p class="hint" style="margin:4px 0 0">Updated by ${esc(r.by||'')}, ${esc(dTime(r.on||''))}</p>`:'<span class="sbbadge none">No status yet</span>'}</div>
       ${staff?`<button class="btn sun small" onclick="sbStatusForm()">${st?'Edit status':'Set status'}</button>`:''}</div></section>
-    ${staff?`<section class="ocard2"><h3>Attendance sheet photos</h3><div class="sbphotos">${photos.map((p,i)=>`<button class="sbph" onclick="sbInsta(${i})"><img src="https://drive.google.com/thumbnail?id=${esc(p.id)}&sz=w300" alt="Attendance sheet ${i+1}" loading="lazy"></button>`).join('')}
-        <label class="sbadd"><input type="file" accept="image/*" multiple onchange="sbUpload(this)"><span>\uFF0B</span><small>Add photo</small></label></div>
-      <p class="hint" style="margin:6px 0 0">Scan or take a clear photo of the signed attendance sheet. Tap a photo to view it full screen.</p></section>
+    ${staff?`<section class="ocard2"><div class="sbst-row"><h3 style="margin:0">Attendance Sheet, Before, During, and After Photos</h3>${can && photos.length?`<button class="btn sun small" onclick="openCollage()">\u2726 Make a photo collage</button>`:''}</div>
+      <div class="stacks">${SB_PHOTO_TAGS.map(t => { const ps = photos.map((p,i)=>({p,i})).filter(x => (x.p.tag||'Attendance sheet')===t);
+        return `<div class="stackbox"><button class="stack ${ps.length?'':'empty'}" ${ps.length?`onclick="sbInsta('${t}')"`:''}>${ps.slice(-3).map((x,k)=>`<img src="https://drive.google.com/thumbnail?id=${esc(x.p.id)}&sz=w300" alt="" loading="lazy" style="--r:${[-7,5,-2][k]}deg">`).join('') || '<span class="stack0">\u{1F4F7}</span>'}${ps.length?`<em>${ps.length}</em>`:''}</button>
+          <b>${t}</b><label class="btn ghost small stackadd"><input type="file" accept="image/*" multiple onchange="sbUpload(this,'${t}')">\uFF0B Add</label></div>`; }).join('')}</div>
+      <p class="hint" style="margin:8px 0 0">Tap a stack to view its photos one by one. Photos stay until the uploader, the School Head, or the AO removes them.</p></section>
     <section class="ocard2"><h3>${esc(g)} parents who prepare today <small class="hint">(${parents.length})</small></h3>
       <p class="hint" style="margin-top:0">Present ${cnt.P} \u00B7 Representative ${cnt.R} \u00B7 Excused ${cnt.E} \u00B7 Not participating ${cnt.N} \u00B7 Not yet marked ${parents.length-cnt.P-cnt.R-cnt.E-cnt.N}${extras.length?' \u00B7 Helpers from other groups '+extras.length:''}</p>
       ${SB.people===null?`<div class="loader"><span class="spin"></span>Loading the list of parents</div>`:`<button class="btn ghost small" onclick="sbAllPresent()">Mark all present</button>
@@ -4259,20 +4360,24 @@ function sbSaveAtt(){
   document.querySelectorAll('.sbtg').forEach(t => { const on = t.querySelector('button.on'), k = t.dataset.key;
     if (!on){ att[k] = k.indexOf('x|')===0 ? 'P' : ''; return; }
     const c = ['P','R','E','N'].find(x => on.classList.contains(x));
-    if (c==='R'){ const n = t.closest('.sbp').querySelector('.sbrepn').value.trim(); if (!n) missing = true; att[k] = 'R:'+n; } else att[k] = c; });
+    if (c==='R'){ const box = t.closest('.sbp'), n = box.querySelector('.sbrepn').value.trim().replace(/\|/g,' '); if (!n) missing = true; const kids = [...box.querySelectorAll('.sbkids input:checked')].map(x=>x.value.replace(/[;|]/g,' ')); att[k] = 'R:'+n+(kids.length?'|'+kids.join(';'):''); } else att[k] = c; });
   if (missing) return toast('Type the name of each representative.');
   sbDay({ att }, 'Attendance saved.');
+}
+function sbRemoveExtra(key){
+  if (!confirm('Remove this helper from today\u2019s list?')) return;
+  const r = sbRec(SB.date); if (r.att) delete r.att[key];
+  sbDay({ att: { [key]: '' } }, 'Helper removed.');
 }
 function sbAddExtra(){
   const v = $('sbExtraQ').value.trim(), m = v.match(/^(.*) \((.*)\)$/); if (!m) return toast('Choose a parent from the list.');
   const r = sbRec(SB.date); r.att = r.att || {}; r.att['x|'+m[1]+'|'+m[2]] = 'P'; sbDayView(); toast('Added. Tap Save attendance to keep it.');
 }
-async function sbUpload(inp){
+async function sbUpload(inp, tag){
   const files = [...inp.files].slice(0,8); if (!files.length) return; const uploads = [];
-  for (const f of files){ loading(true,'Preparing '+f.name); uploads.push({ name:f.name, mime:f.type, base64: await readB64(await shrinkImage(f)) }); }
-  inp.value = ''; sbDay({ uploads }, files.length+' photo'+(files.length>1?'s':'')+' uploaded.');
+  for (const f of files){ loading(true,'Preparing '+f.name); uploads.push({ name:f.name, mime:f.type, tag: tag||'Attendance sheet', base64: await readB64(await shrinkImage(f)) }); }
+  inp.value = ''; sbDay({ uploads }, files.length+' photo'+(files.length>1?'s':'')+' added to '+(tag||'Attendance sheet')+'.');
 }
-// Makes phone photos lighter before upload, keeping them readable
 async function shrinkImage(f){
   if (!/^image\/(jpeg|png|webp)/.test(f.type) || f.size < 900*1024) return f;
   const img = await new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = rej; i.src = URL.createObjectURL(f); });
@@ -4280,9 +4385,9 @@ async function shrinkImage(f){
   c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
   const b = await new Promise(r => c.toBlob(r, 'image/jpeg', 0.85)); return new File([b], f.name.replace(/\.\w+$/,'')+'.jpg', { type:'image/jpeg' });
 }
-function sbInsta(i){
-  const r = sbRec(SB.date), list = (r.photos||[]).map(p => ({ id:p.id, url:p.url, video:/video/.test(p.mime||''), caption:'Attendance sheet \u00B7 '+dShort(SB.date), sub:'Uploaded by '+(p.byName||'')+' \u00B7 '+dTime(p.on||''), canRemove: USER && (p.by===USER.email || canSbfp()), removeFn:`sbRemovePhoto('${p.id}')` }));
-  openInsta(list, i);
+function sbInsta(tag){
+  const r = sbRec(SB.date), list = (r.photos||[]).filter(p => (p.tag||'Attendance sheet')===tag).map(p => ({ id:p.id, url:p.url, video:/video/.test(p.mime||''), caption:tag+' \u00B7 '+dShort(SB.date), sub:'Uploaded by '+(p.byName||'')+' \u00B7 '+dTime(p.on||''), canRemove: USER && (p.by===USER.email || canSbfp()), removeFn:`sbRemovePhoto('${p.id}')` }));
+  openInsta(list, 0);
 }
 async function sbRemovePhoto(id){ if (!confirm('Remove this photo?')) return; closeInsta(); sbDay({ removePhoto:id }, 'Photo removed.'); }
 function sbCalView(){
@@ -4406,6 +4511,59 @@ function printSbfp(){
     <div class="p-foot">Generated from TALA on ${esc(dTime(nowLocal().replace('T',' ')))}.</div>`;
   setTimeout(() => window.print(), 150);
 }
+
+/* ----- SBFP photo collage with the school's branding ----- */
+var COL = { pick:[], data:{}, title:'', grade:'', date:'', caption:'', layout:'auto' };
+function openCollage(){
+  const r = sbRec(SB.date), s = sbSched(SB.date); COL.pick = []; COL.title = s ? s.n : ''; COL.grade = s ? s.g+' parents' : ''; COL.date = new Date(SB.date+'T00:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'}); COL.caption = 'School-Based Feeding Program';
+  $('colPick').innerHTML = (r.photos||[]).map(p=>`<label class="colp"><input type="checkbox" value="${esc(p.id)}" onchange="colToggle(this)"><img src="https://drive.google.com/thumbnail?id=${esc(p.id)}&sz=w300" alt=""><small>${esc(p.tag||'')}</small></label>`).join('');
+  $('colMenu').value = COL.title; $('colGrade').value = COL.grade; $('colDate').value = COL.date; $('colCap').value = COL.caption;
+  $('colStep1').hidden = false; $('colStep2').hidden = true; $('colCount').textContent = '0 selected'; openModal('colModal');
+}
+function colToggle(el){ if (el.checked){ if (COL.pick.length >= 6){ el.checked = false; return toast('Choose up to 6 photos.'); } COL.pick.push(el.value); } else COL.pick = COL.pick.filter(x=>x!==el.value); $('colCount').textContent = COL.pick.length+' selected'; }
+async function colNext(){
+  if (COL.pick.length < 4) return toast('Choose at least 4 photos.');
+  loading(true,'Getting the photos');
+  try{ const need = COL.pick.filter(id => !COL.data[id]); if (need.length) Object.assign(COL.data, await api('sbfpPhotoData',{ ids:need }));
+    COL.imgs = await Promise.all(COL.pick.map(id => new Promise(res => { const im = new Image(); im.onload = () => res(im); im.onerror = () => res(null); im.src = COL.data[id] || ''; })));
+    $('colStep1').hidden = true; $('colStep2').hidden = false; colDraw(); }
+  catch(e){ handleErr(e); }
+  loading(false);
+}
+function colDraw(){
+  COL.title = $('colMenu').value; COL.grade = $('colGrade').value; COL.date = $('colDate').value; COL.caption = $('colCap').value;
+  const W = 1240, H = 1754, c = $('colCanvas'); c.width = W; c.height = H; const g = c.getContext('2d');
+  g.fillStyle = '#fbfaf5'; g.fillRect(0,0,W,H);
+  // header band: school identity
+  const grd = g.createLinearGradient(0,0,W,0); grd.addColorStop(0,'#1F5130'); grd.addColorStop(1,'#2f7a4a'); g.fillStyle = grd; g.fillRect(0,0,W,250);
+  g.fillStyle = '#F4C430'; g.fillRect(0,250,W,12);
+  const logo = new Image(); logo.src = LOGO;
+  const finish = () => {
+    g.save(); g.beginPath(); g.arc(130,125,92,0,Math.PI*2); g.fillStyle = '#fff'; g.fill(); g.clip(); try{ g.drawImage(logo,42,37,176,176); }catch(e){} g.restore();
+    g.fillStyle = '#fff'; g.textAlign = 'left'; g.font = 'bold 30px Arial'; g.fillText('Republic of the Philippines \u00B7 Department of Education', 250, 80);
+    g.font = 'bold 52px Arial'; g.fillText('BALUYAN ELEMENTARY SCHOOL', 250, 145); g.font = '28px Arial'; g.fillStyle = '#F4C430'; g.fillText('Imelda District \u00B7 Schools Division of Zamboanga Sibugay \u00B7 School ID 125592', 250, 195);
+    // title block
+    g.textAlign = 'center'; g.fillStyle = '#b04500'; g.font = 'bold 34px Arial'; g.fillText((COL.caption||'').toUpperCase(), W/2, 330);
+    g.fillStyle = '#1d2a1f'; g.font = 'bold 54px Georgia'; wrapText(g, COL.title, W/2, 400, W-160, 60);
+    g.font = '32px Arial'; g.fillStyle = '#3b4a3e'; g.fillText(COL.date+'  \u00B7  '+COL.grade, W/2, 500);
+    // photos
+    const imgs = COL.imgs.filter(Boolean), n = imgs.length, top = 540, bottom = H-170, pad = 26, cols = 2, rows = Math.ceil(n/cols);
+    const cw = (W - pad*(cols+1)) / cols, ch = (bottom - top - pad*(rows+1)) / rows;
+    imgs.forEach((im,k) => { const r = Math.floor(k/cols), cl = k%cols, lastOdd = n%2===1 && k===n-1;
+      const x = lastOdd ? (W-cw)/2 : pad + cl*(cw+pad), y = top + pad + r*(ch+pad);
+      g.save(); g.shadowColor = 'rgba(0,0,0,.18)'; g.shadowBlur = 18; g.fillStyle = '#fff'; roundRect(g,x-8,y-8,cw+16,ch+16,18); g.fill(); g.restore();
+      g.save(); roundRect(g,x,y,cw,ch,12); g.clip(); const sc = Math.max(cw/im.width, ch/im.height), iw = im.width*sc, ih = im.height*sc; g.drawImage(im, x+(cw-iw)/2, y+(ch-ih)/2, iw, ih); g.restore(); });
+    // footer identity
+    g.fillStyle = '#1F5130'; g.fillRect(0,H-130,W,130); g.fillStyle = '#F4C430'; g.fillRect(0,H-136,W,6);
+    g.fillStyle = '#fff'; g.textAlign = 'left'; g.font = 'bold 30px Arial'; g.fillText('\u2605 TALA \u00B7 Baluyan Elementary School', 50, H-70);
+    g.textAlign = 'right'; g.font = '24px Arial'; g.fillStyle = '#d6e6d6'; g.fillText('SBFP Documentation \u00B7 '+(sbSet().sy||''), W-50, H-70);
+  };
+  if (logo.complete) finish(); else logo.onload = finish;
+}
+function roundRect(g,x,y,w,h,r){ g.beginPath(); g.moveTo(x+r,y); g.arcTo(x+w,y,x+w,y+h,r); g.arcTo(x+w,y+h,x,y+h,r); g.arcTo(x,y+h,x,y,r); g.arcTo(x,y,x+w,y,r); g.closePath(); }
+function wrapText(g, t, x, y, maxW, lh){ const w = String(t||'').split(' '); let line = '', yy = y; w.forEach(word => { const test = line ? line+' '+word : word; if (g.measureText(test).width > maxW && line){ g.fillText(line, x, yy); line = word; yy += lh; } else line = test; }); g.fillText(line, x, yy); }
+function colPng(){ $('colCanvas').toBlob(b => saveBlob(b, 'SBFP_Collage_'+SB.date+'.png'), 'image/png'); }
+function colPdf(){ const url = $('colCanvas').toDataURL('image/jpeg', 0.92); $('printArea').innerHTML = `<div class="colprint"><img src="${url}" alt=""></div>`; document.body.classList.add('portrait-print'); setTimeout(() => { window.print(); setTimeout(()=>document.body.classList.remove('portrait-print'), 800); }, 300); }
 
 /* ----- Instants viewer: pictures and videos full screen, one at a time ----- */
 var INSTA = { list:[], i:0, t:null };
