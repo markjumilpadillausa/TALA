@@ -245,6 +245,33 @@ table.subs tr.nosub td:not(.wk){color:var(--muted);font-style:italic}
 .hist summary{cursor:pointer;color:var(--muted);font-weight:600}
 .hist ol{margin:4px 0 0;padding-left:18px}
 .pinv{font-weight:700;letter-spacing:1px}
+.ohero.athero{background:linear-gradient(135deg,#1e5a8c,#2f7a4a)}.atsel{display:flex;gap:8px;flex-wrap:wrap}.atsel select{border:0;border-radius:10px;padding:10px 12px;font:inherit;font-weight:600}
+.attoday{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:12px 16px;margin-top:12px}.attoday small{display:block;color:var(--muted)}
+.atn{font-weight:700;border-radius:999px;padding:5px 12px}.atn.ok{background:var(--ok-soft);color:var(--ok)}.atn.bad{background:#fdecea;color:var(--late)}.atn.wait{background:var(--sun-soft);color:var(--wait)}
+.abtns{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px;margin-top:12px}.abtns.small{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+.abtn{display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left;background:var(--card);border:1.5px solid var(--line);border-radius:16px;padding:16px;font:inherit;color:var(--ink);cursor:pointer;transition:transform .12s,border-color .12s;min-height:118px}
+.abtn:hover{transform:translateY(-2px);border-color:var(--leaf)}.abtn:active{transform:scale(.98)}.abtn small{color:var(--muted);font-size:12.5px}.abtn b{font-size:16px}
+.abtn.danger{border-color:#f5b5ad}.abtn.danger b{color:var(--late)}
+.abtn.main{background:linear-gradient(135deg,#f4c430,#f9d86a);border-color:#e9b81c}.abico{font-size:26px;line-height:1}
+.atstat{display:flex;gap:8px;margin:10px 0}
+.atgrp{font-weight:700;color:var(--brandtxt);margin:14px 0 6px;font-size:14px}
+.atrow{display:flex;align-items:center;gap:8px;background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:6px 10px;margin-bottom:6px}.atnm{flex:1;font-weight:600;font-size:14px}
+.ses{width:64px;height:48px;border-radius:12px;border:1.5px solid var(--line);background:var(--page);font:inherit;font-size:20px;font-weight:700;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1}
+.ses small{font-size:9.5px;font-weight:600;color:var(--muted)}.ses.sP{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}.ses.sX{background:#fdecea;border-color:var(--late);color:var(--late)}.ses.sE{background:var(--sun-soft);border-color:#e0a040;color:#8a5300}.ses.sT{background:#e3f0fb;border-color:#5b9bd5;color:#1e5a8c}
+.msgc{background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;margin-top:10px}.msgh{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.msgh small{color:var(--muted)}.msgc p{margin:8px 0;white-space:pre-wrap;font-size:14px}
+.msgbtn{background:#0084ff;border-color:#0084ff;color:#fff}
+.sfprev{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px;margin-top:12px;overflow:auto;color:#000}
+.p-sfh{margin-bottom:8px}.p-sfh b{font-size:15px;display:block}.p-sfh i{font-size:11px}.p-sfm{border-collapse:collapse;margin-top:6px;font-size:11px}.p-sfm td{padding:2px 8px 2px 0}
+.sf2t{border-collapse:collapse;font-family:Arial,sans-serif;font-size:10px;min-width:0 !important}.sf2t th,.sf2t td{border:1px solid #000;padding:2px 3px;text-align:center;min-width:16px}
+.sf2t .nm{text-align:left;min-width:150px}.sf2t .tot td{font-weight:700;background:#f4f4f4}.sf2t td.nc{background:#e4e4e4}
+.sf2t td.hu{background:linear-gradient(#555 50%,#fff 50%)}.sf2t td.hl{background:linear-gradient(#fff 50%,#555 50%)}
+.sf2t.st td,.sf2t.st th{font-size:11.5px;padding:4px 6px}.stc{color:#e0a000;font-size:14px;letter-spacing:1px}.st0{color:#ccc}
+.sf2b{display:grid;grid-template-columns:1fr 360px 260px;gap:14px;margin-top:10px;font-size:10px;align-items:start}.sf2s{border-collapse:collapse;width:100%;table-layout:fixed}.sf2s td:first-child{width:58%}.sf2b > *{min-width:0}.sf2s td,.sf2s th{border:1px solid #000;padding:2px 5px;font-size:10px}
+.sf2sig{display:flex;flex-direction:column;gap:2px;font-size:11px}.sf2sig b{margin-top:22px;border-top:1px solid #000;padding-top:2px;text-align:center}.sf2sig small{text-align:center;font-size:9px}
+.dowbars{display:flex;gap:20px;align-items:flex-end;height:120px;margin:8px 0 16px}.dowbars div{display:flex;flex-direction:column;align-items:center;gap:2px}.dowbars i{width:34px;background:#c0392b;border-radius:6px 6px 0 0}
+.asrow{display:grid;grid-template-columns:1fr 1fr 1.6fr auto;gap:8px;margin-bottom:6px}.asrow input,.asrow select{border:1.5px solid var(--line);border-radius:8px;padding:7px;font:inherit}
+@page sflegal{size:legal landscape;margin:7mm}.sfprint{page:sflegal}
+@media print{ .sfprint .sf2t{font-size:7.5px} .sfprint .sf2t th,.sfprint .sf2t td{padding:1px 2px;min-width:12px} .sfprint .sf2t td.hu,.sfprint .sf2t td.hl{-webkit-print-color-adjust:exact;print-color-adjust:exact} .sfprint .sf2b{grid-template-columns:1fr 330px 230px} }
 .sborig{margin:0 0 2px;font-size:13px;color:var(--muted)}.sborig span,.sbchg span{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-right:6px;color:var(--muted)}.sbchg{margin:2px 0 0}.sbchg span{color:#6a2c99}
 .sbday{text-align:center;line-height:1.25}
 .sbd.has.chg{border-color:#b892d6 !important;background:#f7f0fc !important}.sbmenu.orig{color:var(--muted);font-weight:400}.sbmenu.new{color:#6a2c99}.sbdn{font-size:9.5px;color:var(--muted);font-weight:600}
@@ -907,6 +934,7 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
   <section id="viewHome" style="display:none"></section>
   <section id="viewSbfp" style="display:none"></section>
   <section id="viewPir" style="display:none"></section>
+  <section id="viewAtt" style="display:none"></section>
   <section id="viewObs" style="display:none"></section>
 
   <section id="viewSig" style="display:none">
@@ -1344,6 +1372,43 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
     <div class="modal-actions"><button class="btn ghost" onclick="closeModal('scModal')">Cancel</button><button class="btn danger" onclick="sbClearRun()">Clear</button></div></div>
 </div>
 
+<!-- Attendance: learner -->
+<div class="overlay" id="alModal">
+  <div class="modal wide" role="dialog" aria-labelledby="alTitle"><h3 id="alTitle">Learner</h3><input type="hidden" id="al_id">
+    <div class="row2"><div class="field"><label for="al_lrn">LRN</label><input id="al_lrn" inputmode="numeric" maxlength="12"></div><div class="field"><label for="al_sex">Sex</label><select id="al_sex"><option value="M">Male</option><option value="F">Female</option></select></div></div>
+    <div class="row4" style="grid-template-columns:1fr 1fr 1fr"><div class="field"><label for="al_last">Last name</label><input id="al_last"></div><div class="field"><label for="al_first">First name</label><input id="al_first"></div><div class="field"><label for="al_middle">Middle name</label><input id="al_middle"></div></div>
+    <div class="row2"><div class="field"><label for="al_birth">Birth date</label><input type="date" id="al_birth"></div><div class="field"><label for="al_enrolled">Date enrolled (only if late enrolment)</label><input type="date" id="al_enrolled"></div></div>
+    <div class="row2"><div class="field"><label for="al_parent">Parent or guardian (for messages)</label><input id="al_parent" placeholder="Example: Janith V. Arellado"></div><div class="field"><label for="al_contact">Contact number or Messenger name</label><input id="al_contact"></div></div>
+    <div class="field"><label for="al_status">Status</label><select id="al_status" onchange="attStatusSync()"><option>Active</option><option>Transferred In</option><option>Transferred Out</option><option>Dropped Out</option></select></div>
+    <div class="row2" id="al_moveRow"><div class="field"><label for="al_statusDate">Date</label><input type="date" id="al_statusDate"></div><div class="field"><label for="al_reason">Reason or school (for SF2 remarks)</label><input id="al_reason" list="al_reasons" placeholder="Example: a.1 Had to take care of siblings"><datalist id="al_reasons">
+      <option value="a.1 Had to take care of siblings"><option value="a.2 Early marriage or pregnancy"><option value="a.3 Parents' attitude toward schooling"><option value="a.4 Family problems"><option value="b.1 Illness"><option value="b.2 Overage"><option value="b.3 Death"><option value="b.4 Drug abuse"><option value="b.5 Poor academic performance"><option value="b.6 Lack of interest or distractions"><option value="b.7 Hunger or malnutrition"><option value="c.1 Teacher factor"><option value="c.2 Physical condition of classroom"><option value="c.3 Peer influence"><option value="d.1 Distance between home and school"><option value="d.2 Armed conflict"><option value="d.3 Calamities or disasters"><option value="e.1 Child labor, work"><option value="f. Others"></datalist></div></div>
+    <div class="err" id="al_err"></div>
+    <div class="modal-actions"><button class="btn danger" id="al_del" onclick="attLearnerDelete()">Remove</button><span style="flex:1"></span><button class="btn ghost" onclick="closeModal('alModal')">Cancel</button><button class="btn" onclick="attLearnerSave()">Save</button></div></div>
+</div>
+<!-- Attendance: my messages -->
+<div class="overlay" id="mtModal">
+  <div class="modal wide" role="dialog" aria-labelledby="mtTitle"><h3 id="mtTitle">My messages in <span id="mtLang"></span></h3><p class="sub">Use {parent}, {learner}, {teacher}, {class}, and {date}. TALA fills them in.</p>
+    <div class="field"><label for="mt_X">Absent</label><textarea id="mt_X" rows="3"></textarea></div><div class="field"><label for="mt_E">Excused</label><textarea id="mt_E" rows="3"></textarea></div><div class="field"><label for="mt_T">Tardy</label><textarea id="mt_T" rows="3"></textarea></div>
+    <div class="modal-actions"><button class="btn ghost" onclick="attTplSave(true)">Use the original</button><span style="flex:1"></span><button class="btn ghost" onclick="closeModal('mtModal')">Cancel</button><button class="btn" onclick="attTplSave(false)">Save</button></div></div>
+</div>
+<!-- Attendance: clear data -->
+<div class="overlay" id="acModal">
+  <div class="modal" role="dialog" aria-labelledby="acTitle"><h3 id="acTitle">Clear attendance data</h3><p class="sub">Use this before launching, to remove test entries. TALA saves a backup of the Google Sheet in your Drive first, then clears what you tick, for all classes.</p>
+    <div id="acList"><label class="check"><input type="checkbox" data-k="days" checked>All daily attendance (AM and PM marks, holidays, and suspensions set in Attendance)</label>
+      <label class="check"><input type="checkbox" data-k="learners" checked>All learners in every class (you can import the SF1 again)</label>
+      <label class="check"><input type="checkbox" data-k="sections">Classes and advisers (go back to the default list)</label></div>
+    <p class="hint">Not touched: the School Calendar, SBFP, Observations, LPT and PPT, and accounts.</p>
+    <div class="field"><label for="acConfirm">Type CLEAR to confirm</label><input id="acConfirm" autocomplete="off"></div><div class="err" id="acErr"></div>
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal('acModal')">Cancel</button><button class="btn danger" onclick="attClearRun()">Clear</button></div></div>
+</div>
+<!-- Attendance: classes and advisers -->
+<div class="overlay" id="asModal">
+  <div class="modal wide" role="dialog" aria-labelledby="asTitle"><h3 id="asTitle">Classes and advisers</h3><p class="sub">Each adviser sees only her class. Grade, section, then adviser.</p>
+    <div id="asList"></div><button class="btn ghost small" onclick="attSecAdd()">\uFF0B Add a class</button>
+    <div class="row2" style="margin-top:12px"><div class="field"><label for="asFirst">First day of the school year</label><input type="date" id="asFirst"></div><div class="field"><label for="asSnap">Enrolment as of (first Friday)</label><input type="date" id="asSnap"></div></div>
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal('asModal')">Cancel</button><button class="btn" onclick="attSecSave()">Save</button></div></div>
+</div>
+
 <!-- Install app -->
 <div class="overlay" id="installModal">
   <div class="modal" role="dialog" aria-labelledby="instTitle">
@@ -1460,8 +1525,8 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
 
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
-const MIN_SERVER = '4.1'; // oldest Code.gs this page works with
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'4.1', date:'October 7, 2026' } };
+const MIN_SERVER = '4.3'; // oldest Code.gs this page works with
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'4.3', date:'October 7, 2026' } };
 function verLine(server){
   const old = server && (server.indexOf('older') > -1 || parseFloat(server) < parseFloat(MIN_SERVER));
   const s = server ? ' Server '+server+('.') : '';
@@ -1680,7 +1745,7 @@ function copyText(t){
 /* ---------- LPT scanner (ILAW framework) ----------
    Reads the uploaded LPT (.docx or text PDF) in the browser and finds the
    Learning Competencies under Intention, then the Learning Objectives per session. */
-const LIBS = { zip:'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js',
+const LIBS = { zip:'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js', xlsx:'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js', exceljs:'https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js',
   pdf:'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js', worker:'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js' };
 const loaded = {};
 function loadScript(src){
@@ -1860,7 +1925,7 @@ const FEATURES = [
     do:'Record CRLA results for Key Stage 1 and Phil-IRI results for Key Stage 2 for every learner, linked with Project e-READ.',
     auto:'Reading levels per class, grade, and school, and progress from pretest to posttest, are computed automatically.',
     report:'Class reading profile, school reading summary, and the list of learners needing intervention.' },
-  { id:'att', name:'Attendance', icon:'M7 2v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2zm-2 8h14v10H5z',
+  { id:'att', name:'Attendance', built:true, open:() => openAtt(), icon:'M7 2v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2zm-2 8h14v10H5z',
     do:'Record learner attendance every school day by class.',
     auto:'Daily, monthly, and term totals, attendance rates, and learners with frequent absences are computed automatically.',
     report:'Monthly SF2 and SF4 summaries, and the list of learners at risk of dropping out.' },
@@ -1915,7 +1980,7 @@ function toggleSide(open){
   s.classList.toggle('open', on); $('sideBg').classList.toggle('open', on);
 }
 function openSoon(f){
-  ['viewTrk','viewAcc','viewBank','viewLog','viewWeeks','viewSig','viewObs','viewHome','viewSbfp','viewPir'].forEach(v => $(v).style.display='none');
+  ['viewTrk','viewAcc','viewBank','viewLog','viewWeeks','viewSig','viewObs','viewHome','viewSbfp','viewPir','viewAtt'].forEach(v => $(v).style.display='none');
   CUR_FEATURE = f.id; drawSide(); closeGuide(); window.scrollTo(0,0);
   $('viewPir').style.display = ''; $('viewPir').innerHTML = `<div class="ohero"><div><h2>${esc(f.name)}</h2><p>${esc(f.do||'')}</p></div></div>
     <div class="hgrid"><div class="hcard"><b>What TALA will compute for you</b><p>${esc(f.auto||'')}</p></div><div class="hcard"><b>Reports you can print</b><p>${esc(f.report||'')}</p></div></div>
@@ -1926,7 +1991,7 @@ function openFeature(id){
   const f = FEATURES.find(x => x.id === id);
   if (f.id==='home'){ showHome(); return; }
   if (f.ready){ CUR_FEATURE = 'lpt'; drawSide(); showTracker(); window.scrollTo(0,0); maybeGuide('lpt'); return; }
-  const canOpen = f.built && ((USER && (USER.role==='head' || (USER.role==='admin' && f.id==='sbfp'))) || (featOn(f.id) && (USER || f.id==='sbfp')));
+  const canOpen = f.built && ((USER && (USER.role==='head' || (USER.role==='admin' && (f.id==='sbfp' || f.id==='att')))) || (featOn(f.id) && (USER || f.id==='sbfp')));
   if (canOpen && f.open){ CUR_FEATURE = f.id; drawSide(); f.open(); return; }
   openSoon(f);
 }
@@ -2620,6 +2685,15 @@ const GUIDES = {
     { el:'#viewSbfp .ktabs', t:'More', x:'Calendar, menu summary, learners and parents, and participation.' } ] }
 };
 GUIDES.sbfp_admin = GUIDES.sbfp_head;
+GUIDES.att_teacher = { name:'Attendance', steps: [
+  { el:'.abtns', t:'Everything is a button', x:'Take attendance, your learners, messages to parents, and every report are here.' },
+  { el:'.abtn.main', t:'Take attendance', x:'Tap AM or PM for each learner: \u2713 Present, X Absent, E Excused, T Tardy. It works offline too.' },
+  { el:'.atsel', t:'Choose the month', x:'The reports follow the month you choose here.' } ] };
+GUIDES.att_head = { name:'Attendance', steps: [
+  { el:'.atsel', t:'Any class, any month', x:'Choose a class and a month. You can do everything a teacher can.' },
+  { el:'.abtns', t:'Reports', x:'SF2 (DepEd), the school AM and PM SF2, stars, reports, and analysis.' },
+  { el:'#viewAtt h3.sbh4', t:'School', x:'All classes live, the SF4, and the list of classes and advisers.' } ] };
+GUIDES.att_admin = { name:'Attendance', steps: [ { el:'.abtns', t:'View and print', x:'See any class SF2 live and the SF4, then print them for signing.' } ] };
 var TOUR = [], GKEY = '';
 function guideId(f){ const r = USER ? USER.role : 'public'; return f==='home' ? 'home' : GUIDES[f+'_'+r] ? f+'_'+r : GUIDES[f+'_teacher'] && r==='public' ? '' : ''; }
 function tourKey(){ return 'tala_guide_hide_' + (USER ? USER.email : '') + '_' + GKEY; }
@@ -2641,13 +2715,13 @@ function startGuide(id){
 function startTour(){ openGuides(); }
 function openGuides(){
   $('menu').classList.remove('open');
-  const r = USER ? USER.role : 'public', ids = ['home'].concat(['lpt','obs','sbfp'].map(f => f+'_'+r).filter(id => GUIDES[id]));
+  const r = USER ? USER.role : 'public', ids = ['home'].concat(['lpt','obs','sbfp','att'].map(f => f+'_'+r).filter(id => GUIDES[id]));
   $('gList').innerHTML = ids.map(id => `<button class="choice" onclick="openGuideFor('${id}')"><b>${esc(GUIDES[id].name)}</b><small>${GUIDES[id].steps.length} short steps</small></button>`).join('');
   openModal('guidesModal');
 }
 function openGuideFor(id){
   closeModal('guidesModal'); const f = id.split('_')[0];
-  if (f==='home') showHome(); else if (f==='lpt') openFeature('lpt'); else if (f==='obs') openObs(); else if (f==='sbfp') openSbfp();
+  if (f==='home') showHome(); else if (f==='lpt') openFeature('lpt'); else if (f==='obs') openObs(); else if (f==='sbfp') openSbfp(); else if (f==='att') openAtt();
   try{ sessionStorage.removeItem('tala_guide_seen_'+id); }catch(e){}
   setTimeout(() => startGuide(id), 800);
 }
@@ -3063,11 +3137,11 @@ function guideTabSync(){ const t = $('guideTab'); if (t) t.style.display = $('vi
   document.addEventListener('touchstart', e => { const x = e.touches[0].clientX; x0 = (x > window.innerWidth - 28 && $('guideTab').style.display !== 'none') || $('guideDrawer').classList.contains('open') ? x : null; }, { passive:true });
   document.addEventListener('touchend', e => { if (x0 === null) return; const dx = e.changedTouches[0].clientX - x0; if (dx < -40 && !$('guideDrawer').classList.contains('open')) openGuide(); else if (dx > 60) closeGuide(); x0 = null; }, { passive:true });
 })();
-function showObsView(){ ['viewTrk','viewAcc','viewBank','viewLog','viewWeeks','viewSig','viewHome','viewSbfp','viewPir'].forEach(v => $(v).style.display='none'); $('viewObs').style.display=''; window.scrollTo(0,0); }
+function showObsView(){ ['viewTrk','viewAcc','viewBank','viewLog','viewWeeks','viewSig','viewHome','viewSbfp','viewPir','viewAtt'].forEach(v => $(v).style.display='none'); $('viewObs').style.display=''; window.scrollTo(0,0); }
 const _showTracker = showTracker;
-showTracker = function(){ $('viewObs').style.display='none'; $('viewHome').style.display='none'; $('viewSbfp').style.display='none'; $('viewPir').style.display='none'; closeGuide(); CUR_FEATURE='lpt'; drawSide(); _showTracker(); };
+showTracker = function(){ $('viewAtt').style.display='none'; $('viewObs').style.display='none'; $('viewHome').style.display='none'; $('viewSbfp').style.display='none'; $('viewPir').style.display='none'; closeGuide(); CUR_FEATURE='lpt'; drawSide(); _showTracker(); };
 const _showView2 = showView2;
-showView2 = function(id){ $('viewObs').style.display='none'; $('viewHome').style.display='none'; $('viewSbfp').style.display='none'; $('viewPir').style.display='none'; closeGuide(); _showView2(id); };
+showView2 = function(id){ $('viewAtt').style.display='none'; $('viewObs').style.display='none'; $('viewHome').style.display='none'; $('viewSbfp').style.display='none'; $('viewPir').style.display='none'; closeGuide(); _showView2(id); };
 
 async function openObs(){
   if (!USER){ toast('Please sign in to open Classroom Observations.'); openLogin(); return; }
@@ -3932,7 +4006,7 @@ const QUOTES = [
 ];
 function quoteToday(){ const d = todayPH(), n = Number(d.replace(/-/g,'')); return QUOTES[(n*7 + Number(d.slice(8,10))) % QUOTES.length]; }
 function showHome(){
-  ['viewTrk','viewAcc','viewBank','viewLog','viewWeeks','viewSig','viewObs','viewSbfp','viewPir'].forEach(v => $(v).style.display='none');
+  ['viewTrk','viewAcc','viewBank','viewLog','viewWeeks','viewSig','viewObs','viewSbfp','viewPir','viewAtt'].forEach(v => $(v).style.display='none');
   closeGuide(); $('viewHome').style.display=''; CUR_FEATURE = 'home'; drawSide(); drawHome(); window.scrollTo(0,0); maybeGuide('home');
   if (USER && (USER.role==='head' || featOn('obs')) && !OBS.list.length){ obsLocalLoad(); obsRefresh().catch(()=>{}); }
 }
@@ -4256,7 +4330,7 @@ function sbParents(group){
   return out.filter(x=>x.counted);
 }
 async function openSbfp(){
-  ['viewTrk','viewAcc','viewBank','viewLog','viewWeeks','viewSig','viewObs','viewHome','viewPir'].forEach(v => $(v).style.display='none');
+  ['viewTrk','viewAcc','viewBank','viewLog','viewWeeks','viewSig','viewObs','viewHome','viewPir','viewAtt'].forEach(v => $(v).style.display='none');
   closeGuide(); $('viewSbfp').style.display=''; CUR_FEATURE='sbfp'; drawSide();
   if (!SB.date) SB.date = todayPH(); if (!SB.month) SB.month = SB.date.slice(0,7);
   drawSbfp(); window.scrollTo(0,0); maybeGuide('sbfp');
@@ -4756,7 +4830,7 @@ function aboutSlides(){
 async function openPir(mode){
   const prevMode = PIR.mode; PIR.mode = mode || 'pir'; if (prevMode !== PIR.mode){ PIR.slides = []; PIR.built = ''; } $('menu').classList.remove('open');
   ['viewTrk','viewAcc','viewBank','viewLog','viewWeeks','viewSig','viewObs','viewHome','viewSbfp'].forEach(v => $(v).style.display='none');
-  $('viewPir').style.display=''; CUR_FEATURE = 'mne'; drawSide(); window.scrollTo(0,0);
+  $('viewAtt').style.display='none'; $('viewPir').style.display=''; CUR_FEATURE = 'mne'; drawSide(); window.scrollTo(0,0);
   if (!PIR.q){ const t = todayPH(); PIR.q = t.slice(0,4)+'-Q'+(Math.floor((Number(t.slice(5,7))-1)/3)+1); PIR.term = pickCurrentTerm((DATA||PUB).settings); PIR.from = addDays(t,-30); PIR.to = t; }
   if (PIR.slides.length && PIR.built === PIR.mode){ pirDraw(); return; }
   if (PIR.mode==='about'){ for (let i = 0; i < 10 && !window.qrcode; i++) await wait(200); pirBuild(); return; }
@@ -4887,6 +4961,408 @@ async function pirOpen(id, name){
   loading(false);
 }
 async function pirDel(id){ if (!confirm('Delete this saved presentation?')) return; try{ await api('pirDelete',{ id }); pirSaved(); }catch(e){ handleErr(e); } }
+
+/* =========================================================
+   ATTENDANCE: daily AM and PM, DepEd SF2 and SF4, stars, messages, analysis
+   ========================================================= */
+var ATT = { sections:[], mine:[], firstDay:'2026-06-08', snapshot:'2026-06-11', sec:'', month:'', learners:[], days:{}, view:'home', date:'', school:null, loaded:'' };
+const ATT_CODES = { '-':'', P:'\u2713', X:'X', E:'E', T:'T' };
+const ATT_NEXT = { '-':'P', P:'X', X:'E', E:'T', T:'-' };
+const ATT_MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+function attRole(){ return USER ? USER.role : ''; }
+function attCanEdit(){ return attRole()==='head' || (attRole()==='teacher' && ATT.mine.indexOf(ATT.sec) > -1); }
+function secInfo(k){ return ATT.sections.find(s => s.key===k) || { key:k, grade:k.split('|')[0], section:k.split('|')[1]||'', adviserName:'' }; }
+function secLabel(k){ const s = secInfo(k); return s.grade+(s.section?' '+s.section:''); }
+function monthName(ym){ const [y,m] = ym.split('-').map(Number); return ATT_MONTHS[m-1]+' '+y; }
+function weekdaysOf(ym){ const [y,m] = ym.split('-').map(Number), n = new Date(Date.UTC(y,m,0)).getUTCDate(), out = []; for (let d = 1; d <= n; d++){ const s = ym+'-'+String(d).padStart(2,'0'); if (dow(s)>0 && dow(s)<6 && s >= ATT.firstDay) out.push(s); } return out; }
+function calHoliday(date){ return allEvents().some(e => e.type==='Holiday or no classes' && e.audience!=='Only me' && e.date<=date && date<=(e.end||e.date)); }
+function dayStatus(date, sec){ const r = (sec ? (ATT.school && ATT.school.days[sec+'|'+date]) : ATT.days[date]); if (r && r.status) return r.status; return calHoliday(date) ? 'H' : 'C'; }
+function isClassDay(date, sec){ return dow(date)>0 && dow(date)<6 && date >= ATT.firstDay && date <= todayPH() && dayStatus(date, sec)==='C'; }
+function mk(l, date, sec){ const r = sec ? (ATT.school && ATT.school.days[sec+'|'+date]) : ATT.days[date]; return (r && r.marks && r.marks[l.id]) || (r ? 'PP' : '--'); }
+function sessPresent(c){ return c==='P' || c==='T'; }
+function dayPresent(m){ return sessPresent(m[0]) || sessPresent(m[1]); }
+function dayAbsent(m){ return !dayPresent(m) && m!=='--'; }
+function activeOn(l, date){
+  if (l.status==='Transferred In' && l.statusDate && date < l.statusDate) return false;
+  if (l.enrolled && date < l.enrolled) return false;
+  if ((l.status==='Transferred Out' || l.status==='Dropped Out') && l.statusDate && date >= l.statusDate) return false;
+  return true;
+}
+function sortL(list){ return list.slice().sort((a,b)=>(a.sex===b.sex?0:a.sex==='M'?-1:1) || (a.last+a.first).localeCompare(b.last+b.first)); }
+function lname(l){ return l.last+', '+l.first+(l.middle?' '+l.middle:''); }
+
+async function openAtt(){
+  ['viewTrk','viewAcc','viewBank','viewLog','viewWeeks','viewSig','viewObs','viewHome','viewSbfp','viewPir'].forEach(v => $(v).style.display='none');
+  $('viewAtt').style.display=''; CUR_FEATURE='att'; drawSide(); closeGuide(); window.scrollTo(0,0);
+  if (!USER){ $('viewAtt').innerHTML = '<div class="empty">Please sign in to open Attendance.</div>'; return; }
+  if (!ATT.month) ATT.month = todayPH().slice(0,7);
+  if (!ATT.sections.length){ $('viewAtt').innerHTML = `<div class="pirload"><div class="pirstar">\u2605</div><b>Opening your class</b><div class="pirdots"><i></i><i></i><i></i></div></div>`;
+    try{ const r = await api('attSections'); Object.assign(ATT, { sections:r.sections, mine:r.mine, firstDay:r.firstDay, snapshot:r.snapshot }); }
+    catch(e){ try{ const c = JSON.parse(localStorage.getItem('tala_att_'+USER.email)||'null'); if (c) Object.assign(ATT, c.meta); }catch(x){} } }
+  if (!ATT.sec) ATT.sec = ATT.mine[0] || (attRole()!=='teacher' && ATT.sections[0] ? ATT.sections[0].key : '');
+  ATT.view = 'home'; await attLoadClass(); attDraw();
+}
+async function attLoadClass(force){
+  if (!ATT.sec || (ATT.loaded===ATT.sec && !force)) return;
+  const key = 'tala_att_'+USER.email+'_'+ATT.sec;
+  try{ const c = JSON.parse(localStorage.getItem(key)||'null'); if (c){ ATT.learners = c.learners; ATT.days = c.days; } else { ATT.learners = []; ATT.days = {}; } }catch(e){}
+  try{ const r = await api('attLoad',{ section:ATT.sec, from:ATT.firstDay });
+    ATT.learners = r.learners; ATT.days = {}; r.days.forEach(d => ATT.days[d.date] = d);
+    attPendingApply(); ATT.loaded = ATT.sec;
+    try{ localStorage.setItem(key, JSON.stringify({ learners:ATT.learners, days:ATT.days })); localStorage.setItem('tala_att_'+USER.email, JSON.stringify({ meta:{ sections:ATT.sections, mine:ATT.mine, firstDay:ATT.firstDay, snapshot:ATT.snapshot } })); }catch(e){} }
+  catch(e){ attPendingApply(); }
+}
+// Attendance saved on this device but not yet synced is shown too
+function attPendingApply(){ myPending().filter(x=>x.action==='attSave' && x.payload.section===ATT.sec).forEach(x => ATT.days[x.payload.date] = { date:x.payload.date, status:x.payload.status, marks:x.payload.marks, local:true }); }
+function attDraw(){ ({ home:attHome, take:attTake, learners:attLearners, msgs:attMsgs, live:attLive })[ATT.view](); }
+function attBack(){ ATT.view = 'home'; attDraw(); window.scrollTo(0,0); }
+
+/* ----- the dashboard: buttons first ----- */
+function attHome(){
+  const role = attRole(), head = role==='head', admin = role==='admin', today = todayPH();
+  const secs = role==='teacher' ? ATT.sections.filter(s => ATT.mine.indexOf(s.key) > -1) : ATT.sections;
+  const months = []; for (let d = ATT.firstDay.slice(0,7); d <= (today.slice(0,4)*1+1)+'-04'; ){ months.push(d); const [y,m] = d.split('-').map(Number); d = m===12 ? (y+1)+'-01' : y+'-'+String(m+1).padStart(2,'0'); if (months.length > 14) break; }
+  const act = ATT.learners.filter(l => activeOn(l, today)), rec = ATT.days[today];
+  const pres = rec ? act.filter(l => dayPresent(mk(l,today))).length : 0, abs = rec ? act.filter(l => dayAbsent(mk(l,today))).length : 0;
+  const btn = (ico, t, x, fn, cls) => `<button class="abtn ${cls||''}" onclick="${fn}"><span class="abico">${ico}</span><b>${t}</b><small>${x}</small></button>`;
+  $('viewAtt').innerHTML = `
+    <div class="ohero athero"><div><h2>Attendance</h2><p>${ATT.sec?esc(secLabel(ATT.sec))+' \u00B7 '+esc(secInfo(ATT.sec).adviserName||'No adviser set'):'No class assigned to you yet. Ask the School Head to set your class.'}</p></div>
+      <div class="atsel">${secs.length>1?`<select onchange="ATT.sec=this.value;attLoadClass().then(attDraw)">${secs.map(s=>`<option value="${esc(s.key)}" ${s.key===ATT.sec?'selected':''}>${esc(secLabel(s.key))}</option>`).join('')}</select>`:''}
+        <select onchange="ATT.month=this.value;attDraw()">${months.map(m=>`<option value="${m}" ${m===ATT.month?'selected':''}>${monthName(m)}</option>`).join('')}</select></div></div>
+    ${ATT.sec?`<div class="attoday"><div><small>Today</small><b>${esc(dShort(today))}</b></div>
+      ${dow(today)===0||dow(today)===6?'<span class="hint">No class today (weekend).</span>':dayStatus(today)!=='C'?`<span class="sbbadge" style="--c:#a3271b">${dayStatus(today)==='H'?'Holiday':'Suspended'}</span>`:rec?`<span class="atn ok">${pres} present</span><span class="atn bad">${abs} absent</span>${rec.local?'<span class="unsynced">Not yet synced</span>':''}`:'<span class="atn wait">Not yet taken</span>'}</div>`:''}
+    ${ATT.sec?`<div class="abtns">
+      ${attCanEdit()?btn('\u2714','Take attendance',"AM and PM for "+esc(dShort(today)),"attOpenTake('"+today+"')",'main'):''}
+      ${btn('\u{1F465}','My learners',ATT.learners.filter(l=>activeOn(l,today)).length+' enrolled'+(attCanEdit()?', add or edit':''),"ATT.view='learners';attDraw()")}
+      ${attCanEdit()?btn('\u{1F4AC}','Message parents','Absent, excused, or tardy today',"ATT.view='msgs';attDraw()"):''}
+      ${btn('\u{1F4C4}','SF2 (DepEd)','Prescribed form, '+monthName(ATT.month),"attReport('sf2')")}
+      ${btn('\u{1F4CB}','SF2 (School AM and PM)','Our tracking form, '+monthName(ATT.month),"attReport('sf2s')")}
+      ${btn('\u2B50','Weekly stars','For e-READ, '+monthName(ATT.month),"attReport('stars')")}
+      ${btn('\u{1F4C5}','Attendance report','By month or by term',"attReport('sum')")}
+      ${btn('\u{1F4CA}','Analysis and follow up','Who needs attention, FLP',"attReport('ana')")}
+    </div>`:''}
+    ${head||admin?`<h3 class="sbh4" style="font-size:16px;margin-top:18px">School</h3><div class="abtns">
+      ${btn('\u{1F3EB}','All classes, live','Today\u2019s attendance per class',"attOpenLive()")}
+      ${btn('\u{1F4D1}','SF4 (DepEd)','School report, '+monthName(ATT.month),"attSF4()")}
+      ${head?btn('\u2699','Classes and advisers','Set each class and its adviser',"attSecForm()"):''}
+      ${head?btn('\u{1F5D1}','Clear attendance data','Remove test entries before launch',"attClearOpen()",'danger'):''}</div>`:''}`;
+  maybeGuide('att');
+}
+
+/* ----- take attendance ----- */
+var ATK = { date:'', status:'C', marks:{} };
+function attOpenTake(date){ ATK.date = date; const r = ATT.days[date]; ATK.status = r ? r.status : dayStatus(date); ATK.marks = {}; ATT.learners.forEach(l => ATK.marks[l.id] = r ? ((r.marks||{})[l.id] || 'PP') : '--'); ATT.view = 'take'; attDraw(); window.scrollTo(0,0); }
+function attTake(){
+  const d = ATK.date, list = sortL(ATT.learners.filter(l => activeOn(l,d))), can = attCanEdit();
+  const cell = (l, i) => { const c = (ATK.marks[l.id]||'--')[i]; return `<button class="ses s${c}" ${can?`onclick="attTap('${l.id}',${i})"`:''}><small>${i?'PM':'AM'}</small>${ATT_CODES[c]||'\u00B7'}</button>`; };
+  const rows = sx => list.filter(l=>l.sex===sx).map(l=>`<div class="atrow"><span class="atnm">${esc(lname(l))}</span>${cell(l,0)}${cell(l,1)}</div>`).join('') || '<p class="hint">None.</p>';
+  const left = list.filter(l => (ATK.marks[l.id]||'--').indexOf('-') > -1).length;
+  $('viewAtt').innerHTML = `<div class="trk-head"><div><h2>Take attendance</h2><p>${esc(secLabel(ATT.sec))}. Tap AM or PM to change: \u2713 Present, X Absent, E Excused, T Tardy.</p></div><div class="head-actions"><button class="btn ghost" onclick="attBack()">Back</button></div></div>
+    <div class="calbar"><button class="btn ghost small" onclick="attOpenTake(addDays('${d}',${dow(d)===1?-3:-1}))">\u2039</button><input type="date" class="sbdate" value="${d}" onchange="attOpenTake(this.value)"><button class="btn ghost small" onclick="attOpenTake(addDays('${d}',${dow(d)===5?3:1}))">\u203A</button></div>
+    ${dow(d)===0||dow(d)===6?'<div class="empty">No class on weekends.</div>':`
+    <div class="atstat">${[['C','With class'],['H','Holiday'],['S','Suspended']].map(([k,l])=>`<button class="sbs ${ATK.status===k?'on':''}" style="--c:${k==='C'?'#2f7a4a':'#a3271b'}" ${can?`onclick="ATK.status='${k}';attTake()"`:''}>${l}</button>`).join('')}</div>
+    ${ATK.status!=='C'?`<div class="notice">No attendance is counted on this day. Tap Save to keep it as ${ATK.status==='H'?'a holiday':'a suspension'}.</div>`:`
+    ${!list.length?'<div class="empty">No learners yet. Add them in My learners.</div>':`<div class="atgrp">Boys</div>${rows('M')}<div class="atgrp">Girls</div>${rows('F')}`}`}
+    ${can?`<div class="sbattbar">${ATK.status==='C' && left?`<span class="hint">${left} learner${left>1?'s':''} not yet marked.</span>`:''}<button class="btn" onclick="attSaveDay()">Save attendance</button></div>`:''}`}`;
+}
+function attTap(id, i){ const m = (ATK.marks[id]||'--').split(''); m[i] = ATT_NEXT[m[i]] || 'P'; ATK.marks[id] = m.join(''); attTake(); }
+async function attSaveDay(){
+  const left = Object.keys(ATK.marks).filter(k => ATK.marks[k].indexOf('-') > -1);
+  if (ATK.status==='C' && left.length){ if (!confirm(left.length+' learner session'+(left.length>1?'s are':' is')+' not yet marked. Mark the unmarked sessions as present and save?')) return; left.forEach(k => ATK.marks[k] = ATK.marks[k].replace(/-/g,'P')); }
+  const payload = { section:ATT.sec, date:ATK.date, status:ATK.status, marks: ATK.status==='C' ? ATK.marks : {} };
+  ATT.days[ATK.date] = Object.assign({ date:ATK.date }, payload);
+  try{ if (navigator.onLine===false) throw new Error(MSG.NET);
+    const r = await api('attSave', payload); ATT.days[ATK.date] = Object.assign({ date:ATK.date }, r); toast('Attendance saved.'); }
+  catch(e){ if (friendly(e.message)===MSG.NET || friendly(e.message)===MSG.BUSY){ saveOut(outbox().filter(x => !(x.action==='attSave' && x.payload.section===ATT.sec && x.payload.date===ATK.date))); queueOut('attSave', payload, 'Attendance '+ATK.date); ATT.days[ATK.date].local = true; toast('Saved on this device. It will sync when you are online.'); } else return handleErr(e); }
+  try{ localStorage.setItem('tala_att_'+USER.email+'_'+ATT.sec, JSON.stringify({ learners:ATT.learners, days:ATT.days })); }catch(e){}
+  const out = ATT.learners.filter(l => /[XET]/.test(ATK.marks[l.id]||''));
+  ATT.msgDate = ATK.date; ATT.view = out.length && ATK.status==='C' ? 'msgs' : 'home'; attDraw();
+}
+
+/* ----- learners ----- */
+function attLearners(){
+  const can = attCanEdit(), list = sortL(ATT.learners);
+  $('viewAtt').innerHTML = `<div class="trk-head"><div><h2>My learners</h2><p>${esc(secLabel(ATT.sec))} \u00B7 ${list.filter(l=>activeOn(l,todayPH())).length} enrolled</p></div><div class="head-actions"><button class="btn ghost" onclick="attBack()">Back</button></div></div>
+    ${can?`<div class="abtns small"><button class="abtn" onclick="attLearnerForm()"><span class="abico">\uFF0B</span><b>Add a learner</b><small>Type the details</small></button>
+      <label class="abtn"><input type="file" accept=".xls,.xlsx" hidden onchange="attImportSF1(this)"><span class="abico">\u{1F4E5}</span><b>Import from LIS SF1</b><small>Adds your whole class with LRN</small></label></div>`:''}
+    <div class="table-wrap"><table><thead><tr><th>No.</th><th>LRN</th><th>Name</th><th>Sex</th><th>Parent or guardian</th><th>Contact</th><th>Status</th>${can?'<th></th>':''}</tr></thead><tbody>
+    ${list.map((l,i)=>`<tr><td>${i+1}</td><td>${esc(l.lrn||'')}</td><td>${esc(lname(l))}</td><td>${l.sex}</td><td>${esc(l.parent||'')}</td><td>${esc(l.contact||'')}</td><td>${esc(l.status)}${l.statusDate?' ('+esc(dShort(l.statusDate))+')':''}</td>${can?`<td><button class="linkbtn" onclick="attLearnerForm('${l.id}')">Edit</button></td>`:''}</tr>`).join('') || `<tr><td colspan="8" class="empty">No learners yet.</td></tr>`}</tbody></table></div>`;
+}
+function attLearnerForm(id){
+  const l = id ? ATT.learners.find(x=>x.id===id) : { status:'Active', sex:'M' };
+  ['lrn','last','first','middle','birth','parent','contact','statusDate','reason','enrolled'].forEach(k => $('al_'+k).value = l[k]||'');
+  $('al_id').value = id||''; $('al_sex').value = l.sex||'M'; $('al_status').value = l.status||'Active'; $('al_del').style.display = id ? '' : 'none'; $('al_err').textContent = ''; attStatusSync(); openModal('alModal');
+}
+function attStatusSync(){ $('al_moveRow').style.display = $('al_status').value==='Active' ? 'none' : ''; }
+async function attLearnerSave(){
+  const learner = { sec:ATT.sec, id:$('al_id').value, sex:$('al_sex').value, status:$('al_status').value };
+  ['lrn','last','first','middle','birth','parent','contact','statusDate','reason','enrolled'].forEach(k => learner[k] = $('al_'+k).value.trim());
+  if (learner.status!=='Active' && !learner.statusDate) return $('al_err').textContent = 'Choose the date of the '+learner.status.toLowerCase()+'.';
+  try{ ATT.learners = await api('learnerSave',{ learner }); closeModal('alModal'); attDraw(); toast('Saved.'); }catch(e){ handleErr(e,'al_err'); }
+}
+async function attLearnerDelete(){ if (!confirm('Remove this learner from the class? Use Status instead if the learner transferred out or dropped out.')) return; try{ ATT.learners = await api('learnerDelete',{ section:ATT.sec, id:$('al_id').value }); closeModal('alModal'); attDraw(); }catch(e){ handleErr(e,'al_err'); } }
+// Reads the LIS SF1: LRN in A, name in C (LAST,FIRST, MIDDLE), sex in G, birth date in H, parents in AB and AF, guardian in AK, contact in AP
+async function attImportSF1(inp){
+  const f = inp.files[0]; inp.value = ''; if (!f) return;
+  loading(true,'Reading the SF1');
+  try{
+    await loadScript(LIBS.xlsx); const wb = XLSX.read(await f.arrayBuffer(), { type:'array' }), ws = wb.Sheets[wb.SheetNames[0]];
+    const g = a => { const c = ws[a]; return c ? String(c.w || c.v || '').trim() : ''; }, rows = [];
+    for (let r = 7; r < 200; r++){
+      const lrn = g('A'+r).replace(/\D/g,''), name = g('C'+r); if (!name){ if (r > 12 && !g('A'+r)) { if (!g('C'+(r+1)) && !g('C'+(r+2))) break; } continue; }
+      if (/total|generated/i.test(name) || !lrn) continue;
+      const parts = name.split(',').map(s=>s.trim()), last = parts[0], first = parts[1]||'', middle = parts.slice(2).join(' '), bd = g('H'+r).match(/(\d{2})-(\d{2})-(\d{4})/);
+      const mom = g('AF'+r).split(',').filter(Boolean), dad = g('AB'+r), guard = g('AK'+r);
+      rows.push({ lrn, last:(last||'').trim(), first:first||'', middle:middle||'', sex:/^F/i.test(g('G'+r))?'F':'M', birth: bd ? bd[3]+'-'+bd[1]+'-'+bd[2] : '',
+        parent: guard || (mom.length ? (mom[1]||'')+' '+(mom[0]||'')+' (mother)' : dad), contact: g('AP'+r) });
+    }
+    if (!rows.length) throw new Error('No learners were found. Please choose the SF1 downloaded from LIS.');
+    const r = await api('learnersImport',{ section:ATT.sec, rows }); ATT.learners = r.learners; attDraw(); toast(r.added+' learner'+(r.added===1?'':'s')+' added from the SF1.');
+  }catch(e){ handleErr(e); }
+  loading(false);
+}
+
+/* ----- messages to parents ----- */
+const MSG_T = {
+  en:{ X:'Good day, {parent}. This is {teacher}, the class adviser of {learner} ({class}). I would like to inform you that {learner} was absent today, {date}. I hope everything is okay. Please let me know the reason. Thank you.',
+       E:'Good day, {parent}. This is {teacher}, the class adviser of {learner} ({class}). I received the excuse for {learner} today, {date}. Please help {learner} catch up on today\u2019s lessons. Thank you.',
+       T:'Good day, {parent}. This is {teacher}, the class adviser of {learner} ({class}). {learner} arrived late today, {date}. Please help {learner} come to school on time. Thank you.' },
+  fil:{ X:'Magandang araw po, {parent}. Ako po si {teacher}, ang gurong tagapayo ni {learner} ({class}). Nais ko pong ipaalam na lumiban si {learner} ngayong araw, {date}. Maaari po bang malaman ang dahilan? Salamat po.',
+        E:'Magandang araw po, {parent}. Ako po si {teacher}, ang gurong tagapayo ni {learner} ({class}). Natanggap ko po ang paliwanag sa pagliban ni {learner} ngayong {date}. Pakitulungan po siyang humabol sa mga aralin. Salamat po.',
+        T:'Magandang araw po, {parent}. Ako po si {teacher}, ang gurong tagapayo ni {learner} ({class}). Nahuli po si {learner} sa pagpasok ngayong {date}. Pakitulungan po siyang makarating nang maaga. Salamat po.' },
+  ceb:{ X:'Maayong adlaw, {parent}. Ako si {teacher}, ang class adviser ni {learner} ({class}). Gusto lang nako ipahibalo nga wala nakaeskwela si {learner} karong adlawa, {date}. Pwede ba mahibal-an ang hinungdan? Salamat.',
+        E:'Maayong adlaw, {parent}. Ako si {teacher}, ang class adviser ni {learner} ({class}). Nadawat nako ang excuse ni {learner} karong {date}. Palihug tabangi siya nga makaapas sa mga leksyon. Salamat.',
+        T:'Maayong adlaw, {parent}. Ako si {teacher}, ang class adviser ni {learner} ({class}). Na-late si {learner} karong adlawa, {date}. Palihug tabangi siya nga makaabot sa eskwelahan sa saktong oras. Salamat.' } };
+function msgTpl(lang, c){ try{ const s = JSON.parse(localStorage.getItem('tala_msgtpl_'+USER.email)||'{}'); if (s[lang] && s[lang][c]) return s[lang][c]; }catch(e){} return MSG_T[lang][c]; }
+function attMsgs(){
+  const d = ATT.msgDate || todayPH(), lang = ATT.lang || 'en', r = ATT.days[d];
+  const list = sortL(ATT.learners).filter(l => r && /[XET]/.test((r.marks||{})[l.id]||''));
+  const code = l => { const m = r.marks[l.id]; return /X/.test(m) && !/E/.test(m) ? 'X' : /E/.test(m) ? 'E' : 'T'; };
+  const fill = (l) => msgTpl(lang, code(l)).replace(/\{parent\}/g, l.parent ? l.parent.replace(/\s*\(.*\)$/,'') : 'Parent').replace(/\{learner\}/g, (l.first.charAt(0)+l.first.slice(1).toLowerCase()).replace(/\b\w/g,c=>c.toUpperCase())).replace(/\{teacher\}/g, USER.name).replace(/\{class\}/g, secLabel(ATT.sec)).replace(/\{date\}/g, new Date(d+'T00:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'}));
+  ATT.msgList = list.map(l => ({ l, text: fill(l) }));
+  $('viewAtt').innerHTML = `<div class="trk-head"><div><h2>Message parents</h2><p>${esc(dShort(d))}. Copy a message, then paste it in Messenger.</p></div><div class="head-actions"><button class="btn ghost" onclick="attBack()">Done</button></div></div>
+    <div class="bar"><input type="date" class="sbdate" value="${d}" onchange="ATT.msgDate=this.value;attMsgs()"><div class="tabs">${[['en','English'],['fil','Filipino'],['ceb','Cebuano']].map(([k,l])=>`<button class="${lang===k?'on':''}" onclick="ATT.lang='${k}';attMsgs()">${l}</button>`).join('')}</div><button class="btn ghost small" onclick="attTplOpen()">Edit my messages</button></div>
+    ${ATT.msgList.length ? ATT.msgList.map((x,i)=>`<div class="msgc"><div class="msgh"><b>${esc(lname(x.l))}</b><span class="sbbadge" style="--c:${{X:'#c0392b',E:'#b06000',T:'#1e5a8c'}[code(x.l)]}">${{X:'Absent',E:'Excused',T:'Tardy'}[code(x.l)]}</span><small>${esc(x.l.parent||'No parent listed')}${x.l.contact?' \u00B7 '+esc(x.l.contact):''}</small></div>
+      <p>${esc(x.text)}</p><button class="btn small msgbtn" onclick="attCopy(${i})">\u{1F4AC} Copy for Messenger</button></div>`).join('') : '<div class="empty">No absent, excused, or tardy learners on this day.</div>'}`;
+}
+function attCopy(i){ const t = ATT.msgList[i].text; (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(() => toast('Copied. Open Messenger and paste it.'), () => { prompt('Copy this message:', t); }); }
+function attTplOpen(){ const lang = ATT.lang || 'en'; ['X','E','T'].forEach(c => $('mt_'+c).value = msgTpl(lang,c)); $('mtLang').textContent = { en:'English', fil:'Filipino', ceb:'Cebuano' }[lang]; openModal('mtModal'); }
+function attTplSave(reset){ const lang = ATT.lang || 'en'; let s = {}; try{ s = JSON.parse(localStorage.getItem('tala_msgtpl_'+USER.email)||'{}'); }catch(e){} s[lang] = reset ? null : { X:$('mt_X').value, E:$('mt_E').value, T:$('mt_T').value }; localStorage.setItem('tala_msgtpl_'+USER.email, JSON.stringify(s)); closeModal('mtModal'); attMsgs(); toast(reset ? 'Back to the original messages.' : 'Your messages are saved.'); }
+
+/* ----- numbers used by every report ----- */
+function attStats(learners, days, sec, ym){
+  const wd = weekdaysOf(ym), cls = wd.filter(d => isClassDay(d, sec)), end = wd[wd.length-1] || ym+'-28';
+  const get = (l,d) => sec ? mk(l,d,sec) : mk(l,d);
+  const per = learners.map(l => { const o = { l, abs:0, pres:0, exc:0, tdy:0, halfAbs:0, sesP:0, consec:0 }; let run = 0;
+    cls.forEach(d => { if (!activeOn(l,d)) return; const m = get(l,d); if (m==='--') return;
+      if (dayPresent(m)){ o.pres++; run = 0; } else { o.abs++; run++; o.consec = Math.max(o.consec, run); }
+      if (/E/.test(m)) o.exc += (m.match(/E/g)||[]).length * 0.5; o.tdy += (m.match(/T/g)||[]).length;
+      o.sesP += [0,1].filter(i => sessPresent(m[i])).length * 0.5; o.halfAbs += [0,1].filter(i => m[i]==='X'||m[i]==='E').length * 0.5; });
+    o.rate = cls.filter(d=>activeOn(l,d)).length ? Math.round(o.pres / cls.filter(d=>activeOn(l,d)).length * 100) : 0; return o; });
+  const S = { M:{}, F:{} };
+  ['M','F'].forEach(sx => { const ls = learners.filter(l => l.sex===sx);
+    S[sx].enrol = ls.filter(l => !(l.enrolled && l.enrolled > ATT.snapshot) && !(l.status==='Transferred In' && l.statusDate > ATT.snapshot)).length;
+    S[sx].late = ls.filter(l => l.status==='Transferred In' ? false : l.enrolled && l.enrolled > ATT.snapshot && l.enrolled.slice(0,7)===ym).length;
+    S[sx].reg = ls.filter(l => activeOn(l, end) || (l.statusDate && l.statusDate > end)).filter(l => activeOn(l, end)).length;
+    S[sx].daily = cls.map(d => ls.filter(l => activeOn(l,d) && get(l,d)!=='--' && dayPresent(get(l,d))).length);
+    S[sx].ada = cls.length ? S[sx].daily.reduce((a,b)=>a+b,0) / cls.length : 0;
+    S[sx].pctAtt = S[sx].reg ? S[sx].ada / S[sx].reg * 100 : 0; S[sx].pctEnr = S[sx].enrol ? S[sx].reg / S[sx].enrol * 100 : 0;
+    S[sx].consec = per.filter(o => o.l.sex===sx && o.consec >= 5).length;
+    ['Dropped Out','Transferred Out','Transferred In'].forEach(k => S[sx][k] = ls.filter(l => l.status===k && (l.statusDate||'').slice(0,7)===ym).length); });
+  return { wd, cls, per, S };
+}
+function f1(n){ return (Math.round(n*100)/100).toString(); }
+
+/* ----- reports ----- */
+function attReport(kind){
+  if (!ATT.learners.length && kind!=='ana') return toast('Add learners first in My learners.');
+  const sec = secInfo(ATT.sec), ym = ATT.month, S = attStats(ATT.learners, ATT.days, '', ym), headName = (DATA||{}).headName || '';
+  const hdr = `<div class="p-sfh"><b>${kind==='sf2'?'School Form 2 (SF2) Daily Attendance Report of Learners':kind==='sf2s'?'SF2: Daily Attendance (School Version, AM and PM)':kind==='stars'?'Weekly Attendance Stars for e-READ':kind==='sum'?'Attendance Report':'Attendance Analysis and Follow Up'}</b>
+    ${kind==='sf2'?'<i>(This replaces Form 1, Form 2 and STS Form 4: Absenteeism and Dropout Profile)</i>':''}
+    <table class="p-sfm"><tr><td>School ID</td><td><b>125592</b></td><td>School Year</td><td><b>${esc(syShort().replace('SY ',''))}</b></td><td>Report for the Month of</td><td><b>${esc(monthName(ym))}</b></td></tr>
+    <tr><td>Name of School</td><td><b>Baluyan Elementary School</b></td><td>Grade Level</td><td><b>${esc(sec.grade)}</b></td><td>Section</td><td><b>${esc(sec.section)}</b></td></tr></table></div>`;
+  let body = '';
+  if (kind==='sf2') body = sf2Deped(S, sec, headName);
+  else if (kind==='sf2s') body = sf2School(S, sec, headName);
+  else if (kind==='stars') body = attStars(ym);
+  else if (kind==='sum') return attSumForm();
+  else if (kind==='ana') body = attAnalysis();
+  ATT.lastPrint = { kind, title: (kind==='sf2'?'SF2':kind==='sf2s'?'SF2_School':kind==='stars'?'Stars':'Analysis')+'_'+secLabel(ATT.sec).replace(/\s+/g,'')+'_'+monthName(ym).replace(' ','') };
+  attShowReport(hdr + body);
+}
+function attShowReport(html){
+  $('viewAtt').innerHTML = `<div class="trk-head"><div><h2>Report preview</h2><p>Check it, then print or download.</p></div><div class="head-actions"><button class="btn ghost" onclick="attBack()">Back</button>
+    <button class="btn ghost" onclick="attExcel()">Download Excel</button><button class="btn" onclick="attPrint()">Print or save as PDF</button></div></div><div class="sfprev" id="sfPrev">${html}</div>`;
+}
+function attPrint(){ $('printArea').innerHTML = `<div class="sfprint">${$('sfPrev').innerHTML}</div>`; document.body.classList.add('legal-print'); setTimeout(() => { window.print(); setTimeout(()=>document.body.classList.remove('legal-print'), 800); }, 200); }
+function sfMark(m){ if (m==='--') return ['','']; const a0 = !sessPresent(m[0]), a1 = !sessPresent(m[1]);
+  if (a0 && a1) return ['x','']; if (a0 || m[0]==='T') return ['','hu']; if (a1) return ['','hl']; return ['','']; }
+function sf2Deped(A, sec, headName){
+  const L = sortL(ATT.learners.filter(l => A.wd.some(d => activeOn(l,d)))), wdl = ['','M','T','W','TH','F'];
+  const row = (l, n) => { const o = A.per.find(p=>p.l===l);
+    return `<tr><td>${n}</td><td class="nm">${esc(lname(l))}</td>${A.wd.map(d => { if (!isClassDay(d)) return '<td class="nc"></td>'; if (!activeOn(l,d)) return '<td></td>'; const [t,c] = sfMark(mk(l,d)); return `<td class="${c}">${t}</td>`; }).join('')}<td>${o.abs}</td><td>${o.pres}</td><td class="nm">${l.status!=='Active'?esc(l.status+(l.statusDate?' '+dShort(l.statusDate):'')+(l.reason?', '+l.reason:'')):''}</td></tr>`; };
+  const tot = (sx, label) => `<tr class="tot"><td>${L.filter(l=>l.sex===sx).length}</td><td class="nm">&lt;=== ${label} | TOTAL Per Day ===&gt;</td>${A.wd.map(d => { const i = A.cls.indexOf(d); return `<td>${i>-1?A.S[sx].daily[i]:''}</td>`; }).join('')}<td>${A.per.filter(o=>o.l.sex===sx).reduce((a,o)=>a+o.abs,0)}</td><td>${A.per.filter(o=>o.l.sex===sx).reduce((a,o)=>a+o.pres,0)}</td><td></td></tr>`;
+  const T = k => (A.S.M[k]||0) + (A.S.F[k]||0), sm = (k, fx) => `<td>${fx?fx(A.S.M[k]):A.S.M[k]}</td><td>${fx?fx(A.S.F[k]):A.S.F[k]}</td>`;
+  return `<table class="sf2t"><thead><tr><th rowspan="2">No.</th><th rowspan="2" class="nm">NAME<br>(Last Name, First Name, Middle Name)</th>${A.wd.map(d=>`<th>${Number(d.slice(8))}</th>`).join('')}<th colspan="2">Total for the Month</th><th rowspan="2">REMARKS (If DROPPED OUT, state reason. If TRANSFERRED IN/OUT, write the name of School.)</th></tr>
+    <tr>${A.wd.map(d=>`<th>${wdl[dow(d)]}</th>`).join('')}<th>ABSENT</th><th>PRESENT</th></tr></thead>
+    <tbody>${L.filter(l=>l.sex==='M').map((l,i)=>row(l,i+1)).join('')}${tot('M','MALE')}${L.filter(l=>l.sex==='F').map((l,i)=>row(l,i+1)).join('')}${tot('F','FEMALE')}
+    <tr class="tot"><td>${L.length}</td><td class="nm">Combined TOTAL Per Day</td>${A.wd.map(d => { const i = A.cls.indexOf(d); return `<td>${i>-1?A.S.M.daily[i]+A.S.F.daily[i]:''}</td>`; }).join('')}<td>${A.per.reduce((a,o)=>a+o.abs,0)}</td><td>${A.per.reduce((a,o)=>a+o.pres,0)}</td><td></td></tr></tbody></table>
+  <div class="sf2b"><div class="sf2g"><b>GUIDELINES:</b> The attendance shall be accomplished daily. Codes: (blank) Present; (x) Absent; Tardy: half shaded, upper for late comer, lower for cutting classes. Percentage of Enrolment = Registered learners as of end of the month \u00F7 Enrolment as of 1st Friday of the school year \u00D7 100. Average Daily Attendance = Total daily attendance \u00F7 Number of school days in the reporting month. Percentage of Attendance for the month = Average daily attendance \u00F7 Registered learners as of end of the month \u00D7 100.</div>
+    <table class="sf2s"><tr><td>Month: <b>${esc(monthName(ATT.month))}</b></td><td colspan="3">No. of Days of Classes: <b>${A.cls.length}</b></td></tr><tr><th></th><th>M</th><th>F</th><th>TOTAL</th></tr>
+      <tr><td>Enrolment as of ${esc(dShort(ATT.snapshot))}</td>${sm('enrol')}<td>${T('enrol')}</td></tr><tr><td>Late enrolment during the month (beyond cut-off)</td>${sm('late')}<td>${T('late')}</td></tr>
+      <tr><td>Registered Learners as of end of month</td>${sm('reg')}<td>${T('reg')}</td></tr><tr><td>Percentage of Enrolment as of end of month</td>${sm('pctEnr',v=>f1(v)+'%')}<td>${f1(T('enrol')?T('reg')/T('enrol')*100:0)}%</td></tr>
+      <tr><td>Average Daily Attendance</td>${sm('ada',f1)}<td>${f1(A.S.M.ada+A.S.F.ada)}</td></tr><tr><td>Percentage of Attendance for the month</td>${sm('pctAtt',v=>f1(v)+'%')}<td>${f1(T('reg')?(A.S.M.ada+A.S.F.ada)/T('reg')*100:0)}%</td></tr>
+      <tr><td>Number of students absent for 5 consecutive days</td>${sm('consec')}<td>${T('consec')}</td></tr><tr><td>Dropped out</td>${sm('Dropped Out')}<td>${T('Dropped Out')}</td></tr>
+      <tr><td>Transferred out</td>${sm('Transferred Out')}<td>${T('Transferred Out')}</td></tr><tr><td>Transferred in</td>${sm('Transferred In')}<td>${T('Transferred In')}</td></tr></table>
+    <div class="sf2sig"><p>I certify that this is a true and correct report.</p><b>${esc((sec.adviserName||'').toUpperCase())}</b><small>(Signature of Adviser over Printed Name)</small><p>Attested by:</p><b>${esc(headName.toUpperCase())}</b><small>(Signature of School Head over Printed Name)</small></div></div>`;
+}
+function sf2School(A, sec, headName){
+  const L = sortL(ATT.learners.filter(l => A.wd.some(d => activeOn(l,d))));
+  const row = (l,n) => { const o = A.per.find(p=>p.l===l); return `<tr><td>${n}</td><td class="nm">${esc(lname(l))}</td><td>${l.sex}</td>${A.wd.map(d => { if (!isClassDay(d)) return '<td class="nc"></td><td class="nc"></td>'; const m = mk(l,d); return `<td>${ATT_CODES[m[0]]||''}</td><td>${ATT_CODES[m[1]]||''}</td>`; }).join('')}<td>${o.halfAbs}</td><td>${o.exc}</td><td>${o.tdy}</td><td>${o.sesP}</td><td>${o.rate}%</td><td>${esc(l.status)}</td></tr>`; };
+  return `<table class="sf2t s"><thead><tr><th rowspan="3">No.</th><th rowspan="3" class="nm">LEARNER\u2019S NAME</th><th rowspan="3">Sex</th>${A.wd.map(d=>`<th colspan="2">${Number(d.slice(8))} ${['','Mon','Tue','Wed','Thu','Fri'][dow(d)]}</th>`).join('')}<th rowspan="3">ABS (days)</th><th rowspan="3">EXC (days)</th><th rowspan="3">TDY (count)</th><th rowspan="3">PRES (days)</th><th rowspan="3">% ATT</th><th rowspan="3">STATUS</th></tr>
+    <tr>${A.wd.map(d=>`<th colspan="2">${dayStatus(d)}</th>`).join('')}</tr><tr>${A.wd.map(()=>'<th>AM</th><th>PM</th>').join('')}</tr></thead>
+    <tbody>${L.map((l,i)=>row(l,i+1)).join('')}</tbody></table>
+    <p class="hint">\u2713 Present, X Absent, E Excused, T Tardy. Day status: C with class, H holiday, S suspended. One session counts as half a day.</p>
+    <div class="sf2sig"><b>${esc((sec.adviserName||'').toUpperCase())}</b><small>Class Adviser</small><p>Noted by:</p><b>${esc(headName.toUpperCase())}</b><small>School Head</small></div>`;
+}
+// Stars: 3 for a complete week, 2 for 3 days present, 1 for 2 days present (4 days present also gets 2)
+function weeksOf(ym){ const wd = weekdaysOf(ym), out = []; wd.forEach(d => { const mon = addDays(d, 1-dow(d)); let w = out.find(x=>x.mon===mon); if (!w){ w = { mon, days:[] }; out.push(w); } w.days.push(d); }); return out; }
+function starsFor(l, w){ const cls = w.days.filter(d => isClassDay(d) && activeOn(l,d)); if (!cls.length) return null; const p = cls.filter(d => { const m = mk(l,d); return m!=='--' && dayPresent(m); }).length;
+  return p===cls.length ? 3 : p>=3 ? 2 : p===2 ? 1 : 0; }
+function attStars(ym){
+  const W = weeksOf(ym), L = sortL(ATT.learners.filter(l => W.some(w => w.days.some(d => activeOn(l,d)))));
+  return `<table class="sf2t st"><thead><tr><th>No.</th><th class="nm">Learner</th>${W.map((w,i)=>`<th>Week ${i+1}<br><small>${esc(dShort(w.days[0]).replace(/, \d{4}/,''))} to ${esc(dShort(w.days[w.days.length-1]).replace(/, \d{4}/,''))}</small></th>`).join('')}<th>Total stars</th></tr></thead>
+    <tbody>${L.map((l,i)=>{ const s = W.map(w => starsFor(l,w)); return `<tr><td>${i+1}</td><td class="nm">${esc(lname(l))}</td>${s.map(x=>`<td class="stc">${x===null?'':'\u2605'.repeat(x)+'<span class="st0">'+'\u2606'.repeat(3-x)+'</span>'}</td>`).join('')}<td><b>${s.reduce((a,b)=>a+(b||0),0)}</b></td></tr>`; }).join('')}</tbody></table>
+    <p class="hint">3 stars: present on all class days of the week. 2 stars: present 3 or 4 days. 1 star: present 2 days. Add these stars to each learner\u2019s e-READ profile.</p>`;
+}
+function attSumForm(){
+  const T = ['1','2','3'].map(t => ({ t, w1: weekOf(t,'1'), w12: weekOf(t,'12') }));
+  $('viewAtt').innerHTML = `<div class="trk-head"><div><h2>Attendance report</h2><p>Choose the period, for awards and incentives.</p></div><div class="head-actions"><button class="btn ghost" onclick="attBack()">Back</button></div></div>
+    <div class="abtns"><button class="abtn" onclick="attSum('m')"><span class="abico">\u{1F4C5}</span><b>${esc(monthName(ATT.month))}</b><small>The month chosen above</small></button>
+    ${T.filter(x=>x.w1).map(x=>`<button class="abtn" onclick="attSum('t${x.t}')"><span class="abico">\u{1F5D3}</span><b>Term ${x.t}</b><small>${esc(dShort(x.w1.start))} to ${esc(dShort(x.w12.end))}</small></button>`).join('')}</div>`;
+}
+function attSum(p){
+  let from, to, label; if (p==='m'){ from = ATT.month+'-01'; to = ATT.month+'-31'; label = monthName(ATT.month); } else { const t = p.slice(1); from = weekOf(t,'1').start; to = weekOf(t,'12').end; label = 'Term '+t; }
+  const cls = []; for (let d = from; d <= to && d <= todayPH(); d = addDays(d,1)) if (isClassDay(d)) cls.push(d);
+  const L = sortL(ATT.learners), rows = L.map(l => { const ds = cls.filter(d=>activeOn(l,d) && mk(l,d)!=='--'); const pr = ds.filter(d=>dayPresent(mk(l,d))).length, td = ds.reduce((a,d)=>a+(mk(l,d).match(/T/g)||[]).length,0), ex = ds.filter(d=>/E/.test(mk(l,d)) && !dayPresent(mk(l,d))).length;
+    const W = []; ds.forEach(d => { const mon = addDays(d,1-dow(d)); if (W.indexOf(mon)<0) W.push(mon); });
+    const stars = W.reduce((a,mon) => a + (starsFor(l, { days:[0,1,2,3,4].map(k=>addDays(mon,k)).filter(d=>d>=from&&d<=to) })||0), 0);
+    return { l, days:ds.length, pr, ab:ds.length-pr, ex, td, rate: ds.length?Math.round(pr/ds.length*100):0, stars }; }).sort((a,b)=>b.rate-a.rate || b.stars-a.stars);
+  ATT.lastPrint = { title:'Attendance_'+secLabel(ATT.sec).replace(/\s+/g,'')+'_'+label.replace(/\s+/g,'') };
+  attShowReport(`<div class="p-sfh"><b>Attendance Report, ${esc(label)}</b><table class="p-sfm"><tr><td>Grade and Section</td><td><b>${esc(secLabel(ATT.sec))}</b></td><td>Class days</td><td><b>${cls.length}</b></td><td>Adviser</td><td><b>${esc(secInfo(ATT.sec).adviserName||'')}</b></td></tr></table></div>
+    <table class="sf2t st"><thead><tr><th>Rank</th><th class="nm">Learner</th><th>Days</th><th>Present</th><th>Absent</th><th>Excused</th><th>Tardy</th><th>% Attendance</th><th>Stars</th><th>Recognition</th></tr></thead>
+    <tbody>${rows.map((r,i)=>`<tr><td>${i+1}</td><td class="nm">${esc(lname(r.l))}</td><td>${r.days}</td><td>${r.pr}</td><td>${r.ab}</td><td>${r.ex}</td><td>${r.td}</td><td><b>${r.rate}%</b></td><td>${r.stars}</td><td>${r.days&&r.rate===100&&!r.td?'Perfect attendance':r.rate>=95?'Excellent attendance':''}</td></tr>`).join('')}</tbody></table>`);
+}
+function attAnalysis(){
+  const today = todayPH(), cls = []; for (let d = ATT.firstDay; d <= today; d = addDays(d,1)) if (isClassDay(d)) cls.push(d);
+  const L = sortL(ATT.learners.filter(l => activeOn(l,today))), mcls = cls.filter(d => d.slice(0,7)===ATT.month);
+  const info = L.map(l => { let run = 0, maxRun = 0, last = ''; const ds = cls.filter(d=>activeOn(l,d) && mk(l,d)!=='--');
+    ds.forEach(d => { if (dayAbsent(mk(l,d))){ run++; if (run>maxRun){ maxRun = run; last = d; } } else run = 0; });
+    const md = mcls.filter(d=>activeOn(l,d) && mk(l,d)!=='--'), ab = md.filter(d=>dayAbsent(mk(l,d))).length, td = md.reduce((a,d)=>a+(mk(l,d).match(/T/g)||[]).length,0);
+    const dowAbs = [1,2,3,4,5].map(k => ds.filter(d => dow(d)===k && dayAbsent(mk(l,d))).length);
+    return { l, run, maxRun, last, ab, md:md.length, pct: md.length?Math.round(ab/md.length*100):0, td, dowAbs, total: ds.filter(d=>dayAbsent(mk(l,d))).length }; });
+  const flp = info.filter(x => x.maxRun >= 5 || x.pct >= 20), tardy = info.filter(x => x.td >= 3), now = info.filter(x => x.run >= 3);
+  const tbl = (rows, cols) => rows.length ? `<table class="sf2t st"><thead><tr><th class="nm">Learner</th>${cols.map(c=>`<th>${c[0]}</th>`).join('')}<th>Action</th></tr></thead><tbody>${rows.map(x=>`<tr><td class="nm">${esc(lname(x.l))}</td>${cols.map(c=>`<td>${c[1](x)}</td>`).join('')}<td class="nm">${x.maxRun>=5?'Home visit; enrol in the Flexible Learning Program':x.pct>=20?'Talk with the parent; monitor daily':x.run>=3?'Message the parent today':'Remind about punctuality'}</td></tr>`).join('')}</tbody></table>` : '<p class="hint">None. Good job!</p>';
+  const days = ['Mon','Tue','Wed','Thu','Fri'], dTot = [0,1,2,3,4].map(k => info.reduce((a,x)=>a+x.dowAbs[k],0)), dMax = Math.max(1,...dTot);
+  return `<div class="p-sumtitle">ABSENT NOW: 3 OR MORE DAYS IN A ROW</div>${tbl(now, [['Days in a row',x=>x.run],['Parent',x=>esc(x.l.parent||'')],['Contact',x=>esc(x.l.contact||'')]])}
+    <div class="p-sumtitle">FOR THE FLEXIBLE LEARNING PROGRAM: 5 CONSECUTIVE ABSENCES OR 20% ABSENT THIS MONTH</div>${tbl(flp, [['Longest absence (days)',x=>x.maxRun],['Absent this month',x=>x.ab+' of '+x.md+' ('+x.pct+'%)'],['Total absences this school year',x=>x.total]])}
+    <div class="p-sumtitle">FREQUENTLY TARDY THIS MONTH (3 OR MORE)</div>${tbl(tardy, [['Tardy sessions',x=>x.td]])}
+    <div class="p-sumtitle">ABSENCES BY DAY OF THE WEEK (THIS SCHOOL YEAR)</div><div class="dowbars">${days.map((d,k)=>`<div><i style="height:${Math.round(dTot[k]/dMax*80)+4}px"></i><b>${dTot[k]}</b><small>${d}</small></div>`).join('')}</div>`;
+}
+
+/* ----- School Head and AO: all classes live, and SF4 ----- */
+async function attLoadSchool(){
+  loading(true,'Loading all classes');
+  try{ const r = await api('attSchool',{ from:ATT.firstDay }); const days = {}; r.days.forEach(d => days[d.sec+'|'+d.date] = d); ATT.school = { learners:r.learners, days }; }catch(e){ handleErr(e); }
+  loading(false);
+}
+async function attOpenLive(){ await attLoadSchool(); ATT.view = 'live'; attDraw(); }
+function attLive(){
+  const t = todayPH(), S = ATT.school || { learners:[], days:{} };
+  $('viewAtt').innerHTML = `<div class="trk-head"><div><h2>All classes, live</h2><p>Today, ${esc(dShort(t))}. Tap a class to open it${attRole()==='admin'?' (view only)':''}.</p></div><div class="head-actions"><button class="btn ghost" onclick="attOpenLive()">Refresh</button><button class="btn ghost" onclick="attBack()">Back</button></div></div>
+    <div class="olist">${ATT.sections.map(s => { const L = S.learners.filter(l=>l.sec===s.key && activeOn(l,t)), r = S.days[s.key+'|'+t], p = r ? L.filter(l=>dayPresent((r.marks||{})[l.id]||'PP')).length : 0;
+      return `<button class="ocard" onclick="ATT.sec='${esc(s.key)}';ATT.loaded='';attLoadClass().then(()=>{ATT.view='home';attDraw()})"><div class="ocard-h"><span class="oav">${esc(s.grade.replace('Grade ','').charAt(0))}</span><div><b>${esc(secLabel(s.key))}</b><small>${esc(s.adviserName||'No adviser')}</small></div></div>
+        <small>${L.length} enrolled</small>${r?(r.status!=='C'?`<span class="opill">${r.status==='H'?'Holiday':'Suspended'}</span>`:`<span class="opill Completed">${p} present, ${L.length-p} absent</span>`):'<span class="opill Sent">Not yet taken</span>'}</button>`; }).join('')}</div>`;
+}
+async function attSF4(){
+  await attLoadSchool(); if (!ATT.school) return;
+  const ym = ATT.month, S = ATT.school, months = []; for (let d = ATT.firstDay.slice(0,7); d < ym; ){ months.push(d); const [y,m] = d.split('-').map(Number); d = m===12?(y+1)+'-01':y+'-'+String(m+1).padStart(2,'0'); }
+  const rows = ATT.sections.map(s => { const L = S.learners.filter(l=>l.sec===s.key), A = attStats(L, null, s.key, ym);
+    const prev = k => months.reduce((acc,mm) => { const B = attStats(L, null, s.key, mm); return { M:acc.M+B.S.M[k], F:acc.F+B.S.F[k] }; }, { M:0, F:0 });
+    return { s, A, nl:prev('consec'), to:prev('Transferred Out'), ti:prev('Transferred In') }; });
+  const c3 = (m,f,fx) => `<td>${fx?fx(m):m}</td><td>${fx?fx(f):f}</td><td>${fx?fx(m+f):m+f}</td>`;
+  const abc = (a, k, A) => c3(a.M, a.F) + c3(A.S.M[k], A.S.F[k]) + c3(a.M+A.S.M[k], a.F+A.S.F[k]);
+  const line = r => { const A = r.A; return `<td>${esc(r.s.grade)}</td><td>${esc(r.s.section)}</td><td class="nm">${esc((r.s.adviserName||'').toUpperCase())}</td>${c3(A.S.M.reg,A.S.F.reg)}${c3(Math.round(A.S.M.ada),Math.round(A.S.F.ada))}<td>${f1(A.S.M.pctAtt)}</td><td>${f1(A.S.F.pctAtt)}</td><td>${f1((A.S.M.reg+A.S.F.reg)?(A.S.M.ada+A.S.F.ada)/(A.S.M.reg+A.S.F.reg)*100:0)}</td>${abc(r.nl,'consec',A)}${abc(r.to,'Transferred Out',A)}${abc(r.ti,'Transferred In',A)}`; };
+  const grades = [...new Set(ATT.sections.map(s=>s.grade))];
+  const gsum = (g, all) => { const rs = all ? rows : rows.filter(r=>r.s.grade===g), sum = (f) => rs.reduce((a,r)=>a+f(r),0);
+    const M = k => sum(r=>r.A.S.M[k]), F = k => sum(r=>r.A.S.F[k]);
+    return `<tr><td colspan="3" class="nm">${esc(g)}</td>${c3(M('reg'),F('reg'))}${c3(Math.round(M('ada')),Math.round(F('ada')))}<td>${f1(M('reg')?M('ada')/M('reg')*100:0)}</td><td>${f1(F('reg')?F('ada')/F('reg')*100:0)}</td><td>${f1((M('reg')+F('reg'))?(M('ada')+F('ada'))/(M('reg')+F('reg'))*100:0)}</td>
+      ${['nl','to','ti'].map((p,ix) => { const k = ['consec','Transferred Out','Transferred In'][ix]; const a = { M:sum(r=>r[p].M), F:sum(r=>r[p].F) }; return c3(a.M,a.F)+c3(M(k),F(k))+c3(a.M+M(k),a.F+F(k)); }).join('')}</tr>`; };
+  ATT.lastPrint = { title:'SF4_BaluyanES_'+monthName(ym).replace(' ','') };
+  const html = `<div class="p-sfh"><b>School Form 4 (SF4) Monthly Learner\u2019s Movement and Attendance</b><i>(This replaces Form 3 and STS Form 4: Absenteeism and Dropout Profile)</i>
+    <table class="p-sfm"><tr><td>School ID</td><td><b>125592</b></td><td>Region</td><td><b>IX</b></td><td>Division</td><td><b>Zamboanga Sibugay</b></td><td>District</td><td><b>Imelda</b></td></tr>
+    <tr><td>School Name</td><td colspan="3"><b>Baluyan Elementary School</b></td><td>School Year</td><td><b>${esc(syShort().replace('SY ',''))}</b></td><td>Report for the Month of</td><td><b>${esc(monthName(ym))}</b></td></tr></table></div>
+    <table class="sf2t sf4"><thead><tr><th rowspan="3">GRADE/ YEAR LEVEL</th><th rowspan="3">SECTION</th><th rowspan="3" class="nm">NAME OF ADVISER</th><th rowspan="2" colspan="3">REGISTERED LEARNERS (As of End of the Month)</th><th colspan="6">ATTENDANCE</th><th colspan="9">NLPA</th><th colspan="9">TRANSFERRED OUT</th><th colspan="9">TRANSFERRED IN</th></tr>
+    <tr><th colspan="3">Daily Average</th><th colspan="3">Percentage for the Month</th>${['','',''].map(()=>'<th colspan="3">(A) Cumulative as of Previous Month</th><th colspan="3">(B) For the Month</th><th colspan="3">(A+B) Cumulative as of End of the Month</th>').join('')}</tr>
+    <tr>${'<th>M</th><th>F</th><th>T</th>'.repeat(12)}</tr></thead>
+    <tbody>${rows.map(r=>`<tr>${line(r)}</tr>`).join('')}<tr class="tot"><td colspan="39" class="nm"><b>ELEMENTARY:</b></td></tr>${grades.map(g=>gsum(g)).join('')}${gsum('TOTAL', true).replace('<tr>','<tr class="tot">')}</tbody></table>
+    <div class="sf2sig"><p>Prepared and Submitted by:</p><b>${esc(((DATA||{}).headName||'').toUpperCase())}</b><small>(Signature of School Head over Printed Name)</small></div>
+    <p class="hint">NLPA counts learners absent 5 consecutive days in the month. Generated from TALA on ${esc(dTime(nowLocal().replace('T',' ')))}.</p>`;
+  attShowReport(html);
+}
+
+/* ----- Excel: the report on screen, with the same cells, merges, and shading ----- */
+async function attExcel(){
+  loading(true,'Making the Excel file');
+  try{
+    await loadScript(LIBS.exceljs); const wb = new ExcelJS.Workbook(), ws = wb.addWorksheet('Report', { pageSetup:{ orientation:'landscape', paperSize:5, fitToPage:true, fitToWidth:1, fitToHeight:0 } });
+    let row = 1; const thin = { style:'thin' }, B = { top:thin, left:thin, bottom:thin, right:thin };
+    const put = (tbl, border) => { const occ = {}; [...tbl.rows].forEach(tr => { let col = 1;
+      [...tr.cells].forEach(td => { while (occ[row+','+col]) col++; const cs = td.colSpan||1, rs = td.rowSpan||1, c = ws.getCell(row, col);
+        const txt = td.innerText.trim(); c.value = txt!=='' && !isNaN(txt) && !/^0\d/.test(txt) ? Number(txt) : txt;
+        c.alignment = { vertical:'middle', horizontal: td.classList.contains('nm') ? 'left' : 'center', wrapText:true }; c.font = { name:'Arial', size:8, bold: td.tagName==='TH' || /\btot\b/.test(tr.className) };
+        if (border) c.border = B;
+        if (td.classList.contains('hu')) c.fill = { type:'gradient', gradient:'angle', degree:90, stops:[{ position:0, color:{ argb:'FF555555' } },{ position:0.49, color:{ argb:'FF555555' } },{ position:0.51, color:{ argb:'FFFFFFFF' } },{ position:1, color:{ argb:'FFFFFFFF' } }] };
+        if (td.classList.contains('hl')) c.fill = { type:'gradient', gradient:'angle', degree:90, stops:[{ position:0, color:{ argb:'FFFFFFFF' } },{ position:0.49, color:{ argb:'FFFFFFFF' } },{ position:0.51, color:{ argb:'FF555555' } },{ position:1, color:{ argb:'FF555555' } }] };
+        if (td.classList.contains('nc')) c.fill = { type:'pattern', pattern:'solid', fgColor:{ argb:'FFE4E4E4' } };
+        for (let r2 = 0; r2 < rs; r2++) for (let c2 = 0; c2 < cs; c2++) occ[(row+r2)+','+(col+c2)] = 1;
+        if (cs > 1 || rs > 1){ ws.mergeCells(row, col, row+rs-1, col+cs-1); if (border) for (let r2 = 0; r2 < rs; r2++) for (let c2 = 0; c2 < cs; c2++) ws.getCell(row+r2, col+c2).border = B; }
+        col += cs; }); row++; }); row++; };
+    const prev = $('sfPrev'), title = prev.querySelector('.p-sfh b');
+    ws.getCell(row,1).value = title ? title.textContent : 'Report'; ws.getCell(row,1).font = { name:'Arial', size:12, bold:true }; row += 2;
+    prev.querySelectorAll('table').forEach(t => put(t, !t.classList.contains('p-sfm-x')));
+    prev.querySelectorAll('.sf2sig b').forEach(b => { ws.getCell(row,3).value = b.textContent; ws.getCell(row,3).font = { name:'Arial', size:9, bold:true }; row += 2; });
+    ws.getColumn(1).width = 5; ws.getColumn(2).width = 30; for (let c = 3; c <= 60; c++) if (!ws.getColumn(c).width) ws.getColumn(c).width = 4.5;
+    const buf = await wb.xlsx.writeBuffer(); saveBlob(new Blob([buf], { type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }), (ATT.lastPrint ? ATT.lastPrint.title : 'Report')+'.xlsx');
+    toast('Excel downloaded.');
+  }catch(e){ handleErr(e); }
+  loading(false);
+}
+
+function attClearOpen(){ $('acConfirm').value=''; $('acErr').textContent=''; openModal('acModal'); }
+async function attClearRun(){
+  const options = {}; document.querySelectorAll('#acList input').forEach(i => options[i.dataset.k] = i.checked);
+  if (!Object.values(options).some(Boolean)) return $('acErr').textContent = 'Tick what to clear.';
+  loading(true,'Making a backup and clearing');
+  try{ const r = await api('attClear',{ options, confirm:$('acConfirm').value }); closeModal('acModal');
+    Object.keys(localStorage).filter(k => k.indexOf('tala_att_')===0).forEach(k => localStorage.removeItem(k));
+    saveOut(outbox().filter(x => x.action!=='attSave'));
+    ATT.learners = []; ATT.days = {}; ATT.school = null; ATT.loaded = ''; if (options.sections){ ATT.sections = []; ATT.sec = ''; }
+    await openAtt(); alert('Attendance data cleared.\n\nA backup was saved in your Google Drive as:\n'+r.backupName); }
+  catch(e){ handleErr(e,'acErr'); }
+  loading(false);
+}
+/* ----- School Head: classes and advisers ----- */
+function attSecForm(){
+  const accs = (DATA.teachers||[]);
+  $('asList').innerHTML = ATT.sections.map((s,i)=>`<div class="asrow"><input value="${esc(s.grade)}" data-k="grade"><input value="${esc(s.section)}" data-k="section"><select data-k="adviser"><option value="">No adviser</option>${accs.map(t=>`<option value="${esc(t.email)}" ${t.email===s.adviser?'selected':''}>${esc(t.name)}</option>`).join('')}</select><button class="linkbtn" onclick="this.parentElement.remove()">Remove</button></div>`).join('');
+  $('asFirst').value = ATT.firstDay; $('asSnap').value = ATT.snapshot; openModal('asModal');
+}
+function attSecAdd(){ $('asList').insertAdjacentHTML('beforeend', `<div class="asrow"><input placeholder="Grade 1" data-k="grade"><input placeholder="A" data-k="section"><select data-k="adviser"><option value="">No adviser</option>${(DATA.teachers||[]).map(t=>`<option value="${esc(t.email)}">${esc(t.name)}</option>`).join('')}</select><button class="linkbtn" onclick="this.parentElement.remove()">Remove</button></div>`); }
+async function attSecSave(){
+  const sections = [...document.querySelectorAll('#asList .asrow')].map(r => { const o = {}; r.querySelectorAll('[data-k]').forEach(x => o[x.dataset.k] = x.value.trim()); return o; }).filter(o => o.grade);
+  try{ const r = await api('attSaveSections',{ sections, firstDay:$('asFirst').value, snapshot:$('asSnap').value }); Object.assign(ATT, { sections:r.sections, mine:r.mine, firstDay:r.firstDay, snapshot:r.snapshot }); closeModal('asModal'); attDraw(); toast('Classes saved.'); }catch(e){ handleErr(e); }
+}
 
 /* ----- New school year: clean slate (LPT and PPT files and records are kept) ----- */
 function openNewSY(){ $('menu').classList.remove('open'); $('nsErr').textContent=''; $('nsConfirm').value=''; openModal('nsModal'); }
