@@ -251,6 +251,23 @@ table.subs tr.nosub td:not(.wk){color:var(--muted);font-style:italic}
 .abtns{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px;margin-top:12px}.abtns.small{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
 .abtn{display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left;background:var(--card);border:1.5px solid var(--line);border-radius:16px;padding:16px;font:inherit;color:var(--ink);cursor:pointer;transition:transform .12s,border-color .12s;min-height:118px}
 .abtn:hover{transform:translateY(-2px);border-color:var(--leaf)}.abtn:active{transform:scale(.98)}.abtn small{color:var(--muted);font-size:12.5px}.abtn b{font-size:16px}
+.tip{position:relative;cursor:help}.tip:hover::after,.tip:focus::after{content:attr(data-tip);position:absolute;left:0;top:calc(100% + 6px);z-index:30;background:#1d2a1f;color:#fff;font-size:12px;font-weight:500;line-height:1.5;white-space:pre;padding:8px 10px;border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,.25);max-height:260px;overflow:auto;min-width:160px}
+.atn.exc{background:var(--sun-soft);color:#8a5300}.atn.tdy{background:#e3f0fb;color:#1e5a8c}
+.atremind{margin-top:10px;background:#fff8e1;border:1.5px dashed #e9b81c;border-radius:12px;padding:8px 12px;font-size:13.5px}
+.attk{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:14px;align-items:start}.attk-cal{position:sticky;top:80px}
+.sesbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:8px 12px;margin:8px 0}.sesbar b{margin-right:auto}
+.ses.lk{opacity:.75;cursor:not-allowed}
+.mcal{background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:10px}.mcal-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.mcg{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;text-align:center}.mcg span{font-size:11px;color:var(--muted);font-weight:700}
+.mc{border:1px solid var(--line);background:var(--page);border-radius:7px;font:inherit;font-size:12px;padding:5px 0;cursor:pointer}.mc.wk{opacity:.35;cursor:default}
+.mc.done{background:var(--ok-soft);border-color:var(--ok)}.mc.part{background:var(--sun-soft);border-color:#e9b81c}.mc.miss{background:#fdecea;border-color:#f5b5ad}.mc.off{background:#ececec}.mc.sel{box-shadow:inset 0 0 0 2px var(--brandtxt);font-weight:700}
+.mcl{display:flex;flex-direction:column;gap:3px;margin-top:8px;font-size:11.5px;color:var(--muted)}.mcl i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}.mcl i.done{background:var(--ok-soft);border:1px solid var(--ok)}.mcl i.part{background:var(--sun-soft);border:1px solid #e9b81c}.mcl i.miss{background:#fdecea;border:1px solid #f5b5ad}.mcl i.off{background:#ececec}
+.okicon{width:64px;height:64px;border-radius:50%;background:var(--ok-soft);color:var(--ok);display:grid;place-items:center;font-size:32px;margin:0 auto 6px}.oktally{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:8px}
+.xlwrap{background:#e9ece6;border-radius:12px;padding:10px;margin-top:12px;overflow:auto}.xlpage{background:#fff;display:inline-block;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+.xlt{border-collapse:collapse;table-layout:fixed;color:#000;background:#fff}.xlt td{padding:0 1px;overflow:hidden;line-height:1.1;border:0 none;background:none;height:auto}.xlprint{background:#fff}.xrot{display:inline-block;transform:rotate(-90deg)}
+@page{size:A4 landscape;margin:7mm}
+@media print{ .xlprint .xlt td{-webkit-print-color-adjust:exact;print-color-adjust:exact} .xlprint .xlt tr{break-inside:avoid;page-break-inside:avoid} }
+@media (max-width:900px){.attk{grid-template-columns:1fr}.attk-cal{position:static}}
 .abtn.danger{border-color:#f5b5ad}.abtn.danger b{color:var(--late)}
 .abtn.main{background:linear-gradient(135deg,#f4c430,#f9d86a);border-color:#e9b81c}.abico{font-size:26px;line-height:1}
 .atstat{display:flex;gap:8px;margin:10px 0}
@@ -1346,7 +1363,7 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
         <div class="field"><label for="colMenu">Menu</label><input id="colMenu" oninput="colDraw()"></div>
         <div class="field"><label for="colDate">Date</label><input id="colDate" oninput="colDraw()"></div>
         <div class="field"><label for="colGrade">Grade level assigned</label><input id="colGrade" oninput="colDraw()"></div>
-        <button class="btn ghost small" onclick="$('colStep1').hidden=false;$('colStep2').hidden=true">\u2039 Change photos</button></div>
+        <button class="btn ghost small" onclick="$('colStep1').hidden=false;$('colStep2').hidden=true">&#x2039; Change photos</button></div>
       <canvas id="colCanvas" class="colcanvas"></canvas></div>
       <div class="modal-actions"><button class="btn ghost" onclick="closeModal('colModal')">Close</button><button class="btn ghost" onclick="colPdf()">Download as PDF</button><button class="btn ghost" onclick="colPng()">Download as photo</button><button class="btn" onclick="colSave()">Save to the Collage stack</button></div></div>
   </div>
@@ -1354,10 +1371,10 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
 <!-- SBFP print -->
 <div class="overlay" id="sbPrintModal">
   <div class="modal" role="dialog" aria-labelledby="spTitle2"><h3 id="spTitle2">Print SBFP reports</h3><p class="sub">The daily report uses the day you are viewing.</p>
-    <button class="choice" onclick="sbPrint('day')"><b>Daily report</b><small>Menu, status, parents\u2019 attendance, and photos of the day</small></button>
+    <button class="choice" onclick="sbPrint('day')"><b>Daily report</b><small>Menu, status, parents&#x2019; attendance, and photos of the day</small></button>
     <button class="choice" onclick="sbPrint('cal')"><b>Monthly SBFP calendar</b><small>Menus, assigned parents, and status for the month</small></button>
     <button class="choice" onclick="sbPrint('sum')"><b>Feeding summary</b><small>Every feeding day from the start, with status and reasons</small></button>
-    <button class="choice" onclick="sbPrint('part')"><b>Parents\u2019 participation</b><small>Attendance rate of every parent and group</small></button>
+    <button class="choice" onclick="sbPrint('part')"><b>Parents&#x2019; participation</b><small>Attendance rate of every parent and group</small></button>
     <button class="choice" onclick="sbPrint('people')"><b>Learners and parents list</b><small>The full list by group</small></button>
     <div class="modal-actions"><button class="btn ghost" onclick="closeModal('sbPrintModal')">Close</button></div></div>
 </div>
@@ -1365,7 +1382,7 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
 <div class="overlay" id="scModal">
   <div class="modal" role="dialog" aria-labelledby="scTitle"><h3 id="scTitle">Clear SBFP data</h3><p class="sub">TALA saves a backup of the Google Sheet in your Drive first, then clears what you tick.</p>
     <div id="scList"><label class="check"><input type="checkbox" data-k="photos" checked>All photos (attendance sheets, before, during, and after)</label>
-      <label class="check"><input type="checkbox" data-k="records" checked>Status of feeding, reasons, and parents\u2019 attendance</label>
+      <label class="check"><input type="checkbox" data-k="records" checked>Status of feeding, reasons, and parents&#x2019; attendance</label>
       <label class="check"><input type="checkbox" data-k="menus">Menu and group changes (days go back to the schedule)</label>
       <label class="check"><input type="checkbox" data-k="people">Learners and parents list (goes back to the SBFP guide list)</label></div>
     <div class="field"><label for="scConfirm">Type CLEAR to confirm</label><input id="scConfirm" autocomplete="off"></div><div class="err" id="scErr"></div>
@@ -1391,6 +1408,11 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
     <div class="field"><label for="mt_X">Absent</label><textarea id="mt_X" rows="3"></textarea></div><div class="field"><label for="mt_E">Excused</label><textarea id="mt_E" rows="3"></textarea></div><div class="field"><label for="mt_T">Tardy</label><textarea id="mt_T" rows="3"></textarea></div>
     <div class="modal-actions"><button class="btn ghost" onclick="attTplSave(true)">Use the original</button><span style="flex:1"></span><button class="btn ghost" onclick="closeModal('mtModal')">Cancel</button><button class="btn" onclick="attTplSave(false)">Save</button></div></div>
 </div>
+<!-- Attendance: saved -->
+<div class="overlay" id="okModal">
+  <div class="modal" role="dialog" aria-labelledby="okTitle"><div class="okicon">&#10004;</div><h3 id="okTitle" style="text-align:center">Saved</h3><div id="okBody" style="text-align:center"></div>
+    <div class="modal-actions" style="justify-content:center"><button class="btn ghost" id="okMsg" onclick="closeModal('okModal');ATT.view='msgs';attDraw()">&#x1F4AC; Message parents</button><button class="btn" onclick="closeModal('okModal')">Okay</button></div></div>
+</div>
 <!-- Attendance: clear data -->
 <div class="overlay" id="acModal">
   <div class="modal" role="dialog" aria-labelledby="acTitle"><h3 id="acTitle">Clear attendance data</h3><p class="sub">Use this before launching, to remove test entries. TALA saves a backup of the Google Sheet in your Drive first, then clears what you tick, for all classes.</p>
@@ -1404,7 +1426,7 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
 <!-- Attendance: classes and advisers -->
 <div class="overlay" id="asModal">
   <div class="modal wide" role="dialog" aria-labelledby="asTitle"><h3 id="asTitle">Classes and advisers</h3><p class="sub">Each adviser sees only her class. Grade, section, then adviser.</p>
-    <div id="asList"></div><button class="btn ghost small" onclick="attSecAdd()">\uFF0B Add a class</button>
+    <div id="asList"></div><button class="btn ghost small" onclick="attSecAdd()">&#xFF0B; Add a class</button>
     <div class="row2" style="margin-top:12px"><div class="field"><label for="asFirst">First day of the school year</label><input type="date" id="asFirst"></div><div class="field"><label for="asSnap">Enrolment as of (first Friday)</label><input type="date" id="asSnap"></div></div>
     <div class="modal-actions"><button class="btn ghost" onclick="closeModal('asModal')">Cancel</button><button class="btn" onclick="attSecSave()">Save</button></div></div>
 </div>
@@ -1520,13 +1542,13 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
 </div>
 <div class="toast" id="toast"></div>
 <div class="topbar" id="loading" aria-hidden="true"><i></i></div><div class="loadchip" id="loadChip"><span class="spin"></span><span id="loadingText">Loading</span></div>
-<div class="offline" id="offline" hidden>You\u2019re offline. TALA will reconnect when your internet is back.</div>
+<div class="offline" id="offline" hidden>You&#x2019;re offline. TALA will reconnect when your internet is back.</div>
 <div id="printArea"></div>
 
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
-const MIN_SERVER = '4.3'; // oldest Code.gs this page works with
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'4.3', date:'October 7, 2026' } };
+const MIN_SERVER = '4.4'; // oldest Code.gs this page works with
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'4.4', date:'October 8, 2026' } };
 function verLine(server){
   const old = server && (server.indexOf('older') > -1 || parseFloat(server) < parseFloat(MIN_SERVER));
   const s = server ? ' Server '+server+('.') : '';
@@ -2693,6 +2715,22 @@ GUIDES.att_head = { name:'Attendance', steps: [
   { el:'.atsel', t:'Any class, any month', x:'Choose a class and a month. You can do everything a teacher can.' },
   { el:'.abtns', t:'Reports', x:'SF2 (DepEd), the school AM and PM SF2, stars, reports, and analysis.' },
   { el:'#viewAtt h3.sbh4', t:'School', x:'All classes live, the SF4, and the list of classes and advisers.' } ] };
+GUIDES.atttake_teacher = { name:'Take attendance', steps: [
+  { el:'.atstat', t:'Today\u2019s status', x:'Choose With class, Holiday, Suspended, Teacher on leave, or Others. For Others, type what it is.' },
+  { el:'.atrow', t:'AM and PM', x:'Tap each box to change it: \u2713 Present, X Absent, E Excused, T Tardy.' },
+  { el:'.sesbar', t:'Save and lock each session', x:'Lock the AM after your first period and the PM in the afternoon. Tap Edit to change a locked session.' },
+  { el:'.mcal', t:'Calendar', x:'Green days are complete. Red days are not yet taken. Tap a day to open it.' } ] };
+GUIDES.atttake_head = GUIDES.atttake_teacher;
+GUIDES.attlrn_teacher = { name:'My learners', steps: [
+  { el:'.abtns.small', t:'Add your class', x:'Import your class from the LIS SF1 at once, or add one learner at a time.' },
+  { el:'.table-wrap', t:'Edit a learner', x:'Tap Edit to change details, add the parent, or set Transferred or Dropped Out with the date.' } ] };
+GUIDES.attlrn_head = GUIDES.attlrn_teacher;
+GUIDES.attmsg_teacher = { name:'Message parents', steps: [
+  { el:'#viewAtt .tabs', t:'Language', x:'Choose English, Filipino, or Cebuano. Tap Edit my messages to reword them.' },
+  { el:'.msgbtn', t:'Copy for Messenger', x:'Copy the message, open Messenger, and paste it to the parent.' } ] };
+GUIDES.attmsg_head = GUIDES.attmsg_teacher;
+GUIDES.attrep_teacher = { name:'Reports', steps: [ { el:'#viewAtt .head-actions', t:'Print or download', x:'Check the report, then print it, save it as PDF, or download the Excel file.' } ] };
+GUIDES.attrep_head = GUIDES.attrep_teacher; GUIDES.attrep_admin = GUIDES.attrep_teacher;
 GUIDES.att_admin = { name:'Attendance', steps: [ { el:'.abtns', t:'View and print', x:'See any class SF2 live and the SF4, then print them for signing.' } ] };
 var TOUR = [], GKEY = '';
 function guideId(f){ const r = USER ? USER.role : 'public'; return f==='home' ? 'home' : GUIDES[f+'_'+r] ? f+'_'+r : GUIDES[f+'_teacher'] && r==='public' ? '' : ''; }
@@ -3657,7 +3695,7 @@ function pmcfBody(o, sigs, print, editable){
       <div>${sigs.Ratee?`<img src="${sigs.Ratee.sig}" alt="">`:'<i></i>'}<b>${esc(o.teacherName||'')}</b><span>Ratee${o.position?', '+esc(o.position):''}</span>${sigs.Ratee?`<small>Signed ${esc(dTime(sigs.Ratee.on))}</small>`:''}</div></div>
   </div>`;
 }
-function syShort(){ const m = String((DATA&&DATA.settings.sy)||'').match(/(\d{4}).*?(\d{4})/); return m ? 'SY '+m[1]+'-'+m[2] : ''; }
+function syShort(){ const m = String((DATA&&DATA.settings&&DATA.settings.sy)||'').match(/(\d{4}).*?(\d{4})/); return m ? 'SY '+m[1]+'-'+m[2] : ''; }
 function notesBody(o){
   const n = (o.data||{}).notes || {};
   return `<table class="pm-head"><tr><td>Teacher:</td><td><b>${esc(o.teacherName||'')}</b>${o.position?', '+esc(o.position):''}</td><td>Date:</td><td>${o.date?esc(dShort(o.date)):''}${n.timeStart?' ('+esc(fmtTime(n.timeStart))+(n.timeEnd?' to '+esc(fmtTime(n.timeEnd)):'')+')':''}</td></tr>
@@ -4967,6 +5005,7 @@ async function pirDel(id){ if (!confirm('Delete this saved presentation?')) retu
    ========================================================= */
 var ATT = { sections:[], mine:[], firstDay:'2026-06-08', snapshot:'2026-06-11', sec:'', month:'', learners:[], days:{}, view:'home', date:'', school:null, loaded:'' };
 const ATT_CODES = { '-':'', P:'\u2713', X:'X', E:'E', T:'T' };
+const DAY_ST = { C:'With class', H:'Holiday', S:'Suspended', L:'Teacher on leave', O:'Others' };
 const ATT_NEXT = { '-':'P', P:'X', X:'E', E:'T', T:'-' };
 const ATT_MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 function attRole(){ return USER ? USER.role : ''; }
@@ -4976,9 +5015,9 @@ function secLabel(k){ const s = secInfo(k); return s.grade+(s.section?' '+s.sect
 function monthName(ym){ const [y,m] = ym.split('-').map(Number); return ATT_MONTHS[m-1]+' '+y; }
 function weekdaysOf(ym){ const [y,m] = ym.split('-').map(Number), n = new Date(Date.UTC(y,m,0)).getUTCDate(), out = []; for (let d = 1; d <= n; d++){ const s = ym+'-'+String(d).padStart(2,'0'); if (dow(s)>0 && dow(s)<6 && s >= ATT.firstDay) out.push(s); } return out; }
 function calHoliday(date){ return allEvents().some(e => e.type==='Holiday or no classes' && e.audience!=='Only me' && e.date<=date && date<=(e.end||e.date)); }
-function dayStatus(date, sec){ const r = (sec ? (ATT.school && ATT.school.days[sec+'|'+date]) : ATT.days[date]); if (r && r.status) return r.status; return calHoliday(date) ? 'H' : 'C'; }
+function dayStatus(date, sec){ /* C with class; H holiday; S suspended; L teacher on leave; O others */ const r = (sec ? (ATT.school && ATT.school.days[sec+'|'+date]) : ATT.days[date]); if (r && r.status) return r.status; return calHoliday(date) ? 'H' : 'C'; }
 function isClassDay(date, sec){ return dow(date)>0 && dow(date)<6 && date >= ATT.firstDay && date <= todayPH() && dayStatus(date, sec)==='C'; }
-function mk(l, date, sec){ const r = sec ? (ATT.school && ATT.school.days[sec+'|'+date]) : ATT.days[date]; return (r && r.marks && r.marks[l.id]) || (r ? 'PP' : '--'); }
+function mk(l, date, sec){ const r = sec ? (ATT.school && ATT.school.days[sec+'|'+date]) : ATT.days[date]; if (!r) return '--'; const m = (r.marks||{})[l.id]; return m ? (m.length===2 ? m : (m+'--').slice(0,2)) : 'PP'; }
 function sessPresent(c){ return c==='P' || c==='T'; }
 function dayPresent(m){ return sessPresent(m[0]) || sessPresent(m[1]); }
 function dayAbsent(m){ return !dayPresent(m) && m!=='--'; }
@@ -5022,65 +5061,123 @@ function attHome(){
   const role = attRole(), head = role==='head', admin = role==='admin', today = todayPH();
   const secs = role==='teacher' ? ATT.sections.filter(s => ATT.mine.indexOf(s.key) > -1) : ATT.sections;
   const months = []; for (let d = ATT.firstDay.slice(0,7); d <= (today.slice(0,4)*1+1)+'-04'; ){ months.push(d); const [y,m] = d.split('-').map(Number); d = m===12 ? (y+1)+'-01' : y+'-'+String(m+1).padStart(2,'0'); if (months.length > 14) break; }
-  const act = ATT.learners.filter(l => activeOn(l, today)), rec = ATT.days[today];
-  const pres = rec ? act.filter(l => dayPresent(mk(l,today))).length : 0, abs = rec ? act.filter(l => dayAbsent(mk(l,today))).length : 0;
+  const act = ATT.learners.filter(l => activeOn(l, today)), rec = ATT.days[today], T = tally(act, l => mk(l,today), l => '');
   const btn = (ico, t, x, fn, cls) => `<button class="abtn ${cls||''}" onclick="${fn}"><span class="abico">${ico}</span><b>${t}</b><small>${x}</small></button>`;
   $('viewAtt').innerHTML = `
     <div class="ohero athero"><div><h2>Attendance</h2><p>${ATT.sec?esc(secLabel(ATT.sec))+' \u00B7 '+esc(secInfo(ATT.sec).adviserName||'No adviser set'):'No class assigned to you yet. Ask the School Head to set your class.'}</p></div>
       <div class="atsel">${secs.length>1?`<select onchange="ATT.sec=this.value;attLoadClass().then(attDraw)">${secs.map(s=>`<option value="${esc(s.key)}" ${s.key===ATT.sec?'selected':''}>${esc(secLabel(s.key))}</option>`).join('')}</select>`:''}
         <select onchange="ATT.month=this.value;attDraw()">${months.map(m=>`<option value="${m}" ${m===ATT.month?'selected':''}>${monthName(m)}</option>`).join('')}</select></div></div>
     ${ATT.sec?`<div class="attoday"><div><small>Today</small><b>${esc(dShort(today))}</b></div>
-      ${dow(today)===0||dow(today)===6?'<span class="hint">No class today (weekend).</span>':dayStatus(today)!=='C'?`<span class="sbbadge" style="--c:#a3271b">${dayStatus(today)==='H'?'Holiday':'Suspended'}</span>`:rec?`<span class="atn ok">${pres} present</span><span class="atn bad">${abs} absent</span>${rec.local?'<span class="unsynced">Not yet synced</span>':''}`:'<span class="atn wait">Not yet taken</span>'}</div>`:''}
+      ${dow(today)===0||dow(today)===6?'<span class="hint">No class today (weekend).</span>':dayStatus(today)!=='C'?`<span class="sbbadge" style="--c:#a3271b">${esc(DAY_ST[dayStatus(today)])}${rec&&rec.marks&&rec.marks._note?': '+esc(rec.marks._note):''}</span>`:rec?tallyHtml(T)+(rec.local?'<span class="unsynced">Not yet synced</span>':''):'<span class="atn wait">Not yet taken</span>'}</div>`:''}
+    <div class="atremind">\u23F0 Take the attendance during the preliminaries, before the first period, so it does not use the instructional time.</div>
     ${ATT.sec?`<div class="abtns">
       ${attCanEdit()?btn('\u2714','Take attendance',"AM and PM for "+esc(dShort(today)),"attOpenTake('"+today+"')",'main'):''}
       ${btn('\u{1F465}','My learners',ATT.learners.filter(l=>activeOn(l,today)).length+' enrolled'+(attCanEdit()?', add or edit':''),"ATT.view='learners';attDraw()")}
       ${attCanEdit()?btn('\u{1F4AC}','Message parents','Absent, excused, or tardy today',"ATT.view='msgs';attDraw()"):''}
-      ${btn('\u{1F4C4}','SF2 (DepEd)','Prescribed form, '+monthName(ATT.month),"attReport('sf2')")}
+      ${btn('\u{1F4C4}','SF2 (DepEd)','Prescribed form, '+monthName(ATT.month),"showForm('sf2')")}
       ${btn('\u{1F4CB}','SF2 (School AM and PM)','Our tracking form, '+monthName(ATT.month),"attReport('sf2s')")}
       ${btn('\u2B50','Weekly stars','For e-READ, '+monthName(ATT.month),"attReport('stars')")}
       ${btn('\u{1F4C5}','Attendance report','By month or by term',"attReport('sum')")}
       ${btn('\u{1F4CA}','Analysis and follow up','Who needs attention, FLP',"attReport('ana')")}
     </div>`:''}
-    ${head||admin?`<h3 class="sbh4" style="font-size:16px;margin-top:18px">School</h3><div class="abtns">
+    ${head||admin?`<h3 class="sbh4" style="font-size:16px;margin-top:18px">School</h3><div class="attoday" id="attSchoolTally"><small>Whole school today</small><span class="spin"></span></div><div class="abtns">
       ${btn('\u{1F3EB}','All classes, live','Today\u2019s attendance per class',"attOpenLive()")}
-      ${btn('\u{1F4D1}','SF4 (DepEd)','School report, '+monthName(ATT.month),"attSF4()")}
+      ${btn('\u{1F4D1}','SF4 (DepEd)','School report, '+monthName(ATT.month),"showForm('sf4')")}
       ${head?btn('\u2699','Classes and advisers','Set each class and its adviser',"attSecForm()"):''}
       ${head?btn('\u{1F5D1}','Clear attendance data','Remove test entries before launch',"attClearOpen()",'danger'):''}</div>`:''}`;
   maybeGuide('att');
+  if (head||admin) schoolTally();
 }
+
+// Counts with the names behind each number (shown when the mouse is over it)
+function tally(list, getM, extra){
+  const o = { P:[], X:[], E:[], T:[] };
+  list.forEach(l => { const m = getM(l); if (m==='--') return; const nm = lname(l)+extra(l);
+    if (/T/.test(m) && dayPresent(m)) o.T.push(nm); if (dayPresent(m)) o.P.push(nm); else if (/E/.test(m)) o.E.push(nm); else o.X.push(nm); });
+  return o;
+}
+function tallyHtml(T){ const t = (cls, n, label, names) => `<span class="atn ${cls} tip" tabindex="0" data-tip="${esc(names.length?names.join('\n'):'None')}">${n} ${label}</span>`;
+  return t('ok', T.P.length, 'present', T.P) + t('bad', T.X.length, 'absent', T.X) + t('exc', T.E.length, 'excused', T.E) + t('tdy', T.T.length, 'tardy', T.T); }
+async function schoolTally(){
+  if (!ATT.school) await attLoadSchoolQuiet(); const el = $('attSchoolTally'); if (!el || !ATT.school) return;
+  const t = todayPH(), all = { P:[], X:[], E:[], T:[] }; let taken = 0;
+  ATT.sections.forEach(s => { const r = ATT.school.days[s.key+'|'+t]; if (!r || r.status!=='C') return; taken++;
+    const L = ATT.school.learners.filter(l => l.sec===s.key && activeOn(l,t)), T = tally(L, l => mk(l,t,s.key), () => ' ('+secLabel(s.key)+')');
+    Object.keys(all).forEach(k => all[k] = all[k].concat(T[k])); });
+  el.innerHTML = `<div><small>Whole school today</small><b>${taken} of ${ATT.sections.length} classes</b></div>${tallyHtml(all)}`;
+}
+async function attLoadSchoolQuiet(){ try{ const r = await api('attSchool',{ from:ATT.firstDay }); const days = {}; r.days.forEach(d => days[d.sec+'|'+d.date] = d); ATT.school = { learners:r.learners, days }; }catch(e){} }
 
 /* ----- take attendance ----- */
 var ATK = { date:'', status:'C', marks:{} };
-function attOpenTake(date){ ATK.date = date; const r = ATT.days[date]; ATK.status = r ? r.status : dayStatus(date); ATK.marks = {}; ATT.learners.forEach(l => ATK.marks[l.id] = r ? ((r.marks||{})[l.id] || 'PP') : '--'); ATT.view = 'take'; attDraw(); window.scrollTo(0,0); }
+function attOpenTake(date){
+  ATK.date = date; const r = ATT.days[date]; ATK.status = r ? r.status : dayStatus(date); ATK.note = r && r.marks ? r.marks._note||'' : '';
+  ATK.lock = { AM: r && r.marks ? r.marks._lockAM||'' : '', PM: r && r.marks ? r.marks._lockPM||'' : '' }; ATK.marks = {};
+  // a learner with no mark on a saved day was present in each locked session (only absences, excused and tardy are stored)
+  ATT.learners.forEach(l => ATK.marks[l.id] = r && r.marks && r.marks[l.id] ? (r.marks[l.id]+'--').slice(0,2) : r && r.status==='C' ? (!ATK.lock.AM && !ATK.lock.PM ? 'PP' : (ATK.lock.AM?'P':'-')+(ATK.lock.PM?'P':'-')) : '--');
+  ATT.view = 'take'; attDraw(); window.scrollTo(0,0); maybeGuide('atttake');
+}
 function attTake(){
   const d = ATK.date, list = sortL(ATT.learners.filter(l => activeOn(l,d))), can = attCanEdit();
-  const cell = (l, i) => { const c = (ATK.marks[l.id]||'--')[i]; return `<button class="ses s${c}" ${can?`onclick="attTap('${l.id}',${i})"`:''}><small>${i?'PM':'AM'}</small>${ATT_CODES[c]||'\u00B7'}</button>`; };
+  const cell = (l, i) => { const c = (ATK.marks[l.id]||'--')[i], locked = !!ATK.lock[i?'PM':'AM']; return `<button class="ses s${c} ${locked?'lk':''}" ${can && !locked?`onclick="attTap('${l.id}',${i})"`:'disabled'}><small>${i?'PM':'AM'}</small>${ATT_CODES[c]||'\u00B7'}</button>`; };
   const rows = sx => list.filter(l=>l.sex===sx).map(l=>`<div class="atrow"><span class="atnm">${esc(lname(l))}</span>${cell(l,0)}${cell(l,1)}</div>`).join('') || '<p class="hint">None.</p>';
-  const left = list.filter(l => (ATK.marks[l.id]||'--').indexOf('-') > -1).length;
+  const left = i => list.filter(l => (ATK.marks[l.id]||'--')[i]==='-').length;
+  const sesBar = (k, i) => { const lk = ATK.lock[k]; return `<div class="sesbar"><b>${k} session</b>${lk?`<span class="sblock" style="margin:0">\u{1F512} Locked by ${esc(lk.split('|')[0])}, ${esc(lk.split('|')[1]||'')}</span>${can?`<button class="btn ghost small" onclick="attSesUnlock('${k}')">\u{1F513} Edit ${k}</button>`:''}`
+      : can?`${left(i)?`<span class="hint">${left(i)} not yet marked</span>`:''}<button class="btn ghost small" onclick="attSesClear(${i})">Clear ${k}</button><button class="btn small" onclick="attSesSave('${k}')">\u{1F512} Save and lock ${k}</button>`:''}</div>`; };
   $('viewAtt').innerHTML = `<div class="trk-head"><div><h2>Take attendance</h2><p>${esc(secLabel(ATT.sec))}. Tap AM or PM to change: \u2713 Present, X Absent, E Excused, T Tardy.</p></div><div class="head-actions"><button class="btn ghost" onclick="attBack()">Back</button></div></div>
-    <div class="calbar"><button class="btn ghost small" onclick="attOpenTake(addDays('${d}',${dow(d)===1?-3:-1}))">\u2039</button><input type="date" class="sbdate" value="${d}" onchange="attOpenTake(this.value)"><button class="btn ghost small" onclick="attOpenTake(addDays('${d}',${dow(d)===5?3:1}))">\u203A</button></div>
+    <div class="atremind">\u23F0 Take the attendance during the preliminaries, before the first period, so it does not use the instructional time.</div>
+    <div class="attk"><div class="attk-main">
+    <div class="calbar"><button class="btn ghost small" onclick="attOpenTake(addDays('${d}',${dow(d)===1?-3:-1}))">\u2039</button><b>${esc(new Date(d+'T00:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'}))}</b><button class="btn ghost small" onclick="attOpenTake(addDays('${d}',${dow(d)===5?3:1}))">\u203A</button></div>
     ${dow(d)===0||dow(d)===6?'<div class="empty">No class on weekends.</div>':`
-    <div class="atstat">${[['C','With class'],['H','Holiday'],['S','Suspended']].map(([k,l])=>`<button class="sbs ${ATK.status===k?'on':''}" style="--c:${k==='C'?'#2f7a4a':'#a3271b'}" ${can?`onclick="ATK.status='${k}';attTake()"`:''}>${l}</button>`).join('')}</div>
-    ${ATK.status!=='C'?`<div class="notice">No attendance is counted on this day. Tap Save to keep it as ${ATK.status==='H'?'a holiday':'a suspension'}.</div>`:`
-    ${!list.length?'<div class="empty">No learners yet. Add them in My learners.</div>':`<div class="atgrp">Boys</div>${rows('M')}<div class="atgrp">Girls</div>${rows('F')}`}`}
-    ${can?`<div class="sbattbar">${ATK.status==='C' && left?`<span class="hint">${left} learner${left>1?'s':''} not yet marked.</span>`:''}<button class="btn" onclick="attSaveDay()">Save attendance</button></div>`:''}`}`;
+    <div class="atstat">${Object.keys(DAY_ST).map(k=>`<button class="sbs ${ATK.status===k?'on':''}" style="--c:${k==='C'?'#2f7a4a':k==='L'?'#6a2c99':'#a3271b'}" ${can?`onclick="attSetStatus('${k}')"`:''}>${DAY_ST[k]}</button>`).join('')}</div>
+    ${ATK.status==='O'||ATK.status==='L'?`<div class="field"><label for="atNote">${ATK.status==='O'?'Please specify':'Note (optional)'}</label><input id="atNote" value="${esc(ATK.note||'')}" placeholder="${ATK.status==='O'?'Example: School program, no regular classes':'Example: Sick leave'}" oninput="ATK.note=this.value" ${can?'':'disabled'}></div>`:''}
+    ${ATK.status!=='C'?`<div class="notice">No attendance is counted on this day.</div>${can?`<div class="sbattbar"><button class="btn" onclick="attSaveDay('day')">Save</button></div>`:''}`:`
+    ${sesBar('AM',0)}${sesBar('PM',1)}
+    ${!list.length?'<div class="empty">No learners yet. Add them in My learners.</div>':`<div class="atgrp">Boys</div>${rows('M')}<div class="atgrp">Girls</div>${rows('F')}`}`}`}
+    </div><div class="attk-cal">${attMiniCal(d)}</div></div>`;
 }
-function attTap(id, i){ const m = (ATK.marks[id]||'--').split(''); m[i] = ATT_NEXT[m[i]] || 'P'; ATK.marks[id] = m.join(''); attTake(); }
-async function attSaveDay(){
-  const left = Object.keys(ATK.marks).filter(k => ATK.marks[k].indexOf('-') > -1);
-  if (ATK.status==='C' && left.length){ if (!confirm(left.length+' learner session'+(left.length>1?'s are':' is')+' not yet marked. Mark the unmarked sessions as present and save?')) return; left.forEach(k => ATK.marks[k] = ATK.marks[k].replace(/-/g,'P')); }
-  const payload = { section:ATT.sec, date:ATK.date, status:ATK.status, marks: ATK.status==='C' ? ATK.marks : {} };
-  ATT.days[ATK.date] = Object.assign({ date:ATK.date }, payload);
+function attSetStatus(k){ ATK.status = k; attTake(); }
+function attMiniCal(d){
+  const ym = d.slice(0,7), [y,m] = ym.split('-').map(Number), n = new Date(Date.UTC(y,m,0)).getUTCDate(), sd = dow(ym+'-01'), today = todayPH();
+  let cells = '<i></i>'.repeat(sd);
+  for (let k = 1; k <= n; k++){ const ds = ym+'-'+String(k).padStart(2,'0'), r = ATT.days[ds], wk = dow(ds)===0||dow(ds)===6, st = r ? r.status : (calHoliday(ds)?'H':'');
+    const cls = wk ? 'wk' : st && st!=='C' ? 'off' : r ? ((r.marks||{})._lockAM && (r.marks||{})._lockPM ? 'done' : 'part') : ds<=today && ds>=ATT.firstDay ? 'miss' : '';
+    cells += `<button class="mc ${cls} ${ds===d?'sel':''}" ${wk?'disabled':`onclick="attOpenTake('${ds}')"`} title="${esc(r?DAY_ST[r.status]||'':'')}">${k}</button>`; }
+  const prev = new Date(Date.UTC(y,m-2,1)).toISOString().slice(0,10), next = new Date(Date.UTC(y,m,1)).toISOString().slice(0,10);
+  return `<div class="mcal"><div class="mcal-h"><button class="linkbtn" onclick="attOpenTake('${prev}')">\u2039</button><b>${esc(monthName(ym))}</b><button class="linkbtn" onclick="attOpenTake('${next}')">\u203A</button></div>
+    <div class="mcg"><span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>${cells}</div>
+    <div class="mcl"><span><i class="done"></i>AM and PM locked</span><span><i class="part"></i>Saved, not fully locked</span><span><i class="miss"></i>Not yet taken</span><span><i class="off"></i>No class</span></div></div>`;
+}
+function attSesClear(i){ if (!confirm('Clear the '+(i?'PM':'AM')+' marks on screen?')) return; Object.keys(ATK.marks).forEach(k => { const m = ATK.marks[k].split(''); m[i] = '-'; ATK.marks[k] = m.join(''); }); attTake(); }
+async function attSesSave(k){
+  const i = k==='AM' ? 0 : 1, list = ATT.learners.filter(l => activeOn(l, ATK.date)), left = list.filter(l => (ATK.marks[l.id]||'--')[i]==='-');
+  if (left.length){ if (!confirm(left.length+' learner'+(left.length>1?'s are':' is')+' not yet marked in the '+k+' session. Mark them as present?')) return; left.forEach(l => { const m = (ATK.marks[l.id]||'--').split(''); m[i] = 'P'; ATK.marks[l.id] = m.join(''); }); }
+  ATK.lock[k] = USER.name+'|'+new Date().toLocaleTimeString('en-US',{ hour:'numeric', minute:'2-digit', timeZone:'Asia/Manila' });
+  await attSaveDay(k);
+}
+async function attSesUnlock(k){ if (!confirm('Edit the '+k+' attendance? It will be unlocked until you save and lock it again.')) return; ATK.lock[k] = ''; await attSaveDay('unlock'); }
+function attTap(id, i){ if (ATK.lock[i?'PM':'AM']) return; const m = (ATK.marks[id]||'--').split(''); m[i] = ATT_NEXT[m[i]] || 'P'; ATK.marks[id] = m.join(''); attTake(); }
+async function attSaveDay(what){
+  if (ATK.status==='O' && !(ATK.note||'').trim()) return toast('Please specify the reason.');
+  const marks = ATK.status==='C' ? Object.assign({}, ATK.marks) : {};
+  if (ATK.status==='C'){ if (ATK.lock.AM) marks._lockAM = ATK.lock.AM; if (ATK.lock.PM) marks._lockPM = ATK.lock.PM; } else if (ATK.note) marks._note = ATK.note;
+  const payload = { section:ATT.sec, date:ATK.date, status:ATK.status, marks };
+  ATT.days[ATK.date] = Object.assign({ date:ATK.date }, payload); let offline = false;
   try{ if (navigator.onLine===false) throw new Error(MSG.NET);
-    const r = await api('attSave', payload); ATT.days[ATK.date] = Object.assign({ date:ATK.date }, r); toast('Attendance saved.'); }
-  catch(e){ if (friendly(e.message)===MSG.NET || friendly(e.message)===MSG.BUSY){ saveOut(outbox().filter(x => !(x.action==='attSave' && x.payload.section===ATT.sec && x.payload.date===ATK.date))); queueOut('attSave', payload, 'Attendance '+ATK.date); ATT.days[ATK.date].local = true; toast('Saved on this device. It will sync when you are online.'); } else return handleErr(e); }
+    const r = await api('attSave', payload); ATT.days[ATK.date] = Object.assign({ date:ATK.date }, r); }
+  catch(e){ if (friendly(e.message)===MSG.NET || friendly(e.message)===MSG.BUSY){ saveOut(outbox().filter(x => !(x.action==='attSave' && x.payload.section===ATT.sec && x.payload.date===ATK.date))); queueOut('attSave', payload, 'Attendance '+ATK.date); ATT.days[ATK.date].local = true; offline = true; } else return handleErr(e); }
   try{ localStorage.setItem('tala_att_'+USER.email+'_'+ATT.sec, JSON.stringify({ learners:ATT.learners, days:ATT.days })); }catch(e){}
+  if (what==='unlock'){ attTake(); return; }
+  const list = ATT.learners.filter(l => activeOn(l, ATK.date)), T = tally(list, l => ATK.marks[l.id]||'--', () => '');
   const out = ATT.learners.filter(l => /[XET]/.test(ATK.marks[l.id]||''));
-  ATT.msgDate = ATK.date; ATT.view = out.length && ATK.status==='C' ? 'msgs' : 'home'; attDraw();
+  $('okTitle').textContent = what==='day' ? 'Saved' : 'The '+what+' attendance is saved and locked';
+  $('okBody').innerHTML = (offline ? '<p class="unsynced">Saved on this device. It will sync when you are online.</p>' : '') + (ATK.status==='C' ? `<p>${esc(dShort(ATK.date))}, ${esc(secLabel(ATT.sec))}</p><div class="oktally">${tallyHtml(T)}</div>` : `<p>${esc(DAY_ST[ATK.status])}${ATK.note?': '+esc(ATK.note):''}. No attendance is counted.</p>`);
+  $('okMsg').style.display = ATK.status==='C' && out.length ? '' : 'none';
+  openModal('okModal'); ATT.msgDate = ATK.date; attTake();
 }
-
 /* ----- learners ----- */
 function attLearners(){
+  maybeGuide('attlrn');
   const can = attCanEdit(), list = sortL(ATT.learners);
   $('viewAtt').innerHTML = `<div class="trk-head"><div><h2>My learners</h2><p>${esc(secLabel(ATT.sec))} \u00B7 ${list.filter(l=>activeOn(l,todayPH())).length} enrolled</p></div><div class="head-actions"><button class="btn ghost" onclick="attBack()">Back</button></div></div>
     ${can?`<div class="abtns small"><button class="abtn" onclick="attLearnerForm()"><span class="abico">\uFF0B</span><b>Add a learner</b><small>Type the details</small></button>
@@ -5135,10 +5232,11 @@ const MSG_T = {
         T:'Maayong adlaw, {parent}. Ako si {teacher}, ang class adviser ni {learner} ({class}). Na-late si {learner} karong adlawa, {date}. Palihug tabangi siya nga makaabot sa eskwelahan sa saktong oras. Salamat.' } };
 function msgTpl(lang, c){ try{ const s = JSON.parse(localStorage.getItem('tala_msgtpl_'+USER.email)||'{}'); if (s[lang] && s[lang][c]) return s[lang][c]; }catch(e){} return MSG_T[lang][c]; }
 function attMsgs(){
+  maybeGuide('attmsg');
   const d = ATT.msgDate || todayPH(), lang = ATT.lang || 'en', r = ATT.days[d];
   const list = sortL(ATT.learners).filter(l => r && /[XET]/.test((r.marks||{})[l.id]||''));
   const code = l => { const m = r.marks[l.id]; return /X/.test(m) && !/E/.test(m) ? 'X' : /E/.test(m) ? 'E' : 'T'; };
-  const fill = (l) => msgTpl(lang, code(l)).replace(/\{parent\}/g, l.parent ? l.parent.replace(/\s*\(.*\)$/,'') : 'Parent').replace(/\{learner\}/g, (l.first.charAt(0)+l.first.slice(1).toLowerCase()).replace(/\b\w/g,c=>c.toUpperCase())).replace(/\{teacher\}/g, USER.name).replace(/\{class\}/g, secLabel(ATT.sec)).replace(/\{date\}/g, new Date(d+'T00:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'}));
+  const fill = (l) => msgTpl(lang, code(l)).replace(/\{parent\}/g, l.parent ? l.parent.replace(/\s*\(.*\)$/,'') : 'Parent').replace(/\{learner\}/g, (l.first.charAt(0)+l.first.slice(1).toLowerCase()).replace(/\b\w/g,c=>c.toUpperCase())).replace(/\{teacher\}/g, secInfo(ATT.sec).adviserName || USER.name).replace(/\{class\}/g, secLabel(ATT.sec)).replace(/\{date\}/g, new Date(d+'T00:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'}));
   ATT.msgList = list.map(l => ({ l, text: fill(l) }));
   $('viewAtt').innerHTML = `<div class="trk-head"><div><h2>Message parents</h2><p>${esc(dShort(d))}. Copy a message, then paste it in Messenger.</p></div><div class="head-actions"><button class="btn ghost" onclick="attBack()">Done</button></div></div>
     <div class="bar"><input type="date" class="sbdate" value="${d}" onchange="ATT.msgDate=this.value;attMsgs()"><div class="tabs">${[['en','English'],['fil','Filipino'],['ceb','Cebuano']].map(([k,l])=>`<button class="${lang===k?'on':''}" onclick="ATT.lang='${k}';attMsgs()">${l}</button>`).join('')}</div><button class="btn ghost small" onclick="attTplOpen()">Edit my messages</button></div>
@@ -5191,6 +5289,7 @@ function attReport(kind){
   attShowReport(hdr + body);
 }
 function attShowReport(html){
+  setTimeout(() => maybeGuide('attrep'), 300);
   $('viewAtt').innerHTML = `<div class="trk-head"><div><h2>Report preview</h2><p>Check it, then print or download.</p></div><div class="head-actions"><button class="btn ghost" onclick="attBack()">Back</button>
     <button class="btn ghost" onclick="attExcel()">Download Excel</button><button class="btn" onclick="attPrint()">Print or save as PDF</button></div></div><div class="sfprev" id="sfPrev">${html}</div>`;
 }
@@ -5362,6 +5461,204 @@ function attSecAdd(){ $('asList').insertAdjacentHTML('beforeend', `<div class="a
 async function attSecSave(){
   const sections = [...document.querySelectorAll('#asList .asrow')].map(r => { const o = {}; r.querySelectorAll('[data-k]').forEach(x => o[x.dataset.k] = x.value.trim()); return o; }).filter(o => o.grade);
   try{ const r = await api('attSaveSections',{ sections, firstDay:$('asFirst').value, snapshot:$('asSnap').value }); Object.assign(ATT, { sections:r.sections, mine:r.mine, firstDay:r.firstDay, snapshot:r.snapshot }); closeModal('asModal'); attDraw(); toast('Classes saved.'); }catch(e){ handleErr(e); }
+}
+
+/* =========================================================
+   DepEd SF2 and SF4 on the original LIS templates. Only the data is added; the layout is not changed.
+   ========================================================= */
+const SF2T = { mProto:8, mTot:14, fProto:15, fTot:19, comb:20, foot:21,
+  days:['F','H','I','J','K','L','N','O','P','Q','R','T','U','V','X','Z','AB','AC','AD','AE','AF','AG','AI','AJ','AK'],
+  rowMerges:['A:B','C:E','F:G','L:M','R:S','V:W','X:Y','Z:AA','AG:AH','AK:AL','AM:AN','AO:AP','AQ:AU'] };
+const SF4T = { proto:8, protoEnd:15,
+  rowMerges:['A:B','C:E','F:I','K:L','N:O','U:V','W:X','AB:AC','AI:AJ','AO:AP','AQ:AR'],
+  cols:{ reg:['J','K','M'], ada:['N','P','Q'], pct:['R','S','T'], nlA:['U','W','Y'], nlB:['Z','AA','AB'], nlC:['AD','AE','AF'], toA:['AG','AH','AI'], toB:['AK','AL','AM'], toC:['AN','AO','AQ'], tiA:['AS','AT','AU'], tiB:['AV','AW','AX'], tiC:['AY','AZ','BA'] } };
+function colNum(c){ let n = 0; for (const ch of c) n = n*26 + (ch.charCodeAt(0)-64); return n; }
+function colLet(n){ let s = ''; while (n > 0){ const m = (n-1) % 26; s = String.fromCharCode(65+m) + s; n = Math.floor((n-1)/26); } return s; }
+function xEsc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+// Splits the sheet into its rows, so rows can be copied and moved without touching their formatting
+function xlSheet(xml){
+  const a = xml.indexOf('<sheetData>'), b = xml.indexOf('</sheetData>'), body = xml.slice(a+11, b), rows = {};
+  (body.match(/<row [^>]*?(?:\/>|>[\s\S]*?<\/row>)/g) || []).forEach(rx => { rows[Number(rx.match(/ r="(\d+)"/)[1])] = rx; });
+  const mc = (xml.match(/<mergeCell ref="([A-Z]+\d+:[A-Z]+\d+)"\/>/g) || []).map(m => m.match(/ref="([^"]+)"/)[1]);
+  return { head: xml.slice(0, a+11), tail: xml.slice(b), rows, merges: mc };
+}
+function xlMoveRow(rx, to){ return rx.replace(/<row r="\d+"/, `<row r="${to}"`).replace(/<c r="([A-Z]+)\d+"/g, (m, c) => `<c r="${c}${to}"`); }
+function xlSetCell(rx, col, val, num, style){
+  const r = rx.match(/<row r="(\d+)"/)[1], ref = col + r, re = new RegExp(`<c r="${ref}"([^>]*?)(\\/>|>[\\s\\S]*?<\\/c>)`);
+  const m = rx.match(re); let s = m ? (m[1].match(/ s="(\d+)"/)||[])[1] : null; if (style !== undefined && style !== null) s = style;
+  const sa = s !== null && s !== undefined ? ` s="${s}"` : '';
+  const cell = val === '' || val === null || val === undefined ? `<c r="${ref}"${sa}/>` : num ? `<c r="${ref}"${sa} t="n"><v>${val}</v></c>` : `<c r="${ref}"${sa} t="inlineStr"><is><t xml:space="preserve">${xEsc(val)}</t></is></c>`;
+  if (m) return rx.replace(re, cell);
+  // the cell is missing in this row: insert it in column order
+  const cells = rx.match(/<c r="([A-Z]+)\d+"/g) || [], n = colNum(col); let at = rx.lastIndexOf('</row>');
+  for (const c of cells){ const cn = colNum(c.match(/r="([A-Z]+)/)[1]); if (cn > n){ at = rx.indexOf(c); break; } }
+  return rx.slice(0, at) + cell + rx.slice(at);
+}
+function xlBuild(S, order, merges){ // order: list of row xml strings already numbered
+  const last = order.length ? Number(order[order.length-1].match(/<row r="(\d+)"/)[1]) : 1;
+  let head = S.head.replace(/<dimension ref="[^"]*"\/>/, `<dimension ref="A1:${(S.head.match(/<dimension ref="A1:([A-Z]+)/)||[])[1]||'AU'}${last}"/>`);
+  let tail = S.tail.replace(/<mergeCells count="\d+">[\s\S]*?<\/mergeCells>/, `<mergeCells count="${merges.length}">${merges.map(m=>`<mergeCell ref="${m}"/>`).join('')}</mergeCells>`);
+  return head + order.join('') + tail;
+}
+function mTop(m){ return Number(m.split(':')[0].match(/\d+/)[0]); }
+function mShift(m, d){ return m.replace(/([A-Z]+)(\d+)/g, (x, c, r) => c + (Number(r)+d)); }
+// Two extra cell styles for tardy: upper half shaded (late comer) and lower half shaded (cutting class)
+function xlHalfStyles(stylesXml, baseIds){
+  const fillsM = stylesXml.match(/<fills count="(\d+)">([\s\S]*?)<\/fills>/), nf = Number(fillsM[1]);
+  const g = (top) => `<fill><gradientFill degree="90"><stop position="0"><color rgb="${top?'FF4D4D4D':'FFFFFFFF'}"/></stop><stop position="0.499"><color rgb="${top?'FF4D4D4D':'FFFFFFFF'}"/></stop><stop position="0.501"><color rgb="${top?'FFFFFFFF':'FF4D4D4D'}"/></stop><stop position="1"><color rgb="${top?'FFFFFFFF':'FF4D4D4D'}"/></stop></gradientFill></fill>`;
+  stylesXml = stylesXml.replace(fillsM[0], `<fills count="${nf+2}">${fillsM[2]}${g(true)}${g(false)}</fills>`);
+  const xm = stylesXml.match(/<cellXfs count="(\d+)">([\s\S]*?)<\/cellXfs>/), xfs = xm[2].match(/<xf [^>]*?(?:\/>|>[\s\S]*?<\/xf>)/g);
+  let n = xfs.length; const map = {}, add = [];
+  baseIds.forEach(id => { const x = xfs[id]; if (!x) return; ['u','l'].forEach((k,i) => { const nx = x.replace(/fillId="\d+"/, `fillId="${nf+i}"`).replace(/applyFill="[^"]*"/, 'applyFill="true"'); add.push(/fillId=/.test(x) ? nx : nx.replace('<xf ', `<xf fillId="${nf+i}" `)); map[id+k] = n++; }); });
+  stylesXml = stylesXml.replace(xm[0], `<cellXfs count="${n}">${xm[2]}${add.join('')}</cellXfs>`);
+  return { xml: stylesXml, map };
+}
+
+async function buildSF2(sec, ym){
+  await loadScript(LIBS.zip);
+  const res = await fetch('sf2-template.xlsx', { cache:'no-cache' }); if (!res.ok) throw new Error('The SF2 template (sf2-template.xlsx) was not found next to index.html.');
+  const zip = await JSZip.loadAsync(await res.arrayBuffer()), S = xlSheet(await zip.file('xl/worksheets/sheet1.xml').async('string'));
+  const A = attStats(ATT.learners, ATT.days, '', ym), L = sortL(ATT.learners.filter(l => A.wd.some(d => activeOn(l,d))));
+  const male = L.filter(l=>l.sex==='M'), fem = L.filter(l=>l.sex==='F');
+  // dates go under the matching weekday in the five week grid
+  const wd = A.wd, first = wd[0], slot = {}; if (first){ const mon0 = addDays(first, 1-dow(first)); wd.forEach(d => { const k = Math.round((Date.parse(d)-Date.parse(mon0))/864e5); const i = Math.floor(k/7)*5 + (dow(d)-1); if (i >= 0 && i < 25) slot[d] = SF2T.days[i]; }); }
+  // styles of the day cells in a learner row, for the half shading
+  const proto = S.rows[SF2T.mProto], dayStyles = [...new Set(SF2T.days.map(c => ((proto.match(new RegExp(`<c r="${c}${SF2T.mProto}"[^>]*? s="(\\d+)"`))||[])[1])).filter(Boolean).map(Number))];
+  const st = xlHalfStyles(await zip.file('xl/styles.xml').async('string'), dayStyles); zip.file('xl/styles.xml', st.xml);
+  const order = [], merges = S.merges.filter(m => mTop(m) < SF2T.mProto);
+  for (let r = 1; r < SF2T.mProto; r++) if (S.rows[r]) order.push(S.rows[r]);
+  // header values
+  const hr = n => order.findIndex(x => x.indexOf(`<row r="${n}"`) === 0);
+  order[hr(3)] = xlSetCell(xlSetCell(order[hr(3)], 'M', syShort().replace('SY ','').replace('-',' - ')), 'AA', monthName(ym).toUpperCase());
+  order[hr(4)] = xlSetCell(xlSetCell(order[hr(4)], 'AA', sec.grade), 'AM', sec.section.toUpperCase());
+  let r6 = order[hr(6)]; SF2T.days.forEach(c => r6 = xlSetCell(r6, c, '')); Object.keys(slot).forEach(d => r6 = xlSetCell(r6, slot[d], Number(d.slice(8)), true)); order[hr(6)] = r6;
+  let row = SF2T.mProto;
+  const addMerges = r => SF2T.rowMerges.forEach(p => { const [a,b] = p.split(':'); merges.push(`${a}${r}:${b}${r}`); });
+  const learnerRow = (l, n, pr) => { let x = xlMoveRow(pr, row); const o = A.per.find(p=>p.l===l);
+    x = xlSetCell(xlSetCell(x, 'A', n, true), 'C', l.last+','+l.first+(l.middle?', '+l.middle:''));
+    SF2T.days.forEach(c => x = xlSetCell(x, c, ''));
+    wd.forEach(d => { const c = slot[d]; if (!c || !isClassDay(d) || !activeOn(l,d)) return; const m = mk(l,d); if (m==='--') return;
+      const [t, sh] = sfMark(m), s0 = (x.match(new RegExp(`<c r="${c}${row}"[^>]*? s="(\\d+)"`))||[])[1];
+      x = xlSetCell(x, c, t, false, sh && s0 ? st.map[s0 + (sh==='hu'?'u':'l')] : undefined); });
+    x = xlSetCell(xlSetCell(x, 'AM', o.abs, true), 'AO', o.pres, true);
+    x = xlSetCell(x, 'AQ', l.status!=='Active' ? (l.status.toUpperCase()+(l.statusDate?' '+l.statusDate:'')+(l.reason?', '+l.reason:'')) : '');
+    order.push(x); addMerges(row); row++; };
+  const totRow = (pr, label, n, daily, abs, pres) => { let x = xlMoveRow(pr, row); x = xlSetCell(xlSetCell(x, 'A', n, true), 'C', label);
+    SF2T.days.forEach(c => x = xlSetCell(x, c, '')); A.cls.forEach((d,i) => { if (slot[d]) x = xlSetCell(x, slot[d], daily[i], true); });
+    x = xlSetCell(xlSetCell(x, 'AM', abs, true), 'AO', pres, true); order.push(x); addMerges(row); row++; };
+  const sum = (sx, k) => A.per.filter(o=>o.l.sex===sx).reduce((a,o)=>a+o[k],0);
+  male.forEach((l,i) => learnerRow(l, i+1, S.rows[SF2T.mProto]));
+  totRow(S.rows[SF2T.mTot], '<=== MALE | TOTAL Per Day ===>', male.length, A.S.M.daily, sum('M','abs'), sum('M','pres'));
+  fem.forEach((l,i) => learnerRow(l, i+1, S.rows[SF2T.fProto]));
+  totRow(S.rows[SF2T.fTot], '<=== FEMALE | TOTAL Per Day ===>', fem.length, A.S.F.daily, sum('F','abs'), sum('F','pres'));
+  totRow(S.rows[SF2T.comb], 'Combined TOTAL Per Day', L.length, A.S.M.daily.map((v,i)=>v+A.S.F.daily[i]), sum('M','abs')+sum('F','abs'), sum('M','pres')+sum('F','pres'));
+  // the bottom part moves down (or up) as one block; nothing inside it changes except the numbers
+  const d = row - SF2T.foot, maxR = Math.max(...Object.keys(S.rows).map(Number));
+  S.merges.filter(m => mTop(m) >= SF2T.foot).forEach(m => merges.push(mShift(m, d)));
+  const T = k => (A.S.M[k]||0) + (A.S.F[k]||0), v3 = (x, k, fx) => xlSetCell(xlSetCell(xlSetCell(x, 'AR', fx?fx(A.S.M[k]):A.S.M[k], !fx), 'AS', fx?fx(A.S.F[k]):A.S.F[k], !fx), 'AT', fx?fx(T(k)):T(k), !fx);
+  const pct = v => f1(v)+'%', regT = T('reg');
+  for (let r = SF2T.foot; r <= maxR; r++){ if (!S.rows[r]) continue; let x = xlMoveRow(S.rows[r], r+d);
+    if (r===21) x = xlSetCell(xlSetCell(x, 'AM', 'Month : '+monthName(ym)), 'AP', 'No. of Days of Classes: '+A.cls.length);
+    if (r===23) x = v3(x, 'enrol'); if (r===25) x = v3(x, 'late'); if (r===29) x = v3(x, 'reg');
+    if (r===31) x = xlSetCell(xlSetCell(xlSetCell(x, 'AR', pct(A.S.M.pctEnr)), 'AS', pct(A.S.F.pctEnr)), 'AT', pct(T('enrol')?regT/T('enrol')*100:0));
+    if (r===33) x = xlSetCell(xlSetCell(xlSetCell(x, 'AR', f1(A.S.M.ada)), 'AS', f1(A.S.F.ada)), 'AT', f1(A.S.M.ada+A.S.F.ada));
+    if (r===35) x = xlSetCell(xlSetCell(xlSetCell(x, 'AR', pct(A.S.M.pctAtt)), 'AS', pct(A.S.F.pctAtt)), 'AT', pct(regT?(A.S.M.ada+A.S.F.ada)/regT*100:0));
+    if (r===36) x = v3(x, 'consec'); if (r===37) x = v3(x, 'Dropped Out'); if (r===39) x = v3(x, 'Transferred Out'); if (r===41) x = v3(x, 'Transferred In');
+    if (r===46) x = xlSetCell(x, 'AN', (sec.adviserName||'').toUpperCase()); if (r===52) x = xlSetCell(x, 'AN', ((DATA||{}).headName||'').toUpperCase());
+    order.push(x); }
+  zip.file('xl/worksheets/sheet1.xml', xlBuild(S, order, merges));
+  return zip;
+}
+async function buildSF4(ym){
+  await loadScript(LIBS.zip);
+  const res = await fetch('sf4-template.xlsx', { cache:'no-cache' }); if (!res.ok) throw new Error('The SF4 template (sf4-template.xlsx) was not found next to index.html.');
+  const zip = await JSZip.loadAsync(await res.arrayBuffer()), S = xlSheet(await zip.file('xl/worksheets/sheet1.xml').async('string')), D = sf4Data(ym), C = SF4T.cols;
+  const order = [], merges = S.merges.filter(m => mTop(m) < SF4T.proto); for (let r = 1; r < SF4T.proto; r++) if (S.rows[r]) order.push(S.rows[r]);
+  const hr = n => order.findIndex(x => x.indexOf(`<row r="${n}"`) === 0);
+  order[hr(4)] = xlSetCell(xlSetCell(order[hr(4)], 'AD', syShort().replace('SY ','').replace('-',' - ')), 'AU', monthName(ym).toUpperCase());
+  const put3 = (x, cols, m, f, num) => xlSetCell(xlSetCell(xlSetCell(x, cols[0], m, num!==false), cols[1], f, num!==false), cols[2], typeof m==='number' && num!==false ? m+f : '', num!==false);
+  const fill = (x, v) => { x = put3(x, C.reg, v.reg[0], v.reg[1]); x = put3(x, C.ada, Math.round(v.ada[0]), Math.round(v.ada[1]));
+    x = xlSetCell(xlSetCell(xlSetCell(x, C.pct[0], f1(v.pct[0])), C.pct[1], f1(v.pct[1])), C.pct[2], f1(v.pct[2]));
+    ['nl','to','ti'].forEach(k => { x = put3(x, C[k+'A'], v[k][0], v[k][1]); x = put3(x, C[k+'B'], v[k][2], v[k][3]); x = put3(x, C[k+'C'], v[k][0]+v[k][2], v[k][1]+v[k][3]); }); return x; };
+  let row = SF4T.proto;
+  D.rows.forEach(rw => { let x = xlMoveRow(S.rows[SF4T.proto], row); x = xlSetCell(xlSetCell(xlSetCell(x, 'A', rw.s.grade), 'C', rw.s.section.toUpperCase()), 'F', (rw.s.adviserName||'').toUpperCase());
+    order.push(fill(x, rw.v)); SF4T.rowMerges.forEach(p => { const [a,b] = p.split(':'); merges.push(`${a}${row}:${b}${row}`); }); row++; });
+  const d = row - (SF4T.protoEnd + 1), maxR = Math.max(...Object.keys(S.rows).map(Number));
+  S.merges.filter(m => mTop(m) > SF4T.protoEnd).forEach(m => merges.push(mShift(m, d)));
+  const gl = { 17:'Kinder', 18:'Grade 1', 19:'Grade 2', 20:'Grade 3', 21:'Grade 4', 22:'Grade 5', 23:'Grade 6' };
+  for (let r = SF4T.protoEnd+1; r <= maxR; r++){ if (!S.rows[r]) continue; let x = xlMoveRow(S.rows[r], r+d);
+    if (gl[r]) x = fill(x, D.grade(gl[r])); if (r===24) x = fill(x, D.total);
+    if (r===26) x = xlSetCell(xlSetCell(xlSetCell(x, 'D', 0, true), 'I', 0, true), 'S', 0, true);
+    if (r===26) x = xlSetCell(x, 'AC', ((DATA||{}).headName||'').toUpperCase());
+    if (r===29) x = xlSetCell(x, 'A', 'Generated on: '+new Date().toLocaleDateString('en-US',{ weekday:'long', month:'long', day:'numeric', year:'numeric' })+' (TALA)');
+    order.push(x); }
+  zip.file('xl/worksheets/sheet1.xml', xlBuild(S, order, merges));
+  return zip;
+}
+function sf4Data(ym){
+  const S = ATT.school, months = []; for (let d = ATT.firstDay.slice(0,7); d < ym; ){ months.push(d); const [y,m] = d.split('-').map(Number); d = m===12?(y+1)+'-01':y+'-'+String(m+1).padStart(2,'0'); }
+  const rows = ATT.sections.map(s => { const L = S.learners.filter(l=>l.sec===s.key), A = attStats(L, null, s.key, ym);
+    const prev = k => months.reduce((acc,mm) => { const B = attStats(L, null, s.key, mm); return [acc[0]+B.S.M[k], acc[1]+B.S.F[k]]; }, [0,0]);
+    const nl = prev('consec'), to = prev('Transferred Out'), ti = prev('Transferred In');
+    return { s, v:{ reg:[A.S.M.reg, A.S.F.reg], ada:[A.S.M.ada, A.S.F.ada], pct:[A.S.M.pctAtt, A.S.F.pctAtt, (A.S.M.reg+A.S.F.reg)?(A.S.M.ada+A.S.F.ada)/(A.S.M.reg+A.S.F.reg)*100:0],
+      nl:[nl[0], nl[1], A.S.M.consec, A.S.F.consec], to:[to[0], to[1], A.S.M['Transferred Out'], A.S.F['Transferred Out']], ti:[ti[0], ti[1], A.S.M['Transferred In'], A.S.F['Transferred In']] } }; });
+  const agg = rs => { const s = (k,i) => rs.reduce((a,r)=>a+r.v[k][i],0), reg = [s('reg',0), s('reg',1)], ada = [s('ada',0), s('ada',1)];
+    return { reg, ada, pct:[reg[0]?ada[0]/reg[0]*100:0, reg[1]?ada[1]/reg[1]*100:0, (reg[0]+reg[1])?(ada[0]+ada[1])/(reg[0]+reg[1])*100:0], nl:[0,1,2,3].map(i=>s('nl',i)), to:[0,1,2,3].map(i=>s('to',i)), ti:[0,1,2,3].map(i=>s('ti',i)) }; };
+  return { rows, grade: g => agg(rows.filter(r => r.s.grade.replace(/^Kindergarten$/,'Kinder')===g)), total: agg(rows) };
+}
+
+/* ----- shows the filled template on screen and in print, the same as in Excel ----- */
+async function xlsxToHtml(zip){
+  const sx = await zip.file('xl/worksheets/sheet1.xml').async('string'), stx = await zip.file('xl/styles.xml').async('string');
+  const dec = s => s.replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&apos;/g,"'").replace(/&#x([0-9a-fA-F]+);/g,(m,h)=>String.fromCharCode(parseInt(h,16))).replace(/&#(\d+);/g,(m,n)=>String.fromCharCode(Number(n))).replace(/&amp;/g,'&');
+  const ssF = zip.file('xl/sharedStrings.xml'), ss = ssF ? ((await ssF.async('string')).match(/<si>[\s\S]*?<\/si>/g)||[]).map(si => (si.match(/<t[^>]*>([\s\S]*?)<\/t>/g)||[]).map(t=>t.replace(/<[^>]+>/g,'')).join('')).map(dec) : [];
+
+  const fonts = (stx.match(/<fonts[^>]*>([\s\S]*?)<\/fonts>/)[1].match(/<font>[\s\S]*?<\/font>|<font\/>/g)||[]).map(f => ({ sz:Number((f.match(/<sz val="([\d.]+)"/)||[])[1]||10), b:/<b( val="(true|1)")?\/>/.test(f), i:/<i( val="(true|1)")?\/>/.test(f), u:/<u/.test(f), name:(f.match(/<name val="([^"]+)"/)||[])[1]||'Arial' }));
+  const fills = (stx.match(/<fills[^>]*>([\s\S]*?)<\/fills>/)[1].match(/<fill>[\s\S]*?<\/fill>/g)||[]).map(f => { if (/gradientFill/.test(f)){ const c = f.match(/rgb="FF([0-9A-F]{6})"/g).map(x=>'#'+x.slice(7,13)); return `linear-gradient(${c[0]} 50%, ${c[c.length-1]} 50%)`; } const m = f.match(/patternType="solid"[\s\S]*?<fgColor rgb="FF([0-9A-F]{6})"/); return m && m[1]!=='FFFFFF' ? '#'+m[1] : ''; });
+  const bw = s => s==='double' ? '3px double #000' : s==='medium' ? '1.4px solid #000' : s==='thick' ? '2px solid #000' : s==='hair' || s==='dotted' ? '1px dotted #000' : s==='dashed' ? '1px dashed #000' : s ? '1px solid #000' : '';
+  const borders = (stx.match(/<borders[^>]*>([\s\S]*?)<\/borders>/)[1].match(/<border[^>]*?(?:\/>|>[\s\S]*?<\/border>)/g)||[]).map(b => { const g = k => { const m = b.match(new RegExp(`<${k} style="([a-zA-Z]+)"(?:/>|>([\\s\\S]*?)</${k}>)`)); if (!m) return ''; const c = ((m[2]||'').match(/rgb="(?:FF)?([0-9A-Fa-f]{6})"/)||[])[1]; return c && c.toUpperCase()==='FFFFFF' ? '' : m[1]; }; return { l:bw(g('left')), r:bw(g('right')), t:bw(g('top')), b:bw(g('bottom')) }; });
+  const xfs = (stx.match(/<cellXfs[^>]*>([\s\S]*?)<\/cellXfs>/)[1].match(/<xf [^>]*?(?:\/>|>[\s\S]*?<\/xf>)/g)||[]).map(x => ({ f:Number((x.match(/fontId="(\d+)"/)||[])[1]||0), fi:Number((x.match(/fillId="(\d+)"/)||[])[1]||0), b:Number((x.match(/borderId="(\d+)"/)||[])[1]||0), h:(x.match(/horizontal="(\w+)"/)||[])[1]||'', v:(x.match(/vertical="(\w+)"/)||[])[1]||'bottom', w:/wrapText="(true|1)"/.test(x), rot:Number((x.match(/textRotation="(\d+)"/)||[])[1]||0) }));
+  const cw = {}; (sx.match(/<col [^>]*\/>/g)||[]).forEach(c => { const a = Number(c.match(/min="(\d+)"/)[1]), b = Number(c.match(/max="(\d+)"/)[1]), w = Number((c.match(/width="([\d.]+)"/)||[])[1]||9); for (let i = a; i <= b && i < 120; i++) cw[i] = w; });
+  const dims = (sx.match(/<dimension ref="A1:([A-Z]+)(\d+)"/)||[]), maxC = colNum(dims[1]||'AU'), rows = xlSheet(sx).rows, maxR = Math.max(...Object.keys(rows).map(Number));
+  const px = w => w < 1 ? Math.max(1, Math.round(w*12)) : Math.round(w*7+5);
+  const merges = (sx.match(/<mergeCell ref="([^"]+)"/g)||[]).map(m => m.match(/ref="([^"]+)"/)[1]), cover = {}, span = {};
+  merges.forEach(m => { const [a,b] = m.split(':'), c1 = colNum(a.match(/[A-Z]+/)[0]), r1 = Number(a.match(/\d+/)[0]), c2 = colNum(b.match(/[A-Z]+/)[0]), r2 = Number(b.match(/\d+/)[0]);
+    span[r1+','+c1] = [r2-r1+1, c2-c1+1]; for (let r = r1; r <= r2; r++) for (let c = c1; c <= c2; c++) if (r!==r1 || c!==c1) cover[r+','+c] = 1; });
+  let total = 0; for (let c = 1; c <= maxC; c++) total += px(cw[c]||9);
+  let html = `<table class="xlt" style="width:${total}px"><colgroup>${Array.from({length:maxC},(_,i)=>`<col style="width:${px(cw[i+1]||9)}px">`).join('')}</colgroup>`;
+  for (let r = 1; r <= maxR; r++){
+    const rx = rows[r] || '', ht = Number((rx.match(/ ht="([\d.]+)"/)||[])[1]||12.75), cells = {};
+    (rx.match(/<c r="[A-Z]+\d+"[^>]*?(?:\/>|>[\s\S]*?<\/c>)/g)||[]).forEach(c => { const col = colNum(c.match(/r="([A-Z]+)/)[1]), s = Number((c.match(/ s="(\d+)"/)||[])[1]||0), t = (c.match(/ t="(\w+)"/)||[])[1];
+      let v = ''; if (t==='inlineStr') v = dec(((c.match(/<t[^>]*>([\s\S]*?)<\/t>/)||[])[1])||''); else { const vv = (c.match(/<v>([\s\S]*?)<\/v>/)||[])[1]; if (vv !== undefined) v = t==='s' ? ss[Number(vv)]||'' : dec(vv); }
+      cells[col] = { s, v }; });
+    html += `<tr style="height:${Math.round(ht*4/3)}px">`;
+    for (let c = 1; c <= maxC; c++){ if (cover[r+','+c]) continue; const cell = cells[c] || { s:0, v:'' }, x = xfs[cell.s] || xfs[0], f = fonts[x.f] || fonts[0], bd = borders[x.b] || {}, sp = span[r+','+c];
+      // a merged block takes its right and bottom borders from its last cells
+      let br = bd.r, bb = bd.b; if (sp){ const rc = rows[r] && (rows[r].match(new RegExp(`<c r="${colLet(c+sp[1]-1)}${r}"[^>]*? s="(\\d+)"`))||[])[1]; if (rc && xfs[rc]) br = (borders[xfs[rc].b]||{}).r || br; const lr = rows[r+sp[0]-1] && (rows[r+sp[0]-1].match(new RegExp(`<c r="${colLet(c)}${r+sp[0]-1}"[^>]*? s="(\\d+)"`))||[])[1]; if (lr && xfs[lr]) bb = (borders[xfs[lr].b]||{}).b || bb; }
+      const st = `font:${f.i?'italic ':''}${f.b?'bold ':''}${f.sz}pt '${f.name}',Arial,sans-serif;text-align:${x.h==='centerContinuous'?'center':x.h||(typeof cell.v==='number'||/^\d+(\.\d+)?%?$/.test(cell.v)?'right':'left')};vertical-align:${x.v==='center'?'middle':x.v};${bd.l?'border-left:'+bd.l+';':''}${br?'border-right:'+br+';':''}${bd.t?'border-top:'+bd.t+';':''}${bb?'border-bottom:'+bb+';':''}${fills[x.fi]?'background:'+fills[x.fi]+';':''}${x.w?'white-space:pre-wrap;':'white-space:nowrap;'}${f.u?'text-decoration:underline;':''}`;
+      html += `<td${sp?` rowspan="${sp[0]}" colspan="${sp[1]}"`:''} style="${st}">${x.rot===90?`<span class="xrot">${esc(cell.v)}</span>`:esc(cell.v)}</td>`; }
+    html += '</tr>'; }
+  return { html: html + '</table>', width: total };
+}
+async function showForm(kind){
+  loading(true, kind==='sf4' ? 'Filling the SF4 template' : 'Filling the SF2 template');
+  try{
+    if (kind==='sf4'){ await attLoadSchool(); if (!ATT.school) throw new Error('The data of the classes could not be loaded.'); }
+    const zip = kind==='sf4' ? await buildSF4(ATT.month) : await buildSF2(secInfo(ATT.sec), ATT.month), out = await xlsxToHtml(zip);
+    ATT.form = { zip, kind, width: out.width, name: kind==='sf4' ? 'SF4_'+ATT.month+'_Baluyan_Elementary_School' : 'SF2_'+ATT.month+'_'+secLabel(ATT.sec).replace(/\s+/g,'_') };
+    $('viewAtt').innerHTML = `<div class="trk-head"><div><h2>${kind==='sf4'?'SF4 (DepEd)':'SF2 (DepEd)'}, ${esc(monthName(ATT.month))}</h2><p>The original LIS template with your data. The layout is not changed.</p></div>
+      <div class="head-actions"><button class="btn ghost" onclick="attBack()">Back</button><button class="btn ghost" onclick="formExcel()">Download Excel</button><button class="btn" onclick="formPrint()">Print or save as PDF</button></div></div>
+      <div class="xlwrap" id="xlWrap"><div class="xlpage" id="xlPage">${out.html}</div></div>`;
+    const w = $('xlWrap').clientWidth - 20; $('xlPage').style.zoom = Math.min(1, w / out.width);
+  }catch(e){ handleErr(e); }
+  loading(false);
+}
+async function formExcel(){ const b = await ATT.form.zip.generateAsync({ type:'blob', mimeType:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }); saveBlob(b, ATT.form.name+'.xlsx'); toast('Excel downloaded.'); }
+function formPrint(){
+  // A4 landscape with the template margins (about 7 mm); the width fits the page, and the bottom part goes to page 2 when needed
+  const pagePx = (297 - 14) / 25.4 * 96, z = Math.min(1, pagePx / ATT.form.width);
+  $('printArea').innerHTML = `<div class="xlprint" style="zoom:${z}">${$('xlPage').innerHTML}</div>`;
+  setTimeout(() => window.print(), 250);
 }
 
 /* ----- New school year: clean slate (LPT and PPT files and records are kept) ----- */
