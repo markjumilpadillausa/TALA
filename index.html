@@ -845,6 +845,48 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
   .p-sign b{display:block;border-top:1px solid #000;padding-top:3px;margin-top:26px;text-transform:uppercase}
   .p-foot{margin-top:18px;font-size:9px;color:#333}
 }
+
+/* Personnel: time record and requests */
+.stfgrp{font-size:15px;margin:18px 0 0;display:flex;align-items:center;gap:6px}.stfgrp small{background:var(--page);border-radius:999px;padding:1px 9px;font-size:12px;color:var(--muted)}
+.stfcnt .ostat span:last-child{line-height:1.35}
+.stftags{margin:6px 0 0;display:flex;flex-wrap:wrap;gap:6px}.stftags span{background:#efe7fb;color:#5b2c99;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:600}
+.stfwell{background:var(--ok-soft);border-radius:10px;padding:8px 12px;margin:8px 0}.stfwell.bad{background:#fdecea;color:var(--late)}
+.stfrecbox{border:1.5px dashed var(--line);border-radius:12px;padding:10px 12px;margin-top:10px}.stfbad b{color:var(--late)}
+.stfhome{margin-top:14px}
+.stfme{background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;margin:10px 0}
+.stfme-h{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.stfme-h small{display:block;color:var(--muted)}.stfme-h b{font-size:16px}
+.stftiles{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
+.stft{border:1.5px dashed var(--line);border-radius:12px;padding:8px;text-align:center}.stft small{display:block;color:var(--muted);font-size:12px}.stft b{font-size:16px}
+.stft.on{border-style:solid;border-color:var(--ok);background:var(--ok-soft)}button.stft{background:none;font:inherit;color:inherit;cursor:pointer}button.stft:hover{border-color:var(--brandtxt)}
+.stft-table td small{display:block;color:var(--muted);font-size:12px}.stft-table td{vertical-align:middle}.stft-table .atn{display:inline-block;font-size:12.5px;padding:3px 10px}
+.atn.off{background:var(--page);color:var(--muted)}
+.stfaway{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;background:var(--ok-soft);border:1.5px solid var(--ok);border-radius:14px;padding:12px 14px}
+.stfaway.away{background:var(--sun-soft);border-color:#d9a400}.stfaway small{display:block;color:var(--muted);margin-top:2px}
+.stfreqs{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;margin-top:12px}
+.stfreq{background:var(--card);border:1.5px solid var(--line);border-left:5px solid var(--line);border-radius:14px;padding:12px 14px}
+.stfreq.s-wait{border-left-color:#d9a400}.stfreq.s-ok{border-left-color:var(--ok)}.stfreq.s-tdy{border-left-color:#1e5a8c}.stfreq.s-bad{border-left-color:var(--late)}
+.stfreq-h{display:flex;align-items:center;gap:10px}.stfreq-h>div{flex:1}.stfreq-h small{display:block;color:var(--muted)}.stfico{font-size:22px}
+.stfreq-h .atn{font-size:12px;padding:3px 10px;white-space:nowrap}
+.stfreq-w{margin:8px 0 0;font-weight:600}.stfnote{background:var(--page);border-radius:10px;padding:6px 10px;margin:6px 0;font-size:14px}
+.stfreq-a{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;align-items:center}
+.btn.danger,.linkbtn.danger{color:var(--late)}.btn.danger:not(.ghost){background:var(--late);color:#fff}
+.stfkinds{display:grid;gap:8px}.stfrad{display:flex;flex-wrap:wrap;gap:14px}
+.stfg2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stfg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.modal.wide{max-width:640px}.stffile{display:inline-block;margin:4px 8px 0 0}
+.stfsum td b{font-size:16px}
+.sdot{display:inline-grid;place-items:center;min-width:18px;height:18px;border-radius:9px;background:#d93025;color:#fff;font-size:11px;font-style:normal;font-weight:700;margin-left:4px;padding:0 4px}
+@media (max-width:640px){ .stftiles{grid-template-columns:repeat(2,1fr)} .stfg3{grid-template-columns:1fr} .stfreqs{grid-template-columns:1fr} }
+.stfprint{display:none;page:portraitpg}
+@media print{ .stfprint{display:block;font:11pt Arial,sans-serif;color:#000;page:portraitpg} .stfp-page{page-break-after:always} .stfp-page:last-child{page-break-after:auto}
+  .stfp-h{display:flex;gap:12px;align-items:center;justify-content:center;text-align:center}.stfp-h img{width:60px;height:60px}.stfp-h div{display:grid}.stfp-h small{font-size:9pt}.stfp-h b{font-size:11pt}
+  .stfp-t{text-align:center;font-size:14pt;margin:10px 0 2px}.stfp-s{text-align:center;margin:0 0 10px;font-size:10pt}
+  .stfp-info,.stfp-tbl{width:100%;border-collapse:collapse;margin:8px 0}.stfp-info td,.stfp-tbl td,.stfp-tbl th{border:1px solid #000;padding:4px 6px;font-size:9.5pt;text-align:left}
+  .stfp-tbl th{background:#eee} .stfprint tr:last-child td{border-bottom:1px solid #000}.stfp-tbl tr.tot td{font-weight:700}.stfp-n{font-size:11pt;margin:12px 0 2px}
+  .stfp-cert{font-size:9.5pt;font-style:italic;margin:10px 0}
+  .stfp-sigs{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:26px}.stfp-sigs div{display:grid;text-align:center}.stfp-sigs span{border-bottom:1px solid #000;font-weight:700;min-height:16px}
+  .stfp-sigs div:empty{border:0}.stfp-sigs .sigimg{border:0;height:40px;display:flex;align-items:flex-end;justify-content:center}.stfp-sigs .sigimg img{max-height:40px;max-width:160px}.stfp-sigs small{font-size:9pt}
+  .stfp-slip{border:1px dashed #999;padding:14px 18px}.stfp-act{margin-top:14px;border-top:1px solid #000;padding-top:8px;font-size:10pt}.stfp-box{display:inline-block;width:12px;height:12px;border:1px solid #000;text-align:center;line-height:12px;font-size:10pt}
+  .stfp-foot{font-size:8pt;color:#555;margin-top:12px} }
 </style>
 </head>
 <body>
@@ -1413,6 +1455,8 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
   <div class="modal" role="dialog" aria-labelledby="okTitle"><div class="okicon">&#10004;</div><h3 id="okTitle" style="text-align:center">Saved</h3><div id="okBody" style="text-align:center"></div>
     <div class="modal-actions" style="justify-content:center"><button class="btn ghost" id="okMsg" onclick="closeModal('okModal');ATT.view='msgs';attDraw()">&#x1F4AC; Message parents</button><button class="btn" onclick="closeModal('okModal')">Okay</button></div></div>
 </div>
+<!-- Personnel: requests, decisions, time marks -->
+<div class="overlay" id="stfModal"><div class="modal" role="dialog"><div id="stfMBody"></div></div></div>
 <!-- Attendance: clear data -->
 <div class="overlay" id="acModal">
   <div class="modal" role="dialog" aria-labelledby="acTitle"><h3 id="acTitle">Clear attendance data</h3><p class="sub">Use this before launching, to remove test entries. TALA saves a backup of the Google Sheet in your Drive first, then clears what you tick, for all classes.</p>
@@ -1547,8 +1591,8 @@ table.subs td:nth-child(2),table.subs td:nth-child(3){max-width:260px}
 
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
-const MIN_SERVER = '4.4'; // oldest Code.gs this page works with
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'4.4', date:'October 8, 2026' } };
+const MIN_SERVER = '4.6'; // oldest Code.gs this page works with
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'4.6', date:'October 8, 2026' } };
 function verLine(server){
   const old = server && (server.indexOf('older') > -1 || parseFloat(server) < parseFloat(MIN_SERVER));
   const s = server ? ' Server '+server+('.') : '';
@@ -1968,8 +2012,8 @@ function featOn(id){ const s = (DATA||PUB||{}).settings||{}; return !!(s.feature
 function drawSide(){
   const head = USER && USER.role==='head';
   $('sideNav').innerHTML = orderedFeatures().filter(f => !f.headOnly || (USER && USER.role==='head')).map(f => {
-    const dot = f.id==='obs' && OBS && OBS.newCount ? `<i class="sdot">${OBS.newCount}</i>` : '';
-    const tag = f.id==='lpt' || f.id==='home' ? '' : f.headOnly ? '<em class="vis">Only you</em>' : head ? (featOn(f.id) ? '<em class="vis">Shown</em>' : '<em class="hid">Hidden</em>') : (featOn(f.id) && f.built ? dot : '<em>Soon</em>');
+    const dot = f.id==='obs' && OBS && OBS.newCount ? `<i class="sdot">${OBS.newCount}</i>` : f.id==='att' && typeof STF!=='undefined' && STF.dot ? `<i class="sdot">${STF.dot}</i>` : '';
+    const tag = f.id==='lpt' || f.id==='home' ? '' : f.headOnly ? '<em class="vis">Only you</em>' : head ? dot + (featOn(f.id) ? '<em class="vis">Shown</em>' : '<em class="hid">Hidden</em>') : (featOn(f.id) && f.built ? dot : '<em>Soon</em>');
     return `<button type="button" class="side-i ${f.id===CUR_FEATURE?'on':''}" onclick="openFeature('${f.id}')">
     <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="${f.icon}"/></svg><span>${esc(f.name)}</span>${tag}</button>`; }).join('')
     + (head ? '<button type="button" class="linkbtn side-manage" onclick="openFV()">Arrange, show, or hide features</button>' : '');
@@ -2731,6 +2775,27 @@ GUIDES.attmsg_teacher = { name:'Message parents', steps: [
 GUIDES.attmsg_head = GUIDES.attmsg_teacher;
 GUIDES.attrep_teacher = { name:'Reports', steps: [ { el:'#viewAtt .head-actions', t:'Print or download', x:'Check the report, then print it, save it as PDF, or download the Excel file.' } ] };
 GUIDES.attrep_head = GUIDES.attrep_teacher; GUIDES.attrep_admin = GUIDES.attrep_teacher;
+GUIDES.stf_teacher = { name:'My time record and requests', steps: [
+  { el:'.stfme', t:'Time in and Time out', x:'Tap the button when you arrive and when you leave, morning and afternoon. TALA uses the time of the server. It works offline too.' },
+  { el:'.stftabs', t:'Your records', x:'Requests: file a leave, a locator slip, a travel authority, an early out, or a wellness leave. Time records and Summary show your month and what was granted.' } ] };
+GUIDES.stf_admin = { name:'Personnel', steps: [
+  { el:'.stfme', t:'Your own time', x:'Tap Time in and Time out for yourself too.' },
+  { el:'.stft-table', t:'Everyone today', x:'Who is in school, who came in late, and who is on leave or outside. You can view and print, and only the School Head can change records.' } ] };
+GUIDES.stf_head = { name:'Teachers and personnel', steps: [
+  { el:'.stfaway', t:'In school or away', x:'Tag yourself away on days you are out. Forms you act on those days print without your e-signature, so the OIC signs them.' },
+  { el:'.stft-table', t:'Everyone today', x:'Time in and time out of each teacher. Tap Mark or correct for a missed tap, an absence, or a half day.' },
+  { el:'.stftabs', t:'Requests and summary', x:'Act on requests, and see per teacher how many were filed and granted.' } ] };
+GUIDES.stfreq_teacher = { name:'Requests', steps: [
+  { el:'.stfreqs', t:'Your requests', x:'Pending ones can be edited or withdrawn. Print the form any time. Once approved, it prints with the School Head\u2019s e-signature.' } ] };
+GUIDES.stfreq_admin = GUIDES.stfreq_teacher;
+GUIDES.stfreq_head = { name:'Requests', steps: [
+  { el:'.stfst', t:'Filter', x:'Pending requests come first. Filter by status, kind, or teacher.' },
+  { el:'.stfreqs', t:'Act on a request', x:'Approve, approve with condition, or disapprove. A pop up asks for the condition or the reason. You can change the action, edit, or delete later.' } ] };
+GUIDES.stfrec_teacher = { name:'Time records', steps: [ { el:'.stft-table', t:'Your month', x:'Your taps, late minutes, and undertime per day. Print it for your file.' } ] };
+GUIDES.stfrec_admin = GUIDES.stfrec_teacher; GUIDES.stfrec_head = { name:'Time records', steps: [ { el:'.stft-table', t:'Any teacher, any month', x:'Tap Edit on a day to correct it. Print one record or everyone for the month.' } ] };
+GUIDES.stfsum_teacher = { name:'Summary', steps: [ { el:'.stfsum', t:'What you filed and what was granted', x:'"2 of 3" means 2 granted out of 3 filed, with the number of working days.' } ] };
+GUIDES.stfsum_admin = { name:'Summary', steps: [ { el:'.stfsum', t:'Per teacher', x:'Leave, locator slips, travel, early outs, and wellness leave per teacher. Print it for the School Head.' } ] };
+GUIDES.stfsum_head = { name:'Summary', steps: [ { el:'.stfsum', t:'Per teacher', x:'How many requests you granted for each teacher, by month, term, or school year. Tap a name to see the list.' } ] };
 GUIDES.att_admin = { name:'Attendance', steps: [ { el:'.abtns', t:'View and print', x:'See any class SF2 live and the SF4, then print them for signing.' } ] };
 var TOUR = [], GKEY = '';
 function guideId(f){ const r = USER ? USER.role : 'public'; return f==='home' ? 'home' : GUIDES[f+'_'+r] ? f+'_'+r : GUIDES[f+'_teacher'] && r==='public' ? '' : ''; }
@@ -2916,6 +2981,7 @@ async function poll(){
     if (un > LAST_UNREAD && LAST_UNREAD >= 0 && NOTICES[0]) { toast(NOTICES[0].text.slice(0,120)); loadData().catch(()=>{}); }
     LAST_UNREAD = un;
     if (USER.role==='teacher' && typeof r.obsNew === 'number' && r.obsNew !== OBS.newCount){ OBS.newCount = r.obsNew; drawSide(); }
+    if (typeof r.reqNew === 'number' && r.reqNew !== STF.dot){ STF.dot = r.reqNew; drawSide(); if (STF.data && USER.role!=='admin') stfLoad(true).then(() => { if (ATT.view==='staff' && $('viewAtt').style.display!=='none') stfDraw(); }); }
     if ($('bellPanel').classList.contains('open')) drawBell();
     chatBadge(); if (!$('chat').hidden) drawChat();
   }catch(e){ console.warn('TALA poll', e); }
@@ -5053,7 +5119,7 @@ async function attLoadClass(force){
 }
 // Attendance saved on this device but not yet synced is shown too
 function attPendingApply(){ myPending().filter(x=>x.action==='attSave' && x.payload.section===ATT.sec).forEach(x => ATT.days[x.payload.date] = { date:x.payload.date, status:x.payload.status, marks:x.payload.marks, local:true }); }
-function attDraw(){ ({ home:attHome, take:attTake, learners:attLearners, msgs:attMsgs, live:attLive })[ATT.view](); }
+function attDraw(){ ({ home:attHome, take:attTake, learners:attLearners, msgs:attMsgs, live:attLive, staff:stfDraw })[ATT.view](); }
 function attBack(){ ATT.view = 'home'; attDraw(); window.scrollTo(0,0); }
 
 /* ----- the dashboard: buttons first ----- */
@@ -5067,6 +5133,8 @@ function attHome(){
     <div class="ohero athero"><div><h2>Attendance</h2><p>${ATT.sec?esc(secLabel(ATT.sec))+' \u00B7 '+esc(secInfo(ATT.sec).adviserName||'No adviser set'):'No class assigned to you yet. Ask the School Head to set your class.'}</p></div>
       <div class="atsel">${secs.length>1?`<select onchange="ATT.sec=this.value;attLoadClass().then(attDraw)">${secs.map(s=>`<option value="${esc(s.key)}" ${s.key===ATT.sec?'selected':''}>${esc(secLabel(s.key))}</option>`).join('')}</select>`:''}
         <select onchange="ATT.month=this.value;attDraw()">${months.map(m=>`<option value="${m}" ${m===ATT.month?'selected':''}>${monthName(m)}</option>`).join('')}</select></div></div>
+    ${stfHomeBlock()}
+    ${ATT.sec?'<h3 class="sbh4" style="font-size:16px;margin-top:16px">Learners</h3>':''}
     ${ATT.sec?`<div class="attoday"><div><small>Today</small><b>${esc(dShort(today))}</b></div>
       ${dow(today)===0||dow(today)===6?'<span class="hint">No class today (weekend).</span>':dayStatus(today)!=='C'?`<span class="sbbadge" style="--c:#a3271b">${esc(DAY_ST[dayStatus(today)])}${rec&&rec.marks&&rec.marks._note?': '+esc(rec.marks._note):''}</span>`:rec?tallyHtml(T)+(rec.local?'<span class="unsynced">Not yet synced</span>':''):'<span class="atn wait">Not yet taken</span>'}</div>`:''}
     <div class="atremind">\u23F0 Take the attendance during the preliminaries, before the first period, so it does not use the instructional time.</div>
@@ -5087,6 +5155,7 @@ function attHome(){
       ${head?btn('\u{1F5D1}','Clear attendance data','Remove test entries before launch',"attClearOpen()",'danger'):''}</div>`:''}`;
   maybeGuide('att');
   if (head||admin) schoolTally();
+  stfHomeRefresh();
 }
 
 // Counts with the names behind each number (shown when the mouse is over it)
@@ -5660,6 +5729,736 @@ function formPrint(){
   $('printArea').innerHTML = `<div class="xlprint" style="zoom:${z}">${$('xlPage').innerHTML}</div>`;
   setTimeout(() => window.print(), 250);
 }
+
+
+/* =========================================================
+   Personnel forms: CS Form No. 6 (Application for Leave), Locator Slip, Travel Authority.
+   The original files are filled for Word and Excel, and a PDF is made on the same form for printing.
+   The School Head's e-signature is added only when the request was acted on and the School Head was not away.
+   ========================================================= */
+const PDFLIB = ['https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js', 'https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js'];
+async function loadAny(urls){ let err; for (const u of urls){ try{ await loadScript(u); return; }catch(e){ err = e; } } throw err; }
+const LEAVE_TYPES = ['Vacation Leave','Mandatory/Forced Leave','Sick Leave','Maternity Leave','Paternity Leave','Special Privilege Leave','Solo Parent Leave','Study Leave','10-Day VAWC Leave','Rehabilitation Privilege','Special Leave Benefits for Women','Special Emergency (Calamity) Leave','Adoption Leave','Others'];
+const SCHOOL = { name:'Baluyan Elementary School', short:'Baluyan ES', district:'Imelda', id:'125592' };
+function fmtLong(d){ return d ? new Date(d+'T00:00:00').toLocaleDateString('en-US',{ month:'long', day:'numeric', year:'numeric' }) : ''; }
+// "October 12 to 14, 2026", never with a dash
+function dRange(a, b){
+  if (!a) return ''; if (!b || b===a) return fmtLong(a);
+  const A = new Date(a+'T00:00:00'), B = new Date(b+'T00:00:00'), m = x => x.toLocaleDateString('en-US',{ month:'long' });
+  if (A.getFullYear()===B.getFullYear() && A.getMonth()===B.getMonth()) return m(A)+' '+A.getDate()+' to '+B.getDate()+', '+B.getFullYear();
+  if (A.getFullYear()===B.getFullYear()) return m(A)+' '+A.getDate()+' to '+m(B)+' '+B.getDate()+', '+B.getFullYear();
+  return fmtLong(a)+' to '+fmtLong(b);
+}
+function time12(t){ if (!t) return ''; let [h,m] = t.split(':').map(Number); const ap = h>=12?'PM':'AM'; h = h%12||12; return h+':'+String(m).padStart(2,'0')+' '+ap; }
+function travelNo(q){ const m = String(q.number||'').match(/^(\d{4})-(\d+)$/); return m ? m[1]+' – '+m[2] : ''; }
+function b64ToBytes(b64){ const s = atob(b64.replace(/^data:[^,]+,/,'')), u = new Uint8Array(s.length); for (let i = 0; i < s.length; i++) u[i] = s.charCodeAt(i); return u; }
+
+/* ----- what goes on each form, from one request ----- */
+function formData(P){
+  const q = P.req, d = q.details || {}, acted = /^Approved|^Disapproved/.test(q.status), ok = /^Approved/.test(q.status);
+  const headOn = !P.headAway; // when the School Head is away, the OIC writes and signs by hand
+  return { q, d, acted, ok, no: q.status==='Disapproved',
+    name: d.fullName || q.name, position: d.position || q.position || '', filed: fmtLong((q.created||'').slice(0,10)),
+    headName: headOn ? (P.headName||'').toUpperCase() : '', headSig: headOn && acted ? P.headSig : '', mySig: P.mySig || '',
+    actedOn: headOn && acted ? fmtLong(String(q.decidedOn).slice(0,10)) : '' };
+}
+
+/* ----- PDF on the original form ----- */
+async function formPdf(P){
+  await loadAny(PDFLIB);
+  const F = formData(P), kind = F.q.type, file = kind==='LEAVE' ? 'leave-form.pdf' : kind==='LOCATOR' ? 'locator-slip.pdf' : 'travel-authority.pdf';
+  const res = await fetch(file, { cache:'no-cache' }); if (!res.ok) throw new Error('The form '+file+' was not found next to index.html.');
+  const doc = await PDFLib.PDFDocument.load(await res.arrayBuffer()), pg = doc.getPages()[0], H = pg.getHeight();
+  const SF = PDFLib.StandardFonts, fonts = { h: await doc.embedFont(SF.Helvetica), hb: await doc.embedFont(SF.HelveticaBold), t: await doc.embedFont(SF.TimesRoman), tb: await doc.embedFont(SF.TimesRomanBold) };
+  const black = PDFLib.rgb(0,0,0);
+  const clean = s => String(s||'').replace(/[‘’]/g,"'").replace(/[“”]/g,'"').replace(/[^\x20-\x7E -ÿ–]/g,'');
+  // text with its top at y (measured from the top of the page), cut to fit the space
+  const T = (s, x, y, o={}) => { const f = fonts[o.f||'h'], sz = o.sz||9; let t = clean(s); if (o.w){ while (t && f.widthOfTextAtSize(t, sz) > o.w) t = t.slice(0,-1); }
+    const w = f.widthOfTextAtSize(t, sz), xx = o.c ? x - w/2 : x; if (t) pg.drawText(t, { x:xx, y:H - y - sz*0.8, size:sz, font:f, color:black }); };
+  const wrap = (s, w, f, sz) => { const words = clean(s).split(/\s+/), out = []; let line = ''; words.forEach(wd => { const t = line ? line+' '+wd : wd; if (fonts[f].widthOfTextAtSize(t, sz) > w && line){ out.push(line); line = wd; } else line = t; }); if (line) out.push(line); return out; };
+  const box = (x, y, on, s=7) => { pg.drawRectangle({ x, y:H-y-s, width:s, height:s, borderColor:black, borderWidth:0.6, color:PDFLib.rgb(1,1,1) });
+    if (on){ pg.drawLine({ start:{x:x+1.2,y:H-y-s*0.55}, end:{x:x+s*0.4,y:H-y-s+1.2}, thickness:1.1, color:black }); pg.drawLine({ start:{x:x+s*0.4,y:H-y-s+1.2}, end:{x:x+s+1.5,y:H-y+1.5}, thickness:1.1, color:black }); } };
+  const tick = (x, y, w, h) => { pg.drawLine({ start:{x:x+w*0.2,y:H-y-h*0.55}, end:{x:x+w*0.42,y:H-y-h+1}, thickness:1.3, color:black }); pg.drawLine({ start:{x:x+w*0.42,y:H-y-h+1}, end:{x:x+w*0.85,y:H-y-1}, thickness:1.3, color:black }); };
+  const sig = async (b64, cx, bottom, maxW, maxH) => { if (!b64) return; try{ const img = await doc.embedPng(b64ToBytes(b64)); const sc = Math.min(maxW/img.width, maxH/img.height); const w = img.width*sc, h = img.height*sc;
+    pg.drawImage(img, { x:cx - w/2, y:H - bottom, width:w, height:h }); }catch(e){ console.warn('signature', e); } };
+  const d = F.d, q = F.q;
+  if (kind==='LEAVE'){
+    T(SCHOOL.district.toUpperCase()+' / '+SCHOOL.name.toUpperCase()+' / '+SCHOOL.id, 40, 137, { sz:7.5, w:190 });
+    T((d.last||'').toUpperCase(), 296, 137, { f:'hb', c:1, sz:9 }); T((d.first||'').toUpperCase(), 387, 137, { f:'hb', c:1, sz:9 }); T((d.middle||'').toUpperCase(), 469, 137, { f:'hb', c:1, sz:9 });
+    T(F.filed, 121, 152.5, { sz:8.5, w:62 }); T(F.position, 278, 152.5, { sz:8.5, w:128 }); T(d.salary, 470, 152.5, { sz:8.5, w:66 });
+    const L = [209.8,225.8,241.2,256.5,271.0,286.3,302.7,318.0,333.4,348.8,364.2,379.5,394.9];
+    LEAVE_TYPES.slice(0,13).forEach((t,i) => box(45.2, L[i], d.leaveType===t));
+    const R = { ph:225.8, abroad:241.2, hosp:271.0, out:286.3, masters:379.5, bar:395.5, monet:426.3, term:441.3, notReq:474.3, req:489.6, appr:568.0, disappr:584.3 };
+    box(330.6, R.ph, d.where==='Within the Philippines'); box(330.6, R.abroad, d.where==='Abroad'); box(330.6, R.hosp, d.sick==='In Hospital'); box(330.6, R.out, d.sick==='Out Patient');
+    box(330.6, R.masters, d.study==="Completion of Master's Degree"); box(330.6, R.bar, d.study==='BAR/Board Examination Review');
+    box(330.6, R.monet, d.otherPurpose==='Monetization of Leave Credits'); box(330.6, R.term, d.otherPurpose==='Terminal Leave');
+    box(330.6, R.notReq, d.commutation!=='Requested'); box(330.6, R.req, d.commutation==='Requested');
+    box(330.6, R.appr, F.ok); box(330.6, R.disappr, F.no);
+    if (d.where==='Within the Philippines') T(d.place, 424, 222.5, { sz:8, w:114 }); if (d.where==='Abroad') T(d.place, 406, 238, { sz:8, w:130 });
+    if (d.sick==='In Hospital') T(d.illness, 444, 268.5, { sz:8, w:94 }); if (d.sick==='Out Patient') T(d.illness, 449, 284, { sz:8, w:89 });
+    if (d.leaveType==='Special Leave Benefits for Women') T(d.illness, 392, 330.5, { sz:8, w:142 });
+    if (d.leaveType==='Others') T(d.others, 47, 436, { sz:8.5, w:166 });
+    T(q.days ? q.days+' working day'+(q.days>1?'s':'') : '', 56, 471, { sz:9, w:176 }); T(dRange(q.from, q.to), 56, 500, { sz:9, w:176 });
+    await sig(F.mySig, 438, 511, 120, 26);
+    if (F.no){ const lines = wrap(q.note, 105, 'h', 8); T(lines[0]||'', 426, 581.5, { sz:8, w:108 }); wrap(lines.slice(1).join(' '), 192, 'h', 8).slice(0,3).forEach((l,i) => T(l, 343, 592.6 + i*11, { sz:8, w:192 })); }
+    T('RENZ ROY A. RAMOS, HRMO II', 175, 634.5, { f:'hb', c:1, sz:8.5 });
+    await sig(F.headSig, 439, 643, 130, 30); T(F.headName, 439, 634.5, { f:'hb', c:1, sz:8.5 });
+    T('VIRGILIO P. BATAN JR., CESO V', 292.7, 729.5, { f:'hb', c:1, sz:8.5 });
+  } else if (kind==='LOCATOR'){
+    const X = 214, W = 326;
+    T(F.filed, X, 182, { f:'t', sz:11, w:W }); T(F.name.toUpperCase(), X, 216.5, { f:'tb', sz:11, w:W }); T(d.station || SCHOOL.name, X, 246, { f:'t', sz:11, w:W });
+    T(F.position, X, 272.5, { f:'t', sz:11, w:W });
+    const pl = wrap(d.purpose, W, 't', 10); pl.slice(0,2).forEach((l,i) => T(l, X, (pl.length>1?291:299) + i*12, { f:'t', sz:10, w:W }));
+    if (d.ob==='Official Time') tick(382.9, 332.2, 12.8, 9.8); else tick(234.7, 333.9, 12.8, 9.0);
+    T(d.destination, X, 358.5, { f:'t', sz:11, w:W });
+    T(dRange(q.from, q.to)+(d.time?', '+time12(d.time)+(d.timeTo?' to '+time12(d.timeTo):''):''), X, 383, { f:'t', sz:10.5, w:W });
+    await sig(F.mySig, 177, 443, 120, 26); T(F.name.toUpperCase(), 177, 432.5, { f:'tb', c:1, sz:9.5, w:150 }); T(F.filed, 100, 485, { f:'t', sz:10, w:110 });
+    if (!F.no){ await sig(F.headSig, 424, 443, 140, 30); T(F.headName, 424, 432.5, { f:'tb', c:1, sz:9.5, w:186 }); T(F.ok ? F.actedOn : '', 330, 485.5, { f:'t', sz:10, w:110 }); }
+  } else {
+    const X = 228, W = 290;
+    T(travelNo(q), 444, 53.8, { f:'tb', sz:12 });
+    T(F.name.toUpperCase(), X, 213.5, { f:'tb', sz:10.5, w:W }); T(F.position, X, 239, { f:'t', sz:10.5, w:W }); T(d.station || SCHOOL.name, X, 264.5, { f:'t', sz:10.5, w:W });
+    wrap(d.purpose, W, 't', 10).slice(0,3).forEach((l,i) => T(l, X, 290 + i*11.5, { f:'t', sz:10, w:W }));
+    T(d.host, X, 330, { f:'t', sz:10.5, w:W }); T(dRange(q.from, q.to), X, 355.5, { f:'t', sz:10.5, w:W }); T(d.destination, X, 381, { f:'t', sz:10.5, w:W }); T(d.fund, X, 406.5, { f:'t', sz:10.5, w:W });
+    await sig(F.mySig, 226, 516, 140, 28); T(F.name.toUpperCase(), 226, 505, { f:'tb', c:1, sz:10, w:290 }); T(F.filed, 453, 505, { f:'t', c:1, sz:10, w:126 });
+    if (!F.no){ await sig(F.headSig, 226, 655, 150, 32); T(F.headName, 226, 643.5, { f:'tb', c:1, sz:10, w:290 }); T(F.ok ? F.actedOn : '', 453, 643.5, { f:'t', c:1, sz:10, w:126 }); }
+  }
+  doc.setTitle(formTitle(q)); doc.setCreator('TALA, '+SCHOOL.name);
+  return new Blob([await doc.save()], { type:'application/pdf' });
+}
+function formTitle(q){ return ({ LEAVE:'Application_for_Leave', LOCATOR:'Locator_Slip', TRAVEL:'Travel_Authority' })[q.type] + '_' + (q.name||'').replace(/[^A-Za-z]+/g,'_') + '_' + q.from; }
+
+/* ----- the same form as the original Word or Excel file ----- */
+function chunkWords(s, sizes){ const w = String(s||'').split(/\s+/).filter(String), out = []; let i = 0; sizes.forEach(n => { let line = ''; while (i < w.length && (line + ' ' + w[i]).trim().length <= n) line = (line + ' ' + w[i++]).trim(); if (!line && i < w.length) line = w[i++].slice(0, n); out.push(line); }); return out; }
+function xmlEsc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+// Excel text boxes (the fillable spaces of CS Form No. 6)
+function xlTextBox(xml, name, text, o={}){
+  const i = xml.indexOf('name="'+name+'"'); if (i < 0) return xml;
+  const a = xml.indexOf('<xdr:txBody>', i), b = xml.indexOf('</xdr:txBody>', a); if (a < 0 || b < 0) return xml;
+  const body = xml.slice(a, b), head = body.match(/^<xdr:txBody>(<a:bodyPr[\s\S]*?(?:\/>|<\/a:bodyPr>))(<a:lstStyle\/>)?/);
+  const sz = o.sz || 1000, bold = o.b ? ' b="1"' : '';
+  const paras = String(text||'').split('\n').map(t => `<a:p><a:pPr algn="${o.algn||'l'}"/>${t?`<a:r><a:rPr lang="en-US" sz="${sz}"${bold}/><a:t>${xmlEsc(t)}</a:t></a:r>`:''}<a:endParaRPr lang="en-US" sz="${sz}"${bold}/></a:p>`).join('');
+  return xml.slice(0, a) + '<xdr:txBody>' + (head ? head[1] + (head[2]||'') : '<a:bodyPr/><a:lstStyle/>') + paras + xml.slice(b);
+}
+async function leaveXlsx(P){
+  await loadScript(LIBS.zip);
+  const res = await fetch('leave-template.xlsx', { cache:'no-cache' }); if (!res.ok) throw new Error('The leave form (leave-template.xlsx) was not found next to index.html.');
+  const zip = await JSZip.loadAsync(await res.arrayBuffer()), F = formData(P), d = F.d, q = F.q;
+  let dr = await zip.file('xl/drawings/drawing1.xml').async('string');
+  const tb = (n, t, o) => dr = xlTextBox(dr, n, t, o);
+  tb('TextBox 66', SCHOOL.district.toUpperCase()+' / '+SCHOOL.name.toUpperCase()+'\n'+SCHOOL.id, { sz:800 });
+  tb('TextBox 2', [(d.last||'').toUpperCase().padEnd(24,' '), (d.first||'').toUpperCase().padEnd(26,' '), (d.middle||'').toUpperCase()].join('   '), { sz:1000, b:1 });
+  tb('TextBox 38', F.filed, { sz:900 }); tb('TextBox 39', F.position, { sz:900 }); tb('TextBox 40', d.salary||'', { sz:900 });
+  tb('TextBox 41', d.where==='Within the Philippines' ? d.place : '', { sz:900 }); tb('TextBox 42', d.where==='Abroad' ? d.place : '', { sz:900 });
+  tb('TextBox 43', d.sick==='In Hospital' ? d.illness : '', { sz:900 }); tb('TextBox 44', d.sick==='Out Patient' ? d.illness : '', { sz:900 });
+  tb('TextBox 46', d.leaveType==='Special Leave Benefits for Women' ? d.illness : '', { sz:900 });
+  tb('TextBox 48', d.leaveType==='Others' ? d.others : '', { sz:900 });
+  tb('TextBox 49', q.days ? q.days+' working day'+(q.days>1?'s':'') : '', { sz:1000 }); tb('TextBox 50', dRange(q.from, q.to), { sz:1000 });
+  const why = F.no ? chunkWords(q.note, [30,58,58,58]) : []; ['TextBox 52','TextBox 53','TextBox 54','TextBox 55'].forEach((n,i) => tb(n, why[i]||'', { sz:800 }));
+  tb('TextBox 57', F.headName, { sz:1100, b:1, algn:'ctr' });
+  // check boxes: Check Box n is ctrlProp(n-2)
+  const CB = { 'Vacation Leave':5, 'Mandatory/Forced Leave':3, 'Sick Leave':4, 'Maternity Leave':6, 'Paternity Leave':7, 'Special Privilege Leave':8, 'Solo Parent Leave':9, 'Study Leave':10, '10-Day VAWC Leave':11, 'Rehabilitation Privilege':12, 'Special Leave Benefits for Women':13, 'Special Emergency (Calamity) Leave':14, 'Adoption Leave':15 };
+  const on = []; if (CB[d.leaveType]) on.push(CB[d.leaveType]);
+  if (d.where==='Within the Philippines') on.push(16); if (d.where==='Abroad') on.push(17); if (d.sick==='In Hospital') on.push(18); if (d.sick==='Out Patient') on.push(19);
+  if (d.study==="Completion of Master's Degree") on.push(20); if (d.study==='BAR/Board Examination Review') on.push(21);
+  if (d.otherPurpose==='Monetization of Leave Credits') on.push(22); if (d.otherPurpose==='Terminal Leave') on.push(23);
+  on.push(d.commutation==='Requested' ? 25 : 24); if (F.ok) on.push(26); if (F.no) on.push(27);
+  let vml = await zip.file('xl/drawings/vmlDrawing1.vml').async('string');
+  for (const n of on){ const p = 'xl/ctrlProps/ctrlProp'+(n-2)+'.xml', cx = zip.file(p); if (cx){ let s = await cx.async('string'); s = s.replace(/ checked="[^"]*"/,'').replace('<formControlPr ', '<formControlPr checked="Checked" '); zip.file(p, s); }
+    const sid = '_x0000_s'+(1024+n), i = vml.indexOf('id="'+sid+'"'); if (i > -1){ const j = vml.indexOf('</x:ClientData>', i); if (j > -1 && vml.slice(i, j).indexOf('<x:Checked>') < 0) vml = vml.slice(0, j) + '<x:Checked>1</x:Checked>' + vml.slice(j); } }
+  zip.file('xl/drawings/vmlDrawing1.vml', vml);
+  // e-signatures as pictures over the signature lines
+  const pics = []; if (F.mySig) pics.push({ b64:F.mySig, from:[8, 400000, 46, 120000], to:[8, 2100000, 48, 0] }); if (F.headSig) pics.push({ b64:F.headSig, from:[8, 700000, 57, 0], to:[8, 2300000, 58, 250000] });
+  dr = await xlAddPics(zip, dr, pics);
+  zip.file('xl/drawings/drawing1.xml', dr);
+  return zip.generateAsync({ type:'blob', mimeType:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+}
+async function xlAddPics(zip, dr, pics){
+  if (!pics.length) return dr;
+  const rp = 'xl/drawings/_rels/drawing1.xml.rels'; let rels = zip.file(rp) ? await zip.file(rp).async('string') : '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"></Relationships>';
+  let ct = await zip.file('[Content_Types].xml').async('string'); if (!/Extension="png"/i.test(ct)) ct = ct.replace('<Types ', '<Types ').replace(/(<Types[^>]*>)/, '$1<Default Extension="png" ContentType="image/png"/>'); zip.file('[Content_Types].xml', ct);
+  let id = 900;
+  pics.forEach((p, i) => { const rid = 'rIdTala'+i, f = 'talaSig'+i+'.png'; zip.file('xl/media/'+f, b64ToBytes(p.b64));
+    rels = rels.replace('</Relationships>', `<Relationship Id="${rid}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="../media/${f}"/></Relationships>`);
+    const a = (k, v) => `<xdr:${k}><xdr:col>${v[0]}</xdr:col><xdr:colOff>${v[1]}</xdr:colOff><xdr:row>${v[2]}</xdr:row><xdr:rowOff>${v[3]}</xdr:rowOff></xdr:${k}>`;
+    const pic = `<xdr:twoCellAnchor editAs="oneCell">${a('from',p.from)}${a('to',p.to)}<xdr:pic><xdr:nvPicPr><xdr:cNvPr id="${id+i}" name="TALA e-signature ${i+1}"/><xdr:cNvPicPr><a:picLocks noChangeAspect="1"/></xdr:cNvPicPr></xdr:nvPicPr><xdr:blipFill><a:blip xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" r:embed="${rid}"/><a:stretch><a:fillRect/></a:stretch></xdr:blipFill><xdr:spPr><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></xdr:spPr></xdr:pic><xdr:clientData/></xdr:twoCellAnchor>`;
+    dr = dr.replace('</xdr:wsDr>', pic + '</xdr:wsDr>'); });
+  zip.file(rp, rels);
+  return dr;
+}
+// Word: put text in the empty cell next to a label, in the font of the form
+function wCell(xml, label, text, o={}){
+  if (!text) return xml;
+  const plain = s => s.replace(/<[^>]+>/g,'').replace(/\s+/g,' ').trim();
+  const rows = xml.match(/<w:tr[ >][\s\S]*?<\/w:tr>/g) || [];
+  for (const row of rows){ const cells = row.match(/<w:tc>[\s\S]*?<\/w:tc>/g) || []; if (cells.length < 2) continue;
+    if (plain(cells[0]).toLowerCase().indexOf(label.toLowerCase()) !== 0) continue;
+    const last = cells[cells.length-1], font = o.font || 'Bookman Old Style', sz = o.sz || 22;
+    const run = `<w:r><w:rPr><w:rFonts w:ascii="${font}" w:hAnsi="${font}" w:cs="${font}"/>${o.b?'<w:b/>':''}<w:sz w:val="${sz}"/><w:szCs w:val="${sz}"/></w:rPr><w:t xml:space="preserve">${xmlEsc(text)}</w:t></w:r>`;
+    let nc = last.replace(/<w:p( [^>]*)?\/>/, m => m.replace('/>', '>') + run + '</w:p>');
+    if (nc === last){ const k = last.indexOf('</w:p>'); nc = last.slice(0, k) + run + last.slice(k); }
+    return xml.replace(row, row.replace(last, nc)); }
+  return xml;
+}
+// A floating text or picture placed above the n-th paragraph that has the label (for names, dates and signatures on the lines)
+function wFloat(xml, label, nth, inner){
+  let i = -1; for (let k = 0; k <= nth; k++){ i = xml.indexOf(label, i + 1); if (i < 0) return xml; }
+  const p = xml.lastIndexOf('<w:p ', i), p2 = xml.lastIndexOf('<w:p>', i), at = Math.max(p, p2), end = xml.indexOf('>', at) + 1;
+  const pPrEnd = xml.indexOf('</w:pPr>', end), runAt = pPrEnd > -1 && pPrEnd < i ? pPrEnd + 8 : end;
+  return xml.slice(0, runAt) + inner + xml.slice(runAt);
+}
+let W_ID = 5000;
+function wAnchor(o, graphic){ // o: dx, dy (points from the paragraph), w, h (points)
+  const E = v => Math.round(v * 12700), id = ++W_ID;
+  return `<w:r><w:drawing><wp:anchor distT="0" distB="0" distL="0" distR="0" simplePos="0" relativeHeight="${251700000+id}" behindDoc="0" locked="0" layoutInCell="1" allowOverlap="1"><wp:simplePos x="0" y="0"/><wp:positionH relativeFrom="column"><wp:posOffset>${E(o.dx)}</wp:posOffset></wp:positionH><wp:positionV relativeFrom="paragraph"><wp:posOffset>${E(o.dy)}</wp:posOffset></wp:positionV><wp:extent cx="${E(o.w)}" cy="${E(o.h)}"/><wp:effectExtent l="0" t="0" r="0" b="0"/><wp:wrapNone/><wp:docPr id="${id}" name="TALA ${id}"/><wp:cNvGraphicFramePr/>${graphic(E, id)}</wp:anchor></w:drawing></w:r>`;
+}
+function wText(o, text){ if (!text) return ''; const font = o.font || 'Bookman Old Style', sz = o.sz || 20;
+  return wAnchor(o, (E) => `<a:graphic xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"><a:graphicData uri="http://schemas.microsoft.com/office/word/2010/wordprocessingShape"><wps:wsp><wps:cNvSpPr txBox="1"/><wps:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="${E(o.w)}" cy="${E(o.h)}"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom><a:noFill/><a:ln><a:noFill/></a:ln></wps:spPr><wps:txbx><w:txbxContent><w:p><w:pPr><w:spacing w:before="0" w:after="0" w:line="240" w:lineRule="auto"/><w:jc w:val="${o.jc||'center'}"/></w:pPr><w:r><w:rPr><w:rFonts w:ascii="${font}" w:hAnsi="${font}"/>${o.b?'<w:b/>':''}<w:sz w:val="${sz}"/></w:rPr><w:t xml:space="preserve">${xmlEsc(text)}</w:t></w:r></w:p></w:txbxContent></wps:txbx><wps:bodyPr rot="0" vert="horz" wrap="square" lIns="0" tIns="0" rIns="0" bIns="0" anchor="b"><a:noAutofit/></wps:bodyPr></wps:wsp></a:graphicData></a:graphic>`); }
+function wPic(o, rid){ return wAnchor(o, (E, id) => `<a:graphic xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"><a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture"><pic:pic xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"><pic:nvPicPr><pic:cNvPr id="${id}" name="TALA e-signature"/><pic:cNvPicPr/></pic:nvPicPr><pic:blipFill><a:blip r:embed="${rid}"/><a:stretch><a:fillRect/></a:stretch></pic:blipFill><pic:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="${E(o.w)}" cy="${E(o.h)}"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></pic:spPr></pic:pic></a:graphicData></a:graphic>`); }
+async function sigFit(b64, maxW, maxH){ return new Promise(res => { const im = new Image(); im.onload = () => { const s = Math.min(maxW/im.width, maxH/im.height); res({ w:im.width*s, h:im.height*s }); }; im.onerror = () => res({ w:maxW, h:maxH }); im.src = b64; }); }
+async function formDocx(P){
+  await loadScript(LIBS.zip);
+  const F = formData(P), d = F.d, q = F.q, file = q.type==='LOCATOR' ? 'locator-template.docx' : 'travel-template.docx';
+  const res = await fetch(file, { cache:'no-cache' }); if (!res.ok) throw new Error('The form '+file+' was not found next to index.html.');
+  const zip = await JSZip.loadAsync(await res.arrayBuffer());
+  let x = await zip.file('word/document.xml').async('string'), rels = await zip.file('word/_rels/document.xml.rels').async('string');
+  let ct = await zip.file('[Content_Types].xml').async('string'); if (!/Extension="png"/i.test(ct)) ct = ct.replace(/(<Types[^>]*>)/, '$1<Default Extension="png" ContentType="image/png"/>'); zip.file('[Content_Types].xml', ct);
+  let n = 0; const addImg = b64 => { const rid = 'rIdTala'+(++n); zip.file('word/media/talaSig'+n+'.png', b64ToBytes(b64)); rels = rels.replace('</Relationships>', `<Relationship Id="${rid}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="media/talaSig${n}.png"/></Relationships>`); return rid; };
+  if (q.type==='LOCATOR'){
+    const o = { font:'Times New Roman', sz:22 };
+    x = wCell(x, 'Date of Filing', F.filed, o); x = wCell(x, 'Name', F.name.toUpperCase(), Object.assign({ b:1 }, o)); x = wCell(x, 'Permanent Station', d.station || SCHOOL.name, o);
+    x = wCell(x, 'Position', F.position, o); x = wCell(x, 'Purpose', d.purpose, o); x = wCell(x, 'Destination', d.destination, o);
+    x = wCell(x, 'Date and Time', dRange(q.from, q.to)+(d.time?', '+time12(d.time)+(d.timeTo?' to '+time12(d.timeTo):''):''), o);
+    // the check mark goes inside the small box of Official Business or Official Time
+    // the check mark goes inside the small box of Official Business (the box on the left) or Official Time
+    const row = (x.match(/<w:tr[ >](?:(?!<\/w:tr>)[\s\S])*?Please Check[\s\S]*?<\/w:tr>/)||[])[0];
+    if (row){ let nr = row; const boxes = [];
+      nr.replace(/<wp:anchor[\s\S]*?<wp:positionH[^>]*><wp:posOffset>(-?\d+)<\/wp:posOffset>[\s\S]*?<\/wp:anchor>/g, (m, off) => { boxes.push({ m, off:Number(off) }); return m; });
+      boxes.sort((a,b) => a.off - b.off); const pick = boxes[d.ob==='Official Time' ? 1 : 0];
+      const mark = '<w:p><w:pPr><w:spacing w:before="0" w:after="0" w:line="160" w:lineRule="exact"/><w:jc w:val="center"/></w:pPr><w:r><w:rPr><w:rFonts w:ascii="Segoe UI Symbol" w:hAnsi="Segoe UI Symbol"/><w:b/><w:sz w:val="16"/></w:rPr><w:t>\u2713</w:t></w:r></w:p>';
+      if (pick){ const filled = pick.m.replace(/<w:txbxContent>[\s\S]*?<\/w:txbxContent>/, '<w:txbxContent>'+mark+'</w:txbxContent>').replace(/ lIns="91440" tIns="45720" rIns="91440" bIns="45720"/, ' lIns="0" tIns="0" rIns="0" bIns="0"');
+        nr = nr.replace(pick.m, filled);
+        // the older copy of the same box (read by some Word versions) comes right after it
+        const after = nr.indexOf('<mc:Fallback>', nr.indexOf(filled)), endFb = nr.indexOf('</mc:Fallback>', after);
+        if (after > -1){ const fb = nr.slice(after, endFb), fb2 = fb.replace(/<w:txbxContent>[\s\S]*?<\/w:txbxContent>/, '<w:txbxContent>'+mark+'</w:txbxContent>'); nr = nr.slice(0, after) + fb2 + nr.slice(endFb); } }
+      x = x.replace(row, nr); }
+    x = wFloat(x, 'Signature of Requesting', 0, wText({ dx:-20, dy:-16, w:180, h:13, font:'Times New Roman', sz:19, b:1 }, F.name.toUpperCase()));
+    if (F.mySig){ const s = await sigFit(F.mySig, 110, 28); x = wFloat(x, 'Signature of Requesting', 0, wPic({ dx:70 - s.w/2, dy:-30, w:s.w, h:s.h }, addImg(F.mySig))); }
+    x = wFloat(x, 'Date: ___', 0, wText({ dx:30, dy:-4, w:100, h:12, font:'Times New Roman', sz:19, jc:'left' }, F.filed));
+    if (!F.no){ x = wFloat(x, 'Head of Office', 0, wText({ dx:-10, dy:-16, w:200, h:13, font:'Times New Roman', sz:19, b:1 }, F.headName));
+      if (F.headSig){ const s = await sigFit(F.headSig, 130, 30); x = wFloat(x, 'Head of Office', 0, wPic({ dx:90 - s.w/2, dy:-32, w:s.w, h:s.h }, addImg(F.headSig))); }
+      if (F.ok) x = wFloat(x, 'Date: ___', 1, wText({ dx:30, dy:-4, w:100, h:12, font:'Times New Roman', sz:19, jc:'left' }, F.actedOn)); }
+  } else {
+    const o = { font:'Bookman Old Style', sz:20 };
+    // number of the travel authority
+    const i = x.indexOf('<w:t>No.</w:t>'); if (i > -1){ const pe = x.indexOf('</w:p>', i); let seg = x.slice(i + 14, pe), first = true;
+      seg = seg.replace(/<w:t( xml:space="preserve")?>[^<]*<\/w:t>/g, () => { if (first){ first = false; return `<w:t xml:space="preserve"> ${xmlEsc(travelNo(q) || '____________')}</w:t>`; } return '<w:t></w:t>'; });
+      x = x.slice(0, i + 14) + seg + x.slice(pe); }
+    x = wCell(x, 'NAME', F.name.toUpperCase(), Object.assign({ b:1 }, o)); x = wCell(x, 'Position', F.position, o); x = wCell(x, 'Permanent Station', d.station || SCHOOL.name, o);
+    x = wCell(x, 'Purpose of Travel', d.purpose, o); x = wCell(x, 'Host of Activity', d.host, o); x = wCell(x, 'Inclusive Dates', dRange(q.from, q.to), o);
+    x = wCell(x, 'Destination', d.destination, o); x = wCell(x, 'Fund Source', d.fund, o);
+    x = wFloat(x, 'Name and Signature of Requesting', 0, wText({ dx:0, dy:-17, w:296, h:13, sz:19, b:1 }, F.name.toUpperCase()));
+    if (F.mySig){ const s = await sigFit(F.mySig, 130, 30); x = wFloat(x, 'Name and Signature of Requesting', 0, wPic({ dx:148 - s.w/2, dy:-34, w:s.w, h:s.h }, addImg(F.mySig))); }
+    x = wFloat(x, '>Date<', 0, wText({ dx:0, dy:-17, w:128, h:13, sz:19 }, F.filed));
+    if (!F.no){ x = wFloat(x, 'Name and Signature of Recommending', 0, wText({ dx:0, dy:-17, w:296, h:13, sz:19, b:1 }, F.headName));
+      if (F.headSig){ const s = await sigFit(F.headSig, 150, 32); x = wFloat(x, 'Name and Signature of Recommending', 0, wPic({ dx:148 - s.w/2, dy:-36, w:s.w, h:s.h }, addImg(F.headSig))); }
+      if (F.ok) x = wFloat(x, '>Date<', 1, wText({ dx:0, dy:-17, w:128, h:13, sz:19 }, F.actedOn)); }
+  }
+  zip.file('word/document.xml', x); zip.file('word/_rels/document.xml.rels', rels);
+  return zip.generateAsync({ type:'blob', mimeType:'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
+}
+
+
+/* =========================================================
+   PERSONNEL: time in and time out, leave and other requests, summaries
+   Teachers and the AO file requests and tap Time in and Time out.
+   The School Head acts on requests and can mark or correct any day. The AO can view and print.
+   ========================================================= */
+var STF = { data:null, tab:'today', month:'', who:'', st:'', ty:'', period:'month', pfrom:'', pto:'', edit:null, files:[], keep:[], dot:0, loading:false };
+const STF_SLOTS = [['amIn','AM in'],['amOut','AM out'],['pmIn','PM in'],['pmOut','PM out']];
+const REQ_LABEL = { LEAVE:'Leave (CS Form No. 6)', LOCATOR:'Locator Slip', TRAVEL:'Travel Authority', EARLY:'Early out', WELLNESS:'Wellness leave', OTHER:'Other special request' };
+const REQ_ICON = { LEAVE:'\u{1F334}', LOCATOR:'\u{1F4CD}', TRAVEL:'\u{1F68C}', EARLY:'\u{1F552}', WELLNESS:'\u{1F33F}', OTHER:'\u{1F4DD}' };
+const REQ_HINT = { LEAVE:'Vacation, sick, special privilege and other leaves. Prints on CS Form No. 6.', LOCATOR:'Official business or official time outside the school, within the day.', TRAVEL:'Official travel to a training, meeting or activity. Prints on the Travel Authority.', EARLY:'Leave the school early today for a special reason. Kept in the school only.', WELLNESS:'A wellness day agreed with the School Head. Kept in the school only.', OTHER:'Any other special arrangement. Kept in the school only.' };
+const STF_AWAY_TYPES = ['Official travel','Training','Seminar','Meeting','Leave'];
+function stfRole(){ return USER ? USER.role : ''; }
+// Wellness leave: days per fiscal year (January to December), set by the School Head
+function stfWellDays(){ return (STF.data && STF.data.wellnessDays) || 5; }
+function stfWellUsed(email, fy, skipId){ return STF.data.requests.filter(q => q.email===email && q.type==='WELLNESS' && stfGranted(q) && q.from.slice(0,4)===fy && q.id!==skipId).reduce((n,q) => n+(q.days||0), 0); }
+function stfInternal(q){ return q.type==='LEAVE' && q.details && q.details.internal; }
+// Counts per kind for one person (or everyone): filed, granted, disapproved, pending, and granted days
+function stfCounts(list){ const o = {}; Object.keys(REQ_LABEL).forEach(k => { const x = list.filter(q => q.type===k), g = x.filter(stfGranted);
+  o[k] = { n:x.length, g:g.length, dis:x.filter(q=>q.status==='Disapproved').length, pend:x.filter(q=>q.status==='Pending').length, days:g.reduce((a,q)=>a+(q.days||0),0) }; });
+  const L = list.filter(q => q.type==='LEAVE' && stfGranted(q)); o.div = L.filter(q => !stfInternal(q)).reduce((a,q)=>a+(q.days||0),0); o.int = L.filter(stfInternal).reduce((a,q)=>a+(q.days||0),0); o.intN = L.filter(stfInternal).length; return o; }
+function stfNum(n){ return String(Math.round(n*2)/2); }
+function stfHead(){ return stfRole()==='head'; }
+function stfAll(){ return stfRole()==='head' || stfRole()==='admin'; }
+function stfKey(){ return 'tala_stf_'+(USER?USER.email:''); }
+async function stfLoad(quiet){
+  if (!STF.data){ try{ STF.data = JSON.parse(localStorage.getItem(stfKey())||'null'); }catch(e){} }
+  try{ const r = await api('staffLoad', { from: ATT.firstDay || '' }); STF.data = r; try{ localStorage.setItem(stfKey(), JSON.stringify(r)); }catch(e){} }
+  catch(e){ if (!STF.data && !quiet) throw e; }
+  stfPendingApply(); stfDotCount(); return STF.data;
+}
+// Time taps saved on this device but not yet synced are shown too
+function stfPendingApply(){ if (!STF.data) return; myPending().filter(x => x.action==='staffClock').forEach(x => { const d = x.payload.offlineAt.slice(0,10), t = x.payload.offlineAt.slice(11,16); let L = STF.data.logs.find(l => l.email===USER.email && l.date===d); if (!L){ L = { date:d, email:USER.email, name:USER.name }; STF.data.logs.push(L); } if (!L[x.payload.slot]){ L[x.payload.slot] = t; L.local = true; } }); }
+function stfDotCount(){ if (!STF.data || !USER) return; const n = stfHead() ? STF.data.requests.filter(q => q.status==='Pending').length : STF.data.requests.filter(q => q.email===USER.email && q.status!=='Pending' && !q.seen).length; if (n !== STF.dot){ STF.dot = n; drawSide(); } }
+function stfPeople(){ const D = STF.data; if (!D) return []; return stfAll() ? D.people : [D.me]; }
+function stfName(email){ const p = (STF.data.people||[]).concat([STF.data.me]).find(x => x.email===email); return p ? p.name : email; }
+function stfLog(email, date){ return (STF.data.logs||[]).find(l => l.email===email && l.date===date); }
+function stfStart(){ const ds = (STF.data.logs||[]).map(l => l.date).sort(); return ds[0] || todayPH(); }
+function stfMin(t){ if (!t) return null; const [h,m] = t.split(':').map(Number); return h*60+m; }
+function stfGranted(q){ return q.status==='Approved' || q.status==='Approved with condition'; }
+function stfReqOn(email, date){ return (STF.data.requests||[]).filter(q => q.email===email && stfGranted(q) && q.from <= date && date <= (q.to||q.from) && q.type!=='OTHER'); }
+function stfWorkDays(a, b){ if (!a) return 0; let n = 0; for (let d = a; d <= (b||a); d = addDays(d,1)){ if (dow(d)>0 && dow(d)<6 && !calHoliday(d)) n++; if (n > 400) break; } return n; }
+// What a person's day was: present, tardy, on leave, official business, absent
+function stfDay(email, date){
+  if (dow(date)===0 || dow(date)===6) return null;
+  const H = STF.data.hours, L = stfLog(email, date), R = stfReqOn(email, date), today = todayPH();
+  const o = { log:L, req:R, late:0, under:0, label:'', cls:'', tardy:false };
+  const times = L && (L.amIn || L.amOut || L.pmIn || L.pmOut);
+  if (times){
+    if (L.amIn && stfMin(L.amIn) > stfMin(H.amIn)) o.late += stfMin(L.amIn) - stfMin(H.amIn);
+    if (L.pmIn && stfMin(L.pmIn) > stfMin(H.pmIn)) o.late += stfMin(L.pmIn) - stfMin(H.pmIn);
+    const early = R.some(q => q.type==='EARLY' || q.type==='LOCATOR');
+    if (!early){ if (L.amOut && stfMin(L.amOut) < stfMin(H.amOut)) o.under += stfMin(H.amOut) - stfMin(L.amOut); if (L.pmOut && stfMin(L.pmOut) < stfMin(H.pmOut) && date < today) o.under += stfMin(H.pmOut) - stfMin(L.pmOut); }
+    o.tardy = o.late > 0;
+  }
+  if (L && L.status){ o.label = L.status; o.cls = /Absent/.test(L.status) ? 'bad' : /leave|travel|business|time/i.test(L.status) ? 'exc' : /No classes/.test(L.status) ? 'off' : 'ok'; return o; }
+  if (calHoliday(date)){ o.label = 'No classes'; o.cls = 'off'; return o; }
+  const full = R.find(q => ['LEAVE','TRAVEL','WELLNESS'].indexOf(q.type) > -1);
+  if (full){ o.label = full.type==='LEAVE' ? 'On leave'+(full.details&&full.details.leaveType?' ('+full.details.leaveType.replace(/ Leave$/,'')+')':'') : full.type==='TRAVEL' ? 'Official travel' : 'Wellness leave'; o.cls = 'exc'; return o; }
+  const loc = R.find(q => q.type==='LOCATOR'), early = R.find(q => q.type==='EARLY');
+  if (times){ o.label = 'Present' + (loc ? ', '+(loc.details.ob||'Official business').toLowerCase() : '') + (early ? ', early out' : ''); o.cls = o.tardy ? 'tdy' : 'ok'; return o; }
+  if (loc){ o.label = loc.details.ob || 'Official business'; o.cls = 'exc'; return o; }
+  if (date < stfStart() || date > today){ o.label = ''; return o; }
+  if (date === today){ o.label = 'Not yet in'; o.cls = 'wait'; return o; }
+  o.label = 'Absent'; o.cls = 'bad'; return o;
+}
+function stfChip(o){ return o && o.label ? `<span class="atn ${o.cls}">${esc(o.label)}${o.tardy?' · late '+o.late+' min':''}</span>` : ''; }
+
+/* ----- entry from Attendance ----- */
+async function openStaff(tab){
+  ATT.view = 'staff'; if (tab) STF.tab = tab; if (!STF.month) STF.month = todayPH().slice(0,7);
+  if (!STF.data) $('viewAtt').innerHTML = `<div class="pirload"><div class="pirstar">★</div><b>Opening the personnel records</b><div class="pirdots"><i></i><i></i><i></i></div></div>`;
+  try{ await stfLoad(); }catch(e){ handleErr(e); ATT.view = 'home'; return attDraw(); }
+  attDraw(); window.scrollTo(0,0);
+}
+// The block on the Attendance page: my time today and the buttons
+function stfHomeBlock(){
+  return `<div id="stfHome" class="stfhome">${stfHomeInner()}</div>`;
+}
+function stfHomeInner(){
+  if (!STF.data) return `<div class="attoday"><small>Personnel</small><span class="spin"></span></div>`;
+  const D = STF.data, today = todayPH(), btn = (ico, t, x, fn, cls) => `<button class="abtn ${cls||''}" onclick="${fn}"><span class="abico">${ico}</span><b>${t}</b><small>${x}</small></button>`;
+  const pend = D.requests.filter(q => q.status==='Pending').length, mine = D.requests.filter(q => q.email===USER.email);
+  let html = `<h3 class="sbh4 stfh" style="font-size:16px;margin-top:4px">${stfHead()?'Teachers and personnel':'My time record and requests'}</h3>`;
+  if (!stfHead()) html += stfMyToday(true);
+  if (stfAll()){ const ppl = D.people, days = ppl.map(p => stfDay(p.email, today)).filter(Boolean);
+    const inS = days.filter(o => /^Present/.test(o.label)).length, out = days.filter(o => o.cls==='exc').length, wait = days.filter(o => o.label==='Not yet in').length;
+    html += `<div class="attoday"><div><small>Today</small><b>${esc(dShort(today))}</b></div>${dow(today)===0||dow(today)===6?'<span class="hint">Weekend</span>':`<span class="atn ok">${inS} in school</span><span class="atn exc">${out} on leave or outside</span><span class="atn wait">${wait} not yet in</span>`}</div>`; }
+  html += `<div class="abtns">
+    ${btn('\u{1F552}', stfAll()?'Teachers today':'My time today', stfAll()?'Time in and time out of everyone':'Tap Time in and Time out', "openStaff('today')", stfAll()?'':'main')}
+    ${btn('\u{1F4E8}', stfHead()?'Requests for action':'Leave and requests', stfHead()?(pend?pend+' waiting for you':'None waiting'):(stfRole()==='admin'?'View and print. File your own.':mine.length+' filed, '+mine.filter(stfGranted).length+' granted. Wellness: '+stfNum(Math.max(0,stfWellDays()-stfWellUsed(USER.email, todayPH().slice(0,4))))+' day(s) left'), "openStaff('req')", stfHead()&&pend?'main':'')}
+    ${btn('\u{1F4C5}', 'Time records', 'By month, printable', "openStaff('rec')")}
+    ${btn('\u{1F4CA}', 'Summary', stfAll()?'Leave and requests per teacher':'What I filed and what was granted', "openStaff('sum')")}
+  </div>`;
+  return html;
+}
+async function stfHomeRefresh(){ try{ await stfLoad(true); }catch(e){} const el = $('stfHome'); if (el) el.innerHTML = stfHomeInner(); }
+// My four taps for today
+function stfMyToday(compact){
+  const D = STF.data, today = todayPH(), L = stfLog(USER.email, today) || {}, o = stfDay(USER.email, today), H = D.hours;
+  if (dow(today)===0 || dow(today)===6) return `<div class="attoday"><small>My time today</small><span class="hint">No school today (weekend).</span></div>`;
+  const nowM = stfMin(new Date().toLocaleTimeString('en-GB',{ hour:'2-digit', minute:'2-digit', timeZone:'Asia/Manila' })), noon = stfMin(H.amOut) + 30;
+  // in the afternoon, the next tap is PM in even when the morning was not tapped (half day, or came in after lunch)
+  let next = STF_SLOTS.find(s => !L[s[0]]); if (next && nowM >= noon && (next[0]==='amIn' || (next[0]==='amOut' && !L.amIn))) next = STF_SLOTS.find(s => (s[0]==='pmIn' || s[0]==='pmOut') && !L[s[0]]);
+  const tiles = STF_SLOTS.map(s => L[s[0]] ? `<div class="stft on"><small>${s[1]}</small><b>${esc(time12(L[s[0]]))}</b></div>` : `<button class="stft" onclick="stfClock('${s[0]}')" title="Tap to record ${s[1]} now"><small>${s[1]}</small><b>·</b></button>`).join('');
+  return `<div class="stfme ${compact?'compact':''}"><div class="stfme-h"><div><small>My time today</small><b>${esc(dShort(today))}</b> ${o&&o.label&&o.label!=='Not yet in'?stfChip(o):''} ${L.local?'<span class="unsynced">Not yet synced</span>':''}</div>
+    ${next?`<button class="btn" onclick="stfClock('${next[0]}')">\u{1F552} ${next[0].slice(2)==='In'?'Time in':'Time out'}, ${next[1].slice(0,2)}</button>`:'<span class="atn ok">Done for today</span>'}</div>
+    <div class="stftiles">${tiles}</div><p class="hint" style="margin:6px 0 0">School hours: ${esc(time12(H.amIn))} to ${esc(time12(H.amOut))}, ${esc(time12(H.pmIn))} to ${esc(time12(H.pmOut))}. TALA uses the time of the server, not of the phone. Missed a tap? Tell the School Head, who can correct it.</p></div>`;
+}
+async function stfClock(slot){
+  const lab = STF_SLOTS.find(s => s[0]===slot)[1];
+  if (!confirm((slot.slice(2)==='In'?'Time in':'Time out')+' now ('+lab+')?')) return;
+  const today = todayPH(); let L = stfLog(USER.email, today); if (!L){ L = { date:today, email:USER.email, name:USER.name }; STF.data.logs.push(L); }
+  try{ if (navigator.onLine===false) throw new Error(MSG.NET);
+    const r = await api('staffClock', { slot }); Object.assign(L, r.log); delete L.local; if (r.already) toast('This was already recorded at '+time12(r.log[slot])+'.'); else toast(lab+' recorded at '+time12(r.log[slot])+'.'); }
+  catch(e){ if (friendly(e.message)===MSG.NET || friendly(e.message)===MSG.BUSY){ const at = nowLocal().replace('T',' ').slice(0,16); queueOut('staffClock', { slot, offlineAt:at }, lab+' '+at); L[slot] = at.slice(11,16); L.local = true; toast('Saved on this device. It will sync when you are online.'); } else return handleErr(e); }
+  try{ localStorage.setItem(stfKey(), JSON.stringify(STF.data)); }catch(e){}
+  if (ATT.view==='staff') stfDraw(); else { const el = $('stfHome'); if (el) el.innerHTML = stfHomeInner(); }
+}
+
+/* ----- the personnel page ----- */
+function stfDraw(){
+  const D = STF.data; if (!D) return;
+  const tabs = [['today', stfAll()?'Today':'My time today'], ['req', 'Requests'+(STF.dot?` <i class="sdot">${STF.dot}</i>`:'')], ['rec','Time records'], ['sum','Summary']];
+  $('viewAtt').innerHTML = `<div class="trk-head"><div><h2>${stfAll()?'Teachers and personnel':'My time record and requests'}</h2><p>${stfHead()?'Time in and time out, leave and other requests, and summaries per teacher.':stfRole()==='admin'?'You can view and print everything. Only the School Head can act on requests.':'Tap Time in and Time out, file your requests, and see what was granted.'}</p></div>
+    <div class="head-actions"><button class="btn ghost" onclick="attBack()">Back</button></div></div>
+    <div class="tabs stftabs">${tabs.map(t => `<button class="${STF.tab===t[0]?'on':''}" onclick="STF.tab='${t[0]}';stfDraw()">${t[1]}</button>`).join('')}</div>
+    <div id="stfBody" style="margin-top:14px"></div>`;
+  ({ today:stfToday, req:stfReqs, rec:stfRec, sum:stfSum })[STF.tab]();
+  maybeGuide('stf'+(STF.tab==='today'?'':STF.tab));
+}
+function stfToday(){
+  const D = STF.data, today = todayPH(); let html = '';
+  if (stfHead()) html += stfAwayCard();
+  if (!stfHead()) html += stfMyToday(false);
+  if (stfAll()){
+    const rows = D.people.map(p => ({ p, o: stfDay(p.email, today) || { label:'Weekend', cls:'off' }, L: stfLog(p.email, today) || {} }));
+    const grp = f => rows.filter(f).map(r => r.p.name);
+    const tip = (cls, n, label, names) => `<span class="atn ${cls} tip" tabindex="0" data-tip="${esc(names.length?names.join('\n'):'None')}">${n} ${label}</span>`;
+    const pin = grp(r => /^Present/.test(r.o.label)), late = grp(r => r.o.tardy), outs = grp(r => r.o.cls==='exc'), wait = grp(r => r.o.label==='Not yet in'), abs = grp(r => r.o.label==='Absent');
+    html += `<div class="attoday" style="margin-top:12px"><div><small>Today</small><b>${esc(dShort(today))}</b></div>${tip('ok',pin.length,'in school',pin)}${tip('tdy',late.length,'late',late)}${tip('exc',outs.length,'on leave or outside',outs)}${tip('wait',wait.length,'not yet in',wait)}${abs.length?tip('bad',abs.length,'absent',abs):''}</div>
+    <div class="table-wrap"><table class="stft-table"><thead><tr><th>Name</th>${STF_SLOTS.map(s=>`<th>${s[1]}</th>`).join('')}<th>Status</th>${stfHead()?'<th></th>':''}</tr></thead><tbody>
+    ${rows.map(r => `<tr><td><b>${esc(r.p.name)}</b><small>${esc(r.p.position||(r.p.role==='admin'?'Administrative Officer':'Teacher'))}</small></td>${STF_SLOTS.map(s=>`<td>${r.L[s[0]]?esc(time12(r.L[s[0]])):'<span class="hint">·</span>'}</td>`).join('')}<td>${stfChip(r.o)}${r.o.req&&r.o.req.length?r.o.req.map(q=>`<small>${esc(REQ_LABEL[q.type])}</small>`).join(''):''}</td>${stfHead()?`<td><button class="linkbtn" onclick="stfMarkOpen('${r.p.email}','${today}')">Mark or correct</button></td>`:''}</tr>`).join('') || `<tr><td colspan="7" class="empty">No personnel accounts yet.</td></tr>`}
+    </tbody></table></div>
+    ${stfHead()?`<div class="abtns small" style="margin-top:10px"><button class="abtn" onclick="stfHoursOpen()"><span class="abico">⚙</span><b>School hours and wellness leave</b><small>${esc(time12(D.hours.amIn))} to ${esc(time12(D.hours.pmOut))}, used for late and undertime. Wellness leave: ${stfWellDays()} days a year.</small></button></div>`:''}`;
+  }
+  $('stfBody').innerHTML = html;
+}
+// Whether the School Head is in school today. When away, forms acted on today print without the e-signature, for the OIC.
+function stfAwayCard(){
+  const today = todayPH(), m = (OBS.cal||[]).find(x => x.date===today && x.type && !/^No classes/.test(x.type)) || ((STF.data.away||[]).indexOf(today) > -1 ? { type:'Away' } : null);
+  return `<div class="stfaway ${m?'away':''}"><div><b>${m?'You are tagged away from school today ('+esc(m.type)+(m.note?', '+esc(m.note):'')+')':'You are in school today'}</b>
+    <small>${m?'Requests you act on today print without your e-signature, so the OIC can sign them by hand.':'Requests you approve print with your e-signature. Tag yourself away on days you are out, so the OIC signs instead.'}</small></div>
+    ${m?`<button class="btn ghost" onclick="stfAwaySet('')">I am back in school</button>`:`<button class="btn ghost" onclick="stfAwayOpen()">Tag me away today</button>`}</div>`;
+}
+function stfAwayOpen(){
+  stfModal(`<h3>Tag me away from school</h3><p class="sub">On these days your e-signature is not added to the forms you act on. The OIC signs them by hand. These days also count as out of school in the observation calendar.</p>
+    <div class="field"><label for="awType">Reason</label><select id="awType">${STF_AWAY_TYPES.map(t=>`<option>${t}</option>`).join('')}</select></div>
+    <div class="stfg2"><div class="field"><label for="awFrom">From</label><input type="date" id="awFrom" value="${todayPH()}"></div><div class="field"><label for="awTo">To</label><input type="date" id="awTo" value="${todayPH()}"></div></div>
+    <div class="field"><label for="awNote">Note (optional)</label><input id="awNote" maxlength="120" placeholder="Example: Division meeting in Ipil"></div><p class="err" id="awErr"></p>
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Cancel</button><button class="btn" onclick="stfAwaySet($('awType').value)">Save</button></div>`);
+}
+async function stfAwaySet(type){
+  const from = type ? $('awFrom').value : todayPH(), to = type ? ($('awTo').value || from) : todayPH(), note = type ? $('awNote').value.trim() : '';
+  if (!from || to < from) return $('awErr').textContent = 'Check the dates.';
+  loading(true, 'Saving');
+  try{ for (let d = from; d <= to; d = addDays(d,1)){ if (dow(d)===0 || dow(d)===6) continue; OBS.cal = await api('calSave', { date:d, type, note }); }
+    obsLocalSave(); closeModal('stfModal'); await stfLoad(true); stfDraw(); toast(type ? 'Tagged away. The OIC signs the forms on these days.' : 'Welcome back. Your e-signature is used again.'); }
+  catch(e){ handleErr(e, 'awErr'); }
+  loading(false);
+}
+function stfHoursOpen(){
+  const H = STF.data.hours;
+  stfModal(`<h3>School hours</h3><p class="sub">Used to show who came in late and who left early. Change them when the school schedule changes.</p>
+    <div class="stfg2"><div class="field"><label for="hAmIn">Morning starts</label><input type="time" id="hAmIn" value="${H.amIn}"></div><div class="field"><label for="hAmOut">Morning ends</label><input type="time" id="hAmOut" value="${H.amOut}"></div>
+    <div class="field"><label for="hPmIn">Afternoon starts</label><input type="time" id="hPmIn" value="${H.pmIn}"></div><div class="field"><label for="hPmOut">Afternoon ends</label><input type="time" id="hPmOut" value="${H.pmOut}"></div></div>
+    <div class="field"><label for="hWell">Wellness leave days per fiscal year</label><input type="number" id="hWell" min="1" max="59" step="0.5" value="${stfWellDays()}"></div><p class="err" id="hErr"></p>
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Cancel</button><button class="btn" onclick="stfHoursSave()">Save</button></div>`);
+}
+async function stfHoursSave(){ try{ const r = await api('staffHours', { hours:{ amIn:$('hAmIn').value, amOut:$('hAmOut').value, pmIn:$('hPmIn').value, pmOut:$('hPmOut').value }, wellnessDays:$('hWell').value }); STF.data.wellnessDays = r.wellnessDays; delete r.wellnessDays; STF.data.hours = r; closeModal('stfModal'); stfDraw(); toast('Saved.'); }catch(e){ handleErr(e,'hErr'); } }
+function stfMarkOpen(email, date){
+  const L = stfLog(email, date) || {}, opts = ['','Present','Absent','On leave','Official business','Official time','Official travel','Wellness leave','Half day','No classes'];
+  stfModal(`<h3>Mark or correct</h3><p class="sub">${esc(stfName(email))}, ${esc(dShort(date))}. Leave a box empty if there was no tap. Leave the status on Automatic to let TALA decide from the taps and the approved requests.</p>
+    <div class="stfg2">${STF_SLOTS.map(s=>`<div class="field"><label for="mk_${s[0]}">${s[1]}</label><input type="time" id="mk_${s[0]}" value="${esc(L[s[0]]||'')}"></div>`).join('')}</div>
+    <div class="field"><label for="mkSt">Status</label><select id="mkSt">${opts.map(o=>`<option value="${o}" ${o===(L.status||'')?'selected':''}>${o||'Automatic'}</option>`).join('')}</select></div>
+    <div class="field"><label for="mkNote">Note (optional)</label><input id="mkNote" maxlength="200" value="${esc(L.note||'')}" placeholder="Example: Forgot to tap, came in at 7:20"></div><p class="err" id="mkErr"></p>
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Cancel</button><button class="btn" onclick="stfMarkSave('${email}','${date}')">Save</button></div>`);
+}
+async function stfMarkSave(email, date){
+  const mark = { email, date, status:$('mkSt').value, note:$('mkNote').value.trim() }; STF_SLOTS.forEach(s => mark[s[0]] = $('mk_'+s[0]).value);
+  try{ const r = await api('staffMark', { mark }); STF.data.logs = STF.data.logs.filter(l => !(l.email===email && l.date===date)); if (!r.cleared) STF.data.logs.push(r); closeModal('stfModal'); stfDraw(); toast('Saved.'); }catch(e){ handleErr(e,'mkErr'); }
+}
+
+/* ----- time records by month ----- */
+function stfMonths(){ const out = [], first = (ATT.firstDay||todayPH()).slice(0,7), last = todayPH().slice(0,7); for (let d = first; d <= last; ){ out.push(d); const [y,m] = d.split('-').map(Number); d = m===12 ? (y+1)+'-01' : y+'-'+String(m+1).padStart(2,'0'); if (out.length > 14) break; } return out.length ? out : [last]; }
+function stfRecRows(email, ym){ const [y,m] = ym.split('-').map(Number), n = new Date(Date.UTC(y,m,0)).getUTCDate(), out = []; for (let k = 1; k <= n; k++){ const d = ym+'-'+String(k).padStart(2,'0'); const o = stfDay(email, d); if (o) out.push({ d, o }); } return out; }
+function stfTotals(rows){ const t = { present:0, absent:0, leave:0, late:0, lateN:0, under:0 }; rows.forEach(r => { if (/^Present|Half day|Official (business|time)/.test(r.o.label)) t.present++; if (r.o.label==='Absent') t.absent++; if (/leave|travel/i.test(r.o.label)) t.leave++; if (r.o.tardy){ t.lateN++; t.late += r.o.late; } t.under += r.o.under; }); return t; }
+function stfRec(){
+  const ppl = stfPeople(); if (!STF.rwho || !ppl.some(p=>p.email===STF.rwho)) STF.rwho = stfAll() ? (ppl[0]||{}).email||'' : USER.email;
+  const rows = STF.rwho ? stfRecRows(STF.rwho, STF.month) : [], T = stfTotals(rows);
+  $('stfBody').innerHTML = `<div class="bar" style="display:flex;gap:8px;flex-wrap:wrap">${stfAll()?`<select onchange="STF.rwho=this.value;stfRec()">${ppl.map(p=>`<option value="${esc(p.email)}" ${p.email===STF.rwho?'selected':''}>${esc(p.name)}</option>`).join('')}</select>`:''}
+    <select onchange="STF.month=this.value;stfRec()">${stfMonths().map(m=>`<option value="${m}" ${m===STF.month?'selected':''}>${monthName(m)}</option>`).join('')}</select>
+    <button class="btn ghost" onclick="stfRecPrint(false)">\u{1F5A8} Print this record</button>${stfAll()?`<button class="btn ghost" onclick="stfRecPrint(true)">\u{1F5A8} Print everyone, ${esc(monthName(STF.month))}</button>`:''}</div>
+    <div class="ostats"><div class="ostat static"><span class="oico">✔</span><b>${T.present}</b><span>Days present</span></div><div class="ostat static"><span class="oico">✖</span><b>${T.absent}</b><span>Days absent</span></div>
+      <div class="ostat static"><span class="oico">\u{1F334}</span><b>${T.leave}</b><span>Days on leave or travel</span></div><div class="ostat static"><span class="oico">⏰</span><b>${T.lateN}</b><span>Times late (${T.late} min)</span></div><div class="ostat static"><span class="oico">⏳</span><b>${T.under}</b><span>Minutes of undertime</span></div></div>
+    <div class="table-wrap" style="margin-top:12px"><table class="stft-table"><thead><tr><th>Date</th>${STF_SLOTS.map(s=>`<th>${s[1]}</th>`).join('')}<th>Status</th><th>Note</th>${stfHead()?'<th></th>':''}</tr></thead><tbody>
+    ${rows.map(r => { const L = r.o.log || {}; return `<tr><td>${esc(dShort(r.d))}</td>${STF_SLOTS.map(s=>`<td>${L[s[0]]?esc(time12(L[s[0]])):''}</td>`).join('')}<td>${stfChip(r.o)}</td><td><small>${esc(L.note||'')}${L.source==='Offline'?' (tapped offline)':''}</small></td>${stfHead()?`<td><button class="linkbtn" onclick="stfMarkOpen('${STF.rwho}','${r.d}')">Edit</button></td>`:''}</tr>`; }).join('') || `<tr><td colspan="8" class="empty">No school days in this month yet.</td></tr>`}
+    </tbody></table></div>`;
+}
+function stfPrintHead(title, sub){ return `<div class="stfp-h"><img src="${typeof LOGO!=='undefined'?LOGO:''}" alt=""><div><small>Republic of the Philippines</small><b>Department of Education</b><small>Region IX, Schools Division of Zamboanga Sibugay</small><small>Imelda District</small><b>BALUYAN ELEMENTARY SCHOOL</b><small>School ID 125592</small></div></div><h2 class="stfp-t">${esc(title)}</h2>${sub?`<p class="stfp-s">${esc(sub)}</p>`:''}`; }
+function stfRecPrint(all){
+  const list = all ? stfPeople() : stfPeople().filter(p => p.email===STF.rwho), headName = ((DATA||{}).headName||'').toUpperCase();
+  const one = p => { const rows = stfRecRows(p.email, STF.month), T = stfTotals(rows);
+    return `<div class="stfp-page">${stfPrintHead('Personnel Time Record', monthName(STF.month))}
+      <table class="stfp-info"><tr><td>Name</td><td><b>${esc(p.name.toUpperCase())}</b></td><td>Position</td><td><b>${esc(p.position||(p.role==='admin'?'Administrative Officer':'Teacher'))}</b></td></tr>
+      <tr><td>School hours</td><td colspan="3">${esc(time12(STF.data.hours.amIn))} to ${esc(time12(STF.data.hours.amOut))} and ${esc(time12(STF.data.hours.pmIn))} to ${esc(time12(STF.data.hours.pmOut))}</td></tr></table>
+      <table class="stfp-tbl"><thead><tr><th>Date</th><th>AM in</th><th>AM out</th><th>PM in</th><th>PM out</th><th>Status</th><th>Late (min)</th><th>Undertime (min)</th></tr></thead><tbody>
+      ${rows.map(r => { const L = r.o.log||{}; return `<tr><td>${esc(dShort(r.d))}</td>${STF_SLOTS.map(s=>`<td>${L[s[0]]?esc(time12(L[s[0]])):''}</td>`).join('')}<td>${esc(r.o.label)}</td><td>${r.o.late||''}</td><td>${r.o.under||''}</td></tr>`; }).join('')}
+      <tr class="tot"><td colspan="5">Days present: ${T.present} · Absent: ${T.absent} · On leave or travel: ${T.leave}</td><td>Late ${T.lateN} times</td><td>${T.late}</td><td>${T.under}</td></tr></tbody></table>
+      <p class="stfp-cert">I certify on my honor that the above is a true and correct report of the hours of work performed.</p>
+      <div class="stfp-sigs"><div><span>${esc(p.name.toUpperCase())}</span><small>Employee</small></div><div><span>${esc(headName)}</span><small>School Head</small></div></div>
+      <p class="stfp-foot">Generated by TALA on ${esc(fmtLong(todayPH()))}.</p></div>`; };
+  $('printArea').innerHTML = `<div class="stfprint">${list.map(one).join('')}</div>`; setTimeout(() => window.print(), 250);
+}
+
+/* ----- requests ----- */
+function stfReqList(){ const D = STF.data; return D.requests.filter(q => (!STF.st || q.status===STF.st) && (!STF.ty || q.type===STF.ty)).sort((a,b) => (a.status==='Pending'?0:1) - (b.status==='Pending'?0:1) || String(b.created).localeCompare(String(a.created))); }
+function stfStatusCls(s){ return s==='Pending' ? 'wait' : s==='Approved' ? 'ok' : s==='Approved with condition' ? 'tdy' : 'bad'; }
+function stfReqs(){
+  const D = STF.data, all = D.requests, who = stfAll() ? STF.who : USER.email, mineAll = all.filter(q => !who || q.email===who);
+  const cnt = st => mineAll.filter(q => q.status===st && (!STF.ty || q.type===STF.ty)).length;
+  if (!stfHead()) all.filter(q => q.email===USER.email && q.status!=='Pending' && !q.seen).forEach(q => { q.seen = true; api('reqSeen', { id:q.id }).catch(()=>{}); });
+  stfDotCount();
+  const list = stfReqList().filter(q => !who || q.email===who), C = stfCounts(mineAll), fy = todayPH().slice(0,4);
+  const card = (k, main, sub) => `<button class="ostat ${STF.ty===k?'on':''}" onclick="STF.ty=STF.ty==='${k}'?'':'${k}';stfReqs()"><span class="oico">${REQ_ICON[k]}</span><b>${main}</b><span>${sub}</span></button>`;
+  const line = k => `<br>${C[k].n} filed · ${C[k].dis} disapproved${C[k].pend?' · '+C[k].pend+' pending':''}`;
+  const well = who ? (() => { const u = stfWellUsed(who, fy), left = Math.max(0, stfWellDays() - u); return card('WELLNESS', stfNum(left)+' of '+stfWellDays()+' left', 'Wellness leave days left in '+fy+'<br>'+stfNum(u)+' day(s) used'); })() : card('WELLNESS', C.WELLNESS.g, 'Wellness leave granted · '+stfNum(C.WELLNESS.days)+' day(s)');
+  const groups = STF.ty ? [STF.ty] : Object.keys(REQ_LABEL);
+  $('stfBody').innerHTML = `<div class="bar" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+      <button class="btn" onclick="stfReqOpen()">＋ New request</button>${stfHead()?`<button class="btn ghost" onclick="stfRecordOpen()">＋ Add a past record</button>`:''}
+      ${stfAll()?`<select onchange="STF.who=this.value;stfReqs()"><option value="">Everyone</option>${D.people.map(p=>`<option value="${esc(p.email)}" ${p.email===STF.who?'selected':''}>${esc(p.name)}</option>`).join('')}</select>`:''}</div>
+    <h3 class="sbh4" style="font-size:15px;margin:14px 0 0">${who?(stfAll()?esc(stfName(who)):'My requests')+', this school year':'Everyone, this school year'}</h3>
+    <div class="ostats stfcnt">
+      ${card('LEAVE', C.LEAVE.g, 'Leave approved: '+stfNum(C.div+C.int)+' day(s)'+(C.intN?', '+stfNum(C.int)+' internal':'')+line('LEAVE'))}
+      ${card('EARLY', C.EARLY.g, 'Early outs granted'+line('EARLY'))}
+      ${card('LOCATOR', C.LOCATOR.g, 'Locator slips approved'+line('LOCATOR'))}
+      ${card('TRAVEL', C.TRAVEL.g, 'Travel authorities approved'+line('TRAVEL'))}
+      ${well}
+      ${C.OTHER.n?card('OTHER', C.OTHER.g, 'Other requests granted'+line('OTHER')):''}
+    </div>
+    <div class="tabs stfst" style="margin-top:12px">${[['','All'],['Pending','Pending'],['Approved','Approved'],['Approved with condition','With condition'],['Disapproved','Disapproved']].map(x=>`<button class="${STF.st===x[0]?'on':''}" onclick="STF.st='${x[0]}';stfReqs()">${x[1]}${x[0]?' ('+cnt(x[0])+')':''}</button>`).join('')}</div>
+    ${STF.ty?`<p class="hint" style="margin:8px 0 0">Showing ${esc(REQ_LABEL[STF.ty])} only. <button class="linkbtn" onclick="STF.ty='';stfReqs()">Show all kinds</button></p>`:''}
+    ${groups.map(k => { const x = list.filter(q => q.type===k); return x.length ? `<h3 class="stfgrp">${REQ_ICON[k]} ${esc(REQ_LABEL[k])} <small>${x.length}</small></h3><div class="stfreqs">${x.map(stfReqCard).join('')}</div>` : ''; }).join('') || `<div class="empty" style="margin-top:12px">No requests here yet.${stfHead()?'':' Tap New request to file one.'}</div>`}`;
+}
+function stfReqCard(q){
+  const d = q.details||{}, mine = q.email===USER.email, head = stfHead();
+  const what = q.type==='LEAVE' ? (d.leaveType||'Leave')+(d.leaveType==='Others'&&d.others?': '+d.others:'') : q.type==='LOCATOR' ? (d.ob||'Official business')+': '+(d.purpose||'') : q.type==='TRAVEL' ? (d.purpose||'') : (d.reason||'');
+  const when = dRange(q.from, q.to) + (q.type==='EARLY'&&d.time?', out at '+time12(d.time):'') + (q.type==='LOCATOR'&&d.time?', '+time12(d.time)+(d.timeTo?' to '+time12(d.timeTo):''):'') + (q.days?' · '+stfNum(q.days)+' day'+(q.days>1?'s':''):'');
+  const pr = ['LEAVE','LOCATOR','TRAVEL'].indexOf(q.type) > -1;
+  return `<div class="stfreq s-${stfStatusCls(q.status)}"><div class="stfreq-h"><span class="stfico">${REQ_ICON[q.type]}</span><div><b>${esc(REQ_LABEL[q.type])}</b>${stfAll()?`<small>${esc(q.name)}</small>`:''}</div><span class="atn ${stfStatusCls(q.status)}">${esc(q.status)}</span></div>
+    ${stfInternal(q)||d.manual?`<p class="stftags">${stfInternal(q)?'<span>Internal arrangement, not submitted to the Division</span>':''}${d.manual?'<span>Past record added by the School Head</span>':''}</p>`:''}
+    <p class="stfreq-w">${esc(what || (d.manual ? 'Added from an earlier record' : ''))}</p><p class="hint" style="margin:2px 0">${esc(when)}${q.number?' · No. '+esc(travelNo(q)):''}</p>
+    ${q.note?`<p class="stfnote"><b>${q.status==='Disapproved'?'Reason':'Condition'}:</b> ${esc(q.note)}</p>`:''}
+    ${(q.files||[]).length?`<p class="hint" style="margin:4px 0">${q.files.map(f=>`<a href="${esc(f.url)}" target="_blank" rel="noopener">\u{1F4CE} ${esc(f.name)}</a>`).join(' ')}</p>`:''}
+    <p class="hint" style="margin:4px 0 0">Filed ${esc(dTime(q.created))}${q.decidedOn?' · '+esc(q.status)+' by '+esc(q.decidedBy)+', '+esc(dTime(q.decidedOn)):''}${q.decidedOn&&q.headAway?' · School Head away that day, the OIC signs':''}</p>
+    <div class="stfreq-a">
+      ${head&&q.status==='Pending'?`<button class="btn small" onclick="stfDecide('${q.id}','Approved')">✔ Approve</button><button class="btn ghost small" onclick="stfDecide('${q.id}','Approved with condition')">Approve with condition</button><button class="btn ghost small danger" onclick="stfDecide('${q.id}','Disapproved')">Disapprove</button>`:''}
+      ${head&&q.status!=='Pending'?`<button class="btn ghost small" onclick="stfDecideMenu('${q.id}')">Change the action</button>`:''}
+      <button class="btn ghost small" onclick="stfPrint('${q.id}')">\u{1F5A8} ${pr?'Print the form':'Print the slip'}</button>
+      ${(head || (mine && q.status==='Pending'))?`<button class="btn ghost small" onclick="stfReqOpen('${q.id}')">Edit</button>`:''}
+      ${(head || (mine && q.status==='Pending'))?`<button class="linkbtn danger" onclick="stfReqDelete('${q.id}')">${head?'Delete':'Withdraw'}</button>`:''}
+    </div></div>`;
+}
+// A past record added by the School Head, for example a leave approved by email before TALA
+function stfRecordOpen(){
+  STF.edit = { type:'', from:todayPH(), to:todayPH(), details:{ useSig:false }, email: STF.who || (STF.data.people[0]||{}).email || USER.email, record:{ status:'Approved', note:'', on:todayPH() } };
+  STF.files = []; STF.keep = []; stfReqForm();
+}
+// New or edit
+function stfReqOpen(id){
+  const D = STF.data, q = id ? D.requests.find(x => x.id===id) : null;
+  STF.edit = q ? Object.assign(JSON.parse(JSON.stringify(q)), { fromWas:q.from }) : { type:'', from:todayPH(), to:todayPH(), details:{ useSig:true }, email: USER.email };
+  STF.files = []; STF.keep = q ? (q.files||[]).map(f => String(f.id||f.url)) : [];
+  if (!q){ // remember my name parts, position and salary from my last leave
+    const last = D.requests.filter(x => x.email===USER.email && x.type==='LEAVE').sort((a,b)=>String(b.created).localeCompare(String(a.created)))[0];
+    const parts = USER.name.split(/\s+/); Object.assign(STF.edit.details, last ? { last:last.details.last, first:last.details.first, middle:last.details.middle, salary:last.details.salary } : { last:parts.slice(-1)[0], first:parts.slice(0,-1).join(' ') }, { position: (last&&last.details.position) || USER.position || '' }); }
+  stfReqForm();
+}
+function stfReqForm(){
+  const e = STF.edit, d = e.details, t = e.type, head = stfHead(), D = STF.data;
+  const f = (id, label, val, o={}) => `<div class="field"><label for="${id}">${label}</label><${o.ta?'textarea':'input'} id="${id}" ${o.type?`type="${o.type}"`:''} maxlength="${o.max||200}" placeholder="${esc(o.ph||'')}" ${o.ta?'rows="2"':''} oninput="stfF()" ${o.ta?'':`value="${esc(val||'')}"`}>${o.ta?esc(val||'')+'</textarea>':''}</div>`;
+  const radio = (name, opts, val) => `<div class="stfrad">${opts.map(o=>`<label class="check" style="margin:0"><input type="radio" name="${name}" value="${esc(o)}" ${val===o?'checked':''} onchange="stfF();stfReqForm()">${esc(o)}</label>`).join('')}</div>`;
+  let body = '';
+  if (!t){
+    body = `<p class="sub">What do you need?</p><div class="stfkinds">${Object.keys(REQ_LABEL).map(k=>`<button class="choice" onclick="STF.edit.type='${k}';stfReqForm()"><b>${REQ_ICON[k]} ${esc(REQ_LABEL[k])}</b><small>${esc(REQ_HINT[k])}</small></button>`).join('')}</div>`;
+  } else {
+    const who = head ? `<div class="field"><label for="rqWho">For</label><select id="rqWho" onchange="STF.edit.email=this.value">${[{ email:USER.email, name:USER.name+' (me)' }].concat(D.people).map(p=>`<option value="${esc(p.email)}" ${p.email===e.email?'selected':''}>${esc(p.name)}</option>`).join('')}</select></div>` : '';
+    const dates = t==='EARLY' ? `<div class="stfg2">${f('rqFrom','Date',e.from,{type:'date'})}${f('rqTime','Time I will leave',d.time,{type:'time'})}</div>`
+      : t==='LOCATOR' ? `<div class="stfg2">${f('rqFrom','Date',e.from,{type:'date'})}${f('rqTo','Until (if more than a day)',e.to,{type:'date'})}${f('rqTime','From (time)',d.time,{type:'time'})}${f('rqTimeTo','To (time)',d.timeTo,{type:'time'})}</div>`
+      : `<div class="stfg2">${f('rqFrom','From',e.from,{type:'date'})}${f('rqTo','To',e.to,{type:'date'})}</div>${t==='LEAVE'||t==='WELLNESS'||t==='TRAVEL'?`<p class="hint" id="rqDays">${stfWorkDays(e.from,e.to)} working day(s), weekends and holidays not counted.</p>`:''}`;
+    if (t==='LEAVE') body = `<div class="stfg3">${f('rqLast','Last name',d.last)}${f('rqFirst','First name',d.first)}${f('rqMiddle','Middle name',d.middle)}</div>
+      <div class="stfg2">${f('rqPos','Position',d.position,{ph:'Example: Teacher III'})}${f('rqSal','Salary (optional)',d.salary,{ph:'As written on your form'})}</div>
+      <div class="field"><label for="rqLt">Type of leave</label><select id="rqLt" onchange="stfF();stfReqForm()"><option value="">Choose</option>${LEAVE_TYPES.map(x=>`<option ${x===d.leaveType?'selected':''}>${esc(x)}</option>`).join('')}</select></div>
+      ${d.leaveType==='Others'?f('rqOthers','Please specify',d.others):''}
+      ${d.leaveType==='Vacation Leave'||d.leaveType==='Special Privilege Leave'?`<div class="field"><label>Where</label>${radio('rqWhere',['Within the Philippines','Abroad'],d.where)}</div>${f('rqPlace','Place',d.place,{ph:'Example: Ipil, Zamboanga Sibugay'})}`:''}
+      ${d.leaveType==='Sick Leave'?`<div class="field"><label>Sick leave</label>${radio('rqSick',['In Hospital','Out Patient'],d.sick)}</div>${f('rqIll','Illness',d.illness)}`:''}
+      ${d.leaveType==='Special Leave Benefits for Women'?f('rqIll','Illness',d.illness):''}
+      ${d.leaveType==='Study Leave'?`<div class="field"><label>Study leave</label>${radio('rqStudy',["Completion of Master's Degree",'BAR/Board Examination Review'],d.study)}</div>`:''}
+      <div class="field"><label>Other purpose (optional)</label>${radio('rqOp',['None','Monetization of Leave Credits','Terminal Leave'],d.otherPurpose||'None')}</div>
+      ${dates}<div class="field"><label>Commutation</label>${radio('rqCom',['Not Requested','Requested'],d.commutation||'Not Requested')}</div>`;
+    else if (t==='LOCATOR') body = `<div class="field"><label>Please check</label>${radio('rqOb',['Official Business','Official Time'],d.ob||'Official Business')}</div>${f('rqPurpose','Purpose',d.purpose,{ta:1,max:300,ph:'Example: Submit the SF2 to the District Office'})}${f('rqDest','Destination',d.destination,{ph:'Example: Imelda District Office'})}${f('rqPos','Position',d.position)}${dates}`;
+    else if (t==='TRAVEL') body = `${f('rqPurpose','Purpose of travel',d.purpose,{ta:1,max:400,ph:'Must be supported by attachments, such as the memo or invitation'})}${f('rqHost','Host of activity',d.host,{ph:'Example: SDO Zamboanga Sibugay'})}${f('rqDest','Destination',d.destination)}${f('rqFund','Fund source',d.fund,{ph:'Example: MOOE, or Division funds'})}${f('rqPos','Position',d.position)}${dates}`;
+    else body = `${dates}${f('rqReason', t==='OTHER'?'What is the request':'Reason', d.reason, { ta:1, max:400, ph: t==='EARLY'?'Example: Check up of my child at the health center':t==='WELLNESS'?'Example: Rest after the division event':'Type the details' })}`;
+    if (t==='WELLNESS'){ const fy = (e.from||todayPH()).slice(0,4), used = stfWellUsed(e.email, fy, e.id), left = stfWellDays() - used;
+      body += `<p class="stfwell ${left<=0?'bad':''}">Wellness leave in ${fy}: <b>${stfNum(Math.max(0,left))} of ${stfWellDays()} day(s) left</b>${used?' ('+stfNum(used)+' used)':''}.${left<=0?' No days are left this fiscal year.':''}</p>`; }
+    if (head && (e.record || e.id)) body += `<div class="field"><label for="rqDaysN">Number of days</label><input type="number" id="rqDaysN" min="0" step="0.5" value="${e.days!==undefined && e.days!==null && (e.record || e.id) ? e.days : ''}" placeholder="${stfWorkDays(e.from,e.to)}" oninput="stfF()"><small class="hint">Leave it empty to count the working days of the dates. Use .5 for a half day.</small></div>`;
+    if (head && t==='LEAVE') body += `<label class="check"><input type="checkbox" id="rqInt" ${d.internal?'checked':''} onchange="stfF()">Internal arrangement only. Not submitted to the Division, so there is no salary deduction.</label>`;
+    if (e.record) body += `<div class="stfrecbox"><b>Action already taken</b><div class="stfg2"><div class="field"><label for="rcSt">Action</label><select id="rcSt" onchange="stfF()">${['Approved','Approved with condition','Disapproved'].map(x=>`<option ${x===e.record.status?'selected':''}>${x}</option>`).join('')}</select></div>
+      <div class="field"><label for="rcOn">Date of the action</label><input type="date" id="rcOn" value="${esc(e.record.on)}" onchange="stfF()"></div></div>
+      <div class="field"><label for="rcNote">Condition, reason, or where it came from (optional)</label><input id="rcNote" maxlength="300" value="${esc(e.record.note)}" placeholder="Example: Approved through email on October 2" oninput="stfF()"></div></div>`;
+    const files = (e.files||[]).filter(x => STF.keep.indexOf(String(x.id||x.url)) > -1);
+    body = `<p class="sub">${esc(REQ_HINT[t])} <button class="linkbtn" onclick="STF.edit.type='';stfReqForm()">Change</button></p>${who}${body}
+      <div class="field"><label for="rqFiles">Supporting files (optional)</label><input type="file" id="rqFiles" multiple accept="image/*,.pdf,.doc,.docx" onchange="STF.files=[...this.files]">
+        ${files.length?`<div class="hint">${files.map(x=>`<span class="stffile">\u{1F4CE} ${esc(x.name)} <button class="linkbtn" onclick="STF.keep=STF.keep.filter(k=>k!=='${esc(String(x.id||x.url))}');stfF();stfReqForm()">Remove</button></span>`).join(' ')}</div>`:''}<small class="hint">Medical certificate, memo, invitation, or a photo of it. Up to 15 MB each.</small></div>
+      ${['LEAVE','LOCATOR','TRAVEL'].indexOf(t) > -1?`<label class="check"><input type="checkbox" id="rqSig" ${d.useSig!==false?'checked':''} onchange="stfF()">Put my e-signature on the form</label>`:''}`;
+  }
+  stfModal(`<h3>${e.record?'Add a past record':e.id?'Edit the request':'New request'}</h3>${e.record&&!t?'<p class="sub">Add a leave, early out, wellness leave or other request that was already acted on, for example through email, so it adds up in the summary. The teacher is not notified.</p>':''}${body}<p class="err" id="rqErr"></p>
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Cancel</button>${t?`<button class="btn" id="rqBtn" onclick="stfReqSave()">${e.record||e.id||head?'Save':'Send to the School Head'}</button>`:''}</div>`, 'wide');
+}
+// reads the form into STF.edit
+function stfF(){
+  const e = STF.edit, d = e.details, v = id => $(id) ? $(id).value.trim() : undefined, r = n => { const x = document.querySelector(`input[name="${n}"]:checked`); return x ? x.value : undefined; };
+  const set = (k, val) => { if (val !== undefined) d[k] = val; };
+  if (v('rqFrom') !== undefined) e.from = v('rqFrom'); if ($('rqTo')){ e.to = v('rqTo') || e.from; if (e.to < e.from){ e.to = e.from; $('rqTo').value = e.from; } } else e.to = e.from;
+  set('last', v('rqLast')); set('first', v('rqFirst')); set('middle', v('rqMiddle')); set('position', v('rqPos')); set('salary', v('rqSal')); set('leaveType', v('rqLt')); set('others', v('rqOthers'));
+  set('where', r('rqWhere')); set('place', v('rqPlace')); set('sick', r('rqSick')); set('illness', v('rqIll')); set('study', r('rqStudy')); const op = r('rqOp'); if (op !== undefined) d.otherPurpose = op==='None' ? '' : op; set('commutation', r('rqCom'));
+  set('ob', r('rqOb')); set('purpose', v('rqPurpose')); set('destination', v('rqDest')); set('host', v('rqHost')); set('fund', v('rqFund')); set('time', v('rqTime')); set('timeTo', v('rqTimeTo')); set('reason', v('rqReason'));
+  if ($('rqSig')) d.useSig = $('rqSig').checked; if ($('rqInt')) d.internal = $('rqInt').checked;
+  if ($('rqDaysN')) e.daysN = $('rqDaysN').value;
+  if (e.record){ if ($('rcSt')) e.record.status = $('rcSt').value; if ($('rcOn')) e.record.on = $('rcOn').value; if ($('rcNote')) e.record.note = $('rcNote').value.trim(); }
+  if ($('rqWho')) e.email = $('rqWho').value;
+  if ($('rqDays')) $('rqDays').textContent = stfWorkDays(e.from, e.to)+' working day(s), weekends and holidays not counted.';
+}
+async function stfReqSave(){
+  stfF(); const e = STF.edit, d = e.details;
+  if (!e.from) return $('rqErr').textContent = 'Choose the date.';
+  if (e.to < e.from) return $('rqErr').textContent = 'The end date is before the start date.';
+  if (e.type==='LEAVE' && !d.leaveType) return $('rqErr').textContent = 'Choose the type of leave.';
+  if (e.type==='LEAVE' && !e.record && (!d.last || !d.first)) return $('rqErr').textContent = 'Type your last name and first name as written on your form.';
+  if (!e.record && (e.type==='LOCATOR' || e.type==='TRAVEL') && !d.purpose) return $('rqErr').textContent = 'Type the purpose.';
+  if (!e.record && ['EARLY','WELLNESS','OTHER'].indexOf(e.type) > -1 && !d.reason) return $('rqErr').textContent = 'Type the reason.';
+  if (!e.record && e.type==='EARLY' && !d.time) return $('rqErr').textContent = 'Choose the time you will leave.';
+  if (STF.files.reduce((a,f)=>a+f.size,0) > 25*1048576) return $('rqErr').textContent = 'The files are too large together. Attach fewer or smaller files.';
+  d.fullName = e.type==='LEAVE' ? [d.first, d.middle ? d.middle.charAt(0)+'.' : '', d.last].filter(Boolean).join(' ') : '';
+  const auto = ['LEAVE','WELLNESS','TRAVEL'].indexOf(e.type) > -1 ? stfWorkDays(e.from, e.to) : 0;
+  const days = e.daysN !== undefined && e.daysN !== '' ? Number(e.daysN) : auto;
+  if (e.type==='WELLNESS'){ const left = stfWellDays() - stfWellUsed(e.email, e.from.slice(0,4), e.id); if (days > left && !confirm('Only '+stfNum(Math.max(0,left))+' wellness day(s) are left in '+e.from.slice(0,4)+'. Save anyway?')) return; }
+  const req = { id:e.id, type:e.type, from:e.from, to:e.to, email:e.email, days, details:d, keep: e.id ? STF.keep : null, uploads:[], record: e.record || undefined };
+  $('rqBtn').disabled = true;
+  try{ for (const f of STF.files){ loading(true, 'Uploading '+f.name); req.uploads.push({ name:f.name, mime:f.type, base64: await readB64(f) }); }
+    loading(true, 'Sending'); STF.data.requests = await api('reqSave', { req }); closeModal('stfModal'); STF.tab = 'req'; STF.st = ''; stfDraw();
+    toast(e.record ? 'Past record added. It now counts in the summary.' : e.id ? 'Saved.' : stfHead() ? 'Saved.' : 'Sent to the School Head. You will see the action here.'); }
+  catch(x){ handleErr(x, 'rqErr'); }
+  loading(false); if ($('rqBtn')) $('rqBtn').disabled = false;
+}
+async function stfReqDelete(id){
+  const q = STF.data.requests.find(x => x.id===id); if (!q) return;
+  if (!confirm(stfHead() ? 'Delete this request of '+q.name+'? It will be removed from the records and the summary.' : 'Withdraw this request?')) return;
+  try{ STF.data.requests = await api('reqDelete', { id }); stfDraw(); toast(stfHead()?'Deleted.':'Withdrawn.'); }catch(e){ handleErr(e); }
+}
+// Approve, approve with condition, disapprove. Condition and reason are asked in a pop up.
+function stfDecide(id, dec){
+  const q = STF.data.requests.find(x => x.id===id); if (!q) return;
+  const need = dec==='Approved with condition' || dec==='Disapproved';
+  const away = (OBS.cal||[]).some(x => x.date===todayPH() && x.type && !/^No classes/.test(x.type));
+  stfModal(`<h3>${dec==='Approved'?'Approve':dec==='Disapproved'?'Disapprove':dec==='Pending'?'Set back to pending':'Approve with condition'}</h3>
+    <p class="sub">${esc(q.name)}: ${esc(REQ_LABEL[q.type])}, ${esc(dRange(q.from, q.to))}.</p>
+    ${need?`<div class="field"><label for="dcNote">${dec==='Disapproved'?'Reason for disapproval':'What is the condition?'}</label><textarea id="dcNote" rows="3" maxlength="600" placeholder="${dec==='Disapproved'?'Example: The Division monitoring is on this day. Please file for another date.':'Example: Submit the medical certificate when you report back.'}">${esc(q.status===dec?q.note||'':'')}</textarea></div>`:''}
+    ${q.type==='LEAVE' && dec!=='Disapproved' && dec!=='Pending'?`<label class="check"><input type="checkbox" id="dcInt" ${q.details&&q.details.internal?'checked':''}>Internal arrangement only. Not submitted to the Division, so there is no salary deduction.</label>`:''}
+    ${q.type==='WELLNESS' && dec!=='Disapproved' && dec!=='Pending'?(() => { const fy = q.from.slice(0,4), left = stfWellDays() - stfWellUsed(q.email, fy, q.id); return `<p class="stfwell ${left < (q.days||0)?'bad':''}">${esc(q.name)} has ${stfNum(Math.max(0,left))} of ${stfWellDays()} wellness day(s) left in ${fy}. This request is ${stfNum(q.days||0)} day(s).</p>`; })():''}
+    ${dec!=='Pending'?`<p class="hint">${away?'You are tagged away today, so the form prints without your e-signature. The OIC signs it by hand.':'The printed form will carry your e-signature'+(q.type==='LEAVE'?' in 7.B Recommendation.':q.type==='LOCATOR'?' in Approved.':q.type==='TRAVEL'?' as the Recommending Authority.':' on the slip.')}</p>`:''}
+    <p class="err" id="dcErr"></p><div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Cancel</button><button class="btn ${dec==='Disapproved'?'danger':''}" onclick="stfDecideSave('${id}','${dec}')">${dec==='Pending'?'Set to pending':'Save'}</button></div>`);
+  if (need) setTimeout(() => $('dcNote') && $('dcNote').focus(), 150);
+}
+function stfDecideMenu(id){
+  const q = STF.data.requests.find(x => x.id===id);
+  stfModal(`<h3>Change the action</h3><p class="sub">${esc(q.name)}: ${esc(REQ_LABEL[q.type])}. Now: <b>${esc(q.status)}</b>${q.note?', '+esc(q.note):''}.</p>
+    <div class="stfkinds">${['Approved','Approved with condition','Disapproved','Pending'].filter(s => s!==q.status || s!=='Approved').map(s=>`<button class="choice" onclick="stfDecide('${id}','${s}')"><b>${s==='Pending'?'Set back to pending':s===q.status?'Edit the '+(s==='Disapproved'?'reason':'condition'):s}</b></button>`).join('')}</div>
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Close</button></div>`);
+}
+async function stfDecideSave(id, dec){
+  const note = $('dcNote') ? $('dcNote').value.trim() : '';
+  if (dec==='Approved with condition' && !note) return $('dcErr').textContent = 'Type the condition.';
+  if (dec==='Disapproved' && !note) return $('dcErr').textContent = 'Type the reason.';
+  const internal = $('dcInt') ? $('dcInt').checked : undefined;
+  try{ STF.data.requests = await api('reqDecide', { id, decision:dec, note, internal }); closeModal('stfModal'); stfDotCount(); stfDraw(); toast(dec==='Pending' ? 'Set back to pending.' : 'Saved. '+stfName(STF.data.requests.find(x=>x.id===id).email)+' will be notified.'); }
+  catch(e){ handleErr(e, 'dcErr'); }
+}
+// Print the form (PDF), or download the Word or Excel file of the same form
+async function stfPrint(id){
+  const q = STF.data.requests.find(x => x.id===id), off = ['LEAVE','LOCATOR','TRAVEL'].indexOf(q.type) > -1;
+  const sigNote = stfGranted(q) || q.status==='Disapproved' ? (q.headAway ? 'The School Head was away on the day of the action, so the form has no e-signature. The OIC signs it by hand.' : 'The form carries the e-signature of the School Head.') : 'Not yet acted on, so the form has no signature of the School Head yet.';
+  stfModal(`<h3>Print ${off?'the form':'the slip'}</h3><p class="sub">${esc(q.name)}: ${esc(REQ_LABEL[q.type])}, ${esc(dRange(q.from, q.to))}.</p><p class="hint">${esc(sigNote)}</p>
+    <div class="stfkinds">${off?`<button class="choice" onclick="stfOut('${id}','pdf')"><b>\u{1F5A8} PDF for printing</b><small>On the ${q.type==='LEAVE'?'CS Form No. 6':q.type==='LOCATOR'?'Locator Slip':'Travel Authority'}, ready to print</small></button>
+      ${stfInternal(q)?`<button class="choice" onclick="stfOut('${id}','slip')"><b>\u{1F5A8} Internal leave slip</b><small>For the school file. This leave is not submitted to the Division.</small></button>`:''}
+      <button class="choice" onclick="stfOut('${id}','${q.type==='LEAVE'?'xlsx':'docx'}')"><b>\u{1F4C4} ${q.type==='LEAVE'?'Excel file':'Word file'}</b><small>The original form, filled in, if you need to edit it</small></button>`
+      :`<button class="choice" onclick="stfOut('${id}','slip')"><b>\u{1F5A8} Print the slip</b><small>For the school file. Not sent to the Division.</small></button>`}</div>
+    <p class="err" id="poErr"></p><div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Close</button></div>`);
+}
+async function stfOut(id, fmt){
+  const win = fmt==='pdf' ? window.open('', '_blank') : null;
+  loading(true, 'Filling the form');
+  try{ const P = await api('reqPrint', { id }), q = P.req;
+    if (fmt==='slip'){ if (win) win.close(); closeModal('stfModal'); loading(false); return stfSlip(P); }
+    const blob = fmt==='pdf' ? await formPdf(P) : fmt==='xlsx' ? await leaveXlsx(P) : await formDocx(P), name = formTitle(q)+'.'+fmt;
+    if (win){ const url = URL.createObjectURL(blob); win.location.href = url; setTimeout(() => URL.revokeObjectURL(url), 60000); } else saveBlob(blob, name);
+    closeModal('stfModal'); toast(fmt==='pdf' ? 'The form is open. Print it or save it.' : 'Downloaded.'); }
+  catch(e){ if (win) win.close(); handleErr(e, 'poErr'); }
+  loading(false);
+}
+// The school slip for early out, wellness leave and other special requests
+function stfSlip(P){
+  const q = P.req, d = q.details||{}, acted = /^Approved|^Disapproved/.test(q.status), headOn = !P.headAway;
+  const title = q.type==='EARLY' ? 'REQUEST TO LEAVE THE SCHOOL EARLY' : q.type==='WELLNESS' ? 'REQUEST FOR WELLNESS LEAVE' : q.type==='LEAVE' ? 'LEAVE BY INTERNAL ARRANGEMENT' : 'SPECIAL REQUEST';
+  if (q.type==='LEAVE' && !d.reason) d.reason = (d.leaveType||'Leave') + (d.illness?', '+d.illness:'') + (d.place?', '+d.place:'') + (d.others?', '+d.others:'');
+  const box = (on, t) => `<span class="stfp-box">${on?'✓':''}</span> ${t}`;
+  const slip = `<div class="stfp-slip">${stfPrintHead(title, 'For the school file only. Not submitted to the Division.')}
+    <table class="stfp-info"><tr><td>Name</td><td><b>${esc(q.name.toUpperCase())}</b></td><td>Position</td><td>${esc(q.position||'')}</td></tr>
+    <tr><td>Date filed</td><td>${esc(fmtLong(String(q.created).slice(0,10)))}</td><td>${q.type==='EARLY'?'Date and time out':'Date'}</td><td><b>${esc(dRange(q.from, q.to))}${q.type==='EARLY'&&d.time?', '+esc(time12(d.time)):''}</b>${q.days?' ('+q.days+' day'+(q.days>1?'s':'')+')':''}</td></tr>
+    <tr><td>${q.type==='OTHER'?'Request':'Reason'}</td><td colspan="3">${esc(d.reason||'')}</td></tr></table>
+    <div class="stfp-sigs"><div><span class="sigimg">${P.mySig?`<img src="${P.mySig}" alt="">`:''}</span><span>${esc(q.name.toUpperCase())}</span><small>Signature of the requesting employee</small></div><div></div></div>
+    <div class="stfp-act"><b>ACTION OF THE SCHOOL HEAD</b><div>${box(q.status==='Approved','Approved')} &nbsp; ${box(q.status==='Approved with condition','Approved with condition')} &nbsp; ${box(q.status==='Disapproved','Disapproved')}</div>
+      ${q.note?`<p>${q.status==='Disapproved'?'Reason':'Condition'}: <b>${esc(q.note)}</b></p>`:'<p>Condition or reason: ______________________________________________</p>'}</div>
+    <div class="stfp-sigs"><div></div><div><span class="sigimg">${acted && headOn && P.headSig?`<img src="${P.headSig}" alt="">`:''}</span><span>${headOn?esc((P.headName||'').toUpperCase()):'&nbsp;'}</span><small>School Head${acted && headOn && q.decidedOn?', '+esc(fmtLong(String(q.decidedOn).slice(0,10))):''}</small></div></div>
+    <p class="stfp-foot">TALA request ${esc(q.id)}. Generated on ${esc(fmtLong(todayPH()))}.</p></div>`;
+  $('printArea').innerHTML = `<div class="stfprint">${slip}</div>`; setTimeout(() => window.print(), 250);
+}
+
+/* ----- summary per teacher ----- */
+function stfPeriod(){
+  const today = todayPH(), st = ((DATA||PUB||{}).settings)||{};
+  if (STF.period==='month') return [STF.month+'-01', STF.month+'-31', monthName(STF.month)];
+  if (STF.period==='sy') return [ATT.firstDay || today.slice(0,4)+'-06-01', today.slice(0,4)*1+(today.slice(5,7)>'05'?1:0)+'-05-31', 'School year'];
+  if (STF.period==='fy') return [today.slice(0,4)+'-01-01', today.slice(0,4)+'-12-31', 'Fiscal year '+today.slice(0,4)];
+  if (STF.period==='custom') return [STF.pfrom || today, STF.pto || today, dRange(STF.pfrom||today, STF.pto||today)];
+  const starts = [st.t1, st.t2, st.t3].filter(Boolean); let a = starts[0] || ATT.firstDay || today, n = 1;
+  starts.forEach((x,i) => { if (x <= today){ a = x; n = i+1; } });
+  // the end of the term: the last week in the term schedule, or the day before the next term
+  let b = ''; for (let w = 12; w >= 1 && !b; w--){ const k = typeof weekOf==='function' ? weekOf(String(n), String(w)) : null; if (k && k.end) b = k.end; }
+  if (!b) b = starts[n] ? addDays(starts[n], -1) : addDays(a, 90);
+  return [a, b, 'Term '+n];
+}
+function stfSumRow(p, a, b){
+  const R = STF.data.requests.filter(q => q.email===p.email && q.from <= b && (q.to||q.from) >= a), C = stfCounts(R), fy = (b > todayPH() ? todayPH() : b).slice(0,4);
+  const o = Object.assign({ p, n:R.length, granted:R.filter(stfGranted).length, pend:R.filter(q=>q.status==='Pending').length, dis:R.filter(q=>q.status==='Disapproved').length, cond:R.filter(q=>q.status==='Approved with condition').length }, C);
+  o.well = { used: stfWellUsed(p.email, fy), fy }; o.well.left = Math.max(0, stfWellDays() - o.well.used);
+  const rows = []; for (let d = a; d <= b && d <= todayPH(); d = addDays(d,1)){ const x = stfDay(p.email, d); if (x) rows.push({ d, o:x }); if (rows.length > 400) break; }
+  o.att = stfTotals(rows); o.R = R; return o;
+}
+const STF_SUMCOLS = ['Name','Leave, Division','Leave, internal','Early outs','Wellness leave','Locator slips','Travel','Other','Pending','Disapproved','Present','Absent','Late'];
+function stfSum(){
+  const [a, b, label] = stfPeriod(), rows = stfPeople().map(p => stfSumRow(p, a, b));
+  const g = (x) => x.n ? `<b>${x.g}</b><small>of ${x.n} filed${x.days?', '+stfNum(x.days)+' d':''}</small>` : '<span class="hint">0</span>';
+  const leaveDiv = o => { const L = o.R.filter(q => q.type==='LEAVE'), D = L.filter(q => !stfInternal(q)); return D.length ? `<b>${stfNum(o.div)} d</b><small>${D.filter(stfGranted).length} of ${D.length} granted</small>` : '<span class="hint">0</span>'; };
+  const leaveInt = o => o.intN ? `<b>${stfNum(o.int)} d</b><small>${o.intN} granted</small>` : '<span class="hint">0</span>';
+  $('stfBody').innerHTML = `<div class="bar" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><div class="tabs">${[['month','Month'],['term','Term'],['sy','School year'],['fy','Fiscal year'],['custom','Dates']].map(t=>`<button class="${STF.period===t[0]?'on':''}" onclick="STF.period='${t[0]}';stfSum()">${t[1]}</button>`).join('')}</div>
+    ${STF.period==='month'?`<select onchange="STF.month=this.value;stfSum()">${stfMonths().map(m=>`<option value="${m}" ${m===STF.month?'selected':''}>${monthName(m)}</option>`).join('')}</select>`:''}
+    ${STF.period==='custom'?`<input type="date" value="${STF.pfrom}" onchange="STF.pfrom=this.value;stfSum()"><input type="date" value="${STF.pto}" onchange="STF.pto=this.value;stfSum()">`:''}
+    <button class="btn ghost" onclick="stfSumPrint()">\u{1F5A8} Print the summary</button>${stfHead()?`<button class="btn ghost" onclick="STF.tab='req';stfDraw();stfRecordOpen()">＋ Add a past record</button>`:''}</div>
+    <p class="hint">${esc(label)}: ${esc(dRange(a, b))}. Requests count up to the end of the period, including approved dates still ahead. Attendance counts up to today. Granted means approved or approved with condition. "d" means working days. Wellness leave is ${stfWellDays()} days per fiscal year (January to December).</p>
+    <div class="table-wrap"><table class="stft-table stfsum"><thead><tr>${STF_SUMCOLS.map(c=>`<th>${c}</th>`).join('')}</tr></thead><tbody>
+    ${rows.map(o => `<tr><td><button class="linkbtn" onclick="STF.who='${o.p.email}';STF.tab='req';STF.st='';STF.ty='';stfDraw()"><b>${esc(o.p.name)}</b></button><small>${o.n?o.granted+' of '+o.n+' granted'+(o.cond?', '+o.cond+' with condition':''):'None filed'}</small></td>
+      <td>${leaveDiv(o)}</td><td>${leaveInt(o)}</td><td>${g(o.EARLY)}</td>
+      <td class="${o.well.left<=0?'stfbad':''}"><b>${stfNum(o.well.left)} left</b><small>${stfNum(o.well.used)} of ${stfWellDays()} used in ${o.well.fy}</small></td>
+      <td>${g(o.LOCATOR)}</td><td>${g(o.TRAVEL)}</td><td>${g(o.OTHER)}</td><td>${o.pend||''}</td><td>${o.dis||''}</td><td>${o.att.present}</td><td>${o.att.absent}</td><td>${o.att.lateN?o.att.lateN+'<small>'+o.att.late+' min</small>':''}</td></tr>`).join('') || '<tr><td colspan="13" class="empty">No personnel yet.</td></tr>'}
+    </tbody></table></div>`;
+}
+function stfSumPrint(){
+  const [a, b, label] = stfPeriod(), rows = stfPeople().map(p => stfSumRow(p, a, b)), headName = ((DATA||{}).headName||'').toUpperCase();
+  const c = x => x.n ? x.g+' of '+x.n+(x.days?' ('+stfNum(x.days)+' d)':'') : '0';
+  const detail = rows.filter(o => o.R.length).map(o => `<h3 class="stfp-n">${esc(o.p.name)}</h3><table class="stfp-tbl"><thead><tr><th>Kind</th><th>Dates</th><th>Details</th><th>Action</th><th>Condition or reason</th></tr></thead><tbody>
+    ${o.R.map(q => `<tr><td>${esc(REQ_LABEL[q.type])}${stfInternal(q)?' (internal)':''}${q.details.manual?' (past record)':''}</td><td>${esc(dRange(q.from, q.to))}${q.days?' ('+stfNum(q.days)+' d)':''}</td><td>${esc(q.type==='LEAVE'?q.details.leaveType||'':q.details.purpose||q.details.reason||'')}</td><td>${esc(q.status)}</td><td>${esc(q.note||'')}</td></tr>`).join('')}</tbody></table>`).join('');
+  $('printArea').innerHTML = `<div class="stfprint"><div class="stfp-page">${stfPrintHead('Summary of Leave and Requests of Personnel', label+': '+dRange(a, b))}
+    <table class="stfp-tbl"><thead><tr>${STF_SUMCOLS.map(x=>`<th>${x}</th>`).join('')}</tr></thead><tbody>
+    ${rows.map(o => `<tr><td>${esc(o.p.name)}</td><td>${stfNum(o.div)} d</td><td>${stfNum(o.int)} d</td><td>${c(o.EARLY)}</td><td>${stfNum(o.well.used)} used, ${stfNum(o.well.left)} left</td><td>${c(o.LOCATOR)}</td><td>${c(o.TRAVEL)}</td><td>${c(o.OTHER)}</td><td>${o.pend}</td><td>${o.dis}</td><td>${o.att.present}</td><td>${o.att.absent}</td><td>${o.att.lateN}</td></tr>`).join('')}</tbody></table>
+    <p class="hint">"2 of 3" means 2 granted out of 3 filed. "d" means working days. Internal leave is not submitted to the Division. Wellness leave is ${stfWellDays()} days per fiscal year.</p>${detail}
+    <div class="stfp-sigs">${stfRole()==='admin'?`<div><span>${esc(USER.name.toUpperCase())}</span><small>Prepared by, Administrative Officer</small></div>`:'<div></div>'}<div><span>${esc(headName)}</span><small>School Head</small></div></div>
+    <p class="stfp-foot">Generated by TALA on ${esc(fmtLong(todayPH()))}.</p></div></div>`;
+  setTimeout(() => window.print(), 250);
+}
+function stfModal(html, cls){ const m = $('stfModal'); m.querySelector('.modal').className = 'modal '+(cls||''); $('stfMBody').innerHTML = html; openModal('stfModal'); }
 
 /* ----- New school year: clean slate (LPT and PPT files and records are kept) ----- */
 function openNewSY(){ $('menu').classList.remove('open'); $('nsErr').textContent=''; $('nsConfirm').value=''; openModal('nsModal'); }

@@ -1,9 +1,9 @@
 // TALA offline helper. Upload this to GitHub next to index.html and config.js.
 // It keeps a copy of the page so TALA opens even without internet.
-const CACHE = 'tala-v6';
+const CACHE = 'tala-v8';
 self.addEventListener('install', e => {
   self.skipWaiting();
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(['./', './index.html', './config.js', './manifest.json', './icon-192.png', './icon-512.png', './apple-touch-icon.png', './pmcf-template.xlsm', './mwa-template.xlsm', './sf2-template.xlsx', './sf4-template.xlsx']).catch(() => {})));
+  e.waitUntil(caches.open(CACHE).then(c => c.addAll(['./', './index.html', './config.js', './manifest.json', './icon-192.png', './icon-512.png', './apple-touch-icon.png', './pmcf-template.xlsm', './mwa-template.xlsm', './sf2-template.xlsx', './sf4-template.xlsx', './leave-template.xlsx', './locator-template.docx', './travel-template.docx', './leave-form.pdf', './locator-slip.pdf', './travel-authority.pdf']).catch(() => {})));
 });
 self.addEventListener('activate', e => {
   e.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim()));
