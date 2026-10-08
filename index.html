@@ -931,11 +931,15 @@ textarea.nbt{-webkit-touch-callout:none}
 .hubnote{display:flex;flex-direction:column;gap:8px;background:var(--card);border:2px solid #d9a400;border-radius:14px;padding:10px 12px;min-height:260px}.hubnote[hidden]{display:none}
 .hubnote-h{display:flex;align-items:flex-start;gap:8px}.hubnote-h>div{flex:1}.hubnote-h small{display:block;color:var(--muted);font-size:12px}.hubnote textarea{flex:1;min-height:200px;width:100%;resize:vertical;border:1px solid var(--line);border-radius:10px;padding:10px;font:inherit;font-size:15px;line-height:1.5}
 .nbfab{position:fixed;right:22px;bottom:22px;z-index:3100;width:58px;height:58px;border-radius:50%;border:0;background:#d9a400;color:#fff;font-size:26px;cursor:pointer;box-shadow:0 8px 22px rgba(0,0,0,.35)}.nbfab.on{background:#1F5130}
-.hubframe.slides{aspect-ratio:4/3;background:#f2f2f2}.hubframe.slides iframe{position:absolute;inset:0;width:100%;height:100%;border:0}.pvshield{position:absolute;top:0;right:0;width:76px;height:60px;z-index:3}
+.hubframe.slides{aspect-ratio:16/9;background:#e9ece8;display:flex;align-items:center;justify-content:center;touch-action:pan-y;-webkit-user-select:none;user-select:none}.hubframe.slides canvas{display:block;max-width:100%;max-height:100%;background:#fff;box-shadow:0 2px 12px rgba(0,0,0,.15)}
+.deckmsg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;color:#333;font-size:15px}.deckmsg[hidden]{display:none}
+.deckarrow{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:64px;border:0;border-radius:10px;background:rgba(0,0,0,.35);color:#fff;font-size:30px;cursor:pointer;opacity:.0;transition:opacity .2s}.hubframe.slides:hover .deckarrow{opacity:1}.deckarrow:disabled{display:none}.deckarrow.l{left:8px}.deckarrow.r{right:8px}
+.deckctl #dkPrev,.deckctl #dkNext{font-weight:700;padding:8px 14px}.deckctl #dkPrev:disabled,.deckctl #dkNext:disabled{opacity:.35;cursor:default}
+@media(hover:none){.deckarrow{opacity:.45;width:30px;height:46px;font-size:22px;background:rgba(0,0,0,.28)}}
 .hubslide{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:16px!important;gap:6px;background:linear-gradient(135deg,#1F5130,#2f7a4a);color:#fff;padding:12px;text-align:center}.hubslide b{display:none}.hubslide small{font-size:13px;line-height:1.3;max-height:3.9em;overflow:hidden}
 .hubkind{display:block;color:#7a5a00!important;font-weight:600}
 #hubPlayer .hubmodal{padding-bottom:86px}body.hubopen #chatFab{display:none!important}
-@media(max-width:820px){.hubwrap.notes{grid-template-columns:minmax(0,1fr)}.hubframe.slides{aspect-ratio:3/4}}
+@media(max-width:820px){.hubwrap.notes{grid-template-columns:minmax(0,1fr)}}
 .hubframe{border-radius:0}.ytcrop{position:absolute;left:0;right:0;top:-62px;bottom:-62px}.ytcrop iframe,.ytcrop #ytBox{width:100%;height:100%;pointer-events:none;border:0}
 .ytshield{position:absolute;inset:0;z-index:2;cursor:pointer;display:grid;place-items:center;-webkit-user-select:none;user-select:none}
 .ytshield span{width:68px;height:68px;border-radius:50%;background:rgba(0,0,0,.55);color:#fff;font-size:28px;display:grid;place-items:center;transition:opacity .2s}
@@ -1675,8 +1679,8 @@ textarea.nbt{-webkit-touch-callout:none}
 
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
-const MIN_SERVER = '5.1'; // oldest Code.gs this page works with
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'5.1', date:'October 9, 2026' } };
+const MIN_SERVER = '5.3'; // oldest Code.gs this page works with
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'5.3', date:'October 9, 2026' } };
 function verLine(server){
   const old = server && (server.indexOf('older') > -1 || parseFloat(server) < parseFloat(MIN_SERVER));
   const s = server ? ' Server '+server+('.') : '';
@@ -7356,8 +7360,8 @@ function hubForm(id){
     <div class="field"><label>Kind of material</label><div class="stfrad"><label class="check" style="margin:0"><input type="radio" name="hbKind" value="VIDEO" ${LAC.hubKind==='VIDEO'?'checked':''} onchange="hubKindSet('VIDEO')">▶ YouTube video</label><label class="check" style="margin:0"><input type="radio" name="hbKind" value="SLIDES" ${LAC.hubKind==='SLIDES'?'checked':''} onchange="hubKindSet('SLIDES')">\u{1F4CA} PowerPoint or PDF slides</label></div></div>
     <div id="hbVideo" ${LAC.hubKind==='SLIDES'?'hidden':''}><div class="field"><label for="hbUrl">YouTube link</label><input id="hbUrl" value="${esc(h.kind==='SLIDES'?'':h.url||'')}" placeholder="https://youtu.be/..." oninput="hubPreview()"><small class="hint">Upload the video to YouTube as Unlisted, then paste the link.</small></div></div>
     <div id="hbSlides" ${LAC.hubKind==='SLIDES'?'':'hidden'}><div class="field"><label for="hbFile">PowerPoint or PDF file</label><input type="file" id="hbFile" accept=".pptx,.ppt,.pdf,application/pdf,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-powerpoint" onchange="hubFilePick(this)">
-        <small class="hint" id="hbFileTxt">${h.fileName?'Current file: '+esc(h.fileName)+'. Choose a new file only to replace it.':'Up to 30 MB. A PDF opens faster on phones: in PowerPoint, click File, Save As, then choose PDF.'}</small></div>
-      <div class="field"><label for="hbMin">Time to study the slides (minutes)</label><input type="number" id="hbMin" min="1" max="240" value="${esc(h.minutes||10)}" style="max-width:140px"><small class="hint">Progress counts the time the slides are open, up to this many minutes.</small></div></div>
+        <small class="hint" id="hbFileTxt">${h.fileName?'Current file: '+esc(h.fileName)+'. Choose a new file only to replace it.':'Up to 30 MB. A PDF uploads faster: in PowerPoint, click File, Save As, then choose PDF.'}</small></div>
+      <p class="hint">Teachers open it slide by slide, with Previous and Next. A slide counts as viewed after 3 seconds.</p></div>
     <div class="hubprev" id="hbPrev"></div>
     <div class="field"><label for="hbThumb">Your own thumbnail (optional)</label><input type="file" id="hbThumb" accept="image/*" onchange="hubThumbPick(this)"><small class="hint">Leave it empty to use ${LAC.hubKind==='SLIDES'?'a simple cover with the title':'the thumbnail from YouTube'}.</small> ${h.thumb?'<button class="linkbtn" onclick="LAC.thumb=\'\';hubPreview()">Remove my thumbnail</button>':''}</div>
     <div class="field"><label for="hbTitle">Title</label><input id="hbTitle" maxlength="160" value="${esc(h.title||'')}"></div>
@@ -7385,7 +7389,7 @@ function hubB64(f){ return new Promise((res, rej) => { const r = new FileReader(
 async function hubSaveNow(id){
   const kind = LAC.hubKind, cur = id ? LAC.data.hub.find(x => x.id===id) : null;
   const item = { id, kind, url: kind==='VIDEO' ? $('hbUrl').value.trim() : '', title:$('hbTitle').value.trim(), facilitator:$('hbFac').value.trim(), desc:$('hbDesc').value.trim(), session:$('hbSess').value, thumb:LAC.thumb,
-    mode: document.querySelector('input[name=hbMode]:checked').value, minutes: Number($('hbMin').value)||10,
+    mode: document.querySelector('input[name=hbMode]:checked').value,
     assign: document.querySelector('input[name=hbAll]:checked').value==='all' ? 'all' : [...document.querySelectorAll('#hbWho input:checked')].map(x=>x.value), target:$('hbTarget').value };
   if (kind==='VIDEO' && !hubVid(item.url)) return $('hbErr').textContent = 'Paste a YouTube link, for example https://youtu.be/xxxxxxxxxxx';
   if (kind==='SLIDES' && !LAC.hubFile && !(cur && cur.fileId)) return $('hbErr').textContent = 'Choose the PowerPoint or PDF file.';
@@ -7413,7 +7417,7 @@ async function hubPlay(id){
   const s = h.session ? lacS(h.session) : null, needSign = s && lacInvited(s, USER.email) && !lacMine(s.id,'ATT') && s.date <= todayPH();
   const parts = (p.parts && p.parts.length===100) ? p.parts.split('') : Array(101).join('0').split('');
   const pct0 = p.parts ? parts.filter(c => c==='1').length : (p.pct||0);
-  LAC.play = { id, h, slides, pct: pct0, pos:p.pos||0, status:p.status||'', mine, last:0, timer:null, parts, seeking:false, lastT:null, min: h.minutes||10, secs: Math.round(pct0 * (h.minutes||10) * 60 / 100) };
+  LAC.play = { id, h, slides, pct: pct0, pos:p.pos||0, status:p.status||'', mine, last:0, timer:null, parts, seeking:false, lastT:null, page: Math.max(1, Math.round(p.pos||1)), dwell:0 };
   $('hubPlayer').classList.add('open'); document.body.classList.add('hubopen');
   const ctlVideo = `<div class="hubctl" oncontextmenu="return false">
         <button onclick="hubJump(-10)" title="Back 10 seconds" aria-label="Back 10 seconds">⏪ 10</button>
@@ -7426,14 +7430,14 @@ async function hubPlay(id){
         <select id="hpRate" onchange="hubRate(this.value)" aria-label="Speed"><option value="0.75">0.75x</option><option value="1" selected>1x</option><option value="1.25">1.25x</option><option value="1.5">1.5x</option></select>
         <button onclick="hubNote()" title="My notebook" aria-label="My notebook">\u{1F4D3}</button>
         <button onclick="hubFull()" title="Full screen" aria-label="Full screen">⛶</button></div>`;
-  const ctlSlides = `<div class="hubctl" oncontextmenu="return false"><span class="hptime" id="hpTime">Studied 0:00</span><span style="flex:1"></span>
-        <button onclick="hubNote()" title="My notebook" aria-label="My notebook">\u{1F4D3} Notebook</button><button onclick="hubFull()" title="Full screen" aria-label="Full screen">⛶ Full screen</button></div>`;
-  $('hubPBody').innerHTML = `<div class="hubp-h"><div><b>${esc(h.title)}</b><small>${h.facilitator?esc(h.facilitator):''}${s?' · '+esc(s.title):''} · ${esc(hubKind(h))}</small></div>
+  const ctlSlides = `<div class="hubctl deckctl" oncontextmenu="return false"><button onclick="deckGo(-1)" id="dkPrev" title="Previous slide" aria-label="Previous slide">\u2039 Previous</button><span class="hptime" id="hpTime">Slide 1</span><button onclick="deckGo(1)" id="dkNext" title="Next slide" aria-label="Next slide">Next \u203A</button><span style="flex:1"></span>
+        <button onclick="hubNote()" title="My notebook" aria-label="My notebook">\u{1F4D3} Notebook</button><button onclick="hubFull()" title="Full screen" aria-label="Full screen">⛶</button></div>`;
+  $('hubPBody').innerHTML = `<div class="hubp-h"><div><b>${esc(h.title)}</b><small>${[h.facilitator, s && s.title, hubKind(h)].filter(Boolean).map(esc).join(' · ')}</small></div>
       <div style="display:flex;gap:6px"><button class="btn ghost small" onclick="hubClose()">Close</button></div></div>
     ${needSign?`<div class="hubsign">✍ This material is part of <b>${esc(s.title)}</b>. Please tick your attendance. <button class="btn small" onclick="hubClose();lacSign('${s.id}')">Tick my attendance</button></div>`:''}
     <div class="hubwrap" id="hubWrap">
       <div class="hubstage" id="hubStage">
-        ${slides ? `<div class="hubframe slides" id="hubFrame" oncontextmenu="return false"><iframe src="https://drive.google.com/file/d/${esc(h.fileId)}/preview" allow="autoplay; fullscreen" title="${esc(h.title)}"></iframe><div class="pvshield" title=""></div></div>${ctlSlides}`
+        ${slides ? `<div class="hubframe slides" id="hubFrame" oncontextmenu="return false"><canvas id="deckCv"></canvas><div class="deckmsg" id="deckMsg">Opening the slides\u2026</div><button class="deckarrow l" onclick="deckGo(-1)" aria-label="Previous slide">\u2039</button><button class="deckarrow r" onclick="deckGo(1)" aria-label="Next slide">\u203A</button></div>${ctlSlides}`
           : `<div class="hubframe" id="hubFrame" oncontextmenu="return false"><div class="ytcrop"><div id="ytBox"></div></div><div class="ytshield" onclick="hubToggle()" ondblclick="hubFull()" oncontextmenu="return false"><span id="hpBig">▶</span></div></div>${ctlVideo}`}
       </div>
       <aside class="hubnote" id="hubNote" hidden></aside>
@@ -7442,11 +7446,11 @@ async function hubPlay(id){
     ${h.desc?`<p class="hint" style="margin:8px 0">${esc(h.desc)}</p>`:''}
     ${mine?`<div class="hubbar big"><i id="hpBar" style="width:${LAC.play.pct}%"></i></div><div class="hubp-f"><span id="hpTxt">${esc(hubPTxt())}</span>
       <span><button class="btn ghost small" id="hpAlmost" onclick="hubMark('Almost finished')" ${LAC.play.pct<90?'disabled':''}>Mark almost finished</button><button class="btn small" id="hpDone" onclick="hubMark('Finished')" ${LAC.play.pct<90?'disabled':''}>✔ Mark finished</button></span></div>
-      <p class="hint" style="margin:4px 0 0">${slides?'The time counts while the slides are open on your screen, up to '+LAC.play.min+' minutes. The buttons turn on at 90%.':'Only the parts you actually watch are counted. The buttons turn on at 90%. It is marked finished on its own at the end once you reach 90%.'}</p>`:'<p class="hint">Progress is counted only for those assigned to this material.</p>'}`;
-  if (slides){ LAC.play.timer = setInterval(hubTick, 1000); hubTick(); return; }
+      <p class="hint" style="margin:4px 0 0">${slides?'Use Previous and Next, the arrow keys, or swipe. A slide counts after you view it for 3 seconds. It is marked finished when you have viewed every slide.':'Only the parts you actually watch are counted. The buttons turn on at 90%. It is marked finished on its own at the end once you reach 90%.'}</p>`:'<p class="hint">Progress is counted only for those assigned to this material.</p>'}`;
+  if (slides){ deckOpen(); return; }
   try{ await ytApi(); }catch(e){ $('ytBox').innerHTML = `<div class="empty">${esc(e.message)}</div>`; return; }
   LAC.play.yt = new YT.Player('ytBox', { videoId:h.vid, width:'100%', height:'100%',
-    playerVars:{ start:Math.max(0, Math.floor(LAC.play.pos - 3)), controls:0, disablekb:1, fs:0, rel:0, modestbranding:1, iv_load_policy:3, playsinline:1, cc_load_policy:0, showinfo:0 },
+    playerVars:{ origin: location.origin, widget_referrer: location.href, start:Math.max(0, Math.floor(LAC.play.pos - 3)), controls:0, disablekb:1, fs:0, rel:0, modestbranding:1, iv_load_policy:3, playsinline:1, cc_load_policy:0, showinfo:0 },
     events:{ onStateChange: e => { hubIcon(); if (e.data===YT.PlayerState.ENDED) hubEnded(); else if (e.data===YT.PlayerState.PAUSED) hubSave(); } } });
   LAC.play.timer = setInterval(hubTick, 1000);
 }
@@ -7455,20 +7459,26 @@ function hubNote(){
   const w = $('hubWrap'), el = $('hubNote'); if (!w || !el) return;
   if (!el.hidden){ hubNoteHide(); return; }
   const T = nbFloatTarget(), n = LAC.data.notebooks.find(x => x.email===USER.email && x.book===T.book && (T.book==='LAC' ? x.session===T.session : x.title===T.title));
-  if (!LAC.fl || LAC.fl.T.label !== T.label) LAC.fl = { T, id: n ? n.id : '', flag:false };
+  if (!LAC.fl || LAC.fl.T.label !== T.label) LAC.fl = { T, id: n ? n.id : '', cid: 'N'+Date.now().toString(36)+Math.floor(Math.random()*900+100), flag:false };
   if (!$('nbfText')){
-    el.innerHTML = `<div class="hubnote-h"><div><b>\u{1F4D3} ${esc(T.book==='LAC'?'My LAC Notebook':'My Notes')}</b><small>${esc(T.label)}</small></div>${nbBang()}<button class="linkbtn" onclick="hubNoteHide()" title="Hide the notebook">Hide</button></div>
-      <textarea class="nbt" id="nbfText" placeholder="Type your notes while you watch...">${esc(n && n.body ? (n.body.text||'') : nbFloatDraft())}</textarea>
-      <div class="nbf-f"><small id="nbfSt">${n?'Saved':'Not yet saved'}</small><button class="btn small" onclick="nbFloatSave()">Save</button></div>`;
-    nbGuard($('nbfText')); $('nbfText').addEventListener('input', () => { try{ localStorage.setItem(nbFloatKey(), $('nbfText').value); }catch(e){} $('nbfSt').textContent = 'Typing... tap Save'; if (LAC.flag) LAC.fl.flag = true; });
+    const draft = nbFloatDraft(), saved = n && n.body ? (n.body.text||'') : '';
+    el.innerHTML = `<div class="hubnote-h"><div><b>\u{1F4D3} ${esc(T.book==='LAC'?'My LAC Notebook':'My Notes')}</b><small>${esc(T.label)}</small></div>${nbBang()}
+        <span class="nbf-b"><button onclick="hubNoteHide()" title="Minimize. Your notes are saved." aria-label="Minimize">\u2212</button><button onclick="hubNoteHide()" title="Close. Your notes are saved." aria-label="Close">\u00D7</button></span></div>
+      <textarea class="nbt" id="nbfText" placeholder="Type your notes while you watch...">${esc(draft || saved)}</textarea>
+      <div class="nbf-f"><small id="nbfSt">${draft && draft!==saved ? 'Not yet saved' : n ? 'Saved in your notebook' : 'Saves by itself as you type'}</small><button class="btn small" onclick="nbFloatSave()">Save</button></div>`;
+    nbGuard($('nbfText'));
+    $('nbfText').addEventListener('input', () => { try{ localStorage.setItem(nbFloatKey(), $('nbfText').value); }catch(e){} $('nbfSt').textContent = 'Typing...'; if (LAC.flag) LAC.fl.flag = true;
+      clearTimeout(LAC.fl.auto); LAC.fl.auto = setTimeout(() => nbFloatSave(true), 2500); });   // saves by itself 2.5 seconds after typing stops
+    if (draft && draft!==saved) setTimeout(() => nbFloatSave(true), 500);
   }
-  el.hidden = false; w.classList.add('notes'); document.querySelector('#hubPlayer .hubmodal').classList.add('withnotes'); $('nbFab').classList.add('on');
-  setTimeout(() => { const t = $('nbfText'); if (t){ t.focus({ preventScroll:true }); if (window.innerWidth < 820) el.scrollIntoView({ behavior:'smooth', block:'nearest' }); } }, 80);
+  el.hidden = false; w.classList.add('notes'); document.querySelector('#hubPlayer .hubmodal').classList.add('withnotes'); $('nbFab').classList.add('on'); if (LAC.play && LAC.play.slides) setTimeout(deckDraw, 80);
+  setTimeout(() => { const t = $('nbfText'); if (t){ t.focus({ preventScroll:true }); t.selectionStart = t.selectionEnd = t.value.length; t.scrollTop = t.scrollHeight; if (window.innerWidth < 820) el.scrollIntoView({ behavior:'smooth', block:'nearest' }); } }, 80);
 }
+// Minimize or close: the notes are kept and saved, never erased
 async function hubNoteHide(){ const el = $('hubNote'); if (!el) return;
-  const t = $('nbfText'); if (t && t.value.trim() && $('nbfSt').textContent.indexOf('Typing') === 0) await nbFloatSave();   // saved quietly when hidden
-  el.hidden = true; $('hubWrap').classList.remove('notes'); document.querySelector('#hubPlayer .hubmodal').classList.remove('withnotes'); $('nbFab').classList.remove('on'); }
-function hubPTxt(){ const P = LAC.play, w = P.slides ? 'studied' : 'watched'; return P.status==='Finished' ? '✔ Finished. You can open it again any time.' : P.status==='Almost finished' ? 'Almost finished, '+P.pct+'% '+w : P.pct ? P.pct+'% '+w : 'Not started'; }
+  nbFloatSave(true);
+  el.hidden = true; $('hubWrap').classList.remove('notes'); document.querySelector('#hubPlayer .hubmodal').classList.remove('withnotes'); $('nbFab').classList.remove('on'); if (LAC.play && LAC.play.slides) setTimeout(deckDraw, 80); }
+function hubPTxt(){ const P = LAC.play, w = P.slides ? 'viewed' : 'watched'; return P.status==='Finished' ? '✔ Finished. You can open it again any time.' : P.status==='Almost finished' ? 'Almost finished, '+P.pct+'% '+w : P.pct ? P.pct+'% '+w : 'Not started'; }
 function hubFmt(t){ t = Math.max(0, Math.floor(t||0)); const h = Math.floor(t/3600), m = Math.floor(t%3600/60), s = t%60; return (h?h+':'+String(m).padStart(2,'0'):m)+':'+String(s).padStart(2,'0'); }
 function hubYT(){ const P = LAC.play; return P && P.yt && P.yt.getDuration ? P.yt : null; }
 function hubPlaying(){ const y = hubYT(); return y && y.getPlayerState && y.getPlayerState()===1; }
@@ -7497,16 +7507,56 @@ function hubTick(){
   if ($('hpAlmost')) $('hpAlmost').disabled = P.pct < 90 || P.status==='Finished'; if ($('hpDone')) $('hpDone').disabled = P.pct < 90 || P.status==='Finished';
   if (Date.now() - P.last > 20000) hubSave();
 }
-// Slides: one more second counts only while the slides are on the screen
+/* Slides: the PDF is drawn page by page inside TALA. No link, no download, no text to copy.
+   A slide counts as viewed after 3 seconds on it. Viewing every slide finishes the material. */
+const DECK = {};
+async function deckOpen(){
+  const P = LAC.play, id = P.id;
+  try{
+    await loadScript(LIBS.pdf); try{ pdfjsLib.GlobalWorkerOptions.workerSrc = LIBS.worker; }catch(e){}
+    if (!DECK[id]){ const r = await api('hubFile', { id }); const bin = atob(r.base64), u = new Uint8Array(bin.length); for (let k = 0; k < bin.length; k++) u[k] = bin.charCodeAt(k); DECK[id] = await pdfjsLib.getDocument({ data:u }).promise; }
+    if (!LAC.play || LAC.play.id !== id) return;
+    P.doc = DECK[id]; P.n = P.doc.numPages; P.page = Math.min(P.n, Math.max(1, P.page));
+    $('deckMsg').hidden = true; deckWire(); await deckDraw();
+    P.timer = setInterval(hubTick, 1000);
+  }catch(e){ const m = $('deckMsg'); if (m){ m.hidden = false; m.textContent = friendly(e.message || 'The slides could not be opened. Check your internet connection.'); } }
+}
+function deckPartsOf(p){ const n = LAC.play.n; return [Math.floor((p-1)*100/n), Math.max(Math.floor((p-1)*100/n), Math.floor(p*100/n)-1)]; }
+function deckSeen(p){ const [a] = deckPartsOf(p); return LAC.play.parts[a]==='1'; }
+async function deckDraw(){
+  const P = LAC.play; if (!P || !P.doc) return; const cv = $('deckCv'), fr = $('hubFrame'); if (!cv || !fr) return;
+  const pg = await P.doc.getPage(P.page), v1 = pg.getViewport({ scale:1 });
+  if (!P.ratio){ P.ratio = v1.width / v1.height; fr.style.aspectRatio = v1.width+' / '+v1.height; }
+  const W = fr.clientWidth || 800, H = fr.clientHeight || W / P.ratio, sc = Math.min(W / v1.width, H / v1.height), dpr = Math.min(2, window.devicePixelRatio || 1);
+  const vp = pg.getViewport({ scale: sc * dpr }); cv.width = vp.width; cv.height = vp.height; cv.style.width = Math.round(vp.width/dpr)+'px'; cv.style.height = 'auto';
+  if (P.task) try{ P.task.cancel(); }catch(e){}
+  P.task = pg.render({ canvasContext: cv.getContext('2d'), viewport: vp }); try{ await P.task.promise; }catch(e){}
+  P.dwell = 0; deckLabel();
+}
+function deckLabel(){ const P = LAC.play; if (!P || !P.n) return;
+  if ($('hpTime')) $('hpTime').textContent = 'Slide '+P.page+' of '+P.n+(deckSeen(P.page)?' \u2714':'');
+  if ($('dkPrev')) $('dkPrev').disabled = P.page<=1; if ($('dkNext')) $('dkNext').disabled = P.page>=P.n;
+  document.querySelectorAll('.deckarrow.l').forEach(b => b.disabled = P.page<=1); document.querySelectorAll('.deckarrow.r').forEach(b => b.disabled = P.page>=P.n); }
+function deckGo(d){ const P = LAC.play; if (!P || !P.doc) return; const n = Math.min(P.n, Math.max(1, P.page + d)); if (n === P.page) return; P.page = n; P.pos = n; deckDraw(); }
+function deckWire(){
+  const fr = $('hubFrame'); let sx = null;
+  fr.addEventListener('pointerdown', e => { sx = e.clientX; });
+  fr.addEventListener('pointerup', e => { if (sx === null) return; const dx = e.clientX - sx; sx = null; if (Math.abs(dx) > 50) deckGo(dx < 0 ? 1 : -1); });
+  if (!DECK.keys){ DECK.keys = true; document.addEventListener('keydown', e => { const P = LAC.play; if (!P || !P.slides || /TEXTAREA|INPUT|SELECT/.test((e.target||{}).tagName||'')) return;
+    if (e.key==='ArrowRight' || e.key==='PageDown' || e.key===' '){ e.preventDefault(); deckGo(1); } else if (e.key==='ArrowLeft' || e.key==='PageUp'){ e.preventDefault(); deckGo(-1); } }); }
+  if (!DECK.rs){ DECK.rs = true; const re = () => { const P = LAC.play; if (P && P.slides) setTimeout(deckDraw, 150); }; window.addEventListener('resize', re); document.addEventListener('fullscreenchange', re); }
+}
+// Every second: the slide on screen counts after 3 seconds
 function hubTickSlides(){
-  const P = LAC.play; if (document.visibilityState==='visible' && document.hasFocus()) P.secs++;
-  const full = P.min*60, k = Math.min(100, Math.floor(P.secs / full * 100)); for (let i = 0; i < k; i++) P.parts[i] = '1';
-  P.pct = P.parts.filter(c => c==='1').length; P.pos = P.secs;
-  if ($('hpTime')) $('hpTime').textContent = 'Studied '+hubFmt(Math.min(P.secs, full))+' of '+hubFmt(full);
+  const P = LAC.play; if (!P || !P.n) return;
+  if (document.visibilityState==='visible' && !deckSeen(P.page)){ P.dwell++; if (P.dwell >= 3){ const [a,b] = deckPartsOf(P.page); for (let i = a; i <= b; i++) P.parts[i] = '1'; deckLabel(); P.last = 0; } }
+  const seen = Array.from({ length:P.n }, (_,k) => deckSeen(k+1)).filter(Boolean).length;
+  P.pct = seen === P.n ? 100 : Math.min(99, Math.round(seen / P.n * 100));
+  if (P.pct === 100) P.parts = P.parts.map(() => '1');
   if (!P.mine) return;
-  if ($('hpBar')) $('hpBar').style.width = P.pct+'%'; if ($('hpTxt')) $('hpTxt').textContent = hubPTxt();
+  if ($('hpBar')) $('hpBar').style.width = P.pct+'%'; if ($('hpTxt')) $('hpTxt').textContent = hubPTxt() + ' \u00B7 ' + seen + ' of ' + P.n + ' slides viewed';
   if ($('hpAlmost')) $('hpAlmost').disabled = P.pct < 90 || P.status==='Finished'; if ($('hpDone')) $('hpDone').disabled = P.pct < 90 || P.status==='Finished';
-  if (P.pct >= 100 && P.status!=='Finished'){ hubSave(true); toast('You studied the slides for the full time. Marked finished.'); return; }
+  if (P.pct >= 100 && P.status!=='Finished'){ hubSave(true); toast('You viewed every slide. Marked finished.'); return; }
   if (Date.now() - P.last > 20000) hubSave();
 }
 function hubEnded(){ const P = LAC.play; if (!P) return; hubTick(); if (P.mine && P.pct < 90) toast('You reached the end, but some parts were skipped ('+P.pct+'% watched). Watch the parts you skipped to finish.'); hubSave(P.pct >= 90); }
@@ -7521,7 +7571,7 @@ async function hubSave(ended, mark){
   if ($('hpTxt')) $('hpTxt').textContent = hubPTxt();
 }
 async function hubMark(m){ await hubSave(false, m); toast(m==='Finished' ? 'Marked finished. Well done!' : 'Marked almost finished. You can come back to it.'); if ($('hpDone')) $('hpDone').disabled = LAC.play.status==='Finished'; }
-function hubClose(){ const P = LAC.play; if (document.fullscreenElement) document.exitFullscreen().catch(()=>{}); if (P){ clearInterval(P.timer); if (P.slides) hubSave(); else if (hubYT()){ try{ hubTick(); }catch(e){} hubSave(); try{ P.yt.destroy(); }catch(e){} } } const t = $('nbfText'); if (t && t.value.trim() && ($('nbfSt')||{}).textContent && $('nbfSt').textContent.indexOf('Typing')===0) nbFloatSave(); LAC.fl = null; document.querySelector('#hubPlayer .hubmodal').classList.remove('withnotes'); LAC.play = null; document.body.classList.remove('hubopen'); $('hubPlayer').classList.remove('open'); $('hubPBody').innerHTML = ''; if (CUR_FEATURE==='lac') lacDraw(); }
+function hubClose(){ const P = LAC.play; if (document.fullscreenElement) document.exitFullscreen().catch(()=>{}); if (P){ clearInterval(P.timer); if (P.slides) hubSave(); else if (hubYT()){ try{ hubTick(); }catch(e){} hubSave(); try{ P.yt.destroy(); }catch(e){} } } if ($('nbfText') && LAC.fl) nbFloatSave(true); LAC.fl = null; document.querySelector('#hubPlayer .hubmodal').classList.remove('withnotes'); LAC.play = null; document.body.classList.remove('hubopen'); $('hubPlayer').classList.remove('open'); $('hubPBody').innerHTML = ''; if (CUR_FEATURE==='lac') lacDraw(); }
 
 /* ----- the floating notebook: type while watching. Drag it, make it small, or close it. ----- */
 function nbFloatTarget(){
@@ -7548,15 +7598,31 @@ function nbFloatDraft(){ try{ return localStorage.getItem(nbFloatKey()) || ''; }
 function nbFloatMin(){ $('nbFloat').classList.add('min'); }
 function nbFloatMax(){ $('nbFloat').classList.remove('min'); }
 async function nbFloatClose(){ const t = $('nbfText'); if (t && t.value.trim() && $('nbfSt').textContent.indexOf('Typing') === 0 && confirm('Save your notes before closing?')) await nbFloatSave(); $('nbFloat').hidden = true; }
-async function nbFloatSave(){
-  const F = LAC.fl, text = $('nbfText').value.trim(); if (!text) return toast('Write something first.');
+// Saves the notes to the teacher's notebook. quiet: no message when there is nothing to save.
+async function nbFloatSave(quiet){
+  const F = LAC.fl, ta = $('nbfText'); if (!F || !ta) return; clearTimeout(F.auto);
+  const text = ta.value.trim(), st = $('nbfSt');
+  if (!text){ if (!quiet) toast('Write something first.'); return; }
+  if (F.saving){ F.again = true; return F.saving; }
+  if (text === F.lastSaved){ if (st) st.textContent = 'Saved in your notebook'; return; }
   const cur = F.id ? LAC.data.notebooks.find(x => x.id===F.id) : null;
-  const note = { id:F.id, cid: F.id ? '' : 'N'+Date.now().toString(36)+Math.floor(Math.random()*900+100), book:F.T.book, session:F.T.session, title: cur ? cur.title : F.T.title, body: Object.assign({}, cur ? cur.body : {}, { text }), flag:F.flag };
-  try{ if (navigator.onLine===false) throw new Error(MSG.NET);
-    const r = await api('nbSave', { note }); const i = LAC.data.notebooks.findIndex(x => x.id===r.note.id); if (i > -1) LAC.data.notebooks[i] = r.note; else LAC.data.notebooks.push(r.note); F.id = r.note.id; $('nbfSt').textContent = 'Saved'; }
-  catch(e){ if (friendly(e.message)===MSG.NET || friendly(e.message)===MSG.BUSY){ saveOut(outbox().filter(x => !(x.action==='nbSave' && (x.payload.note.id||x.payload.note.cid)===(note.id||note.cid)))); queueOut('nbSave', { note }, 'Notebook entry'); lacPendingApply(); F.id = F.id || note.cid; $('nbfSt').textContent = 'Saved on this device'; } else return handleErr(e); }
-  try{ localStorage.removeItem(nbFloatKey()); }catch(e){} lacSaveLocal();
+  const note = { id: F.id || '', cid: F.id ? '' : F.cid, book:F.T.book, session:F.T.session, title: cur ? cur.title : F.T.title, body: Object.assign({}, cur ? cur.body : {}, { text }), flag:F.flag };
+  if (st) st.textContent = 'Saving...';
+  F.saving = (async () => {
+    try{ if (navigator.onLine===false) throw new Error(MSG.NET);
+      const r = await api('nbSave', { note }); const i = LAC.data.notebooks.findIndex(x => x.id===r.note.id || x.id===note.cid); if (i > -1) LAC.data.notebooks[i] = r.note; else LAC.data.notebooks.push(r.note);
+      F.id = r.note.id; F.lastSaved = text; if ($('nbfSt')) $('nbfSt').textContent = 'Saved in your notebook at '+new Date().toLocaleTimeString('en-US',{ hour:'numeric', minute:'2-digit', timeZone:'Asia/Manila' });
+      try{ if (($('nbfText')||{}).value === undefined || $('nbfText').value.trim() === text) localStorage.removeItem(nbFloatKey()); }catch(e){} }
+    catch(e){ if (friendly(e.message)===MSG.NET || friendly(e.message)===MSG.BUSY){ const key = note.id || note.cid; saveOut(outbox().filter(x => !(x.action==='nbSave' && (x.payload.note.id||x.payload.note.cid)===key)));
+        queueOut('nbSave', { note: Object.assign({}, note, { id:'', cid:key }) }, 'Notebook entry'); lacPendingApply(); F.lastSaved = text; if ($('nbfSt')) $('nbfSt').textContent = 'Saved on this device. It will sync when online.'; }
+      else if (!quiet) handleErr(e); else if ($('nbfSt')) $('nbfSt').textContent = 'Not yet saved. Tap Save.'; }
+    lacSaveLocal();
+  })();
+  await F.saving; F.saving = null;
+  if (F.again){ F.again = false; return nbFloatSave(true); }
 }
+// Leaving the page or switching apps also saves the notes
+document.addEventListener('visibilitychange', () => { if (document.visibilityState==='hidden' && $('nbfText') && LAC.fl) nbFloatSave(true); });
 function nbFloatDrag(el, handle){
   let sx, sy, ox, oy, on = false;
   handle.onpointerdown = e => { if (e.target.closest('button')) return; on = true; sx = e.clientX; sy = e.clientY; const r = el.getBoundingClientRect(); ox = r.left; oy = r.top; handle.setPointerCapture(e.pointerId); };
