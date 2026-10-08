@@ -926,6 +926,16 @@ textarea.nbt{-webkit-touch-callout:none}
 
 /* Learning Hub player with TALA controls, and the floating notebook */
 .hubstage{background:#000;border-radius:12px;overflow:hidden}.hubstage:fullscreen{display:flex;flex-direction:column;justify-content:center;border-radius:0}.hubstage:fullscreen .hubframe{flex:1;aspect-ratio:auto;border-radius:0}
+.hubmodal.withnotes{max-width:1280px}.hubwrap{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;align-items:stretch}.hubwrap.notes{grid-template-columns:minmax(0,1fr) 340px}
+.hubwrap:fullscreen{background:#000;gap:0;height:100vh;padding:0}.hubwrap:fullscreen .hubstage{display:flex;flex-direction:column;height:100vh;border-radius:0}.hubwrap:fullscreen .hubframe{flex:1;aspect-ratio:auto}.hubwrap:fullscreen .hubnote{border-radius:0;height:100vh;border-width:0 0 0 3px}.hubwrap:fullscreen .nbfab{display:none}
+.hubnote{display:flex;flex-direction:column;gap:8px;background:var(--card);border:2px solid #d9a400;border-radius:14px;padding:10px 12px;min-height:260px}.hubnote[hidden]{display:none}
+.hubnote-h{display:flex;align-items:flex-start;gap:8px}.hubnote-h>div{flex:1}.hubnote-h small{display:block;color:var(--muted);font-size:12px}.hubnote textarea{flex:1;min-height:200px;width:100%;resize:vertical;border:1px solid var(--line);border-radius:10px;padding:10px;font:inherit;font-size:15px;line-height:1.5}
+.nbfab{position:fixed;right:22px;bottom:22px;z-index:3100;width:58px;height:58px;border-radius:50%;border:0;background:#d9a400;color:#fff;font-size:26px;cursor:pointer;box-shadow:0 8px 22px rgba(0,0,0,.35)}.nbfab.on{background:#1F5130}
+.hubframe.slides{aspect-ratio:4/3;background:#f2f2f2}.hubframe.slides iframe{position:absolute;inset:0;width:100%;height:100%;border:0}.pvshield{position:absolute;top:0;right:0;width:76px;height:60px;z-index:3}
+.hubslide{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:16px!important;gap:6px;background:linear-gradient(135deg,#1F5130,#2f7a4a);color:#fff;padding:12px;text-align:center}.hubslide b{display:none}.hubslide small{font-size:13px;line-height:1.3;max-height:3.9em;overflow:hidden}
+.hubkind{display:block;color:#7a5a00!important;font-weight:600}
+#hubPlayer .hubmodal{padding-bottom:86px}body.hubopen #chatFab{display:none!important}
+@media(max-width:820px){.hubwrap.notes{grid-template-columns:minmax(0,1fr)}.hubframe.slides{aspect-ratio:3/4}}
 .hubframe{border-radius:0}.ytcrop{position:absolute;left:0;right:0;top:-62px;bottom:-62px}.ytcrop iframe,.ytcrop #ytBox{width:100%;height:100%;pointer-events:none;border:0}
 .ytshield{position:absolute;inset:0;z-index:2;cursor:pointer;display:grid;place-items:center;-webkit-user-select:none;user-select:none}
 .ytshield span{width:68px;height:68px;border-radius:50%;background:rgba(0,0,0,.55);color:#fff;font-size:28px;display:grid;place-items:center;transition:opacity .2s}
@@ -1665,8 +1675,8 @@ textarea.nbt{-webkit-touch-callout:none}
 
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
-const MIN_SERVER = '5.0'; // oldest Code.gs this page works with
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'5.0', date:'October 9, 2026' } };
+const MIN_SERVER = '5.1'; // oldest Code.gs this page works with
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'5.1', date:'October 9, 2026' } };
 function verLine(server){
   const old = server && (server.indexOf('older') > -1 || parseFloat(server) < parseFloat(MIN_SERVER));
   const s = server ? ' Server '+server+('.') : '';
@@ -5002,7 +5012,7 @@ function aboutSlides(){
     <div><h3 class="ah3" data-edit>What TALA does</h3>${list(['Keeps everything in one place, online and even offline.','Records every action with the date and time, so we are accountable.','Computes totals, percentages, and lateness automatically.','Prints DepEd ready reports and Division templates in one tap.'])}</div></div>`);
   wrap('One Portal, Many Programs', `<div class="agrid agrid9">${card('\u2637','LPT and PPT Tracking','Weekly upload, validation, lateness, QR codes, and the weekly report.','#1e5a8c')}${card('\u25C9','Observations','ePMCF classroom observation and PMCF MWA, with e-signatures and Division Excel.','#6a2c99')}
     ${card('\u{1F372}','SBFP Monitoring','Menu of the day, parents\u2019 schedule, photos, attendance, and participation.','#d35400')}${card('\u270D','Learner Attendance','AM and PM attendance, the DepEd SF2 and SF4, Messenger messages, and weekly stars.','#1e5a8c')}
-    ${card('\u{1F552}','Time Records and Requests','Time in and Time out, leave on CS Form No. 6, locator slips, travel, and wellness leave.','#2f7a4a')}${card('\u{1F393}','LAC and Learning Hub','Sessions, e-signed attendance, evaluations, minutes, notebooks, and videos to learn.','#b06000')}
+    ${card('\u{1F552}','Time Records and Requests','Time in and Time out, leave on CS Form No. 6, locator slips, travel, and wellness leave.','#2f7a4a')}${card('\u{1F393}','LAC and Learning Hub','Sessions, e-signed attendance, evaluations, minutes, notebooks, videos, and slides to learn.','#b06000')}
     ${card('\u{1F4C5}','School Calendar','Activities, SBFP menus, and memos with photos and MOVs.','#2f7a4a')}${card('\u{1F4CA}','School M&amp;E Reports','PIR presentation, every report in one place, and annotation tools.','#b06000')}${card('\u2712','E-signatures and Chat','Sign documents online, message the team, and get notified.','#a3271b')}</div>
     <p class="pnote" data-edit>Coming next: Learner Reading Assessment and Reimbursement Inventory.</p>`);
   wrap('LPT and PPT Tracking', `<div class="pcols"><div>${list(['Teachers upload the LPT and PPT with the correct file name, for the whole week or by session.','The School Head validates: Approved, Returned with remarks, or Wrong file.','TALA counts on time and late submissions from the Monday deadline.','Every file gets a QR code for monitoring visitors.'])}</div>
@@ -5016,7 +5026,7 @@ function aboutSlides(){
   wrap('Time Records, Leave, and Requests', `<div class="pcols"><div>${list(['Everyone taps Time in and Time out with a live photo from the phone camera; the School Head corrects a missed tap.','Leave, locator slip, travel authority, early out, and wellness leave are filed in TALA.','The School Head approves, approves with condition, or disapproves, with a pop up for the reason.'])}</div>
     <div>${list(['CS Form No. 6, the Locator Slip, and the Travel Authority are filled automatically, with the e-signature once approved.','Internal arrangements and the 5 days of wellness leave per year are counted.','A summary per teacher by month, term, or fiscal year.'])}</div></div>`);
   wrap('LAC and the Learning Hub', `<div class="pcols"><div>${list(['Each LAC session has e-signed attendance, evaluation of the session and of the speakers, minutes, and an accomplishment report.','Teachers keep a LAC Notebook, a Reflection Notebook, a Meeting Notebook, and Notes, typed in their own words.','The School Head reads and checks the notebooks.'])}</div>
-    <div>${list(['The Learning Hub holds videos approved by the School Head and assigned to all or to a few.','Progress counts only the parts actually watched.','A floating notebook lets teachers write while watching.'])}</div></div>`);
+    <div>${list(['The Learning Hub holds videos approved by the School Head and assigned to all or to a few.','Progress counts only the parts actually watched.','Slides in PowerPoint or PDF can be studied on their own or followed during a hybrid LAC.','The notebook opens beside the video or slides, so teachers write while watching.'])}</div></div>`);
   // What teachers can do in each tab, and what they can print
   const tab = (ico, t, can, pr, c) => `<div class="atab" style="--c:${c}"><h4><span>${ico}</span><span data-edit>${t}</span></h4><ul>${can.map(x=>`<li data-edit>${x}</li>`).join('')}</ul>${pr.length?`<div class="apr"><b>Reports you can print</b><ul>${pr.map(x=>`<li data-edit>${x}</li>`).join('')}</ul></div>`:''}</div>`;
   const tabs = (n, body) => wrap('What Teachers Can Do in TALA <small style="font-size:.5em;color:#6b776d">('+n+' of 3)</small>', `<div class="atgrid">${body}</div>`);
@@ -5027,7 +5037,7 @@ function aboutSlides(){
     + tab('\u{1F552}','Attendance: My Time and Requests',['Tap Time in and Time out with a live photo.','File leave, locator slip, travel, early out, and wellness leave.','See the status of each request and the wellness days left.'],['My time record','CS Form No. 6, Locator Slip, Travel Authority, TALA slip','My summary by month, term, or fiscal year'],'#2f7a4a')
     + tab('\u{1F372}','SBFP Monitoring',['See the menu, recipe, and assigned parents of the day.','Mark if the feeding was implemented, and why if not.','Mark the parents who helped prepare.','See the calendar, menu summary, and participation.'],[],'#d35400'));
   tabs(3, tab('\u{1F393}','LAC and Teacher Development',['Sign the LAC attendance with your e-signature.','Evaluate the session and each speaker.','Write in your LAC Notebook, Reflection Notebook, Meeting Notebook, and Notes.','As a speaker, see your results without the names.'],['My notebooks and reflections'],'#b06000')
-    + tab('\u{1F3AC}','Learning Hub',['Watch the videos assigned to you: pause, rewind, forward, and adjust the volume.','Type in the floating notebook while watching.','See your progress: Almost finished at 90%, Finished at the end.','As a facilitator, share a video for approval.'],['My notes from the videos'],'#a3271b')
+    + tab('\u{1F3AC}','Learning Hub',['Watch the videos assigned to you: pause, rewind, forward, and adjust the volume.','Study PowerPoint or PDF slides, self-paced or with a live facilitator.','Tap the notebook icon to write beside the video or slides.','See your progress: Almost finished at 90%, Finished at the end.','As a facilitator, share a video for approval.'],['My notes from the videos'],'#a3271b')
     + tab('\u{1F4CA}','School M&amp;E Reports',['See My Status slides about your own work.','Edit the text, draw, save, and present the slides.','Open Reports and documents for everything you made.'],['Only your own reports and documents','My Status as PDF'],'#1F5130'));
   who('\u{1F469}\u200D\u{1F3EB}', 'How Teachers Benefit', ['A clear weekly routine: submit once, see the status anytime.','Fair and transparent observation: read the notes, comment, then sign.','Attendance, SF2, and leave forms are made for them, no more manual writing.','Learn anytime in the Learning Hub, and keep notes and reflections in one place.','Works on the phone, even offline, and installs like an app.'], '#1e5a8c');
   who('\u{1F5C2}', 'How the Administrative Officer Benefits', ['Prints weekly reports, the SF2 and SF4, and LAC reports without collecting papers.','Posts and updates the SBFP menu and monitors parents\u2019 attendance.','Sees the time records and the leave summary of personnel, view and print.','Keeps records safe in Google Drive with automatic backups.'], '#6a2c99');
@@ -7231,7 +7241,7 @@ function lacHeadEmail(){ const h = lacPeople().find(p => p.role==='head'); retur
 // For teachers: no paste, no right click, no copy or cut, no dragging text in. They type their own words.
 function nbGuard(el){
   if (!el || lacRole()!=='teacher') return;
-  const stop = e => { e.preventDefault(); toast('Please type your own words. Pasting is turned off in the notebook.'); return false; };
+  const stop = e => { e.preventDefault(); return false; };
   ['paste','drop','contextmenu','copy','cut','dragstart'].forEach(ev => el.addEventListener(ev, stop));
   el.addEventListener('keydown', e => { const k = (e.key||'').toLowerCase(); if ((e.ctrlKey || e.metaKey) && ['v','c','x'].indexOf(k) > -1) return stop(e); if (e.shiftKey && k==='insert') return stop(e); });
   el.addEventListener('beforeinput', e => { if (/^insertFrom(Paste|Drop|Yank|PasteAsQuotation)$/.test(e.inputType||'')) return stop(e); });
@@ -7277,7 +7287,7 @@ function nbOpen(id, book, sid){
     ${mine?'':`<p class="sub">${esc(n.name)}${n.flag?' \u00B7 <b style="color:var(--late)">Check this entry: a large block of text appeared at once.</b>':''}</p>`}
     ${n.book!=='NOTE'?`<div class="field"><label for="nbSess">${n.book==='MEET'?'Meeting':'LAC session'}</label><select id="nbSess" ${ro?'disabled':''}><option value="">Choose</option>${sess.map(s=>`<option value="${s.id}" ${s.id===n.session?'selected':''}>${esc(s.title)}, ${esc(dShort(s.date))}</option>`).join('')}</select></div>`
       :`<div class="field"><label for="nbTitle">Title</label><input class="nbt" id="nbTitle" maxlength="160" ${ro} value="${esc(n.title||'')}" placeholder="Example: Ideas for the reading program"></div>`}
-    ${fields}${lacRole()==='teacher'&&mine?'<p class="hint">\u270D Type in your own words. Pasting is turned off here.</p>':''}
+    ${fields}
     ${n.remark?`<p class="stfnote"><b>School Head:</b> ${esc(n.remark)}</p>`:''}
     <p class="err" id="nbErr"></p><div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Close</button>${id?`<button class="btn ghost" onclick="nbPrint('${id}')">\u{1F5A8} Print</button>`:''}${mine?`<button class="btn" onclick="nbSaveNow()">Save</button>`:lacHead()?`<button class="btn" onclick="nbCheckOpen('${id}')">\u2714 Check</button>`:''}</div>`, 'wide');
   if (mine) document.querySelectorAll('#stfMBody .nbt').forEach(nbGuard);
@@ -7318,15 +7328,17 @@ function nbPrint(id){
 /* ----- Learning Hub ----- */
 function lacProg(hid, email){ return (LAC.data.progress||[]).find(p => p.hub===hid && p.email===(email||USER.email)); }
 function lacHubMine(){ return (LAC.data.hub||[]).filter(h => h.status==='Approved' && (h.assign==='all' || (h.assign||[]).indexOf(USER.email) > -1)); }
-function hubThumb(h){ return h.thumb || ('https://i.ytimg.com/vi/'+h.vid+'/hqdefault.jpg'); }
+function hubThumb(h){ return h.thumb || (h.kind==='SLIDES' ? '' : 'https://i.ytimg.com/vi/'+h.vid+'/hqdefault.jpg'); }
+function hubThumbHtml(h){ const t = hubThumb(h); return t ? `<img src="${esc(t)}" alt="" loading="lazy" onerror="this.style.display='none'">` : `<span class="hubslide"><b>\u{1F4CA}</b><small>${esc(h.title)}</small></span>`; }
+function hubKind(h){ return (h.kind==='SLIDES' ? 'Slides' : 'Video') + ' \u00B7 ' + (h.mode==='Hybrid' ? 'Hybrid, with live facilitator' : 'Self-paced'); }
 function hubAssignees(h){ return lacPeople().filter(p => h.assign==='all' || (h.assign||[]).indexOf(p.email) > -1); }
 function lacHub(){
   const D = LAC.data, head = lacHead(), admin = lacRole()==='admin', st = LAC.hubSt;
   const list = D.hub.filter(h => !st || h.status===st).sort((a,b) => (a.status==='Pending'?0:1)-(b.status==='Pending'?0:1) || String(b.created).localeCompare(String(a.created)));
   const card = h => { const p = lacProg(h.id), mine = h.assign==='all' || (h.assign||[]).indexOf(USER.email) > -1, as = hubAssignees(h), fin = as.filter(x => (lacProg(h.id, x.email)||{}).status==='Finished').length;
-    return `<div class="hubcard"><button class="hubthumb" onclick="hubPlay('${h.id}')" aria-label="Play ${esc(h.title)}"><img src="${esc(hubThumb(h))}" alt="" loading="lazy" onerror="this.style.display='none'"><span class="hubplay">\u25B6</span>${h.status!=='Approved'?`<span class="hubst ${h.status}">${h.status==='Pending'?'Waiting for approval':'Returned'}</span>`:''}</button>
-      <div class="hubbody"><b>${esc(h.title)}</b><small>${h.facilitator?esc(h.facilitator)+' \u00B7 ':''}${h.session&&lacS(h.session)?esc(lacS(h.session).title):'Self learning'}</small>
-      ${mine&&h.status==='Approved'?`<div class="hubbar" title="${p?p.pct:0}% watched"><i style="width:${p?p.pct:0}%"></i></div><small>${p?esc(p.status)+', '+p.pct+'%':'Not started'}${h.target?' \u00B7 by '+esc(dShort(h.target)):''}</small>`:''}
+    return `<div class="hubcard"><button class="hubthumb" onclick="hubPlay('${h.id}')" aria-label="Play ${esc(h.title)}">${hubThumbHtml(h)}<span class="hubplay">${h.kind==='SLIDES'?'\u{1F4D6}':'\u25B6'}</span>${h.status!=='Approved'?`<span class="hubst ${h.status}">${h.status==='Pending'?'Waiting for approval':'Returned'}</span>`:''}</button>
+      <div class="hubbody"><b>${esc(h.title)}</b><small>${h.facilitator?esc(h.facilitator)+' \u00B7 ':''}${h.session&&lacS(h.session)?esc(lacS(h.session).title):'Self learning'}</small><small class="hubkind">${esc(hubKind(h))}</small>
+      ${mine&&h.status==='Approved'?`<div class="hubbar" title="${p?p.pct:0}% done"><i style="width:${p?p.pct:0}%"></i></div><small>${p?esc(p.status)+', '+p.pct+'%':'Not started'}${h.target?' \u00B7 by '+esc(dShort(h.target)):''}</small>`:''}
       ${(head||admin)&&h.status==='Approved'?`<small>${fin} of ${as.length} finished \u00B7 <button class="linkbtn" onclick="hubProgView('${h.id}')">See progress</button></small>`:''}
       ${h.note&&(head||h.byEmail===USER.email)?`<p class="stfnote">${esc(h.note)}</p>`:''}
       <div class="stfreq-a">${head&&h.status!=='Approved'?`<button class="btn small" onclick="hubDecide('${h.id}','Approved')">\u2714 Approve</button><button class="btn ghost small" onclick="hubDecide('${h.id}','Returned')">Return</button>`:''}
@@ -7334,36 +7346,55 @@ function lacHub(){
         ${(head||admin)&&h.status==='Approved'?`<button class="linkbtn" onclick="lacMsgOpen('hub','${h.id}')">\u{1F4AC} Message</button>`:''}</div></div></div>`; };
   $('lacBody').innerHTML = `<div class="bar" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><button class="btn" onclick="hubForm()">\uFF0B Add a material</button>
       ${head||admin?`<div class="tabs">${[['','All'],['Pending','Waiting for approval'],['Approved','Approved'],['Returned','Returned']].map(x=>`<button class="${st===x[0]?'on':''}" onclick="LAC.hubSt='${x[0]}';lacHub()">${x[1]}${x[0]?' ('+D.hub.filter(h=>h.status===x[0]).length+')':''}</button>`).join('')}</div><button class="btn ghost" onclick="hubProgView()">\u{1F4CA} Progress of everyone</button>`:''}</div>
-    <p class="hint">Turn your PPT into an MP4, upload it to YouTube as Unlisted, then paste the link here. The School Head approves it before others can see it.</p>
+    <p class="hint">Add a YouTube video (Unlisted) or upload your PowerPoint or PDF slides. Tap a material to open it, and tap the notebook icon to write while you watch. The School Head approves new materials first.</p>
     <div class="hubgrid">${list.map(card).join('') || '<div class="empty">No materials yet.</div>'}</div>`;
 }
 function hubForm(id){
-  const h = id ? LAC.data.hub.find(x => x.id===id) : { assign:'all' }, P = lacPeople();
-  LAC.thumb = h.thumb || '';
+  const h = id ? LAC.data.hub.find(x => x.id===id) : { assign:'all', kind:'VIDEO', mode:'Self-paced', minutes:10 }, P = lacPeople();
+  LAC.thumb = h.thumb || ''; LAC.hubKind = h.kind || 'VIDEO'; LAC.hubFile = null;
   stfModal(`<h3>${id?'Edit the material':'Add a material to the Learning Hub'}</h3><p class="sub">${lacHead()?'It is shown right away to those you assign.':'The School Head will check and approve it first.'}</p>
-    <div class="field"><label for="hbUrl">YouTube link</label><input id="hbUrl" value="${esc(h.url||'')}" placeholder="https://youtu.be/..." oninput="hubPreview()"></div>
+    <div class="field"><label>Kind of material</label><div class="stfrad"><label class="check" style="margin:0"><input type="radio" name="hbKind" value="VIDEO" ${LAC.hubKind==='VIDEO'?'checked':''} onchange="hubKindSet('VIDEO')">▶ YouTube video</label><label class="check" style="margin:0"><input type="radio" name="hbKind" value="SLIDES" ${LAC.hubKind==='SLIDES'?'checked':''} onchange="hubKindSet('SLIDES')">\u{1F4CA} PowerPoint or PDF slides</label></div></div>
+    <div id="hbVideo" ${LAC.hubKind==='SLIDES'?'hidden':''}><div class="field"><label for="hbUrl">YouTube link</label><input id="hbUrl" value="${esc(h.kind==='SLIDES'?'':h.url||'')}" placeholder="https://youtu.be/..." oninput="hubPreview()"><small class="hint">Upload the video to YouTube as Unlisted, then paste the link.</small></div></div>
+    <div id="hbSlides" ${LAC.hubKind==='SLIDES'?'':'hidden'}><div class="field"><label for="hbFile">PowerPoint or PDF file</label><input type="file" id="hbFile" accept=".pptx,.ppt,.pdf,application/pdf,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-powerpoint" onchange="hubFilePick(this)">
+        <small class="hint" id="hbFileTxt">${h.fileName?'Current file: '+esc(h.fileName)+'. Choose a new file only to replace it.':'Up to 30 MB. A PDF opens faster on phones: in PowerPoint, click File, Save As, then choose PDF.'}</small></div>
+      <div class="field"><label for="hbMin">Time to study the slides (minutes)</label><input type="number" id="hbMin" min="1" max="240" value="${esc(h.minutes||10)}" style="max-width:140px"><small class="hint">Progress counts the time the slides are open, up to this many minutes.</small></div></div>
     <div class="hubprev" id="hbPrev"></div>
-    <div class="field"><label for="hbThumb">Your own thumbnail (optional)</label><input type="file" id="hbThumb" accept="image/*" onchange="hubThumbPick(this)"><small class="hint">Leave it empty to use the thumbnail from YouTube.</small> ${h.thumb?'<button class="linkbtn" onclick="LAC.thumb=\'\';hubPreview()">Use the YouTube thumbnail</button>':''}</div>
+    <div class="field"><label for="hbThumb">Your own thumbnail (optional)</label><input type="file" id="hbThumb" accept="image/*" onchange="hubThumbPick(this)"><small class="hint">Leave it empty to use ${LAC.hubKind==='SLIDES'?'a simple cover with the title':'the thumbnail from YouTube'}.</small> ${h.thumb?'<button class="linkbtn" onclick="LAC.thumb=\'\';hubPreview()">Remove my thumbnail</button>':''}</div>
     <div class="field"><label for="hbTitle">Title</label><input id="hbTitle" maxlength="160" value="${esc(h.title||'')}"></div>
     <div class="field"><label for="hbFac">Facilitator or speaker</label><input id="hbFac" list="hbNames" maxlength="160" value="${esc(h.facilitator||'')}" placeholder="Start typing a name"><datalist id="hbNames">${lacNameList().map(n => `<option value="${esc(n)}">`).join('')}</datalist></div>
     <div class="field"><label for="hbDesc">Short description (optional)</label><textarea id="hbDesc" rows="2" maxlength="1500">${esc(h.desc||'')}</textarea></div>
+    <div class="field"><label>How it is used</label><div class="stfrad"><label class="check" style="margin:0"><input type="radio" name="hbMode" value="Self-paced" ${h.mode!=='Hybrid'?'checked':''}>Self-paced: teachers study it on their own</label><label class="check" style="margin:0"><input type="radio" name="hbMode" value="Hybrid" ${h.mode==='Hybrid'?'checked':''}>Hybrid: the facilitator leads it live, teachers follow on their devices</label></div></div>
     <div class="field"><label for="hbSess">Part of a session (optional)</label><select id="hbSess"><option value="">Self learning</option>${LAC.data.sessions.sort((a,b)=>b.date.localeCompare(a.date)).map(s=>`<option value="${s.id}" ${s.id===h.session?'selected':''}>${esc(s.title)}, ${esc(dShort(s.date))}</option>`).join('')}</select></div>
     <div class="field"><label>Assign to</label><div class="stfrad"><label class="check" style="margin:0"><input type="radio" name="hbAll" value="all" ${h.assign==='all'?'checked':''} onchange="$('hbWho').hidden=true">All personnel</label><label class="check" style="margin:0"><input type="radio" name="hbAll" value="some" ${h.assign!=='all'?'checked':''} onchange="$('hbWho').hidden=false">A few, or one person</label></div>
       <div id="hbWho" class="lacpick" ${h.assign==='all'?'hidden':''}>${P.map(p=>`<label class="check" style="margin:0"><input type="checkbox" value="${esc(p.email)}" ${h.assign!=='all'&&h.assign.indexOf(p.email)>-1?'checked':''}>${esc(p.name)}</label>`).join('')}</div></div>
     <div class="field"><label for="hbTarget">Finish by (optional)</label><input type="date" id="hbTarget" value="${esc(h.target||'')}"></div>
-    <p class="err" id="hbErr"></p><div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Cancel</button><button class="btn" onclick="hubSaveNow('${id||''}')">${lacHead()?'Save':'Send for approval'}</button></div>`, 'wide');
+    <p class="err" id="hbErr"></p><div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Cancel</button><button class="btn" id="hbSaveBtn" onclick="hubSaveNow('${id||''}')">${lacHead()?'Save':'Send for approval'}</button></div>`, 'wide');
   hubPreview();
 }
+function hubKindSet(k){ LAC.hubKind = k; $('hbVideo').hidden = k!=='VIDEO'; $('hbSlides').hidden = k!=='SLIDES'; hubPreview(); }
+function hubFilePick(inp){ const f = inp.files[0]; LAC.hubFile = null; if (!f) return;
+  if (!/\.(pptx|ppt|pdf)$/i.test(f.name)){ inp.value=''; return $('hbErr').textContent = 'Choose a PowerPoint (.pptx or .ppt) or PDF file.'; }
+  if (f.size > 30*1048576){ inp.value=''; return $('hbErr').textContent = 'This file is '+(f.size/1048576).toFixed(1)+' MB. The limit is 30 MB. Save it as PDF or compress the pictures in PowerPoint.'; }
+  LAC.hubFile = f; $('hbErr').textContent = ''; $('hbFileTxt').textContent = f.name+', '+(f.size/1048576).toFixed(1)+' MB';
+  if (!$('hbTitle').value.trim()) $('hbTitle').value = f.name.replace(/\.(pptx|ppt|pdf)$/i,'').replace(/[_-]+/g,' '); }
 function hubVid(url){ const m = String(url||'').match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?(?:.*&)?v=|embed\/|shorts\/|live\/))([A-Za-z0-9_-]{11})/); return m ? m[1] : ''; }
-function hubPreview(){ const v = hubVid($('hbUrl').value), el = $('hbPrev'); if (!el) return;
-  el.innerHTML = v || LAC.thumb ? `<img src="${esc(LAC.thumb || 'https://i.ytimg.com/vi/'+v+'/hqdefault.jpg')}" alt="Thumbnail" onerror="this.style.display='none'"><small>${v?'This is how it will look in the Learning Hub.':'Paste the YouTube link above.'}</small>` : ''; }
+function hubPreview(){ const el = $('hbPrev'); if (!el) return; const v = LAC.hubKind==='VIDEO' && $('hbUrl') ? hubVid($('hbUrl').value) : '';
+  el.innerHTML = v || LAC.thumb ? `<img src="${esc(LAC.thumb || 'https://i.ytimg.com/vi/'+v+'/hqdefault.jpg')}" alt="Thumbnail" onerror="this.style.display='none'"><small>This is how it will look in the Learning Hub.</small>` : ''; }
 async function hubThumbPick(inp){ const f = inp.files[0]; if (!f) return; try{ let q = 0.8, d = await lacShrink(f, 640, q); while (d.length > 46000 && q > 0.3){ q -= 0.1; d = await lacShrink(f, 560, q); } if (d.length > 46000) throw new Error('This picture is too large. Choose another one.'); LAC.thumb = d; hubPreview(); }catch(e){ handleErr(e,'hbErr'); } }
+function hubB64(f){ return new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(String(r.result).split(',')[1]); r.onerror = () => rej(new Error('The file could not be read. Choose it again.')); r.readAsDataURL(f); }); }
 async function hubSaveNow(id){
-  const item = { id, url:$('hbUrl').value.trim(), title:$('hbTitle').value.trim(), facilitator:$('hbFac').value.trim(), desc:$('hbDesc').value.trim(), session:$('hbSess').value, thumb:LAC.thumb,
+  const kind = LAC.hubKind, cur = id ? LAC.data.hub.find(x => x.id===id) : null;
+  const item = { id, kind, url: kind==='VIDEO' ? $('hbUrl').value.trim() : '', title:$('hbTitle').value.trim(), facilitator:$('hbFac').value.trim(), desc:$('hbDesc').value.trim(), session:$('hbSess').value, thumb:LAC.thumb,
+    mode: document.querySelector('input[name=hbMode]:checked').value, minutes: Number($('hbMin').value)||10,
     assign: document.querySelector('input[name=hbAll]:checked').value==='all' ? 'all' : [...document.querySelectorAll('#hbWho input:checked')].map(x=>x.value), target:$('hbTarget').value };
-  if (!hubVid(item.url)) return $('hbErr').textContent = 'Paste a YouTube link, for example https://youtu.be/xxxxxxxxxxx'; if (!item.title) return $('hbErr').textContent = 'Type the title.';
-  if (item.assign!=='all' && !item.assign.length) return $('hbErr').textContent = 'Choose who will watch it.';
-  try{ LAC.data = await api('hubSave', { item }); lacSaveLocal(); closeModal('stfModal'); LAC.tab = 'hub'; lacDraw(); toast(lacHead() ? 'Saved. It is now in the Learning Hub.' : 'Sent to the School Head for approval.'); }catch(e){ handleErr(e,'hbErr'); }
+  if (kind==='VIDEO' && !hubVid(item.url)) return $('hbErr').textContent = 'Paste a YouTube link, for example https://youtu.be/xxxxxxxxxxx';
+  if (kind==='SLIDES' && !LAC.hubFile && !(cur && cur.fileId)) return $('hbErr').textContent = 'Choose the PowerPoint or PDF file.';
+  if (!item.title) return $('hbErr').textContent = 'Type the title.';
+  if (item.assign!=='all' && !item.assign.length) return $('hbErr').textContent = 'Choose who will study it.';
+  $('hbSaveBtn').disabled = true;
+  try{ if (kind==='SLIDES' && LAC.hubFile){ loading(true, 'Uploading the slides...'); item.file = { name: LAC.hubFile.name, base64: await hubB64(LAC.hubFile) }; }
+    LAC.data = await api('hubSave', { item }); loading(false); lacSaveLocal(); closeModal('stfModal'); LAC.tab = 'hub'; lacDraw(); toast(lacHead() ? 'Saved. It is now in the Learning Hub.' : 'Sent to the School Head for approval.'); }
+  catch(e){ loading(false); if ($('hbSaveBtn')) $('hbSaveBtn').disabled = false; handleErr(e,'hbErr'); }
 }
 async function hubDecide(id, decision){
   let note = ''; if (decision==='Returned'){ note = prompt('Why is it returned? The uploader will see this.') || ''; if (!note.trim()) return; }
@@ -7377,17 +7408,14 @@ function ytApi(){ if (window.YT && YT.Player) return Promise.resolve(); if (!win
 // Progress counts only the parts actually played, so skipping ahead does not count as watched.
 async function hubPlay(id){
   const h = LAC.data.hub.find(x => x.id===id); if (!h) return;
+  const slides = h.kind==='SLIDES';
   const mine = h.status==='Approved' && (h.assign==='all' || (h.assign||[]).indexOf(USER.email) > -1), p = lacProg(id) || { pct:0, pos:0, status:'' };
   const s = h.session ? lacS(h.session) : null, needSign = s && lacInvited(s, USER.email) && !lacMine(s.id,'ATT') && s.date <= todayPH();
   const parts = (p.parts && p.parts.length===100) ? p.parts.split('') : Array(101).join('0').split('');
-  LAC.play = { id, h, pct: p.parts ? parts.filter(c => c==='1').length : (p.pct||0), pos:p.pos||0, status:p.status||'', mine, last:0, timer:null, parts, seeking:false, lastT:null };
-  $('hubPlayer').classList.add('open');
-  $('hubPBody').innerHTML = `<div class="hubp-h"><div><b>${esc(h.title)}</b><small>${h.facilitator?esc(h.facilitator):''}${s?' · '+esc(s.title):''}</small></div>
-      <div style="display:flex;gap:6px"><button class="btn ghost small" onclick="nbFloat()">\u{1F4D3} My notebook</button><button class="btn ghost small" onclick="hubClose()">Close</button></div></div>
-    ${needSign?`<div class="hubsign">✍ This material is part of <b>${esc(s.title)}</b>. Please tick your attendance. <button class="btn small" onclick="hubClose();lacSign('${s.id}')">Tick my attendance</button></div>`:''}
-    <div class="hubstage" id="hubStage">
-      <div class="hubframe" id="hubFrame" oncontextmenu="return false"><div class="ytcrop"><div id="ytBox"></div></div><div class="ytshield" onclick="hubToggle()" ondblclick="hubFull()" oncontextmenu="return false"><span id="hpBig">▶</span></div></div>
-      <div class="hubctl" oncontextmenu="return false">
+  const pct0 = p.parts ? parts.filter(c => c==='1').length : (p.pct||0);
+  LAC.play = { id, h, slides, pct: pct0, pos:p.pos||0, status:p.status||'', mine, last:0, timer:null, parts, seeking:false, lastT:null, min: h.minutes||10, secs: Math.round(pct0 * (h.minutes||10) * 60 / 100) };
+  $('hubPlayer').classList.add('open'); document.body.classList.add('hubopen');
+  const ctlVideo = `<div class="hubctl" oncontextmenu="return false">
         <button onclick="hubJump(-10)" title="Back 10 seconds" aria-label="Back 10 seconds">⏪ 10</button>
         <button id="hpPlay" onclick="hubToggle()" title="Play or pause" aria-label="Play or pause">▶</button>
         <button onclick="hubJump(10)" title="Forward 10 seconds" aria-label="Forward 10 seconds">10 ⏩</button>
@@ -7396,20 +7424,51 @@ async function hubPlay(id){
         <button id="hpMute" onclick="hubMute()" title="Mute" aria-label="Mute">\u{1F50A}</button>
         <input type="range" id="hpVol" min="0" max="100" step="5" value="100" aria-label="Volume" oninput="hubVol(this.value)">
         <select id="hpRate" onchange="hubRate(this.value)" aria-label="Speed"><option value="0.75">0.75x</option><option value="1" selected>1x</option><option value="1.25">1.25x</option><option value="1.5">1.5x</option></select>
-        <button onclick="hubFull()" title="Full screen" aria-label="Full screen">⛶</button>
+        <button onclick="hubNote()" title="My notebook" aria-label="My notebook">\u{1F4D3}</button>
+        <button onclick="hubFull()" title="Full screen" aria-label="Full screen">⛶</button></div>`;
+  const ctlSlides = `<div class="hubctl" oncontextmenu="return false"><span class="hptime" id="hpTime">Studied 0:00</span><span style="flex:1"></span>
+        <button onclick="hubNote()" title="My notebook" aria-label="My notebook">\u{1F4D3} Notebook</button><button onclick="hubFull()" title="Full screen" aria-label="Full screen">⛶ Full screen</button></div>`;
+  $('hubPBody').innerHTML = `<div class="hubp-h"><div><b>${esc(h.title)}</b><small>${h.facilitator?esc(h.facilitator):''}${s?' · '+esc(s.title):''} · ${esc(hubKind(h))}</small></div>
+      <div style="display:flex;gap:6px"><button class="btn ghost small" onclick="hubClose()">Close</button></div></div>
+    ${needSign?`<div class="hubsign">✍ This material is part of <b>${esc(s.title)}</b>. Please tick your attendance. <button class="btn small" onclick="hubClose();lacSign('${s.id}')">Tick my attendance</button></div>`:''}
+    <div class="hubwrap" id="hubWrap">
+      <div class="hubstage" id="hubStage">
+        ${slides ? `<div class="hubframe slides" id="hubFrame" oncontextmenu="return false"><iframe src="https://drive.google.com/file/d/${esc(h.fileId)}/preview" allow="autoplay; fullscreen" title="${esc(h.title)}"></iframe><div class="pvshield" title=""></div></div>${ctlSlides}`
+          : `<div class="hubframe" id="hubFrame" oncontextmenu="return false"><div class="ytcrop"><div id="ytBox"></div></div><div class="ytshield" onclick="hubToggle()" ondblclick="hubFull()" oncontextmenu="return false"><span id="hpBig">▶</span></div></div>${ctlVideo}`}
       </div>
+      <aside class="hubnote" id="hubNote" hidden></aside>
+      <button class="nbfab" id="nbFab" onclick="hubNote()" title="My notebook" aria-label="My notebook">\u{1F4D3}</button>
     </div>
     ${h.desc?`<p class="hint" style="margin:8px 0">${esc(h.desc)}</p>`:''}
     ${mine?`<div class="hubbar big"><i id="hpBar" style="width:${LAC.play.pct}%"></i></div><div class="hubp-f"><span id="hpTxt">${esc(hubPTxt())}</span>
       <span><button class="btn ghost small" id="hpAlmost" onclick="hubMark('Almost finished')" ${LAC.play.pct<90?'disabled':''}>Mark almost finished</button><button class="btn small" id="hpDone" onclick="hubMark('Finished')" ${LAC.play.pct<90?'disabled':''}>✔ Mark finished</button></span></div>
-      <p class="hint" style="margin:4px 0 0">Only the parts you actually watch are counted. The buttons turn on at 90%. It is marked finished on its own at the end once you reach 90%.</p>`:'<p class="hint">Progress is counted only for those assigned to this material.</p>'}`;
+      <p class="hint" style="margin:4px 0 0">${slides?'The time counts while the slides are open on your screen, up to '+LAC.play.min+' minutes. The buttons turn on at 90%.':'Only the parts you actually watch are counted. The buttons turn on at 90%. It is marked finished on its own at the end once you reach 90%.'}</p>`:'<p class="hint">Progress is counted only for those assigned to this material.</p>'}`;
+  if (slides){ LAC.play.timer = setInterval(hubTick, 1000); hubTick(); return; }
   try{ await ytApi(); }catch(e){ $('ytBox').innerHTML = `<div class="empty">${esc(e.message)}</div>`; return; }
   LAC.play.yt = new YT.Player('ytBox', { videoId:h.vid, width:'100%', height:'100%',
     playerVars:{ start:Math.max(0, Math.floor(LAC.play.pos - 3)), controls:0, disablekb:1, fs:0, rel:0, modestbranding:1, iv_load_policy:3, playsinline:1, cc_load_policy:0, showinfo:0 },
     events:{ onStateChange: e => { hubIcon(); if (e.data===YT.PlayerState.ENDED) hubEnded(); else if (e.data===YT.PlayerState.PAUSED) hubSave(); } } });
   LAC.play.timer = setInterval(hubTick, 1000);
 }
-function hubPTxt(){ const P = LAC.play; return P.status==='Finished' ? '✔ Finished. You can watch it again any time.' : P.status==='Almost finished' ? 'Almost finished, '+P.pct+'% watched' : P.pct ? P.pct+'% watched' : 'Not started'; }
+/* The notebook beside the material: the round icon shows or hides it. The video or slides get smaller, never covered. */
+function hubNote(){
+  const w = $('hubWrap'), el = $('hubNote'); if (!w || !el) return;
+  if (!el.hidden){ hubNoteHide(); return; }
+  const T = nbFloatTarget(), n = LAC.data.notebooks.find(x => x.email===USER.email && x.book===T.book && (T.book==='LAC' ? x.session===T.session : x.title===T.title));
+  if (!LAC.fl || LAC.fl.T.label !== T.label) LAC.fl = { T, id: n ? n.id : '', flag:false };
+  if (!$('nbfText')){
+    el.innerHTML = `<div class="hubnote-h"><div><b>\u{1F4D3} ${esc(T.book==='LAC'?'My LAC Notebook':'My Notes')}</b><small>${esc(T.label)}</small></div>${nbBang()}<button class="linkbtn" onclick="hubNoteHide()" title="Hide the notebook">Hide</button></div>
+      <textarea class="nbt" id="nbfText" placeholder="Type your notes while you watch...">${esc(n && n.body ? (n.body.text||'') : nbFloatDraft())}</textarea>
+      <div class="nbf-f"><small id="nbfSt">${n?'Saved':'Not yet saved'}</small><button class="btn small" onclick="nbFloatSave()">Save</button></div>`;
+    nbGuard($('nbfText')); $('nbfText').addEventListener('input', () => { try{ localStorage.setItem(nbFloatKey(), $('nbfText').value); }catch(e){} $('nbfSt').textContent = 'Typing... tap Save'; if (LAC.flag) LAC.fl.flag = true; });
+  }
+  el.hidden = false; w.classList.add('notes'); document.querySelector('#hubPlayer .hubmodal').classList.add('withnotes'); $('nbFab').classList.add('on');
+  setTimeout(() => { const t = $('nbfText'); if (t){ t.focus({ preventScroll:true }); if (window.innerWidth < 820) el.scrollIntoView({ behavior:'smooth', block:'nearest' }); } }, 80);
+}
+async function hubNoteHide(){ const el = $('hubNote'); if (!el) return;
+  const t = $('nbfText'); if (t && t.value.trim() && $('nbfSt').textContent.indexOf('Typing') === 0) await nbFloatSave();   // saved quietly when hidden
+  el.hidden = true; $('hubWrap').classList.remove('notes'); document.querySelector('#hubPlayer .hubmodal').classList.remove('withnotes'); $('nbFab').classList.remove('on'); }
+function hubPTxt(){ const P = LAC.play, w = P.slides ? 'studied' : 'watched'; return P.status==='Finished' ? '✔ Finished. You can open it again any time.' : P.status==='Almost finished' ? 'Almost finished, '+P.pct+'% '+w : P.pct ? P.pct+'% '+w : 'Not started'; }
 function hubFmt(t){ t = Math.max(0, Math.floor(t||0)); const h = Math.floor(t/3600), m = Math.floor(t%3600/60), s = t%60; return (h?h+':'+String(m).padStart(2,'0'):m)+':'+String(s).padStart(2,'0'); }
 function hubYT(){ const P = LAC.play; return P && P.yt && P.yt.getDuration ? P.yt : null; }
 function hubPlaying(){ const y = hubYT(); return y && y.getPlayerState && y.getPlayerState()===1; }
@@ -7420,9 +7479,10 @@ function hubSeek(v){ const y = hubYT(); if (!y) return; LAC.play.seeking = false
 function hubVol(v){ const y = hubYT(); if (!y) return; v = Number(v); y.setVolume(v); if (v > 0 && y.isMuted && y.isMuted()) y.unMute(); if ($('hpMute')) $('hpMute').textContent = v === 0 ? '\u{1F507}' : '\u{1F50A}'; }
 function hubMute(){ const y = hubYT(); if (!y) return; if (y.isMuted && y.isMuted()){ y.unMute(); $('hpMute').textContent = '\u{1F50A}'; } else { y.mute(); $('hpMute').textContent = '\u{1F507}'; } }
 function hubRate(v){ const y = hubYT(); if (y && y.setPlaybackRate) y.setPlaybackRate(Number(v)); }
-function hubFull(){ const el = $('hubStage'); if (!el) return; if (document.fullscreenElement) document.exitFullscreen().catch(()=>{}); else (el.requestFullscreen || el.webkitRequestFullscreen || (()=>{})).call(el); }
+function hubFull(){ const el = $('hubWrap'); if (!el) return; if (document.fullscreenElement) document.exitFullscreen().catch(()=>{}); else (el.requestFullscreen || el.webkitRequestFullscreen || (()=>{})).call(el); }
 function hubTick(){
-  const P = LAC.play, y = hubYT(); if (!P || !y) return;
+  const P = LAC.play; if (P && P.slides) return hubTickSlides();
+  const y = hubYT(); if (!P || !y) return;
   const d = y.getDuration(), t = y.getCurrentTime(); if (!d) return;
   P.pos = t;
   // mark the parts played since the last second (a jump of more than a few seconds is a skip, not watching)
@@ -7437,6 +7497,18 @@ function hubTick(){
   if ($('hpAlmost')) $('hpAlmost').disabled = P.pct < 90 || P.status==='Finished'; if ($('hpDone')) $('hpDone').disabled = P.pct < 90 || P.status==='Finished';
   if (Date.now() - P.last > 20000) hubSave();
 }
+// Slides: one more second counts only while the slides are on the screen
+function hubTickSlides(){
+  const P = LAC.play; if (document.visibilityState==='visible' && document.hasFocus()) P.secs++;
+  const full = P.min*60, k = Math.min(100, Math.floor(P.secs / full * 100)); for (let i = 0; i < k; i++) P.parts[i] = '1';
+  P.pct = P.parts.filter(c => c==='1').length; P.pos = P.secs;
+  if ($('hpTime')) $('hpTime').textContent = 'Studied '+hubFmt(Math.min(P.secs, full))+' of '+hubFmt(full);
+  if (!P.mine) return;
+  if ($('hpBar')) $('hpBar').style.width = P.pct+'%'; if ($('hpTxt')) $('hpTxt').textContent = hubPTxt();
+  if ($('hpAlmost')) $('hpAlmost').disabled = P.pct < 90 || P.status==='Finished'; if ($('hpDone')) $('hpDone').disabled = P.pct < 90 || P.status==='Finished';
+  if (P.pct >= 100 && P.status!=='Finished'){ hubSave(true); toast('You studied the slides for the full time. Marked finished.'); return; }
+  if (Date.now() - P.last > 20000) hubSave();
+}
 function hubEnded(){ const P = LAC.play; if (!P) return; hubTick(); if (P.mine && P.pct < 90) toast('You reached the end, but some parts were skipped ('+P.pct+'% watched). Watch the parts you skipped to finish.'); hubSave(P.pct >= 90); }
 async function hubSave(ended, mark){
   const P = LAC.play; if (!P || !P.mine) return; P.last = Date.now();
@@ -7449,7 +7521,7 @@ async function hubSave(ended, mark){
   if ($('hpTxt')) $('hpTxt').textContent = hubPTxt();
 }
 async function hubMark(m){ await hubSave(false, m); toast(m==='Finished' ? 'Marked finished. Well done!' : 'Marked almost finished. You can come back to it.'); if ($('hpDone')) $('hpDone').disabled = LAC.play.status==='Finished'; }
-function hubClose(){ const P = LAC.play; if (document.fullscreenElement) document.exitFullscreen().catch(()=>{}); if (P){ clearInterval(P.timer); if (hubYT()){ try{ hubTick(); }catch(e){} hubSave(); try{ P.yt.destroy(); }catch(e){} } } LAC.play = null; $('hubPlayer').classList.remove('open'); $('hubPBody').innerHTML = ''; if (CUR_FEATURE==='lac') lacDraw(); }
+function hubClose(){ const P = LAC.play; if (document.fullscreenElement) document.exitFullscreen().catch(()=>{}); if (P){ clearInterval(P.timer); if (P.slides) hubSave(); else if (hubYT()){ try{ hubTick(); }catch(e){} hubSave(); try{ P.yt.destroy(); }catch(e){} } } const t = $('nbfText'); if (t && t.value.trim() && ($('nbfSt')||{}).textContent && $('nbfSt').textContent.indexOf('Typing')===0) nbFloatSave(); LAC.fl = null; document.querySelector('#hubPlayer .hubmodal').classList.remove('withnotes'); LAC.play = null; document.body.classList.remove('hubopen'); $('hubPlayer').classList.remove('open'); $('hubPBody').innerHTML = ''; if (CUR_FEATURE==='lac') lacDraw(); }
 
 /* ----- the floating notebook: type while watching. Drag it, make it small, or close it. ----- */
 function nbFloatTarget(){
