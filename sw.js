@@ -1,6 +1,6 @@
 // TALA offline helper. Upload this to GitHub next to index.html and config.js.
 // It keeps a copy of the page so TALA opens even without internet.
-const CACHE = 'tala-v14';
+const CACHE = 'tala-v16';
 self.addEventListener('install', e => {
   self.skipWaiting();
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(['./', './index.html', './config.js', './manifest.json', './icon-192.png', './icon-512.png', './apple-touch-icon.png', './pmcf-template.xlsm', './mwa-template.xlsm', './sf2-template.xlsx', './sf4-template.xlsx', './leave-template.xlsx', './locator-template.docx', './travel-template.docx', './leave-form.pdf', './locator-slip.pdf', './travel-authority.pdf']).catch(() => {})));

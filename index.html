@@ -934,6 +934,8 @@ textarea.nbt{-webkit-touch-callout:none}
 .hubframe.slides{aspect-ratio:16/9;background:#e9ece8;display:flex;align-items:center;justify-content:center;touch-action:pan-y;-webkit-user-select:none;user-select:none}.hubframe.slides canvas{display:block;max-width:100%;max-height:100%;background:#fff;box-shadow:0 2px 12px rgba(0,0,0,.15)}
 .deckmsg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;color:#333;font-size:15px}.deckmsg[hidden]{display:none}
 .deckarrow{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:64px;border:0;border-radius:10px;background:rgba(0,0,0,.35);color:#fff;font-size:30px;cursor:pointer;opacity:.0;transition:opacity .2s}.hubframe.slides:hover .deckarrow{opacity:1}.deckarrow:disabled{display:none}.deckarrow.l{left:8px}.deckarrow.r{right:8px}
+.deckstrip{display:flex;gap:2px;margin:8px 0 2px;flex-wrap:nowrap}.deckstrip button{flex:1;min-width:3px;height:10px;border:0;border-radius:3px;background:#dfe5dc;padding:0;cursor:pointer}.deckstrip button.seen{background:#2f7a4a}.deckstrip button.cur{outline:2px solid #d9a400;outline-offset:1px}
+.hubresume{margin:8px 0;padding:8px 12px;border-radius:10px;background:#fff8e1;border:1.5px solid #e9b81c;font-size:14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}.hubresume[hidden]{display:none}
 .deckctl #dkPrev,.deckctl #dkNext{font-weight:700;padding:8px 14px}.deckctl #dkPrev:disabled,.deckctl #dkNext:disabled{opacity:.35;cursor:default}
 @media(hover:none){.deckarrow{opacity:.45;width:30px;height:46px;font-size:22px;background:rgba(0,0,0,.28)}}
 .hubslide{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:16px!important;gap:6px;background:linear-gradient(135deg,#1F5130,#2f7a4a);color:#fff;padding:12px;text-align:center}.hubslide b{display:none}.hubslide small{font-size:13px;line-height:1.3;max-height:3.9em;overflow:hidden}
@@ -962,6 +964,7 @@ textarea.nbt{-webkit-touch-callout:none}
 .camview video{width:100%;height:100%;object-fit:cover;transform:scaleX(-1)}.camview img{width:100%;height:100%;object-fit:contain;background:#111}
 .camwait{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:18px;color:#fff;font-size:15px;line-height:1.4}.camwait[hidden],.camview [hidden]{display:none!important}
 .camnote{font-size:12.5px;color:#5b6b5f;margin-bottom:10px}.cambtns{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}.cambtns .btn{flex:1;min-width:120px}
+.stft.shut{opacity:.45;cursor:not-allowed}.nophoto{display:inline-block;background:#fdecea;color:#a3271b;border-radius:6px;padding:1px 6px;font-size:11px;font-weight:700;vertical-align:middle}
 .picbtn{border:0;background:#eef3ec;border-radius:8px;padding:1px 5px;cursor:pointer;font-size:13px;vertical-align:middle}
 .livebar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:4px 0 12px}.livebar input{padding:8px 10px;border:1px solid #cfd8cc;border-radius:10px;font:inherit}
 .agrid9{grid-template-columns:repeat(3,1fr)!important}.agrid9 .acard p{font-size:15px}
@@ -1679,8 +1682,8 @@ textarea.nbt{-webkit-touch-callout:none}
 
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
-const MIN_SERVER = '5.3'; // oldest Code.gs this page works with
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'5.3', date:'October 9, 2026' } };
+const MIN_SERVER = '5.5'; // oldest Code.gs this page works with
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'5.5', date:'October 9, 2026' } };
 function verLine(server){
   const old = server && (server.indexOf('older') > -1 || parseFloat(server) < parseFloat(MIN_SERVER));
   const s = server ? ' Server '+server+('.') : '';
@@ -6328,7 +6331,7 @@ function stfWorkDays(a, b){ if (!a) return 0; let n = 0; for (let d = a; d <= (b
 // What a person's day was: present, tardy, on leave, official business, absent
 function stfDay(email, date){
   if (dow(date)===0 || dow(date)===6) return null;
-  const H = STF.data.hours, L = stfLog(email, date), R = stfReqOn(email, date), today = todayPH();
+  const H = stfHoursOf(email), L = stfLog(email, date), R = stfReqOn(email, date), today = todayPH();
   const o = { log:L, req:R, late:0, under:0, label:'', cls:'', tardy:false };
   const times = L && (L.amIn || L.amOut || L.pmIn || L.pmOut);
   if (times){
@@ -6382,19 +6385,33 @@ function stfHomeInner(){
 }
 async function stfHomeRefresh(){ try{ await stfLoad(true); }catch(e){} const el = $('stfHome'); if (el) el.innerHTML = stfHomeInner(); }
 // My four taps for today
+// AM taps only in the morning, PM taps only from 12:00 noon, and Time out only after Time in (the server checks the same)
+// Teachers follow the school hours; the School Head and the AO follow the office hours
+const STF_OFFICE = { amIn:'08:00', amOut:'12:00', pmIn:'13:00', pmOut:'17:00' };
+function stfRoleOf(email){ const p = ((STF.data||{}).people||[]).find(x => x.email===email); return p ? p.role : (USER && email===USER.email ? USER.role : 'teacher'); }
+function stfHoursOf(email){ const r = stfRoleOf(email); return (r==='head' || r==='admin') ? (STF.data.office || STF_OFFICE) : STF.data.hours; }
+function stfHoursTxt(H){ return time12(H.amIn)+' to '+time12(H.amOut)+' and '+time12(H.pmIn)+' to '+time12(H.pmOut); }
+function stfSlotWhy(k, L, m){ const noon = 720, pmStart = Math.max(noon, stfMin(stfHoursOf(USER.email).pmIn));
+  if (k==='amIn'){ if (m >= noon) return 'The morning Time in is closed after 12:00 noon. Tap PM in instead.'; if (L.amOut) return 'You already tapped AM out.'; }
+  if (k==='amOut'){ if (!L.amIn) return 'Tap AM in first.'; if (m >= pmStart) return 'The morning Time out is closed. Ask the School Head to correct it.'; }
+  if (k==='pmIn'){ if (m < noon) return 'The afternoon Time in opens at 12:00 noon.'; if (L.pmOut) return 'You already tapped PM out.'; }
+  if (k==='pmOut'){ if (m < noon) return 'The afternoon Time out opens at 12:00 noon. For the morning, tap AM out.'; if (!L.pmIn && !L.amIn) return 'Tap Time in first.'; }
+  return ''; }
+function stfNowM(){ return stfMin(new Date().toLocaleTimeString('en-GB',{ hour:'2-digit', minute:'2-digit', timeZone:'Asia/Manila' })); }
 function stfMyToday(compact){
-  const D = STF.data, today = todayPH(), L = stfLog(USER.email, today) || {}, o = stfDay(USER.email, today), H = D.hours;
+  const D = STF.data, today = todayPH(), L = stfLog(USER.email, today) || {}, o = stfDay(USER.email, today), H = stfHoursOf(USER.email);
   if (dow(today)===0 || dow(today)===6) return `<div class="attoday"><small>My time today</small><span class="hint">No school today (weekend).</span></div>`;
   const nowM = stfMin(new Date().toLocaleTimeString('en-GB',{ hour:'2-digit', minute:'2-digit', timeZone:'Asia/Manila' })), noon = stfMin(H.amOut) + 30;
   // in the afternoon, the next tap is PM in even when the morning was not tapped (half day, or came in after lunch)
-  let next = STF_SLOTS.find(s => !L[s[0]]); if (next && nowM >= noon && (next[0]==='amIn' || (next[0]==='amOut' && !L.amIn))) next = STF_SLOTS.find(s => (s[0]==='pmIn' || s[0]==='pmOut') && !L[s[0]]);
-  const tiles = STF_SLOTS.map(s => L[s[0]] ? `<div class="stft on"><small>${s[1]}</small><b>${stfTimeCell(Object.assign({ email:USER.email, date:today }, L), s[0])}</b></div>` : `<button class="stft" onclick="stfClock('${s[0]}')" title="Tap to record ${s[1]} now"><small>${s[1]}</small><b>·</b></button>`).join('');
+  let next = STF_SLOTS.find(s => !L[s[0]] && !stfSlotWhy(s[0], L, nowM));
+  const tiles = STF_SLOTS.map(s => L[s[0]] ? `<div class="stft on"><small>${s[1]}</small><b>${stfTimeCell(Object.assign({ email:USER.email, date:today }, L), s[0])}</b></div>` : (stfSlotWhy(s[0], L, nowM) ? `<button class="stft shut" onclick="toast('${esc(stfSlotWhy(s[0], L, nowM))}')" title="${esc(stfSlotWhy(s[0], L, nowM))}"><small>${s[1]}</small><b>·</b></button>` : `<button class="stft" onclick="stfClock('${s[0]}')" title="Tap to record ${s[1]} now"><small>${s[1]}</small><b>·</b></button>`)).join('');
   return `<div class="stfme ${compact?'compact':''}"><div class="stfme-h"><div><small>My time today</small><b>${esc(dShort(today))}</b> ${o&&o.label&&o.label!=='Not yet in'?stfChip(o):''} ${L.local?'<span class="unsynced">Not yet synced</span>':''}</div>
     ${next?`<button class="btn" onclick="stfClock('${next[0]}')">\u{1F552} ${next[0].slice(2)==='In'?'Time in':'Time out'}, ${next[1].slice(0,2)}</button>`:'<span class="atn ok">Done for today</span>'}</div>
-    <div class="stftiles">${tiles}</div><p class="hint" style="margin:6px 0 0">School hours: ${esc(time12(H.amIn))} to ${esc(time12(H.amOut))}, ${esc(time12(H.pmIn))} to ${esc(time12(H.pmOut))}. TALA uses the time of the server, not of the phone. Missed a tap? Tell the School Head, who can correct it.</p></div>`;
+    <div class="stftiles">${tiles}</div><p class="hint" style="margin:6px 0 0">${['head','admin'].indexOf(USER.role)>-1?'Your hours':'School hours'}: ${esc(time12(H.amIn))} to ${esc(time12(H.amOut))}, ${esc(time12(H.pmIn))} to ${esc(time12(H.pmOut))}. TALA uses the time of the server, not of the phone. Missed a tap? Tell the School Head, who can correct it.</p></div>`;
 }
 async function stfClock(slot){
   const lab = STF_SLOTS.find(s => s[0]===slot)[1];
+  { const why = stfSlotWhy(slot, stfLog(USER.email, todayPH()) || {}, stfNowM()); if (why){ toast(why); return; } }
   const shot = await camOpen((slot.slice(2)==='In'?'Time in':'Time out')+', '+lab.slice(0,2)); if (!shot) return;
   const today = todayPH(); let L = stfLog(USER.email, today); if (!L){ L = { date:today, email:USER.email, name:USER.name }; STF.data.logs.push(L); }
   const pic = shot.photo ? { photo: shot.photo.split(',')[1] } : { nocam:true };
@@ -6434,14 +6451,14 @@ async function camStart(){
     camBtns(`<button class="btn ghost" onclick="camClose(null)">Cancel</button><button class="btn" onclick="camSnap()">\u{1F4F8} Take photo</button>`);
   }catch(e){
     const n = e && e.name;
-    if (n==='NotFoundError' || n==='OverconstrainedError' || n==='DevicesNotFoundError') camFail('nocam', 'No camera was found on this device.');
+    if (n==='NotFoundError' || n==='OverconstrainedError' || n==='DevicesNotFoundError') camFail('nocam', 'No camera was found on this device. Please use your phone or tablet to tap Time in and Time out.');
     else camFail('denied', 'TALA needs the camera. Tap the lock or camera icon near the address bar, choose Allow for the camera, then tap Try again.');
   }
 }
 function camFail(kind, text){
   const msg = $('camMsg'); msg.hidden = false; msg.textContent = text;
   // a device without any camera may still record, marked "No camera", so the School Head can see it
-  camBtns(`<button class="btn ghost" onclick="camClose(null)">Cancel</button><button class="btn ghost" onclick="camStart()">Try again</button>${kind==='nocam'?`<button class="btn" onclick="camClose({ nocam:true })">Record without photo</button>`:''}`);
+  camBtns(`<button class="btn ghost" onclick="camClose(null)">Cancel</button><button class="btn ghost" onclick="camStart()">Try again</button>${kind==='never'?`<button class="btn" onclick="camClose({ nocam:true })">Record without photo</button>`:''}`);
 }
 function camSnap(){
   const vid = $('camVid'), w = 480, h = Math.round(w * (vid.videoHeight || 480) / (vid.videoWidth || 480)), c = document.createElement('canvas'); c.width = w; c.height = h;
@@ -6460,7 +6477,7 @@ function stfPicOf(L, slot){ const id = L && L.photos && L.photos[slot]; return S
 function stfTimeCell(L, slot, empty){
   if (!L || !L[slot]) return empty || '';
   const p = stfPicOf(L, slot), t = esc(time12(L[slot]));
-  if (!p || p==='none') return t;
+  if (!p || p==='none') return t + (L.source && /Marked by/.test(L.source) ? '' : ' <small class="nophoto" title="Tapped without a photo (older copy of TALA)">no photo</small>');
   if (p==='nocam') return t+' <small class="hint" title="No camera on the device">no camera</small>';
   return `${t} <button class="picbtn" title="See the photo" onclick="event.stopPropagation();stfPhotoView('${esc(L.email)}','${esc(L.date)}','${slot}')">\u{1F4F7}</button>`;
 }
@@ -6499,7 +6516,8 @@ function stfToday(){
     <div class="table-wrap"><table class="stft-table"><thead><tr><th>Name</th>${STF_SLOTS.map(s=>`<th>${s[1]}</th>`).join('')}<th>Status</th>${stfHead()?'<th></th>':''}</tr></thead><tbody>
     ${rows.map(r => `<tr><td><b>${esc(r.p.name)}</b><small>${esc(r.p.position||(r.p.role==='admin'?'Administrative Officer':'Teacher'))}</small></td>${STF_SLOTS.map(s=>`<td>${stfTimeCell(Object.assign({ email:r.p.email, date:today }, r.L), s[0], '<span class="hint">·</span>')}</td>`).join('')}<td>${stfChip(r.o)}${r.o.req&&r.o.req.length?r.o.req.map(q=>`<small>${esc(REQ_LABEL[q.type])}</small>`).join(''):''}</td>${stfHead()?`<td><button class="linkbtn" onclick="stfMarkOpen('${r.p.email}','${today}')">Mark or correct</button></td>`:''}</tr>`).join('') || `<tr><td colspan="7" class="empty">No personnel accounts yet.</td></tr>`}
     </tbody></table></div>
-    ${stfHead()?`<div class="abtns small" style="margin-top:10px"><button class="abtn" onclick="stfHoursOpen()"><span class="abico">⚙</span><b>School hours and wellness leave</b><small>${esc(time12(D.hours.amIn))} to ${esc(time12(D.hours.pmOut))}, used for late and undertime. Wellness leave: ${stfWellDays()} days a year.</small></button></div>`:''}`;
+    ${stfHead()?`<div class="abtns small" style="margin-top:10px"><button class="abtn" onclick="stfRemindOpen()"><span class="abico">\u23F0</span><b>Reminders 30 minutes before</b><small>${(D.remind||{}).on?'On: TALA notice and email to each teacher':'Off. Tap to turn on.'}</small></button>
+      <button class="abtn" onclick="stfGcMsg()"><span class="abico">\u{1F4AC}</span><b>Message for the group chat</b><small>Ready to copy and paste, with who is not yet in</small></button><button class="abtn" onclick="stfHoursOpen()"><span class="abico">⚙</span><b>Hours of work and wellness leave</b><small>Teachers ${esc(time12(D.hours.amIn))} to ${esc(time12(D.hours.pmOut))}. School Head and AO ${esc(time12((D.office||STF_OFFICE).amIn))} to ${esc(time12((D.office||STF_OFFICE).pmOut))}. Wellness leave: ${stfWellDays()} days a year.</small></button></div>`:''}`;
   }
   $('stfBody').innerHTML = html;
 }
@@ -6510,6 +6528,47 @@ function stfAwayCard(){
     <small>${m?'Requests you act on today print without your e-signature, so the OIC can sign them by hand.':'Requests you approve print with your e-signature. Tag yourself away on days you are out, so the OIC signs instead.'}</small></div>
     ${m?`<button class="btn ghost" onclick="stfAwaySet('')">I am back in school</button>`:`<button class="btn ghost" onclick="stfAwayOpen()">Tag me away today</button>`}</div>`;
 }
+
+// Reminders 30 minutes before each Time in and Time out: a TALA notice and an email to each personnel
+function stfRemindOpen(){
+  const R = STF.data.remind || { on:false, slots:['amIn','amOut','pmIn','pmOut'] }, H = STF.data.hours;
+  const O = STF.data.office || STF_OFFICE, nm = { amIn:'Morning Time in', amOut:'Morning Time out', pmIn:'Afternoon Time in', pmOut:'Afternoon Time out' };
+  const lab = {}; STF_SLOTS.forEach(s => { const k = s[0]; lab[k] = nm[k]+': teachers '+time12(H[k])+' (reminder '+time12(stfAddMin(H[k],-30))+'), School Head and AO '+time12(O[k])+' (reminder '+time12(stfAddMin(O[k],-30))+')'; });
+  stfModal(`<h3>Reminders 30 minutes before</h3><p class="sub">Each personnel gets a TALA notice and an email 30 minutes before each time you choose. It skips weekends, holidays, no class days, people on approved leave or travel, and those who already tapped.</p>
+    <label class="check"><input type="checkbox" id="rmOn" ${R.on?'checked':''}> Turn on the reminders</label>
+    <div class="lacpick" style="margin-top:8px">${STF_SLOTS.map(s => `<label class="check" style="margin:0"><input type="checkbox" class="rmSl" value="${s[0]}" ${R.slots.indexOf(s[0])>-1?'checked':''}> ${esc(lab[s[0]])}</label>`).join('')}</div>
+    <p class="err" id="rmErr"></p><div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Cancel</button><button class="btn" onclick="stfRemindSave()">Save</button></div>`);
+}
+function stfAddMin(t, d){ let m = stfMin(t) + d; m = (m + 1440) % 1440; return String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0'); }
+async function stfRemindSave(){ try{ loading(true, 'Saving'); STF.data.remind = await api('staffRemind', { on:$('rmOn').checked, slots:[...document.querySelectorAll('.rmSl:checked')].map(x=>x.value) }); loading(false); closeModal('stfModal'); stfDraw(); toast(STF.data.remind.on ? 'Reminders are on.' : 'Reminders are off.'); }catch(e){ loading(false); handleErr(e,'rmErr'); } }
+// A ready message for the group chat, with who has not yet tapped in today
+function stfGcMsg(){
+  const D = STF.data, H = D.hours, today = todayPH(), nowM = stfNowM();
+  const ppl = D.people.filter(p => p.email!==USER.email), rows = ppl.map(p => ({ p, o: stfDay(p.email, today) || {}, L: stfLog(p.email, today) || {} }));
+  const notIn = rows.filter(r => r.o.label==='Not yet in').map(r => r.p.name), noPic = rows.filter(r => STF_SLOTS.some(s => r.L[s[0]] && !(r.L.photos||{})[s[0]] && !/Marked by/.test(r.L.source||''))).map(r => r.p.name);
+  const greet = nowM < 720 ? 'Good morning' : 'Good afternoon';
+  const t = `${greet}, Baluyan ES family!
+
+A reminder for our TALA Time in and Time out:
+
+1. Tap Time in when you arrive and Time out before you leave, in the morning and in the afternoon.
+2. A photo is required for every tap. TALA opens your camera. You may retake before you tap Send.
+3. Teachers, morning: Time in on or before ${time12(H.amIn)}, Time out at ${time12(H.amOut)}.
+4. Teachers, afternoon: Time in on or before ${time12(H.pmIn)}, Time out at ${time12(H.pmOut)}.
+   School Head and AO: ${time12((D.office||STF_OFFICE).amIn)} to ${(D.office||STF_OFFICE).amOut==='12:00'?'12:00 noon':time12((D.office||STF_OFFICE).amOut)}, and ${time12((D.office||STF_OFFICE).pmIn)} to ${time12((D.office||STF_OFFICE).pmOut)}.
+5. AM taps work only in the morning. PM taps open at 12:00 noon.
+6. If the camera does not open or you see an old screen, close TALA completely, open it again, and allow the camera.
+7. TALA sends a reminder 30 minutes before each time.
+
+Missed a tap? Send me a message so I can correct it.
+${notIn.length ? '\nNot yet in today: '+notIn.join(', ')+'.' : ''}${noPic.length ? '\nPlease tap again with your photo next time: '+noPic.join(', ')+'.' : ''}
+
+Thank you, and have a blessed day!
+${USER.name}`;
+  stfModal(`<h3>Message for the group chat</h3><p class="sub">Copy it, then paste it in Messenger. You can change the words first.</p><textarea id="gcTxt" rows="16" style="width:100%">${esc(t)}</textarea>
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Close</button><button class="btn" onclick="stfGcCopy()">Copy</button></div>`, 'wide');
+}
+async function stfGcCopy(){ const t = $('gcTxt').value; try{ await navigator.clipboard.writeText(t); }catch(e){ $('gcTxt').select(); document.execCommand('copy'); } toast('Copied. Paste it in your group chat.'); }
 function stfAwayOpen(){
   stfModal(`<h3>Tag me away from school</h3><p class="sub">On these days your e-signature is not added to the forms you act on. The OIC signs them by hand. These days also count as out of school in the observation calendar.</p>
     <div class="field"><label for="awType">Reason</label><select id="awType">${STF_AWAY_TYPES.map(t=>`<option>${t}</option>`).join('')}</select></div>
@@ -6527,14 +6586,17 @@ async function stfAwaySet(type){
   loading(false);
 }
 function stfHoursOpen(){
-  const H = STF.data.hours;
-  stfModal(`<h3>School hours</h3><p class="sub">Used to show who came in late and who left early. Change them when the school schedule changes.</p>
-    <div class="stfg2"><div class="field"><label for="hAmIn">Morning starts</label><input type="time" id="hAmIn" value="${H.amIn}"></div><div class="field"><label for="hAmOut">Morning ends</label><input type="time" id="hAmOut" value="${H.amOut}"></div>
-    <div class="field"><label for="hPmIn">Afternoon starts</label><input type="time" id="hPmIn" value="${H.pmIn}"></div><div class="field"><label for="hPmOut">Afternoon ends</label><input type="time" id="hPmOut" value="${H.pmOut}"></div></div>
+  const H = STF.data.hours, O = STF.data.office || STF_OFFICE;
+  const four = (p, X) => `<div class="stfg2"><div class="field"><label for="${p}AmIn">Morning starts</label><input type="time" id="${p}AmIn" value="${X.amIn}"></div><div class="field"><label for="${p}AmOut">Morning ends</label><input type="time" id="${p}AmOut" value="${X.amOut}"></div>
+    <div class="field"><label for="${p}PmIn">Afternoon starts</label><input type="time" id="${p}PmIn" value="${X.pmIn}"></div><div class="field"><label for="${p}PmOut">Afternoon ends</label><input type="time" id="${p}PmOut" value="${X.pmOut}"></div></div>`;
+  stfModal(`<h3>Hours of work</h3><p class="sub">Used to show who came in late and who left early, and for the reminders. Change them when the schedule changes.</p>
+    <h4 class="nbsec">Teachers</h4>${four('h', H)}
+    <h4 class="nbsec">School Head and Administrative Officer</h4>${four('o', O)}
     <div class="field"><label for="hWell">Wellness leave days per fiscal year</label><input type="number" id="hWell" min="1" max="59" step="0.5" value="${stfWellDays()}"></div><p class="err" id="hErr"></p>
-    <div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Cancel</button><button class="btn" onclick="stfHoursSave()">Save</button></div>`);
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Cancel</button><button class="btn" onclick="stfHoursSave()">Save</button></div>`, 'wide');
 }
-async function stfHoursSave(){ try{ const r = await api('staffHours', { hours:{ amIn:$('hAmIn').value, amOut:$('hAmOut').value, pmIn:$('hPmIn').value, pmOut:$('hPmOut').value }, wellnessDays:$('hWell').value }); STF.data.wellnessDays = r.wellnessDays; delete r.wellnessDays; STF.data.hours = r; closeModal('stfModal'); stfDraw(); toast('Saved.'); }catch(e){ handleErr(e,'hErr'); } }
+async function stfHoursSave(){ const g = p => ({ amIn:$(p+'AmIn').value, amOut:$(p+'AmOut').value, pmIn:$(p+'PmIn').value, pmOut:$(p+'PmOut').value });
+  try{ const r = await api('staffHours', { hours:g('h'), office:g('o'), wellnessDays:$('hWell').value }); STF.data.wellnessDays = r.wellnessDays; STF.data.office = r.office; delete r.wellnessDays; delete r.office; STF.data.hours = r; closeModal('stfModal'); stfDraw(); toast('Saved.'); }catch(e){ handleErr(e,'hErr'); } }
 function stfMarkOpen(email, date){
   const L = stfLog(email, date) || {}, opts = ['','Present','Absent','On leave','Official business','Official time','Official travel','Wellness leave','Half day','No classes'];
   stfModal(`<h3>Mark or correct</h3><p class="sub">${esc(stfName(email))}, ${esc(dShort(date))}. Leave a box empty if there was no tap. Leave the status on Automatic to let TALA decide from the taps and the approved requests.</p>
@@ -6570,7 +6632,7 @@ function stfRecPrint(all){
   const one = p => { const rows = stfRecRows(p.email, STF.month), T = stfTotals(rows);
     return `<div class="stfp-page">${stfPrintHead('Personnel Time Record', monthName(STF.month))}
       <table class="stfp-info"><tr><td>Name</td><td><b>${esc(p.name.toUpperCase())}</b></td><td>Position</td><td><b>${esc(p.position||(p.role==='admin'?'Administrative Officer':'Teacher'))}</b></td></tr>
-      <tr><td>School hours</td><td colspan="3">${esc(time12(STF.data.hours.amIn))} to ${esc(time12(STF.data.hours.amOut))} and ${esc(time12(STF.data.hours.pmIn))} to ${esc(time12(STF.data.hours.pmOut))}</td></tr></table>
+      <tr><td>${['head','admin'].indexOf(stfRoleOf(p.email))>-1?'Office hours':'School hours'}</td><td colspan="3">${esc(stfHoursTxt(stfHoursOf(p.email)))}</td></tr></table>
       <table class="stfp-tbl"><thead><tr><th>Date</th><th>AM in</th><th>AM out</th><th>PM in</th><th>PM out</th><th>Status</th><th>Late (min)</th><th>Undertime (min)</th></tr></thead><tbody>
       ${rows.map(r => { const L = r.o.log||{}; return `<tr><td>${esc(dShort(r.d))}</td>${STF_SLOTS.map(s=>`<td>${L[s[0]]?esc(time12(L[s[0]])):''}</td>`).join('')}<td>${esc(r.o.label)}</td><td>${r.o.late||''}</td><td>${r.o.under||''}</td></tr>`; }).join('')}
       <tr class="tot"><td colspan="5">Days present: ${T.present} · Absent: ${T.absent} · On leave or travel: ${T.leave}</td><td>Late ${T.lateN} times</td><td>${T.late}</td><td>${T.under}</td></tr></tbody></table>
@@ -7417,7 +7479,8 @@ async function hubPlay(id){
   const s = h.session ? lacS(h.session) : null, needSign = s && lacInvited(s, USER.email) && !lacMine(s.id,'ATT') && s.date <= todayPH();
   const parts = (p.parts && p.parts.length===100) ? p.parts.split('') : Array(101).join('0').split('');
   const pct0 = p.parts ? parts.filter(c => c==='1').length : (p.pct||0);
-  LAC.play = { id, h, slides, pct: pct0, pos:p.pos||0, status:p.status||'', mine, last:0, timer:null, parts, seeking:false, lastT:null, page: Math.max(1, Math.round(p.pos||1)), dwell:0 };
+  const lp = hubPosGet(id), pos0 = lp && (!p.updated || lp.at > Date.parse(String(p.updated).replace(' ','T'))) ? lp.pos : (p.pos||0);
+  LAC.play = { id, h, slides, pct: pct0, pos:pos0, status:p.status||'', mine, last:0, timer:null, parts, seeking:false, lastT:null, page: Math.max(1, Math.round(pos0||1)), dwell:0 };
   $('hubPlayer').classList.add('open'); document.body.classList.add('hubopen');
   const ctlVideo = `<div class="hubctl" oncontextmenu="return false">
         <button onclick="hubJump(-10)" title="Back 10 seconds" aria-label="Back 10 seconds">⏪ 10</button>
@@ -7443,6 +7506,8 @@ async function hubPlay(id){
       <aside class="hubnote" id="hubNote" hidden></aside>
       <button class="nbfab" id="nbFab" onclick="hubNote()" title="My notebook" aria-label="My notebook">\u{1F4D3}</button>
     </div>
+    ${slides?'<div class="deckstrip" id="deckStrip" aria-label="Slides viewed"></div>':''}
+    <div class="hubresume" id="hubResume" hidden></div>
     ${h.desc?`<p class="hint" style="margin:8px 0">${esc(h.desc)}</p>`:''}
     ${mine?`<div class="hubbar big"><i id="hpBar" style="width:${LAC.play.pct}%"></i></div><div class="hubp-f"><span id="hpTxt">${esc(hubPTxt())}</span>
       <span><button class="btn ghost small" id="hpAlmost" onclick="hubMark('Almost finished')" ${LAC.play.pct<90?'disabled':''}>Mark almost finished</button><button class="btn small" id="hpDone" onclick="hubMark('Finished')" ${LAC.play.pct<90?'disabled':''}>✔ Mark finished</button></span></div>
@@ -7450,9 +7515,9 @@ async function hubPlay(id){
   if (slides){ deckOpen(); return; }
   try{ await ytApi(); }catch(e){ $('ytBox').innerHTML = `<div class="empty">${esc(e.message)}</div>`; return; }
   LAC.play.yt = new YT.Player('ytBox', { videoId:h.vid, width:'100%', height:'100%',
-    playerVars:{ origin: location.origin, widget_referrer: location.href, start:Math.max(0, Math.floor(LAC.play.pos - 3)), controls:0, disablekb:1, fs:0, rel:0, modestbranding:1, iv_load_policy:3, playsinline:1, cc_load_policy:0, showinfo:0 },
-    events:{ onStateChange: e => { hubIcon(); if (e.data===YT.PlayerState.ENDED) hubEnded(); else if (e.data===YT.PlayerState.PAUSED) hubSave(); } } });
-  LAC.play.timer = setInterval(hubTick, 1000);
+    playerVars:{ origin: location.origin, widget_referrer: location.href, start: hubStartAt(), controls:0, disablekb:1, fs:0, rel:0, modestbranding:1, iv_load_policy:3, playsinline:1, cc_load_policy:0, showinfo:0 },
+    events:{ onReady: () => hubResumeShow(), onStateChange: e => { hubIcon(); if (e.data===YT.PlayerState.ENDED) hubEnded(); else if (e.data===YT.PlayerState.PAUSED) hubSave(); } } });
+  LAC.play.timer = setInterval(hubTick, 1000); setTimeout(() => { if (LAC.play && LAC.play.id===id && $('hubResume') && $('hubResume').hidden) hubResumeShow(); }, 2500);
 }
 /* The notebook beside the material: the round icon shows or hides it. The video or slides get smaller, never covered. */
 function hubNote(){
@@ -7478,7 +7543,16 @@ function hubNote(){
 async function hubNoteHide(){ const el = $('hubNote'); if (!el) return;
   nbFloatSave(true);
   el.hidden = true; $('hubWrap').classList.remove('notes'); document.querySelector('#hubPlayer .hubmodal').classList.remove('withnotes'); $('nbFab').classList.remove('on'); if (LAC.play && LAC.play.slides) setTimeout(deckDraw, 80); }
-function hubPTxt(){ const P = LAC.play, w = P.slides ? 'viewed' : 'watched'; return P.status==='Finished' ? '✔ Finished. You can open it again any time.' : P.status==='Almost finished' ? 'Almost finished, '+P.pct+'% '+w : P.pct ? P.pct+'% '+w : 'Not started'; }
+// Where each person left off, kept on this device too (so it works even before the server is updated)
+function hubPosKey(id){ return 'tala_pos_'+USER.email+'_'+id; }
+function hubPosGet(id){ try{ return JSON.parse(localStorage.getItem(hubPosKey(id))||'null'); }catch(e){ return null; } }
+function hubPosPut(){ const P = LAC.play; if (!P) return; try{ localStorage.setItem(hubPosKey(P.id), JSON.stringify({ pos: P.slides ? P.page : Math.floor(P.pos||0), at: Date.now() })); }catch(e){} }
+function hubStartAt(){ const P = LAC.play; return P.pos > 5 ? Math.max(0, Math.floor(P.pos - 3)) : 0; }
+function hubResumeShow(){ const P = LAC.play, el = $('hubResume'); if (!P || !el) return; const y = hubYT(), d = y ? y.getDuration() : 0;
+  if (P.pos > 5 && (!d || P.pos < d - 5)){ el.hidden = false; el.innerHTML = `\u23F5 Continuing where you left off, at <b>${hubFmt(P.pos)}</b>. <button class="linkbtn" onclick="hubRestart()">Start over</button>`; }
+  else if (d && P.pos >= d - 5){ y.seekTo(0, true); y.pauseVideo(); P.lastT = null; } }
+function hubRestart(){ const y = hubYT(); if (y){ y.seekTo(0, true); LAC.play.lastT = null; LAC.play.pos = 0; hubPosPut(); } else if (LAC.play.slides){ LAC.play.page = 1; deckDraw(); } $('hubResume').hidden = true; }
+function hubPTxt(){ const P = LAC.play, w = P.slides ? 'viewed' : 'watched'; return (P.slides && P.n ? (seen => (P.status==='Finished' ? '✔ Finished. You can open it again any time.' : (seen ? Math.round(seen/P.n*100)+'% viewed' : 'Not started')) + ' · ' + seen + ' of ' + P.n + ' slides viewed')(Array.from({ length:P.n }, (_,k) => deckSeen(k+1)).filter(Boolean).length) : null) || (P.status==='Finished' ? '✔ Finished. You can open it again any time.' : P.status==='Almost finished' ? 'Almost finished, '+P.pct+'% '+w : P.pct ? P.pct+'% '+w : 'Not started'); }
 function hubFmt(t){ t = Math.max(0, Math.floor(t||0)); const h = Math.floor(t/3600), m = Math.floor(t%3600/60), s = t%60; return (h?h+':'+String(m).padStart(2,'0'):m)+':'+String(s).padStart(2,'0'); }
 function hubYT(){ const P = LAC.play; return P && P.yt && P.yt.getDuration ? P.yt : null; }
 function hubPlaying(){ const y = hubYT(); return y && y.getPlayerState && y.getPlayerState()===1; }
@@ -7494,7 +7568,7 @@ function hubTick(){
   const P = LAC.play; if (P && P.slides) return hubTickSlides();
   const y = hubYT(); if (!P || !y) return;
   const d = y.getDuration(), t = y.getCurrentTime(); if (!d) return;
-  P.pos = t;
+  P.pos = t; if (hubPlaying()) hubPosPut();
   // mark the parts played since the last second (a jump of more than a few seconds is a skip, not watching)
   if (hubPlaying()){ const a = P.lastT !== null && t >= P.lastT && t - P.lastT <= 4 ? P.lastT : t; for (let i = Math.floor(a/d*100); i <= Math.min(99, Math.floor(t/d*100)); i++) P.parts[i] = '1'; P.lastT = t; }
   else P.lastT = null;
@@ -7518,7 +7592,7 @@ async function deckOpen(){
     if (!LAC.play || LAC.play.id !== id) return;
     P.doc = DECK[id]; P.n = P.doc.numPages; P.page = Math.min(P.n, Math.max(1, P.page));
     $('deckMsg').hidden = true; deckWire(); await deckDraw();
-    P.timer = setInterval(hubTick, 1000);
+    P.timer = setInterval(hubTick, 1000); hubTick();
   }catch(e){ const m = $('deckMsg'); if (m){ m.hidden = false; m.textContent = friendly(e.message || 'The slides could not be opened. Check your internet connection.'); } }
 }
 function deckPartsOf(p){ const n = LAC.play.n; return [Math.floor((p-1)*100/n), Math.max(Math.floor((p-1)*100/n), Math.floor(p*100/n)-1)]; }
@@ -7533,11 +7607,20 @@ async function deckDraw(){
   P.task = pg.render({ canvasContext: cv.getContext('2d'), viewport: vp }); try{ await P.task.promise; }catch(e){}
   P.dwell = 0; deckLabel();
 }
-function deckLabel(){ const P = LAC.play; if (!P || !P.n) return;
+// One small box per slide: green when viewed, outlined for the one on screen. Tap a box to go there.
+function deckStrip(){ const P = LAC.play, el = $('deckStrip'); if (!P || !P.n || !el) return;
+  if (el.children.length !== P.n) el.innerHTML = Array.from({ length:P.n }, (_,k) => `<button onclick="deckTo(${k+1})" title="Slide ${k+1}"></button>`).join('');
+  [...el.children].forEach((b, k) => { b.className = (deckSeen(k+1) ? 'seen' : '') + (k+1===P.page ? ' cur' : ''); }); }
+function deckTo(n){ const P = LAC.play; if (!P || !P.doc) return; n = Math.min(P.n, Math.max(1, n)); if (n === P.page) return; P.page = n; P.pos = n; hubPosPut(); deckDraw(); }
+function deckFirstMissed(){ const P = LAC.play; for (let k = 1; k <= P.n; k++) if (!deckSeen(k)) return k; return 0; }
+function deckLabel(){ const P = LAC.play; if (!P || !P.n) return; deckStrip();
+  const miss = deckFirstMissed(), el = $('hubResume');
+  if (el && P.page === P.n && miss){ el.hidden = false; el.innerHTML = `You reached the last slide, but ${P.n - Array.from({ length:P.n }, (_,k) => deckSeen(k+1)).filter(Boolean).length} slides are not yet viewed. <button class="btn small" onclick="deckTo(${miss})">Go to slide ${miss}</button>`; }
+  else if (el && el.dataset.k !== 'resume') el.hidden = true;
   if ($('hpTime')) $('hpTime').textContent = 'Slide '+P.page+' of '+P.n+(deckSeen(P.page)?' \u2714':'');
   if ($('dkPrev')) $('dkPrev').disabled = P.page<=1; if ($('dkNext')) $('dkNext').disabled = P.page>=P.n;
   document.querySelectorAll('.deckarrow.l').forEach(b => b.disabled = P.page<=1); document.querySelectorAll('.deckarrow.r').forEach(b => b.disabled = P.page>=P.n); }
-function deckGo(d){ const P = LAC.play; if (!P || !P.doc) return; const n = Math.min(P.n, Math.max(1, P.page + d)); if (n === P.page) return; P.page = n; P.pos = n; deckDraw(); }
+function deckGo(d){ const P = LAC.play; if (P) deckTo(P.page + d); }
 function deckWire(){
   const fr = $('hubFrame'); let sx = null;
   fr.addEventListener('pointerdown', e => { sx = e.clientX; });
@@ -7549,12 +7632,12 @@ function deckWire(){
 // Every second: the slide on screen counts after 3 seconds
 function hubTickSlides(){
   const P = LAC.play; if (!P || !P.n) return;
-  if (document.visibilityState==='visible' && !deckSeen(P.page)){ P.dwell++; if (P.dwell >= 3){ const [a,b] = deckPartsOf(P.page); for (let i = a; i <= b; i++) P.parts[i] = '1'; deckLabel(); P.last = 0; } }
+  if (document.visibilityState==='visible' && !deckSeen(P.page)){ P.dwell++; if (P.dwell >= 3){ const [a,b] = deckPartsOf(P.page); for (let i = a; i <= b; i++) P.parts[i] = '1'; deckLabel(); P.last = 0; } else deckStrip(); }
   const seen = Array.from({ length:P.n }, (_,k) => deckSeen(k+1)).filter(Boolean).length;
   P.pct = seen === P.n ? 100 : Math.min(99, Math.round(seen / P.n * 100));
   if (P.pct === 100) P.parts = P.parts.map(() => '1');
   if (!P.mine) return;
-  if ($('hpBar')) $('hpBar').style.width = P.pct+'%'; if ($('hpTxt')) $('hpTxt').textContent = hubPTxt() + ' \u00B7 ' + seen + ' of ' + P.n + ' slides viewed';
+  if ($('hpBar')) $('hpBar').style.width = P.pct+'%'; if ($('hpTxt')) $('hpTxt').textContent = hubPTxt();
   if ($('hpAlmost')) $('hpAlmost').disabled = P.pct < 90 || P.status==='Finished'; if ($('hpDone')) $('hpDone').disabled = P.pct < 90 || P.status==='Finished';
   if (P.pct >= 100 && P.status!=='Finished'){ hubSave(true); toast('You viewed every slide. Marked finished.'); return; }
   if (Date.now() - P.last > 20000) hubSave();
