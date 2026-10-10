@@ -982,6 +982,15 @@ textarea.nbt{-webkit-touch-callout:none}
 .lkgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:12px 0}.lkcard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}.lkcard i{font-style:normal;font-size:24px}.lkcard b{display:block;margin:6px 0 4px;color:var(--c)}.lkcard p{margin:0;font-size:13.5px;color:var(--muted);line-height:1.45}
 .lksteps{counter-reset:k;list-style:none;padding:0;margin:8px 0}.lksteps li{counter-increment:k;position:relative;padding:8px 0 8px 44px;font-size:14.5px;line-height:1.45}.lksteps li::before{content:counter(k);position:absolute;left:0;top:6px;width:30px;height:30px;border-radius:50%;background:var(--c);color:#fff;font-weight:700;display:grid;place-items:center}
 @media(max-width:760px){.lkgrid{grid-template-columns:1fr}.lkhero h2{font-size:24px}}
+.nbcard.returned{border:2px solid #d93025;background:#fff5f4}.stfnote.bad{background:#fdecea;color:#7a1c12}.nbmiss.bad{border-color:#d93025;background:#fff1ef}.nbmiss.bad b{color:#a3271b}.nbread{max-height:300px;overflow:auto;border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:8px 0;background:#fafbf8}
+.sbtodo{margin:12px 0;padding:14px 16px;border-radius:14px;background:#fff8e1;border:2px solid #e9b81c}.sbtodo>b{color:#7a5200;font-size:16px}.sbtodo p{margin:6px 0;font-size:14px}.sbtodo-n{color:#7a1c12;font-weight:600}
+.sbtodo-l{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px;margin:8px 0}.sbtodo-l button{text-align:left;border:1px solid #e6d29a;background:#fff;border-radius:10px;padding:8px 10px;cursor:pointer;font:inherit}.sbtodo-l span{display:block;font-size:12px;color:#8a6a1e}.sbtodo-l b{display:block;font-size:14px}.sbtodo-l small{display:block;color:#a3271b;font-size:12px;margin-top:2px}
+.aralhero{display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap;border-radius:20px;padding:22px 24px;color:#fff;background:linear-gradient(135deg,#7a3e00,#c76b12)}.aralhero h2{margin:0 0 4px;font-size:28px}.aralhero p{margin:0;opacity:.92;max-width:620px}
+.aralhero .lktag{display:inline-block;background:rgba(255,255,255,.18);border-radius:999px;padding:4px 12px;font-size:12px;font-weight:700;margin-bottom:8px}.aralstat{background:rgba(255,255,255,.16);border-radius:14px;padding:10px 18px;text-align:center}.aralstat b{display:block;font-size:30px}.aralstat span{font-size:13px}
+.aralbar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:10px}.aralday input{margin-left:6px;padding:7px 10px;border:1px solid var(--line);border-radius:10px;font:inherit}
+.araltick{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px}.araltick label{display:flex;flex-direction:column;border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;cursor:pointer;background:var(--card);position:relative}.araltick label.on{border-color:#2f7a4a;background:#eef7f0}.araltick input{position:absolute;right:10px;top:10px;width:18px;height:18px}.araltick small{color:var(--muted)}
+.aralletters{display:grid;grid-template-columns:repeat(auto-fill,minmax(46px,1fr));gap:6px}.aralletters button{border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:6px 0;font:700 18px/1.1 inherit;cursor:pointer}.aralletters button small{display:block;font-size:12px;font-weight:400;color:var(--muted)}.aralletters button.on{background:#c76b12;border-color:#c76b12;color:#fff}.aralletters button.on small{color:#fff}
+.araltutees{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}.araltutee{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px}.aralnl{margin:8px 0;padding-left:18px;font-size:13.5px}.aralnl li{margin:3px 0}
 .picbtn{border:0;background:#eef3ec;border-radius:8px;padding:1px 5px;cursor:pointer;font-size:13px;vertical-align:middle}
 .livebar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:4px 0 12px}.livebar input{padding:8px 10px;border:1px solid #cfd8cc;border-radius:10px;font:inherit}
 .agrid9{grid-template-columns:repeat(3,1fr)!important}.agrid9 .acard p{font-size:15px}
@@ -1699,8 +1708,8 @@ textarea.nbt{-webkit-touch-callout:none}
 
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
-const MIN_SERVER = '5.6'; // oldest Code.gs this page works with
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'5.7', date:'October 10, 2026' } };
+const MIN_SERVER = '5.8'; // oldest Code.gs this page works with
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'5.8', date:'October 11, 2026' } };
 function verLine(server){
   const old = server && (server.indexOf('older') > -1 || parseFloat(server) < parseFloat(MIN_SERVER));
   const s = server ? ' Server '+server+('.') : '';
@@ -2111,6 +2120,7 @@ const FEATURES = [
     do:'Plan LAC sessions from the teachers\u2019 IDP needs (IPCRF and e-SAT), record attendance, and keep outputs.',
     auto:'Session attendance, hours of training per teacher, and needs addressed are tallied automatically.',
     report:'LAC plan, attendance sheet, and LAC accomplishment report.' },
+  { id:'aral', name:'ARAL (Project TULAY)', built:true, open:() => openAral(), icon:'M12 2 3 6v2h18V6zM5 10v7h3v-7zm5.5 0v7h3v-7zM16 10v7h3v-7zM3 19v3h18v-3z' },
   { id:'mne', name:'School M&E Reports', built:true, open:() => openPir(USER && USER.role==='head' ? 'pir' : 'me'), icon:'M4 20V10h3v10zm6 0V4h3v16zm6 0v-7h3v7z',
     do:'Bring together results from all TALA trackers into one school monitoring and evaluation view.',
     auto:'Figures for SMEA, PIR, and AIP progress are pulled from the other features automatically.',
@@ -2118,25 +2128,41 @@ const FEATURES = [
 ];
 function featOn(id){ const s = (DATA||PUB||{}).settings||{}; return !!(s.features||{})[id]; }
 /* Red numbers on each feature: what waits for you there, and unread notices about it. The installed app shows the total on its icon. */
-const FEAT_NT = { lpt:['upload','approved','returned'], obs:['obs'], att:['request','decision','remind'], lac:['lac'], sbfp:['sbfp'] };
+const FEAT_NT = { lpt:['upload','approved','returned'], obs:['obs'], att:['request','decision','remind'], lac:['lac'], sbfp:['sbfp'], aral:['aral'] };
 function featUnread(id){ return (NOTICES||[]).filter(n => !n.read && (FEAT_NT[id]||[]).indexOf(n.type) > -1).length; }
+// For the School Head: new entries since the feature was last opened (SBFP and ARAL), or what waits for checking
+function seenKeyF(id){ return 'tala_fseen_'+(USER?USER.email:'')+'_'+id; }
+function seenAt(id){ try{ return localStorage.getItem(seenKeyF(id)) || ''; }catch(e){ return ''; } }
+function markSeen(id){ try{ localStorage.setItem(seenKeyF(id), new Date().toLocaleString('sv-SE', { timeZone:'Asia/Manila' }).slice(0,19)); }catch(e){} }   // Philippine time, the same clock as the server
+function headNew(id){
+  if (!USER || (USER.role!=='head' && USER.role!=='admin')) return 0;
+  const since = seenAt(id) || '0000';
+  if (id==='sbfp') return (sbfpList()||[]).filter(r => r.on && String(r.on) > since && r.by && r.by !== USER.name).length;
+  if (id==='aral') return (typeof ARAL!=='undefined' && ARAL.data ? ARAL.data.rows : []).filter(r => r.on && String(r.on) > since && r.tutor !== USER.email).length || (typeof ARAL!=='undefined' ? ARAL.srvNew||0 : 0);
+  return 0;
+}
 function featCount(id){
   if (!USER) return 0;
   const u = featUnread(id);
+  if (USER.role==='head'){
+    if (id==='lpt') return Math.max(u, ((DATA||{}).entries||[]).reduce((a, e) => a + filesOf(e).filter(f => f.d.link && f.d.validation==='Pending').length, 0));
+    if (id==='obs') return Math.max(u, (typeof OBS!=='undefined' ? (OBS.list||[]).filter(o => o.status==='TeacherSigned').length : 0) + (OBS.headNew||0));
+  }
   if (id==='obs') return Math.max(u, (typeof OBS!=='undefined' && OBS.newCount) || 0);
   if (id==='att') return Math.max(u, (typeof STF!=='undefined' && STF.dot) || 0);
   if (id==='lac') return Math.max(u, (typeof LAC!=='undefined' && LAC.dot) || 0);
-  if (id==='sbfp'){ try{ const t = todayPH(), r = sbRec(t); return u + ((USER.role==='head' || USER.role==='admin') && sbSched(t) && !r.status && new Date().getHours() >= 12 ? 1 : 0); }catch(e){ return u; } }
+  if (id==='aral') return u + headNew('aral');
+  if (id==='sbfp'){ try{ if (USER.role==='teacher') return u + sbMyTodo().length; return u + headNew('sbfp'); }catch(e){ return u; } }
   return u;
 }
 function appBadge(){
   if (!USER) return;
-  const total = ['lpt','obs','sbfp','att','lac'].filter(id => featOn(id) || id==='lpt' || USER.role==='head').reduce((a, id) => a + featCount(id), 0);
+  const total = ['lpt','obs','sbfp','att','lac','aral'].filter(id => featOn(id) || id==='lpt' || USER.role==='head').reduce((a, id) => a + featCount(id), 0);
   try{ if (navigator.setAppBadge){ total ? navigator.setAppBadge(total).catch(()=>{}) : navigator.clearAppBadge().catch(()=>{}); } }catch(e){}
   try{ document.title = (total ? '('+total+') ' : '') + 'TALA'; }catch(e){}
 }
 // Opening a feature marks its notices as read
-function featSeen(id){ const ty = FEAT_NT[id]; if (!ty || !featUnread(id)) return; NOTICES.forEach(n => { if (ty.indexOf(n.type) > -1) n.read = true; }); api('readNotices', { types: ty }).catch(()=>{}); const un = NOTICES.filter(n => !n.read).length; $('bellCount').hidden = !un; $('bellCount').textContent = un > 9 ? '9+' : un; LAST_UNREAD = un; drawSide(); }
+function featSeen(id){ if (id==='sbfp' || id==='aral'){ markSeen(id); if (typeof ARAL!=='undefined') ARAL.srvNew = 0; drawSide(); } const ty = FEAT_NT[id]; if (!ty || !featUnread(id)) return; NOTICES.forEach(n => { if (ty.indexOf(n.type) > -1) n.read = true; }); api('readNotices', { types: ty }).catch(()=>{}); const un = NOTICES.filter(n => !n.read).length; $('bellCount').hidden = !un; $('bellCount').textContent = un > 9 ? '9+' : un; LAST_UNREAD = un; drawSide(); }
 function drawSide(){
   const head = USER && USER.role==='head';
   const shown = f => f.id==='home' || f.id==='lpt' || f.headOnly || featOn(f.id);
@@ -2152,7 +2178,7 @@ function drawSide(){
   appBadge(); menuDot();
 }
 // The menu button on a phone shows a dot when something waits
-function menuDot(){ const b = document.querySelector('.menubtn'); if (!b) return; const any = USER && ['lpt','obs','sbfp','att','lac'].some(id => featCount(id)); b.classList.toggle('hasdot', !!any); }
+function menuDot(){ const b = document.querySelector('.menubtn'); if (!b) return; const any = USER && ['lpt','obs','sbfp','att','lac','aral'].some(id => featCount(id)); b.classList.toggle('hasdot', !!any); }
 var CUR_FEATURE = 'home';
 var FV_ORDER = [];
 function orderedFeatures(){ const ord = (((DATA||PUB||{}).settings)||{}).order || []; const rank = id => { const i = ord.indexOf(id); return i < 0 ? 100 + FEATURES.findIndex(f=>f.id===id) : i; };
@@ -2179,6 +2205,241 @@ async function saveFeatures(){
 function toggleSide(open){
   const s = $('side'), on = open === undefined ? !s.classList.contains('open') : open;
   s.classList.toggle('open', on); $('sideBg').classList.toggle('open', on);
+}
+
+/* =========================================================
+   ARAL Program: Project TULAY (a bridge for every learner to catch up)
+   Advisers tick the ARAL tutees (Key Stage 2 chooses a tutor). Tutors tap Time in and Time out, tick the tutees present
+   before or after class, and write ARAL notes. The Individual Daily Log and Accomplishment Report is made from these.
+   ========================================================= */
+const ARAL = { data:null, tab:'', date:'', session:'', who:'', period:'', from:'', to:'' };
+// The suggested letter order and the word patterns of Project e-READ
+const ARAL_LETTERS = 'SAMTIPNCODGELFHRBUKWJYVQXZ'.split('');
+const ARAL_PATTERNS = {
+  'CVC Words': ['Short a (CVC)','Short e (CVC)','Short i (CVC)','Short o (CVC)','Short u (CVC)'],
+  'Word Families': ['at','an','ap','ag','ad','am','et','en','ed','eg','it','in','ip','ig','id','ot','op','og','ug','un','ut','ub','ack','ell','ill','all','ing','ink','ank','ake','ight'].map(x => 'Word Family ('+x+')'),
+  'Digraphs and Blends': ['SH','CH','TH','WH','NG','CK','L blends (bl, cl, fl, gl, pl, sl)','R blends (br, cr, dr, fr, gr, pr, tr)','S blends (sc, sk, sm, sn, sp, st, sw)'],
+  'Magic E': ['Magic E (a_e)','Magic E (i_e)','Magic E (o_e)','Magic E (u_e)','Magic E (e_e)'],
+  'Vowel Teams': ['ai','ay','ee','ea','oa','ow','oo','ou','ie'].map(x => 'Vowel Team ('+x+')'),
+  'Other Patterns': ['R controlled (ar)','R controlled (er, ir, ur)','R controlled (or)','Words with s and es','Words with ed','Words with ing']
+};
+const ARAL_FOCUS = ['Letter name and sound','Word pattern or word family','Sight words','Reading with understanding','Numeracy','Other'];
+const ARAL_PROG = ['Mastered','Developing','Needs more practice'];
+function aralRole(){ return USER ? USER.role : ''; }
+function aralAll(){ return aralRole()==='head' || aralRole()==='admin'; }
+function aralKey(){ return 'tala_aral_'+(USER?USER.email:''); }
+async function aralLoad(quiet){
+  if (!ARAL.data){ try{ ARAL.data = JSON.parse(localStorage.getItem(aralKey())||'null'); }catch(e){} }
+  try{ ARAL.data = await api('aralLoad'); try{ localStorage.setItem(aralKey(), JSON.stringify(ARAL.data)); }catch(e){} }
+  catch(e){ if (!ARAL.data && !quiet) throw e; }
+  return ARAL.data;
+}
+async function openAral(){
+  ['viewLac','viewTrk','viewAcc','viewBank','viewLog','viewWeeks','viewSig','viewObs','viewHome','viewSbfp','viewAtt'].forEach(v => $(v) && ($(v).style.display='none'));
+  $('viewPir').style.display=''; CUR_FEATURE = 'aral'; drawSide(); window.scrollTo(0,0);
+  if (!USER){ $('viewPir').innerHTML = '<div class="empty">Please sign in to open ARAL.</div>'; return; }
+  if (!ARAL.date) ARAL.date = todayPH();
+  if (!ARAL.session) ARAL.session = new Date().toLocaleTimeString('en-GB',{ hour:'2-digit', timeZone:'Asia/Manila' }) >= '12' ? 'After class' : 'Before class';
+  if (!ARAL.data) $('viewPir').innerHTML = `<div class="pirload"><div class="pirstar">★</div><b>Opening ARAL</b><div class="pirdots"><i></i><i></i><i></i></div></div>`;
+  else aralDraw();
+  try{ await aralLoad(); }catch(e){ return handleErr(e); }
+  if (CUR_FEATURE==='aral') aralDraw();
+}
+function aralTutees(email){ const D = ARAL.data; return (D.tutees||[]).filter(t => !email || t.tutor===email).sort((a,b) => String(a.data.name).localeCompare(String(b.data.name))); }
+function aralMyTutees(){ return aralTutees(USER.email); }
+function aralName(id){ const t = (ARAL.data.tutees||[]).find(x => x.learner===id); if (t) return t.data.name; const l = (ARAL.data.learners||[]).find(x => x.id===id); return l ? l.last+', '+l.first : id; }
+function aralSecLabel(t){ return (t.data.grade||'')+(t.data.section?' '+t.data.section:''); }
+function aralRow(kind, tutor, date, session){ return (ARAL.data.rows||[]).find(r => r.kind===kind && r.tutor===tutor && r.date===date && (!session || r.data.session===session)); }
+function aralNotes(o){ return (ARAL.data.rows||[]).filter(r => r.kind==='NOTE' && (!o.learner || r.learner===o.learner) && (!o.tutor || r.tutor===o.tutor) && (!o.date || r.date===o.date) && (!o.session || r.data.session===o.session)).sort((a,b) => String(b.date).localeCompare(String(a.date)) || String(b.on).localeCompare(String(a.on))); }
+function aralFocusTxt(f){ f = f || {}; if (f.type==='Letter name and sound') return 'Letter name and sound: '+((f.letters||[]).join(', ')||'not set');
+  if (f.type==='Word pattern or word family') return 'Word pattern: '+(f.pattern||f.group||'not set');
+  return f.type + (f.other ? ': '+f.other : ''); }
+function aralMins(t){ if (!t || !t.in || !t.out) return 0; const a = t.in.split(':').map(Number), b = t.out.split(':').map(Number); return Math.max(0, (b[0]*60+b[1]) - (a[0]*60+a[1])); }
+function aralHrs(m){ return m ? (Math.floor(m/60) ? Math.floor(m/60)+' h ' : '')+(m%60 ? (m%60)+' min' : '') : ''; }
+
+function aralDraw(){
+  const D = ARAL.data; if (!D) return;
+  const all = aralAll(), head = aralRole()==='head', adviser = (D.mine||[]).length > 0, tutor = aralMyTutees().length > 0;
+  const tabs = all ? [['ov','Overview'],['tutees','Tutees and tutors'],['rep','Reports']] : [].concat(tutor||!adviser?[['today','Today']]:[], tutor?[['notes','My tutees and notes']]:[], adviser?[['class','My class']]:[], [['rep','My reports']]);
+  if (head) tabs.splice(1, 0, ['today','My ARAL today'], ['class','Choose tutees by class']);
+  if (!tabs.some(t => t[0]===ARAL.tab)) ARAL.tab = tabs[0][0];
+  $('viewPir').innerHTML = `<div class="aralhero"><div><span class="lktag">ARAL PROGRAM</span><h2>Project TULAY</h2><p>A bridge for every learner to catch up. ARAL tutorials in reading and numeracy, with the tutors' daily log and accomplishment report.</p></div>
+      <div class="aralstat">${all?`<b>${(D.tutees||[]).length}</b><span>ARAL tutees</span>`:`<b>${aralMyTutees().length}</b><span>My ARAL tutees</span>`}</div></div>
+    <div class="tabs lactabs" style="margin-top:12px">${tabs.map(t => `<button class="${ARAL.tab===t[0]?'on':''}" onclick="ARAL.tab='${t[0]}';aralDraw()">${t[1]}</button>`).join('')}</div>
+    <div id="aralBody" style="margin-top:14px"></div>`;
+  ({ ov:aralOverview, today:aralToday, notes:aralNotesTab, class:aralClass, tutees:aralTuteesTab, rep:aralReports })[ARAL.tab]();
+}
+
+/* ----- Today: time in and out, learners present, and notes ----- */
+function aralToday(){
+  const D = ARAL.data, me = USER.email, list = aralMyTutees(), date = ARAL.date, ses = ARAL.session, today = D.today || todayPH();
+  const T = aralRow('TIME', me, today, ses) || { data:{} }, A = aralRow('ATT', me, date, ses), present = A ? A.data.present : [];
+  const tile = (k, l) => T.data[k] ? `<div class="stft on"><small>${l}</small><b>${esc(time12(T.data[k]))}</b></div>` : `<button class="stft" onclick="aralClock('${k}')"><small>${l}</small><b>·</b></button>`;
+  $('aralBody').innerHTML = `
+    <div class="aralbar"><div class="tabs">${['Before class','After class'].map(x => `<button class="${ses===x?'on':''}" onclick="ARAL.session='${x}';aralDraw()">${x}</button>`).join('')}</div>
+      <label class="aralday">Date <input type="date" value="${esc(date)}" max="${esc(today)}" onchange="ARAL.date=this.value||todayPH();aralDraw()"></label></div>
+    <div class="stfme"><div class="stfme-h"><div><small>My ARAL time today, ${esc(ses.toLowerCase())}</small><b>${esc(dShort(today))}</b></div>${T.data.in&&T.data.out?`<span class="atn ok">${esc(aralHrs(aralMins(T.data)))}</span>`:''}</div>
+      <div class="stftiles" style="grid-template-columns:repeat(2,1fr)">${tile('in','Time in')}${tile('out','Time out')}</div></div>
+    ${list.length ? `<h3 class="stfgrp">Tick the tutees present <small>${esc(dShort(date))}, ${esc(ses.toLowerCase())}</small></h3>
+      <div class="araltick">${list.map(t => `<label class="${present.indexOf(t.learner)>-1?'on':''}"><input type="checkbox" value="${esc(t.learner)}" ${present.indexOf(t.learner)>-1?'checked':''} onchange="this.parentElement.classList.toggle('on',this.checked)"><b>${esc(t.data.name)}</b><small>${esc(aralSecLabel(t))}</small></label>`).join('')}</div>
+      <div class="obs-actions"><button class="btn" onclick="aralAttSave()">Save who is present</button>${A?`<span class="hint">Saved: ${present.length} of ${list.length} present.</span>`:''}</div>
+      <h3 class="stfgrp">ARAL notes for ${esc(dShort(date))}</h3>
+      <div class="abtns">${list.filter(t => !A || present.indexOf(t.learner)>-1).map(t => { const n = aralNotes({ learner:t.learner, tutor:me, date, session:ses })[0];
+        return `<button class="abtn ${n?'':'main'}" onclick="aralNoteOpen('${t.learner}','${n?n.id:''}')"><span class="abico">${n?'✔':'✍'}</span><b>${esc(t.data.name)}</b><small>${n?esc(aralFocusTxt(n.data.focus)):'Write what you taught'}</small></button>`; }).join('')}</div>
+      <div class="obs-actions"><button class="btn ghost" onclick="aralPrintDaily('${me}','${date}')">\u{1F5A8} Print my Daily Log for ${esc(dShort(date))}</button></div>`
+    : `<div class="empty">You have no ARAL tutees yet. The adviser of the learner chooses the tutor when the learner is ticked as an ARAL tutee.</div>`}`;
+}
+async function aralClock(slot){ if (!confirm((slot==='in'?'Time in':'Time out')+' now for the ARAL session '+ARAL.session.toLowerCase()+'?')) return;
+  try{ loading(true); ARAL.data = await api('aralTime', { session:ARAL.session, slot }); loading(false); aralDraw(); toast(slot==='in'?'Time in recorded.':'Time out recorded.'); }catch(e){ loading(false); handleErr(e); } }
+async function aralAttSave(){ const present = [...document.querySelectorAll('.araltick input:checked')].map(x => x.value);
+  try{ loading(true); ARAL.data = await api('aralAtt', { date:ARAL.date, session:ARAL.session, present }); loading(false); aralDraw(); toast('Saved. '+present.length+' present.'); }catch(e){ loading(false); handleErr(e); } }
+
+/* ----- The ARAL note ----- */
+function aralNoteOpen(learner, id){
+  const n = id ? (ARAL.data.rows||[]).find(r => r.id===id) : null, d = n ? n.data : { session:ARAL.session, focus:{ type:'' } }, f = d.focus || {};
+  const others = aralMyTutees().filter(t => t.learner!==learner);
+  ARAL.nf = { learner, id, letters: (f.letters||[]).slice() };
+  stfModal(`<h3>ARAL note</h3><p class="sub">${esc(aralName(learner))}</p>
+    <div class="stfg2"><div class="field"><label for="anDate">Date</label><input type="date" id="anDate" value="${esc(n?n.date:ARAL.date)}" max="${esc(todayPH())}"></div>
+      <div class="field"><label for="anSes">Session</label><select id="anSes">${['Before class','After class'].map(x => `<option ${d.session===x?'selected':''}>${x}</option>`).join('')}</select></div></div>
+    <div class="field"><label for="anType">What was taught</label><select id="anType" onchange="aralNoteType()"><option value="">Choose</option>${ARAL_FOCUS.map(x => `<option ${f.type===x?'selected':''}>${x}</option>`).join('')}</select></div>
+    <div id="anLet" class="field" hidden><label>Which letters? <small class="hint">The order follows Project e-READ.</small></label><div class="aralletters">${ARAL_LETTERS.map(L => `<button type="button" class="${ARAL.nf.letters.indexOf(L)>-1?'on':''}" onclick="aralLetter(this,'${L}')">${L}<small>${L.toLowerCase()}</small></button>`).join('')}</div></div>
+    <div id="anPat" class="stfg2" hidden><div class="field"><label for="anGroup">Group</label><select id="anGroup" onchange="aralPatList()">${Object.keys(ARAL_PATTERNS).map(g => `<option ${f.group===g?'selected':''}>${g}</option>`).join('')}</select></div>
+      <div class="field"><label for="anPattern">Pattern or word family</label><select id="anPattern"></select></div></div>
+    <div id="anOther" class="field" hidden><label for="anOtherT">Specify</label><input id="anOtherT" maxlength="200" value="${esc(f.other||'')}" placeholder="Example: the, and, is"></div>
+    <div class="field"><label for="anAct">What we did</label><textarea id="anAct" rows="3" maxlength="1500" placeholder="Example: Read the word cards, then built words with letter tiles.">${esc(d.activity||'')}</textarea></div>
+    <div class="field"><label>Progress of the learner</label><div class="stfrad">${ARAL_PROG.map(x => `<label class="check" style="margin:0"><input type="radio" name="anProg" value="${x}" ${d.progress===x?'checked':''}>${x}</label>`).join('')}</div></div>
+    <div class="field"><label for="anRem">Note for this learner</label><textarea id="anRem" rows="2" maxlength="800" placeholder="What was different for this learner, or what to do next time">${esc(d.remarks||'')}</textarea></div>
+    ${!id && others.length ? `<div class="field"><label>Same lesson for other tutees (optional)</label><div class="lacpick">${others.map(t => `<label class="check" style="margin:0"><input type="checkbox" class="anCopy" value="${esc(t.learner)}">${esc(t.data.name)}</label>`).join('')}</div>
+      <small class="hint">Each learner gets their own note. Open each note later to write what was different for that learner.</small></div>` : ''}
+    ${d.copied?'<p class="hint">ℹ This note was copied from the same lesson. Write what was different for this learner in the note above.</p>':''}
+    <p class="err" id="anErr"></p><div class="modal-actions">${id?`<button class="linkbtn danger" style="margin-right:auto" onclick="aralNoteDel('${id}')">Delete</button>`:''}<button class="btn ghost" onclick="closeModal('stfModal')">Cancel</button><button class="btn" onclick="aralNoteSave()">Save</button></div>`, 'wide');
+  aralNoteType(); aralPatList(f.pattern);
+}
+function aralNoteType(){ const t = $('anType').value; $('anLet').hidden = t!=='Letter name and sound'; $('anPat').hidden = t!=='Word pattern or word family'; $('anOther').hidden = !t || t==='Letter name and sound' || t==='Word pattern or word family'; }
+function aralPatList(sel){ const g = $('anGroup').value; $('anPattern').innerHTML = (ARAL_PATTERNS[g]||[]).map(p => `<option ${p===sel?'selected':''}>${esc(p)}</option>`).join(''); }
+function aralLetter(b, L){ const a = ARAL.nf.letters, i = a.indexOf(L); if (i > -1) a.splice(i, 1); else a.push(L); b.classList.toggle('on', i < 0); }
+async function aralNoteSave(){
+  const type = $('anType').value; if (!type) return $('anErr').textContent = 'Choose what was taught.';
+  const focus = { type, letters: type==='Letter name and sound' ? ARAL_LETTERS.filter(L => ARAL.nf.letters.indexOf(L) > -1) : [], group: type==='Word pattern or word family' ? $('anGroup').value : '', pattern: type==='Word pattern or word family' ? $('anPattern').value : '', other: $('anOther').hidden ? '' : $('anOtherT').value.trim() };
+  if (type==='Letter name and sound' && !focus.letters.length) return $('anErr').textContent = 'Tap the letters that were taught.';
+  const pr = document.querySelector('input[name=anProg]:checked');
+  const note = { id:ARAL.nf.id, learner:ARAL.nf.learner, date:$('anDate').value, session:$('anSes').value, focus, activity:$('anAct').value.trim(), progress: pr ? pr.value : '', remarks:$('anRem').value.trim() };
+  const copyTo = [...document.querySelectorAll('.anCopy:checked')].map(x => x.value);
+  try{ loading(true); ARAL.data = await api('aralNote', { note, copyTo }); loading(false); closeModal('stfModal'); aralDraw(); toast(copyTo.length ? 'Saved for '+(copyTo.length+1)+' learners. Each has their own note.' : 'Note saved.'); }catch(e){ loading(false); handleErr(e,'anErr'); }
+}
+async function aralNoteDel(id){ if (!confirm('Delete this ARAL note?')) return; try{ ARAL.data = await api('aralNote', { remove:id }); closeModal('stfModal'); aralDraw(); toast('Deleted.'); }catch(e){ handleErr(e,'anErr'); } }
+
+/* ----- My tutees and their notes ----- */
+function aralNotesTab(){
+  const me = USER.email, list = aralMyTutees();
+  $('aralBody').innerHTML = `<div class="araltutees">${list.map(t => { const ns = aralNotes({ learner:t.learner }), days = new Set((ARAL.data.rows||[]).filter(r => r.kind==='ATT' && r.data.present.indexOf(t.learner)>-1).map(r => r.date)).size;
+      return `<div class="araltutee"><div class="stfreq-h"><span class="oav">${esc((t.data.name||'?').charAt(0))}</span><div><b>${esc(t.data.name)}</b><small>${esc(aralSecLabel(t))} · Key Stage ${t.data.ks} · ${days} day${days===1?'':'s'} attended</small></div></div>
+        ${ns.length?`<ul class="aralnl">${ns.slice(0,4).map(n => `<li><button class="linkbtn" onclick="aralNoteOpen('${t.learner}','${n.id}')">${esc(dShort(n.date))}</button> ${esc(aralFocusTxt(n.data.focus))}${n.data.progress?' · <i>'+esc(n.data.progress)+'</i>':''}</li>`).join('')}</ul>${ns.length>4?`<small class="hint">${ns.length-4} more notes in the reports.</small>`:''}`:'<p class="hint">No notes yet.</p>'}
+        <div class="stfreq-a"><button class="btn small" onclick="aralNoteOpen('${t.learner}','')">✍ New note</button></div></div>`; }).join('') || '<div class="empty">No tutees yet.</div>'}</div>`;
+}
+
+/* ----- My class: the adviser ticks the ARAL tutees ----- */
+function aralClass(secKey){
+  const D = ARAL.data, mine = aralAll() ? D.sections.map(s => s.key) : D.mine;
+  if (!ARAL.cls || mine.indexOf(ARAL.cls) < 0) ARAL.cls = mine[0];
+  const sec = D.sections.find(s => s.key===ARAL.cls) || {}, ks2 = /Grade\s*[4-6]/i.test(sec.grade||''), L = (D.learners||[]).filter(l => l.sec===ARAL.cls).sort((a,b) => (a.sex===b.sex?0:a.sex==='M'?-1:1) || (a.last+a.first).localeCompare(b.last+b.first));
+  const tut = id => (D.tutees||[]).find(t => t.learner===id);
+  $('aralBody').innerHTML = `${mine.length>1?`<div class="bar"><select onchange="ARAL.cls=this.value;aralDraw()">${mine.map(k => { const s = D.sections.find(x => x.key===k)||{}; return `<option value="${esc(k)}" ${k===ARAL.cls?'selected':''}>${esc((s.grade||'')+' '+(s.section||''))}</option>`; }).join('')}</select></div>`:''}
+    <p class="hint">${ks2?'Key Stage 2: when you tick a learner, choose the ARAL tutor.':'Key Stage 1: you, the adviser, are the ARAL tutor of the learners you tick.'}</p>
+    <div class="table-wrap"><table class="stft-table"><thead><tr><th>Learner</th><th>ARAL tutee</th><th>Tutor</th></tr></thead><tbody>
+    ${L.map(l => { const t = tut(l.id); return `<tr><td><b>${esc(l.last)}, ${esc(l.first)}</b></td><td><label class="switch"><input type="checkbox" ${t?'checked':''} onchange="aralTuteeSet('${l.id}', this.checked, ${ks2})"><span></span></label></td><td>${t?esc(t.tutorName)+(ks2?` <button class="linkbtn" onclick="aralTuteeSet('${l.id}', true, true)">Change</button>`:''):'<span class="hint">·</span>'}</td></tr>`; }).join('') || '<tr><td colspan="3" class="hint">No learners in this class yet. Add them in Attendance, My learners.</td></tr>'}
+    </tbody></table></div>`;
+}
+function aralTuteeSet(id, on, ks2){
+  const l = (ARAL.data.learners||[]).find(x => x.id===id) || {}, nm = (l.first||'')+' '+(l.last||'');
+  if (!on){ if (!confirm('Remove '+nm+' from the ARAL tutees? The notes are kept.')) return aralDraw(); return aralTuteeSave(id, false, ''); }
+  if (!ks2) return aralTuteeSave(id, true, '');
+  const cur = (ARAL.data.tutees||[]).find(t => t.learner===id);
+  stfModal(`<h3>Who is the ARAL tutor?</h3><p class="sub">${esc(nm)} is in Key Stage 2. Choose the teacher who will tutor this learner.</p>
+    <div class="field"><label for="atTutor">ARAL tutor</label><select id="atTutor"><option value="">Choose</option>${(ARAL.data.people||[]).map(p => `<option value="${esc(p.email)}" ${cur&&cur.tutor===p.email?'selected':''}>${esc(p.name)}</option>`).join('')}</select></div>
+    <p class="err" id="atErr"></p><div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal');aralDraw()">Cancel</button><button class="btn" onclick="if(!$('atTutor').value){$('atErr').textContent='Choose the tutor.';return;} aralTuteeSave('${id}', true, $('atTutor').value)">Save</button></div>`);
+}
+async function aralTuteeSave(id, on, tutor){ try{ loading(true); ARAL.data = await api('aralTutee', { learner:id, on, tutor }); loading(false); closeModal('stfModal'); aralDraw(); toast(on ? 'Saved as an ARAL tutee.' : 'Removed from the ARAL tutees.'); }catch(e){ loading(false); handleErr(e,'atErr'); aralDraw(); } }
+
+/* ----- School Head and AO ----- */
+function aralOverview(){
+  const D = ARAL.data, today = D.today || todayPH(), tutors = [...new Set((D.tutees||[]).map(t => t.tutor))].filter(Boolean);
+  const name = e => ((D.people||[]).find(p => p.email===e)||{}).name || ((D.tutees||[]).find(t => t.tutor===e)||{}).tutorName || e;
+  const ks = k => (D.tutees||[]).filter(t => t.data.ks===k).length, notesToday = (D.rows||[]).filter(r => r.kind==='NOTE' && r.date===today).length;
+  $('aralBody').innerHTML = `<div class="ostats"><div class="ostat static"><span class="oico">\u{1F9D2}</span><b>${(D.tutees||[]).length}</b><span>ARAL tutees (KS1 ${ks(1)}, KS2 ${ks(2)})</span></div>
+      <div class="ostat static"><span class="oico">\u{1F469}‍\u{1F3EB}</span><b>${tutors.length}</b><span>ARAL tutors</span></div>
+      <div class="ostat static"><span class="oico">✍</span><b>${notesToday}</b><span>ARAL notes today</span></div></div>
+    <h3 class="stfgrp">Tutors today, ${esc(dShort(today))}</h3>
+    <div class="table-wrap"><table class="stft-table"><thead><tr><th>Tutor</th><th>Tutees</th><th>Before class</th><th>After class</th><th>Present today</th><th>Notes today</th><th></th></tr></thead><tbody>
+    ${tutors.map(e => { const tt = (s) => { const T = aralRow('TIME', e, today, s); return T ? esc(time12(T.data.in||''))+(T.data.out?' to '+esc(time12(T.data.out)):'') : '<span class="hint">·</span>'; };
+      const pres = (D.rows||[]).filter(r => r.kind==='ATT' && r.tutor===e && r.date===today).reduce((a,r) => a + r.data.present.length, 0);
+      return `<tr><td><b>${esc(name(e))}</b></td><td>${aralTutees(e).length}</td><td>${tt('Before class')}</td><td>${tt('After class')}</td><td>${pres}</td><td>${aralNotes({ tutor:e, date:today }).length}</td><td><button class="linkbtn" onclick="ARAL.who='${e}';ARAL.tab='rep';aralDraw()">Reports</button></td></tr>`; }).join('') || '<tr><td colspan="7" class="hint">No tutors yet. The advisers tick the ARAL tutees in their class.</td></tr>'}</tbody></table></div>`;
+}
+function aralTuteesTab(){
+  const D = ARAL.data, head = aralRole()==='head';
+  $('aralBody').innerHTML = `${head?`<div class="bar"><button class="btn" onclick="ARAL.tab='class';aralDraw()">⚙ Choose tutees by class</button></div>`:''}
+    <div class="table-wrap"><table class="stft-table"><thead><tr><th>Learner</th><th>Grade and section</th><th>Key Stage</th><th>Tutor</th><th>Notes</th></tr></thead><tbody>
+    ${aralTutees().map(t => `<tr><td><b>${esc(t.data.name)}</b></td><td>${esc(aralSecLabel(t))}</td><td>${t.data.ks}</td><td>${esc(t.tutorName||'')}</td><td>${aralNotes({ learner:t.learner }).length}</td></tr>`).join('') || '<tr><td colspan="5" class="hint">No ARAL tutees yet.</td></tr>'}</tbody></table></div>`;
+}
+
+/* ----- Reports: Individual Daily Log and Accomplishment Report ----- */
+function aralReports(){
+  const D = ARAL.data, all = aralAll(), today = D.today || todayPH();
+  const tutors = all ? [...new Set((D.tutees||[]).map(t => t.tutor).concat((D.rows||[]).map(r => r.tutor)))].filter(Boolean) : [USER.email];
+  if (!ARAL.who || tutors.indexOf(ARAL.who) < 0) ARAL.who = tutors[0] || USER.email;
+  if (!ARAL.from){ ARAL.from = today.slice(0,8)+'01'; ARAL.to = today; }
+  const name = e => ((D.people||[]).find(p => p.email===e)||{}).name || e;
+  $('aralBody').innerHTML = `<div class="repgrid">
+      ${all?`<div class="repcard" style="grid-column:1/-1"><div class="field" style="margin:0"><label for="arWho">ARAL tutor</label><select id="arWho" onchange="ARAL.who=this.value;aralDraw()">${tutors.map(e => `<option value="${esc(e)}" ${e===ARAL.who?'selected':''}>${esc(name(e))}</option>`).join('')}</select></div></div>`:''}
+      <div class="repcard"><div class="repcard-h"><span>\u{1F4C4}</span><div><b>Daily Log and Accomplishment Report</b><small>One day, with every learner's note</small></div></div>
+        <div class="field"><label for="arDay">Date</label><input type="date" id="arDay" value="${esc(ARAL.date||today)}" max="${esc(today)}"></div>
+        <button class="btn" onclick="aralPrintDaily(ARAL.who, $('arDay').value)">\u{1F5A8} Print the daily report</button></div>
+      <div class="repcard"><div class="repcard-h"><span>\u{1F4CA}</span><div><b>Summary of the Daily Log and Accomplishment Report</b><small>Any period: a week, a month, or the term</small></div></div>
+        <div class="stfg2"><div class="field"><label for="arFrom">From</label><input type="date" id="arFrom" value="${esc(ARAL.from)}"></div><div class="field"><label for="arTo">To</label><input type="date" id="arTo" value="${esc(ARAL.to)}" max="${esc(today)}"></div></div>
+        <button class="btn" onclick="ARAL.from=$('arFrom').value;ARAL.to=$('arTo').value;aralPrintSum(ARAL.who, ARAL.from, ARAL.to)">\u{1F5A8} Print the summary</button></div></div>`;
+}
+function aralDayData(e, date){
+  const D = ARAL.data, ses = ['Before class','After class'];
+  return ses.map(s => { const T = aralRow('TIME', e, date, s), A = aralRow('ATT', e, date, s), N = aralNotes({ tutor:e, date, session:s });
+    if (!T && !A && !N.length) return null; return { s, T: T ? T.data : {}, present: A ? A.data.present : [...new Set(N.map(n => n.learner))], notes: N }; }).filter(Boolean);
+}
+function aralSigs(e){ const D = ARAL.data, p = (D.people||[]).find(x => x.email===e) || {}, head = ((DATA||{}).headName||'').toUpperCase();
+  return `<div class="stfp-sigs"><div><small style="text-align:left">Prepared by:</small><span>${esc((p.name||'').toUpperCase())}</span><small>ARAL Tutor${p.position?', '+esc(p.position):''}</small></div><div><small style="text-align:left">Noted by:</small><span>${esc(head)}</span><small>School Head</small></div></div>`; }
+function aralPrintDaily(e, date){
+  const D = ARAL.data, p = (D.people||[]).find(x => x.email===e) || { name:e }, rows = aralDayData(e, date), mine = aralTutees(e);
+  if (!rows.length) return toast('There is no ARAL record on '+dShort(date)+' yet.');
+  const mins = rows.reduce((a,r) => a + aralMins(r.T), 0);
+  const body = rows.map(r => `<h4 class="stfp-n">${esc(r.s)}${r.T.in?' · '+esc(time12(r.T.in))+(r.T.out?' to '+esc(time12(r.T.out)):''):''}</h4>
+    <table class="stfp-tbl"><thead><tr><th>No.</th><th>Name of learner</th><th>Grade and section</th><th>What was taught</th><th>What we did</th><th>Progress</th><th>Note</th></tr></thead><tbody>
+    ${r.present.map((id, i) => { const ns = r.notes.filter(x => x.learner===id).reverse(), t = mine.find(x => x.learner===id) || { data:{} }, j = (f) => ns.map(f).filter(Boolean).map(esc).join('<br>');
+      return `<tr><td>${i+1}</td><td>${esc(aralName(id))}</td><td>${esc(aralSecLabel(t))}</td><td>${j(n => aralFocusTxt(n.data.focus))}</td><td>${j(n => n.data.activity)}</td><td>${j(n => n.data.progress)}</td><td>${j(n => n.data.remarks)}</td></tr>`; }).join('') || '<tr><td colspan="7">No learner present was recorded.</td></tr>'}</tbody></table>`).join('');
+  $('printArea').innerHTML = `<div class="stfprint"><div class="stfp-page">${stfPrintHead('Individual Daily Log and Accomplishment Report', 'ARAL Program, Project TULAY')}
+    <table class="stfp-info"><tr><td>Name of ARAL tutor</td><td><b>${esc((p.name||'').toUpperCase())}</b></td><td>Date</td><td><b>${esc(fmtLong(date))}</b></td></tr>
+      <tr><td>Position</td><td>${esc(p.position||'Teacher')}</td><td>Time spent</td><td>${esc(aralHrs(mins)||'Not recorded')}</td></tr>
+      <tr><td>Learners present</td><td>${new Set(rows.flatMap(r => r.present)).size} of ${mine.length} tutees</td><td>Sessions</td><td>${esc(rows.map(r => r.s).join(' and '))}</td></tr></table>
+    ${body}${aralSigs(e)}<p class="stfp-foot">Generated by TALA on ${esc(fmtLong(todayPH()))}.</p></div></div>`;
+  setTimeout(() => window.print(), 300);
+}
+function aralPrintSum(e, from, to){
+  const D = ARAL.data, p = (D.people||[]).find(x => x.email===e) || { name:e }, mine = aralTutees(e);
+  const dates = [...new Set((D.rows||[]).filter(r => r.tutor===e && r.date >= from && r.date <= to).map(r => r.date))].sort();
+  if (!dates.length) return toast('There is no ARAL record from '+dShort(from)+' to '+dShort(to)+'.');
+  let mins = 0; const served = new Set(), letters = {}, pats = {};
+  const lines = dates.flatMap(d => aralDayData(e, d).map(r => { mins += aralMins(r.T); r.present.forEach(id => served.add(id));
+    r.notes.forEach(n => { const f = n.data.focus||{}; (f.letters||[]).forEach(L => letters[L] = (letters[L]||0)+1); if (f.pattern) pats[f.pattern] = (pats[f.pattern]||0)+1; });
+    const foci = [...new Set(r.notes.map(n => aralFocusTxt(n.data.focus)))];
+    return `<tr><td>${esc(dShort(d))}</td><td>${esc(r.s)}</td><td>${esc(r.T.in?time12(r.T.in):'')}</td><td>${esc(r.T.out?time12(r.T.out):'')}</td><td>${esc(aralHrs(aralMins(r.T)))}</td><td>${r.present.length}</td><td>${esc(foci.join('; '))}</td><td>${r.notes.length}</td></tr>`; }));
+  const order = ARAL_LETTERS.filter(L => letters[L]);
+  $('printArea').innerHTML = `<div class="stfprint"><div class="stfp-page">${stfPrintHead('Summary of the Individual Daily Log and Accomplishment Report', 'ARAL Program, Project TULAY, '+fmtLong(from)+' to '+fmtLong(to))}
+    <table class="stfp-info"><tr><td>Name of ARAL tutor</td><td><b>${esc((p.name||'').toUpperCase())}</b></td><td>Position</td><td>${esc(p.position||'Teacher')}</td></tr>
+      <tr><td>Days with ARAL</td><td>${dates.length}</td><td>Total time</td><td>${esc(aralHrs(mins)||'Not recorded')}</td></tr>
+      <tr><td>Tutees</td><td>${mine.length}</td><td>Learners served</td><td>${served.size}</td></tr></table>
+    <table class="stfp-tbl"><thead><tr><th>Date</th><th>Session</th><th>Time in</th><th>Time out</th><th>Time spent</th><th>Learners present</th><th>What was taught</th><th>Notes</th></tr></thead><tbody>${lines.join('')}</tbody></table>
+    ${order.length?`<h4 class="stfp-n">Letters taught</h4><p>${order.map(L => esc(L)+' ('+letters[L]+')').join(', ')}</p>`:''}
+    ${Object.keys(pats).length?`<h4 class="stfp-n">Word patterns and word families taught</h4><p>${Object.keys(pats).map(k => esc(k)+' ('+pats[k]+')').join(', ')}</p>`:''}
+    ${aralSigs(e)}<p class="stfp-foot">Generated by TALA on ${esc(fmtLong(todayPH()))}.</p></div></div>`;
+  setTimeout(() => window.print(), 300);
 }
 
 /* ----- Project e-READ and Project ABONO: separate apps of Baluyan ES, opened from TALA ----- */
@@ -3150,7 +3411,7 @@ async function poll(){
   if (!USER || !TOKEN) return;
   LAST_POLL = Date.now();
   try{
-    const r = await api('poll', { since: MSG_SINCE });
+    const r = await api('poll', { since: MSG_SINCE, seenAral: seenAt('aral') });
     NOTICES = r.notices || [];
     mergeMsgs(r.messages || []); MSG_SINCE = r.now ? r.now.slice(0,16) : MSG_SINCE;
     const un = r.unread || 0;
@@ -3160,6 +3421,7 @@ async function poll(){
     LAST_UNREAD = un;
     if (USER.role==='teacher' && typeof r.obsNew === 'number' && r.obsNew !== OBS.newCount){ OBS.newCount = r.obsNew; drawSide(); }
     if (typeof r.lacNew === 'number' && r.lacNew !== LAC.dot){ LAC.dot = r.lacNew; drawSide(); }
+    if (typeof r.aralNew === 'number' && r.aralNew !== ARAL.srvNew){ ARAL.srvNew = r.aralNew; drawSide(); }
     if (typeof r.reqNew === 'number' && r.reqNew !== STF.dot){ STF.dot = r.reqNew; drawSide(); if (STF.data && USER.role!=='admin') stfLoad(true).then(() => { if (ATT.view==='staff' && $('viewAtt').style.display!=='none') stfDraw(); }); }
     if ($('bellPanel').classList.contains('open')) drawBell();
     chatBadge(); if (!$('chat').hidden) drawChat();
@@ -4378,9 +4640,9 @@ const QUOTES = [
   'Today is a new chance to make a difference in one learner’s life.',
   'Faithful in small things, ready for great things.'
 ];
-// A random quote each time Home opens; New quote shows another one
+// One quote per day, the same for everyone. It goes through all the quotes before any repeats.
 let CUR_QUOTE = '';
-function quoteToday(){ if (!CUR_QUOTE) CUR_QUOTE = QUOTES[Math.floor(Math.random() * QUOTES.length)]; return CUR_QUOTE; }
+function quoteToday(){ const d = todayPH(), n = Math.floor(Date.UTC(+d.slice(0,4), +d.slice(5,7)-1, +d.slice(8,10)) / 86400000); return QUOTES[((n * 37) % QUOTES.length + QUOTES.length) % QUOTES.length]; }
 function quoteNext(){ let q = CUR_QUOTE; while (QUOTES.length > 1 && q === CUR_QUOTE) q = QUOTES[Math.floor(Math.random() * QUOTES.length)]; CUR_QUOTE = q; document.querySelectorAll('.qcard p').forEach(p => p.textContent = '\u201C' + q + '\u201D'); }
 function showHome(){
   ['viewLac','viewTrk','viewAcc','viewBank','viewLog','viewWeeks','viewSig','viewObs','viewSbfp','viewPir','viewAtt'].forEach(v => $(v).style.display='none');
@@ -4417,8 +4679,9 @@ function drawHome(){
   }
   $('viewHome').innerHTML = `
     <div class="hhero"><div class="hhero-t"><h2>${greet}, ${esc(first)}!</h2><p>Today is ${esc(today)}. Enjoy your class, and be an inspiration.</p>${head?`<button class="btn sun small" style="margin-top:12px" onclick="openFeature('mne')">PIR Presentation</button>`:`<button class="btn sun small" style="margin-top:12px" onclick="openPir('me')">My status presentation</button>`}</div>
-      <div class="qcard" id="qCard"><span class="qstar">\u2605</span><p>\u201C${esc(quoteToday())}\u201D</p><small>TALA quote</small>
-        <div class="qbtns"><button class="btn ghost small" onclick="quoteNext()">\u21BB New quote</button><button class="btn ghost small" onclick="quoteSave()">\u2B07 Save picture</button><button class="btn ghost small" onclick="shareQuote()">Share</button></div></div></div>
+      <div class="qcard" id="qCard"><span class="qstar">\u2605</span><p>\u201C${esc(quoteToday())}\u201D</p><small>TALA quote of the day</small>
+        <div class="qbtns"><button class="btn ghost small" onclick="quoteSave()">\u2B07 Save picture</button><button class="btn ghost small" onclick="shareQuote()">Share</button></div></div></div>
+    ${sbTodoHtml()}
     <div class="hgrid">${lpt}${obs}</div>
     <div id="homeCal"></div>`;
   drawSchoolCal();
@@ -4435,7 +4698,7 @@ function drawPublicHome(){
   }
   $('viewHome').innerHTML = `
     <div class="hhero"><div class="hhero-t"><h2>Welcome to TALA!</h2><p>Baluyan Elementary School. Today is ${esc(today)}.</p><button class="btn sun small" style="margin-top:12px" onclick="openLogin()">Sign in</button></div>
-      <div class="qcard"><span class="qstar">\u2605</span><p>\u201C${esc(quoteToday())}\u201D</p><small>TALA quote</small><div class="qbtns"><button class="btn ghost small" onclick="quoteNext()">\u21BB New quote</button><button class="btn ghost small" onclick="quoteSave()">\u2B07 Save picture</button><button class="btn ghost small" onclick="shareQuote()">Share</button></div></div></div>
+      <div class="qcard"><span class="qstar">\u2605</span><p>\u201C${esc(quoteToday())}\u201D</p><small>TALA quote of the day</small><div class="qbtns"><button class="btn ghost small" onclick="quoteSave()">\u2B07 Save picture</button><button class="btn ghost small" onclick="shareQuote()">Share</button></div></div></div>
     <div class="hgrid">${lpt}</div>
     <div id="homeCal"></div>`;
   drawSchoolCal();
@@ -4704,6 +4967,30 @@ function sbSched(date){
 function sbfpOn(date){ const s = sbSched(date); return s ? { menu:s.n, grade:s.g+' parents', notes:(s.rec||{}).notes } : null; }
 function isStaff(){ return USER && ['teacher','head','admin'].indexOf(USER.role) > -1; }
 function sbGroupOf(g){ return /^Grade 4/.test(g) ? 'Grade 4' : g; }
+/* Reminders for the teacher whose grade level parents are assigned on a feeding day: complete the status, the photos of the
+   attendance sheet, and the parents' attendance. The menu is not changed by the teacher; a different menu is told to the School Head. */
+function sbNorm(g){ g = String(g||'').replace(/\s*parents$/i,'').trim(); if (/^kinder/i.test(g)) return 'Kindergarten'; const m = g.match(/^Grade\s*(\d)/i); return m ? 'Grade '+m[1] : g; }
+function sbMyGrades(){ if (!USER) return []; const secs = (typeof ATT!=='undefined' && ATT.sections && ATT.sections.length) ? ATT.sections : ((typeof attCacheMeta==='function' && attCacheMeta()) || {}).sections || [];
+  return [...new Set(secs.filter(x => x.adviser===USER.email).map(x => sbNorm(x.grade)))]; }
+function sbMyTodo(){
+  if (!USER || USER.role!=='teacher' || !featOn('sbfp')) return [];
+  const mine = sbMyGrades(); if (!mine.length) return [];
+  const today = todayPH(), out = [], from = [sbFirst(), addDays(today, -45)].sort().pop(), afterNoon = new Date().toLocaleTimeString('en-GB',{ hour:'2-digit', timeZone:'Asia/Manila' }) >= '12';
+  for (let d = from; d <= today; d = addDays(d, 1)){
+    if (d === today && !afterNoon) continue;
+    const sc = sbSched(d); if (!sc || mine.indexOf(sbNorm(sc.g)) < 0) continue;
+    const r = sbRec(d), att = r.att || {}, need = [];
+    if (!r.status) need.push('status of feeding');
+    if (!r.status || r.status==='Implemented'){ if (!(r.photos||[]).length) need.push('photos of the attendance sheet'); if (!Object.keys(att).some(k => k.charAt(0)!=='_' && att[k])) need.push('parents\u2019 attendance'); }
+    if (need.length) out.push({ date:d, s:sc, need });
+  }
+  return out;
+}
+function sbTodoHtml(){ const L = sbMyTodo(); if (!L.length) return '';
+  return `<div class="sbtodo"><b>\u23F0 Your SBFP days to complete (${L.length})</b>
+    <p>These are the feeding days of your grade level parents. Please update each one: the status, the photos of the attendance sheet, and the parents' attendance.</p>
+    <div class="sbtodo-l">${L.map(x => `<button onclick="SB.date='${x.date}';SB.tab='today';openSbfp()"><span>${esc(dShort(x.date))}</span><b>${esc(x.s.n)}</b><small>Still needed: ${esc(x.need.join(', '))}</small></button>`).join('')}</div>
+    <p class="sbtodo-n">\u2757 If the menu that was actually served is different, do not change the menu. Complete the day as it is, and tell the School Head about it.</p></div>`; }
 function sbParents(group){
   const seen = {}, out = [];
   (SB.people||[]).filter(p => p.group===group).forEach(p => { const k = p.parent+'|'+group;
@@ -4723,6 +5010,7 @@ function drawSbfp(){
   $('viewSbfp').innerHTML = `<div class="ohero sbhero"><div><h2>SBFP Monitoring</h2><p>School-Based Feeding Program: the menu of the day, the grade level whose parents prepare it, the status of feeding, attendance sheets, and parents\u2019 participation.</p></div>
       <div class="sbtoday"><small>Today</small>${t?`<b>${esc(t.n)}</b><span>${esc(t.g)} parents \u00B7 Day ${t.day} of ${SBFP_MENUS.length}</span>`:'<b>No feeding scheduled today</b>'}</div></div>
     <div class="ktabs">${tabs.map(([k,l])=>`<button class="${SB.tab===k?'on':''}" onclick="SB.tab='${k}';drawSbfp()">${l}</button>`).join('')}</div>
+    ${sbTodoHtml()}
     ${staff?`<div class="sbtools"><button class="btn ghost small" onclick="openModal('sbPrintModal')">\u2399 Print reports</button>${USER.role==='head'?'<button class="btn ghost small danger" onclick="sbClearOpen()">Clear SBFP data</button>':''}</div>`:''}
     <div id="sbBody"></div>`;
   ({ today:sbDayView, cal:sbCalView, sum:sbSumView, people:sbPeopleView, part:sbPartView })[SB.tab]();
@@ -7145,7 +7433,9 @@ const NB_TABS = { LAC:'LAC Notebook', MEET:'Meeting Notebook' };
 function nbTabOf(book){ return book==='MEET' ? 'MEET' : 'LAC'; }
 // Whether a person has written something in the notebook of a session
 function nbWritten(sid, email, kind){ const book = kind==='MEET' ? 'MEET' : 'LAC';
-  return (LAC.data.notebooks||[]).some(n => n.session===sid && n.email===email && n.book===book && Object.values(n.body||{}).some(v => String(v||'').trim())); }
+  return (LAC.data.notebooks||[]).some(n => n.session===sid && n.email===email && n.book===book && n.status!=='Returned' && Object.values(n.body||{}).some(v => String(v||'').trim())); }
+// Entries the School Head returned to complete
+function nbReturned(email){ return (LAC.data.notebooks||[]).filter(n => n.email===(email||USER.email) && n.status==='Returned'); }
 // Sessions I attended where my notebook is still empty
 function nbMissing(email){ email = email || USER.email; const today = todayPH();
   return (LAC.data.sessions||[]).filter(s => s.date <= today && lacInvited(s, email) && (LAC.data.records||[]).some(r => r.session===s.id && r.kind==='ATT' && r.email===email) && !nbWritten(s.id, email, s.kind)); }
@@ -7199,7 +7489,7 @@ async function openLac(tab){
   lacDraw(); maybeGuide('lac');
 }
 function lacDot(){ if (!LAC.data || !USER) return; const t = todayPH();
-  const n = lacHead() ? LAC.data.hub.filter(h => h.status==='Pending').length
+  const n = lacHead() ? LAC.data.hub.filter(h => h.status==='Pending').length + (LAC.data.notebooks||[]).filter(x => x.email!==USER.email && !x.checkedOn && x.status!=='Returned').length
     : LAC.data.hub.filter(h => h.status==='Approved' && (h.assign==='all' || (h.assign||[]).indexOf(USER.email) > -1) && h.byEmail!==USER.email && !LAC.data.progress.some(p => p.hub===h.id && p.email===USER.email)).length + LAC.data.sessions.filter(s => s.date===t && lacInvited(s, USER.email) && !lacMine(s.id,'ATT')).length;
   const k = n + (lacHead() ? 0 : nbMissing().length);
   if (k !== LAC.dot){ LAC.dot = k; drawSide(); } }
@@ -7227,6 +7517,7 @@ function lacHome(){
     if (s.kind==='LAC') (s.facilitators||[]).forEach((f,i) => { if (f.email!==me && !lacMine(s.id,'EVR',f.name)) todo.push({ ico:'\u{1F3A4}', t:'Evaluate the speaker', x:f.name+', '+s.title, fn:`lacEval('${s.id}','EVR',${i})` }); });
     if (s.kind==='LAC' && !lacNotesFor(s.id, me).length) todo.push({ ico:'\u{1F4AD}', t:'Write your reflection', x:s.title, fn:`nbOpenFor('${s.id}','REF')` });
   });
+  if (!head) nbReturned().forEach(n => todo.unshift({ ico:'\u21A9', t:'Complete your returned notebook', x:(n.title || (lacS(n.session)||{}).title || NB_BOOKS[n.book])+'. '+(n.remark||''), fn:`nbOpen('${n.id}')`, main:1, warn:1 }));
   if (!head) nbMissing().forEach(s => todo.unshift({ ico:'\u{1F4D3}', t:'Write in your '+(s.kind==='MEET'?'Meeting':'LAC')+' Notebook', x:s.title+', '+dShort(s.date)+'. Still empty.', fn:`nbOpenFor('${s.id}','${s.kind==='MEET'?'MEET':'LAC'}')`, main:1, warn:1 }));
   const mine = lacHubMine();
   mine.filter(h => { const p = lacProg(h.id); return !p || p.status!=='Finished'; }).forEach(h => { const p = lacProg(h.id); todo.push({ ico:'\u25B6', t:p?'Continue watching':'Watch', x:h.title+(p?', '+p.pct+'%':'')+(h.target?', by '+dShort(h.target):''), fn:`hubPlay('${h.id}')` }); });
@@ -7550,15 +7841,23 @@ async function lacPrint(kind, id, T, html){
 function lacHeadEmail(){ const h = lacPeople().find(p => p.role==='head'); return h ? h.email : ''; }
 
 /* ----- Notebooks ----- */
-// For teachers: no paste, no right click, no copy or cut, no dragging text in. They type their own words.
+// Notebooks are typed by hand: no copy, cut, or paste, no right click, no dragging text in or out, and no pasting from the phone's
+// clipboard bar. A big block of text that appears all at once is taken back out. Only the School Head is not limited.
 function nbGuard(el){
-  if (!el || lacRole()!=='teacher') return;
-  const stop = e => { e.preventDefault(); return false; };
-  ['paste','drop','contextmenu','copy','cut','dragstart'].forEach(ev => el.addEventListener(ev, stop));
-  el.addEventListener('keydown', e => { const k = (e.key||'').toLowerCase(); if ((e.ctrlKey || e.metaKey) && ['v','c','x'].indexOf(k) > -1) return stop(e); if (e.shiftKey && k==='insert') return stop(e); });
-  el.addEventListener('beforeinput', e => { if (/^insertFrom(Paste|Drop|Yank|PasteAsQuotation)$/.test(e.inputType||'')) return stop(e); });
-  let last = el.value.length;
-  el.addEventListener('input', e => { const grow = el.value.length - last; last = el.value.length; if (grow > 40 || ((e.data||'').length > 30)) LAC.flag = true; });
+  if (!el || (USER && USER.role==='head')) return;
+  const stop = e => { e.preventDefault(); e.stopPropagation(); return false; };
+  ['paste','drop','dragover','dragstart','copy','cut','contextmenu'].forEach(ev => el.addEventListener(ev, stop, true));
+  el.addEventListener('keydown', e => { const k = (e.key||'').toLowerCase();
+    if ((e.ctrlKey || e.metaKey) && ['v','c','x'].indexOf(k) > -1) return stop(e);
+    if ((e.shiftKey && k==='insert') || ((e.ctrlKey || e.metaKey) && k==='insert') || (e.shiftKey && k==='delete')) return stop(e); }, true);
+  el.addEventListener('beforeinput', e => { const t = e.inputType || '';
+    if (/^insertFrom(Paste|Drop|Yank|PasteAsQuotation)$/.test(t) || t==='insertReplacementText' && (e.data||'').length > 25) return stop(e);
+    if ((t==='insertText' || t==='insertCompositionText') && (e.data||'').length > 25) return stop(e); }, true);
+  el.style.webkitTouchCallout = 'none';
+  let last = el.value;
+  el.addEventListener('input', e => { const grow = el.value.length - last.length;
+    if (grow > 25 && !/^delete/.test(e.inputType||'')){ const pos = el.selectionStart; el.value = last; try{ el.selectionStart = el.selectionEnd = Math.max(0, pos - grow); }catch(x){} LAC.flag = true; return; }
+    last = el.value; });
 }
 function nbBang(){ return `<button class="nbbang" onclick="this.classList.toggle('open')" aria-label="About this notebook">!<span>Your School Head can read this notebook.</span></button>`; }
 function lacNotebooks(){
@@ -7569,19 +7868,20 @@ function lacNotebooks(){
   $('lacBody').innerHTML = `<div class="bar" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><div class="tabs">${books.map(b => { const k = head ? 0 : nbMissing().filter(s => (s.kind==='MEET'?'MEET':'LAC')===b).length; return `<button class="${LAC.nb===b?'on':''}" onclick="LAC.nb='${b}';lacNotebooks()">${NB_TABS[b]}${k?` <i class="sdot">${k}</i>`:''}</button>`; }).join('')}</div>${nbBang()}
       ${head?`<select onchange="LAC.nbWho=this.value;lacNotebooks()"><option value="">Everyone</option>${lacPeople().map(p => `<option value="${esc(p.email)}" ${p.email===LAC.nbWho?'selected':''}>${esc(p.name)}${p.email===USER.email?' (me)':''}</option>`).join('')}</select>`:''}
       <button class="btn" onclick="nbOpen('','${LAC.nb}')">\uFF0B New entry</button><button class="btn ghost" onclick="nbPrint()">\u{1F5A8} Print ${head&&!who?'all':who===USER.email||!head?'my':''} ${esc(NB_TABS[LAC.nb])}</button></div>
+    ${head ? '' : nbReturned().filter(n => nbTabOf(n.book)===LAC.nb).map(n => `<button class="nbmiss bad" onclick="nbOpen('${n.id}')"><b>\u21A9 Returned by the School Head: please complete</b><span>${esc(n.title || (lacS(n.session)||{}).title || NB_BOOKS[n.book])}. ${esc(n.remark||'')}</span></button>`).join('')}
     ${miss.map(s => `<button class="nbmiss" onclick="nbOpenFor('${s.id}','${s.kind==='MEET'?'MEET':'LAC'}')"><b>\u270D Please write in your ${s.kind==='MEET'?'Meeting':'LAC'} Notebook</b><span>${esc(s.title)}, ${esc(dShort(s.date))}. You attended, but your notebook for this ${s.kind==='MEET'?'meeting':'session'} is still empty. Tap here to write.</span></button>`).join('')}
-    ${head?`<p class="hint">${D.notebooks.filter(n => n.email!==USER.email && !n.checkedOn).length} entries of the teachers in all notebooks are not yet checked.</p>`:''}
+    ${head?`<p class="hint">${D.notebooks.filter(n => n.email!==USER.email && !n.checkedOn && n.status!=='Returned').length} entries of the teachers are waiting for checking. ${D.notebooks.filter(n => n.status==='Returned').length} returned entries are waiting for the teachers.</p>`:''}
     <div class="nblist">${list.map(nbCard).join('') || '<div class="empty">No entries yet. Tap New entry to start writing.</div>'}</div>`;
 }
 function nbCard(n){
   const s = n.session ? lacS(n.session) : null, b = n.body || {}, mine = n.email===USER.email, head = lacHead();
   const preview = String(b.text || b.learn || b.r0 || b.r1 || '').slice(0, 220);
-  return `<div class="nbcard ${n.checkedOn?'checked':''}"><div class="stfreq-h"><span class="stfico">\u{1F4D3}</span><div>${n.book==='REF'?'<span class="nbtag">Reflection</span>':n.book==='NOTE'||(n.book==='LAC'&&!n.session)?'<span class="nbtag hub">Learning Hub</span>':''}<b>${esc(n.title || (s?s.title:NB_BOOKS[n.book]))}</b><small>${head&&!mine?esc(n.name)+' \u00B7 ':''}${esc(dTime(n.updated))}${n.local?' \u00B7 <span class="unsynced">Not yet synced</span>':''}</small></div>
-      ${n.checkedOn?`<span class="atn ok">\u2714 Checked</span>`:''}${head&&n.flag?'<span class="atn bad" title="A large block of text appeared at once">Check this entry</span>':''}</div>
+  return `<div class="nbcard ${n.checkedOn?'checked':''} ${n.status==='Returned'?'returned':''}"><div class="stfreq-h"><span class="stfico">\u{1F4D3}</span><div>${n.book==='REF'?'<span class="nbtag">Reflection</span>':n.book==='NOTE'||(n.book==='LAC'&&!n.session)?'<span class="nbtag hub">Learning Hub</span>':''}<b>${esc(n.title || (s?s.title:NB_BOOKS[n.book]))}</b><small>${head&&!mine?esc(n.name)+' \u00B7 ':''}${esc(dTime(n.updated))}${n.local?' \u00B7 <span class="unsynced">Not yet synced</span>':''}</small></div>
+      ${n.checkedOn?`<span class="atn ok">\u2714 Checked</span>`:n.status==='Returned'?`<span class="atn bad">\u21A9 Returned to complete</span>`:n.status==='Resubmitted'?`<span class="atn wait">Completed, check again</span>`:''}${head&&n.flag?'<span class="atn bad" title="A large block of text appeared at once">Check this entry</span>':''}</div>
     <p class="nbprev">${esc(preview)}${preview.length>=220?'...':''}</p>
-    ${n.remark?`<p class="stfnote"><b>School Head:</b> ${esc(n.remark)}</p>`:''}
-    <div class="stfreq-a"><button class="btn ghost small" onclick="nbOpen('${n.id}')">${mine?'Open and edit':'Read'}</button>
-      ${head&&!mine?`<button class="btn ghost small" onclick="nbCheckOpen('${n.id}')">${n.checkedOn?'Edit the check':'\u2714 Check'}</button>`:''}
+    ${n.remark?`<p class="stfnote ${n.status==='Returned'?'bad':''}"><b>${n.status==='Returned'?'Returned. What to complete:':'School Head:'}</b> ${esc(n.remark)}</p>`:''}
+    <div class="stfreq-a"><button class="btn ${mine&&n.status==='Returned'?'':'ghost'} small" onclick="nbOpen('${n.id}')">${mine?(n.status==='Returned'?'Complete it now':'Open and edit'):'Read'}</button>
+      ${head&&!mine?`<button class="btn ghost small" onclick="nbCheckOpen('${n.id}')">${n.checkedOn?'Edit the check':n.status==='Returned'?'Waiting for the teacher':'\u2714 Check or return'}</button>`:''}
       <button class="btn ghost small" onclick="nbPrint('${n.id}')">\u{1F5A8} Print</button>
       ${mine?`<button class="linkbtn danger" onclick="nbDel('${n.id}')">Delete</button>`:''}</div></div>`;
 }
@@ -7624,8 +7924,12 @@ async function nbDel(id){ if (!confirm('Delete this notebook entry?')) return;
   LAC.data.notebooks = LAC.data.notebooks.filter(x => x.id!==id); lacSaveLocal(); lacDraw(); toast('Deleted.'); }
 function nbCheckOpen(id){ const n = LAC.data.notebooks.find(x => x.id===id);
   stfModal(`<h3>Check this entry</h3><p class="sub">${esc(n.name)}: ${esc(n.title || (lacS(n.session)||{}).title || NB_BOOKS[n.book])}</p>
-    <div class="field"><label for="ckRem">Remark for the teacher (optional)</label><textarea id="ckRem" rows="3" maxlength="500" placeholder="Example: Very good reflection. Try the strategy in your Grade 3 class.">${esc(n.remark||'')}</textarea></div>
-    <p class="err" id="ckErr"></p><div class="modal-actions">${n.checkedOn?`<button class="linkbtn danger" style="margin-right:auto" onclick="nbCheckSave('${id}',true)">Remove the check</button>`:''}<button class="btn ghost" onclick="closeModal('stfModal')">Cancel</button><button class="btn" onclick="nbCheckSave('${id}')">\u2714 Mark as checked</button></div>`); }
+    <div class="nbread">${nbHtml(n)}</div>
+    <div class="field"><label for="ckRem">Remark for the teacher</label><textarea id="ckRem" rows="3" maxlength="500" placeholder="If it is complete: Very good reflection. If not yet complete: write what is lacking, for example, Please add what you will apply in your class.">${esc(n.remark||'')}</textarea>
+      <small class="hint">Return for completion when the entry is not yet finished. The teacher is notified, completes it, and it comes back to you.</small></div>
+    <p class="err" id="ckErr"></p><div class="modal-actions">${n.checkedOn||n.status?`<button class="linkbtn danger" style="margin-right:auto" onclick="nbCheckSave('${id}',true)">Clear</button>`:''}<button class="btn ghost" onclick="closeModal('stfModal')">Cancel</button><button class="btn ghost" onclick="nbReturnSave('${id}')">\u21A9 Return for completion</button><button class="btn" onclick="nbCheckSave('${id}')">\u2714 Mark as checked</button></div>`, 'wide'); }
+async function nbReturnSave(id){ const remark = $('ckRem').value.trim(); if (!remark) return $('ckErr').textContent = 'Write what is lacking, so the teacher knows what to complete.';
+  try{ const r = await api('nbCheck', { id, remark, returnIt:true }); const i = LAC.data.notebooks.findIndex(x => x.id===id); LAC.data.notebooks[i] = r; lacSaveLocal(); closeModal('stfModal'); lacDraw(); toast('Returned. The teacher was notified to complete it.'); }catch(e){ handleErr(e,'ckErr'); } }
 async function nbCheckSave(id, undo){ try{ const r = await api('nbCheck', { id, remark: $('ckRem') ? $('ckRem').value.trim() : '', undo:!!undo }); const i = LAC.data.notebooks.findIndex(x => x.id===id); LAC.data.notebooks[i] = r; lacSaveLocal(); closeModal('stfModal'); lacDraw(); toast(undo?'Check removed.':'Checked. The teacher was notified.'); }catch(e){ handleErr(e,'ckErr'); } }
 function nbHtml(n){ const s = n.session ? lacS(n.session) : null, b = n.body || {};
   const part = (t, v) => v ? `<h4>${esc(t)}</h4>${lacPara(v)}` : '';
