@@ -1,6 +1,6 @@
 // TALA offline helper. Upload this to GitHub next to index.html and config.js.
 // It keeps a copy of the page so TALA opens even without internet.
-const CACHE = 'tala-v16';
+const CACHE = 'tala-v18';
 self.addEventListener('install', e => {
   self.skipWaiting();
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(['./', './index.html', './config.js', './manifest.json', './icon-192.png', './icon-512.png', './apple-touch-icon.png', './pmcf-template.xlsm', './mwa-template.xlsm', './sf2-template.xlsx', './sf4-template.xlsx', './leave-template.xlsx', './locator-template.docx', './travel-template.docx', './leave-form.pdf', './locator-slip.pdf', './travel-authority.pdf']).catch(() => {})));
@@ -21,4 +21,12 @@ self.addEventListener('fetch', e => {
     // Fonts and reader tools: use the saved copy first
     e.respondWith(caches.match(req).then(r => r || fetch(req).then(res => { const copy = res.clone(); caches.open(CACHE).then(c => c.put(req, copy)); return res; })));
   }
+});
+// Tapping a TALA notification opens TALA
+self.addEventListener('notificationclick', e => {
+  e.notification.close();
+  e.waitUntil(self.clients.matchAll({ type:'window', includeUncontrolled:true }).then(list => {
+    for (const c of list){ if ('focus' in c) return c.focus(); }
+    return self.clients.openWindow ? self.clients.openWindow((e.notification.data && e.notification.data.url) || './') : null;
+  }));
 });

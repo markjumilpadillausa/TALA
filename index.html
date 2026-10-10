@@ -965,6 +965,23 @@ textarea.nbt{-webkit-touch-callout:none}
 .camwait{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:18px;color:#fff;font-size:15px;line-height:1.4}.camwait[hidden],.camview [hidden]{display:none!important}
 .camnote{font-size:12.5px;color:#5b6b5f;margin-bottom:10px}.cambtns{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}.cambtns .btn{flex:1;min-width:120px}
 .stft.shut{opacity:.45;cursor:not-allowed}.nophoto{display:inline-block;background:#fdecea;color:#a3271b;border-radius:6px;padding:1px 6px;font-size:11px;font-weight:700;vertical-align:middle}
+.sbmarks{display:flex;gap:4px;margin-top:3px;flex-wrap:wrap}.sbmarks i{font-style:normal;font-size:13px;line-height:1;background:#fff;border:1px solid #e6dccb;border-radius:6px;padding:2px 4px}.sbmarks sub{font-size:9px;font-weight:700;margin-left:1px}.sday .sbmarks i{font-size:11px;padding:1px 3px}
+.abtn.warn{border:2px solid #d9a400;background:#fff8e1;box-shadow:0 0 0 3px rgba(217,164,0,.18);animation:nbpulse 2s ease-in-out infinite}.abtn.warn small{color:#8a5a00;font-weight:600}
+@keyframes nbpulse{0%,100%{box-shadow:0 0 0 3px rgba(217,164,0,.18)}50%{box-shadow:0 0 0 7px rgba(217,164,0,.08)}}
+.lacsess.needs{border:2px solid #d9a400;background:#fffbea}.nbmiss{display:block;width:100%;text-align:left;margin:10px 0;padding:12px 14px;border-radius:12px;border:2px solid #d9a400;background:#fff8e1;cursor:pointer;font:inherit}.nbmiss b{display:block;color:#7a5200;margin-bottom:2px}.nbmiss span{font-size:13.5px;color:#5b4a1e}.nbmiss.static{cursor:default}
+.nbtag{display:inline-block;font-size:11px;font-weight:700;color:#6a2c99;background:#f1e8fa;border-radius:6px;padding:1px 6px;margin-bottom:3px}.nbtag.hub{color:#1e5a8c;background:#e6f0f8}
+.menubtn{position:relative}.menubtn.hasdot::after{content:'';position:absolute;top:6px;right:6px;width:10px;height:10px;border-radius:50%;background:#E53935;border:2px solid #fff}
+.meetjoin{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:12px 0;padding:12px 14px;border-radius:12px;background:#e8f1fb;border:1.5px solid #9cc0e6}.meetjoin small{display:block;color:#3b556e;font-size:13px}
+.qbtns{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.sidehid{margin-top:10px;border-top:1px dashed var(--line);padding-top:8px}.sidehid summary{cursor:pointer;font-size:12.5px;color:var(--muted);padding:4px 10px;list-style:revert}.sidehid .side-i{opacity:.6}
+.lkhero{border-radius:20px;padding:26px 24px;color:#fff;position:relative;overflow:hidden}.lkhero h2{margin:0 0 4px;font-size:30px}.lkhero p{margin:0;opacity:.92;max-width:640px;line-height:1.5}.lkhero .lktag{display:inline-block;background:rgba(255,255,255,.18);border-radius:999px;padding:4px 12px;font-size:12.5px;font-weight:700;margin-bottom:10px;letter-spacing:.03em}
+.lkhero .lkbig{position:absolute;right:-10px;bottom:-30px;font-size:150px;opacity:.16;line-height:1}
+.lkgo{display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin:16px 0;padding:18px 20px;border-radius:16px;background:var(--card);border:2px solid var(--c)}.lkgo b{font-size:18px;display:block}.lkgo small{color:var(--muted)}
+.lkgo .btn{background:var(--c);border-color:var(--c);font-size:16px;padding:12px 22px}
+.lknote{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:14px;background:#fff8e1;border:1.5px solid #e9b81c;margin:12px 0}.lknote span{font-size:24px;line-height:1}.lknote p{margin:0;font-size:14.5px;line-height:1.5}
+.lkgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:12px 0}.lkcard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}.lkcard i{font-style:normal;font-size:24px}.lkcard b{display:block;margin:6px 0 4px;color:var(--c)}.lkcard p{margin:0;font-size:13.5px;color:var(--muted);line-height:1.45}
+.lksteps{counter-reset:k;list-style:none;padding:0;margin:8px 0}.lksteps li{counter-increment:k;position:relative;padding:8px 0 8px 44px;font-size:14.5px;line-height:1.45}.lksteps li::before{content:counter(k);position:absolute;left:0;top:6px;width:30px;height:30px;border-radius:50%;background:var(--c);color:#fff;font-weight:700;display:grid;place-items:center}
+@media(max-width:760px){.lkgrid{grid-template-columns:1fr}.lkhero h2{font-size:24px}}
 .picbtn{border:0;background:#eef3ec;border-radius:8px;padding:1px 5px;cursor:pointer;font-size:13px;vertical-align:middle}
 .livebar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:4px 0 12px}.livebar input{padding:8px 10px;border:1px solid #cfd8cc;border-radius:10px;font:inherit}
 .agrid9{grid-template-columns:repeat(3,1fr)!important}.agrid9 .acard p{font-size:15px}
@@ -1682,8 +1699,8 @@ textarea.nbt{-webkit-touch-callout:none}
 
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
-const MIN_SERVER = '5.5'; // oldest Code.gs this page works with
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'5.5', date:'October 9, 2026' } };
+const MIN_SERVER = '5.6'; // oldest Code.gs this page works with
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'5.7', date:'October 10, 2026' } };
 function verLine(server){
   const old = server && (server.indexOf('older') > -1 || parseFloat(server) < parseFloat(MIN_SERVER));
   const s = server ? ' Server '+server+('.') : '';
@@ -2078,7 +2095,7 @@ const FEATURES = [
     auto:'Observation schedules, reminders, acknowledgment timestamps, and each teacher\u2019s rating summary across the school year are computed automatically.',
     report:'Observation record per teacher, and a quarterly summary of all observations with signatures.' },
   { id:'sbfp', name:'SBFP Monitoring', built:true, open:() => openSbfp(), icon:'M4 11h16a8 8 0 0 1-16 0zm3-6c0 1 1 1 1 2s-1 1-1 2m4-4c0 1 1 1 1 2s-1 1-1 2m4-4c0 1 1 1 1 2s-1 1-1 2M3 19h18v2H3z' },
-  { id:'read', name:'Learner Reading Assessment', icon:'M4 5h7a3 3 0 0 1 3 3v12a2 2 0 0 0-2-2H4zm16 0h-7a3 3 0 0 0-3 3v12a2 2 0 0 1 2-2h8z',
+  { id:'read', name:'Learner Reading Assessment', built:true, open:() => openLink('read'), icon:'M4 5h7a3 3 0 0 1 3 3v12a2 2 0 0 0-2-2H4zm16 0h-7a3 3 0 0 0-3 3v12a2 2 0 0 1 2-2h8z',
     do:'Record CRLA results for Key Stage 1 and Phil-IRI results for Key Stage 2 for every learner, linked with Project e-READ.',
     auto:'Reading levels per class, grade, and school, and progress from pretest to posttest, are computed automatically.',
     report:'Class reading profile, school reading summary, and the list of learners needing intervention.' },
@@ -2086,7 +2103,7 @@ const FEATURES = [
     do:'Record learner attendance every school day by class.',
     auto:'Daily, monthly, and term totals, attendance rates, and learners with frequent absences are computed automatically.',
     report:'Monthly SF2 and SF4 summaries, and the list of learners at risk of dropping out.' },
-  { id:'reimb', name:'Reimbursement Inventory', icon:'M3 6h18v12H3zm9 3a3 3 0 1 0 0 6 3 3 0 0 0 0-6z',
+  { id:'reimb', name:'Reimbursement Inventory', built:true, open:() => openLink('reimb'), icon:'M3 6h18v12H3zm9 3a3 3 0 1 0 0 6 3 3 0 0 0 0-6z',
     do:'Record what teachers spend from their own pocket for school programs, projects, and activities, with receipts.',
     auto:'Totals per teacher, per activity, and per month, and the status of each reimbursement are computed automatically.',
     report:'Monthly reimbursement summary and liquidation list.' },
@@ -2100,15 +2117,42 @@ const FEATURES = [
     report:'Quarterly SMEA and PIR tables, ready to print.' }
 ];
 function featOn(id){ const s = (DATA||PUB||{}).settings||{}; return !!(s.features||{})[id]; }
+/* Red numbers on each feature: what waits for you there, and unread notices about it. The installed app shows the total on its icon. */
+const FEAT_NT = { lpt:['upload','approved','returned'], obs:['obs'], att:['request','decision','remind'], lac:['lac'], sbfp:['sbfp'] };
+function featUnread(id){ return (NOTICES||[]).filter(n => !n.read && (FEAT_NT[id]||[]).indexOf(n.type) > -1).length; }
+function featCount(id){
+  if (!USER) return 0;
+  const u = featUnread(id);
+  if (id==='obs') return Math.max(u, (typeof OBS!=='undefined' && OBS.newCount) || 0);
+  if (id==='att') return Math.max(u, (typeof STF!=='undefined' && STF.dot) || 0);
+  if (id==='lac') return Math.max(u, (typeof LAC!=='undefined' && LAC.dot) || 0);
+  if (id==='sbfp'){ try{ const t = todayPH(), r = sbRec(t); return u + ((USER.role==='head' || USER.role==='admin') && sbSched(t) && !r.status && new Date().getHours() >= 12 ? 1 : 0); }catch(e){ return u; } }
+  return u;
+}
+function appBadge(){
+  if (!USER) return;
+  const total = ['lpt','obs','sbfp','att','lac'].filter(id => featOn(id) || id==='lpt' || USER.role==='head').reduce((a, id) => a + featCount(id), 0);
+  try{ if (navigator.setAppBadge){ total ? navigator.setAppBadge(total).catch(()=>{}) : navigator.clearAppBadge().catch(()=>{}); } }catch(e){}
+  try{ document.title = (total ? '('+total+') ' : '') + 'TALA'; }catch(e){}
+}
+// Opening a feature marks its notices as read
+function featSeen(id){ const ty = FEAT_NT[id]; if (!ty || !featUnread(id)) return; NOTICES.forEach(n => { if (ty.indexOf(n.type) > -1) n.read = true; }); api('readNotices', { types: ty }).catch(()=>{}); const un = NOTICES.filter(n => !n.read).length; $('bellCount').hidden = !un; $('bellCount').textContent = un > 9 ? '9+' : un; LAST_UNREAD = un; drawSide(); }
 function drawSide(){
   const head = USER && USER.role==='head';
-  $('sideNav').innerHTML = orderedFeatures().filter(f => !f.headOnly || (USER && USER.role==='head')).map(f => {
-    const dot = f.id==='obs' && OBS && OBS.newCount ? `<i class="sdot">${OBS.newCount}</i>` : f.id==='att' && typeof STF!=='undefined' && STF.dot ? `<i class="sdot">${STF.dot}</i>` : f.id==='lac' && typeof LAC!=='undefined' && LAC.dot ? `<i class="sdot">${LAC.dot}</i>` : '';
-    const tag = f.id==='lpt' || f.id==='home' ? '' : f.headOnly ? '<em class="vis">Only you</em>' : head ? dot + (featOn(f.id) ? '<em class="vis">Shown</em>' : '<em class="hid">Hidden</em>') : (featOn(f.id) && f.built ? dot : '<em>Soon</em>');
+  const shown = f => f.id==='home' || f.id==='lpt' || f.headOnly || featOn(f.id);
+  const item = f => {
+    const k = featCount(f.id), dot = k ? `<i class="sdot">${k > 99 ? '99+' : k}</i>` : '';
+    const tag = f.id==='home' ? '' : f.id==='lpt' ? dot : f.headOnly ? '<em class="vis">Only you</em>' : head ? dot + (featOn(f.id) ? '' : '<em class="hid">Hidden</em>') : dot;
     return `<button type="button" class="side-i ${f.id===CUR_FEATURE?'on':''}" onclick="openFeature('${f.id}')">
-    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="${f.icon}"/></svg><span>${esc(f.name)}</span>${tag}</button>`; }).join('')
+    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="${f.icon}"/></svg><span>${esc(f.name)}</span>${tag}</button>`; };
+  const all = orderedFeatures().filter(f => !f.headOnly || head), hid = all.filter(f => !shown(f));
+  $('sideNav').innerHTML = all.filter(shown).map(item).join('')
+    + (head && hid.length ? `<details class="sidehid"><summary>Hidden from personnel (${hid.length})</summary>${hid.map(item).join('')}</details>` : '')
     + (head ? '<button type="button" class="linkbtn side-manage" onclick="openFV()">Arrange, show, or hide features</button>' : '');
+  appBadge(); menuDot();
 }
+// The menu button on a phone shows a dot when something waits
+function menuDot(){ const b = document.querySelector('.menubtn'); if (!b) return; const any = USER && ['lpt','obs','sbfp','att','lac'].some(id => featCount(id)); b.classList.toggle('hasdot', !!any); }
 var CUR_FEATURE = 'home';
 var FV_ORDER = [];
 function orderedFeatures(){ const ord = (((DATA||PUB||{}).settings)||{}).order || []; const rank = id => { const i = ord.indexOf(id); return i < 0 ? 100 + FEATURES.findIndex(f=>f.id===id) : i; };
@@ -2136,6 +2180,35 @@ function toggleSide(open){
   const s = $('side'), on = open === undefined ? !s.classList.contains('open') : open;
   s.classList.toggle('open', on); $('sideBg').classList.toggle('open', on);
 }
+
+/* ----- Project e-READ and Project ABONO: separate apps of Baluyan ES, opened from TALA ----- */
+const LINKS = {
+  read: { c:'#1e5a8c', grad:'linear-gradient(135deg,#1e5a8c,#2f8fc9)', big:'\u{1F4D6}', tag:'LEARNER READING ASSESSMENT', title:'Project e-READ',
+    sub:'Electronic Reading Engagement and Differentiated Support. The reading assessment and practice app of Baluyan Elementary School.',
+    url:'https://markjumilpadillausa.github.io/e-READ-Project/', btn:'Open Project e-READ',
+    cards:[['\u{1F4DD}','Reading assessment','CRLA for Key Stage 1 and Phil-IRI for Key Stage 2, recorded per learner.'],['\u{1F3A4}','Reading practice','Learners read words aloud and record. Teachers check each recording.'],['⭐','Stars and games','Word games, stars, rankings, and prizes that keep learners reading.']],
+    steps:['Tap Open Project e-READ. It opens in a new tab or window.','Sign in there. Teachers use their DepEd email and PIN. Learners sign in the way their teacher showed them.','When you are done, come back to this TALA tab. TALA stays open.'],
+    who:'For teachers, the School Head, and learners.' },
+  reimb: { c:'#2f7a4a', grad:'linear-gradient(135deg,#1F5130,#3a9a5c)', big:'\u{1F4B0}', tag:'REIMBURSEMENT INVENTORY', title:'Project ABONO',
+    sub:'The school finance portal of Baluyan Elementary School for reimbursements, refunds, and school funds.',
+    url:'https://markjumilpadillausa.github.io/ABONO/', btn:'Open Project ABONO',
+    cards:[['\u{1F9FE}','Record what you spent','List what you paid from your own pocket for school programs and activities, with the receipts.'],['✔','Track your refund','See if each item is refunded or not yet refunded, as set by the School Treasurer.'],['\u{1F4CA}','School funds','The School Head and the Treasurer keep the records of the school funds, with a history of every change.']],
+    steps:['Tap Open Project ABONO. It opens in a new tab or window.','Sign in with your DepEd email and PIN. On your first sign in, use the default PIN 2026, then set your own PIN.','Add your expense with the receipt, then check the status of your refund anytime.','When you are done, come back to this TALA tab. TALA stays open.'],
+    who:'For teachers, the Administrative Officer, the School Treasurer, and the School Head.' }
+};
+function openLink(id){
+  ['viewLac','viewTrk','viewAcc','viewBank','viewLog','viewWeeks','viewSig','viewObs','viewHome','viewSbfp','viewAtt'].forEach(v => $(v) && ($(v).style.display='none'));
+  const L = LINKS[id], el = $('viewPir'); el.style.display=''; CUR_FEATURE = id; drawSide(); window.scrollTo(0,0);
+  el.innerHTML = `<div style="--c:${L.c}">
+    <div class="lkhero" style="background:${L.grad}"><span class="lkbig">${L.big}</span><span class="lktag">${esc(L.tag)}</span><h2>${esc(L.title)}</h2><p>${esc(L.sub)}</p></div>
+    <div class="lknote"><span>ℹ️</span><p><b>This opens a separate app.</b> ${esc(L.title)} is not inside TALA yet. When you tap the button, you go to another web page, and you need to <b>sign in there</b>. Your TALA stays open in this tab.</p></div>
+    <div class="lkgo"><div><b>${esc(L.title)}</b><small>${esc(L.who)}</small></div><a class="btn" href="${L.url}" target="_blank" rel="noopener" onclick="toast('${esc(L.title)} is opening in a new tab. Sign in there.')">${esc(L.btn)} ↗</a></div>
+    <h3 class="stfgrp">What you can do there</h3>
+    <div class="lkgrid">${L.cards.map(c => `<div class="lkcard"><i>${c[0]}</i><b>${esc(c[1])}</b><p>${esc(c[2])}</p></div>`).join('')}</div>
+    <h3 class="stfgrp">How to use it</h3>
+    <ol class="lksteps">${L.steps.map(x => `<li>${esc(x)}</li>`).join('')}</ol>
+    <p class="hint">Tip: install ${esc(L.title)} on your phone too. Open it, then choose Add to Home screen or Install app in your browser menu.</p></div>`;
+}
 function openSoon(f){
   ['viewLac','viewTrk','viewAcc','viewBank','viewLog','viewWeeks','viewSig','viewObs','viewHome','viewSbfp','viewPir','viewAtt'].forEach(v => $(v).style.display='none');
   CUR_FEATURE = f.id; drawSide(); closeGuide(); window.scrollTo(0,0);
@@ -2144,11 +2217,11 @@ function openSoon(f){
     <div class="hcard" style="margin-top:14px"><b>Getting this ready</b><p class="hint">The forms for this feature are being prepared and will appear here automatically after an update. Your other features are ready to use.</p></div>`;
 }
 function openFeature(id){
-  toggleSide(false);
+  toggleSide(false); setTimeout(() => featSeen(id), 800);
   const f = FEATURES.find(x => x.id === id);
   if (f.id==='home'){ showHome(); return; }
   if (f.ready){ CUR_FEATURE = 'lpt'; drawSide(); showTracker(); window.scrollTo(0,0); maybeGuide('lpt'); return; }
-  const canOpen = f.built && ((USER && (USER.role==='head' || (USER.role==='admin' && (f.id==='sbfp' || f.id==='att' || f.id==='lac')))) || (featOn(f.id) && (USER || f.id==='sbfp')));
+  const canOpen = f.built && ((USER && USER.role==='head') || (featOn(f.id) && (USER || f.id==='sbfp' || f.id==='read' || f.id==='reimb')));
   if (canOpen && f.open){ CUR_FEATURE = f.id; drawSide(); f.open(); return; }
   openSoon(f);
 }
@@ -3082,7 +3155,8 @@ async function poll(){
     mergeMsgs(r.messages || []); MSG_SINCE = r.now ? r.now.slice(0,16) : MSG_SINCE;
     const un = r.unread || 0;
     $('bellCount').hidden = !un; $('bellCount').textContent = un > 9 ? '9+' : un;
-    if (un > LAST_UNREAD && LAST_UNREAD >= 0 && NOTICES[0]) { toast(NOTICES[0].text.slice(0,120)); loadData().catch(()=>{}); }
+    if (un > LAST_UNREAD && LAST_UNREAD >= 0 && NOTICES[0]) { toast(NOTICES[0].text.slice(0,120)); loadData().catch(()=>{}); phoneNotify(NOTICES.filter(n => !n.read).slice(0, un - LAST_UNREAD)); }
+    drawSide();
     LAST_UNREAD = un;
     if (USER.role==='teacher' && typeof r.obsNew === 'number' && r.obsNew !== OBS.newCount){ OBS.newCount = r.obsNew; drawSide(); }
     if (typeof r.lacNew === 'number' && r.lacNew !== LAC.dot){ LAC.dot = r.lacNew; drawSide(); }
@@ -3100,8 +3174,25 @@ document.addEventListener('click', e => { if (!e.target.closest('#bellPanel') &&
 function drawBell(){
   $('myNotify').checked = !!(USER && USER.notify !== false);
   $('bpHint').textContent = USER.role==='head' ? 'You are told when a teacher submits or reuploads an LPT or PPT.' : USER.role==='admin' ? 'Notices for your account appear here.' : 'You are told when the School Head approves or returns your files.';
+  if (!$('bpPhone')){ const h = document.createElement('div'); h.id = 'bpPhone'; $('bellList').parentNode.insertBefore(h, $('bellList')); }
+  $('bpPhone').innerHTML = !('Notification' in window) ? '' : phoneNotifyOn() ? '<p class="hint" style="margin:6px 0">\u{1F514} Notifications are on for this device.</p>' : '<button class="btn small" style="margin:6px 0" onclick="phoneNotifyAsk()">\u{1F514} Turn on notifications on this device</button>';
   $('bellList').innerHTML = NOTICES.length ? NOTICES.map(n => `<div class="bp-item ${n.read?'':'new'} ${esc(n.type)}"><span>${esc(n.text)}</span><small>${esc(dTime(n.on))}</small></div>`).join('')
     : '<div class="empty" style="padding:18px">No notifications yet.</div>';
+}
+
+// Phone and tablet notifications (while TALA is open or in the background). Emails still go out as before.
+function phoneNotifyOn(){ return 'Notification' in window && Notification.permission==='granted'; }
+async function phoneNotifyAsk(){
+  if (!('Notification' in window)) return toast('This browser cannot show notifications. Install TALA from Chrome or Safari first.');
+  const p = await Notification.requestPermission(); drawBell();
+  toast(p==='granted' ? 'Notifications are on for this device.' : 'Notifications are blocked. Allow them in the settings of your browser.');
+  if (p==='granted') phoneNotify([{ text:'Notifications are on. TALA will tell you about new updates here.', type:'test' }]);
+}
+async function phoneNotify(list){
+  if (!phoneNotifyOn() || !list || !list.length) return;
+  try{ const reg = navigator.serviceWorker && await navigator.serviceWorker.getRegistration();
+    list.slice(0, 3).forEach((n, i) => { const o = { body: n.text, icon:'icon-192.png', badge:'icon-192.png', tag:'tala-'+(n.id||Date.now()+i), data:{ url: location.href } };
+      if (reg && reg.showNotification) reg.showNotification('TALA', o); else new Notification('TALA', o); }); }catch(e){}
 }
 async function setMyNotify(on){
   try{ const r = await api('setNotify',{ on }); USER.notify = r.notify; toast(on ? 'Notifications are on. You will also get an email.' : 'Notifications are off.'); }
@@ -3766,7 +3857,7 @@ async function obsViewer(){
         ${head && o.status!=='Draft'?'<button class="btn ghost" onclick="obsEdit()">Edit</button>':''}
         ${head?'<button class="btn danger" onclick="obsDeleteAny()">Delete</button>':''}
         ${mwa?'':'<button class="btn ghost" onclick="printObsNotes(OBS.cur)">Print notes</button>'}
-        ${o.status==='Completed'||head?`<button class="btn ghost" onclick="printPmcf()">${o.status==='Completed'?'Print as PDF':'Preview PDF'}</button>`:''}
+        ${o.status==='Completed'||head?`<button class="btn ghost" onclick="printChoose()">${o.status==='Completed'?'Print as PDF':'Preview PDF'}</button>`:''}
         ${o.status==='Completed'&&!mwa?'<button class="btn" onclick="downloadPmcf()">Download Excel for the Division</button>':''}</div></div>
     ${(o.data.revisions||[]).length && o.status!=='Completed'?`<div class="notice" style="margin-top:12px"><b>This observation was revised</b> on ${esc(dTime(o.data.revisions[o.data.revisions.length-1].on))}. ${canTeacherSign?'Please read it again before signing.':'Both signatures are needed again.'}</div>`:''}
     ${canTeacherSign?`<div class="notice" style="margin-top:12px"><b>Please review this observation.</b> If you want something added, changed, or removed in the agreement, write it in the comment box below. The School Head will see it and may revise the agreement. When you agree, tap <b>Sign and return</b>.</div>`:''}
@@ -3925,6 +4016,34 @@ function printObsSummary(){
   setTimeout(() => window.print(), 150);
 }
 
+
+/* ----- Print: the school layout, or the Division template (the original Excel form, filled and printed as is) ----- */
+function printChoose(){
+  const o = OBS.cur, mwa = otype(o)==='mwa';
+  stfModal(`<h3>Print this ${mwa?'MWA':'observation'}</h3><p class="sub">Choose the layout. Both include the e-signatures.</p>
+    <div class="abtns small"><button class="abtn" onclick="closeModal('stfModal');printPmcf()"><span class="abico">\u{1F3EB}</span><b>School template</b><small>The TALA layout of Baluyan ES</small></button>
+      <button class="abtn main" onclick="closeModal('stfModal');printDivision()"><span class="abico">\u{1F4C4}</span><b>Division template</b><small>${mwa?'The Division PMCF MWA form of Term '+esc(o.term)+', Week '+esc(o.week)+', with all the MWA visits of that week':'The Division PMCF form, the same as the Excel file'}</small></button></div>`);
+}
+async function printDivision(){
+  const o = OBS.cur, mwa = otype(o)==='mwa'; loading(true, 'Filling the Division template');
+  try{
+    await loadScript(LIBS.zip); let zip, extras = [];
+    if (mwa){
+      const list = mwaWeekList(o.term, o.week); if (!list.length) throw new Error('This MWA is not yet locked.');
+      zip = (await buildMwaZip(o.term, o.week, list)).zip;
+      const sg = await weekSigs(list);   // signatures in the Name and Signature column of each row
+      list.forEach((v, i) => { const s2 = sg[v.id] || {}; [s2.Rater, s2.Ratee].filter(Boolean).forEach((x, j) => extras.push({ col:13, colOff:30000 + j*520000, row:18+i, rowOff:20000, w:64, h:24, src:x.sig })); });
+    } else {
+      let sigs = OBS.sigs || {}; try{ sigs = await api('obsSigs',{ id:o.id }); }catch(e){}
+      zip = await buildPmcf(o, sigs, await pmcfTemplate(), true);
+    }
+    const out = await xlsxToHtml(zip, extras, { trimFrom: 19 + (mwa ? mwaWeekList(o.term, o.week).length : Math.max(1, (o.data.inc||[]).length)) });
+    const pagePx = (297 - 8) / 25.4 * 96, z = Math.min(1, pagePx / out.width);
+    $('printArea').innerHTML = `<div class="xlprint" style="zoom:${z}">${out.html}</div>`;
+    loading(false); setTimeout(() => window.print(), 300);
+  }catch(e){ loading(false); handleErr(e); }
+}
+
 /* ----- Division Excel: fills the original template, keeps everything else ----- */
 const XLNS = 'http://schemas.openxmlformats.org/spreadsheetml/2006/main';
 function xlSerial(d){ const p = d.split('-').map(Number); return Math.round((Date.UTC(p[0],p[1]-1,p[2]) - Date.UTC(1899,11,30))/86400000); }
@@ -3958,7 +4077,7 @@ async function downloadPmcf(){
   }catch(e){ handleErr(e); }
   loading(false);
 }
-async function buildPmcf(o, sigs, buf){
+async function buildPmcf(o, sigs, buf, asZip){
   {
     const zip = await JSZip.loadAsync(buf), P = new DOMParser(), S = new XMLSerializer();
     const read = async f => P.parseFromString(await zip.file(f).async('string'), 'application/xml');
@@ -4019,6 +4138,7 @@ async function buildPmcf(o, sigs, buf){
       });
       zip.file('xl/drawings/_rels/drawing1.xml.rels', rels); zip.file('xl/drawings/drawing1.xml', dr);
     }
+    if (asZip) return zip;
     return zip.generateAsync({ type:'blob', mimeType:'application/vnd.ms-excel.sheet.macroEnabled.12', compression:'DEFLATE' });
   }
 }
@@ -4061,10 +4181,21 @@ async function printWeekMwa(){
 /* ----- Weekly PMCF MWA Excel (Division template) ----- */
 async function downloadMwa(){
   const term = OBS.term, week = OBS.week;
-  const list = OBS.list.filter(o => otype(o)==='mwa' && o.status!=='Draft' && o.term===term && o.week===week).sort((a,b)=>String(a.date).localeCompare(String(b.date))).slice(0,28);
+  const list = mwaWeekList(term, week);
   if (!list.length) return toast('No locked MWA visits for Term '+term+' Week '+week+' yet.');
   loading(true,'Preparing the MWA Excel file');
   try{
+    const { zip, month, wom } = await buildMwaZip(term, week, list);
+    const blob = await zip.generateAsync({ type:'blob', mimeType:'application/vnd.ms-excel.sheet.macroEnabled.12', compression:'DEFLATE' });
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'PMCF_MWA_'+month+'_Week'+wom+'_Term'+term+'W'+week+'.xlsm';
+    document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 2000);
+    toast('MWA Excel downloaded with '+list.length+' visit'+(list.length>1?'s':'')+'.');
+  }catch(e){ handleErr(e); }
+  loading(false);
+}
+function mwaWeekList(term, week){ return OBS.list.filter(o => otype(o)==='mwa' && o.status!=='Draft' && o.term===term && o.week===week).sort((a,b)=>String(a.date).localeCompare(String(b.date))).slice(0,28); }
+async function buildMwaZip(term, week, list){
+  {
     await loadScript(LIBS.zip);
     const res = await fetch('mwa-template.xlsm', { cache:'no-cache' }); if (!res.ok) throw new Error('The MWA template file (mwa-template.xlsm) was not found next to index.html.');
     const zip = await JSZip.loadAsync(await res.arrayBuffer()), P = new DOMParser(), S = new XMLSerializer();
@@ -4099,12 +4230,8 @@ async function downloadMwa(){
     }
     zip.file('xl/worksheets/sheet1.xml', S.serializeToString(enc)); zip.file('xl/worksheets/sheet3.xml', S.serializeToString(db));
     let wb = await zip.file('xl/workbook.xml').async('string'); wb = wb.replace(/<calcPr ([^>]*?)\/>/, (m, a) => /fullCalcOnLoad/.test(a) ? m : `<calcPr ${a} fullCalcOnLoad="1"/>`); zip.file('xl/workbook.xml', wb);
-    const blob = await zip.generateAsync({ type:'blob', mimeType:'application/vnd.ms-excel.sheet.macroEnabled.12', compression:'DEFLATE' });
-    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'PMCF_MWA_'+month+'_Week'+wom+'_Term'+term+'W'+week+'.xlsm';
-    document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 2000);
-    toast('MWA Excel downloaded with '+list.length+' visit'+(list.length>1?'s':'')+'.');
-  }catch(e){ handleErr(e); }
-  loading(false);
+    return { zip, month, wom };
+  }
 }
 
 /* ----- Observation calendar: 2 observations each school day you are in school ----- */
@@ -4181,39 +4308,80 @@ async function calSave(){
 /* ----- Home: welcome, quote of the day, and summaries of every feature ----- */
 const QUOTES = [
   'A good lesson is not what the teacher covers, but what the learners discover.',
+  'Prepare the lesson well, and the lesson will take care of the learners.',
+  'Every lesson is a seed. Some grow today, some grow years from now.',
+  'Clear objectives make clear lessons, and clear lessons make confident learners.',
+  'Plan for the learner who struggles, and every learner benefits.',
+  'The best lesson plan is the one that still listens to the learners.',
+  'Teach one thing well today rather than many things in a hurry.',
+  'A question that makes learners think is worth more than an answer they memorize.',
+  'Use the first five minutes to connect, and the rest of the lesson will follow.',
+  'When learners talk about the lesson, they are learning the lesson.',
+  'Simple materials, used with purpose, can make a lesson unforgettable.',
+  'Check for understanding often. Learning is not the same as listening.',
+  'Every learner can learn. Our task is to find the way that works for each one.',
+  'Feedback given today is learning that grows tomorrow.',
+  'A well prepared teacher is a calm teacher, and a calm teacher builds a calm class.',
+  'Monitoring is not looking for mistakes. It is looking for ways to help.',
+  'We observe to support, we coach to grow, and we follow up to sustain.',
+  'What gets checked gets improved, and what gets improved gets celebrated.',
+  'Good monitoring sees the effort behind every result.',
+  'A school grows when every visit to a classroom ends with encouragement.',
+  'Coaching is walking beside a teacher, not standing over one.',
+  'Notes taken with care become support given with purpose.',
+  'Follow up is where good plans become good practice.',
+  'Every observation is a conversation, not a judgment.',
+  'We look closely because we care deeply.',
+  'Evaluation tells us where we are, so we can decide where to go next.',
+  'Data does not judge us. It guides us.',
+  'Honest results, honestly reported, are the first step to real progress.',
+  'Measure what matters, and act on what you measure.',
+  'A low score is not a failure. It is information we can use.',
+  'Reflection turns experience into learning.',
+  'Look at the numbers, but never forget the learners behind them.',
+  'Progress, not perfection, is what we celebrate.',
+  'Every report we submit is a promise kept to our learners.',
+  'An evaluation is only useful when it leads to better teaching.',
+  'Honesty is the quiet strength of every good school.',
+  'Do the right thing, even when no one is watching. Especially then.',
+  'Integrity is keeping the record true, even when the truth is hard.',
+  'A true report today saves a bigger problem tomorrow.',
+  'Trust is built one honest day at a time.',
+  'Be accountable for your work, and your work will speak for you.',
+  'Tell the truth with kindness, and listen to the truth with humility.',
+  'Punctuality is a form of respect for learners and for colleagues.',
+  'Our learners learn honesty by watching how we work.',
+  'What we record with honesty, we can improve with confidence.',
   'Every child you teach today carries a little of your light tomorrow.',
   'Small steps every day still move a whole school forward.',
   'Teach with your heart, plan with your head, and listen with both.',
-  'The best classrooms are built on patience, not perfection.',
-  'Your kindness today may be the lesson a learner remembers most.',
-  'Great teachers do not make learners copy them. They help learners find themselves.',
-  'A prepared teacher is a calm teacher, and a calm teacher is a powerful one.',
-  'Feedback is a gift. Give it kindly and receive it gladly.',
-  'When one teacher grows, every learner in that room grows too.',
-  'Reading opens doors that no one can close again.',
-  'Be the reason a child believes school is a safe place.',
-  'Good teaching is one part knowledge and nine parts care.',
-  'Today is a fresh page. Write a good lesson on it.',
-  'Learners may forget your words, but not how you made them feel.',
-  'A star does not compete with other stars. It simply shines.',
-  'Plan your lesson, then leave room for wonder.',
-  'Every question a child asks is a door you are invited to open.',
-  'Consistency in small things builds excellence in big things.',
-  'The goal is not to be better than other teachers, but better than yesterday.',
-  'Behind every confident reader is a patient teacher.',
-  'Teaching in a small school is still teaching a whole future.',
-  'Mistakes in class are not failures. They are the beginning of learning.',
-  'Inspire one learner today, and you have changed a family.',
-  'Celebrate progress, no matter how small.',
-  'A school is only as strong as the care its teachers give.',
-  'Lead with example, guide with patience, and grow with your learners.',
-  'The light you give your learners will guide them long after they leave your room.',
-  'Every LPT you prepare is a promise kept to your learners.',
   'Rest well tonight. Your learners need your best self tomorrow.',
   'Ask more, tell less, and watch learners think.',
-  'A warm greeting at the door can change a learner\u2019s whole day.'
+  'A warm greeting at the door can change a learner’s whole day.',
+  'A grateful teacher builds a hopeful classroom.',
+  'We go farther when we go together.',
+  'Celebrate small wins. They add up to big changes.',
+  'Your patience today is a learner’s confidence tomorrow.',
+  'Kind words cost nothing and can change everything.',
+  'A positive school is built by positive people, one day at a time.',
+  'Be the teacher you needed when you were a child.',
+  'Every effort counts, even the ones nobody sees.',
+  'Start the day with purpose and end it with gratitude.',
+  'Encourage one another. Teaching is hard, and we are stronger as a team.',
+  'Learners remember how you made them feel long after they forget the lesson.',
+  'Bring your best, and give yourself grace when your best looks different.',
+  'Growth begins at the edge of our comfort.',
+  'A smile in the classroom is a lesson in itself.',
+  'Serve with joy. Our work shapes the future of our community.',
+  'Learning never stops, for learners and for teachers.',
+  'When teachers grow, learners grow.',
+  'Today is a new chance to make a difference in one learner’s life.',
+  'Faithful in small things, ready for great things.'
 ];
-function quoteToday(){ const d = todayPH(), n = Number(d.replace(/-/g,'')); return QUOTES[(n*7 + Number(d.slice(8,10))) % QUOTES.length]; }
+// A random quote each time Home opens; New quote shows another one
+let CUR_QUOTE = '';
+function quoteToday(){ if (!CUR_QUOTE) CUR_QUOTE = QUOTES[Math.floor(Math.random() * QUOTES.length)]; return CUR_QUOTE; }
+function quoteNext(){ let q = CUR_QUOTE; while (QUOTES.length > 1 && q === CUR_QUOTE) q = QUOTES[Math.floor(Math.random() * QUOTES.length)]; CUR_QUOTE = q; document.querySelectorAll('.qcard p').forEach(p => p.textContent = '\u201C' + q + '\u201D'); }
 function showHome(){
   ['viewLac','viewTrk','viewAcc','viewBank','viewLog','viewWeeks','viewSig','viewObs','viewSbfp','viewPir','viewAtt'].forEach(v => $(v).style.display='none');
   closeGuide(); $('viewHome').style.display=''; CUR_FEATURE = 'home'; drawSide(); drawHome(); window.scrollTo(0,0); maybeGuide('home');
@@ -4249,8 +4417,8 @@ function drawHome(){
   }
   $('viewHome').innerHTML = `
     <div class="hhero"><div class="hhero-t"><h2>${greet}, ${esc(first)}!</h2><p>Today is ${esc(today)}. Enjoy your class, and be an inspiration.</p>${head?`<button class="btn sun small" style="margin-top:12px" onclick="openFeature('mne')">PIR Presentation</button>`:`<button class="btn sun small" style="margin-top:12px" onclick="openPir('me')">My status presentation</button>`}</div>
-      <div class="qcard" id="qCard"><span class="qstar">\u2605</span><p>\u201C${esc(quoteToday())}\u201D</p><small>TALA quote of the day</small>
-        <button class="btn ghost small" onclick="shareQuote()">Share this quote</button></div></div>
+      <div class="qcard" id="qCard"><span class="qstar">\u2605</span><p>\u201C${esc(quoteToday())}\u201D</p><small>TALA quote</small>
+        <div class="qbtns"><button class="btn ghost small" onclick="quoteNext()">\u21BB New quote</button><button class="btn ghost small" onclick="quoteSave()">\u2B07 Save picture</button><button class="btn ghost small" onclick="shareQuote()">Share</button></div></div></div>
     <div class="hgrid">${lpt}${obs}</div>
     <div id="homeCal"></div>`;
   drawSchoolCal();
@@ -4267,7 +4435,7 @@ function drawPublicHome(){
   }
   $('viewHome').innerHTML = `
     <div class="hhero"><div class="hhero-t"><h2>Welcome to TALA!</h2><p>Baluyan Elementary School. Today is ${esc(today)}.</p><button class="btn sun small" style="margin-top:12px" onclick="openLogin()">Sign in</button></div>
-      <div class="qcard"><span class="qstar">\u2605</span><p>\u201C${esc(quoteToday())}\u201D</p><small>TALA quote of the day</small><button class="btn ghost small" onclick="shareQuote()">Share this quote</button></div></div>
+      <div class="qcard"><span class="qstar">\u2605</span><p>\u201C${esc(quoteToday())}\u201D</p><small>TALA quote</small><div class="qbtns"><button class="btn ghost small" onclick="quoteNext()">\u21BB New quote</button><button class="btn ghost small" onclick="quoteSave()">\u2B07 Save picture</button><button class="btn ghost small" onclick="shareQuote()">Share</button></div></div></div>
     <div class="hgrid">${lpt}</div>
     <div id="homeCal"></div>`;
   drawSchoolCal();
@@ -4284,13 +4452,14 @@ function drawSchoolCal(){
   const el = $('homeCal'); if (!el) return;
   if (!SCM) SCM = todayPH().slice(0,7);
   const [y,m] = SCM.split('-').map(Number), first = SCM+'-01', startDow = dow(first), days = new Date(Date.UTC(y,m,0)).getUTCDate(), today = todayPH(), head = USER && USER.role==='head';
+  const sbShow = head || featOn('sbfp');   // SBFP menus show on the calendar only when SBFP is shown to personnel
   let cells = ''; for (let i = 0; i < startDow; i++) cells += '<div class="sday empty"></div>';
   for (let d = 1; d <= days; d++){
     const date = SCM+'-'+String(d).padStart(2,'0'), ev = eventsOn(date), mk = head ? calMark(date) : null, n = head ? obsOnDay(date) : 0, sd = head && schoolDay(date);
     cells += `<button class="sday ${date===today?'today':''} ${dow(date)===0||dow(date)===6?'wkend':''}" onclick="${HCT==='sbfp'?`SB.date='${date}';SB.tab='today';openSbfp()`:`dayModal('${date}')`}"><b>${d}</b>
       ${mk && !ev.some(e => e.title===mk.note)?`<span class="evchip" style="background:#777">Out: ${esc(mk.type.replace(/ \(.*/,''))}</span>`:''}
       ${HCT==='sbfp' ? (sbfpOn(date)?`<span class="evchip" style="background:#d35400">${esc(sbfpOn(date).menu)}</span><span class="evmore">${esc(sbfpOn(date).grade||'')}</span>`:'')
-        : (sbfpOn(date)?`<span class="evchip sbchip" title="SBFP: ${esc(sbfpOn(date).menu)}, ${esc(sbfpOn(date).grade)}">\u{1F372} ${esc(sbfpOn(date).menu)}<i>${esc(sbfpOn(date).grade.replace(' parents',''))}</i></span>`:'') + ev.slice(0,2).map(e=>`<span class="evchip" style="background:${EV_COLOR[e.type]||'#555'}">${mk && mk.note===e.title?'\u2708 ':''}${esc(e.title)}</span>`).join('')+(ev.length>2?`<span class="evmore">+${ev.length-2} more</span>`:'')}
+        : (sbShow && sbfpOn(date)?`<span class="evchip sbchip" title="SBFP: ${esc(sbfpOn(date).menu)}, ${esc(sbfpOn(date).grade)}">\u{1F372} ${esc(sbfpOn(date).menu)}<i>${esc(sbfpOn(date).grade.replace(' parents',''))}</i></span>${sbMarks(date)}`:'') + ev.slice(0,2).map(e=>`<span class="evchip" style="background:${EV_COLOR[e.type]||'#555'}">${mk && mk.note===e.title?'\u2708 ':''}${esc(e.title)}</span>`).join('')+(ev.length>2?`<span class="evmore">+${ev.length-2} more</span>`:'')}
       ${sd && !mk ? `<span class="cdots">${[0,1].map(i=>`<i class="${i<n?'on':''}"></i>`).join('')}</span>`:''}</button>`;
   }
   const mname = new Date(Date.UTC(y,m-1,1)).toLocaleString('en-US',{month:'long',year:'numeric',timeZone:'UTC'});
@@ -4298,7 +4467,7 @@ function drawSchoolCal(){
   const upcoming = HCT==='sbfp' ? [] : allEvents().filter(e => (e.end||e.date) >= today).sort((a,b)=>a.date.localeCompare(b.date)).slice(0,5);
   const sbOk = false; HCT = 'school';
   el.innerHTML = `<div class="hcard scal">${sbOk?`<div class="ktabs" style="margin:0 0 10px"><button class="${HCT==='school'?'on':''}" onclick="HCT='school';drawSchoolCal()">School Calendar</button><button class="${HCT==='sbfp'?'on':''}" onclick="HCT='sbfp';drawSchoolCal()">SBFP Calendar</button></div>`:''}
-    <div class="hcard-h"><span class="oico">\u2637</span><div><b>School Calendar</b><small>Events, activities, SBFP menus${head?', and your observation days':''}</small></div>
+    <div class="hcard-h"><span class="oico">\u2637</span><div><b>School Calendar</b><small>Events, activities${sbShow?', SBFP menus':''}${head?', and your observation days':''}</small></div>
       ${HCT==='sbfp' ? `<button class="btn small" onclick="openSbfp()">Open SBFP Monitoring</button>` : USER?`<button class="btn small sun" onclick="eventForm('${today}')">\u002B Add</button>`:''}</div>
     <div class="calbar"><button class="btn ghost small" onclick="SCM='${prev}';drawSchoolCal()">\u2039</button><b>${esc(mname)}</b><button class="btn ghost small" onclick="SCM='${next}';drawSchoolCal()">\u203A</button></div>
     <div class="scal-grid"><div class="cdow">Sun</div><div class="cdow">Mon</div><div class="cdow">Tue</div><div class="cdow">Wed</div><div class="cdow">Thu</div><div class="cdow">Fri</div><div class="cdow">Sat</div>${cells}</div>
@@ -4507,6 +4676,10 @@ const SB_PHOTO_TAGS = ['Attendance sheet','Before','During','After','Collage'];
 const SB_GROUPS = ['Kindergarten','Grade 1','Grade 2','Grade 3','Grade 4','Grade 5','Grade 6'];
 function sbfpList(){ return ((DATA||PUB||{}).sbfp)||[]; }
 function sbRec(date){ return sbfpList().find(x=>x.date===date) || {}; }
+// Small icons on the calendar: photos of the attendance sheet, and the parents' attendance saved (or locked)
+function sbMarks(date){ const r = sbRec(date), ph = (r.photos||[]).length, att = r.att || {}, saved = Object.keys(att).some(k => k.charAt(0)!=='_' && att[k]);
+  if (!ph && !saved) return '';
+  return `<span class="sbmarks">${ph?`<i title="${ph} photo${ph>1?'s':''} attached">\u{1F4F7}${ph>1?'<sub>'+ph+'</sub>':''}</i>`:''}${saved?`<i title="${att._lock?'Attendance saved and locked':'Attendance saved'}">${att._lock?'\u{1F512}':'\u2705'}</i>`:''}</span>`; }
 function sbSet(){ return ((DATA||PUB||{}).settings)||{}; }
 function sbStart(){ return sbSet().sbfpStart || '2026-09-14'; }
 function sbStartDay(){ return Number(sbSet().sbfpStartDay || 1); }
@@ -4710,11 +4883,12 @@ function sbCalView(){
   let cells = ''; for (let i = 0; i < sd; i++) cells += '<div class="sbd empty"></div>';
   for (let d = 1; d <= days; d++){
     const date = SB.month+'-'+String(d).padStart(2,'0'), s = sbSched(date), r = sbRec(date), wk = dow(date)===0||dow(date)===6;
-    cells += `<button class="sbd ${s?'has':''} ${s&&s.changed?'chg':''} ${wk?'wkend':''} ${date===today?'today':''}" ${s?`onclick="sbGo('${date}')"`:''}><b>${d}${s?` <small class="sbdn">C${s.cycle} D${s.day}</small>`:''}</b>${s?((s.changed?`<span class="sbmenu orig"><s>${esc(s.on)}</s></span><span class="sbgrade"><s>${esc(s.og)}</s></span><span class="sbmenu new">\u2192 ${esc(s.n)}</span><span class="sbgrade">${esc(s.g)}</span>`:`<span class="sbmenu">${esc(s.n)}</span><span class="sbgrade">${esc(s.g)}</span>`)+(r.status?`<span class="sbstat" style="background:${SB_COLOR[r.status]||'#777'}">${esc(r.status)}</span>`:'')):''}</button>`;
+    cells += `<button class="sbd ${s?'has':''} ${s&&s.changed?'chg':''} ${wk?'wkend':''} ${date===today?'today':''}" ${s?`onclick="sbGo('${date}')"`:''}><b>${d}${s?` <small class="sbdn">C${s.cycle} D${s.day}</small>`:''}</b>${s?((s.changed?`<span class="sbmenu orig"><s>${esc(s.on)}</s></span><span class="sbgrade"><s>${esc(s.og)}</s></span><span class="sbmenu new">\u2192 ${esc(s.n)}</span><span class="sbgrade">${esc(s.g)}</span>`:`<span class="sbmenu">${esc(s.n)}</span><span class="sbgrade">${esc(s.g)}</span>`)+(r.status?`<span class="sbstat" style="background:${SB_COLOR[r.status]||'#777'}">${esc(r.status)}</span>`:'')+sbMarks(date)):''}</button>`;
   }
   const mname = new Date(Date.UTC(y,m-1,1)).toLocaleString('en-US',{month:'long',year:'numeric',timeZone:'UTC'});
   const prev = new Date(Date.UTC(y,m-2,1)).toISOString().slice(0,7), next = new Date(Date.UTC(y,m,1)).toISOString().slice(0,7);
   $('sbBody').innerHTML = `<div class="calbar"><button class="btn ghost small" onclick="SB.month='${prev}';drawSbfp()">\u2039 Previous</button><b>${esc(mname)}</b><button class="btn ghost small" onclick="SB.month='${next}';drawSbfp()">Next \u203A</button></div>
+    <p class="hint" style="margin:4px 0 8px">\u{1F4F7} Photos of the attendance sheet are attached \u00B7 \u2705 Parents' attendance saved \u00B7 \u{1F512} Saved and locked</p>
     <div class="sbgrid"><div class="cdow">Sun</div><div class="cdow">Mon</div><div class="cdow">Tue</div><div class="cdow">Wed</div><div class="cdow">Thu</div><div class="cdow">Fri</div><div class="cdow">Sat</div>${cells}</div>
     ${USER?`<div class="obs-actions">${canSbfp()?'<button class="btn ghost" onclick="sbMenuList()">Edit the menu list and start date</button>':''}<button class="btn ghost" onclick="printSbfp()">Print ${esc(mname)} SBFP calendar</button></div>`:''}`;
 }
@@ -5021,7 +5195,7 @@ function aboutSlides(){
     ${card('\u{1F372}','SBFP Monitoring','Menu of the day, parents\u2019 schedule, photos, attendance, and participation.','#d35400')}${card('\u270D','Learner Attendance','AM and PM attendance, the DepEd SF2 and SF4, Messenger messages, and weekly stars.','#1e5a8c')}
     ${card('\u{1F552}','Time Records and Requests','Time in and Time out, leave on CS Form No. 6, locator slips, travel, and wellness leave.','#2f7a4a')}${card('\u{1F393}','LAC and Learning Hub','Sessions, e-signed attendance, evaluations, minutes, notebooks, videos, and slides to learn.','#b06000')}
     ${card('\u{1F4C5}','School Calendar','Activities, SBFP menus, and memos with photos and MOVs.','#2f7a4a')}${card('\u{1F4CA}','School M&amp;E Reports','PIR presentation, every report in one place, and annotation tools.','#b06000')}${card('\u2712','E-signatures and Chat','Sign documents online, message the team, and get notified.','#a3271b')}</div>
-    <p class="pnote" data-edit>Coming next: Learner Reading Assessment and Reimbursement Inventory.</p>`);
+    <p class="pnote" data-edit>Also linked from TALA: Project e-READ for the Learner Reading Assessment, and Project ABONO for the Reimbursement Inventory.</p>`);
   wrap('LPT and PPT Tracking', `<div class="pcols"><div>${list(['Teachers upload the LPT and PPT with the correct file name, for the whole week or by session.','The School Head validates: Approved, Returned with remarks, or Wrong file.','TALA counts on time and late submissions from the Monday deadline.','Every file gets a QR code for monitoring visitors.'])}</div>
     <div class="aflow">${['Prepare','Rename','Upload','Validate','Report'].map((x,i)=>`<span><b>${i+1}</b>${x}</span>`).join('')}</div></div>`);
   wrap('Observations: ePMCF and MWA', `<div class="pcols"><div>${list(['Low inference notes, STAR incidents, and COI and NCOI ratings in one form.','Autosave on the phone, even without internet.','Teacher reviews, comments on the agreement, agrees, and signs.','Weekly and term summaries, and the observation calendar of 2 per day.'])}</div>
@@ -5156,7 +5330,7 @@ async function repCenter(){
   if (LAC.data) html += card('\u{1F393}', 'LAC and Teacher Development', staff||doc?'Attendance, evaluations, minutes, reflections, and reports':'My notebooks', `${staff||doc?`${sel('rpSess', sess.filter(s => staff || s.documenter===USER.email).map(s => [s.id, s.title+', '+dShort(s.date)]), (sess[0]||{}).id)}
       ${b('Attendance sheet', "repLac('att')")}${b('Evaluations', "repLac('ev')")}${b('Who answered', "repLac('who')")}${b('Minutes', "repLac('min')")}${head?b('Reflections', "repLac('ref')"):''}${b('Accomplishment report', "repLac('rep')")}`:''}
       ${staff?b('Overview', "repLac('ov')")+b('Learning Hub progress', "repLac('hub')"):''}
-      ${sel('rpNB', Object.keys(NB_BOOKS).map(k => [k, NB_BOOKS[k]]), 'LAC')}${head?sel('rpNW', [['', 'All personnel']].concat(lacPeople().map(p => [p.email, p.name])), ''):''}${b(head?'Notebooks':'My notebook', "repLac('nb')")}`);
+      ${sel('rpNB', Object.keys(NB_TABS).map(k => [k, NB_TABS[k]]), 'LAC')}${head?sel('rpNW', [['', 'All personnel']].concat(lacPeople().map(p => [p.email, p.name])), ''):''}${b(head?'Notebooks':'My notebook', "repLac('nb')")}`);
   html += card('\u{1F4CA}', 'Presentations', 'Print or edit the slides', `<button class="btn ghost small" onclick="openPir('${head?'pir':'me'}')">${head?'PIR Presentation':'My Status'}</button><button class="btn ghost small" onclick="openPir('about')">About TALA</button>`);
   const tabs = pirDecks().map(([k,l]) => `<button class="${PIR.mode===k?'on':''}" onclick="openPir('${k}')">${l}</button>`).join('');
   $('viewPir').innerHTML = `<div class="ktabs" style="margin-top:0">${tabs}</div><div class="trk-head"><div><h2>Reports and documents</h2><p>${staff?'Every report TALA can make, for all personnel. Choose the period, then print or save as PDF.':'Your own reports and documents. Choose the period, then print or save as PDF.'}</p></div></div>
@@ -5357,8 +5531,10 @@ function lname(l){ return l.last+', '+l.first+(l.middle?' '+l.middle:''); }
 function attKey(sec){ return 'tala_att_'+USER.email+(sec?'_'+sec:''); }
 function attCacheMeta(){ try{ const c = JSON.parse(localStorage.getItem(attKey())||'null'); return c && c.meta; }catch(e){ return null; } }
 function attCacheClass(sec){ try{ return JSON.parse(localStorage.getItem(attKey(sec))||'null'); }catch(e){ return null; } }
-function attCachePut(){ try{ localStorage.setItem(attKey(), JSON.stringify({ meta:{ sections:ATT.sections, mine:ATT.mine, firstDay:ATT.firstDay, snapshot:ATT.snapshot } })); if (ATT.sec) localStorage.setItem(attKey(ATT.sec), JSON.stringify({ learners:ATT.learners, days:ATT.days })); }catch(e){} }
-function attDefaultSec(){ return ATT.mine[0] || (attRole()!=='teacher' && ATT.sections[0] ? ATT.sections[0].key : ''); }
+function attCachePut(){ try{ localStorage.setItem(attKey(), JSON.stringify({ meta:{ sections:ATT.sections, mine:ATT.mine, firstDay:ATT.firstDay, snapshot:ATT.snapshot } })); if (ATT.sec && ATT.sec!=='*') localStorage.setItem(attKey(ATT.sec), JSON.stringify({ learners:ATT.learners, days:ATT.days })); }catch(e){} }
+// The School Head and the AO open on All grade levels; a teacher opens on her own class
+function attDefaultSec(){ return attRole()!=='teacher' ? '*' : (ATT.mine[0] || ''); }
+function attIsAll(){ return ATT.sec==='*'; }
 function attUseClass(c){   // the server sends a list of days, this phone keeps them by date
   ATT.learners = c.learners || []; ATT.days = {};
   if (Array.isArray(c.days)) c.days.forEach(d => ATT.days[d.date] = d); else Object.keys(c.days||{}).forEach(k => { if (!c.days[k].local) ATT.days[k] = c.days[k]; });
@@ -5367,11 +5543,11 @@ function attShown(){ return CUR_FEATURE==='att' && $('viewAtt').style.display!==
 // Gets the newest data from the server. Redraws the page only when something changed.
 function attRefresh(){
   if (ATT.refreshing) return ATT.refreshing;
-  const asked = ATT.sec, before = JSON.stringify([ATT.sections, ATT.learners, ATT.days]);
+  const asked = ATT.sec==='*' ? '' : ATT.sec, before = JSON.stringify([ATT.sections, ATT.learners, ATT.days]);
   ATT.refreshing = (async () => { try{
       const r = await api('attOpen', { section:asked, from:ATT.firstDay||'' });
       Object.assign(ATT, { sections:r.sections, mine:r.mine, firstDay:r.firstDay, snapshot:r.snapshot });
-      if (ATT.sec === asked){ ATT.sec = r.section; if (r.section){ attUseClass(r); ATT.loaded = r.section; } }
+      if (ATT.sec !== '*' && ATT.sec === asked){ ATT.sec = r.section; if (r.section){ attUseClass(r); ATT.loaded = r.section; } }
       attCachePut();
       if (attShown() && JSON.stringify([ATT.sections, ATT.learners, ATT.days]) !== before){ ATT.quiet = true; attDraw(); ATT.quiet = false; }
     } catch(e){ } finally { ATT.refreshing = null; } })();
@@ -5385,15 +5561,15 @@ async function openAtt(){
   ATT.view = 'home';
   if (!ATT.sections.length){ const m = attCacheMeta(); if (m) Object.assign(ATT, m); }
   if (!ATT.sec) ATT.sec = attDefaultSec();
-  if (ATT.sec && ATT.loaded !== ATT.sec){ const c = attCacheClass(ATT.sec); if (c){ attUseClass(c); ATT.loaded = ATT.sec; } }
-  if (ATT.sections.length && (!ATT.sec || ATT.loaded === ATT.sec)){ attDraw(); attRefresh(); return; }   // instant
+  if (ATT.sec && ATT.sec!=='*' && ATT.loaded !== ATT.sec){ const c = attCacheClass(ATT.sec); if (c){ attUseClass(c); ATT.loaded = ATT.sec; } }
+  if (ATT.sections.length && (!ATT.sec || ATT.sec==='*' || ATT.loaded === ATT.sec)){ attDraw(); attRefresh(); return; }   // instant
   $('viewAtt').innerHTML = `<div class="pirload"><div class="pirstar">★</div><b>Opening your class</b><div class="pirdots"><i></i><i></i><i></i></div></div>`;
   ATT.view = 'loading'; await attRefresh(); ATT.view = 'home';
   if (!ATT.sections.length){ $('viewAtt').innerHTML = `<div class="empty">Attendance could not open. Please check the connection.<br><button class="btn small" style="margin-top:10px" onclick="openAtt()">Try again</button></div>`; return; }
   if (CUR_FEATURE==='att') attDraw();
 }
 async function attLoadClass(force){
-  if (!ATT.sec || (ATT.loaded===ATT.sec && !force)) return;
+  if (!ATT.sec || ATT.sec==='*' || (ATT.loaded===ATT.sec && !force)) return;
   const c = !force && attCacheClass(ATT.sec);
   if (c){ attUseClass(c); ATT.loaded = ATT.sec; attRefresh(); return; }   // shown at once, updated quietly
   ATT.learners = []; ATT.days = {};
@@ -5423,15 +5599,16 @@ function attHome(){
   const act = ATT.learners.filter(l => activeOn(l, today)), rec = ATT.days[today], T = tally(act, l => mk(l,today), l => '');
   const btn = (ico, t, x, fn, cls) => `<button class="abtn ${cls||''}" onclick="${fn}"><span class="abico">${ico}</span><b>${t}</b><small>${x}</small></button>`;
   $('viewAtt').innerHTML = `
-    <div class="ohero athero"><div><h2>Attendance</h2><p>${ATT.sec?esc(secLabel(ATT.sec))+' \u00B7 '+esc(secInfo(ATT.sec).adviserName||'No adviser set'):'No class assigned to you yet. Ask the School Head to set your class.'}</p></div>
-      <div class="atsel">${secs.length>1?`<select onchange="ATT.sec=this.value;attLoadClass().then(attDraw)">${secs.map(s=>`<option value="${esc(s.key)}" ${s.key===ATT.sec?'selected':''}>${esc(secLabel(s.key))}</option>`).join('')}</select>`:''}
+    <div class="ohero athero"><div><h2>Attendance</h2><p>${attIsAll()?'All grade levels \u00B7 '+ATT.sections.length+' classes':ATT.sec?esc(secLabel(ATT.sec))+' \u00B7 '+esc(secInfo(ATT.sec).adviserName||'No adviser set'):'No class assigned to you yet. Ask the School Head to set your class.'}</p></div>
+      <div class="atsel">${secs.length>1 || role!=='teacher'?`<select onchange="ATT.sec=this.value;attLoadClass().then(attDraw)">${role!=='teacher'?`<option value="*" ${attIsAll()?'selected':''}>All grade levels</option>`:''}${secs.map(s=>`<option value="${esc(s.key)}" ${s.key===ATT.sec?'selected':''}>${esc(secLabel(s.key))}</option>`).join('')}</select>`:''}
         <select onchange="ATT.month=this.value;attDraw()">${months.map(m=>`<option value="${m}" ${m===ATT.month?'selected':''}>${monthName(m)}</option>`).join('')}</select></div></div>
     ${stfHomeBlock()}
-    ${ATT.sec?'<h3 class="sbh4" style="font-size:16px;margin-top:16px">Learners</h3>':''}
-    ${ATT.sec?`<div class="attoday"><div><small>Today</small><b>${esc(dShort(today))}</b></div>
+    ${attIsAll()?`<h3 class="sbh4" style="font-size:16px;margin-top:16px">All grade levels today</h3><p class="hint" style="margin:0 0 8px">Tap a class to open it. Use the list at the top to choose a class.</p><div class="olist" id="attAllCards">${ATT.school?attCards(today).cards:'<span class="spin"></span>'}</div>`:''}
+    ${ATT.sec&&!attIsAll()?'<h3 class="sbh4" style="font-size:16px;margin-top:16px">Learners</h3>':''}
+    ${ATT.sec&&!attIsAll()?`<div class="attoday"><div><small>Today</small><b>${esc(dShort(today))}</b></div>
       ${dow(today)===0||dow(today)===6?'<span class="hint">No class today (weekend).</span>':dayStatus(today)!=='C'?`<span class="sbbadge" style="--c:#a3271b">${esc(DAY_ST[dayStatus(today)])}${rec&&rec.marks&&rec.marks._note?': '+esc(rec.marks._note):''}</span>`:rec?tallyHtml(T)+(rec.local?'<span class="unsynced">Not yet synced</span>':''):'<span class="atn wait">Not yet taken</span>'}</div>`:''}
     <div class="atremind">\u23F0 Take the attendance during the preliminaries, before the first period, so it does not use the instructional time.</div>
-    ${ATT.sec?`<div class="abtns">
+    ${ATT.sec&&!attIsAll()?`<div class="abtns">
       ${attCanEdit()?btn('\u2714','Take attendance',"AM and PM for "+esc(dShort(today)),"attOpenTake('"+today+"')",'main'):''}
       ${btn('\u{1F465}','My learners',ATT.learners.filter(l=>activeOn(l,today)).length+' enrolled'+(attCanEdit()?', add or edit':''),"ATT.view='learners';attDraw()")}
       ${attCanEdit()?btn('\u{1F4AC}','Message parents','Absent, excused, or tardy today',"ATT.view='msgs';attDraw()"):''}
@@ -5471,6 +5648,7 @@ async function schoolTally(fresh){
     const L = ATT.school.learners.filter(l => l.sec===s.key && activeOn(l,t)), T = tally(L, l => mk(l,t,s.key), () => ' ('+secLabel(s.key)+')');
     Object.keys(all).forEach(k => all[k] = all[k].concat(T[k])); });
   el.innerHTML = `<div><small>Whole school today</small><b>${taken} of ${ATT.sections.length} classes</b></div>${tallyHtml(all)}`;
+  if ($('attAllCards')) $('attAllCards').innerHTML = attCards(t).cards;
 }
 function attLoadSchoolQuiet(){ return ATT.schoolP || (ATT.schoolP = attLoadSchoolNow().finally(() => ATT.schoolP = null)); }
 async function attLoadSchoolNow(){ try{ const r = await api('attSchool',{ from:ATT.firstDay }); const days = {}; r.days.forEach(d => days[d.sec+'|'+d.date] = d); ATT.school = { learners:r.learners, days }; try{ localStorage.setItem(attKey('school'), JSON.stringify(ATT.school)); }catch(e){} }catch(e){} }
@@ -5747,6 +5925,11 @@ async function attOpenLive(keep){ ATT.liveDate = keep || todayPH(); await attLoa
 function attLive(){
   const today = todayPH(), t = ATT.liveDate && ATT.liveDate <= today ? ATT.liveDate : today, S = ATT.school || { learners:[], days:{} }, isToday = t===today;
   const wk = dow(t)===0 || dow(t)===6, hol = !wk && calHoliday(t);
+  const { cards, all, taken } = attCards(t);
+  $('viewAtt').innerHTML = attLiveHtml(t, today, isToday, wk, cards, all, taken);
+}
+function attCards(t){
+  const today = todayPH(), S = ATT.school || { learners:[], days:{} }, isToday = t===today, wk = dow(t)===0 || dow(t)===6, hol = !wk && calHoliday(t);
   const all = { P:[], X:[], E:[], T:[] }; let taken = 0;
   const cards = ATT.sections.map(s => { const L = S.learners.filter(l=>l.sec===s.key && activeOn(l,t)), r = S.days[s.key+'|'+t];
     let pill = '<span class="opill Sent">'+(isToday?'Not yet taken':'Not taken')+'</span>';
@@ -5758,7 +5941,10 @@ function attLive(){
     const go = isToday ? `ATT.sec='${esc(s.key)}';ATT.loaded='';attLoadClass().then(()=>{ATT.view='home';attDraw()})` : `attLiveOpen('${esc(s.key)}','${t}')`;
     return `<button class="ocard" onclick="${go}"><div class="ocard-h"><span class="oav">${esc(s.grade.replace('Grade ','').charAt(0))}</span><div><b>${esc(secLabel(s.key))}</b><small>${esc(s.adviserName||'No adviser')}</small></div></div>
       <small>${L.length} enrolled</small><div style="display:flex;gap:6px;flex-wrap:wrap">${pill}</div></button>`; }).join('');
-  $('viewAtt').innerHTML = `<div class="trk-head"><div><h2>${isToday?'All classes, live':'All classes'}</h2><p>${isToday?'Today, ':''}${esc(dShort(t))}. Tap a class to open ${isToday?'it':'the attendance of that day'}${attRole()==='admin'?' (view only)':''}.</p></div><div class="head-actions"><button class="btn ghost" onclick="attOpenLive(ATT.liveDate)">Refresh</button><button class="btn ghost" onclick="attBack()">Back</button></div></div>
+  return { cards, all, taken };
+}
+function attLiveHtml(t, today, isToday, wk, cards, all, taken){
+  return `<div class="trk-head"><div><h2>${isToday?'All classes, live':'All classes'}</h2><p>${isToday?'Today, ':''}${esc(dShort(t))}. Tap a class to open ${isToday?'it':'the attendance of that day'}${attRole()==='admin'?' (view only)':''}.</p></div><div class="head-actions"><button class="btn ghost" onclick="attOpenLive(ATT.liveDate)">Refresh</button><button class="btn ghost" onclick="attBack()">Back</button></div></div>
     <div class="livebar"><button class="btn ghost" onclick="attLiveStep(-1)" title="Previous school day">‹ Previous</button>
       <input type="date" id="liveDate" value="${t}" min="${ATT.firstDay||''}" max="${today}" onchange="if(this.value){ATT.liveDate=this.value;attLive()}">
       <button class="btn ghost" onclick="attLiveStep(1)" ${isToday?'disabled':''} title="Next school day">Next ›</button>
@@ -5995,7 +6181,7 @@ function sf4Data(ym){
 }
 
 /* ----- shows the filled template on screen and in print, the same as in Excel ----- */
-async function xlsxToHtml(zip){
+async function xlsxToHtml(zip, extras, opt){ opt = opt || {};
   const sx = await zip.file('xl/worksheets/sheet1.xml').async('string'), stx = await zip.file('xl/styles.xml').async('string');
   const dec = s => s.replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&apos;/g,"'").replace(/&#x([0-9a-fA-F]+);/g,(m,h)=>String.fromCharCode(parseInt(h,16))).replace(/&#(\d+);/g,(m,n)=>String.fromCharCode(Number(n))).replace(/&amp;/g,'&');
   const ssF = zip.file('xl/sharedStrings.xml'), ss = ssF ? ((await ssF.async('string')).match(/<si>[\s\S]*?<\/si>/g)||[]).map(si => (si.match(/<t[^>]*>([\s\S]*?)<\/t>/g)||[]).map(t=>t.replace(/<[^>]+>/g,'')).join('')).map(dec) : [];
@@ -6004,20 +6190,29 @@ async function xlsxToHtml(zip){
   const fills = (stx.match(/<fills[^>]*>([\s\S]*?)<\/fills>/)[1].match(/<fill>[\s\S]*?<\/fill>/g)||[]).map(f => { if (/gradientFill/.test(f)){ const c = f.match(/rgb="FF([0-9A-F]{6})"/g).map(x=>'#'+x.slice(7,13)); return `linear-gradient(${c[0]} 50%, ${c[c.length-1]} 50%)`; } const m = f.match(/patternType="solid"[\s\S]*?<fgColor rgb="FF([0-9A-F]{6})"/); return m && m[1]!=='FFFFFF' ? '#'+m[1] : ''; });
   const bw = s => s==='double' ? '3px double #000' : s==='medium' ? '1.4px solid #000' : s==='thick' ? '2px solid #000' : s==='hair' || s==='dotted' ? '1px dotted #000' : s==='dashed' ? '1px dashed #000' : s ? '1px solid #000' : '';
   const borders = (stx.match(/<borders[^>]*>([\s\S]*?)<\/borders>/)[1].match(/<border[^>]*?(?:\/>|>[\s\S]*?<\/border>)/g)||[]).map(b => { const g = k => { const m = b.match(new RegExp(`<${k} style="([a-zA-Z]+)"(?:/>|>([\\s\\S]*?)</${k}>)`)); if (!m) return ''; const c = ((m[2]||'').match(/rgb="(?:FF)?([0-9A-Fa-f]{6})"/)||[])[1]; return c && c.toUpperCase()==='FFFFFF' ? '' : m[1]; }; return { l:bw(g('left')), r:bw(g('right')), t:bw(g('top')), b:bw(g('bottom')) }; });
-  const xfs = (stx.match(/<cellXfs[^>]*>([\s\S]*?)<\/cellXfs>/)[1].match(/<xf [^>]*?(?:\/>|>[\s\S]*?<\/xf>)/g)||[]).map(x => ({ f:Number((x.match(/fontId="(\d+)"/)||[])[1]||0), fi:Number((x.match(/fillId="(\d+)"/)||[])[1]||0), b:Number((x.match(/borderId="(\d+)"/)||[])[1]||0), h:(x.match(/horizontal="(\w+)"/)||[])[1]||'', v:(x.match(/vertical="(\w+)"/)||[])[1]||'bottom', w:/wrapText="(true|1)"/.test(x), rot:Number((x.match(/textRotation="(\d+)"/)||[])[1]||0) }));
+  const xfs = (stx.match(/<cellXfs[^>]*>([\s\S]*?)<\/cellXfs>/)[1].match(/<xf [^>]*?(?:\/>|>[\s\S]*?<\/xf>)/g)||[]).map(x => ({ f:Number((x.match(/fontId="(\d+)"/)||[])[1]||0), fi:Number((x.match(/fillId="(\d+)"/)||[])[1]||0), b:Number((x.match(/borderId="(\d+)"/)||[])[1]||0), h:(x.match(/horizontal="(\w+)"/)||[])[1]||'', v:(x.match(/vertical="(\w+)"/)||[])[1]||'bottom', w:/wrapText="(true|1)"/.test(x), rot:Number((x.match(/textRotation="(\d+)"/)||[])[1]||0), nf:Number((x.match(/numFmtId="(\d+)"/)||[])[1]||0) }));
+  const nfs = {}; (stx.match(/<numFmt [^>]*\/>/g)||[]).forEach(n => { nfs[Number((n.match(/numFmtId="(\d+)"/)||[])[1])] = dec((n.match(/formatCode="([^"]*)"/)||[])[1]||''); });
+  const isDateFmt = id => (id >= 14 && id <= 22) || (id >= 45 && id <= 47) || (nfs[id] !== undefined && /[dy]|m{3,}/i.test(nfs[id].replace(/"[^"]*"|\[[^\]]*\]/g,'')) && !/^[#0.,%\s]*$/.test(nfs[id]));
+  const fmtDate = (n, id) => { const d = new Date(Date.UTC(1899,11,30) + Math.round(Number(n))*86400000), M = ['January','February','March','April','May','June','July','August','September','October','November','December'], code = nfs[id] || '';
+    if (/mmmm/i.test(code)) return M[d.getUTCMonth()]+' '+d.getUTCDate()+', '+d.getUTCFullYear(); if (/mmm/i.test(code)) return M[d.getUTCMonth()].slice(0,3)+' '+d.getUTCDate()+', '+d.getUTCFullYear();
+    return String(d.getUTCMonth()+1).padStart(2,'0')+'/'+String(d.getUTCDate()).padStart(2,'0')+'/'+d.getUTCFullYear(); };
   const cw = {}; (sx.match(/<col [^>]*\/>/g)||[]).forEach(c => { const a = Number(c.match(/min="(\d+)"/)[1]), b = Number(c.match(/max="(\d+)"/)[1]), w = Number((c.match(/width="([\d.]+)"/)||[])[1]||9); for (let i = a; i <= b && i < 120; i++) cw[i] = w; });
-  const dims = (sx.match(/<dimension ref="A1:([A-Z]+)(\d+)"/)||[]), maxC = colNum(dims[1]||'AU'), rows = xlSheet(sx).rows, maxR = Math.max(...Object.keys(rows).map(Number));
+  const dm = sx.match(/<dimension ref="[A-Z]+(\d+):([A-Z]+)(\d+)"/) || [], dims = [0, dm[2]], minR = Number(dm[1]||1), maxC = colNum(dims[1]||'AU'), rows = xlSheet(sx).rows, maxR = Math.max(...Object.keys(rows).map(Number));
   const px = w => w < 1 ? Math.max(1, Math.round(w*12)) : Math.round(w*7+5);
-  const merges = (sx.match(/<mergeCell ref="([^"]+)"/g)||[]).map(m => m.match(/ref="([^"]+)"/)[1]), cover = {}, span = {};
+  const merges = (sx.match(/<mergeCell ref="([^"]+)"/g)||[]).map(m => m.match(/ref="([^"]+)"/)[1]), cover = {}, span = {}, vrow = {};
   merges.forEach(m => { const [a,b] = m.split(':'), c1 = colNum(a.match(/[A-Z]+/)[0]), r1 = Number(a.match(/\d+/)[0]), c2 = colNum(b.match(/[A-Z]+/)[0]), r2 = Number(b.match(/\d+/)[0]);
-    span[r1+','+c1] = [r2-r1+1, c2-c1+1]; for (let r = r1; r <= r2; r++) for (let c = c1; c <= c2; c++) if (r!==r1 || c!==c1) cover[r+','+c] = 1; });
+    span[r1+','+c1] = [r2-r1+1, c2-c1+1]; for (let r = r1; r <= r2; r++) for (let c = c1; c <= c2; c++) if (r!==r1 || c!==c1) cover[r+','+c] = 1; if (r2 > r1) for (let r = r1; r <= r2; r++) vrow[r] = 1; });
   let total = 0; for (let c = 1; c <= maxC; c++) total += px(cw[c]||9);
   let html = `<table class="xlt" style="width:${total}px"><colgroup>${Array.from({length:maxC},(_,i)=>`<col style="width:${px(cw[i+1]||9)}px">`).join('')}</colgroup>`;
-  for (let r = 1; r <= maxR; r++){
-    const rx = rows[r] || '', ht = Number((rx.match(/ ht="([\d.]+)"/)||[])[1]||12.75), cells = {};
+  const rowH = {};
+  for (let r = minR; r <= maxR; r++){
+    const rx = rows[r] || '', ht = Number((rx.match(/ ht="([\d.]+)"/)||[])[1]||12.75), cells = {}; rowH[r] = Math.round(ht*4/3);
     (rx.match(/<c r="[A-Z]+\d+"[^>]*?(?:\/>|>[\s\S]*?<\/c>)/g)||[]).forEach(c => { const col = colNum(c.match(/r="([A-Z]+)/)[1]), s = Number((c.match(/ s="(\d+)"/)||[])[1]||0), t = (c.match(/ t="(\w+)"/)||[])[1];
       let v = ''; if (t==='inlineStr') v = dec(((c.match(/<t[^>]*>([\s\S]*?)<\/t>/)||[])[1])||''); else { const vv = (c.match(/<v>([\s\S]*?)<\/v>/)||[])[1]; if (vv !== undefined) v = t==='s' ? ss[Number(vv)]||'' : dec(vv); }
+      if (v !== '' && t !== 's' && t !== 'inlineStr' && t !== 'str' && /^\d+(\.\d+)?$/.test(v) && Number(v) > 20000 && Number(v) < 80000 && xfs[s] && isDateFmt(xfs[s].nf)) v = fmtDate(v, xfs[s].nf);
       cells[col] = { s, v }; });
+    // for printing: empty rows after the filled ones are left out (single rows only, never part of a merged block)
+    if (opt.trimFrom && r >= opt.trimFrom && !vrow[r] && !Object.values(cells).some(c => String(c.v).trim() !== '')){ rowH[r] = 0; continue; }
     html += `<tr style="height:${Math.round(ht*4/3)}px">`;
     for (let c = 1; c <= maxC; c++){ if (cover[r+','+c]) continue; const cell = cells[c] || { s:0, v:'' }, x = xfs[cell.s] || xfs[0], f = fonts[x.f] || fonts[0], bd = borders[x.b] || {}, sp = span[r+','+c];
       // a merged block takes its right and bottom borders from its last cells
@@ -6025,7 +6220,31 @@ async function xlsxToHtml(zip){
       const st = `font:${f.i?'italic ':''}${f.b?'bold ':''}${f.sz}pt '${f.name}',Arial,sans-serif;text-align:${x.h==='centerContinuous'?'center':x.h||(typeof cell.v==='number'||/^\d+(\.\d+)?%?$/.test(cell.v)?'right':'left')};vertical-align:${x.v==='center'?'middle':x.v};${bd.l?'border-left:'+bd.l+';':''}${br?'border-right:'+br+';':''}${bd.t?'border-top:'+bd.t+';':''}${bb?'border-bottom:'+bb+';':''}${fills[x.fi]?'background:'+fills[x.fi]+';':''}${x.w?'white-space:pre-wrap;':'white-space:nowrap;'}${f.u?'text-decoration:underline;':''}`;
       html += `<td${sp?` rowspan="${sp[0]}" colspan="${sp[1]}"`:''} style="${st}">${x.rot===90?`<span class="xrot">${esc(cell.v)}</span>`:esc(cell.v)}</td>`; }
     html += '</tr>'; }
-  return { html: html + '</table>', width: total };
+  html += '</table>';
+  // pictures: from the sheet's drawing (signatures put in the Excel file) and extra ones, placed by cell
+  const colX = [0]; for (let c = 1; c <= maxC + 2; c++) colX[c] = colX[c-1] + px(cw[c]||9);
+  const rowY = {}; let y = 0; for (let r = minR; r <= maxR + 2; r++){ rowY[r-1] = y; y += rowH[r] !== undefined ? rowH[r] : 17; }
+  const at = (col, colOff, row, rowOff) => [ (colX[col]||0) + Math.round(colOff/9525), (rowY[row] !== undefined ? rowY[row] : 0) + Math.round(rowOff/9525) ];
+  const imgs = [];
+  try{
+    const sr = zip.file('xl/worksheets/_rels/sheet1.xml.rels'), srx = sr ? await sr.async('string') : '', dt = (srx.match(/Target="\.\.\/drawings\/(drawing\d+\.xml)"/)||[])[1];
+    if (dt && zip.file('xl/drawings/'+dt)){
+      const dx = await zip.file('xl/drawings/'+dt).async('string'), drf = zip.file('xl/drawings/_rels/'+dt+'.rels'), drx = drf ? await drf.async('string') : '';
+      for (const an of (dx.match(/<xdr:(twoCellAnchor|oneCellAnchor)[\s\S]*?<\/xdr:\1>/g) || [])){
+        const rid = (an.match(/r:embed="([^"]+)"/)||[])[1]; if (!rid) continue;
+        const tg = (drx.match(new RegExp('Id="'+rid+'"[^>]*Target="\\.\\./media/([^"]+)"'))||drx.match(new RegExp('Target="\\.\\./media/([^"]+)"[^>]*Id="'+rid+'"'))||[])[1]; if (!tg || !zip.file('xl/media/'+tg)) continue;
+        const g = (k, t) => Number(((an.match(new RegExp('<xdr:'+k+'>[\\s\\S]*?<xdr:'+t+'>(\\d+)</xdr:'+t+'>'))||[])[1])||0);
+        const a = at(g('from','col'), g('from','colOff'), g('from','row'), g('from','rowOff'));
+        let w, h; if (/<xdr:to>/.test(an)){ const b = at(g('to','col'), g('to','colOff'), g('to','row'), g('to','rowOff')); w = b[0]-a[0]; h = b[1]-a[1]; }
+        else { w = Math.round(Number((an.match(/cx="(\d+)"/)||[])[1]||0)/9525); h = Math.round(Number((an.match(/cy="(\d+)"/)||[])[1]||0)/9525); }
+        if (w < 4 || h < 4) continue;
+        const ext = tg.split('.').pop().toLowerCase(), src = 'data:image/'+(ext==='jpg'?'jpeg':ext)+';base64,'+await zip.file('xl/media/'+tg).async('base64');
+        imgs.push(`<img src="${src}" alt="" style="position:absolute;left:${a[0]}px;top:${a[1]}px;width:${w}px;height:${h}px;object-fit:contain">`);
+      }
+    }
+  }catch(e){}
+  (extras||[]).forEach(x => { const a = at(x.col, x.colOff||0, x.row, x.rowOff||0); imgs.push(`<img src="${x.src}" alt="" style="position:absolute;left:${a[0]}px;top:${a[1]}px;width:${x.w}px;height:${x.h}px;object-fit:contain">`); });
+  return { html: `<div style="position:relative;width:${total}px">${html}${imgs.join('')}</div>`, width: total };
 }
 async function showForm(kind){
   loading(true, kind==='sf4' ? 'Filling the SF4 template' : 'Filling the SF2 template');
@@ -6920,7 +7139,16 @@ const LAC_SCALE = [[4,'Strongly Agree'],[3,'Agree'],[2,'Disagree'],[1,'Strongly 
 const LAC_EVS = ['The objectives of the session were clearly stated and met.', 'The topic is relevant to my teaching and to my learners.', 'The activities helped me understand the topic.', 'The materials were useful and well prepared.', 'The time was used well.', 'I can apply what I learned in my class.'];
 const LAC_EVR = ['My learnings from this session prepared me for learning applications in my workplace.', 'The expertise of the resource person or subject matter expert guided me to better understand the session\u2019s topics.', 'The resource person appropriately adjusted the content, methodology, and schedule to address my learning needs.', 'The resource person checked my understanding on the topic and processed my responses.', 'My learning environment was established and maintained positively by the resource person.'];
 const LAC_REF = ['What were the most valuable insights or knowledge you gained from this training?', 'How will you apply what you learned to your work or daily practice?', 'What aspects of this training were most impactful or eye opening for you?'];
-const NB_BOOKS = { LAC:'LAC Notebook', REF:'Reflection Notebook', MEET:'Meeting Notebook', NOTE:'Notes' };
+const NB_BOOKS = { LAC:'LAC Notebook', REF:'Reflection', MEET:'Meeting Notebook', NOTE:'Learning Hub notes' };
+// Only two notebooks: the LAC Notebook (it keeps the reflections and the Learning Hub notes too) and the Meeting Notebook
+const NB_TABS = { LAC:'LAC Notebook', MEET:'Meeting Notebook' };
+function nbTabOf(book){ return book==='MEET' ? 'MEET' : 'LAC'; }
+// Whether a person has written something in the notebook of a session
+function nbWritten(sid, email, kind){ const book = kind==='MEET' ? 'MEET' : 'LAC';
+  return (LAC.data.notebooks||[]).some(n => n.session===sid && n.email===email && n.book===book && Object.values(n.body||{}).some(v => String(v||'').trim())); }
+// Sessions I attended where my notebook is still empty
+function nbMissing(email){ email = email || USER.email; const today = todayPH();
+  return (LAC.data.sessions||[]).filter(s => s.date <= today && lacInvited(s, email) && (LAC.data.records||[]).some(r => r.session===s.id && r.kind==='ATT' && r.email===email) && !nbWritten(s.id, email, s.kind)); }
 function lacRole(){ return USER ? USER.role : ''; }
 function lacHead(){ return lacRole()==='head'; }
 function lacKey(){ return 'tala_lac_'+(USER?USER.email:''); }
@@ -6973,7 +7201,8 @@ async function openLac(tab){
 function lacDot(){ if (!LAC.data || !USER) return; const t = todayPH();
   const n = lacHead() ? LAC.data.hub.filter(h => h.status==='Pending').length
     : LAC.data.hub.filter(h => h.status==='Approved' && (h.assign==='all' || (h.assign||[]).indexOf(USER.email) > -1) && h.byEmail!==USER.email && !LAC.data.progress.some(p => p.hub===h.id && p.email===USER.email)).length + LAC.data.sessions.filter(s => s.date===t && lacInvited(s, USER.email) && !lacMine(s.id,'ATT')).length;
-  if (n !== LAC.dot){ LAC.dot = n; drawSide(); } }
+  const k = n + (lacHead() ? 0 : nbMissing().length);
+  if (k !== LAC.dot){ LAC.dot = k; drawSide(); } }
 function lacDraw(){
   const D = LAC.data, head = lacHead(), admin = lacRole()==='admin', doc = D.sessions.some(s => s.documenter===USER.email);
   lacDot();
@@ -6998,6 +7227,7 @@ function lacHome(){
     if (s.kind==='LAC') (s.facilitators||[]).forEach((f,i) => { if (f.email!==me && !lacMine(s.id,'EVR',f.name)) todo.push({ ico:'\u{1F3A4}', t:'Evaluate the speaker', x:f.name+', '+s.title, fn:`lacEval('${s.id}','EVR',${i})` }); });
     if (s.kind==='LAC' && !lacNotesFor(s.id, me).length) todo.push({ ico:'\u{1F4AD}', t:'Write your reflection', x:s.title, fn:`nbOpenFor('${s.id}','REF')` });
   });
+  if (!head) nbMissing().forEach(s => todo.unshift({ ico:'\u{1F4D3}', t:'Write in your '+(s.kind==='MEET'?'Meeting':'LAC')+' Notebook', x:s.title+', '+dShort(s.date)+'. Still empty.', fn:`nbOpenFor('${s.id}','${s.kind==='MEET'?'MEET':'LAC'}')`, main:1, warn:1 }));
   const mine = lacHubMine();
   mine.filter(h => { const p = lacProg(h.id); return !p || p.status!=='Finished'; }).forEach(h => { const p = lacProg(h.id); todo.push({ ico:'\u25B6', t:p?'Continue watching':'Watch', x:h.title+(p?', '+p.pct+'%':'')+(h.target?', by '+dShort(h.target):''), fn:`hubPlay('${h.id}')` }); });
   if (head){ const pend = D.hub.filter(h => h.status==='Pending').length; if (pend) todo.unshift({ ico:'\u2714', t:'Approve materials', x:pend+' waiting in the Learning Hub', fn:`LAC.tab='hub';LAC.hubSt='Pending';lacDraw()`, main:1 });
@@ -7012,7 +7242,7 @@ function lacHome(){
       <div class="ostat static"><span class="oico">\u{1F4D3}</span><b>${D.notebooks.filter(n => n.email===me).length}</b><span>Entries in my notebooks</span></div>
       ${next?`<div class="ostat static"><span class="oico">\u23F0</span><b>${esc(dShort(next.date))}</b><span>Next: ${esc(next.title)}</span></div>`:''}</div>
     <h3 class="stfgrp">To do <small>${todo.length}</small></h3>
-    <div class="abtns">${todo.map(x => `<button class="abtn ${x.main?'main':''}" onclick="${x.fn}"><span class="abico">${x.ico}</span><b>${esc(x.t)}</b><small>${esc(x.x)}</small></button>`).join('') || '<div class="empty">All done for now. Well done!</div>'}</div>
+    <div class="abtns">${todo.map(x => `<button class="abtn ${x.warn?'warn':x.main?'main':''}" onclick="${x.fn}"><span class="abico">${x.ico}</span><b>${esc(x.t)}</b><small>${esc(x.x)}</small></button>`).join('') || '<div class="empty">All done for now. Well done!</div>'}</div>
     <h3 class="stfgrp">Quick links</h3><div class="abtns small">
       <button class="abtn" onclick="LAC.tab='sess';lacDraw()"><span class="abico">\u{1F4C5}</span><b>Sessions</b><small>LAC sessions and faculty meetings</small></button>
       <button class="abtn" onclick="LAC.tab='hub';lacDraw()"><span class="abico">\u25B6</span><b>Learning Hub</b><small>Videos to learn on your own</small></button>
@@ -7024,42 +7254,55 @@ function lacHome(){
 function lacSessions(){
   const D = LAC.data, me = USER.email, head = lacHead(), today = todayPH();
   const list = D.sessions.filter(s => head || lacRole()==='admin' || lacInvited(s, me) || s.documenter===me || lacFac(s, me)).sort((a,b) => b.date.localeCompare(a.date));
-  const card = s => { const att = lacRecs(s.id,'ATT'), signed = lacMine(s.id,'ATT'), inv = lacInvitees(s).length;
-    return `<button class="lacsess" onclick="LAC.sid='${s.id}';lacDraw()"><div class="lacdate"><b>${new Date(s.date+'T00:00:00').getDate()}</b><small>${esc(new Date(s.date+'T00:00:00').toLocaleDateString('en-US',{ month:'short' }))}</small></div>
+  const card = s => { const att = lacRecs(s.id,'ATT'), signed = lacMine(s.id,'ATT'), inv = lacInvitees(s).length, nbNo = signed && !head && s.date <= today && !nbWritten(s.id, me, s.kind);
+    return `<button class="lacsess ${nbNo?'needs':''}" onclick="LAC.sid='${s.id}';lacDraw()"><div class="lacdate"><b>${new Date(s.date+'T00:00:00').getDate()}</b><small>${esc(new Date(s.date+'T00:00:00').toLocaleDateString('en-US',{ month:'short' }))}</small></div>
       <div class="lacsess-b"><span class="lackind ${s.kind}">${lacKind(s)}</span><b>${esc(s.title)}</b><small>${esc(lacTime(s))}${s.venue?' \u00B7 '+esc(s.venue):''}</small>
       <small>${(s.facilitators||[]).length?'Facilitator: '+esc(s.facilitators.map(f=>f.name).join(', ')):''}${s.documenter?' \u00B7 Documenter: '+esc(lacName(s.documenter)):''}</small></div>
-      <div class="lacsess-s">${lacViewAll(s)?`<span class="atn ok">${att.length} of ${inv} signed</span>`:''}${lacInvited(s, me)?(signed?'<span class="atn ok">\u2714 You signed</span>':s.date<=today?'<span class="atn wait">Not yet signed</span>':'<span class="atn off">Upcoming</span>'):''}</div></button>`; };
-  $('lacBody').innerHTML = `${head?`<div class="bar" style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" onclick="lacSessionForm()">\uFF0B New session</button></div>`:''}
+      <div class="lacsess-s">${lacViewAll(s)?`<span class="atn ok">${att.length} of ${inv} signed</span>`:''}${lacInvited(s, me)?(signed?'<span class="atn ok">\u2714 You signed</span>'+(nbNo?`<span class="atn bad">\u270D Write in your ${s.kind==='MEET'?'Meeting':'LAC'} Notebook</span>`:''):s.date<=today?'<span class="atn wait">Not yet signed</span>':'<span class="atn off">Upcoming</span>'):''}</div></button>`; };
+  $('lacBody').innerHTML = `${head?`<div class="bar" style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" onclick="lacSessionForm()">\uFF0B New LAC session</button><button class="btn ghost" onclick="lacSessionForm('','MEET')">\uFF0B New faculty meeting</button></div>`:''}
     <div class="lacsessions">${list.map(card).join('') || '<div class="empty">No sessions yet.'+(head?' Tap New session to set one up.':'')+'</div>'}</div>`;
 }
-function lacSessionForm(id){
-  const s = id ? lacS(id) : { kind:'LAC', date:todayPH(), start:'13:00', end:'16:00', venue:'Baluyan Elementary School', facilitators:[{ email:'', name:'' }], attendees:'all', materials:[] };
-  const P = lacPeople(), names = lacNameList();
+function lacSessionForm(id, kindNow){
+  const s0 = id ? lacS(id) : { kind:'LAC', date:todayPH(), start:'13:00', end:'16:00', venue:'Baluyan Elementary School', facilitators:[{ email:'', name:'' }], attendees:'all', materials:[] };
+  const s = Object.assign({}, s0, kindNow ? lacFormKeep(kindNow) : {});
+  const P = lacPeople(), names = lacNameList(), meet = s.kind==='MEET';
   const facRow = lacFacRow;
   const hub = LAC.data.hub.filter(h => h.status==='Approved');
-  stfModal(`<h3>${id?'Edit the session':'New session'}</h3><p class="sub">Everyone invited gets a notice. They tick their attendance, evaluate, and write in their notebooks here.</p>
-    <div class="field"><label>Kind</label><div class="stfrad"><label class="check" style="margin:0"><input type="radio" name="lsKind" value="LAC" ${s.kind!=='MEET'?'checked':''}>LAC session</label><label class="check" style="margin:0"><input type="radio" name="lsKind" value="MEET" ${s.kind==='MEET'?'checked':''}>Faculty meeting</label></div></div>
-    <div class="field"><label for="lsTitle">Title</label><input id="lsTitle" maxlength="160" value="${esc(s.title||'')}" placeholder="Example: LAC Session 3, Differentiated Instruction in Multigrade Classes"></div>
-    <div class="field"><label for="lsTopic">Topic or focus (optional)</label><input id="lsTopic" maxlength="200" value="${esc(s.topic||'')}"></div>
-    <div class="stfg3"><div class="field"><label for="lsDate">Date</label><input type="date" id="lsDate" value="${esc(s.date)}"></div><div class="field"><label for="lsStart">Starts</label><input type="time" id="lsStart" value="${esc(s.start||'')}"></div><div class="field"><label for="lsEnd">Ends</label><input type="time" id="lsEnd" value="${esc(s.end||'')}"></div></div>
-    <div class="field"><label for="lsVenue">Venue</label><input id="lsVenue" maxlength="120" value="${esc(s.venue||'')}"></div>
-    <div class="field"><label>Facilitators or speakers</label><div id="lsFac">${(s.facilitators.length?s.facilitators:[{}]).map(facRow).join('')}</div><button class="linkbtn" onclick="$('lsFac').insertAdjacentHTML('beforeend', lacFacRow({}))">\uFF0B Add another speaker</button></div>
-    <datalist id="lacNames">${names.map(n => `<option value="${esc(n)}">`).join('')}</datalist>
-    ${lacHead()?`<div class="field"><label for="lsDoc">LAC Documenter for this session</label><select id="lsDoc"><option value="">None yet</option>${P.map(p=>`<option value="${esc(p.email)}" ${p.email===s.documenter?'selected':''}>${esc(p.name)}</option>`).join('')}</select></div>`:''}
-    <div class="field"><label for="lsObj">Objectives (one per line)</label><textarea id="lsObj" rows="3" maxlength="1500">${esc(s.objectives||'')}</textarea></div>
+  stfModal(`<h3>${id?(meet?'Edit the meeting':'Edit the session'):(meet?'New faculty meeting':'New LAC session')}</h3><p class="sub">${meet?'Everyone invited gets a notice. They tick their attendance and write in their Meeting Notebook while the meeting goes on.':'Everyone invited gets a notice. They tick their attendance, evaluate, and write in their notebooks here.'}</p>
+    <div class="field"><label>Kind</label><div class="stfrad"><label class="check" style="margin:0"><input type="radio" name="lsKind" value="LAC" ${!meet?'checked':''} onchange="lacSessionForm('${id||''}','LAC')">LAC session</label><label class="check" style="margin:0"><input type="radio" name="lsKind" value="MEET" ${meet?'checked':''} onchange="lacSessionForm('${id||''}','MEET')">Faculty meeting</label></div></div>
+    <div class="field"><label for="lsTitle">Title</label><input id="lsTitle" maxlength="160" value="${esc(s.title||'')}" placeholder="${meet?'Example: Faculty Meeting, October 2026':'Example: LAC Session 3, Differentiated Instruction in Multigrade Classes'}"></div>
+    ${meet?`<div class="field"><label for="lsLink">Meeting link (optional)</label><input id="lsLink" maxlength="500" value="${esc(s.link||'')}" placeholder="Paste the Microsoft Teams, Google Meet, or Zoom link"><small class="hint">Teachers tap Join the meeting, then write in their Meeting Notebook in TALA at the same time.</small></div>
+      <div class="stfg2"><div class="field"><label for="lsDate">Date</label><input type="date" id="lsDate" value="${esc(s.date)}"></div><div class="field"><label for="lsStart">Starts</label><input type="time" id="lsStart" value="${esc(s.start||'')}"><small class="hint">No end time is needed.</small></div></div>
+      <div class="field"><label for="lsVenue">Where (optional)</label><input id="lsVenue" maxlength="120" value="${esc(s.venue||'')}" placeholder="Example: Grade 6 classroom, or Online"></div>
+      ${lacHead()?`<div class="field"><label for="lsDoc">Who writes the minutes (optional)</label><select id="lsDoc"><option value="">None yet</option>${P.map(p=>`<option value="${esc(p.email)}" ${p.email===s.documenter?'selected':''}>${esc(p.name)}</option>`).join('')}</select></div>`:''}
+      <div class="field"><label for="lsObj">Agenda (one per line, optional)</label><textarea id="lsObj" rows="4" maxlength="1500">${esc(s.objectives||'')}</textarea></div>`
+    :`<div class="field"><label for="lsTopic">Topic or focus (optional)</label><input id="lsTopic" maxlength="200" value="${esc(s.topic||'')}"></div>
+      <div class="stfg3"><div class="field"><label for="lsDate">Date</label><input type="date" id="lsDate" value="${esc(s.date)}"></div><div class="field"><label for="lsStart">Starts</label><input type="time" id="lsStart" value="${esc(s.start||'')}"></div><div class="field"><label for="lsEnd">Ends</label><input type="time" id="lsEnd" value="${esc(s.end||'')}"></div></div>
+      <div class="field"><label for="lsVenue">Venue</label><input id="lsVenue" maxlength="120" value="${esc(s.venue||'')}"></div>
+      <div class="field"><label>Facilitators or speakers</label><div id="lsFac">${((s.facilitators||[]).length?s.facilitators:[{}]).map(facRow).join('')}</div><button class="linkbtn" onclick="$('lsFac').insertAdjacentHTML('beforeend', lacFacRow({}))">＋ Add another speaker</button></div>
+      <datalist id="lacNames">${names.map(n => `<option value="${esc(n)}">`).join('')}</datalist>
+      ${lacHead()?`<div class="field"><label for="lsDoc">LAC Documenter for this session</label><select id="lsDoc"><option value="">None yet</option>${P.map(p=>`<option value="${esc(p.email)}" ${p.email===s.documenter?'selected':''}>${esc(p.name)}</option>`).join('')}</select></div>`:''}
+      <div class="field"><label for="lsObj">Objectives (one per line)</label><textarea id="lsObj" rows="3" maxlength="1500">${esc(s.objectives||'')}</textarea></div>`}
     <div class="field"><label>Who attends</label><div class="stfrad"><label class="check" style="margin:0"><input type="radio" name="lsAll" value="all" ${s.attendees==='all'?'checked':''} onchange="$('lsWho').hidden=true">All personnel</label><label class="check" style="margin:0"><input type="radio" name="lsAll" value="some" ${s.attendees!=='all'?'checked':''} onchange="$('lsWho').hidden=false">Selected personnel</label></div>
       <div id="lsWho" class="lacpick" ${s.attendees==='all'?'hidden':''}>${P.map(p=>`<label class="check" style="margin:0"><input type="checkbox" value="${esc(p.email)}" ${s.attendees!=='all'&&s.attendees.indexOf(p.email)>-1?'checked':''}>${esc(p.name)}</label>`).join('')}</div></div>
-    ${hub.length?`<div class="field"><label>Learning Hub materials of this session (optional)</label><div class="lacpick" id="lsMat">${hub.map(h=>`<label class="check" style="margin:0"><input type="checkbox" value="${h.id}" ${(s.materials||[]).indexOf(h.id)>-1?'checked':''}>${esc(h.title)}</label>`).join('')}</div></div>`:''}
+    ${!meet&&hub.length?`<div class="field"><label>Learning Hub materials of this session (optional)</label><div class="lacpick" id="lsMat">${hub.map(h=>`<label class="check" style="margin:0"><input type="checkbox" value="${h.id}" ${(s.materials||[]).indexOf(h.id)>-1?'checked':''}>${esc(h.title)}</label>`).join('')}</div></div>`:''}
     <p class="err" id="lsErr"></p><div class="modal-actions">${id&&lacHead()?`<button class="linkbtn danger" style="margin-right:auto" onclick="lacSessionDelete('${id}')">Delete</button>`:''}<button class="btn ghost" onclick="closeModal('stfModal')">Cancel</button><button class="btn" onclick="lacSessionSave('${id||''}')">Save</button></div>`, 'wide');
 }
+// Switching between LAC session and meeting keeps what was already typed
+function lacFormKeep(kind){ const v = k => $(k) ? $(k).value : undefined, o = { kind };
+  if (v('lsTitle') !== undefined) o.title = v('lsTitle'); if (v('lsDate')) o.date = v('lsDate'); if (v('lsStart') !== undefined) o.start = v('lsStart'); if (v('lsVenue') !== undefined) o.venue = v('lsVenue');
+  if (v('lsObj') !== undefined) o.objectives = v('lsObj'); if (v('lsDoc') !== undefined) o.documenter = v('lsDoc'); if (v('lsLink') !== undefined) o.link = v('lsLink');
+  const all = document.querySelector('input[name=lsAll]:checked'); if (all) o.attendees = all.value==='all' ? 'all' : [...document.querySelectorAll('#lsWho input:checked')].map(x=>x.value);
+  return o; }
 function lacFacRow(f){ return `<div class="lacfac"><input list="lacNames" placeholder="Name of the facilitator or speaker" value="${esc(f.name||'')}" data-k="name"><input placeholder="Position or office (optional)" value="${esc(f.position||'')}" data-k="position"><button class="linkbtn danger" onclick="this.parentElement.remove()">Remove</button></div>`; }
 function lacNameList(){ const set = new Set(); lacPeople().forEach(p => set.add(p.name)); (LAC.data.sessions||[]).forEach(s => (s.facilitators||[]).forEach(f => f.name && set.add(f.name))); (LAC.data.hub||[]).forEach(h => h.facilitator && set.add(h.facilitator)); return [...set].sort(); }
 async function lacSessionSave(id){
   const P = lacPeople(), kind = document.querySelector('input[name=lsKind]:checked').value;
   const facilitators = [...document.querySelectorAll('#lsFac .lacfac')].map(r => { const name = r.querySelector('[data-k=name]').value.trim(), p = P.find(x => x.name.toLowerCase()===name.toLowerCase()); return { name, position:r.querySelector('[data-k=position]').value.trim() || (p?lacPos(p.email):''), email:p?p.email:'' }; }).filter(f => f.name);
   const all = document.querySelector('input[name=lsAll]:checked').value==='all';
-  const session = { id, kind, title:$('lsTitle').value.trim(), topic:$('lsTopic').value.trim(), date:$('lsDate').value, start:$('lsStart').value, end:$('lsEnd').value, venue:$('lsVenue').value.trim(), facilitators,
+  const session = { id, kind, title:$('lsTitle').value.trim(), topic:$('lsTopic') ? $('lsTopic').value.trim() : '', date:$('lsDate').value, start:$('lsStart').value, end:$('lsEnd') ? $('lsEnd').value : '', venue:$('lsVenue').value.trim(), facilitators, link: $('lsLink') ? $('lsLink').value.trim() : '',
     documenter: $('lsDoc') ? $('lsDoc').value : (lacS(id)||{}).documenter, objectives:$('lsObj').value.trim(), attendees: all ? 'all' : [...document.querySelectorAll('#lsWho input:checked')].map(x=>x.value), materials: [...document.querySelectorAll('#lsMat input:checked')].map(x=>x.value) };
+  if (session.link && !/^https?:\/\/\S+$/i.test(session.link)) return $('lsErr').textContent = 'The meeting link must start with https://';
   if (!session.title) return $('lsErr').textContent = 'Type the title.'; if (!session.date) return $('lsErr').textContent = 'Choose the date.';
   try{ LAC.data = await api('lacSessionSave', { session }); lacSaveLocal(); closeModal('stfModal'); lacDraw(); toast(id ? 'Saved.' : 'Session saved. Everyone invited was notified.'); if (!id) setTimeout(() => lacMsgOpen('sess', LAC.data.sessions.slice(-1)[0].id), 400); }
   catch(e){ handleErr(e, 'lsErr'); }
@@ -7077,17 +7320,20 @@ function lacSession(id){
       <p class="hint">${(s.facilitators||[]).length?'Facilitator: '+esc(s.facilitators.map(f=>f.name).join(', ')):''}${s.documenter?' \u00B7 LAC Documenter: '+esc(lacName(s.documenter)):''}</p></div>
     <div class="head-actions"><button class="btn ghost" onclick="LAC.sid='';lacDraw()">Back</button>${staff?`<button class="btn ghost" onclick="lacSessionForm('${id}')">Edit</button>`:''}${all?`<button class="btn ghost" onclick="lacMsgOpen('sess','${id}')">\u{1F4AC} Messenger message</button>`:''}</div></div>
     ${s.topic||s.objectives?`<div class="lacobj">${s.topic?`<b>${esc(s.topic)}</b>`:''}${s.objectives?`<ul>${s.objectives.split('\n').filter(Boolean).map(o=>`<li>${esc(o)}</li>`).join('')}</ul>`:''}</div>`:''}
+    ${inv && signed && !nbWritten(id, me, s.kind) && !lacHead() ? `<div class="nbmiss static"><b>\u270D Your ${lac?'LAC':'Meeting'} Notebook for this ${lac?'session':'meeting'} is still empty</b><span>This ${lac?'session':'meeting'} is not complete until you write your notes. Tap ${lac?'My LAC Notebook':'My Meeting Notebook'} below.</span></div>`:''}
+    ${!lac && s.link ? `<div class="meetjoin"><div><b>\u{1F4F9} Online meeting</b><small>Join the meeting, then open your Meeting Notebook here to write while it goes on.</small></div><a class="btn" href="${esc(s.link)}" target="_blank" rel="noopener">Join the meeting</a></div>`:''}
     ${inv?`<h3 class="stfgrp">For you</h3><div class="abtns">
       ${signed?btn('\u2714','Attendance signed', 'At '+esc(time12(String(signed.on).slice(11,16)))+(signed.local?', not yet synced':''), `lacSign('${id}')`):btn('\u270D','Tick my attendance','Signs with your e-signature',`lacSign('${id}')`,'main')}
       ${lac?btn('\u2B50','Evaluate the session', lacMine(id,'EVS')?'Done. Tap to change.':'Takes one minute', `lacEval('${id}','EVS')`):''}
       ${lac?(s.facilitators||[]).map((f,i) => f.email===me ? '' : btn('\u{1F3A4}','Evaluate the speaker', esc(f.name)+(lacMine(id,'EVR',f.name)?', done':''), `lacEval('${id}','EVR',${i})`)).join(''):''}
-      ${btn('\u{1F4D3}', lac?'My LAC Notebook':'My Meeting Notebook', lac?'Anything I want to write':'My notes of the meeting', `nbOpenFor('${id}','${lac?'LAC':'MEET'}')`)}
+      ${nbWritten(id, me, s.kind) ? btn('\u{1F4D3}', lac?'My LAC Notebook':'My Meeting Notebook', 'Written. Tap to open or edit.', `nbOpenFor('${id}','${lac?'LAC':'MEET'}')`)
+        : btn('\u{1F4D3}', lac?'My LAC Notebook':'My Meeting Notebook', signed ? 'Not yet written. Please write your notes.' : (lac?'Anything I want to write':'My notes of the meeting'), `nbOpenFor('${id}','${lac?'LAC':'MEET'}')`, signed ? 'warn' : '')}
       ${lac?btn('\u{1F4AD}','My Reflection', lacNotesFor(id, me).length?'Written. Tap to open.':'Share your significant learnings', `nbOpenFor('${id}','REF')`):''}
       ${mats.map(h => btn('\u25B6', esc(h.title), (lacProg(h.id)||{}).status || 'Not started', `hubPlay('${h.id}')`)).join('')}</div>`:''}
     ${all||fac?`<h3 class="stfgrp">Reports</h3><div class="abtns">
       ${all?btn('\u{1F4CB}','Attendance', att.length+' of '+invs.length+' signed', `lacAttView('${id}')`):''}
       ${lac&&(all||fac)?btn('\u2B50','Evaluations', evs.length+' of '+att.length+' answered the session evaluation', `lacEvalAll('${id}')`):''}
-      ${lac&&staff?btn('\u{1F50E}','Who answered', 'Follow up those not yet done', `lacWho('${id}')`):''}
+      ${staff?btn('\u{1F50E}','Who answered', 'Follow up those not yet done', `lacWho('${id}')`):''}
       ${all?btn('\u{1F4DD}','Minutes', s.minutes&&s.minutes.on?'Saved by '+esc(s.minutes.by):'Not yet written', `lacMinutesOpen('${id}')`):''}
       ${all&&lac&&lacHead()?btn('\u{1F4AD}','Reflections', notes.length+' written', `lacRefSum('${id}')`):''}
       ${all&&lac?btn('\u{1F3C6}','Accomplishment report', s.report&&s.report.on?'Saved by '+esc(s.report.by):'Draft from the session', `lacReportOpen('${id}')`):''}
@@ -7163,12 +7409,12 @@ function lacEvalAll(id){ lacReportView('Evaluation of the Session and the Resour
 function lacWhoRows(id){
   const s = lacS(id), sp = (s.facilitators||[]);
   return lacInvitees(s).filter(p => p.role!=='head' || lacRecs(id,'ATT').some(r => r.email===p.email)).map(p => { const has = k => lacRecs(id,k).some(r => r.email===p.email);
-    return { p, att:has('ATT'), evs:has('EVS'), evr: sp.map(f => f.email===p.email ? null : lacRecs(id,'EVR').some(r => r.email===p.email && r.data.speaker===f.name)), ref: lacNotesFor(id, p.email).length > 0 }; });
+    return { p, att:has('ATT'), evs:has('EVS'), evr: sp.map(f => f.email===p.email ? null : lacRecs(id,'EVR').some(r => r.email===p.email && r.data.speaker===f.name)), ref: lacNotesFor(id, p.email).length > 0, nb: nbWritten(id, p.email, s.kind) }; });
 }
 function lacWho(id){
-  const s = lacS(id), sp = s.facilitators||[], rows = lacWhoRows(id), ok = v => v===null ? '<span class="hint">Speaker</span>' : v ? '<span class="atn ok">✔ Done</span>' : '<span class="atn bad">Not yet</span>';
-  const html = `<div class="table-wrap"><table class="stft-table stfp-tbl"><thead><tr><th>Name</th><th>Attendance</th><th>Session evaluation</th>${sp.map(f => `<th>Speaker: ${esc(f.name)}</th>`).join('')}<th>Reflection</th></tr></thead><tbody>
-    ${rows.map(r => `<tr><td><b>${esc(r.p.name)}</b></td><td>${ok(r.att)}</td><td>${ok(r.evs)}</td>${r.evr.map(v => `<td>${ok(v)}</td>`).join('')}<td>${ok(r.ref)}</td></tr>`).join('')}</tbody></table></div>`;
+  const s = lacS(id), lac = s.kind==='LAC', sp = lac ? (s.facilitators||[]) : [], rows = lacWhoRows(id), ok = v => v===null ? '<span class="hint">Speaker</span>' : v ? '<span class="atn ok">✔ Done</span>' : '<span class="atn bad">Not yet</span>';
+  const html = `<div class="table-wrap"><table class="stft-table stfp-tbl"><thead><tr><th>Name</th><th>Attendance</th>${lac?'<th>Session evaluation</th>':''}${sp.map(f => `<th>Speaker: ${esc(f.name)}</th>`).join('')}${lac?'<th>Reflection</th>':''}<th>${lac?'LAC':'Meeting'} Notebook</th></tr></thead><tbody>
+    ${rows.map(r => `<tr><td><b>${esc(r.p.name)}</b></td><td>${ok(r.att)}</td>${lac?`<td>${ok(r.evs)}</td>`:''}${lac?r.evr.map(v => `<td>${ok(v)}</td>`).join(''):''}${lac?`<td>${ok(r.ref)}</td>`:''}<td>${ok(r.nb)}</td></tr>`).join('')}</tbody></table></div>`;
   LAC.viewHtml = html; LAC.lastRep = { title:'Who Answered the Evaluation and Reflection', id };
   stfModal(`<h3>Who answered</h3><p class="sub">${esc(s.title)}. Tap Follow up message to remind those not yet done.</p>${html}
     <div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Close</button><button class="btn ghost" onclick="lacPrintSetup('view','${id}')">\u{1F5A8} Print</button><button class="btn" onclick="lacMsgOpen('follow','${id}')">\u{1F4AC} Follow up message</button></div>`, 'wide');
@@ -7317,18 +7563,20 @@ function nbGuard(el){
 function nbBang(){ return `<button class="nbbang" onclick="this.classList.toggle('open')" aria-label="About this notebook">!<span>Your School Head can read this notebook.</span></button>`; }
 function lacNotebooks(){
   const D = LAC.data, head = lacHead(), who = head ? (LAC.nbWho || '') : USER.email;
-  const list = D.notebooks.filter(n => n.book===LAC.nb && (head ? (!who || n.email===who) : n.email===USER.email)).sort((a,b) => String(b.updated).localeCompare(String(a.updated)));
-  const books = Object.keys(NB_BOOKS);
-  $('lacBody').innerHTML = `<div class="bar" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><div class="tabs">${books.map(b => `<button class="${LAC.nb===b?'on':''}" onclick="LAC.nb='${b}';lacNotebooks()">${NB_BOOKS[b]}</button>`).join('')}</div>${nbBang()}
+  if (!NB_TABS[LAC.nb]) LAC.nb = 'LAC';
+  const list = D.notebooks.filter(n => nbTabOf(n.book)===LAC.nb && (head ? (!who || n.email===who) : n.email===USER.email)).sort((a,b) => String(b.updated).localeCompare(String(a.updated)));
+  const books = Object.keys(NB_TABS), miss = head ? [] : nbMissing().filter(s => (s.kind==='MEET' ? 'MEET' : 'LAC')===LAC.nb);
+  $('lacBody').innerHTML = `<div class="bar" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><div class="tabs">${books.map(b => { const k = head ? 0 : nbMissing().filter(s => (s.kind==='MEET'?'MEET':'LAC')===b).length; return `<button class="${LAC.nb===b?'on':''}" onclick="LAC.nb='${b}';lacNotebooks()">${NB_TABS[b]}${k?` <i class="sdot">${k}</i>`:''}</button>`; }).join('')}</div>${nbBang()}
       ${head?`<select onchange="LAC.nbWho=this.value;lacNotebooks()"><option value="">Everyone</option>${lacPeople().map(p => `<option value="${esc(p.email)}" ${p.email===LAC.nbWho?'selected':''}>${esc(p.name)}${p.email===USER.email?' (me)':''}</option>`).join('')}</select>`:''}
-      <button class="btn" onclick="nbOpen('','${LAC.nb}')">\uFF0B New entry</button><button class="btn ghost" onclick="nbPrint()">\u{1F5A8} Print ${head&&!who?'all':who===USER.email||!head?'my':''} ${esc(NB_BOOKS[LAC.nb])}</button></div>
+      <button class="btn" onclick="nbOpen('','${LAC.nb}')">\uFF0B New entry</button><button class="btn ghost" onclick="nbPrint()">\u{1F5A8} Print ${head&&!who?'all':who===USER.email||!head?'my':''} ${esc(NB_TABS[LAC.nb])}</button></div>
+    ${miss.map(s => `<button class="nbmiss" onclick="nbOpenFor('${s.id}','${s.kind==='MEET'?'MEET':'LAC'}')"><b>\u270D Please write in your ${s.kind==='MEET'?'Meeting':'LAC'} Notebook</b><span>${esc(s.title)}, ${esc(dShort(s.date))}. You attended, but your notebook for this ${s.kind==='MEET'?'meeting':'session'} is still empty. Tap here to write.</span></button>`).join('')}
     ${head?`<p class="hint">${D.notebooks.filter(n => n.email!==USER.email && !n.checkedOn).length} entries of the teachers in all notebooks are not yet checked.</p>`:''}
     <div class="nblist">${list.map(nbCard).join('') || '<div class="empty">No entries yet. Tap New entry to start writing.</div>'}</div>`;
 }
 function nbCard(n){
   const s = n.session ? lacS(n.session) : null, b = n.body || {}, mine = n.email===USER.email, head = lacHead();
   const preview = String(b.text || b.learn || b.r0 || b.r1 || '').slice(0, 220);
-  return `<div class="nbcard ${n.checkedOn?'checked':''}"><div class="stfreq-h"><span class="stfico">\u{1F4D3}</span><div><b>${esc(n.title || (s?s.title:NB_BOOKS[n.book]))}</b><small>${head&&!mine?esc(n.name)+' \u00B7 ':''}${esc(dTime(n.updated))}${n.local?' \u00B7 <span class="unsynced">Not yet synced</span>':''}</small></div>
+  return `<div class="nbcard ${n.checkedOn?'checked':''}"><div class="stfreq-h"><span class="stfico">\u{1F4D3}</span><div>${n.book==='REF'?'<span class="nbtag">Reflection</span>':n.book==='NOTE'||(n.book==='LAC'&&!n.session)?'<span class="nbtag hub">Learning Hub</span>':''}<b>${esc(n.title || (s?s.title:NB_BOOKS[n.book]))}</b><small>${head&&!mine?esc(n.name)+' \u00B7 ':''}${esc(dTime(n.updated))}${n.local?' \u00B7 <span class="unsynced">Not yet synced</span>':''}</small></div>
       ${n.checkedOn?`<span class="atn ok">\u2714 Checked</span>`:''}${head&&n.flag?'<span class="atn bad" title="A large block of text appeared at once">Check this entry</span>':''}</div>
     <p class="nbprev">${esc(preview)}${preview.length>=220?'...':''}</p>
     ${n.remark?`<p class="stfnote"><b>School Head:</b> ${esc(n.remark)}</p>`:''}
@@ -7351,7 +7599,8 @@ function nbOpen(id, book, sid){
   else fields = ta('text','Notes',10,'Type your notes...');
   stfModal(`<div style="display:flex;align-items:center;gap:8px"><h3 style="margin:0">${esc(NB_BOOKS[n.book])}</h3>${nbBang()}</div>
     ${mine?'':`<p class="sub">${esc(n.name)}${n.flag?' \u00B7 <b style="color:var(--late)">Check this entry: a large block of text appeared at once.</b>':''}</p>`}
-    ${n.book!=='NOTE'?`<div class="field"><label for="nbSess">${n.book==='MEET'?'Meeting':'LAC session'}</label><select id="nbSess" ${ro?'disabled':''}><option value="">Choose</option>${sess.map(s=>`<option value="${s.id}" ${s.id===n.session?'selected':''}>${esc(s.title)}, ${esc(dShort(s.date))}</option>`).join('')}</select></div>`
+    ${n.book!=='NOTE'?`<div class="field"><label for="nbSess">${n.book==='MEET'?'Meeting':'LAC session'}</label><select id="nbSess" ${ro?'disabled':''}><option value="">${n.book==='LAC'?'Not for a session (Learning Hub or my own notes)':'Choose'}</option>${sess.map(s=>`<option value="${s.id}" ${s.id===n.session?'selected':''}>${esc(s.title)}, ${esc(dShort(s.date))}</option>`).join('')}</select></div>
+      ${n.book==='LAC'&&(n.title||!n.session)?`<div class="field"><label for="nbTitle">Title</label><input class="nbt" id="nbTitle" maxlength="160" ${ro} value="${esc(n.title||'')}" placeholder="Example: Notes from the video on Domain 1"></div>`:''}`
       :`<div class="field"><label for="nbTitle">Title</label><input class="nbt" id="nbTitle" maxlength="160" ${ro} value="${esc(n.title||'')}" placeholder="Example: Ideas for the reading program"></div>`}
     ${fields}
     ${n.remark?`<p class="stfnote"><b>School Head:</b> ${esc(n.remark)}</p>`:''}
@@ -7362,7 +7611,8 @@ async function nbSaveNow(){
   const n = LAC.nbEdit, body = {}; document.querySelectorAll('#stfMBody textarea.nbt').forEach(t => body[t.id.slice(3)] = t.value.trim());
   const session = $('nbSess') ? $('nbSess').value : '', title = $('nbTitle') ? $('nbTitle').value.trim() : '';
   if (!Object.values(body).some(Boolean)) return $('nbErr').textContent = 'Write something first.';
-  if (n.book!=='NOTE' && !session) return $('nbErr').textContent = 'Choose the '+(n.book==='MEET'?'meeting':'LAC session')+'.';
+  if (n.book==='MEET' && !session) return $('nbErr').textContent = 'Choose the meeting.';
+  if ((n.book==='LAC' || n.book==='REF') && !session && !title) return $('nbErr').textContent = 'Choose the LAC session, or type a title.';
   const note = { id:n.id, cid: n.id ? '' : 'N'+Date.now().toString(36)+Math.floor(Math.random()*900+100), book:n.book, session, title, body, flag:LAC.flag };
   try{ if (navigator.onLine===false) throw new Error(MSG.NET);
     const r = await api('nbSave', { note }); const i = LAC.data.notebooks.findIndex(x => x.id===r.note.id); if (i > -1) LAC.data.notebooks[i] = r.note; else LAC.data.notebooks.push(r.note); toast('Saved.'); }
@@ -7384,9 +7634,9 @@ function nbHtml(n){ const s = n.session ? lacS(n.session) : null, b = n.body || 
     ${n.checkedOn?`<p class="stfnote">\u2714 Checked by ${esc(n.checkedBy)}, ${esc(dTime(n.checkedOn))}${n.remark?'. '+esc(n.remark):''}</p>`:''}</div>`; }
 function nbPrint(id){
   const head = lacHead(), who = head ? LAC.nbWho : USER.email;
-  const list = id ? [LAC.data.notebooks.find(x => x.id===id)] : LAC.data.notebooks.filter(n => n.book===LAC.nb && (!who || n.email===who)).sort((a,b) => String(a.updated).localeCompare(String(b.updated)));
+  const list = id ? [LAC.data.notebooks.find(x => x.id===id)] : LAC.data.notebooks.filter(n => nbTabOf(n.book)===LAC.nb && (!who || n.email===who)).sort((a,b) => String(a.updated).localeCompare(String(b.updated)));
   if (!list.length || !list[0]) return toast('There is nothing to print yet.');
-  const book = NB_BOOKS[list[0].book], owner = [...new Set(list.map(n => n.name))];
+  const book = id ? NB_BOOKS[list[0].book] : NB_TABS[LAC.nb], owner = [...new Set(list.map(n => n.name))];
   $('printArea').innerHTML = `<div class="stfprint"><div class="stfp-page">${stfPrintHead(book, owner.length===1 ? owner[0] : 'All personnel')}${list.map(nbHtml).join('<hr>')}<p class="stfp-foot">Generated by TALA on ${esc(fmtLong(todayPH()))}.</p></div></div>`;
   closeModal('stfModal'); setTimeout(() => window.print(), 250);
 }
@@ -7523,7 +7773,7 @@ async function hubPlay(id){
 function hubNote(){
   const w = $('hubWrap'), el = $('hubNote'); if (!w || !el) return;
   if (!el.hidden){ hubNoteHide(); return; }
-  const T = nbFloatTarget(), n = LAC.data.notebooks.find(x => x.email===USER.email && x.book===T.book && (T.book==='LAC' ? x.session===T.session : x.title===T.title));
+  const T = nbFloatTarget(), n = LAC.data.notebooks.find(x => x.email===USER.email && (T.session ? x.book==='LAC' && x.session===T.session : ((x.book==='LAC' && !x.session) || x.book==='NOTE') && x.title===T.title));
   if (!LAC.fl || LAC.fl.T.label !== T.label) LAC.fl = { T, id: n ? n.id : '', cid: 'N'+Date.now().toString(36)+Math.floor(Math.random()*900+100), flag:false };
   if (!$('nbfText')){
     const draft = nbFloatDraft(), saved = n && n.body ? (n.body.text||'') : '';
@@ -7660,10 +7910,10 @@ function hubClose(){ const P = LAC.play; if (document.fullscreenElement) documen
 function nbFloatTarget(){
   const P = LAC.play, h = P && P.h, sid = h && h.session && lacS(h.session) ? h.session : '';
   if (sid) return { book:'LAC', session:sid, title:'', label:(lacS(sid)||{}).title || 'LAC Notebook' };
-  return { book:'NOTE', session:'', title: h ? h.title : 'My notes', label: h ? h.title : 'My notes' };
+  return { book:'LAC', session:'', title: h ? h.title : 'My notes', label: h ? h.title : 'My notes' };
 }
 function nbFloat(){
-  const T = nbFloatTarget(), n = LAC.data.notebooks.find(x => x.email===USER.email && x.book===T.book && (T.book==='LAC' ? x.session===T.session : x.title===T.title));
+  const T = nbFloatTarget(), n = LAC.data.notebooks.find(x => x.email===USER.email && (T.session ? x.book==='LAC' && x.session===T.session : ((x.book==='LAC' && !x.session) || x.book==='NOTE') && x.title===T.title));
   LAC.fl = { T, id: n ? n.id : '', flag:false };
   let el = $('nbFloat'); if (!el){ el = document.createElement('div'); el.id = 'nbFloat'; el.className = 'nbfloat'; document.body.appendChild(el); }
   el.classList.remove('min'); el.hidden = false;
@@ -7761,13 +8011,14 @@ function lacOverview(){
 function lacMsgOpen(kind, id){
   const head = (LAC.data.headName||USER.name), D = LAC.data; let t = '';
   if (kind==='sess'){ const s = lacS(id), att = lacRecs(id,'ATT'), not = lacInvitees(s).filter(p => !att.some(a => a.email===p.email) && p.role!=='head');
-    t = `Good day, Ma'am and Sir! \u{1F31F}\n\n${s.kind==='MEET'?'\u{1F4E2} Faculty Meeting':'\u{1F4DA} LAC Session'}: ${s.title}\n\u{1F4C5} ${fmtLong(s.date)}${lacTime(s)?', '+lacTime(s):''}\n\u{1F4CD} ${s.venue||'Baluyan Elementary School'}${(s.facilitators||[]).length?'\n\u{1F3A4} '+(s.kind==='MEET'?'Presider':'Facilitator')+': '+s.facilitators.map(f=>f.name).join(', '):''}\n\nPlease open TALA, then LAC and Teacher Development:\n\u2705 Tick your attendance\n${s.kind==='LAC'?'\u{1F4D3} Write in your LAC Notebook and answer the reflection\n\u2B50 Evaluate the session and the speaker\n':'\u{1F4D3} Write your notes in the Meeting Notebook\n'}${not.length && s.date <= todayPH()?'\nNot yet signed: '+not.map(p=>p.name).join(', ')+'\n':''}\nThank you and God bless! \u{1F64F}\n${head}\nSchool Head`; }
+    t = `Good day, Ma'am and Sir! \u{1F31F}\n\n${s.kind==='MEET'?'\u{1F4E2} Faculty Meeting':'\u{1F4DA} LAC Session'}: ${s.title}\n\u{1F4C5} ${fmtLong(s.date)}${lacTime(s)?', '+lacTime(s):''}\n\u{1F4CD} ${s.venue||'Baluyan Elementary School'}${s.link?'\n\u{1F517} Join here: '+s.link:''}${(s.facilitators||[]).length?'\n\u{1F3A4} '+(s.kind==='MEET'?'Presider':'Facilitator')+': '+s.facilitators.map(f=>f.name).join(', '):''}\n\nPlease open TALA, then LAC and Teacher Development:\n\u2705 Tick your attendance\n${s.kind==='LAC'?'\u{1F4D3} Write in your LAC Notebook and answer the reflection\n\u2B50 Evaluate the session and the speaker\n':'\u{1F4D3} Write your notes in the Meeting Notebook\n'}${not.length && s.date <= todayPH()?'\nNot yet signed: '+not.map(p=>p.name).join(', ')+'\n':''}\nThank you and God bless! \u{1F64F}\n${head}\nSchool Head`; }
   else if (kind==='follow'){ const s = lacS(id), sp = s.facilitators||[], rows = lacWhoRows(id).filter(r => r.p.role!=='head'), names = f => rows.filter(f).map(r => r.p.name);
     const parts = [], a = names(r => !r.att), e = names(r => r.att && !r.evs), f = names(r => r.att && !r.ref);
     if (a.length) parts.push('\u270D Attendance not yet signed:\n'+a.map(n=>'\u2022 '+n).join('\n'));
     if (s.kind==='LAC' && e.length) parts.push('\u2B50 Evaluation of the session not yet done:\n'+e.map(n=>'\u2022 '+n).join('\n'));
     if (s.kind==='LAC') sp.forEach((x,i) => { const n = rows.filter(r => r.att && r.evr[i]===false).map(r => r.p.name); if (n.length) parts.push('\u{1F3A4} Evaluation of '+x.name+' not yet done:\n'+n.map(m=>'\u2022 '+m).join('\n')); });
     if (s.kind==='LAC' && f.length) parts.push('\u{1F4AD} Reflection not yet written:\n'+f.map(n=>'\u2022 '+n).join('\n'));
+    const nb = names(r => r.att && !r.nb); if (nb.length) parts.push('\u{1F4D3} '+(s.kind==='LAC'?'LAC':'Meeting')+' Notebook still empty:\n'+nb.map(n=>'\u2022 '+n).join('\n'));
     t = `Good day, Ma'am and Sir! \u{1F31F}\n\nA friendly follow up for our ${lacKind(s)}: ${s.title} (${fmtLong(s.date)}).\n\n${parts.join('\n\n') || 'Everyone is done. Thank you very much!'}\n\nPlease open TALA, then LAC and Teacher Development, then the session, to finish these today. Thank you! \u{1F64F}\n${head}\nSchool Head`; }
   else if (kind==='hub'){ const h = D.hub.find(x => x.id===id), as = hubAssignees(h), notDone = as.filter(p => (lacProg(h.id, p.email)||{}).status!=='Finished' && p.role!=='head');
     t = `Good day, Ma'am and Sir! \u{1F31F}\n\nNew in the TALA Learning Hub \u25B6\n\u{1F3AC} ${h.title}${h.facilitator?'\n\u{1F3A4} '+h.facilitator:''}${h.target?'\n\u{1F4C5} Please finish it by '+fmtLong(h.target):''}\n\nOpen TALA, then LAC and Teacher Development, then Learning Hub. Watch it until the end so it is counted as finished.${notDone.length && notDone.length < as.length ? '\n\nNot yet finished: '+notDone.map(p=>p.name).join(', ') : ''}\n\nThank you! \u{1F64F}\n${head}\nSchool Head`; }
@@ -7791,7 +8042,7 @@ async function newSchoolYear(){
   $('nsBtn').disabled = false; loading(false);
 }
 // Makes a square picture of the quote that can be shared on social media
-async function shareQuote(){
+async function quoteBlob(){
   const q = quoteToday(), c = document.createElement('canvas'); c.width = 1080; c.height = 1080; const g = c.getContext('2d');
   const grd = g.createLinearGradient(0,0,1080,1080); grd.addColorStop(0,'#1F5130'); grd.addColorStop(1,'#2F7A4A'); g.fillStyle = grd; g.fillRect(0,0,1080,1080);
   g.fillStyle = 'rgba(244,196,48,.18)'; g.beginPath(); g.arc(900,180,260,0,Math.PI*2); g.fill();
@@ -7802,10 +8053,20 @@ async function shareQuote(){
   const y0 = 560 - (lines.length-1)*38; lines.forEach((l,i) => g.fillText(l, 540, y0 + i*76));
   g.fillStyle = '#F4C430'; g.font = 'bold 34px Arial, sans-serif'; g.fillText('TALA \u00B7 Baluyan Elementary School', 540, 950);
   g.fillStyle = 'rgba(255,255,255,.8)'; g.font = '28px Arial, sans-serif'; g.fillText(new Date().toLocaleDateString('en-US',{timeZone:'Asia/Manila',month:'long',day:'numeric',year:'numeric'}), 540, 995);
-  const blob = await new Promise(r => c.toBlob(r, 'image/png')), file = new File([blob], 'TALA-quote-'+todayPH()+'.png', { type:'image/png' });
-  try{ if (navigator.canShare && navigator.canShare({ files:[file] })){ await navigator.share({ files:[file], text: q+' #TALA #BaluyanES' }); return; } }catch(e){ if (e && e.name==='AbortError') return; }
-  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = file.name; document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 1500);
-  toast('Quote picture saved. You can post it on social media.');
+  const blob = await new Promise(r => c.toBlob(r, 'image/png'));
+  return { q, blob, url: c.toDataURL('image/png'), name: 'TALA-quote-'+todayPH()+'.png' };
+}
+async function shareQuote(){
+  const P = await quoteBlob(), file = new File([P.blob], P.name, { type:'image/png' });
+  try{ if (navigator.canShare && navigator.canShare({ files:[file] })){ await navigator.share({ files:[file], text: P.q+' #TALA #BaluyanES' }); return; } }catch(e){ if (e && e.name==='AbortError') return; }
+  quoteSave(P);
+}
+// Saving works on every device: the picture opens with a Download button; on a phone, it can also be pressed and held to save
+async function quoteSave(P){
+  P = P || await quoteBlob();
+  stfModal(`<h3>Save the quote picture</h3><p class="sub">Tap Download. On a phone, you can also press and hold the picture, then choose Save image or Add to Photos.</p>
+    <img src="${P.url}" alt="${esc(P.q)}" style="width:100%;max-width:420px;display:block;margin:0 auto;border-radius:12px">
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Close</button><a class="btn" href="${P.url}" download="${P.name}" onclick="setTimeout(()=>toast('Saved to your Downloads.'),400)">\u2B07 Download</a></div>`);
 }
 
 /* ----- Install TALA on phones ----- */
