@@ -1001,6 +1001,10 @@ textarea.nbt{-webkit-touch-callout:none}
 .repgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px;margin-top:14px}
 .repcard{background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:12px 14px}.repcard-h{display:flex;gap:10px;align-items:center}.repcard-h span{font-size:22px}.repcard-h small{display:block;color:var(--muted)}
 .repcard-b{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;align-items:center}.repcard-b select{max-width:100%}
+.aralchips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}.aralchips i{font-style:normal;font-size:12px;padding:3px 9px;border-radius:999px;font-weight:600}
+.aralchips .pm{background:#e3f4e8;color:#1d6b36}.aralchips .pd{background:#fff4d6;color:#8a5a00}.aralchips .pn{background:#fde6e6;color:#a12a2a}
+.aralview{display:grid;gap:10px;margin:10px 0}.aralview>div{background:var(--page);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.aralview small{display:block;font-weight:700;opacity:.7;margin-bottom:4px}.aralview p{margin:0;white-space:normal}
+.aralgram{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:6px 0 12px}.arallock{font-size:18px;margin-left:4px}
 </style>
 </head>
 <body>
@@ -1708,8 +1712,8 @@ textarea.nbt{-webkit-touch-callout:none}
 
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
-const MIN_SERVER = '5.8'; // oldest Code.gs this page works with
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'5.8', date:'October 11, 2026' } };
+const MIN_SERVER = '5.9'; // oldest Code.gs this page works with
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'5.9', date:'October 11, 2026' } };
 function verLine(server){
   const old = server && (server.indexOf('older') > -1 || parseFloat(server) < parseFloat(MIN_SERVER));
   const s = server ? ' Server '+server+('.') : '';
@@ -2126,7 +2130,7 @@ const FEATURES = [
     auto:'Figures for SMEA, PIR, and AIP progress are pulled from the other features automatically.',
     report:'Quarterly SMEA and PIR tables, ready to print.' }
 ];
-function featOn(id){ const s = (DATA||PUB||{}).settings||{}; return !!(s.features||{})[id]; }
+function featOn(id){ const s = (DATA||PUB||{}).settings||{}; return (s.features||{})[id] !== false; } // shown unless the School Head unticked it
 /* Red numbers on each feature: what waits for you there, and unread notices about it. The installed app shows the total on its icon. */
 const FEAT_NT = { lpt:['upload','approved','returned'], obs:['obs'], att:['request','decision','remind'], lac:['lac'], sbfp:['sbfp'], aral:['aral'] };
 function featUnread(id){ return (NOTICES||[]).filter(n => !n.read && (FEAT_NT[id]||[]).indexOf(n.type) > -1).length; }
@@ -2249,7 +2253,7 @@ function aralTutees(email){ const D = ARAL.data; return (D.tutees||[]).filter(t 
 function aralMyTutees(){ return aralTutees(USER.email); }
 function aralName(id){ const t = (ARAL.data.tutees||[]).find(x => x.learner===id); if (t) return t.data.name; const l = (ARAL.data.learners||[]).find(x => x.id===id); return l ? l.last+', '+l.first : id; }
 function aralSecLabel(t){ return (t.data.grade||'')+(t.data.section?' '+t.data.section:''); }
-function aralRow(kind, tutor, date, session){ return (ARAL.data.rows||[]).find(r => r.kind===kind && r.tutor===tutor && r.date===date && (!session || r.data.session===session)); }
+function aralRow(kind, tutor, date){ return (ARAL.data.rows||[]).find(r => r.kind===kind && r.tutor===tutor && r.date===date); } // one sign in and one sign out a day
 function aralNotes(o){ return (ARAL.data.rows||[]).filter(r => r.kind==='NOTE' && (!o.learner || r.learner===o.learner) && (!o.tutor || r.tutor===o.tutor) && (!o.date || r.date===o.date) && (!o.session || r.data.session===o.session)).sort((a,b) => String(b.date).localeCompare(String(a.date)) || String(b.on).localeCompare(String(a.on))); }
 function aralFocusTxt(f){ f = f || {}; if (f.type==='Letter name and sound') return 'Letter name and sound: '+((f.letters||[]).join(', ')||'not set');
   if (f.type==='Word pattern or word family') return 'Word pattern: '+(f.pattern||f.group||'not set');
@@ -2257,130 +2261,198 @@ function aralFocusTxt(f){ f = f || {}; if (f.type==='Letter name and sound') ret
 function aralMins(t){ if (!t || !t.in || !t.out) return 0; const a = t.in.split(':').map(Number), b = t.out.split(':').map(Number); return Math.max(0, (b[0]*60+b[1]) - (a[0]*60+a[1])); }
 function aralHrs(m){ return m ? (Math.floor(m/60) ? Math.floor(m/60)+' h ' : '')+(m%60 ? (m%60)+' min' : '') : ''; }
 
+function aralIsTutor(){ return !!(ARAL.data && ARAL.data.isTutor) || aralMyTutees().length > 0; }
+function aralProg(id){ const c = { 'Mastered':0, 'Developing':0, 'Needs more practice':0 }; aralNotes({ learner:id }).forEach(n => { if (c[n.data.progress] !== undefined) c[n.data.progress]++; }); return c; }
+function aralProgChips(id){ const c = aralProg(id); return `<span class="aralchips"><i class="pm">Mastered ${c['Mastered']}</i><i class="pd">Developing ${c['Developing']}</i><i class="pn">Needs more practice ${c['Needs more practice']}</i></span>`; }
+function aralLockTxt(ns){ if (!ns.length) return '<span class="hint">No notes yet</span>'; const k = ns.filter(n => n.data.locked).length;
+  return k===ns.length ? `<span class="atn ok" title="All notes are saved and locked">🔒 Done, ${k} locked</span>` : `<span class="atn wait" title="Some notes are still drafts">✎ ${ns.length-k} draft${ns.length-k===1?'':'s'}, ${k} locked</span>`; }
+
 function aralDraw(){
   const D = ARAL.data; if (!D) return;
-  const all = aralAll(), head = aralRole()==='head', adviser = (D.mine||[]).length > 0, tutor = aralMyTutees().length > 0;
-  const tabs = all ? [['ov','Overview'],['tutees','Tutees and tutors'],['rep','Reports']] : [].concat(tutor||!adviser?[['today','Today']]:[], tutor?[['notes','My tutees and notes']]:[], adviser?[['class','My class']]:[], [['rep','My reports']]);
-  if (head) tabs.splice(1, 0, ['today','My ARAL today'], ['class','Choose tutees by class']);
+  const role = aralRole(), head = role==='head', ao = role==='admin', tutor = aralIsTutor(), adviser = (D.mine||[]).length > 0;
+  let tabs, who, stat;
+  if (head){ tabs = [['ov','Overview'],['tag','Tag tutees and tutors'],['tutees','Tutees and tutors'],['rep','Reports'],['today','My ARAL today']]; who = 'School Head dashboard'; }
+  else if (ao){ tabs = [['ov','Overview'],['tutees','Tutees and tutors'],['rep','Reports']]; who = 'Administrative Officer, view only'; }
+  else if (tutor){ tabs = [['today','Today'],['notes','My tutees and notes'],['tag','Tag learners'],['rep','My reports']]; if (adviser) tabs.push(['class','My class in ARAL']); who = 'ARAL tutor'; }
+  else if (adviser){ tabs = [['class','My learners in ARAL']]; who = 'Adviser, view only'; }
+  else { tabs = [['none','ARAL']]; who = 'Teacher'; }
+  if (head || ao) stat = `<b>${(D.tutees||[]).length}</b><span>ARAL tutees</span>`;
+  else if (tutor) stat = `<b>${aralMyTutees().length}</b><span>My ARAL tutees</span>`;
+  else stat = `<b>${(D.tutees||[]).filter(t => (D.mine||[]).indexOf(t.data.sec) > -1).length}</b><span>My learners in ARAL</span>`;
   if (!tabs.some(t => t[0]===ARAL.tab)) ARAL.tab = tabs[0][0];
-  $('viewPir').innerHTML = `<div class="aralhero"><div><span class="lktag">ARAL PROGRAM</span><h2>Project TULAY</h2><p>A bridge for every learner to catch up. ARAL tutorials in reading and numeracy, with the tutors' daily log and accomplishment report.</p></div>
-      <div class="aralstat">${all?`<b>${(D.tutees||[]).length}</b><span>ARAL tutees</span>`:`<b>${aralMyTutees().length}</b><span>My ARAL tutees</span>`}</div></div>
+  $('viewPir').innerHTML = `<div class="aralhero"><div><span class="lktag">ARAL PROGRAM · ${esc(who.toUpperCase())}</span><h2>Project TULAY</h2><p>A bridge for every learner to catch up. ARAL tutorials in reading and numeracy, with the tutors' daily log and accomplishment report.</p></div>
+      <div class="aralstat">${stat}</div></div>
     <div class="tabs lactabs" style="margin-top:12px">${tabs.map(t => `<button class="${ARAL.tab===t[0]?'on':''}" onclick="ARAL.tab='${t[0]}';aralDraw()">${t[1]}</button>`).join('')}</div>
     <div id="aralBody" style="margin-top:14px"></div>`;
-  ({ ov:aralOverview, today:aralToday, notes:aralNotesTab, class:aralClass, tutees:aralTuteesTab, rep:aralReports })[ARAL.tab]();
+  ({ ov:aralOverview, today:aralToday, notes:aralNotesTab, class:aralClass, tag:aralTag, tutees:aralTuteesTab, rep:aralReports, none:aralNone })[ARAL.tab]();
 }
+function aralNone(){ $('aralBody').innerHTML = '<div class="empty">You are not an ARAL tutor, and none of your learners is in ARAL yet. The School Head tags the ARAL tutees and assigns their tutors.</div>'; }
 
-/* ----- Today: time in and out, learners present, and notes ----- */
+/* ----- Today: sign in before the tutorial, sign out after it ----- */
 function aralToday(){
-  const D = ARAL.data, me = USER.email, list = aralMyTutees(), date = ARAL.date, ses = ARAL.session, today = D.today || todayPH();
-  const T = aralRow('TIME', me, today, ses) || { data:{} }, A = aralRow('ATT', me, date, ses), present = A ? A.data.present : [];
-  const tile = (k, l) => T.data[k] ? `<div class="stft on"><small>${l}</small><b>${esc(time12(T.data[k]))}</b></div>` : `<button class="stft" onclick="aralClock('${k}')"><small>${l}</small><b>·</b></button>`;
+  const D = ARAL.data, me = USER.email, list = aralMyTutees(), today = D.today || todayPH(), date = ARAL.date;
+  const T = aralRow('TIME', me, today) || { data:{} }, A = aralRow('ATT', me, date), present = A ? A.data.present : [];
+  if (T.data.session) ARAL.session = T.data.session;
+  const ses = (date!==today && A && A.data.session) || ARAL.session; ARAL.curSes = ses;
+  const tile = (k, l, sub) => T.data[k] ? `<div class="stft on"><small>${l}</small><b>${esc(time12(T.data[k]))}</b><small>${sub}</small></div>` : `<button class="stft" onclick="aralClock('${k}')"><small>${l}</small><b>·</b><small>${sub}</small></button>`;
   $('aralBody').innerHTML = `
-    <div class="aralbar"><div class="tabs">${['Before class','After class'].map(x => `<button class="${ses===x?'on':''}" onclick="ARAL.session='${x}';aralDraw()">${x}</button>`).join('')}</div>
+    <div class="aralbar">${T.data.in ? `<span class="atn ok">Tutorial today: ${esc(T.data.session.toLowerCase())}</span>` : `<div><small class="hint" style="display:block">When is your tutorial today?</small><div class="tabs">${['Before class','After class'].map(x => `<button class="${ses===x?'on':''}" onclick="ARAL.session='${x}';aralDraw()">${x}</button>`).join('')}</div></div>`}
       <label class="aralday">Date <input type="date" value="${esc(date)}" max="${esc(today)}" onchange="ARAL.date=this.value||todayPH();aralDraw()"></label></div>
-    <div class="stfme"><div class="stfme-h"><div><small>My ARAL time today, ${esc(ses.toLowerCase())}</small><b>${esc(dShort(today))}</b></div>${T.data.in&&T.data.out?`<span class="atn ok">${esc(aralHrs(aralMins(T.data)))}</span>`:''}</div>
-      <div class="stftiles" style="grid-template-columns:repeat(2,1fr)">${tile('in','Time in')}${tile('out','Time out')}</div></div>
-    ${list.length ? `<h3 class="stfgrp">Tick the tutees present <small>${esc(dShort(date))}, ${esc(ses.toLowerCase())}</small></h3>
+    <div class="stfme"><div class="stfme-h"><div><small>My ARAL attendance today</small><b>${esc(dShort(today))}</b></div>${T.data.in&&T.data.out?`<span class="atn ok">${esc(aralHrs(aralMins(T.data)))}</span>`:''}</div>
+      <div class="stftiles" style="grid-template-columns:repeat(2,1fr)">${tile('in','Sign in','before the tutorial')}${tile('out','Sign out','after the tutorial')}</div></div>
+    ${list.length ? `<h3 class="stfgrp">Tick the tutees present <small>${esc(dShort(date))}</small></h3>
       <div class="araltick">${list.map(t => `<label class="${present.indexOf(t.learner)>-1?'on':''}"><input type="checkbox" value="${esc(t.learner)}" ${present.indexOf(t.learner)>-1?'checked':''} onchange="this.parentElement.classList.toggle('on',this.checked)"><b>${esc(t.data.name)}</b><small>${esc(aralSecLabel(t))}</small></label>`).join('')}</div>
       <div class="obs-actions"><button class="btn" onclick="aralAttSave()">Save who is present</button>${A?`<span class="hint">Saved: ${present.length} of ${list.length} present.</span>`:''}</div>
       <h3 class="stfgrp">ARAL notes for ${esc(dShort(date))}</h3>
-      <div class="abtns">${list.filter(t => !A || present.indexOf(t.learner)>-1).map(t => { const n = aralNotes({ learner:t.learner, tutor:me, date, session:ses })[0];
-        return `<button class="abtn ${n?'':'main'}" onclick="aralNoteOpen('${t.learner}','${n?n.id:''}')"><span class="abico">${n?'✔':'✍'}</span><b>${esc(t.data.name)}</b><small>${n?esc(aralFocusTxt(n.data.focus)):'Write what you taught'}</small></button>`; }).join('')}</div>
-      <div class="obs-actions"><button class="btn ghost" onclick="aralPrintDaily('${me}','${date}')">\u{1F5A8} Print my Daily Log for ${esc(dShort(date))}</button></div>`
-    : `<div class="empty">You have no ARAL tutees yet. The adviser of the learner chooses the tutor when the learner is ticked as an ARAL tutee.</div>`}`;
+      <div class="abtns">${list.filter(t => !A || present.indexOf(t.learner)>-1).map(t => { const n = aralNotes({ learner:t.learner, tutor:me, date })[0];
+        return `<button class="abtn ${n?'':'main'}" onclick="aralNoteOpen('${t.learner}','${n?n.id:''}')"><span class="abico">${n?(n.data.locked?'🔒':'✎'):'✍'}</span><b>${esc(t.data.name)}</b><small>${n?(n.data.locked?'Saved and locked: ':'Draft: ')+esc(aralFocusTxt(n.data.focus)):'Write what you taught'}</small></button>`; }).join('')}</div>
+      <div class="obs-actions"><button class="btn ghost" onclick="aralPrintDaily('${me}','${date}')">🖨 Print my Daily Log for ${esc(dShort(date))}</button></div>`
+    : `<div class="empty">You have no ARAL tutees yet. The School Head tags the ARAL tutees and assigns their tutors.</div>`}`;
 }
-async function aralClock(slot){ if (!confirm((slot==='in'?'Time in':'Time out')+' now for the ARAL session '+ARAL.session.toLowerCase()+'?')) return;
-  try{ loading(true); ARAL.data = await api('aralTime', { session:ARAL.session, slot }); loading(false); aralDraw(); toast(slot==='in'?'Time in recorded.':'Time out recorded.'); }catch(e){ loading(false); handleErr(e); } }
+async function aralClock(slot){ if (!confirm(slot==='in' ? 'Sign in now, before your ARAL tutorial ('+ARAL.session.toLowerCase()+')?' : 'Sign out now, after your ARAL tutorial?')) return;
+  try{ loading(true); ARAL.data = await api('aralTime', { session:ARAL.session, slot }); loading(false); aralDraw(); toast(slot==='in'?'Signed in. Have a good tutorial.':'Signed out. Thank you.'); }catch(e){ loading(false); handleErr(e); } }
 async function aralAttSave(){ const present = [...document.querySelectorAll('.araltick input:checked')].map(x => x.value);
-  try{ loading(true); ARAL.data = await api('aralAtt', { date:ARAL.date, session:ARAL.session, present }); loading(false); aralDraw(); toast('Saved. '+present.length+' present.'); }catch(e){ loading(false); handleErr(e); } }
+  try{ loading(true); ARAL.data = await api('aralAtt', { date:ARAL.date, session:ARAL.curSes||ARAL.session, present }); loading(false); aralDraw(); toast('Saved. '+present.length+' present.'); }catch(e){ loading(false); handleErr(e); } }
 
-/* ----- The ARAL note ----- */
+/* ----- The ARAL note: save a draft, or save and lock when done ----- */
+function aralCanEdit(n){ return !n || n.tutor===USER.email || aralRole()==='head'; }
 function aralNoteOpen(learner, id){
-  const n = id ? (ARAL.data.rows||[]).find(r => r.id===id) : null, d = n ? n.data : { session:ARAL.session, focus:{ type:'' } }, f = d.focus || {};
+  const n = id ? (ARAL.data.rows||[]).find(r => r.id===id) : null;
+  if (n && (n.data.locked || !aralCanEdit(n))) return aralNoteView(id);
+  const d = n ? n.data : { session:ARAL.curSes||ARAL.session, focus:{ type:'' } }, f = d.focus || {};
   const others = aralMyTutees().filter(t => t.learner!==learner);
   ARAL.nf = { learner, id, letters: (f.letters||[]).slice() };
   stfModal(`<h3>ARAL note</h3><p class="sub">${esc(aralName(learner))}</p>
     <div class="stfg2"><div class="field"><label for="anDate">Date</label><input type="date" id="anDate" value="${esc(n?n.date:ARAL.date)}" max="${esc(todayPH())}"></div>
-      <div class="field"><label for="anSes">Session</label><select id="anSes">${['Before class','After class'].map(x => `<option ${d.session===x?'selected':''}>${x}</option>`).join('')}</select></div></div>
+      <div class="field"><label for="anSes">Tutorial time</label><select id="anSes">${['Before class','After class'].map(x => `<option ${d.session===x?'selected':''}>${x}</option>`).join('')}</select></div></div>
     <div class="field"><label for="anType">What was taught</label><select id="anType" onchange="aralNoteType()"><option value="">Choose</option>${ARAL_FOCUS.map(x => `<option ${f.type===x?'selected':''}>${x}</option>`).join('')}</select></div>
     <div id="anLet" class="field" hidden><label>Which letters? <small class="hint">The order follows Project e-READ.</small></label><div class="aralletters">${ARAL_LETTERS.map(L => `<button type="button" class="${ARAL.nf.letters.indexOf(L)>-1?'on':''}" onclick="aralLetter(this,'${L}')">${L}<small>${L.toLowerCase()}</small></button>`).join('')}</div></div>
     <div id="anPat" class="stfg2" hidden><div class="field"><label for="anGroup">Group</label><select id="anGroup" onchange="aralPatList()">${Object.keys(ARAL_PATTERNS).map(g => `<option ${f.group===g?'selected':''}>${g}</option>`).join('')}</select></div>
       <div class="field"><label for="anPattern">Pattern or word family</label><select id="anPattern"></select></div></div>
-    <div id="anOther" class="field" hidden><label for="anOtherT">Specify</label><input id="anOtherT" maxlength="200" value="${esc(f.other||'')}" placeholder="Example: the, and, is"></div>
-    <div class="field"><label for="anAct">What we did</label><textarea id="anAct" rows="3" maxlength="1500" placeholder="Example: Read the word cards, then built words with letter tiles.">${esc(d.activity||'')}</textarea></div>
+    <div id="anOther" class="field" hidden><label for="anOtherT">Specify</label><input id="anOtherT" maxlength="200" spellcheck="true" lang="en" autocomplete="off" value="${esc(f.other||'')}" placeholder="Example: the, and, is"><div class="gfix" id="gx_anOtherT"></div></div>
+    <div class="field"><label for="anAct">What we did</label><textarea id="anAct" rows="3" maxlength="1500" spellcheck="true" lang="en" autocomplete="off" placeholder="Example: Read the word cards, then built words with letter tiles.">${esc(d.activity||'')}</textarea><div class="gfix" id="gx_anAct"></div></div>
     <div class="field"><label>Progress of the learner</label><div class="stfrad">${ARAL_PROG.map(x => `<label class="check" style="margin:0"><input type="radio" name="anProg" value="${x}" ${d.progress===x?'checked':''}>${x}</label>`).join('')}</div></div>
-    <div class="field"><label for="anRem">Note for this learner</label><textarea id="anRem" rows="2" maxlength="800" placeholder="What was different for this learner, or what to do next time">${esc(d.remarks||'')}</textarea></div>
+    <div class="field"><label for="anRem">Note for this learner</label><textarea id="anRem" rows="2" maxlength="800" spellcheck="true" lang="en" autocomplete="off" placeholder="What was different for this learner, or what to do next time">${esc(d.remarks||'')}</textarea><div class="gfix" id="gx_anRem"></div></div>
+    <div class="aralgram"><button type="button" class="btn ghost small" onclick="aralGrammar()">✓ Check spelling and grammar</button><span class="hint" id="anG">Misspelled words are underlined in red. Type your own notes: copy and paste are turned off.</span></div>
     ${!id && others.length ? `<div class="field"><label>Same lesson for other tutees (optional)</label><div class="lacpick">${others.map(t => `<label class="check" style="margin:0"><input type="checkbox" class="anCopy" value="${esc(t.learner)}">${esc(t.data.name)}</label>`).join('')}</div>
-      <small class="hint">Each learner gets their own note. Open each note later to write what was different for that learner.</small></div>` : ''}
+      <small class="hint">Each learner gets their own note, saved as a draft. Open each note later to write what was different for that learner, then lock it.</small></div>` : ''}
     ${d.copied?'<p class="hint">ℹ This note was copied from the same lesson. Write what was different for this learner in the note above.</p>':''}
-    <p class="err" id="anErr"></p><div class="modal-actions">${id?`<button class="linkbtn danger" style="margin-right:auto" onclick="aralNoteDel('${id}')">Delete</button>`:''}<button class="btn ghost" onclick="closeModal('stfModal')">Cancel</button><button class="btn" onclick="aralNoteSave()">Save</button></div>`, 'wide');
+    <p class="err" id="anErr"></p><div class="modal-actions">${id?`<button class="linkbtn danger" style="margin-right:auto" onclick="aralNoteDel('${id}')">Delete</button>`:''}<button class="btn ghost" onclick="closeModal('stfModal')">Cancel</button><button class="btn ghost" onclick="aralNoteSave(false)">Save draft</button><button class="btn" onclick="aralNoteSave(true)" title="Lock the note when you are done. You can still unlock it to edit.">🔒 Save and lock</button></div>`, 'wide');
   aralNoteType(); aralPatList(f.pattern);
+  ['anAct','anRem','anOtherT'].forEach(k => nbGuard($(k)));
 }
+function aralNoteView(id){
+  const n = (ARAL.data.rows||[]).find(r => r.id===id); if (!n) return;
+  const d = n.data, can = aralCanEdit(n), box = (l, v) => `<div><small>${l}</small><p>${v ? esc(v).replace(/\n/g,'<br>') : '<span class="hint">None</span>'}</p></div>`;
+  stfModal(`<h3>ARAL note ${d.locked?'<span class="arallock" title="Saved and locked">🔒</span>':'<span class="atn wait">Draft</span>'}</h3>
+    <p class="sub">${esc(aralName(n.learner))} · ${esc(fmtLong(n.date))}${d.session?' · '+esc(d.session):''} · Tutor: ${esc(n.tutorName||'')}</p>
+    <div class="aralview">${box('What was taught', aralFocusTxt(d.focus))}${box('What we did', d.activity)}${box('Progress of the learner', d.progress)}${box('Note for this learner', d.remarks)}</div>
+    <p class="hint">${d.locked ? 'Saved and locked by the tutor'+(d.lockedOn?' on '+esc(dTime(d.lockedOn)):'')+'.' : 'The tutor is still writing this note.'}${can?'':' View only.'}</p>
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Close</button>${can && d.locked ? `<button class="btn" onclick="aralUnlock('${id}')">🔓 Unlock to edit</button>` : ''}</div>`, 'wide');
+}
+async function aralUnlock(id){ const n = (ARAL.data.rows||[]).find(r => r.id===id); if (!n) return;
+  try{ loading(true); ARAL.data = await api('aralNote', { unlock:id }); loading(false); aralDraw(); aralNoteOpen(n.learner, id); }catch(e){ loading(false); handleErr(e); } }
 function aralNoteType(){ const t = $('anType').value; $('anLet').hidden = t!=='Letter name and sound'; $('anPat').hidden = t!=='Word pattern or word family'; $('anOther').hidden = !t || t==='Letter name and sound' || t==='Word pattern or word family'; }
 function aralPatList(sel){ const g = $('anGroup').value; $('anPattern').innerHTML = (ARAL_PATTERNS[g]||[]).map(p => `<option ${p===sel?'selected':''}>${esc(p)}</option>`).join(''); }
 function aralLetter(b, L){ const a = ARAL.nf.letters, i = a.indexOf(L); if (i > -1) a.splice(i, 1); else a.push(L); b.classList.toggle('on', i < 0); }
-async function aralNoteSave(){
+async function aralNoteSave(lock){
   const type = $('anType').value; if (!type) return $('anErr').textContent = 'Choose what was taught.';
   const focus = { type, letters: type==='Letter name and sound' ? ARAL_LETTERS.filter(L => ARAL.nf.letters.indexOf(L) > -1) : [], group: type==='Word pattern or word family' ? $('anGroup').value : '', pattern: type==='Word pattern or word family' ? $('anPattern').value : '', other: $('anOther').hidden ? '' : $('anOtherT').value.trim() };
   if (type==='Letter name and sound' && !focus.letters.length) return $('anErr').textContent = 'Tap the letters that were taught.';
   const pr = document.querySelector('input[name=anProg]:checked');
-  const note = { id:ARAL.nf.id, learner:ARAL.nf.learner, date:$('anDate').value, session:$('anSes').value, focus, activity:$('anAct').value.trim(), progress: pr ? pr.value : '', remarks:$('anRem').value.trim() };
+  if (lock && !pr) return $('anErr').textContent = 'Choose the progress of the learner before you lock the note.';
+  const note = { id:ARAL.nf.id, learner:ARAL.nf.learner, date:$('anDate').value, session:$('anSes').value, focus, activity:$('anAct').value.trim(), progress: pr ? pr.value : '', remarks:$('anRem').value.trim(), lock:!!lock };
   const copyTo = [...document.querySelectorAll('.anCopy:checked')].map(x => x.value);
-  try{ loading(true); ARAL.data = await api('aralNote', { note, copyTo }); loading(false); closeModal('stfModal'); aralDraw(); toast(copyTo.length ? 'Saved for '+(copyTo.length+1)+' learners. Each has their own note.' : 'Note saved.'); }catch(e){ loading(false); handleErr(e,'anErr'); }
+  try{ loading(true); ARAL.data = await api('aralNote', { note, copyTo }); loading(false); closeModal('stfModal'); aralDraw();
+    toast((lock ? 'Saved and locked.' : 'Draft saved.') + (copyTo.length ? ' Copied as drafts for '+copyTo.length+' more learner'+(copyTo.length>1?'s':'')+'.' : '')); }catch(e){ loading(false); handleErr(e,'anErr'); }
 }
 async function aralNoteDel(id){ if (!confirm('Delete this ARAL note?')) return; try{ ARAL.data = await api('aralNote', { remove:id }); closeModal('stfModal'); aralDraw(); toast('Deleted.'); }catch(e){ handleErr(e,'anErr'); } }
+async function aralGrammar(){
+  const ids = ['anAct','anRem'].concat($('anOther').hidden ? [] : ['anOtherT']), st = $('anG');
+  ids.forEach(id => $('gx_'+id).innerHTML = '');
+  if (!ids.some(id => $(id).value.trim().length > 2)) return st.textContent = 'Write your notes first.';
+  if (navigator.onLine === false) return st.textContent = 'The grammar check needs internet. Misspelled words are still underlined in red.';
+  st.textContent = 'Checking...'; let total = 0;
+  for (const id of ids){ const f = $(id), box = $('gx_'+id); if (f.value.trim().length < 3) continue;
+    try{ const res = await fetch('https://api.languagetool.org/v2/check', { method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body:'language=en-US&text='+encodeURIComponent(f.value) });
+      const j = await res.json(), ms = (j.matches||[]).slice(0,8); total += ms.length;
+      box.innerHTML = ms.map(m => { const bad = f.value.substr(m.offset, m.length), fix = (m.replacements[0]||{}).value;
+        return `<div class="gsug"><span>${esc(m.message)}</span>${fix!==undefined?` <button type="button" class="linkbtn" data-fix="${esc(fix)}" onclick="aralFix('${id}',${m.offset},${m.length},this)">Change “${esc(bad)}” to “${esc(fix)}”</button>`:''}</div>`; }).join('');
+    }catch(e){ st.textContent = 'The grammar checker could not be reached. Misspelled words are still underlined in red.'; return; } }
+  st.textContent = total ? total+' suggestion'+(total>1?'s':'')+' found. Tap a suggestion to apply it.' : 'No problems found.';
+}
+function aralFix(id, off, len, btn){ const f = $(id); f.value = f.value.slice(0, off) + btn.dataset.fix + f.value.slice(off + len); f._last = f.value;
+  btn.closest('.gfix').innerHTML = '<div class="gsug ok">Applied. Tap Check spelling and grammar again to recheck.</div>'; }
 
-/* ----- My tutees and their notes ----- */
+/* ----- Tutor: my tutees and their notes ----- */
 function aralNotesTab(){
   const me = USER.email, list = aralMyTutees();
-  $('aralBody').innerHTML = `<div class="araltutees">${list.map(t => { const ns = aralNotes({ learner:t.learner }), days = new Set((ARAL.data.rows||[]).filter(r => r.kind==='ATT' && r.data.present.indexOf(t.learner)>-1).map(r => r.date)).size;
-      return `<div class="araltutee"><div class="stfreq-h"><span class="oav">${esc((t.data.name||'?').charAt(0))}</span><div><b>${esc(t.data.name)}</b><small>${esc(aralSecLabel(t))} · Key Stage ${t.data.ks} · ${days} day${days===1?'':'s'} attended</small></div></div>
-        ${ns.length?`<ul class="aralnl">${ns.slice(0,4).map(n => `<li><button class="linkbtn" onclick="aralNoteOpen('${t.learner}','${n.id}')">${esc(dShort(n.date))}</button> ${esc(aralFocusTxt(n.data.focus))}${n.data.progress?' · <i>'+esc(n.data.progress)+'</i>':''}</li>`).join('')}</ul>${ns.length>4?`<small class="hint">${ns.length-4} more notes in the reports.</small>`:''}`:'<p class="hint">No notes yet.</p>'}
-        <div class="stfreq-a"><button class="btn small" onclick="aralNoteOpen('${t.learner}','')">✍ New note</button></div></div>`; }).join('') || '<div class="empty">No tutees yet.</div>'}</div>`;
+  $('aralBody').innerHTML = `<p class="hint">🔒 means the note is saved and locked. ✎ means it is still a draft. Lock each note when you are done; you can unlock it later to edit.</p>
+    <div class="araltutees">${list.map(t => { const ns = aralNotes({ learner:t.learner, tutor:me }), days = new Set((ARAL.data.rows||[]).filter(r => r.kind==='ATT' && r.tutor===me && r.data.present.indexOf(t.learner)>-1).map(r => r.date)).size;
+      return `<div class="araltutee"><div class="stfreq-h"><span class="oav">${esc((t.data.name||'?').charAt(0))}</span><div><b>${esc(t.data.name)}</b><small>${esc(aralSecLabel(t))} · Key Stage ${t.data.ks} · ${days} day${days===1?'':'s'} attended</small></div>${aralLockTxt(ns)}</div>
+        ${aralProgChips(t.learner)}
+        ${ns.length?`<ul class="aralnl">${ns.slice(0,5).map(n => `<li>${n.data.locked?'🔒':'✎'} <button class="linkbtn" onclick="aralNoteOpen('${t.learner}','${n.id}')">${esc(dShort(n.date))}</button> ${esc(aralFocusTxt(n.data.focus))}${n.data.progress?' · <i>'+esc(n.data.progress)+'</i>':''}</li>`).join('')}</ul>${ns.length>5?`<small class="hint">${ns.length-5} more notes in the reports.</small>`:''}`:'<p class="hint">No notes yet.</p>'}
+        <div class="stfreq-a"><button class="btn small" onclick="aralNoteOpen('${t.learner}','')">✍ New note</button></div></div>`; }).join('') || '<div class="empty">No tutees yet. Open Tag learners to add your tutees.</div>'}</div>`;
 }
 
-/* ----- My class: the adviser ticks the ARAL tutees ----- */
-function aralClass(secKey){
-  const D = ARAL.data, mine = aralAll() ? D.sections.map(s => s.key) : D.mine;
-  if (!ARAL.cls || mine.indexOf(ARAL.cls) < 0) ARAL.cls = mine[0];
-  const sec = D.sections.find(s => s.key===ARAL.cls) || {}, ks2 = /Grade\s*[4-6]/i.test(sec.grade||''), L = (D.learners||[]).filter(l => l.sec===ARAL.cls).sort((a,b) => (a.sex===b.sex?0:a.sex==='M'?-1:1) || (a.last+a.first).localeCompare(b.last+b.first));
-  const tut = id => (D.tutees||[]).find(t => t.learner===id);
-  $('aralBody').innerHTML = `${mine.length>1?`<div class="bar"><select onchange="ARAL.cls=this.value;aralDraw()">${mine.map(k => { const s = D.sections.find(x => x.key===k)||{}; return `<option value="${esc(k)}" ${k===ARAL.cls?'selected':''}>${esc((s.grade||'')+' '+(s.section||''))}</option>`; }).join('')}</select></div>`:''}
-    <p class="hint">${ks2?'Key Stage 2: when you tick a learner, choose the ARAL tutor.':'Key Stage 1: you, the adviser, are the ARAL tutor of the learners you tick.'}</p>
+/* ----- Tagging: the School Head tags tutees and assigns tutors; a tutor tags learners for herself ----- */
+function aralTag(){
+  const D = ARAL.data, head = aralRole()==='head', me = USER.email, secs = (D.sections||[]).filter(s => (D.learners||[]).some(l => l.sec===s.key));
+  if (!ARAL.cls || !secs.some(s => s.key===ARAL.cls)) ARAL.cls = ((secs.find(s => (D.mine||[]).indexOf(s.key) > -1) || secs[0]) || {}).key;
+  const L = (D.learners||[]).filter(l => l.sec===ARAL.cls).sort((a,b) => (a.sex===b.sex?0:a.sex==='M'?-1:1) || (a.last+a.first).localeCompare(b.last+b.first));
+  const tut = id => (D.tutees||[]).find(t => t.learner===id), n = L.filter(l => tut(l.id)).length;
+  $('aralBody').innerHTML = `<div class="bar" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><select onchange="ARAL.cls=this.value;aralDraw()">${secs.map(s => `<option value="${esc(s.key)}" ${s.key===ARAL.cls?'selected':''}>${esc((s.grade||'')+' '+(s.section||''))}</option>`).join('')}</select><span class="hint">${n} of ${L.length} learners are ARAL tutees.</span></div>
+    <p class="hint">${head ? 'Tick a learner to tag as an ARAL tutee, then choose the tutor. Tap Change to move the learner to another tutor.' : 'Tick a learner to tag as your ARAL tutee. A learner who already has another tutor can only be moved by the School Head.'}</p>
     <div class="table-wrap"><table class="stft-table"><thead><tr><th>Learner</th><th>ARAL tutee</th><th>Tutor</th></tr></thead><tbody>
-    ${L.map(l => { const t = tut(l.id); return `<tr><td><b>${esc(l.last)}, ${esc(l.first)}</b></td><td><label class="switch"><input type="checkbox" ${t?'checked':''} onchange="aralTuteeSet('${l.id}', this.checked, ${ks2})"><span></span></label></td><td>${t?esc(t.tutorName)+(ks2?` <button class="linkbtn" onclick="aralTuteeSet('${l.id}', true, true)">Change</button>`:''):'<span class="hint">·</span>'}</td></tr>`; }).join('') || '<tr><td colspan="3" class="hint">No learners in this class yet. Add them in Attendance, My learners.</td></tr>'}
+    ${L.map(l => { const t = tut(l.id), lockd = !head && t && t.tutor!==me;
+      return `<tr><td><b>${esc(l.last)}, ${esc(l.first)}</b></td><td><label class="switch"><input type="checkbox" ${t?'checked':''} ${lockd?'disabled':''} onchange="aralTagSet('${l.id}', this.checked)"><span></span></label></td><td>${t?esc(t.tutorName||'')+(t.tutor===me?' (me)':'')+(head?` <button class="linkbtn" onclick="aralTagSet('${l.id}', true)">Change</button>`:''):'<span class="hint">·</span>'}</td></tr>`; }).join('') || '<tr><td colspan="3" class="hint">No learners in this class yet. The adviser adds them in Attendance, My learners.</td></tr>'}
     </tbody></table></div>`;
 }
-function aralTuteeSet(id, on, ks2){
-  const l = (ARAL.data.learners||[]).find(x => x.id===id) || {}, nm = (l.first||'')+' '+(l.last||'');
+function aralTagSet(id, on){
+  const D = ARAL.data, l = (D.learners||[]).find(x => x.id===id) || {}, nm = (l.first||'')+' '+(l.last||'');
   if (!on){ if (!confirm('Remove '+nm+' from the ARAL tutees? The notes are kept.')) return aralDraw(); return aralTuteeSave(id, false, ''); }
-  if (!ks2) return aralTuteeSave(id, true, '');
-  const cur = (ARAL.data.tutees||[]).find(t => t.learner===id);
-  stfModal(`<h3>Who is the ARAL tutor?</h3><p class="sub">${esc(nm)} is in Key Stage 2. Choose the teacher who will tutor this learner.</p>
-    <div class="field"><label for="atTutor">ARAL tutor</label><select id="atTutor"><option value="">Choose</option>${(ARAL.data.people||[]).map(p => `<option value="${esc(p.email)}" ${cur&&cur.tutor===p.email?'selected':''}>${esc(p.name)}</option>`).join('')}</select></div>
+  if (aralRole()!=='head') return aralTuteeSave(id, true, '');
+  const cur = (D.tutees||[]).find(t => t.learner===id), sec = (D.sections||[]).find(s => s.key===l.sec) || {}, pick = cur ? cur.tutor : (sec.adviser||'');
+  stfModal(`<h3>Who is the ARAL tutor?</h3><p class="sub">${esc(nm)}, ${esc((sec.grade||'')+' '+(sec.section||''))}. Choose the teacher who will tutor this learner.</p>
+    <div class="field"><label for="atTutor">ARAL tutor</label><select id="atTutor"><option value="">Choose</option>${(D.people||[]).map(p => `<option value="${esc(p.email)}" ${pick===p.email?'selected':''}>${esc(p.name)}${p.email===sec.adviser?' (adviser)':''}</option>`).join('')}</select></div>
     <p class="err" id="atErr"></p><div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal');aralDraw()">Cancel</button><button class="btn" onclick="if(!$('atTutor').value){$('atErr').textContent='Choose the tutor.';return;} aralTuteeSave('${id}', true, $('atTutor').value)">Save</button></div>`);
 }
 async function aralTuteeSave(id, on, tutor){ try{ loading(true); ARAL.data = await api('aralTutee', { learner:id, on, tutor }); loading(false); closeModal('stfModal'); aralDraw(); toast(on ? 'Saved as an ARAL tutee.' : 'Removed from the ARAL tutees.'); }catch(e){ loading(false); handleErr(e,'atErr'); aralDraw(); } }
 
+/* ----- Adviser: view only, the progress of my learners in ARAL ----- */
+function aralClass(){
+  const D = ARAL.data, mine = D.mine||[], list = (D.tutees||[]).filter(t => mine.indexOf(t.data.sec) > -1).sort((a,b) => String(a.data.name).localeCompare(String(b.data.name)));
+  $('aralBody').innerHTML = `<p class="hint">View only. The ARAL tutor writes these notes. Here you can follow the progress of your learners.</p>
+    <div class="araltutees">${list.map(t => { const ns = aralNotes({ learner:t.learner }), last = ns.find(n => n.data.progress);
+      return `<div class="araltutee"><div class="stfreq-h"><span class="oav">${esc((t.data.name||'?').charAt(0))}</span><div><b>${esc(t.data.name)}</b><small>${esc(aralSecLabel(t))} · Tutor: ${esc(t.tutorName||'')}</small></div>${last?`<span class="atn ${last.data.progress==='Mastered'?'ok':last.data.progress==='Developing'?'wait':'bad'}">Latest: ${esc(last.data.progress)}</span>`:''}</div>
+        ${aralProgChips(t.learner)}
+        ${ns.length?`<ul class="aralnl">${ns.slice(0,5).map(n => `<li>${n.data.locked?'🔒':'✎'} <button class="linkbtn" onclick="aralNoteView('${n.id}')">${esc(dShort(n.date))}</button> ${esc(aralFocusTxt(n.data.focus))}${n.data.progress?' · <i>'+esc(n.data.progress)+'</i>':''}</li>`).join('')}</ul>${ns.length>5?`<button class="linkbtn" onclick="aralAllNotes('${t.learner}')">See all ${ns.length} notes</button>`:''}`:'<p class="hint">No notes yet.</p>'}</div>`; }).join('') || '<div class="empty">None of your learners is an ARAL tutee yet.</div>'}</div>`;
+}
+function aralAllNotes(id){ const ns = aralNotes({ learner:id });
+  stfModal(`<h3>ARAL notes</h3><p class="sub">${esc(aralName(id))}</p>${aralProgChips(id)}<ul class="aralnl">${ns.map(n => `<li>${n.data.locked?'🔒':'✎'} <button class="linkbtn" onclick="aralNoteView('${n.id}')">${esc(dShort(n.date))}</button> ${esc(aralFocusTxt(n.data.focus))}${n.data.progress?' · <i>'+esc(n.data.progress)+'</i>':''}</li>`).join('')}</ul><div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Close</button></div>`, 'wide'); }
+
 /* ----- School Head and AO ----- */
 function aralOverview(){
-  const D = ARAL.data, today = D.today || todayPH(), tutors = [...new Set((D.tutees||[]).map(t => t.tutor))].filter(Boolean);
+  const D = ARAL.data, head = aralRole()==='head', today = D.today || todayPH(), tutors = [...new Set((D.tutees||[]).map(t => t.tutor))].filter(Boolean);
   const name = e => ((D.people||[]).find(p => p.email===e)||{}).name || ((D.tutees||[]).find(t => t.tutor===e)||{}).tutorName || e;
-  const ks = k => (D.tutees||[]).filter(t => t.data.ks===k).length, notesToday = (D.rows||[]).filter(r => r.kind==='NOTE' && r.date===today).length;
-  $('aralBody').innerHTML = `<div class="ostats"><div class="ostat static"><span class="oico">\u{1F9D2}</span><b>${(D.tutees||[]).length}</b><span>ARAL tutees (KS1 ${ks(1)}, KS2 ${ks(2)})</span></div>
-      <div class="ostat static"><span class="oico">\u{1F469}‍\u{1F3EB}</span><b>${tutors.length}</b><span>ARAL tutors</span></div>
-      <div class="ostat static"><span class="oico">✍</span><b>${notesToday}</b><span>ARAL notes today</span></div></div>
+  const ks = k => (D.tutees||[]).filter(t => t.data.ks===k).length, nt = (D.rows||[]).filter(r => r.kind==='NOTE' && r.date===today), done = tutors.filter(e => { const x = nt.filter(n => n.tutor===e); return x.length && x.every(n => n.data.locked); }).length;
+  $('aralBody').innerHTML = `<div class="ostats"><div class="ostat static"><span class="oico">🧒</span><b>${(D.tutees||[]).length}</b><span>ARAL tutees (KS1 ${ks(1)}, KS2 ${ks(2)})</span></div>
+      <div class="ostat static"><span class="oico">👩‍🏫</span><b>${tutors.length}</b><span>ARAL tutors</span></div>
+      <div class="ostat static"><span class="oico">✍</span><b>${nt.length}</b><span>ARAL notes today</span></div>
+      <div class="ostat static"><span class="oico">🔒</span><b>${done}</b><span>Tutors done today (all notes locked)</span></div></div>
+    ${head?`<div class="bar"><button class="btn" onclick="ARAL.tab='tag';aralDraw()">Tag tutees and tutors</button></div>`:''}
     <h3 class="stfgrp">Tutors today, ${esc(dShort(today))}</h3>
-    <div class="table-wrap"><table class="stft-table"><thead><tr><th>Tutor</th><th>Tutees</th><th>Before class</th><th>After class</th><th>Present today</th><th>Notes today</th><th></th></tr></thead><tbody>
-    ${tutors.map(e => { const tt = (s) => { const T = aralRow('TIME', e, today, s); return T ? esc(time12(T.data.in||''))+(T.data.out?' to '+esc(time12(T.data.out)):'') : '<span class="hint">·</span>'; };
-      const pres = (D.rows||[]).filter(r => r.kind==='ATT' && r.tutor===e && r.date===today).reduce((a,r) => a + r.data.present.length, 0);
-      return `<tr><td><b>${esc(name(e))}</b></td><td>${aralTutees(e).length}</td><td>${tt('Before class')}</td><td>${tt('After class')}</td><td>${pres}</td><td>${aralNotes({ tutor:e, date:today }).length}</td><td><button class="linkbtn" onclick="ARAL.who='${e}';ARAL.tab='rep';aralDraw()">Reports</button></td></tr>`; }).join('') || '<tr><td colspan="7" class="hint">No tutors yet. The advisers tick the ARAL tutees in their class.</td></tr>'}</tbody></table></div>`;
+    <div class="table-wrap"><table class="stft-table"><thead><tr><th>Tutor</th><th>Tutees</th><th>Tutorial</th><th>Sign in</th><th>Sign out</th><th>Present</th><th>Notes today</th><th></th></tr></thead><tbody>
+    ${tutors.map(e => { const T = aralRow('TIME', e, today), A = aralRow('ATT', e, today), ns = nt.filter(n => n.tutor===e);
+      const c = v => v ? esc(time12(v)) : '<span class="hint">·</span>';
+      return `<tr><td><b>${esc(name(e))}</b></td><td>${aralTutees(e).length}</td><td>${T&&T.data.session?esc(T.data.session):'<span class="hint">·</span>'}</td><td>${c(T&&T.data.in)}</td><td>${c(T&&T.data.out)}</td><td>${A?A.data.present.length:'<span class="hint">·</span>'}</td><td>${aralLockTxt(ns)}</td><td><button class="linkbtn" onclick="ARAL.who='${e}';ARAL.tab='rep';aralDraw()">Reports</button></td></tr>`; }).join('') || `<tr><td colspan="8" class="hint">No tutors yet.${head?' Open Tag tutees and tutors to start.':''}</td></tr>`}</tbody></table></div>`;
 }
 function aralTuteesTab(){
   const D = ARAL.data, head = aralRole()==='head';
-  $('aralBody').innerHTML = `${head?`<div class="bar"><button class="btn" onclick="ARAL.tab='class';aralDraw()">⚙ Choose tutees by class</button></div>`:''}
-    <div class="table-wrap"><table class="stft-table"><thead><tr><th>Learner</th><th>Grade and section</th><th>Key Stage</th><th>Tutor</th><th>Notes</th></tr></thead><tbody>
-    ${aralTutees().map(t => `<tr><td><b>${esc(t.data.name)}</b></td><td>${esc(aralSecLabel(t))}</td><td>${t.data.ks}</td><td>${esc(t.tutorName||'')}</td><td>${aralNotes({ learner:t.learner }).length}</td></tr>`).join('') || '<tr><td colspan="5" class="hint">No ARAL tutees yet.</td></tr>'}</tbody></table></div>`;
+  $('aralBody').innerHTML = `${head?`<div class="bar"><button class="btn" onclick="ARAL.tab='tag';aralDraw()">Tag tutees and tutors</button></div>`:'<p class="hint">View only.</p>'}
+    <div class="table-wrap"><table class="stft-table"><thead><tr><th>Learner</th><th>Grade and section</th><th>Key Stage</th><th>Tutor</th><th>Latest progress</th><th>Notes</th></tr></thead><tbody>
+    ${aralTutees().map(t => { const ns = aralNotes({ learner:t.learner }), last = ns.find(n => n.data.progress);
+      return `<tr><td><b>${esc(t.data.name)}</b></td><td>${esc(aralSecLabel(t))}</td><td>${t.data.ks}</td><td>${esc(t.tutorName||'')}</td><td>${last?esc(last.data.progress):'<span class="hint">·</span>'}</td><td>${ns.length?`<button class="linkbtn" onclick="aralAllNotes('${t.learner}')">${aralLockTxt(ns)}</button>`:aralLockTxt(ns)}</td></tr>`; }).join('') || '<tr><td colspan="6" class="hint">No ARAL tutees yet.</td></tr>'}</tbody></table></div>`;
 }
 
 /* ----- Reports: Individual Daily Log and Accomplishment Report ----- */
@@ -2400,9 +2472,10 @@ function aralReports(){
         <button class="btn" onclick="ARAL.from=$('arFrom').value;ARAL.to=$('arTo').value;aralPrintSum(ARAL.who, ARAL.from, ARAL.to)">\u{1F5A8} Print the summary</button></div></div>`;
 }
 function aralDayData(e, date){
-  const D = ARAL.data, ses = ['Before class','After class'];
-  return ses.map(s => { const T = aralRow('TIME', e, date, s), A = aralRow('ATT', e, date, s), N = aralNotes({ tutor:e, date, session:s });
-    if (!T && !A && !N.length) return null; return { s, T: T ? T.data : {}, present: A ? A.data.present : [...new Set(N.map(n => n.learner))], notes: N }; }).filter(Boolean);
+  const T = aralRow('TIME', e, date), A = aralRow('ATT', e, date), N = aralNotes({ tutor:e, date });
+  if (!T && !A && !N.length) return [];
+  const s = (T && T.data.session) || (A && A.data.session) || (N[0] && N[0].data.session) || 'ARAL tutorial';
+  return [{ s, T: T ? T.data : {}, present: [...new Set((A ? A.data.present : []).concat(N.map(n => n.learner)))], notes: N }];
 }
 function aralSigs(e){ const D = ARAL.data, p = (D.people||[]).find(x => x.email===e) || {}, head = ((DATA||{}).headName||'').toUpperCase();
   return `<div class="stfp-sigs"><div><small style="text-align:left">Prepared by:</small><span>${esc((p.name||'').toUpperCase())}</span><small>ARAL Tutor${p.position?', '+esc(p.position):''}</small></div><div><small style="text-align:left">Noted by:</small><span>${esc(head)}</span><small>School Head</small></div></div>`; }
@@ -2417,7 +2490,7 @@ function aralPrintDaily(e, date){
   $('printArea').innerHTML = `<div class="stfprint"><div class="stfp-page">${stfPrintHead('Individual Daily Log and Accomplishment Report', 'ARAL Program, Project TULAY')}
     <table class="stfp-info"><tr><td>Name of ARAL tutor</td><td><b>${esc((p.name||'').toUpperCase())}</b></td><td>Date</td><td><b>${esc(fmtLong(date))}</b></td></tr>
       <tr><td>Position</td><td>${esc(p.position||'Teacher')}</td><td>Time spent</td><td>${esc(aralHrs(mins)||'Not recorded')}</td></tr>
-      <tr><td>Learners present</td><td>${new Set(rows.flatMap(r => r.present)).size} of ${mine.length} tutees</td><td>Sessions</td><td>${esc(rows.map(r => r.s).join(' and '))}</td></tr></table>
+      <tr><td>Learners present</td><td>${new Set(rows.flatMap(r => r.present)).size} of ${mine.length} tutees</td><td>Tutorial time</td><td>${esc(rows.map(r => r.s).join(' and '))}</td></tr></table>
     ${body}${aralSigs(e)}<p class="stfp-foot">Generated by TALA on ${esc(fmtLong(todayPH()))}.</p></div></div>`;
   setTimeout(() => window.print(), 300);
 }
@@ -2435,7 +2508,7 @@ function aralPrintSum(e, from, to){
     <table class="stfp-info"><tr><td>Name of ARAL tutor</td><td><b>${esc((p.name||'').toUpperCase())}</b></td><td>Position</td><td>${esc(p.position||'Teacher')}</td></tr>
       <tr><td>Days with ARAL</td><td>${dates.length}</td><td>Total time</td><td>${esc(aralHrs(mins)||'Not recorded')}</td></tr>
       <tr><td>Tutees</td><td>${mine.length}</td><td>Learners served</td><td>${served.size}</td></tr></table>
-    <table class="stfp-tbl"><thead><tr><th>Date</th><th>Session</th><th>Time in</th><th>Time out</th><th>Time spent</th><th>Learners present</th><th>What was taught</th><th>Notes</th></tr></thead><tbody>${lines.join('')}</tbody></table>
+    <table class="stfp-tbl"><thead><tr><th>Date</th><th>Tutorial time</th><th>Sign in</th><th>Sign out</th><th>Time spent</th><th>Learners present</th><th>What was taught</th><th>Notes</th></tr></thead><tbody>${lines.join('')}</tbody></table>
     ${order.length?`<h4 class="stfp-n">Letters taught</h4><p>${order.map(L => esc(L)+' ('+letters[L]+')').join(', ')}</p>`:''}
     ${Object.keys(pats).length?`<h4 class="stfp-n">Word patterns and word families taught</h4><p>${Object.keys(pats).map(k => esc(k)+' ('+pats[k]+')').join(', ')}</p>`:''}
     ${aralSigs(e)}<p class="stfp-foot">Generated by TALA on ${esc(fmtLong(todayPH()))}.</p></div></div>`;
@@ -7854,10 +7927,10 @@ function nbGuard(el){
     if (/^insertFrom(Paste|Drop|Yank|PasteAsQuotation)$/.test(t) || t==='insertReplacementText' && (e.data||'').length > 25) return stop(e);
     if ((t==='insertText' || t==='insertCompositionText') && (e.data||'').length > 25) return stop(e); }, true);
   el.style.webkitTouchCallout = 'none';
-  let last = el.value;
-  el.addEventListener('input', e => { const grow = el.value.length - last.length;
-    if (grow > 25 && !/^delete/.test(e.inputType||'')){ const pos = el.selectionStart; el.value = last; try{ el.selectionStart = el.selectionEnd = Math.max(0, pos - grow); }catch(x){} LAC.flag = true; return; }
-    last = el.value; });
+  el._last = el.value;
+  el.addEventListener('input', e => { const grow = el.value.length - el._last.length;
+    if (grow > 25 && !/^delete/.test(e.inputType||'')){ const pos = el.selectionStart; el.value = el._last; try{ el.selectionStart = el.selectionEnd = Math.max(0, pos - grow); }catch(x){} if (typeof LAC!=='undefined') LAC.flag = true; return; }
+    el._last = el.value; });
 }
 function nbBang(){ return `<button class="nbbang" onclick="this.classList.toggle('open')" aria-label="About this notebook">!<span>Your School Head can read this notebook.</span></button>`; }
 function lacNotebooks(){
