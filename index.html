@@ -1028,6 +1028,12 @@ textarea.nbt{-webkit-touch-callout:none}
 .aralpm{font-size:12.5px}.aralpm b.ok{color:var(--ok)}.aralpm b.bad{color:var(--late)}
 .aralout{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:10px 12px;border-radius:12px;background:#fde6e6;color:#7a1f1f;margin-bottom:10px}
 .aralstale{padding:8px 12px;border-radius:10px;background:#fff4d6;color:#7a5200;margin-top:10px;font-size:13.5px}
+@media print{ .stfprint .annex{text-align:center} .stfprint .annex table{margin:0 auto} .lacatt{margin-left:auto;margin-right:auto}
+  .lacprintph{display:flex !important;flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px;margin:8px auto}
+  .lacprintph figure{width:47%;margin:0;text-align:center;break-inside:avoid} .lacprintph.one figure{width:75%}
+  .lacprintph img{display:block;margin:0 auto;max-width:100%;max-height:95mm;width:auto;object-fit:contain;border-radius:2px} .lacprintph figcaption{font-size:9.5pt;margin-top:3px}
+  .stfp-sigs{break-inside:avoid;page-break-inside:avoid} .nbtbl td{vertical-align:top} .nbtbl td p{margin:0 0 4px} }
+.hubtags{display:flex;flex-wrap:wrap;gap:4px;margin:4px 0}.hubtag{font-size:11.5px;font-weight:700;padding:2px 8px;border-radius:999px}.hubtag.lac{background:#e3eefb;color:#1d4f8a}.hubtag.self{background:#eef3e6;color:#3f5d1d}.hubtag.hold{background:#fff1d6;color:#8a5a00}
 </style>
 </head>
 <body>
@@ -1317,6 +1323,8 @@ textarea.nbt{-webkit-touch-callout:none}
     <div class="field"><label for="eaPos">Position</label><input id="eaPos" list="posList" maxlength="60" placeholder="Choose or type a position">
       <datalist id="posList"></datalist></div>
     <div class="field"><label for="eaGrade">Grade handled (optional)</label><input id="eaGrade" maxlength="40"></div>
+    <div class="field" id="eaAralF"><label for="eaAral">Teacher profile</label><select id="eaAral"><option value="">Regular teacher</option><option value="both">Regular teacher and ARAL tutor</option><option value="only">ARAL tutor only</option></select>
+      <small class="hint">ARAL tutor only: sees only Home and ARAL, signs in and out in ARAL, and is not counted in LPT and PPT, Time in and Time out, and LAC.</small></div>
     <div class="err" id="eaErr"></div>
     <div class="modal-actions"><button class="btn ghost" onclick="closeModal('editAccModal')">Cancel</button><button class="btn" id="eaBtn" onclick="saveEditAcc()">Save</button></div>
   </div>
@@ -1735,8 +1743,8 @@ textarea.nbt{-webkit-touch-callout:none}
 
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
-const MIN_SERVER = '6.4'; // oldest Code.gs this page works with
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'6.4', date:'October 11, 2026' } };
+const MIN_SERVER = '6.6'; // oldest Code.gs this page works with
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'6.6', date:'October 11, 2026' } };
 function verLine(server){
   const old = server && (server.indexOf('older') > -1 || parseFloat(server) < parseFloat(MIN_SERVER));
   const s = server ? ' Server '+server+('.') : '';
@@ -2131,7 +2139,7 @@ const FEATURES = [
     auto:'Observation schedules, reminders, acknowledgment timestamps, and each teacher\u2019s rating summary across the school year are computed automatically.',
     report:'Observation record per teacher, and a quarterly summary of all observations with signatures.' },
   { id:'sbfp', name:'SBFP Monitoring', built:true, open:() => openSbfp(), icon:'M4 11h16a8 8 0 0 1-16 0zm3-6c0 1 1 1 1 2s-1 1-1 2m4-4c0 1 1 1 1 2s-1 1-1 2m4-4c0 1 1 1 1 2s-1 1-1 2M3 19h18v2H3z' },
-  { id:'read', name:'Learner Reading Assessment', built:true, open:() => openLink('read'), icon:'M4 5h7a3 3 0 0 1 3 3v12a2 2 0 0 0-2-2H4zm16 0h-7a3 3 0 0 0-3 3v12a2 2 0 0 1 2-2h8z',
+  { id:'read', name:'Learner Reading Assessment (Project e-READ)', built:true, open:() => openLink('read'), icon:'M4 5h7a3 3 0 0 1 3 3v12a2 2 0 0 0-2-2H4zm16 0h-7a3 3 0 0 0-3 3v12a2 2 0 0 1 2-2h8z',
     do:'Record CRLA results for Key Stage 1 and Phil-IRI results for Key Stage 2 for every learner, linked with Project e-READ.',
     auto:'Reading levels per class, grade, and school, and progress from pretest to posttest, are computed automatically.',
     report:'Class reading profile, school reading summary, and the list of learners needing intervention.' },
@@ -2139,7 +2147,7 @@ const FEATURES = [
     do:'Record learner attendance every school day by class.',
     auto:'Daily, monthly, and term totals, attendance rates, and learners with frequent absences are computed automatically.',
     report:'Monthly SF2 and SF4 summaries, and the list of learners at risk of dropping out.' },
-  { id:'reimb', name:'Reimbursement Inventory', built:true, open:() => openLink('reimb'), icon:'M3 6h18v12H3zm9 3a3 3 0 1 0 0 6 3 3 0 0 0 0-6z',
+  { id:'reimb', name:'Reimbursement Inventory (Project ABONO)', built:true, open:() => openLink('reimb'), icon:'M3 6h18v12H3zm9 3a3 3 0 1 0 0 6 3 3 0 0 0 0-6z',
     do:'Record what teachers spend from their own pocket for school programs, projects, and activities, with receipts.',
     auto:'Totals per teacher, per activity, and per month, and the status of each reimbursement are computed automatically.',
     report:'Monthly reimbursement summary and liquidation list.' },
@@ -2190,15 +2198,17 @@ function appBadge(){
 }
 // Opening a feature marks its notices as read
 function featSeen(id){ if (id==='sbfp' || id==='aral'){ markSeen(id); if (typeof ARAL!=='undefined') ARAL.srvNew = 0; drawSide(); } const ty = FEAT_NT[id]; if (!ty || !featUnread(id)) return; NOTICES.forEach(n => { if (ty.indexOf(n.type) > -1) n.read = true; }); api('readNotices', { types: ty }).catch(()=>{}); const un = NOTICES.filter(n => !n.read).length; $('bellCount').hidden = !un; $('bellCount').textContent = un > 9 ? '9+' : un; LAST_UNREAD = un; drawSide(); }
+// A teacher tagged "ARAL tutor only" in Accounts sees only Home and ARAL
+function aralOnly(){ return !!(USER && USER.role==='teacher' && USER.aral==='only'); }
 function drawSide(){
   const head = USER && USER.role==='head';
-  const shown = f => f.id==='home' || f.id==='lpt' || f.headOnly || featOn(f.id);
+  const shown = f => aralOnly() ? (f.id==='home' || f.id==='aral') : (f.id==='home' || f.id==='lpt' || f.headOnly || featOn(f.id));
   const item = f => {
     const k = featCount(f.id), dot = k ? `<i class="sdot">${k > 99 ? '99+' : k}</i>` : '';
     const tag = f.id==='home' ? '' : f.id==='lpt' ? dot : f.headOnly ? '<em class="vis">Only you</em>' : head ? dot + (featOn(f.id) ? '' : '<em class="hid">Hidden</em>') : dot;
     return `<button type="button" class="side-i ${f.id===CUR_FEATURE?'on':''}" onclick="openFeature('${f.id}')">
     <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="${f.icon}"/></svg><span>${esc(f.name)}</span>${tag}</button>`; };
-  const all = orderedFeatures().filter(f => !f.headOnly || head), hid = all.filter(f => !shown(f));
+  const all = orderedFeatures().filter(f => !f.headOnly || head), hid = aralOnly() ? [] : all.filter(f => !shown(f));
   $('sideNav').innerHTML = all.filter(shown).map(item).join('')
     + (head && hid.length ? `<details class="sidehid"><summary>Hidden from personnel (${hid.length})</summary>${hid.map(item).join('')}</details>` : '')
     + (head ? '<button type="button" class="linkbtn side-manage" onclick="msgCenter()">💬 Ready messages for Messenger</button><button type="button" class="linkbtn side-manage" onclick="openFV()">Arrange, show, or hide features</button>' : '');
@@ -2358,7 +2368,7 @@ function aralDraw(){
   let tabs, who, stat;
   if (head){ tabs = [['ov','Overview'],['tag','Tag tutees and tutors'],['tutees','Tutees and tutors'],['rep','Reports'],['today','My ARAL today']]; who = 'School Head dashboard'; }
   else if (ao){ tabs = [['ov','Overview'],['tutees','Tutees and tutors'],['rep','Reports']]; who = 'Administrative Officer, view only'; }
-  else if (tutor){ tabs = [['today','Today'],['notes','My tutees and notes'],['tag','Tag learners'],['rep','My reports']]; if (adviser) tabs.push(['class','My class in ARAL']); who = 'ARAL tutor'; }
+  else if (tutor){ tabs = [['today','Today'],['notes','My tutees and notes'],['rep','My reports']]; if (adviser) tabs.push(['class','My class in ARAL']); who = 'ARAL tutor'; }
   else if (adviser){ tabs = [['class','My learners in ARAL']]; who = 'Adviser, view only'; }
   else { tabs = [['none','ARAL']]; who = 'Teacher'; }
   if (head || ao) stat = `<b>${(D.tutees||[]).length}</b><span>ARAL tutees</span>`;
@@ -2454,7 +2464,7 @@ function aralNotesTab(){
       return `<div class="araltutee"><div class="stfreq-h"><span class="oav">${esc((t.data.name||'?').charAt(0))}</span><div><b>${esc(t.data.name)}</b><small>${esc(aralSecLabel(t))} · Key Stage ${t.data.ks}</small><div>${aralAttTxt(aralLearnerAtt(t))}</div></div>${aralLockTxt(ns)}</div>
         ${aralProgChips(t.learner)}
         ${ns.length?`<ul class="aralnl">${ns.slice(0,5).map(n => `<li>${n.data.locked?'🔒':'✎'} <button class="linkbtn" onclick="aralNoteOpen('${t.learner}','${n.id}')">${esc(dShort(n.date))}</button> ${esc(aralFocusTxt(n.data.focus))}${n.data.progress?' · <i>'+esc(n.data.progress)+'</i>':''}</li>`).join('')}</ul>${ns.length>5?`<small class="hint">${ns.length-5} more notes in the reports.</small>`:''}`:'<p class="hint">No notes yet.</p>'}
-        <div class="stfreq-a"><button class="btn small" onclick="aralNoteOpen('${t.learner}','')">✍ New note</button></div></div>`; }).join('') || '<div class="empty">No tutees yet. Open Tag learners to add your tutees.</div>'}</div>`;
+        <div class="stfreq-a"><button class="btn small" onclick="aralNoteOpen('${t.learner}','')">✍ New note</button></div></div>`; }).join('') || '<div class="empty">No tutees yet. The School Head tags the ARAL tutees and assigns them to you.</div>'}</div>`;
 }
 
 /* ----- Tagging: the School Head tags tutees and assigns tutors; a tutor tags learners for herself ----- */
@@ -2650,7 +2660,6 @@ const ARAL_GUIDE = {
     ['🧒','Step 3. Tick the learners present','Tick the tutees who came, then tap <b>Save who is present</b>. To record a past session, change the <b>Session date</b> first.'],
     ['✍','Step 4. Write a note for each learner','Tap a learner\'s name. Choose what was taught: letters, word patterns, sight words, and more. Write what you did, choose the progress, and add a note. Tap <b>Check spelling and grammar</b> to fix your writing.'],
     ['🔒','Step 5. Save and lock when done','<b>Save draft</b> keeps the note so you can finish it later. <b>Save and lock</b> tells the School Head the note is done. A 🔒 shows on the note. You can still tap <b>Unlock to edit</b> if you need to change it.'],
-    ['🏷','Tag learners','In <b>Tag learners</b>, tick a learner from any class to make them your ARAL tutee. A learner who already has a tutor can only be moved by the School Head.'],
     ['🖨','Print your reports','In <b>My reports</b>, print the Individual Daily Log and Accomplishment Report for one day, or the Summary for a week, a month, or the term. Sign it as Prepared by, then give it to the School Head to sign as Noted by.'],
     ['❓','Need help again?','Tap <b>How to use ARAL</b> at the top anytime to open this guide again.'] ],
   adviser: [
@@ -2800,9 +2809,14 @@ function openSoon(f){
 }
 function openFeature(id){
   toggleSide(false); setTimeout(() => featSeen(id), 800);
+  if (aralOnly() && id!=='home' && id!=='aral') id = 'aral';
   const f = FEATURES.find(x => x.id === id);
+  if (!f){ showHome(); return; }
   if (f.id==='home'){ showHome(); return; }
-  if (f.ready){ CUR_FEATURE = 'lpt'; drawSide(); showTracker(); window.scrollTo(0,0); maybeGuide('lpt'); return; }
+  if (f.ready){ CUR_FEATURE = 'lpt'; drawSide(); showTracker(); window.scrollTo(0,0); maybeGuide('lpt');
+    // always open on the week of today, so everyone sees the same week first
+    try{ const st = (DATA||PUB||{}).settings; if (st){ SEL.term = pickCurrentTerm(st); const w = pickCurrentWeek(SEL.term); if (w) SEL.week = w; renderAll(); } }catch(e){}
+    return; }
   const canOpen = f.built && ((USER && USER.role==='head') || (featOn(f.id) && (USER || f.id==='sbfp' || f.id==='read' || f.id==='reimb')));
   if (canOpen && f.open){ CUR_FEATURE = f.id; drawSide(); f.open(); return; }
   openSoon(f);
@@ -4972,8 +4986,24 @@ function showHome(){
   closeGuide(); $('viewHome').style.display=''; CUR_FEATURE = 'home'; drawSide(); drawHome(); window.scrollTo(0,0); maybeGuide('home');
   if (USER && (USER.role==='head' || featOn('obs')) && !OBS.list.length){ obsLocalLoad(); obsRefresh().catch(()=>{}); }
 }
+function drawAralHome(){
+  const hr = Number(new Date().toLocaleString('en-US',{timeZone:'Asia/Manila',hour:'numeric',hour12:false})), greet = hr < 12 ? 'Good morning' : hr < 18 ? 'Good afternoon' : 'Good evening';
+  const first = USER.name.split(' ')[0].replace(/^./, c=>c.toUpperCase()), D = (typeof ARAL!=='undefined' && ARAL.data) ? ARAL.data : null, today = (D && D.today) || todayPH();
+  let card = `<div class="pirload"><div class="pirdots"><i></i><i></i><i></i></div><b>Opening your ARAL summary</b></div>`;
+  if (D){ const list = aralMyTutees(), T = (aralRow('TIME', USER.email, today)||{}).data || {}, A = aralRow('ATT', USER.email, today), ns = aralNotes({ tutor:USER.email, date:today });
+    card = `<div class="ostats"><div class="ostat static"><span class="oico">🧒</span><b>${list.length}</b><span>My ARAL tutees</span></div>
+      <div class="ostat static"><span class="oico">⏰</span><b>${T.in?esc(time12(T.in)):'Not yet'}</b><span>Sign in today${T.session?', '+(T.session==='Before class'?'before':'after')+' the regular class':''}</span></div>
+      <div class="ostat static"><span class="oico">🚪</span><b>${T.out?esc(time12(T.out)):'Not yet'}</b><span>Sign out today</span></div>
+      <div class="ostat static"><span class="oico">✅</span><b>${A?A.data.present.length+' of '+list.length:'Not yet'}</b><span>Learners present today</span></div>
+      <div class="ostat static"><span class="oico">✍</span><b>${ns.length}</b><span>Notes today (${ns.filter(n => n.data.locked).length} locked)</span></div></div>
+      ${aralMeter(T, true)}`; }
+  $('viewHome').innerHTML = `<div class="hhero"><div class="hhero-t"><h2>${greet}, ${esc(first)}!</h2><p>${esc(fmtLong(today))}. Thank you for helping every learner catch up.</p><button class="btn sun small" style="margin-top:12px" onclick="openFeature('aral')">Open ARAL</button></div></div>
+    <div class="hcard" style="margin-top:14px"><b>My ARAL today</b>${card}</div>`;
+  if (!D && typeof aralLoad==='function') aralLoad(true).then(() => { if (CUR_FEATURE==='home' && aralOnly()) drawAralHome(); }).catch(()=>{});
+}
 function drawHome(){
   if (!USER) return drawPublicHome();
+  if (aralOnly()) return drawAralHome();
   const hr = Number(new Date().toLocaleString('en-US',{timeZone:'Asia/Manila',hour:'numeric',hour12:false})), greet = hr < 12 ? 'Good morning' : hr < 18 ? 'Good afternoon' : 'Good evening';
   const today = new Date().toLocaleString('en-US',{timeZone:'Asia/Manila',weekday:'long',month:'long',day:'numeric',year:'numeric'});
   const first = USER.name.split(' ')[0].replace(/^./, c=>c.toUpperCase()), head = USER.role==='head', teacher = USER.role==='teacher';
@@ -5313,7 +5343,7 @@ function sbTodoHtml(){ const L = sbMyTodo(); if (!L.length) return '';
   return `<div class="sbtodo"><b>\u23F0 Your SBFP days to complete (${L.length})</b>
     <p>These are the feeding days of your grade level parents. Please update each one: the status, the photos of the attendance sheet, and the parents' attendance.</p>
     <div class="sbtodo-l">${L.map(x => `<button onclick="SB.date='${x.date}';SB.tab='today';openSbfp()"><span>${esc(dShort(x.date))}</span><b>${esc(x.s.n)}</b><small>Still needed: ${esc(x.need.join(', '))}</small></button>`).join('')}</div>
-    <p class="sbtodo-n">\u2757 If the menu that was actually served is different, do not change the menu. Complete the day as it is, and tell the School Head about it.</p></div>`; }
+    <p class="sbtodo-n">\u2757 If the menu or the grade level parents assigned on a day are different from what was served, skip that day for now. Message the School Head first before you enter its data. Go on and complete the days with the correct menu and grade level assignment, based on your attendance.</p></div>`; }
 function sbParents(group){
   const seen = {}, out = [];
   (SB.people||[]).filter(p => p.group===group).forEach(p => { const k = p.parent+'|'+group;
@@ -5878,7 +5908,7 @@ function pirLacCalc(R, email){
   const held = D.sessions.filter(s => s.date >= R.from && s.date <= R.to && s.date <= today && (!email || lacInvited(s, email))), lacs = held.filter(s => s.kind==='LAC');
   const att = held.map(s => { const inv = lacInvitees(s).filter(p => !email || p.email===email); return { s, inv:inv.length, att: lacRecs(s.id,'ATT').filter(r => !email || r.email===email).length }; });
   const ev = lacMean(lacs.map(s => lacEvalData(s.id,'EVS').overall).filter(Boolean)), sp = lacMean(lacs.map(s => (s.facilitators||[]).map(f => lacEvalData(s.id,'EVR',f.name).overall)).flat().filter(Boolean));
-  const hubs = D.hub.filter(h => h.status==='Approved'), pairs = []; hubs.forEach(h => hubAssignees(h).filter(p => !email || p.email===email).forEach(p => pairs.push((lacProg(h.id, p.email)||{}).status==='Finished')));
+  const hubs = D.hub.filter(h => hubLive(h)), pairs = []; hubs.forEach(h => hubAssignees(h).filter(p => !email || p.email===email).forEach(p => pairs.push((lacProg(h.id, p.email)||{}).status==='Finished')));
   const refs = lacs.reduce((a,s) => a + lacNotesFor(s.id, email||undefined).length, 0), attended = att.reduce((a,x)=>a+x.att,0), invited = att.reduce((a,x)=>a+x.inv,0);
   return { held, lacs, att, ev, sp, hubDone: pairs.filter(Boolean).length, hubAll: pairs.length, refs, attended, invited, rate: pct(attended, invited) };
 }
@@ -7813,7 +7843,7 @@ async function openLac(tab){
 }
 function lacDot(){ if (!LAC.data || !USER) return; const t = todayPH();
   const n = lacHead() ? LAC.data.hub.filter(h => h.status==='Pending').length + (LAC.data.notebooks||[]).filter(x => x.email!==USER.email && !x.checkedOn && x.status!=='Returned').length
-    : LAC.data.hub.filter(h => h.status==='Approved' && (h.assign==='all' || (h.assign||[]).indexOf(USER.email) > -1) && h.byEmail!==USER.email && !LAC.data.progress.some(p => p.hub===h.id && p.email===USER.email)).length + LAC.data.sessions.filter(s => s.date===t && lacInvited(s, USER.email) && !lacMine(s.id,'ATT')).length;
+    : LAC.data.hub.filter(h => hubLive(h) && (h.assign==='all' || (h.assign||[]).indexOf(USER.email) > -1) && h.byEmail!==USER.email && !LAC.data.progress.some(p => p.hub===h.id && p.email===USER.email)).length + LAC.data.sessions.filter(s => s.date===t && lacInvited(s, USER.email) && !lacMine(s.id,'ATT')).length;
   const k = n + (lacHead() ? 0 : nbMissing().length);
   if (k !== LAC.dot){ LAC.dot = k; drawSide(); } }
 function lacDraw(){
@@ -8084,8 +8114,10 @@ async function lacMinutesSave(id, print){
 function lacPara(t){ return String(t||'').split(/\n+/).filter(Boolean).map(p => `<p>${esc(p)}</p>`).join(''); }
 function lacMinutesHtml(s){
   const M = s.minutes || {}, att = lacRecs(s.id,'ATT').sort((a,b) => String(a.on).localeCompare(String(b.on))), not = lacInvitees(s).filter(p => !att.some(a => a.email===p.email) && p.role!=='head');
-  return `<table class="stfp-info"><tr><td>Present (${att.length})</td><td>${esc(att.map(a=>a.name).join(', '))||'None'}</td></tr>${not.length?`<tr><td>Absent (${not.length})</td><td>${esc(not.map(p=>p.name).join(', '))}</td></tr>`:''}</table>
-    ${LAC_MIN.map(m => M[m[0]]?`<h4>${m[1]}</h4>${lacPara(M[m[0]])}`:'').join('') || '<p class="hint">No minutes yet.</p>'}`;
+  // one table: each part of the minutes as it was asked in the form
+  return `<table class="stfp-tbl nbtbl"><thead><tr><th style="width:30%">Part of the minutes</th><th>Details</th></tr></thead><tbody>
+    <tr><td><b>Present (${att.length})</b></td><td>${esc(att.map(a=>a.name).join(', '))||'None'}</td></tr>${not.length?`<tr><td><b>Absent (${not.length})</b></td><td>${esc(not.map(p=>p.name).join(', '))}</td></tr>`:''}
+    ${LAC_MIN.map(m => `<tr><td><b>${esc(m[1])}</b></td><td>${M[m[0]] ? lacPara(M[m[0]]) : '<span style="color:#888">None</span>'}</td></tr>`).join('')}</tbody></table>`;
 }
 function lacReportDraft(s){
   const M = s.minutes||{}, E = lacEvalData(s.id,'EVS'), att = lacRecs(s.id,'ATT').length, inv = lacInvitees(s).length;
@@ -8154,19 +8186,27 @@ async function lacPrint(kind, id, T, html){
   const time = (T.start?time12(T.start):'')+(T.end?' to '+time12(T.end):'');
   const info = `<table class="stfp-info"><tr><td>Title</td><td colspan="3"><b>${esc(s.title)}</b></td></tr><tr><td>Date</td><td>${esc(fmtLong(T.date))}</td><td>Time</td><td>${esc(time)}</td></tr>
     <tr><td>Venue</td><td>${esc(T.venue||'')}</td><td>${s.kind==='LAC'?'Facilitator':'Presider'}</td><td>${esc((s.facilitators||[]).map(f=>f.name).join(', '))}</td></tr></table>`;
-  let sigs = {}; if (kind==='att' || kind==='rep' || kind==='min'){ loading(true, 'Preparing the printout'); try{ sigs = await api('lacSigs', { session:id }); }catch(e){} loading(false); }
-  const sigImg = e => sigs[e] ? `<img src="${sigs[e]}" alt="">` : '';
-  const signers = `<div class="stfp-sigs"><div><span class="sigimg">${s.documenter?sigImg(s.documenter):''}</span><span>${esc(docN||'\u00A0')}</span><small>Prepared by, LAC Documenter</small></div><div><span class="sigimg">${sigImg(lacHeadEmail())}</span><span>${esc(head)}</span><small>Noted by, School Head</small></div></div>`;
+  const docRole = s.kind==='MEET' ? 'Meeting Secretary' : 'LAC Documenter', docTitle = kind==='att' ? 'Attendance Sheet' : kind==='min' ? 'Minutes' : kind==='rep' ? 'Accomplishment Report' : ((LAC.lastRep||{}).title || 'Report');
+  let sigs = {}, affDoc, affHead = false;
+  if (kind==='att' || kind==='rep' || kind==='min' || kind==='view'){
+    closeModal('stfModal');
+    // the documenter (or the meeting secretary) confirms before the e-signature is placed; the School Head too for Noted by
+    if (s.documenter===USER.email && kind!=='view'){ affDoc = await affixAsk('Prepared by, '+docRole, docTitle);
+      if (affDoc && !(s.minutes||{})['sig_'+kind]){ try{ LAC.data = await api('lacMinutes', { session:id, affix:kind }); lacSaveLocal(); }catch(e){ handleErr(e); } } }
+    if (USER.role==='head') affHead = await affixAsk('Noted by, School Head', docTitle);
+    loading(true, 'Preparing the printout'); try{ sigs = await api('lacSigs', { session:id, kind, head:affHead, doc:affDoc }); }catch(e){} loading(false); }
+  const attSig = (sigs && sigs.att) || {}, sigImg = e => attSig[e] ? `<img src="${attSig[e]}" alt="">` : '';
+  const signers = sigBlock([{ label:'Prepared by:', name:docN, role:docRole, img:sigs.doc||'' }, { label:'Noted by:', name:head, role:'School Head', img:sigs.head||'' }]);
   let title = '', body = '';
   const attTbl = () => { const att = lacRecs(id,'ATT').sort((a,b) => String(a.on).localeCompare(String(b.on)));
     return `<table class="stfp-tbl lacatt"><thead><tr><th>No.</th><th>Name</th><th>Position</th><th>Grade level assigned</th><th>Email</th><th>Contact number</th><th>Time signed</th><th>Signature</th></tr></thead><tbody>
       ${att.map((a,i) => `<tr><td>${i+1}</td><td>${esc(String(a.name||'').toUpperCase())}</td><td style="white-space:nowrap">${esc(lacPos(a.email))}</td><td>${esc(lacAsg(a.email))}</td><td class="lacem">${esc(a.email)}</td><td>${esc(lacContact(a.email))}</td><td style="white-space:nowrap">${a.on?esc(time12(String(a.on).slice(11,16))):''}</td><td class="lacsig">${sigImg(a.email) || '<small>Signed in TALA</small>'}</td></tr>`).join('')}
       ${Array.from({length:3}).map((_,i) => `<tr><td>${att.length+i+1}</td><td></td><td></td><td></td><td></td><td></td><td></td><td class="lacsig"></td></tr>`).join('')}</tbody></table>`; };
-  const photoAnnex = async (h) => { if (!(s.photos||[]).length) return ''; const ph = await lacPhotoFetch(s.photos.map(p => p.id)); return `<h4>${h}</h4><div class="lacprintph">${s.photos.map(p => `<figure>${ph[p.id]?`<img src="${ph[p.id]}" alt="">`:''}<figcaption>${esc(p.caption||'')}</figcaption></figure>`).join('')}</div>`; };
-  if (kind==='att'){ title = 'Attendance Sheet'; body = info + attTbl() + signers; }
+  const photoAnnex = async (h) => { if (!(s.photos||[]).length) return ''; const ph = await lacPhotoFetch(s.photos.map(p => p.id)); return `<div class="lacprintph ${s.photos.length===1?'one':''}">${s.photos.map(p => `<figure>${ph[p.id]?`<img src="${ph[p.id]}" alt="">`:''}<figcaption>${esc(p.caption||'')}</figcaption></figure>`).join('')}</div>`; };
+  if (kind==='att'){ title = 'Attendance Sheet'; body = info + `<div class="annex">` + attTbl() + `</div>` + signers; }
   else if (kind==='min'){ title = 'Minutes of the '+(s.kind==='MEET'?'Faculty Meeting':'LAC Session'); loading(true, 'Adding the attendance and photos');
     let ph = ''; try{ ph = await photoAnnex('Annex B. Photos (documentation)'); }catch(e){} loading(false);
-    body = info + lacMinutesHtml(s) + signers + `<div class="stfp-break"></div><h4>Annex A. Attendance Sheet</h4>` + attTbl() + (ph ? `<div class="stfp-break"></div>` + ph : ''); }
+    body = info + lacMinutesHtml(s) + signers + `</div><div class="stfp-page">${stfPrintHead('Annex A. Attendance Sheet', lacKind(s)+', '+fmtLong(T.date))}<div class="annex">` + attTbl() + `</div>` + (ph ? `</div><div class="stfp-page">${stfPrintHead('Annex B. Photos', lacKind(s)+', '+fmtLong(T.date))}<div class="annex">${ph}</div>` : ''); }
   else if (kind==='rep'){ const R = Object.assign(lacReportDraft(s), s.report||{}), E = lacEvalData(id,'EVS'), N = lacNotesFor(id), ph = await lacPhotoFetch((s.photos||[]).map(p => p.id));
     title = 'Accomplishment Report';
     body = info + `<h4>I. Rationale</h4>${lacPara(R.rationale)}<h4>II. Objectives</h4><ul>${String(R.objectives||'').split('\n').filter(Boolean).map(o=>`<li>${esc(o)}</li>`).join('')}</ul>
@@ -8174,12 +8214,48 @@ async function lacPrint(kind, id, T, html){
       <h4>V. Evaluation Results</h4>${lacPara(R.evaluation)}${E.R.length?lacEvalTable(E):''}
       <h4>VI. Reflections of the Participants</h4>${lacPara(R.reflect)}${N.length?`<ul>${N.slice(0,8).map(n => (n.body||{}).r0 ? `<li>${esc(String(n.body.r0).slice(0,220))}${String(n.body.r0).length>220?'...':''} <i>(${esc(n.name)})</i></li>` : '').join('')}</ul>`:''}
       <h4>VII. Agreements and Next Steps</h4>${lacPara(R.next)||'<p>&nbsp;</p>'}
-      ${(s.photos||[]).length?`<h4>VIII. Documentation (MOVs)</h4><div class="lacprintph">${s.photos.map(p => `<figure>${ph[p.id]?`<img src="${ph[p.id]}" alt="">`:''}<figcaption>${esc(p.caption||'')}</figcaption></figure>`).join('')}</div>`:''}` + signers; }
-  else { title = (LAC.lastRep||{}).title || 'Report'; body = info + html + `<div class="stfp-sigs"><div></div><div><span>${esc(head)}</span><small>School Head</small></div></div>`; }
+      ${(s.photos||[]).length?`<h4>VIII. Documentation (MOVs)</h4><div class="lacprintph ${s.photos.length===1?'one':''}">${s.photos.map(p => `<figure>${ph[p.id]?`<img src="${ph[p.id]}" alt="">`:''}<figcaption>${esc(p.caption||'')}</figcaption></figure>`).join('')}</div>`:''}` + signers; }
+  else { title = (LAC.lastRep||{}).title || 'Report'; body = info + html + signers; }
   closeModal('stfModal');
   $('printArea').innerHTML = `<div class="stfprint"><div class="stfp-page">${stfPrintHead(title, lacKind(s)+', '+fmtLong(T.date))}${body}<p class="stfp-foot">Generated by TALA on ${esc(fmtLong(todayPH()))}.</p></div></div>`;
   setTimeout(() => window.print(), 300);
 }
+
+/* ----- Printing: signatories, affixing the e-signature, and fitting a report on one or two pages ----- */
+// Asks the person printing if their own e-signature should be placed above their name
+function affixAsk(role, doc){ return new Promise(res => { window._affixRes = v => { closeModal('stfModal'); window._affixRes = null; res(v); };
+  stfModal(`<h3>✍ Affix your e-signature?</h3><p class="sub">You are printing the ${esc(doc)}. Your e-signature will be placed above your name as <b>${esc(role)}</b>.</p>
+    <div class="modal-actions"><button class="btn ghost" onclick="_affixRes(false)">Print without my e-signature</button><button class="btn" onclick="_affixRes(true)">✍ Affix my e-signature</button></div>`); }); }
+async function mySigData(){ try{ const r = await api('getMySig'); if (r && r.sig) return r.sig; toast('Please save your e-signature first. Printing without it.'); }catch(e){} return ''; }
+function sigBlock(L){ return `<div class="stfp-sigs">${L.map(x => `<div><small style="text-align:left">${esc(x.label)}</small><span class="sigimg">${x.img?`<img src="${x.img}" alt="">`:''}</span><span>${esc(String(x.name||'').toUpperCase()) || '\u00A0'}</span><small>${esc(x.role||'')}</small></div>`).join('')}</div>`; }
+// A report that spills over a little (for example, only the signatories) is made smaller to fit on fewer pages
+const PRINT_W = 733, PRINT_H = 1040; // A4 portrait, 8 mm margins, in screen pixels
+function printMirrorCss(){
+  if (window._pmCss) return; window._pmCss = true; const out = [];
+  [...document.styleSheets].forEach(sh => { let rules; try{ rules = sh.cssRules; }catch(e){ return; }
+    [...(rules||[])].forEach(r => { if (r.type===4 && /print/.test(r.media.mediaText)) [...r.cssRules].forEach(x => { if (!x.selectorText) return;
+      const sel = x.selectorText.split(',').map(t => { t = t.trim(); if (/^body/.test(t)) return ''; return t.indexOf('#printArea')===0 ? t.replace('#printArea', '.pmeasure') : '.pmeasure '+t; }).filter(Boolean).join(',');
+      if (sel) out.push(sel+'{'+x.style.cssText+'}'); }); }); });
+  const st = document.createElement('style'); st.textContent = out.join('\n'); document.head.appendChild(st);
+}
+function fitPrintPages(){
+  const pages = [...document.querySelectorAll('#printArea .stfprint .stfp-page')]; if (!pages.length) return;
+  printMirrorCss();
+  const box = document.createElement('div'); box.className = 'pmeasure'; box.style.cssText = 'position:absolute;left:-20000px;top:0;width:'+PRINT_W+'px;visibility:hidden;display:block';
+  document.body.appendChild(box);
+  pages.forEach(pg => { pg.style.zoom = '';
+    box.innerHTML = '<div class="stfprint" style="display:block"></div>'; const c = pg.cloneNode(true); c.style.pageBreakAfter = 'auto'; box.firstChild.appendChild(c);
+    const meas = z => { c.style.zoom = z; return c.getBoundingClientRect().height; };
+    let h = meas(1); const n = Math.ceil(h / PRINT_H); if (n <= 1) return;
+    const sg = c.querySelector('.stfp-sigs'), sigTop = sg ? (sg.getBoundingClientRect().top - c.getBoundingClientRect().top) : h;
+    const spill = h - (n-1) * PRINT_H, sigsAlone = sg && sigTop >= (n-1) * PRINT_H - 40;
+    if (n > 3 || !(sigsAlone || spill < PRINT_H * 0.3)) return;
+    for (let z = 0.96; z >= 0.7; z -= 0.03){ if (meas(z) <= (n-1) * PRINT_H - 10){ pg.style.zoom = z.toFixed(2); return; } }
+  });
+  box.remove();
+}
+(function(){ const P = window.print ? window.print.bind(window) : null; if (!P) return; window.print = function(){ try{ fitPrintPages(); }catch(e){ console.warn('TALA print fit', e); } return P(); }; })();
+
 function lacHeadEmail(){ const h = lacPeople().find(p => p.role==='head'); return h ? h.email : ''; }
 
 /* ----- Notebooks ----- */
@@ -8278,43 +8354,64 @@ function nbHtml(n){ const s = n.session ? lacS(n.session) : null, b = n.body || 
   return `<div class="nbprint"><h3 class="stfp-n">${esc(n.title || (s ? s.title : NB_BOOKS[n.book]))}</h3><p class="hint">${s?esc(lacKind(s))+', '+esc(fmtLong(s.date))+' \u00B7 ':''}Written by ${esc(n.name)}, ${esc(dTime(n.updated))}</p>
     ${n.book==='LAC' || n.book==='REF' ? part('My notes', b.text) + part('What I learned', b.learn) + (LAC_REF.some((q,i) => b['r'+i]) ? '<h4 class="nbsec">Share Your Significant Learnings</h4>' + LAC_REF.map((q,i) => part((i+1)+'. '+q, b['r'+i])).join('') : '') : n.book==='MEET' ? part('My notes', b.text) + part('My tasks', b.todo) : lacPara(b.text)}
     ${n.checkedOn?`<p class="stfnote">\u2714 Checked by ${esc(n.checkedBy)}, ${esc(dTime(n.checkedOn))}${n.remark?'. '+esc(n.remark):''}</p>`:''}</div>`; }
-function nbPrint(id){
+function nbTable(n){
+  const s = n.session ? lacS(n.session) : null, b = n.body || {}, rows = [];
+  if (n.book==='LAC' || n.book==='REF'){ if (b.text || n.book==='LAC') rows.push(['My notes', b.text]); if (b.learn) rows.push(['What I learned', b.learn]); LAC_REF.forEach((q,i) => { if (b['r'+i] || n.book==='REF') rows.push([(i+1)+'. '+q, b['r'+i]]); }); }
+  else if (n.book==='MEET'){ rows.push(['My notes of the meeting', b.text]); rows.push(['My tasks from the meeting', b.todo]); }
+  else rows.push(['Notes', b.text]);
+  return `<table class="stfp-info"><tr><td>Title</td><td colspan="3"><b>${esc(n.title || (s ? s.title : NB_BOOKS[n.book]))}</b></td></tr>
+      <tr><td>${s?esc(lacKind(s)):'Notebook'}</td><td>${s?esc(fmtLong(s.date)):esc(NB_BOOKS[n.book])}</td><td>Last saved</td><td>${esc(dTime(n.updated))}</td></tr>
+      <tr><td>Written by</td><td>${esc(n.name)}</td><td>Position</td><td>${esc(lacPos(n.email))}</td></tr></table>
+    <table class="stfp-tbl nbtbl"><thead><tr><th style="width:34%">Question or prompt</th><th>Answer</th></tr></thead><tbody>${rows.map(r => `<tr><td><b>${esc(r[0])}</b></td><td>${r[1] ? lacPara(r[1]) : '<span style="color:#888">No answer</span>'}</td></tr>`).join('')}</tbody></table>
+    ${n.checkedOn?`<p class="stfnote">\u2714 Checked by ${esc(n.checkedBy)}, ${esc(dTime(n.checkedOn))}${n.remark?'. '+esc(n.remark):''}</p>`:''}`;
+}
+async function nbPrint(id){
   const head = lacHead(), who = head ? LAC.nbWho : USER.email;
   const list = id ? [LAC.data.notebooks.find(x => x.id===id)] : LAC.data.notebooks.filter(n => nbTabOf(n.book)===LAC.nb && (!who || n.email===who)).sort((a,b) => String(a.updated).localeCompare(String(b.updated)));
   if (!list.length || !list[0]) return toast('There is nothing to print yet.');
-  const book = id ? NB_BOOKS[list[0].book] : NB_TABS[LAC.nb], owner = [...new Set(list.map(n => n.name))];
-  $('printArea').innerHTML = `<div class="stfprint"><div class="stfp-page">${stfPrintHead(book, owner.length===1 ? owner[0] : 'All personnel')}${list.map(nbHtml).join('<hr>')}<p class="stfp-foot">Generated by TALA on ${esc(fmtLong(todayPH()))}.</p></div></div>`;
-  closeModal('stfModal'); setTimeout(() => window.print(), 250);
+  closeModal('stfModal');
+  const own = list.every(n => n.email===USER.email), doc = list.length > 1 ? 'notebook entries' : 'notebook entry';
+  // the writer signs as Prepared by when printing their own; the School Head signs Noted by. Printing everyone's entries, the School Head prints without the teachers' e-signatures.
+  const sig = (own || USER.role==='head') && await affixAsk(own ? 'Prepared by' : 'Noted by, School Head', doc) ? await mySigData() : '';
+  const headName = LAC.data.headName || (USER.role==='head' ? USER.name : '');
+  $('printArea').innerHTML = `<div class="stfprint">${list.map(n => `<div class="stfp-page">${stfPrintHead(NB_BOOKS[n.book], n.name)}${nbTable(n)}
+    ${sigBlock([{ label:'Prepared by:', name:n.name, role:lacPos(n.email)||'Teacher', img: n.email===USER.email ? sig : '' }, { label:'Noted by:', name:headName, role:'School Head', img: USER.role==='head' ? sig : '' }])}
+    <p class="stfp-foot">Generated by TALA on ${esc(fmtLong(todayPH()))}.</p></div>`).join('')}</div>`;
+  setTimeout(() => window.print(), 250);
 }
 
 /* ----- Learning Hub ----- */
 function lacProg(hid, email){ return (LAC.data.progress||[]).find(p => p.hub===hid && p.email===(email||USER.email)); }
-function lacHubMine(){ return (LAC.data.hub||[]).filter(h => h.status==='Approved' && (h.assign==='all' || (h.assign||[]).indexOf(USER.email) > -1)); }
+function lacHubMine(){ return (LAC.data.hub||[]).filter(h => hubLive(h) && (h.assign==='all' || (h.assign||[]).indexOf(USER.email) > -1)); }
 function hubThumb(h){ return h.thumb || (h.kind==='SLIDES' ? '' : 'https://i.ytimg.com/vi/'+h.vid+'/hqdefault.jpg'); }
 function hubThumbHtml(h){ const t = hubThumb(h); return t ? `<img src="${esc(t)}" alt="" loading="lazy" onerror="this.style.display='none'">` : `<span class="hubslide"><b>\u{1F4CA}</b><small>${esc(h.title)}</small></span>`; }
 function hubKind(h){ return (h.kind==='SLIDES' ? 'Slides' : 'Video') + ' \u00B7 ' + (h.mode==='Hybrid' ? 'Hybrid, with live facilitator' : 'Self-paced'); }
+// Approved and already shown to the teachers (not hidden, and the show date has come)
+function hubLive(h){ return h.status==='Approved' && (!h.release || (h.release!=='hold' && h.release <= todayPH())); }
+function hubMatch(h, st){ if (!st) return true; if (st==='LAC' || st==='SELF') return (h.use||(h.session?'LAC':'SELF'))===st; return h.status===st; }
 function hubAssignees(h){ return lacPeople().filter(p => h.assign==='all' || (h.assign||[]).indexOf(p.email) > -1); }
 function lacHub(){
   const D = LAC.data, head = lacHead(), admin = lacRole()==='admin', st = LAC.hubSt;
-  const list = D.hub.filter(h => !st || h.status===st).sort((a,b) => (a.status==='Pending'?0:1)-(b.status==='Pending'?0:1) || String(b.created).localeCompare(String(a.created)));
+  const list = D.hub.filter(h => hubMatch(h, st)).sort((a,b) => (a.status==='Pending'?0:1)-(b.status==='Pending'?0:1) || String(b.created).localeCompare(String(a.created)));
   const card = h => { const p = lacProg(h.id), mine = h.assign==='all' || (h.assign||[]).indexOf(USER.email) > -1, as = hubAssignees(h), fin = as.filter(x => (lacProg(h.id, x.email)||{}).status==='Finished').length;
     return `<div class="hubcard"><button class="hubthumb" onclick="hubPlay('${h.id}')" aria-label="Play ${esc(h.title)}">${hubThumbHtml(h)}<span class="hubplay">${h.kind==='SLIDES'?'\u{1F4D6}':'\u25B6'}</span>${h.status!=='Approved'?`<span class="hubst ${h.status}">${h.status==='Pending'?'Waiting for approval':'Returned'}</span>`:''}</button>
-      <div class="hubbody"><b>${esc(h.title)}</b><small>${h.facilitator?esc(h.facilitator)+' \u00B7 ':''}${h.session&&lacS(h.session)?esc(lacS(h.session).title):'Self learning'}</small><small class="hubkind">${esc(hubKind(h))}</small>
+      <div class="hubbody"><b>${esc(h.title)}</b><div class="hubtags">${hubUseTag(h)}${head||admin?hubRelTag(h):''}</div><small>${h.facilitator?esc(h.facilitator):''}</small><small class="hubkind">${esc(hubKind(h))}</small>
       ${mine&&h.status==='Approved'?`<div class="hubbar" title="${p?p.pct:0}% done"><i style="width:${p?p.pct:0}%"></i></div><small>${p?esc(p.status)+', '+p.pct+'%':'Not started'}${h.target?' \u00B7 by '+esc(dShort(h.target)):''}</small>`:''}
       ${(head||admin)&&h.status==='Approved'?`<small>${fin} of ${as.length} finished \u00B7 <button class="linkbtn" onclick="hubProgView('${h.id}')">See progress</button></small>`:''}
       ${h.note&&(head||h.byEmail===USER.email)?`<p class="stfnote">${esc(h.note)}</p>`:''}
       <div class="stfreq-a">${head&&h.status!=='Approved'?`<button class="btn small" onclick="hubDecide('${h.id}','Approved')">\u2714 Approve</button><button class="btn ghost small" onclick="hubDecide('${h.id}','Returned')">Return</button>`:''}
+        ${head&&h.status==='Approved'&&(h.release==='hold'||(h.release&&h.release>todayPH()))?`<button class="btn small" onclick="hubShowNow('${h.id}')">\u{1F441} Show now</button>`:''}
         ${head||(h.byEmail===USER.email&&h.status!=='Approved')?`<button class="btn ghost small" onclick="hubForm('${h.id}')">Edit</button><button class="linkbtn danger" onclick="hubDel('${h.id}')">Delete</button>`:''}
         ${(head||admin)&&h.status==='Approved'?`<button class="linkbtn" onclick="lacMsgOpen('hub','${h.id}')">\u{1F4AC} Message</button>`:''}</div></div></div>`; };
   $('lacBody').innerHTML = `<div class="bar" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><button class="btn" onclick="hubForm()">\uFF0B Add a material</button>
-      ${head||admin?`<div class="tabs">${[['','All'],['Pending','Waiting for approval'],['Approved','Approved'],['Returned','Returned']].map(x=>`<button class="${st===x[0]?'on':''}" onclick="LAC.hubSt='${x[0]}';lacHub()">${x[1]}${x[0]?' ('+D.hub.filter(h=>h.status===x[0]).length+')':''}</button>`).join('')}</div><button class="btn ghost" onclick="hubProgView()">\u{1F4CA} Progress of everyone</button>`:''}</div>
+      ${head||admin?`<div class="tabs">${[['','All'],['Pending','Waiting for approval'],['Approved','Approved'],['Returned','Returned'],['LAC','For LAC'],['SELF','Self learning']].map(x=>`<button class="${st===x[0]?'on':''}" onclick="LAC.hubSt='${x[0]}';lacHub()">${x[1]}${x[0]?' ('+D.hub.filter(h=>hubMatch(h,x[0])).length+')':''}</button>`).join('')}</div><button class="btn ghost" onclick="hubProgView()">\u{1F4CA} Progress of everyone</button>`:''}</div>
     <p class="hint">Add a YouTube video (Unlisted) or upload your PowerPoint or PDF slides. Tap a material to open it, and tap the notebook icon to write while you watch. The School Head approves new materials first.</p>
     <div class="hubgrid">${list.map(card).join('') || '<div class="empty">No materials yet.</div>'}</div>`;
 }
 function hubForm(id){
-  const h = id ? LAC.data.hub.find(x => x.id===id) : { assign:'all', kind:'VIDEO', mode:'Self-paced', minutes:10 }, P = lacPeople();
+  const h = id ? LAC.data.hub.find(x => x.id===id) : { assign:'all', kind:'VIDEO', mode:'Self-paced', minutes:10, use:'', release:'' }, P = lacPeople(), head = lacHead();
   LAC.thumb = h.thumb || ''; LAC.hubKind = h.kind || 'VIDEO'; LAC.hubFile = null;
-  stfModal(`<h3>${id?'Edit the material':'Add a material to the Learning Hub'}</h3><p class="sub">${lacHead()?'It is shown right away to those you assign.':'The School Head will check and approve it first.'}</p>
+  stfModal(`<h3>${id?'Edit the material':'Add a material to the Learning Hub'}</h3><p class="sub">${head?'You choose who sees it and when.':'The School Head will check it, then decide who sees it and when.'}</p>
     <div class="field"><label>Kind of material</label><div class="stfrad"><label class="check" style="margin:0"><input type="radio" name="hbKind" value="VIDEO" ${LAC.hubKind==='VIDEO'?'checked':''} onchange="hubKindSet('VIDEO')">▶ YouTube video</label><label class="check" style="margin:0"><input type="radio" name="hbKind" value="SLIDES" ${LAC.hubKind==='SLIDES'?'checked':''} onchange="hubKindSet('SLIDES')">\u{1F4CA} PowerPoint or PDF slides</label></div></div>
     <div id="hbVideo" ${LAC.hubKind==='SLIDES'?'hidden':''}><div class="field"><label for="hbUrl">YouTube link</label><input id="hbUrl" value="${esc(h.kind==='SLIDES'?'':h.url||'')}" placeholder="https://youtu.be/..." oninput="hubPreview()"><small class="hint">Upload the video to YouTube as Unlisted, then paste the link.</small></div></div>
     <div id="hbSlides" ${LAC.hubKind==='SLIDES'?'':'hidden'}><div class="field"><label for="hbFile">PowerPoint or PDF file</label><input type="file" id="hbFile" accept=".pptx,.ppt,.pdf,application/pdf,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-powerpoint" onchange="hubFilePick(this)">
@@ -8325,10 +8422,9 @@ function hubForm(id){
     <div class="field"><label for="hbTitle">Title</label><input id="hbTitle" maxlength="160" value="${esc(h.title||'')}"></div>
     <div class="field"><label for="hbFac">Facilitator or speaker</label><input id="hbFac" list="hbNames" maxlength="160" value="${esc(h.facilitator||'')}" placeholder="Start typing a name"><datalist id="hbNames">${lacNameList().map(n => `<option value="${esc(n)}">`).join('')}</datalist></div>
     <div class="field"><label for="hbDesc">Short description (optional)</label><textarea id="hbDesc" rows="2" maxlength="1500">${esc(h.desc||'')}</textarea></div>
+    ${hubUseFields(h)}
     <div class="field"><label>How it is used</label><div class="stfrad"><label class="check" style="margin:0"><input type="radio" name="hbMode" value="Self-paced" ${h.mode!=='Hybrid'?'checked':''}>Self-paced: teachers study it on their own</label><label class="check" style="margin:0"><input type="radio" name="hbMode" value="Hybrid" ${h.mode==='Hybrid'?'checked':''}>Hybrid: the facilitator leads it live, teachers follow on their devices</label></div></div>
-    <div class="field"><label for="hbSess">Part of a session (optional)</label><select id="hbSess"><option value="">Self learning</option>${LAC.data.sessions.sort((a,b)=>b.date.localeCompare(a.date)).map(s=>`<option value="${s.id}" ${s.id===h.session?'selected':''}>${esc(s.title)}, ${esc(dShort(s.date))}</option>`).join('')}</select></div>
-    <div class="field"><label>Assign to</label><div class="stfrad"><label class="check" style="margin:0"><input type="radio" name="hbAll" value="all" ${h.assign==='all'?'checked':''} onchange="$('hbWho').hidden=true">All personnel</label><label class="check" style="margin:0"><input type="radio" name="hbAll" value="some" ${h.assign!=='all'?'checked':''} onchange="$('hbWho').hidden=false">A few, or one person</label></div>
-      <div id="hbWho" class="lacpick" ${h.assign==='all'?'hidden':''}>${P.map(p=>`<label class="check" style="margin:0"><input type="checkbox" value="${esc(p.email)}" ${h.assign!=='all'&&h.assign.indexOf(p.email)>-1?'checked':''}>${esc(p.name)}</label>`).join('')}</div></div>
+    ${head ? hubWhoFields(h, P) : ''}
     <div class="field"><label for="hbTarget">Finish by (optional)</label><input type="date" id="hbTarget" value="${esc(h.target||'')}"></div>
     <p class="err" id="hbErr"></p><div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Cancel</button><button class="btn" id="hbSaveBtn" onclick="hubSaveNow('${id||''}')">${lacHead()?'Save':'Send for approval'}</button></div>`, 'wide');
   hubPreview();
@@ -8346,22 +8442,64 @@ async function hubThumbPick(inp){ const f = inp.files[0]; if (!f) return; try{ l
 function hubB64(f){ return new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(String(r.result).split(',')[1]); r.onerror = () => rej(new Error('The file could not be read. Choose it again.')); r.readAsDataURL(f); }); }
 async function hubSaveNow(id){
   const kind = LAC.hubKind, cur = id ? LAC.data.hub.find(x => x.id===id) : null;
-  const item = { id, kind, url: kind==='VIDEO' ? $('hbUrl').value.trim() : '', title:$('hbTitle').value.trim(), facilitator:$('hbFac').value.trim(), desc:$('hbDesc').value.trim(), session:$('hbSess').value, thumb:LAC.thumb,
-    mode: document.querySelector('input[name=hbMode]:checked').value,
-    assign: document.querySelector('input[name=hbAll]:checked').value==='all' ? 'all' : [...document.querySelectorAll('#hbWho input:checked')].map(x=>x.value), target:$('hbTarget').value };
+  const item = { id, kind, url: kind==='VIDEO' ? $('hbUrl').value.trim() : '', title:$('hbTitle').value.trim(), facilitator:$('hbFac').value.trim(), desc:$('hbDesc').value.trim(), thumb:LAC.thumb,
+    mode: document.querySelector('input[name=hbMode]:checked').value, target:$('hbTarget').value };
+  const u = hubUseVal(); if (!u) return $('hbErr').textContent = 'Choose what the material is for: a LAC session or self learning.'; item.use = u.use; item.session = u.session;
+  if (lacHead()){ const w = hubWhoVal(); if (w.err) return $('hbErr').textContent = w.err; item.assign = w.assign; item.release = w.release; }
   if (kind==='VIDEO' && !hubVid(item.url)) return $('hbErr').textContent = 'Paste a YouTube link, for example https://youtu.be/xxxxxxxxxxx';
   if (kind==='SLIDES' && !LAC.hubFile && !(cur && cur.fileId)) return $('hbErr').textContent = 'Choose the PowerPoint or PDF file.';
   if (!item.title) return $('hbErr').textContent = 'Type the title.';
-  if (item.assign!=='all' && !item.assign.length) return $('hbErr').textContent = 'Choose who will study it.';
   $('hbSaveBtn').disabled = true;
   try{ if (kind==='SLIDES' && LAC.hubFile){ loading(true, 'Uploading the slides...'); item.file = { name: LAC.hubFile.name, base64: await hubB64(LAC.hubFile) }; }
-    LAC.data = await api('hubSave', { item }); loading(false); lacSaveLocal(); closeModal('stfModal'); LAC.tab = 'hub'; lacDraw(); toast(lacHead() ? 'Saved. It is now in the Learning Hub.' : 'Sent to the School Head for approval.'); }
+    LAC.data = await api('hubSave', { item }); loading(false); lacSaveLocal(); closeModal('stfModal'); LAC.tab = 'hub'; lacDraw(); toast(lacHead() ? (item.release==='hold' ? 'Saved. It stays hidden from the teachers until you show it.' : item.release ? 'Saved. Teachers will see it from '+dShort(item.release)+'.' : 'Saved. Those assigned can see it now.') : 'Sent to the School Head for approval.'); }
   catch(e){ loading(false); if ($('hbSaveBtn')) $('hbSaveBtn').disabled = false; handleErr(e,'hbErr'); }
 }
-async function hubDecide(id, decision){
-  let note = ''; if (decision==='Returned'){ note = prompt('Why is it returned? The uploader will see this.') || ''; if (!note.trim()) return; }
-  try{ LAC.data = await api('hubDecide', { id, decision, note }); lacSaveLocal(); lacDraw(); toast(decision==='Approved' ? 'Approved. Those assigned were notified.' : 'Returned to the uploader.'); }catch(e){ handleErr(e); }
+// What the material is for: a LAC session (listed in that session) or self learning
+function hubUseFields(h){
+  const lacs = (LAC.data.sessions||[]).filter(s => s.kind==='LAC').sort((a,b) => b.date.localeCompare(a.date)), use = h.use || (h.id ? (h.session ? 'LAC' : 'SELF') : '');
+  return `<div class="field"><label>What is this material for?</label>
+    <div class="aralsesc"><button type="button" class="aralsesb hbuse ${use==='LAC'?'on':''}" data-v="LAC" onclick="hubUseSet('LAC')"><span class="aralbox">${use==='LAC'?'✔':''}</span><b>LAC session material</b></button><button type="button" class="aralsesb hbuse ${use==='SELF'?'on':''}" data-v="SELF" onclick="hubUseSet('SELF')"><span class="aralbox">${use==='SELF'?'✔':''}</span><b>Self learning</b></button></div>
+    <input type="hidden" id="hbUse" value="${use}">
+    <div id="hbSessF" style="margin-top:8px" ${use==='LAC'?'':'hidden'}><label for="hbSess">Which LAC session?</label><select id="hbSess"><option value="">Not yet scheduled (the School Head will set the session)</option>${lacs.map(s => `<option value="${s.id}" ${s.id===h.session?'selected':''}>${esc(s.title)}, ${esc(dShort(s.date))}</option>`).join('')}</select>
+      <small class="hint">It is added to the materials of that LAC session.</small></div></div>`;
 }
+function hubUseSet(v){ $('hbUse').value = v; document.querySelectorAll('.hbuse').forEach(b => { const on = b.dataset.v===v; b.classList.toggle('on', on); b.querySelector('.aralbox').textContent = on ? '✔' : ''; }); $('hbSessF').hidden = v!=='LAC'; }
+function hubUseVal(){ const v = $('hbUse') ? $('hbUse').value : ''; return v ? { use:v, session: v==='LAC' ? $('hbSess').value : '' } : null; }
+// Who sees it and when (School Head only). Approved does not mean shown right away.
+function hubWhoFields(h, P){
+  const rel = h.release==='hold' ? 'hold' : h.release ? 'date' : (h.id ? 'now' : 'hold');
+  return `<div class="field"><label>Who can see it</label><div class="stfrad"><label class="check" style="margin:0"><input type="radio" name="hbAll" value="all" ${h.assign==='all'?'checked':''} onchange="$('hbWho').hidden=true">All personnel</label><label class="check" style="margin:0"><input type="radio" name="hbAll" value="some" ${h.assign!=='all'?'checked':''} onchange="$('hbWho').hidden=false">A few, or one person</label></div>
+      <div id="hbWho" class="lacpick" ${h.assign==='all'?'hidden':''}>${P.map(p=>`<label class="check" style="margin:0"><input type="checkbox" value="${esc(p.email)}" ${h.assign!=='all'&&(h.assign||[]).indexOf(p.email)>-1?'checked':''}>${esc(p.name)}</label>`).join('')}</div></div>
+    <div class="field"><label>When can they see it?</label><div class="stfrad" style="flex-direction:column;align-items:flex-start">
+      <label class="check" style="margin:0"><input type="radio" name="hbRel" value="hold" ${rel==='hold'?'checked':''} onchange="$('hbRelD').hidden=true">Keep it hidden for now (I will show it later)</label>
+      <label class="check" style="margin:0"><input type="radio" name="hbRel" value="now" ${rel==='now'?'checked':''} onchange="$('hbRelD').hidden=true">Show it now</label>
+      <label class="check" style="margin:0"><input type="radio" name="hbRel" value="date" ${rel==='date'?'checked':''} onchange="$('hbRelD').hidden=false">Show it from a date</label></div>
+      <input type="date" id="hbRelD" min="${addDays(todayPH(),1)}" value="${esc(rel==='date'?h.release:'')}" ${rel==='date'?'':'hidden'} style="margin-top:6px"></div>`;
+}
+function hubWhoVal(){
+  const all = (document.querySelector('input[name=hbAll]:checked')||{}).value !== 'some', assign = all ? 'all' : [...document.querySelectorAll('#hbWho input:checked')].map(x=>x.value);
+  if (!all && !assign.length) return { err:'Choose who can see it.' };
+  const r = (document.querySelector('input[name=hbRel]:checked')||{}).value || 'hold', d = $('hbRelD') ? $('hbRelD').value : '';
+  if (r==='date' && !(d && d > todayPH())) return { err:'Choose a date after today, or pick another option.' };
+  return { assign, release: r==='hold' ? 'hold' : r==='date' ? d : '' };
+}
+async function hubDecide(id, decision){
+  if (decision==='Returned'){ const note = prompt('Why is it returned? The uploader will see this.') || ''; if (!note.trim()) return;
+    try{ LAC.data = await api('hubDecide', { id, decision, note }); lacSaveLocal(); lacDraw(); toast('Returned to the uploader.'); }catch(e){ handleErr(e); } return; }
+  const h = LAC.data.hub.find(x => x.id===id); if (!h) return;
+  stfModal(`<h3>Approve the material</h3><p class="sub">${esc(h.title)}, from ${esc(h.byName||'')}. Approving does not show it yet. Choose who sees it and when.</p>
+    ${hubUseFields(h)}${hubWhoFields(Object.assign({}, h, { release: h.release || 'hold' }), lacPeople())}
+    <p class="err" id="hbErr"></p><div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Cancel</button><button class="btn" onclick="hubApprove('${id}')">\u2714 Approve</button></div>`, 'wide');
+}
+async function hubApprove(id){
+  const u = hubUseVal(), w = hubWhoVal(); if (!u) return $('hbErr').textContent = 'Choose what the material is for.'; if (w.err) return $('hbErr').textContent = w.err;
+  try{ LAC.data = await api('hubDecide', { id, decision:'Approved', note:'', assign:w.assign, release:w.release, use:u.use, session:u.session }); lacSaveLocal(); closeModal('stfModal'); lacDraw();
+    toast(w.release==='hold' ? 'Approved. It stays hidden until you show it.' : w.release ? 'Approved. Teachers will see it from '+dShort(w.release)+'.' : 'Approved and shown. Those assigned were notified.'); }catch(e){ handleErr(e,'hbErr'); }
+}
+async function hubShowNow(id){ const h = LAC.data.hub.find(x => x.id===id); if (!h || !confirm('Show "'+h.title+'" to those assigned now? They will get a notice.')) return;
+  try{ LAC.data = await api('hubDecide', { id, decision:'Approved', note:h.note||'', release:'' }); lacSaveLocal(); lacDraw(); toast('Shown. Those assigned were notified.'); }catch(e){ handleErr(e); } }
+function hubRelTag(h){ if (h.status!=='Approved') return ''; if (h.release==='hold') return '<span class="hubtag hold">Hidden from teachers</span>'; if (h.release && h.release > todayPH()) return `<span class="hubtag hold">Shows on ${esc(dShort(h.release))}</span>`; return ''; }
+function hubUseTag(h){ const s = h.session ? lacS(h.session) : null; return (h.use||(h.session?'LAC':'SELF'))==='LAC' ? `<span class="hubtag lac">LAC${s?': '+esc(s.title):', session not yet set'}</span>` : '<span class="hubtag self">Self learning</span>'; }
 async function hubDel(id){ if (!confirm('Delete this material and its progress records?')) return; try{ LAC.data = await api('hubDelete', { id }); lacSaveLocal(); lacDraw(); toast('Deleted.'); }catch(e){ handleErr(e); } }
 // The player: YouTube inside TALA. It keeps the farthest point watched and the place to continue.
 function ytApi(){ if (window.YT && YT.Player) return Promise.resolve(); if (!window._ytP) window._ytP = new Promise((res, rej) => { window.onYouTubeIframeAPIReady = () => res(); const s = document.createElement('script'); s.src = 'https://www.youtube.com/iframe_api'; s.onerror = () => { window._ytP = null; rej(new Error('The video could not be loaded. Check your internet connection.')); }; document.head.appendChild(s); }); return window._ytP; }
@@ -8371,7 +8509,7 @@ function ytApi(){ if (window.YT && YT.Player) return Promise.resolve(); if (!win
 async function hubPlay(id){
   const h = LAC.data.hub.find(x => x.id===id); if (!h) return;
   const slides = h.kind==='SLIDES';
-  const mine = h.status==='Approved' && (h.assign==='all' || (h.assign||[]).indexOf(USER.email) > -1), p = lacProg(id) || { pct:0, pos:0, status:'' };
+  const mine = hubLive(h) && (h.assign==='all' || (h.assign||[]).indexOf(USER.email) > -1), p = lacProg(id) || { pct:0, pos:0, status:'' };
   const s = h.session ? lacS(h.session) : null, needSign = s && lacInvited(s, USER.email) && !lacMine(s.id,'ATT') && s.date <= todayPH();
   const parts = (p.parts && p.parts.length===100) ? p.parts.split('') : Array(101).join('0').split('');
   const pct0 = p.parts ? parts.filter(c => c==='1').length : (p.pct||0);
@@ -8623,14 +8761,18 @@ function hubProgView(only){
   stfModal(`<h3>Learning Hub progress</h3><p class="sub">${only?esc(hubs[0].title):'All approved materials'}</p>${html}
     <div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Close</button><button class="btn" onclick="lacPrintPlain('Learning Hub Progress', LAC.viewHtml)">\u{1F5A8} Print</button></div>`, 'wide');
 }
-function lacPrintPlain(title, html, sub){ closeModal('stfModal'); $('printArea').innerHTML = `<div class="stfprint"><div class="stfp-page">${stfPrintHead(title, sub || fmtLong(todayPH()))}${html}<div class="stfp-sigs"><div></div><div><span>${esc((LAC.data.headName||'').toUpperCase())}</span><small>School Head</small></div></div><p class="stfp-foot">Generated by TALA on ${esc(fmtLong(todayPH()))}.</p></div></div>`; setTimeout(() => window.print(), 250); }
+async function lacPrintPlain(title, html, sub){ closeModal('stfModal');
+  const head = USER.role==='head', sig = await affixAsk(head ? 'Noted by, School Head' : 'Prepared by', title) ? await mySigData() : '';
+  const L = head ? [{ label:'', name:'', role:'' }, { label:'Noted by:', name:LAC.data.headName||USER.name, role:'School Head', img:sig }]
+    : [{ label:'Prepared by:', name:USER.name, role:lacPos(USER.email)||'Teacher', img:sig }, { label:'Noted by:', name:LAC.data.headName||'', role:'School Head' }];
+  $('printArea').innerHTML = `<div class="stfprint"><div class="stfp-page">${stfPrintHead(title, sub || fmtLong(todayPH()))}${html}${sigBlock(L)}<p class="stfp-foot">Generated by TALA on ${esc(fmtLong(todayPH()))}.</p></div></div>`; setTimeout(() => window.print(), 250); }
 
 /* ----- Overview for the School Head (the AO can view and print) ----- */
 function lacOverview(){
   const D = LAC.data, today = todayPH(), held = D.sessions.filter(s => s.date <= today && s.date >= lacSY()), lacs = held.filter(s => s.kind==='LAC');
   const attRate = held.length ? Math.round(lacMean(held.map(s => { const i = lacInvitees(s).length; return i ? lacRecs(s.id,'ATT').length/i*100 : 0; }))) : 0;
   const evAll = lacMean(lacs.map(s => lacEvalData(s.id,'EVS').overall).filter(Boolean)), spAll = lacMean(lacs.map(s => (s.facilitators||[]).map(f => lacEvalData(s.id,'EVR',f.name).overall)).flat().filter(Boolean));
-  const hubs = D.hub.filter(h => h.status==='Approved'), asg = hubs.reduce((a,h) => a + hubAssignees(h).length, 0), fin = (D.progress||[]).filter(p => p.status==='Finished' && hubs.some(h => h.id===p.hub)).length;
+  const hubs = D.hub.filter(h => hubLive(h)), asg = hubs.reduce((a,h) => a + hubAssignees(h).length, 0), fin = (D.progress||[]).filter(p => p.status==='Finished' && hubs.some(h => h.id===p.hub)).length;
   const rows = lacPeople().filter(p => p.role!=='head').map(p => { const inv = held.filter(s => lacInvited(s, p.email)), att = inv.filter(s => lacRecs(s.id,'ATT').some(r => r.email===p.email)), lacAtt = att.filter(s => s.kind==='LAC');
     const ev = lacAtt.filter(s => lacRecs(s.id,'EVS').some(r => r.email===p.email)).length, ref = lacAtt.filter(s => lacNotesFor(s.id, p.email).length).length;
     const mh = hubs.filter(h => hubAssignees(h).some(x => x.email===p.email)), mf = mh.filter(h => (lacProg(h.id, p.email)||{}).status==='Finished').length, nb = D.notebooks.filter(n => n.email===p.email);
@@ -8674,7 +8816,7 @@ function lacMsgText(kind, id){
   else if (kind==='hub'){ const h = D.hub.find(x => x.id===id), as = hubAssignees(h), notDone = as.filter(p => (lacProg(h.id, p.email)||{}).status!=='Finished' && p.role!=='head');
     t = `Good day, Ma'am and Sir! \u{1F31F}\n\nNew in the TALA Learning Hub \u25B6\n\u{1F3AC} ${h.title}${h.facilitator?'\n\u{1F3A4} '+h.facilitator:''}${h.target?'\n\u{1F4C5} Please finish it by '+fmtLong(h.target):''}\n\nOpen TALA, then LAC and Teacher Development, then Learning Hub. Watch it until the end so it is counted as finished.${notDone.length && notDone.length < as.length ? '\n\nNot yet finished: '+notDone.map(p=>p.name).join(', ') : ''}\n\nThank you! \u{1F64F}\n${head}\nSchool Head`; }
   else { const pend = []; lacPeople().filter(p => p.role!=='head').forEach(p => { const n = []; D.sessions.filter(s => s.date <= todayPH() && lacInvited(s, p.email) && !lacRecs(s.id,'ATT').some(r => r.email===p.email)).slice(0,3).forEach(s => n.push('attendance, '+s.title));
-      D.hub.filter(h => h.status==='Approved' && hubAssignees(h).some(x => x.email===p.email) && (lacProg(h.id, p.email)||{}).status!=='Finished').slice(0,3).forEach(h => n.push('watch, '+h.title)); if (n.length) pend.push('\u2022 '+p.name+': '+n.join('; ')); });
+      D.hub.filter(h => hubLive(h) && hubAssignees(h).some(x => x.email===p.email) && (lacProg(h.id, p.email)||{}).status!=='Finished').slice(0,3).forEach(h => n.push('watch, '+h.title)); if (n.length) pend.push('\u2022 '+p.name+': '+n.join('; ')); });
     t = `Good day, Ma'am and Sir! \u{1F31F}\n\nA friendly reminder from TALA, LAC and Teacher Development:\n\n${pend.join('\n') || 'Everyone is up to date. Thank you!'}\n\nPlease open TALA to finish these. Thank you! \u{1F64F}\n${head}\nSchool Head`; }
   return t;
 }
@@ -8825,12 +8967,12 @@ function mcLac(){
   ppl.forEach(p => { const n = [];
     D.sessions.filter(s => s.date <= today && lacInvited(s, p.email) && !lacRecs(s.id,'ATT').some(r => r.email===p.email)).slice(0,3).forEach(s => n.push('attendance of '+s.title));
     D.sessions.filter(s => s.date <= today && lacRecs(s.id,'ATT').some(r => r.email===p.email) && !nbWritten(s.id, p.email, s.kind)).slice(0,3).forEach(s => n.push((s.kind==='MEET'?'Meeting':'LAC')+' Notebook of '+s.title));
-    D.hub.filter(h => h.status==='Approved' && hubAssignees(h).some(x => x.email===p.email) && (lacProg(h.id, p.email)||{}).status!=='Finished').slice(0,3).forEach(h => n.push('Learning Hub: '+h.title));
+    D.hub.filter(h => hubLive(h) && hubAssignees(h).some(x => x.email===p.email) && (lacProg(h.id, p.email)||{}).status!=='Finished').slice(0,3).forEach(h => n.push('Learning Hub: '+h.title));
     (D.notebooks||[]).filter(x => x.email===p.email && x.status==='Returned').slice(0,3).forEach(x => n.push('returned notebook entry: '+(x.title||'entry')));
     if (n.length) per.push({ email:p.email, name:p.name, need:n.join('; ') }); });
   const held = D.sessions.filter(s => s.date <= today).sort((a,b) => b.date.localeCompare(a.date))[0];
   const next = D.sessions.filter(s => s.date >= today).sort((a,b) => a.date.localeCompare(b.date))[0];
-  const hub = D.hub.filter(h => h.status==='Approved').sort((a,b) => String(b.updated||b.on||'').localeCompare(String(a.updated||a.on||'')))[0];
+  const hub = D.hub.filter(h => hubLive(h)).sort((a,b) => String(b.updated||b.on||'').localeCompare(String(a.updated||a.on||'')))[0];
   const k = [{ id:'pend', ico:'⏳', label:'Things to finish', items:per, done:'Everyone is up to date. Thank you!',
       group: () => mcGroup('📚 A friendly reminder from LAC and Teacher Development. Still to finish in TALA:', per, 'Please open TALA, then LAC and Teacher Development, to finish these.'),
       one: x => mcOne(x, 'A friendly reminder from LAC and Teacher Development. TALA shows these are still to finish:', 'Please open TALA to finish them. Message me if you need help.') }];
@@ -9038,8 +9180,8 @@ async function openAccounts(){
 }
 function renderAcc(){
   $('accBody').innerHTML = `<div class="table-wrap"><table><thead><tr><th>Name and email</th><th>Role and position</th><th>PIN</th><th>PIN status</th><th>Last sign in</th><th>Sign ins</th><th>Account</th><th>Notifications</th><th>Test account</th><th></th></tr></thead><tbody>${
-    ACC.map(a=>`<tr><td><b>${esc(a.name)}</b><small>${esc(a.email)}</small><button class="linkbtn" style="font-size:12.5px;margin-top:4px" onclick="openEditAcc('${esc(a.email)}')">Edit name and position</button></td>
-      <td>${a.role==='head'?'School Head':a.role==='admin'?'Administrative Officer':'Teacher'}<small>${esc(a.position||'No position set')}</small></td>
+    ACC.map(a=>`<tr><td><b>${esc(a.name)}</b><small>${esc(a.email)}</small><button class="linkbtn" style="font-size:12.5px;margin-top:4px" onclick="openEditAcc('${esc(a.email)}')">Edit name, position, and profile</button></td>
+      <td>${a.role==='head'?'School Head':a.role==='admin'?'Administrative Officer':a.aral==='only'?'ARAL tutor only':a.aral==='both'?'Teacher and ARAL tutor':'Teacher'}<small>${esc(a.position||'No position set')}</small></td>
       <td style="white-space:nowrap"><span class="pinv" id="pin_${esc(a.email).replace(/[^a-z0-9]/gi,'_')}" data-pin="${esc(a.pin)}">••••</span> <button class="linkbtn" style="font-size:12.5px" onclick="togglePin(this)">Show</button></td>
       <td><span class="${a.pinStatus.indexOf('Default')===0?'mk-wait':'mk-ok'}">${esc(a.pinStatus)}</span>${a.pinChangedOn?`<small>Changed ${esc(dTime(a.pinChangedOn))}</small>`:''}</td>
       <td>${a.lastSignIn?esc(dTime(a.lastSignIn)):'<span class="mk-wait">Never</span>'}</td>
@@ -9057,11 +9199,12 @@ const POSITIONS = ['Teacher I','Teacher II','Teacher III','Teacher IV','Teacher 
 function openEditAcc(email){
   const a = ACC.find(x=>x.email===email);
   $('eaEmail').textContent = a.email; $('eaName').value = a.name; $('eaPos').value = a.position||''; $('eaGrade').value = a.grade||'';
+  $('eaAral').value = a.aral||''; $('eaAralF').style.display = a.role==='teacher' ? '' : 'none';
   $('posList').innerHTML = POSITIONS.map(p=>`<option value="${p}">`).join(''); $('eaErr').textContent=''; openModal('editAccModal');
 }
 async function saveEditAcc(){
   $('eaErr').textContent=''; $('eaBtn').disabled=true;
-  try{ await api('updateAccount',{ email:$('eaEmail').textContent, name:$('eaName').value, position:$('eaPos').value, grade:$('eaGrade').value });
+  try{ await api('updateAccount',{ email:$('eaEmail').textContent, name:$('eaName').value, position:$('eaPos').value, grade:$('eaGrade').value, aral:$('eaAral').value });
     closeModal('editAccModal'); ACC = await api('getAccounts'); renderAcc(); loadData().catch(()=>{}); toast('Personnel details saved.'); }
   catch(e){ handleErr(e,'eaErr'); }
   $('eaBtn').disabled=false;
