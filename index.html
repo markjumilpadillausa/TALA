@@ -1016,6 +1016,7 @@ textarea.nbt{-webkit-touch-callout:none}
 .aralgdots{display:flex;gap:6px;justify-content:center;margin-bottom:8px}.aralgdots i{width:9px;height:9px;border-radius:50%;background:var(--line)}.aralgdots i.on{background:#c76b12;width:22px;border-radius:6px}.aralgdots i.done{background:#e9a23b}
 .aralpop{display:grid;gap:8px}
 @media (max-width:640px){ .aralsesc{grid-template-columns:1fr} .aralhour span{white-space:normal} }
+#lsWho .lacpick{max-height:300px}.lacwhobar{margin:8px 0 6px;font-size:13.5px}.lacwhog{display:contents}.lacwhog small{grid-column:1/-1;font-weight:700;color:var(--muted);margin-top:4px}
 </style>
 </head>
 <body>
@@ -1723,8 +1724,8 @@ textarea.nbt{-webkit-touch-callout:none}
 
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
-const MIN_SERVER = '6.0'; // oldest Code.gs this page works with
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'6.0', date:'October 11, 2026' } };
+const MIN_SERVER = '6.2'; // oldest Code.gs this page works with
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'6.2', date:'October 11, 2026' } };
 function verLine(server){
   const old = server && (server.indexOf('older') > -1 || parseFloat(server) < parseFloat(MIN_SERVER));
   const s = server ? ' Server '+server+('.') : '';
@@ -2430,7 +2431,8 @@ function aralToday(){
   const ses = (date!==today && A && A.data.session) || ARAL.session; ARAL.curSes = ses;
   const locked = !!T.data.in;
   const choice = (x, l) => `<button type="button" class="aralsesb ${ARAL.session===x?'on':''}" ${locked?'disabled':''} onclick="ARAL.session='${x}';aralDraw()"><span class="aralbox">${ARAL.session===x?'✔':''}</span><b>${l}</b></button>`;
-  const tile = (k, l, sub) => T.data[k] ? `<div class="stft on"><small>${l}</small><b>${esc(time12(T.data[k]))}</b><small>${sub}</small></div>` : `<button class="stft" onclick="aralClock('${k}')"><small>${l}</small><b>·</b><small>${sub}</small></button>`;
+  const TR = aralRow('TIME', me, today);
+  const tile = (k, l, sub) => T.data[k] ? `<div class="stft on"><small>${l}</small><b>${esc(time12(T.data[k]))}${aralPicBtn(TR, k)}</b><small>${sub}</small></div>` : `<button class="stft" onclick="aralClock('${k}')"><small>${l}</small><b>📷</b><small>${sub}, with your photo</small></button>`;
   $('aralBody').innerHTML = `
     <div class="stfme"><div class="stfme-h"><div><small>My ARAL attendance today</small><b>${esc(dShort(today))}</b></div></div>
       <div class="aralses"><b>When is the ARAL session conducted today?</b> <small class="hint">${locked ? 'Ticked when you signed in.' : 'Tick one, then tap Sign in.'}</small>
@@ -2455,8 +2457,23 @@ async function aralClock(slot){
   if (slot==='in' && !ARAL.session) return toast('Tick first when the ARAL session is conducted: before or after the regular class.');
   if (slot==='in' && !confirm('Sign in now? ARAL session '+(ARAL.session==='Before class'?'before':'after')+' the regular class.')) return;
   if (slot==='out'){ const m = aralUsed(T.data, true);
-    if (!confirm(m < ARAL_NEED ? 'The ARAL session needs 1 hour a day. You have '+m+' minutes so far. Sign out now anyway?' : 'Sign out now, after your ARAL tutorial?')) return; }
-  try{ loading(true); ARAL.data = await api('aralTime', { session:ARAL.session, slot }); loading(false); aralDraw(); toast(slot==='in'?'Signed in. Have a good tutorial.':'Signed out. Thank you.'); }catch(e){ loading(false); handleErr(e); } }
+    if (m < ARAL_NEED && !confirm('The ARAL session needs 1 hour a day. You have '+m+' minutes so far. Sign out now anyway?')) return; }
+  const shot = await camOpen('ARAL '+(slot==='in'?'Sign in':'Sign out')); if (!shot || !shot.photo) return;
+  try{ loading(true); ARAL.data = await api('aralTime', { session:ARAL.session, slot, photo: shot.photo.split(',')[1] }); loading(false);
+    const R = aralRow('TIME', USER.email, ARAL.data.today || todayPH()); if (R) ARAL_PICS[R.id+'|'+slot] = shot.photo;
+    aralDraw(); toast(slot==='in'?'Signed in. Have a good tutorial.':'Signed out. Thank you.'); }catch(e){ loading(false); handleErr(e); } }
+const ARAL_PICS = {};
+// The camera button beside a time: the School Head sees everyone's photo, each tutor only her own
+function aralPicBtn(R, slot){ if (!R || !R.data[slot]) return ''; const id = R.data['p'+slot];
+  if (!id) return R.data.addedBy ? '' : ''; if (aralRole()!=='head' && R.tutor!==USER.email) return '';
+  return ` <button class="picbtn" title="See the photo" onclick="event.stopPropagation();aralPhotoView('${esc(R.id)}','${slot}')">📷</button>`; }
+async function aralPhotoView(id, slot){
+  const lab = slot==='in' ? 'ARAL sign in' : 'ARAL sign out', show = (src, cap) => stfModal(`<h3>${esc(cap)}</h3><img src="${src}" alt="" style="width:100%;max-width:480px;border-radius:12px;display:block;margin:0 auto" oncontextmenu="return false"><div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Close</button></div>`);
+  if (ARAL_PICS[id+'|'+slot]) return show(ARAL_PICS[id+'|'+slot], lab);
+  stfModal(`<div class="pirload"><div class="pirdots"><i></i><i></i><i></i></div></div>`);
+  try{ const r = await api('aralPhoto', { id, slot }); if (r.none) return stfModal(`<p>No photo for this time.</p><div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Close</button></div>`);
+    ARAL_PICS[id+'|'+slot] = r.src; show(r.src, r.name+', '+lab+', '+dShort(r.date)+(r.time?' at '+time12(r.time):'')); }
+  catch(e){ stfModal(`<p>${esc(friendly(e.message))}</p>`); } }
 async function aralAttSave(){ const present = [...document.querySelectorAll('.araltick input:checked')].map(x => x.value);
   try{ loading(true); ARAL.data = await api('aralAtt', { date:ARAL.date, session:ARAL.curSes||ARAL.session||'After class', present }); loading(false); aralDraw(); toast('Saved. '+present.length+' present.'); }catch(e){ loading(false); handleErr(e); } }
 
@@ -2478,8 +2495,8 @@ function aralOverview(){
       ${card('🔒', done, 'Tutors done (all notes locked)', "aralTutorsPop()")}</div>
     <h3 class="stfgrp">Tutors on ${esc(fmtLong(day))} <small>Tap a name to open the details.</small></h3>
     <div class="table-wrap"><table class="stft-table"><thead><tr><th>Tutor</th><th>Tutees</th><th>Session</th><th>Sign in</th><th>Sign out</th><th>Time used</th><th>Present</th><th>Notes</th><th></th></tr></thead><tbody>
-    ${tutors.map(e => { const T = aralRow('TIME', e, day), A = aralRow('ATT', e, day), ns = nt.filter(n => n.tutor===e), c = v => v ? esc(time12(v)) : '<span class="hint">·</span>';
-      return `<tr><td><button class="linkbtn" onclick="aralTutorDay('${e}')"><b>${esc(aralPName(e))}</b></button>${T&&T.data.addedBy?'<br><small class="hint">Added by the School Head</small>':''}</td><td>${aralTutees(e).length}</td><td>${T&&T.data.session?esc(T.data.session==='Before class'?'Before the regular class':'After the regular class'):'<span class="hint">·</span>'}</td><td>${c(T&&T.data.in)}</td><td>${c(T&&T.data.out)}</td><td>${aralUsedTxt(T&&T.data)}</td><td>${A?A.data.present.length:'<span class="hint">·</span>'}</td><td>${ns.length?`<button class="linkbtn" onclick="aralDayNotes('${e}')">${aralLockTxt(ns)}</button>`:aralLockTxt(ns)}</td>
+    ${tutors.map(e => { const T = aralRow('TIME', e, day), A = aralRow('ATT', e, day), ns = nt.filter(n => n.tutor===e), c = (v, k) => v ? esc(time12(v)) + aralPicBtn(T, k) : '<span class="hint">·</span>';
+      return `<tr><td><button class="linkbtn" onclick="aralTutorDay('${e}')"><b>${esc(aralPName(e))}</b></button>${T&&T.data.addedBy?'<br><small class="hint">Added by the School Head</small>':''}</td><td>${aralTutees(e).length}</td><td>${T&&T.data.session?esc(T.data.session==='Before class'?'Before the regular class':'After the regular class'):'<span class="hint">·</span>'}</td><td>${c(T&&T.data.in,'in')}</td><td>${c(T&&T.data.out,'out')}</td><td>${aralUsedTxt(T&&T.data)}</td><td>${A?A.data.present.length:'<span class="hint">·</span>'}</td><td>${ns.length?`<button class="linkbtn" onclick="aralDayNotes('${e}')">${aralLockTxt(ns)}</button>`:aralLockTxt(ns)}</td>
         <td style="white-space:nowrap">${head?`<button class="linkbtn" onclick="aralManualOpen('${e}','${day}')">${T?'Edit':'Add'} attendance</button> · `:''}<button class="linkbtn" onclick="ARAL.who='${e}';ARAL.tab='rep';aralDraw()">Reports</button></td></tr>`; }).join('') || `<tr><td colspan="9" class="hint">No tutors yet.${head?' Open Tag tutees and tutors to start.':''}</td></tr>`}</tbody></table></div>`;
 }
 function aralTutorsPop(){ const day = ARAL.ov || todayPH(), nt = (ARAL.data.rows||[]).filter(r => r.kind==='NOTE' && r.date===day);
@@ -2497,7 +2514,7 @@ function aralDayNotes(e){ const day = ARAL.ov || todayPH(), ns = (ARAL.data.rows
     <div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Close</button></div>`, 'wide'); }
 function aralTutorDay(e){ const D = ARAL.data, day = ARAL.ov || D.today || todayPH(), T = aralRow('TIME', e, day), A = aralRow('ATT', e, day), ns = aralNotes({ tutor:e, date:day }), head = aralRole()==='head';
   stfModal(`<h3>${esc(aralPName(e))}</h3><p class="sub">ARAL on ${esc(fmtLong(day))}${T&&T.data.session?' · '+(T.data.session==='Before class'?'before':'after')+' the regular class':''}</p>
-    <div class="stftiles" style="grid-template-columns:repeat(2,1fr)"><div class="stft ${T&&T.data.in?'on':''}"><small>Sign in</small><b>${T&&T.data.in?esc(time12(T.data.in)):'·'}</b></div><div class="stft ${T&&T.data.out?'on':''}"><small>Sign out</small><b>${T&&T.data.out?esc(time12(T.data.out)):'·'}</b></div></div>
+    <div class="stftiles" style="grid-template-columns:repeat(2,1fr)"><div class="stft ${T&&T.data.in?'on':''}"><small>Sign in</small><b>${T&&T.data.in?esc(time12(T.data.in))+aralPicBtn(T,'in'):'·'}</b></div><div class="stft ${T&&T.data.out?'on':''}"><small>Sign out</small><b>${T&&T.data.out?esc(time12(T.data.out))+aralPicBtn(T,'out'):'·'}</b></div></div>
     ${aralMeter(T?T.data:{}, day===(D.today||todayPH()))}
     <h4 class="stfgrp">Learners present (${A?A.data.present.length:0} of ${aralTutees(e).length})</h4><p>${A&&A.data.present.length?A.data.present.map(id => esc(aralName(id))).join(', '):'<span class="hint">Not recorded.</span>'}</p>
     <h4 class="stfgrp">Notes</h4><ul class="aralnl">${ns.map(n => `<li>${n.data.locked?'🔒':'✎'} <button class="linkbtn" onclick="aralNoteView('${n.id}')">${esc(aralName(n.learner))}</button> ${esc(aralFocusTxt(n.data.focus))}${n.data.progress?' · <i>'+esc(n.data.progress)+'</i>':''}</li>`).join('') || '<li class="hint">No notes.</li>'}</ul>
@@ -2527,7 +2544,7 @@ const ARAL_GUIDE = {
   teacher: [
     ['🌉','Welcome to ARAL, Project TULAY','ARAL is the catch up program for learners who need more help in reading and numeracy. This guide shows you what to do every day. It takes 2 minutes.'],
     ['✔','Step 1. Tick when the session is held','Open the Today tab. Before you start, tick <b>Before the regular class</b> or <b>After the regular class</b>. This is when your ARAL session is conducted today.'],
-    ['⏰','Step 2. Sign in, then sign out','Tap <b>Sign in</b> when the tutorial starts. Tap <b>Sign out</b> when it ends. You only tap twice a day. The time bar shows your minutes. Each tutor needs <b>1 hour a day</b>.'],
+    ['⏰','Step 2. Sign in, then sign out','Tap <b>Sign in</b> when the tutorial starts and <b>Sign out</b> when it ends. Each time, the camera opens: face the camera, tap <b>Take photo</b>, then <b>Send</b>. You can retake before sending. You only tap twice a day. The time bar shows your minutes. Each tutor needs <b>1 hour a day</b>.'],
     ['🧒','Step 3. Tick the learners present','Tick the tutees who came, then tap <b>Save who is present</b>. To record a past session, change the <b>Session date</b> first.'],
     ['✍','Step 4. Write a note for each learner','Tap a learner\'s name. Choose what was taught: letters, word patterns, sight words, and more. Write what you did, choose the progress, and add a note. Tap <b>Check spelling and grammar</b> to fix your writing.'],
     ['🔒','Step 5. Save and lock when done','<b>Save draft</b> keeps the note so you can finish it later. <b>Save and lock</b> tells the School Head the note is done. A 🔒 shows on the note. You can still tap <b>Unlock to edit</b> if you need to change it.'],
@@ -2544,7 +2561,7 @@ const ARAL_GUIDE = {
     ['🌉','Welcome to your ARAL dashboard','Here you tag the ARAL tutees, assign the tutors, check the daily attendance and notes, and sign the reports.'],
     ['🏷','Step 1. Tag tutees and assign tutors','Open <b>Tag tutees and tutors</b>. Choose a class, tick a learner, then choose the tutor. For Key Stage 1 the adviser is suggested first. Tap <b>Change</b> to move a learner to another tutor. The tutor gets a notice.'],
     ['📊','Step 2. Check the Overview','Each card opens its details when you tap it: tutees, tutors, tutors with 1 hour, the notes of the day, and tutors who are done. Change the <b>Day</b> to check a past day.'],
-    ['⏱','Step 3. The 1 hour a day','The <b>Time used</b> column shows the minutes of each tutor. ✔ means the 1 hour is complete. Red means the tutor is short.'],
+    ['⏱','Step 3. The 1 hour a day','The <b>Time used</b> column shows the minutes of each tutor. ✔ means the 1 hour is complete. Red means the tutor is short. Tap 📷 beside a time to see the photo of the tutor. Only you can see the photos.'],
     ['＋','Step 4. Add a missed attendance','If a tutor forgot to sign in, tap <b>Add attendance</b> on that tutor\'s row, or <b>Add attendance for a tutor</b> at the top. Choose the day, tick before or after the regular class, enter the times, and tick the learners present.'],
     ['🔒','Step 5. Read the notes','Tap a tutor\'s name to see the learners present and every note. 🔒 means the note is done. You can unlock a note if it needs to be fixed.'],
     ['🖨','Step 6. Print and sign','In <b>Reports</b>, choose the tutor and print the Daily Log and Accomplishment Report or the Summary. The tutor signs as Prepared by, and you sign as Noted by.'],
@@ -7756,7 +7773,7 @@ function lacSessions(){
     <div class="lacsessions">${list.map(card).join('') || '<div class="empty">No sessions yet.'+(head?' Tap New session to set one up.':'')+'</div>'}</div>`;
 }
 function lacSessionForm(id, kindNow){
-  const s0 = id ? lacS(id) : { kind:'LAC', date:todayPH(), start:'13:00', end:'16:00', venue:'Baluyan Elementary School', facilitators:[{ email:'', name:'' }], attendees:'all', materials:[] };
+  const s0 = id ? lacS(id) : { kind:'LAC', date:todayPH(), start:'13:00', end:'16:00', venue:'Baluyan Elementary School', facilitators:[{ email:'', name:'' }], attendees:'', materials:[] };
   const s = Object.assign({}, s0, kindNow ? lacFormKeep(kindNow) : {});
   const P = lacPeople(), names = lacNameList(), meet = s.kind==='MEET';
   const facRow = lacFacRow;
@@ -7764,6 +7781,7 @@ function lacSessionForm(id, kindNow){
   stfModal(`<h3>${id?(meet?'Edit the meeting':'Edit the session'):(meet?'New faculty meeting':'New LAC session')}</h3><p class="sub">${meet?'Everyone invited gets a notice. They tick their attendance and write in their Meeting Notebook while the meeting goes on.':'Everyone invited gets a notice. They tick their attendance, evaluate, and write in their notebooks here.'}</p>
     <div class="field"><label>Kind</label><div class="stfrad"><label class="check" style="margin:0"><input type="radio" name="lsKind" value="LAC" ${!meet?'checked':''} onchange="lacSessionForm('${id||''}','LAC')">LAC session</label><label class="check" style="margin:0"><input type="radio" name="lsKind" value="MEET" ${meet?'checked':''} onchange="lacSessionForm('${id||''}','MEET')">Faculty meeting</label></div></div>
     <div class="field"><label for="lsTitle">Title</label><input id="lsTitle" maxlength="160" value="${esc(s.title||'')}" placeholder="${meet?'Example: Faculty Meeting, October 2026':'Example: LAC Session 3, Differentiated Instruction in Multigrade Classes'}"></div>
+    ${lacWhoField(s, P, meet)}
     ${meet?`<div class="field"><label for="lsLink">Meeting link (optional)</label><input id="lsLink" maxlength="500" value="${esc(s.link||'')}" placeholder="Paste the Microsoft Teams, Google Meet, or Zoom link"><small class="hint">Teachers tap Join the meeting, then write in their Meeting Notebook in TALA at the same time.</small></div>
       <div class="stfg2"><div class="field"><label for="lsDate">Date</label><input type="date" id="lsDate" value="${esc(s.date)}"></div><div class="field"><label for="lsStart">Starts</label><input type="time" id="lsStart" value="${esc(s.start||'')}"><small class="hint">No end time is needed.</small></div></div>
       <div class="field"><label for="lsVenue">Where (optional)</label><input id="lsVenue" maxlength="120" value="${esc(s.venue||'')}" placeholder="Example: Grade 6 classroom, or Online"></div>
@@ -7776,27 +7794,41 @@ function lacSessionForm(id, kindNow){
       <datalist id="lacNames">${names.map(n => `<option value="${esc(n)}">`).join('')}</datalist>
       ${lacHead()?`<div class="field"><label for="lsDoc">LAC Documenter for this session</label><select id="lsDoc"><option value="">None yet</option>${P.map(p=>`<option value="${esc(p.email)}" ${p.email===s.documenter?'selected':''}>${esc(p.name)}</option>`).join('')}</select></div>`:''}
       <div class="field"><label for="lsObj">Objectives (one per line)</label><textarea id="lsObj" rows="3" maxlength="1500">${esc(s.objectives||'')}</textarea></div>`}
-    <div class="field"><label>Who attends</label><div class="stfrad"><label class="check" style="margin:0"><input type="radio" name="lsAll" value="all" ${s.attendees==='all'?'checked':''} onchange="$('lsWho').hidden=true">All personnel</label><label class="check" style="margin:0"><input type="radio" name="lsAll" value="some" ${s.attendees!=='all'?'checked':''} onchange="$('lsWho').hidden=false">Selected personnel</label></div>
-      <div id="lsWho" class="lacpick" ${s.attendees==='all'?'hidden':''}>${P.map(p=>`<label class="check" style="margin:0"><input type="checkbox" value="${esc(p.email)}" ${s.attendees!=='all'&&s.attendees.indexOf(p.email)>-1?'checked':''}>${esc(p.name)}</label>`).join('')}</div></div>
     ${!meet&&hub.length?`<div class="field"><label>Learning Hub materials of this session (optional)</label><div class="lacpick" id="lsMat">${hub.map(h=>`<label class="check" style="margin:0"><input type="checkbox" value="${h.id}" ${(s.materials||[]).indexOf(h.id)>-1?'checked':''}>${esc(h.title)}</label>`).join('')}</div></div>`:''}
     <p class="err" id="lsErr"></p><div class="modal-actions">${id&&lacHead()?`<button class="linkbtn danger" style="margin-right:auto" onclick="lacSessionDelete('${id}')">Delete</button>`:''}<button class="btn ghost" onclick="closeModal('stfModal')">Cancel</button><button class="btn" onclick="lacSessionSave('${id||''}')">Save</button></div>`, 'wide');
+  lacWhoCount();
 }
+// Who must attend: only those chosen are counted in the attendance. Others are not marked absent.
+function lacWhoField(s, P, meet){
+  const pick = Array.isArray(s.attendees), all = s.attendees==='all', grp = (l, f) => { const g = P.filter(f); return g.length ? `<div class="lacwhog"><small>${l}</small>${g.map(p => `<label class="check" style="margin:0"><input type="checkbox" value="${esc(p.email)}" ${pick && s.attendees.indexOf(p.email)>-1?'checked':''} onchange="lacWhoCount()">${esc(p.name)}</label>`).join('')}</div>` : ''; };
+  return `<div class="field lacwho"><label>Who must attend this ${meet?'meeting':'session'}? <small class="hint">Only the people required are counted in the attendance. The others are not marked absent.</small></label>
+    <div class="aralsesc"><button type="button" class="aralsesb ${all?'on':''}" data-v="all" onclick="lacWhoSet('all')"><span class="aralbox">${all?'✔':''}</span><b>All personnel</b></button><button type="button" class="aralsesb ${pick?'on':''}" data-v="some" onclick="lacWhoSet('some')"><span class="aralbox">${pick?'✔':''}</span><b>Only the people I select</b></button></div>
+    <div id="lsWho" ${pick?'':'hidden'}><div class="lacwhobar"><button type="button" class="linkbtn" onclick="lacWhoAll(true)">Select everyone</button> · <button type="button" class="linkbtn" onclick="lacWhoAll(false)">Clear</button><span class="hint" id="lsWhoN"></span></div>
+      <div class="lacpick">${grp('Teachers', p => p.role!=='head' && p.role!=='admin')}${grp('School Head', p => p.role==='head')}${grp('Administrative Officer', p => p.role==='admin')}</div></div>
+    <input type="hidden" id="lsWhoV" value="${all?'all':pick?'some':''}"></div>`;
+}
+function lacWhoSet(v){ $('lsWhoV').value = v; document.querySelectorAll('.lacwho .aralsesb').forEach(b => { const on = b.dataset.v===v; b.classList.toggle('on', on); b.querySelector('.aralbox').textContent = on ? '✔' : ''; }); $('lsWho').hidden = v!=='some'; lacWhoCount(); }
+function lacWhoAll(on){ document.querySelectorAll('#lsWho input').forEach(x => x.checked = on); lacWhoCount(); }
+function lacWhoCount(){ const n = document.querySelectorAll('#lsWho input:checked').length; if ($('lsWhoN')) $('lsWhoN').textContent = ' '+n+' selected'; }
+function lacWhoVal(){ const v = $('lsWhoV') ? $('lsWhoV').value : ''; return v==='all' ? 'all' : v==='some' ? [...document.querySelectorAll('#lsWho input:checked')].map(x=>x.value) : ''; }
 // Switching between LAC session and meeting keeps what was already typed
 function lacFormKeep(kind){ const v = k => $(k) ? $(k).value : undefined, o = { kind };
   if (v('lsTitle') !== undefined) o.title = v('lsTitle'); if (v('lsDate')) o.date = v('lsDate'); if (v('lsStart') !== undefined) o.start = v('lsStart'); if (v('lsVenue') !== undefined) o.venue = v('lsVenue');
   if (v('lsObj') !== undefined) o.objectives = v('lsObj'); if (v('lsDoc') !== undefined) o.documenter = v('lsDoc'); if (v('lsLink') !== undefined) o.link = v('lsLink');
-  const all = document.querySelector('input[name=lsAll]:checked'); if (all) o.attendees = all.value==='all' ? 'all' : [...document.querySelectorAll('#lsWho input:checked')].map(x=>x.value);
+  if ($('lsWhoV')) o.attendees = lacWhoVal();
   return o; }
 function lacFacRow(f){ return `<div class="lacfac"><input list="lacNames" placeholder="Name of the facilitator or speaker" value="${esc(f.name||'')}" data-k="name"><input placeholder="Position or office (optional)" value="${esc(f.position||'')}" data-k="position"><button class="linkbtn danger" onclick="this.parentElement.remove()">Remove</button></div>`; }
 function lacNameList(){ const set = new Set(); lacPeople().forEach(p => set.add(p.name)); (LAC.data.sessions||[]).forEach(s => (s.facilitators||[]).forEach(f => f.name && set.add(f.name))); (LAC.data.hub||[]).forEach(h => h.facilitator && set.add(h.facilitator)); return [...set].sort(); }
 async function lacSessionSave(id){
   const P = lacPeople(), kind = document.querySelector('input[name=lsKind]:checked').value;
   const facilitators = [...document.querySelectorAll('#lsFac .lacfac')].map(r => { const name = r.querySelector('[data-k=name]').value.trim(), p = P.find(x => x.name.toLowerCase()===name.toLowerCase()); return { name, position:r.querySelector('[data-k=position]').value.trim() || (p?lacPos(p.email):''), email:p?p.email:'' }; }).filter(f => f.name);
-  const all = document.querySelector('input[name=lsAll]:checked').value==='all';
+  const who = lacWhoVal();
   const session = { id, kind, title:$('lsTitle').value.trim(), topic:$('lsTopic') ? $('lsTopic').value.trim() : '', date:$('lsDate').value, start:$('lsStart').value, end:$('lsEnd') ? $('lsEnd').value : '', venue:$('lsVenue').value.trim(), facilitators, link: $('lsLink') ? $('lsLink').value.trim() : '',
-    documenter: $('lsDoc') ? $('lsDoc').value : (lacS(id)||{}).documenter, objectives:$('lsObj').value.trim(), attendees: all ? 'all' : [...document.querySelectorAll('#lsWho input:checked')].map(x=>x.value), materials: [...document.querySelectorAll('#lsMat input:checked')].map(x=>x.value) };
+    documenter: $('lsDoc') ? $('lsDoc').value : (lacS(id)||{}).documenter, objectives:$('lsObj').value.trim(), attendees: who, materials: [...document.querySelectorAll('#lsMat input:checked')].map(x=>x.value) };
   if (session.link && !/^https?:\/\/\S+$/i.test(session.link)) return $('lsErr').textContent = 'The meeting link must start with https://';
   if (!session.title) return $('lsErr').textContent = 'Type the title.'; if (!session.date) return $('lsErr').textContent = 'Choose the date.';
+  if (!who) return $('lsErr').textContent = 'Choose who must attend: all personnel, or only the people you select.';
+  if (Array.isArray(who) && !who.length) return $('lsErr').textContent = 'Tick at least one person who must attend.';
   try{ LAC.data = await api('lacSessionSave', { session }); lacSaveLocal(); closeModal('stfModal'); lacDraw(); toast(id ? 'Saved.' : 'Session saved. Everyone invited was notified.'); if (!id) setTimeout(() => lacMsgOpen('sess', LAC.data.sessions.slice(-1)[0].id), 400); }
   catch(e){ handleErr(e, 'lsErr'); }
 }
@@ -7810,7 +7842,7 @@ function lacSession(id){
   const btn = (ico, t, x, fn, cls) => `<button class="abtn ${cls||''}" onclick="${fn}"><span class="abico">${ico}</span><b>${t}</b><small>${x}</small></button>`;
   const evs = lacRecs(id,'EVS'), notes = lacNotesFor(id);
   $('viewLac').innerHTML = `<div class="trk-head"><div><span class="lackind ${s.kind}">${lacKind(s)}</span><h2 style="margin-top:6px">${esc(s.title)}</h2><p>${esc(fmtLong(s.date))}${lacTime(s)?', '+esc(lacTime(s)):''}${s.venue?' \u00B7 '+esc(s.venue):''}</p>
-      <p class="hint">${(s.facilitators||[]).length?'Facilitator: '+esc(s.facilitators.map(f=>f.name).join(', ')):''}${s.documenter?' \u00B7 LAC Documenter: '+esc(lacName(s.documenter)):''}</p></div>
+      <p class="hint">${(s.facilitators||[]).length?'Facilitator: '+esc(s.facilitators.map(f=>f.name).join(', ')):''}${s.documenter?' \u00B7 LAC Documenter: '+esc(lacName(s.documenter)):''}</p>${all?`<p class="hint">Required to attend: <b>${s.attendees==='all'?'All personnel':invs.length+' selected '+(invs.length===1?'person':'people')}</b>. Only they are counted in the attendance.</p>`:''}</div>
     <div class="head-actions"><button class="btn ghost" onclick="LAC.sid='';lacDraw()">Back</button>${staff?`<button class="btn ghost" onclick="lacSessionForm('${id}')">Edit</button>`:''}${all?`<button class="btn ghost" onclick="lacMsgOpen('sess','${id}')">\u{1F4AC} Messenger message</button>`:''}</div></div>
     ${s.topic||s.objectives?`<div class="lacobj">${s.topic?`<b>${esc(s.topic)}</b>`:''}${s.objectives?`<ul>${s.objectives.split('\n').filter(Boolean).map(o=>`<li>${esc(o)}</li>`).join('')}</ul>`:''}</div>`:''}
     ${inv && signed && !nbWritten(id, me, s.kind) && !lacHead() ? `<div class="nbmiss static"><b>\u270D Your ${lac?'LAC':'Meeting'} Notebook for this ${lac?'session':'meeting'} is still empty</b><span>This ${lac?'session':'meeting'} is not complete until you write your notes. Tap ${lac?'My LAC Notebook':'My Meeting Notebook'} below.</span></div>`:''}
