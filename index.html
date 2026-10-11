@@ -1017,6 +1017,17 @@ textarea.nbt{-webkit-touch-callout:none}
 .aralpop{display:grid;gap:8px}
 @media (max-width:640px){ .aralsesc{grid-template-columns:1fr} .aralhour span{white-space:normal} }
 #lsWho .lacpick{max-height:300px}.lacwhobar{margin:8px 0 6px;font-size:13.5px}.lacwhog{display:contents}.lacwhog small{grid-column:1/-1;font-weight:700;color:var(--muted);margin-top:4px}
+@media print{ .stfp-break{break-before:page;page-break-before:always;height:0} }
+.mctabs{flex-wrap:wrap}.mckinds{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px;margin-bottom:12px}
+.mckind{display:flex;align-items:center;gap:8px;padding:10px;border:1.5px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);font:inherit;cursor:pointer;text-align:left}
+.mckind b{flex:1;font-size:13.5px}.mckind i{font-style:normal;background:var(--late);color:#fff;border-radius:999px;padding:1px 8px;font-size:12px;font-weight:700}.mckind i.zero{background:var(--ok)}
+.mckind.on{border-color:var(--brandtxt);box-shadow:inset 0 0 0 1px var(--brandtxt)}
+.mcpeople{display:grid;gap:6px}.mcperson{display:flex;gap:8px;align-items:center;padding:8px 10px;border:1px solid var(--line);border-radius:10px}.mcperson>div{flex:1;min-width:0}.mcperson small{display:block;color:var(--muted)}
+.mcperson .btn.ok{border-color:var(--ok);color:var(--ok)}.mcdone{padding:14px;border-radius:12px;background:var(--ok-soft);color:var(--ok);font-weight:600}
+.araltog{border:0;background:none;cursor:pointer;font-size:14px;color:var(--brandtxt);padding:0 4px}.araltrx>td{background:var(--page)}.aralsub{margin:4px 0}
+.aralpm{font-size:12.5px}.aralpm b.ok{color:var(--ok)}.aralpm b.bad{color:var(--late)}
+.aralout{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:10px 12px;border-radius:12px;background:#fde6e6;color:#7a1f1f;margin-bottom:10px}
+.aralstale{padding:8px 12px;border-radius:10px;background:#fff4d6;color:#7a5200;margin-top:10px;font-size:13.5px}
 </style>
 </head>
 <body>
@@ -1724,8 +1735,8 @@ textarea.nbt{-webkit-touch-callout:none}
 
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
-const MIN_SERVER = '6.2'; // oldest Code.gs this page works with
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'6.2', date:'October 11, 2026' } };
+const MIN_SERVER = '6.4'; // oldest Code.gs this page works with
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'6.4', date:'October 11, 2026' } };
 function verLine(server){
   const old = server && (server.indexOf('older') > -1 || parseFloat(server) < parseFloat(MIN_SERVER));
   const s = server ? ' Server '+server+('.') : '';
@@ -1756,7 +1767,7 @@ const MSG = {
   BUSY: 'TALA is busy for a moment. Please wait a few seconds, then try again.',
   UPLOAD: 'Your file was not sent yet, and nothing was lost. Please tap Submit again when your signal is stronger.'
 };
-const SAFE_RETRY = ['publicData','checkSession','getData','getAccounts','getLog'];
+const SAFE_RETRY = ['publicData','checkSession','getData','getAccounts','getLog','aralLoad','lacLoad','attSections','attSchool','staffLoad','aralPhoto','lacSigs','lacPhotoData'];
 const wait = ms => new Promise(r => setTimeout(r, ms));
 async function api(action, payload){
   if (!connected()) throw new Error('This page is not connected yet. Please contact the School Head.');
@@ -2190,7 +2201,7 @@ function drawSide(){
   const all = orderedFeatures().filter(f => !f.headOnly || head), hid = all.filter(f => !shown(f));
   $('sideNav').innerHTML = all.filter(shown).map(item).join('')
     + (head && hid.length ? `<details class="sidehid"><summary>Hidden from personnel (${hid.length})</summary>${hid.map(item).join('')}</details>` : '')
-    + (head ? '<button type="button" class="linkbtn side-manage" onclick="openFV()">Arrange, show, or hide features</button>' : '');
+    + (head ? '<button type="button" class="linkbtn side-manage" onclick="msgCenter()">💬 Ready messages for Messenger</button><button type="button" class="linkbtn side-manage" onclick="openFV()">Arrange, show, or hide features</button>' : '');
   appBadge(); menuDot();
 }
 // The menu button on a phone shows a dot when something waits
@@ -2245,9 +2256,12 @@ function aralRole(){ return USER ? USER.role : ''; }
 function aralAll(){ return aralRole()==='head' || aralRole()==='admin'; }
 function aralKey(){ return 'tala_aral_'+(USER?USER.email:''); }
 async function aralLoad(quiet){
-  if (!ARAL.data){ try{ ARAL.data = JSON.parse(localStorage.getItem(aralKey())||'null'); }catch(e){} }
-  try{ ARAL.data = await api('aralLoad'); try{ localStorage.setItem(aralKey(), JSON.stringify(ARAL.data)); }catch(e){} }
-  catch(e){ if (!ARAL.data && !quiet) throw e; }
+  if (!ARAL.data){ try{ ARAL.data = aralNorm(JSON.parse(localStorage.getItem(aralKey())||'null')); }catch(e){ ARAL.data = null; } }
+  const v = ARAL.ver || 0;
+  try{ const d = aralNorm(await api('aralLoad'));
+    // a reply that started before a save is older than what is on the screen, so it is not used
+    if (d && (ARAL.ver || 0) === v){ ARAL.data = d; ARAL.stale = false; aralSave(); } }
+  catch(e){ ARAL.stale = true; if (!ARAL.data && !quiet) throw e; }
   return ARAL.data;
 }
 async function openAral(){
@@ -2257,9 +2271,69 @@ async function openAral(){
   if (!ARAL.date) ARAL.date = todayPH();
   if (!ARAL.data) $('viewPir').innerHTML = `<div class="pirload"><div class="pirstar">★</div><b>Opening ARAL</b><div class="pirdots"><i></i><i></i><i></i></div></div>`;
   else aralDraw();
-  try{ await aralLoad(); }catch(e){ return handleErr(e); }
+  try{ await aralLoad(); }catch(e){ if (!ARAL.data){ $('viewPir').innerHTML = `<div class="empty">ARAL could not be opened. Please check the internet. <button class="btn ghost small" onclick="openAral()">Try again</button></div>`; return; } }
   if (CUR_FEATURE==='aral'){ aralDraw(); aralMaybeGuide(); }
 }
+/* ----- ARAL data kept safe: checked, saved on the device, and never replaced by an older reply ----- */
+function aralNorm(d){
+  if (!d || typeof d!=='object' || (!Array.isArray(d.tutees) && !Array.isArray(d.rows))) return null;
+  ['sections','mine','tutees','rows','learners','people'].forEach(k => { if (!Array.isArray(d[k])) d[k] = []; });
+  d.tutees = d.tutees.filter(t => t && t.learner).map(t => { t.data = t.data && typeof t.data==='object' ? t.data : {}; t.data.name = t.data.name || t.learner; t.tutor = String(t.tutor||'').toLowerCase(); return t; });
+  d.rows = d.rows.filter(r => r && r.kind).map(r => { r.data = r.data && typeof r.data==='object' ? r.data : {}; r.tutor = String(r.tutor||'').toLowerCase();
+    if (r.kind==='ATT' && !Array.isArray(r.data.present)) r.data.present = []; if (r.kind==='NOTE' && (!r.data.focus || typeof r.data.focus!=='object')) r.data.focus = {}; return r; });
+  d.me = d.me || {}; return d;
+}
+function aralSave(){ try{ localStorage.setItem(aralKey(), JSON.stringify(ARAL.data)); }catch(e){} }
+function aralSet(d){ const n = aralNorm(d); if (!n) return; ARAL.data = n; ARAL.ver = (ARAL.ver||0) + 1; ARAL.stale = false; aralSave(); }
+
+/* ----- Attendance of each learner in ARAL: sessions present and missed ----- */
+function aralLearnerAtt(t){
+  const rows = (ARAL.data.rows||[]).filter(r => r.kind==='ATT' && r.tutor===t.tutor && (!t.date || r.date >= t.date)).sort((a,b) => String(a.date).localeCompare(String(b.date)));
+  let present = 0, last = '', streak = 0;
+  rows.forEach(r => { if (r.data.present.indexOf(t.learner) > -1){ present++; last = r.date; streak = 0; } else streak++; });
+  const today = ARAL.data.today || todayPH(), T = rows.find(r => r.date===today);
+  return { held: rows.length, present, missed: rows.length - present, last, streak, today: T ? (T.data.present.indexOf(t.learner) > -1 ? 'in' : 'out') : '' };
+}
+function aralAttTxt(a){ return a.held ? `<span class="aralpm"><b class="ok">${a.present}</b> present · <b class="${a.missed?'bad':''}">${a.missed}</b> missed${a.streak>=2?` · <b class="bad">${a.streak} in a row</b>`:''}</span>` : '<span class="hint">No session yet</span>'; }
+function aralTodayTag(a){ return a.today==='in' ? '<span class="atn ok">In ARAL today</span>' : a.today==='out' ? '<span class="atn bad">Not in ARAL today</span>' : '<span class="hint">No session today yet</span>'; }
+
+/* ----- Ready messages for the parents of learners who were not in ARAL ----- */
+function aralParentMsgs(list, from){
+  if (!list.length) return toast('Everyone was in ARAL. No message needed.');
+  ARAL.pm = { list, from, lang: ARAL.pmLang || 'en' }; aralParentDraw();
+}
+function aralParentText(t, lang){
+  const D = ARAL.data, l = (D.learners||[]).find(x => x.id===t.learner) || {}, first = l.first ? l.first.charAt(0)+l.first.slice(1).toLowerCase() : String(t.data.name).split(',').pop().trim();
+  const full = l.first ? first+' '+(l.last ? l.last.charAt(0)+l.last.slice(1).toLowerCase() : '') : t.data.name, he = l.sex==='F' ? 'she' : l.sex==='M' ? 'he' : 'your child';
+  const a = aralLearnerAtt(t), T = (aralRow('TIME', t.tutor, D.today || todayPH())||{}).data || {}, ses = T.session || (aralRow('ATT', t.tutor, D.today || todayPH())||{data:{}}).data.session || '';
+  const day = fmtLong(D.today || todayPH()), me = USER.name, adv = ARAL.pm.from==='adviser';
+  if (lang==='fil') return `Magandang araw po, magulang o tagapag-alaga ni ${full}! 🌟
+
+Ako po si ${me}, ${adv ? 'ang class adviser ni '+first : 'ang ARAL tutor ni '+first} sa Baluyan Elementary School. Hindi po nakadalo si ${first} sa ARAL session ngayong araw, ${day}. Ang ARAL po ay ang aming dagdag na klase sa pagbasa at numeracy${ses==='Before class'?', bago ang regular na klase':ses==='After class'?', pagkatapos ng regular na klase':''}.
+${a.missed > 1 ? '\nNakaligtaan na po ni '+first+' ang '+a.missed+' na ARAL session.\n' : ''}
+Sana po ay makadalo siya sa susunod na session. Kung may problema po, mag-message lang po kayo para matulungan namin si ${first}.
+
+Maraming salamat po! 🙏
+${me}`;
+  return `Good day po, parent or guardian of ${full}! 🌟
+
+This is ${me}, ${adv ? first+'’s class adviser' : first+'’s ARAL tutor'} at Baluyan Elementary School. ${first} was not in our ARAL session today, ${day}. ARAL is our catch up class in reading and numeracy${ses==='Before class'?', before the regular class':ses==='After class'?', after the regular class':''}.
+${a.missed > 1 ? '\n'+first+' has missed '+a.missed+' ARAL sessions so far.\n' : ''}
+We hope ${he} can join us in the next session. If there is a problem, please message me so we can help ${first}.
+
+Thank you po! 🙏
+${me}`;
+}
+function aralParentDraw(){
+  const P = ARAL.pm; ARAL.pmTexts = P.list.map(t => aralParentText(t, P.lang));
+  stfModal(`<h3>💬 Message the parents</h3><p class="sub">Learners not in ARAL today, ${esc(fmtLong(ARAL.data.today || todayPH()))}. Copy a message, then paste it in Messenger to the parent. You can change the words first.</p>
+    <div class="tabs" style="margin-bottom:10px">${[['en','English'],['fil','Filipino']].map(x => `<button class="${P.lang===x[0]?'on':''}" onclick="ARAL.pm.lang=ARAL.pmLang='${x[0]}';aralParentDraw()">${x[1]}</button>`).join('')}</div>
+    <div class="mcpeople">${P.list.map((t,i) => { const a = aralLearnerAtt(t); return `<div class="mcperson"><div><b>${esc(t.data.name)}</b><small>${esc(aralSecLabel(t))} · ${a.missed} missed of ${a.held} sessions</small></div><button class="btn ghost small" onclick="aralPmShow(${i})">View</button><button class="btn small" onclick="mcCopyText(ARAL.pmTexts[${i}]);this.textContent='✔ Copied';toast('Copied. Paste it in Messenger.')">📋 Copy</button></div>`; }).join('')}</div>
+    <div id="pmView"></div><div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Close</button></div>`, 'wide');
+}
+function aralPmShow(i){ $('pmView').innerHTML = `<textarea id="pmTxt" rows="11" style="width:100%;margin-top:10px">${esc(ARAL.pmTexts[i])}</textarea><div class="obs-actions"><button class="btn" onclick="mcCopyBox('pmTxt')">📋 Copy this message</button></div>`; }
+function aralNotInToday(list){ return list.filter(t => aralLearnerAtt(t).today==='out'); }
+
 function aralTutees(email){ const D = ARAL.data; return (D.tutees||[]).filter(t => !email || t.tutor===email).sort((a,b) => String(a.data.name).localeCompare(String(b.data.name))); }
 function aralMyTutees(){ return aralTutees(USER.email); }
 function aralName(id){ const t = (ARAL.data.tutees||[]).find(x => x.learner===id); if (t) return t.data.name; const l = (ARAL.data.learners||[]).find(x => x.id===id); return l ? l.last+', '+l.first : id; }
@@ -2292,11 +2366,14 @@ function aralDraw(){
   else stat = `<b>${(D.tutees||[]).filter(t => (D.mine||[]).indexOf(t.data.sec) > -1).length}</b><span>My learners in ARAL</span>`;
   if (!tabs.some(t => t[0]===ARAL.tab)) ARAL.tab = tabs[0][0];
   $('viewPir').innerHTML = `<div class="aralhero"><div><span class="lktag">ARAL PROGRAM · ${esc(who.toUpperCase())}</span><h2>Project TULAY</h2><p>A bridge for every learner to catch up. ARAL tutorials in reading and numeracy, with the tutors' daily log and accomplishment report.</p></div>
-      <div style="display:flex;flex-direction:column;gap:8px;align-items:center"><div class="aralstat">${stat}</div><button class="aralhelp" onclick="aralGuide(0)">📘 How to use ARAL</button></div></div>
+      <div style="display:flex;flex-direction:column;gap:8px;align-items:center"><div class="aralstat">${stat}</div><button class="aralhelp" onclick="aralGuide(0)">📘 How to use ARAL</button><button class="aralhelp" id="aralRf" onclick="aralRefresh()">↻ Refresh</button>${aralRole()==='head'?`<button class="aralhelp" onclick="msgCenter('aral')">💬 Ready messages</button>`:''}</div></div>
     <div class="tabs lactabs" style="margin-top:12px">${tabs.map(t => `<button class="${ARAL.tab===t[0]?'on':''}" onclick="ARAL.tab='${t[0]}';aralDraw()">${t[1]}</button>`).join('')}</div>
     <div id="aralBody" style="margin-top:14px"></div>`;
-  ({ ov:aralOverview, today:aralToday, notes:aralNotesTab, class:aralClass, tag:aralTag, tutees:aralTuteesTab, rep:aralReports, none:aralNone })[ARAL.tab]();
+  if (ARAL.stale) $('aralBody').insertAdjacentHTML('beforebegin', `<div class="aralstale">Showing the copy saved on this device. The newest data could not be loaded. <button class="linkbtn" onclick="aralRefresh()">Try again</button></div>`);
+  try{ ({ ov:aralOverview, today:aralToday, notes:aralNotesTab, class:aralClass, tag:aralTag, tutees:aralTuteesTab, rep:aralReports, none:aralNone })[ARAL.tab](); }
+  catch(e){ console.warn('TALA ARAL', e); $('aralBody').innerHTML = `<div class="empty">This part could not be shown. Your ARAL data is safe. <button class="btn ghost small" onclick="aralRefresh()">↻ Reload ARAL</button></div>`; }
 }
+async function aralRefresh(){ const b = $('aralRf'); if (b) b.disabled = true; try{ await aralLoad(true); }catch(e){} if (CUR_FEATURE==='aral') aralDraw(); toast(ARAL.stale ? 'Could not reach TALA. Showing the saved copy.' : 'ARAL is up to date.'); }
 function aralNone(){ $('aralBody').innerHTML = '<div class="empty">You are not an ARAL tutor, and none of your learners is in ARAL yet. The School Head tags the ARAL tutees and assigns their tutors.</div>'; }
 
 /* ----- The ARAL note: save a draft, or save and lock when done ----- */
@@ -2336,7 +2413,7 @@ function aralNoteView(id){
     <div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Close</button>${can && d.locked ? `<button class="btn" onclick="aralUnlock('${id}')">🔓 Unlock to edit</button>` : ''}</div>`, 'wide');
 }
 async function aralUnlock(id){ const n = (ARAL.data.rows||[]).find(r => r.id===id); if (!n) return;
-  try{ loading(true); ARAL.data = await api('aralNote', { unlock:id }); loading(false); aralDraw(); aralNoteOpen(n.learner, id); }catch(e){ loading(false); handleErr(e); } }
+  try{ loading(true); aralSet(await api('aralNote', { unlock:id })); loading(false); aralDraw(); aralNoteOpen(n.learner, id); }catch(e){ loading(false); handleErr(e); } }
 function aralNoteType(){ const t = $('anType').value; $('anLet').hidden = t!=='Letter name and sound'; $('anPat').hidden = t!=='Word pattern or word family'; $('anOther').hidden = !t || t==='Letter name and sound' || t==='Word pattern or word family'; }
 function aralPatList(sel){ const g = $('anGroup').value; $('anPattern').innerHTML = (ARAL_PATTERNS[g]||[]).map(p => `<option ${p===sel?'selected':''}>${esc(p)}</option>`).join(''); }
 function aralLetter(b, L){ const a = ARAL.nf.letters, i = a.indexOf(L); if (i > -1) a.splice(i, 1); else a.push(L); b.classList.toggle('on', i < 0); }
@@ -2348,10 +2425,10 @@ async function aralNoteSave(lock){
   if (lock && !pr) return $('anErr').textContent = 'Choose the progress of the learner before you lock the note.';
   const note = { id:ARAL.nf.id, learner:ARAL.nf.learner, date:$('anDate').value, session:$('anSes').value, focus, activity:$('anAct').value.trim(), progress: pr ? pr.value : '', remarks:$('anRem').value.trim(), lock:!!lock };
   const copyTo = [...document.querySelectorAll('.anCopy:checked')].map(x => x.value);
-  try{ loading(true); ARAL.data = await api('aralNote', { note, copyTo }); loading(false); closeModal('stfModal'); aralDraw();
+  try{ loading(true); aralSet(await api('aralNote', { note, copyTo })); loading(false); closeModal('stfModal'); aralDraw();
     toast((lock ? 'Saved and locked.' : 'Draft saved.') + (copyTo.length ? ' Copied as drafts for '+copyTo.length+' more learner'+(copyTo.length>1?'s':'')+'.' : '')); }catch(e){ loading(false); handleErr(e,'anErr'); }
 }
-async function aralNoteDel(id){ if (!confirm('Delete this ARAL note?')) return; try{ ARAL.data = await api('aralNote', { remove:id }); closeModal('stfModal'); aralDraw(); toast('Deleted.'); }catch(e){ handleErr(e,'anErr'); } }
+async function aralNoteDel(id){ if (!confirm('Delete this ARAL note?')) return; try{ aralSet(await api('aralNote', { remove:id })); closeModal('stfModal'); aralDraw(); toast('Deleted.'); }catch(e){ handleErr(e,'anErr'); } }
 async function aralGrammar(){
   const ids = ['anAct','anRem'].concat($('anOther').hidden ? [] : ['anOtherT']), st = $('anG');
   ids.forEach(id => $('gx_'+id).innerHTML = '');
@@ -2374,7 +2451,7 @@ function aralNotesTab(){
   const me = USER.email, list = aralMyTutees();
   $('aralBody').innerHTML = `<p class="hint">🔒 means the note is saved and locked. ✎ means it is still a draft. Lock each note when you are done; you can unlock it later to edit.</p>
     <div class="araltutees">${list.map(t => { const ns = aralNotes({ learner:t.learner, tutor:me }), days = new Set((ARAL.data.rows||[]).filter(r => r.kind==='ATT' && r.tutor===me && r.data.present.indexOf(t.learner)>-1).map(r => r.date)).size;
-      return `<div class="araltutee"><div class="stfreq-h"><span class="oav">${esc((t.data.name||'?').charAt(0))}</span><div><b>${esc(t.data.name)}</b><small>${esc(aralSecLabel(t))} · Key Stage ${t.data.ks} · ${days} day${days===1?'':'s'} attended</small></div>${aralLockTxt(ns)}</div>
+      return `<div class="araltutee"><div class="stfreq-h"><span class="oav">${esc((t.data.name||'?').charAt(0))}</span><div><b>${esc(t.data.name)}</b><small>${esc(aralSecLabel(t))} · Key Stage ${t.data.ks}</small><div>${aralAttTxt(aralLearnerAtt(t))}</div></div>${aralLockTxt(ns)}</div>
         ${aralProgChips(t.learner)}
         ${ns.length?`<ul class="aralnl">${ns.slice(0,5).map(n => `<li>${n.data.locked?'🔒':'✎'} <button class="linkbtn" onclick="aralNoteOpen('${t.learner}','${n.id}')">${esc(dShort(n.date))}</button> ${esc(aralFocusTxt(n.data.focus))}${n.data.progress?' · <i>'+esc(n.data.progress)+'</i>':''}</li>`).join('')}</ul>${ns.length>5?`<small class="hint">${ns.length-5} more notes in the reports.</small>`:''}`:'<p class="hint">No notes yet.</p>'}
         <div class="stfreq-a"><button class="btn small" onclick="aralNoteOpen('${t.learner}','')">✍ New note</button></div></div>`; }).join('') || '<div class="empty">No tutees yet. Open Tag learners to add your tutees.</div>'}</div>`;
@@ -2402,14 +2479,16 @@ function aralTagSet(id, on){
     <div class="field"><label for="atTutor">ARAL tutor</label><select id="atTutor"><option value="">Choose</option>${(D.people||[]).map(p => `<option value="${esc(p.email)}" ${pick===p.email?'selected':''}>${esc(p.name)}${p.email===sec.adviser?' (adviser)':''}</option>`).join('')}</select></div>
     <p class="err" id="atErr"></p><div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal');aralDraw()">Cancel</button><button class="btn" onclick="if(!$('atTutor').value){$('atErr').textContent='Choose the tutor.';return;} aralTuteeSave('${id}', true, $('atTutor').value)">Save</button></div>`);
 }
-async function aralTuteeSave(id, on, tutor){ try{ loading(true); ARAL.data = await api('aralTutee', { learner:id, on, tutor }); loading(false); closeModal('stfModal'); aralDraw(); toast(on ? 'Saved as an ARAL tutee.' : 'Removed from the ARAL tutees.'); }catch(e){ loading(false); handleErr(e,'atErr'); aralDraw(); } }
+async function aralTuteeSave(id, on, tutor){ try{ loading(true); aralSet(await api('aralTutee', { learner:id, on, tutor })); loading(false); closeModal('stfModal'); aralDraw(); toast(on ? 'Saved as an ARAL tutee.' : 'Removed from the ARAL tutees.'); }catch(e){ loading(false); handleErr(e,'atErr'); aralDraw(); } }
 
 /* ----- Adviser: view only, the progress of my learners in ARAL ----- */
 function aralClass(){
   const D = ARAL.data, mine = D.mine||[], list = (D.tutees||[]).filter(t => mine.indexOf(t.data.sec) > -1).sort((a,b) => String(a.data.name).localeCompare(String(b.data.name)));
-  $('aralBody').innerHTML = `<p class="hint">View only. The ARAL tutor writes these notes. Here you can follow the progress of your learners.</p>
+  const out = aralNotInToday(list);
+  $('aralBody').innerHTML = `<p class="hint">View only. The ARAL tutor writes these notes. Here you can follow the attendance and progress of your learners.</p>
+    ${out.length?`<div class="aralout"><b>Not in ARAL today (${out.length}):</b> ${out.map(t => esc(t.data.name)).join(', ')} <button class="btn small" onclick="aralParentMsgs(aralNotInToday((ARAL.data.tutees||[]).filter(t => (ARAL.data.mine||[]).indexOf(t.data.sec) > -1)), 'adviser')">💬 Message the parents</button></div>`:''}
     <div class="araltutees">${list.map(t => { const ns = aralNotes({ learner:t.learner }), last = ns.find(n => n.data.progress);
-      return `<div class="araltutee"><div class="stfreq-h"><span class="oav">${esc((t.data.name||'?').charAt(0))}</span><div><b>${esc(t.data.name)}</b><small>${esc(aralSecLabel(t))} · Tutor: ${esc(t.tutorName||'')}</small></div>${last?`<span class="atn ${last.data.progress==='Mastered'?'ok':last.data.progress==='Developing'?'wait':'bad'}">Latest: ${esc(last.data.progress)}</span>`:''}</div>
+      return `<div class="araltutee"><div class="stfreq-h"><span class="oav">${esc((t.data.name||'?').charAt(0))}</span><div><b>${esc(t.data.name)}</b><small>${esc(aralSecLabel(t))} · Tutor: ${esc(t.tutorName||'')}</small><div>${aralAttTxt(aralLearnerAtt(t))} ${aralTodayTag(aralLearnerAtt(t))}</div></div>${last?`<span class="atn ${last.data.progress==='Mastered'?'ok':last.data.progress==='Developing'?'wait':'bad'}">Latest: ${esc(last.data.progress)}</span>`:''}</div>
         ${aralProgChips(t.learner)}
         ${ns.length?`<ul class="aralnl">${ns.slice(0,5).map(n => `<li>${n.data.locked?'🔒':'✎'} <button class="linkbtn" onclick="aralNoteView('${n.id}')">${esc(dShort(n.date))}</button> ${esc(aralFocusTxt(n.data.focus))}${n.data.progress?' · <i>'+esc(n.data.progress)+'</i>':''}</li>`).join('')}</ul>${ns.length>5?`<button class="linkbtn" onclick="aralAllNotes('${t.learner}')">See all ${ns.length} notes</button>`:''}`:'<p class="hint">No notes yet.</p>'}</div>`; }).join('') || '<div class="empty">None of your learners is an ARAL tutee yet.</div>'}</div>`;
 }
@@ -2444,7 +2523,7 @@ function aralToday(){
         <label class="aralday">Session date <input type="date" value="${esc(date)}" max="${esc(today)}" onchange="ARAL.date=this.value||todayPH();aralDraw()"></label></div>
       ${date!==today?`<p class="hint">You are ticking learners and writing notes for a past session, ${esc(fmtLong(date))}.</p>`:''}
       <div class="araltick">${list.map(t => `<label class="${present.indexOf(t.learner)>-1?'on':''}"><input type="checkbox" value="${esc(t.learner)}" ${present.indexOf(t.learner)>-1?'checked':''} onchange="this.parentElement.classList.toggle('on',this.checked)"><b>${esc(t.data.name)}</b><small>${esc(aralSecLabel(t))}</small></label>`).join('')}</div>
-      <div class="obs-actions"><button class="btn" onclick="aralAttSave()">Save who is present</button>${A?`<span class="hint">Saved: ${present.length} of ${list.length} present.</span>`:''}</div>
+      <div class="obs-actions"><button class="btn" onclick="aralAttSave()">Save who is present</button>${A?`<span class="hint">Saved: ${present.length} of ${list.length} present.</span>`:''}${A && date===today && present.length < list.length ? `<button class="btn ghost" onclick="aralParentMsgs(aralNotInToday(aralMyTutees()), 'tutor')">💬 Message the parents of the ${list.length-present.length} not in ARAL</button>` : ''}</div>
       <h3 class="stfgrp">ARAL notes for ${esc(dShort(date))}</h3>
       <div class="abtns">${list.filter(t => !A || present.indexOf(t.learner)>-1).map(t => { const n = aralNotes({ learner:t.learner, tutor:me, date })[0];
         return `<button class="abtn ${n?'':'main'}" onclick="aralNoteOpen('${t.learner}','${n?n.id:''}')"><span class="abico">${n?(n.data.locked?'🔒':'✎'):'✍'}</span><b>${esc(t.data.name)}</b><small>${n?(n.data.locked?'Saved and locked: ':'Draft: ')+esc(aralFocusTxt(n.data.focus)):'Write what you taught'}</small></button>`; }).join('')}</div>
@@ -2459,7 +2538,7 @@ async function aralClock(slot){
   if (slot==='out'){ const m = aralUsed(T.data, true);
     if (m < ARAL_NEED && !confirm('The ARAL session needs 1 hour a day. You have '+m+' minutes so far. Sign out now anyway?')) return; }
   const shot = await camOpen('ARAL '+(slot==='in'?'Sign in':'Sign out')); if (!shot || !shot.photo) return;
-  try{ loading(true); ARAL.data = await api('aralTime', { session:ARAL.session, slot, photo: shot.photo.split(',')[1] }); loading(false);
+  try{ loading(true); aralSet(await api('aralTime', { session:ARAL.session, slot, photo: shot.photo.split(',')[1] })); loading(false);
     const R = aralRow('TIME', USER.email, ARAL.data.today || todayPH()); if (R) ARAL_PICS[R.id+'|'+slot] = shot.photo;
     aralDraw(); toast(slot==='in'?'Signed in. Have a good tutorial.':'Signed out. Thank you.'); }catch(e){ loading(false); handleErr(e); } }
 const ARAL_PICS = {};
@@ -2475,7 +2554,7 @@ async function aralPhotoView(id, slot){
     ARAL_PICS[id+'|'+slot] = r.src; show(r.src, r.name+', '+lab+', '+dShort(r.date)+(r.time?' at '+time12(r.time):'')); }
   catch(e){ stfModal(`<p>${esc(friendly(e.message))}</p>`); } }
 async function aralAttSave(){ const present = [...document.querySelectorAll('.araltick input:checked')].map(x => x.value);
-  try{ loading(true); ARAL.data = await api('aralAtt', { date:ARAL.date, session:ARAL.curSes||ARAL.session||'After class', present }); loading(false); aralDraw(); toast('Saved. '+present.length+' present.'); }catch(e){ loading(false); handleErr(e); } }
+  try{ loading(true); aralSet(await api('aralAtt', { date:ARAL.date, session:ARAL.curSes||ARAL.session||'After class', present })); loading(false); aralDraw(); toast('Saved. '+present.length+' present.'); }catch(e){ loading(false); handleErr(e); } }
 
 /* ----- School Head and AO ----- */
 function aralTutorList(){ const D = ARAL.data; return [...new Set((D.tutees||[]).map(t => t.tutor))].filter(Boolean); }
@@ -2487,7 +2566,7 @@ function aralOverview(){
   const done = tutors.filter(e => { const x = nt.filter(n => n.tutor===e); return x.length && x.every(n => n.data.locked); }).length;
   const card = (ico, n, l, fn) => `<button class="ostat" onclick="${fn}" title="Tap to open"><span class="oico">${ico}</span><b>${n}</b><span>${l} ›</span></button>`;
   $('aralBody').innerHTML = `<div class="aralbar"><label class="aralday">Day <input type="date" value="${esc(day)}" max="${esc(today)}" onchange="ARAL.ov=this.value||todayPH();aralDraw()"></label>
-      ${head?`<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn ghost" onclick="aralManualOpen('','${day}')">＋ Add attendance for a tutor</button><button class="btn" onclick="ARAL.tab='tag';aralDraw()">Tag tutees and tutors</button></div>`:''}</div>
+      ${head?`<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn ghost danger" onclick="aralClearOpen()">Clear ARAL data</button><button class="btn ghost" onclick="aralManualOpen('','${day}')">＋ Add attendance for a tutor</button><button class="btn" onclick="ARAL.tab='tag';aralDraw()">Tag tutees and tutors</button></div>`:''}</div>
     <div class="ostats">${card('🧒', (D.tutees||[]).length, 'ARAL tutees (KS1 '+ks(1)+', KS2 '+ks(2)+')', "ARAL.tab='tutees';aralDraw()")}
       ${card('👩‍🏫', tutors.length, 'ARAL tutors', "aralTutorsPop()")}
       ${card('⏱', met+' of '+tutors.length, 'Tutors with 1 hour '+(day===today?'today':'on '+dShort(day)), "aralHoursPop()")}
@@ -2496,8 +2575,10 @@ function aralOverview(){
     <h3 class="stfgrp">Tutors on ${esc(fmtLong(day))} <small>Tap a name to open the details.</small></h3>
     <div class="table-wrap"><table class="stft-table"><thead><tr><th>Tutor</th><th>Tutees</th><th>Session</th><th>Sign in</th><th>Sign out</th><th>Time used</th><th>Present</th><th>Notes</th><th></th></tr></thead><tbody>
     ${tutors.map(e => { const T = aralRow('TIME', e, day), A = aralRow('ATT', e, day), ns = nt.filter(n => n.tutor===e), c = (v, k) => v ? esc(time12(v)) + aralPicBtn(T, k) : '<span class="hint">·</span>';
-      return `<tr><td><button class="linkbtn" onclick="aralTutorDay('${e}')"><b>${esc(aralPName(e))}</b></button>${T&&T.data.addedBy?'<br><small class="hint">Added by the School Head</small>':''}</td><td>${aralTutees(e).length}</td><td>${T&&T.data.session?esc(T.data.session==='Before class'?'Before the regular class':'After the regular class'):'<span class="hint">·</span>'}</td><td>${c(T&&T.data.in,'in')}</td><td>${c(T&&T.data.out,'out')}</td><td>${aralUsedTxt(T&&T.data)}</td><td>${A?A.data.present.length:'<span class="hint">·</span>'}</td><td>${ns.length?`<button class="linkbtn" onclick="aralDayNotes('${e}')">${aralLockTxt(ns)}</button>`:aralLockTxt(ns)}</td>
-        <td style="white-space:nowrap">${head?`<button class="linkbtn" onclick="aralManualOpen('${e}','${day}')">${T?'Edit':'Add'} attendance</button> · `:''}<button class="linkbtn" onclick="ARAL.who='${e}';ARAL.tab='rep';aralDraw()">Reports</button></td></tr>`; }).join('') || `<tr><td colspan="9" class="hint">No tutors yet.${head?' Open Tag tutees and tutors to start.':''}</td></tr>`}</tbody></table></div>`;
+      const open = (ARAL.open||{})[e], tl = aralTutees(e);
+      return `<tr><td><button class="araltog" onclick="ARAL.open=ARAL.open||{};ARAL.open['${e}']=!ARAL.open['${e}'];aralDraw()" title="Show the tutees">${open?'▾':'▸'}</button> <button class="linkbtn" onclick="aralTutorDay('${e}')"><b>${esc(aralPName(e))}</b></button>${T&&T.data.addedBy?'<br><small class="hint">Added by the School Head</small>':''}</td><td>${aralTutees(e).length}</td><td>${T&&T.data.session?esc(T.data.session==='Before class'?'Before the regular class':'After the regular class'):'<span class="hint">·</span>'}</td><td>${c(T&&T.data.in,'in')}</td><td>${c(T&&T.data.out,'out')}</td><td>${aralUsedTxt(T&&T.data)}</td><td>${A?A.data.present.length:'<span class="hint">·</span>'}</td><td>${ns.length?`<button class="linkbtn" onclick="aralDayNotes('${e}')">${aralLockTxt(ns)}</button>`:aralLockTxt(ns)}</td>
+        <td style="white-space:nowrap">${head?`<button class="linkbtn" onclick="aralManualOpen('${e}','${day}')">${T?'Edit':'Add'} attendance</button> · `:''}<button class="linkbtn" onclick="ARAL.who='${e}';ARAL.tab='rep';aralDraw()">Reports</button></td></tr>${open?`<tr class="araltrx"><td colspan="9">${tl.length?`<table class="stft-table aralsub"><thead><tr><th>Tutee</th><th>Grade and section</th><th>Attendance in ARAL</th><th>Today</th><th>Latest progress</th></tr></thead><tbody>${tl.map(t => { const a = aralLearnerAtt(t), lp = aralNotes({ learner:t.learner }).find(n => n.data.progress);
+          return `<tr><td><button class="linkbtn" onclick="aralAllNotes('${t.learner}')">${esc(t.data.name)}</button></td><td>${esc(aralSecLabel(t))}</td><td>${aralAttTxt(a)}</td><td>${aralTodayTag(a)}</td><td>${lp?esc(lp.data.progress):'<span class="hint">·</span>'}</td></tr>`; }).join('')}</tbody></table>`:'<span class="hint">No tutees.</span>'}</td></tr>`:''}`; }).join('') || `<tr><td colspan="9" class="hint">No tutors yet.${head?' Open Tag tutees and tutors to start.':''}</td></tr>`}</tbody></table></div>`;
 }
 function aralTutorsPop(){ const day = ARAL.ov || todayPH(), nt = (ARAL.data.rows||[]).filter(r => r.kind==='NOTE' && r.date===day);
   stfModal(`<h3>ARAL tutors</h3><p class="sub">${esc(fmtLong(day))}. Tap a tutor to open the details.</p>
@@ -2536,7 +2617,28 @@ async function aralManualSave(){
   const b = { tutor:$('amT').value, date:$('amD').value, session:ARAL.man.session, in:$('amIn').value, out:$('amOut').value, present:[...document.querySelectorAll('.amP:checked')].map(x => x.value) };
   if (!b.session) return $('amErr').textContent = 'Tick when the ARAL session was conducted.';
   if (!b.in) return $('amErr').textContent = 'Enter the sign in time.';
-  try{ loading(true); ARAL.data = await api('aralManual', b); loading(false); closeModal('stfModal'); ARAL.ov = b.date; aralDraw(); toast('ARAL attendance saved.'); }catch(e){ loading(false); handleErr(e,'amErr'); }
+  try{ loading(true); aralSet(await api('aralManual', b)); loading(false); closeModal('stfModal'); ARAL.ov = b.date; aralDraw(); toast('ARAL attendance saved.'); }catch(e){ loading(false); handleErr(e,'amErr'); }
+}
+
+// Clear ARAL data before launching, or at the start of a new school year (School Head only)
+function aralClearOpen(){
+  const R = ARAL.data.rows||[], n = k => R.filter(r => r.kind===k).length;
+  stfModal(`<h3>Clear ARAL data</h3><p class="sub">Use this before launching, to remove test entries, or at the start of a new school year. TALA first saves a backup copy of the Google Sheet in your Drive, then clears what you tick.</p>
+    <div id="acAral"><label class="check"><input type="checkbox" data-k="logs" checked>Tutors' attendance: sign in and sign out, photos, and learners present (${n('TIME')+n('ATT')} records)</label>
+      <label class="check"><input type="checkbox" data-k="notes" checked>All ARAL notes of the learners (${n('NOTE')} notes)</label>
+      <label class="check"><input type="checkbox" data-k="tutees">ARAL tutees and their tutors (${(ARAL.data.tutees||[]).length} tutees). Tick this for a new school year, then tag the new tutees.</label></div>
+    <p class="hint">Not touched: the learners in Attendance, the regular Time in and Time out, LAC, SBFP, Observations, LPT and PPT, and accounts. Printed reports you already have stay valid.</p>
+    <div class="field"><label for="aclType">Type CLEAR to confirm</label><input id="aclType" autocomplete="off"></div><p class="err" id="aclErr"></p>
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Cancel</button><button class="btn danger" id="aclGo" onclick="aralClearRun()">Clear</button></div>`);
+}
+async function aralClearRun(){
+  const options = {}; document.querySelectorAll('#acAral input').forEach(x => options[x.dataset.k] = x.checked);
+  if (!Object.values(options).some(Boolean)) return $('aclErr').textContent = 'Tick at least one item to clear.';
+  if ($('aclType').value.trim().toUpperCase() !== 'CLEAR') return $('aclErr').textContent = 'Type CLEAR to confirm.';
+  $('aclGo').disabled = true;
+  try{ loading(true); const r = await api('aralClear', { options, confirm:$('aclType').value }); loading(false); aralSet(r.data);
+    closeModal('stfModal'); aralDraw(); toast('ARAL data cleared. Backup saved in your Drive: '+r.backupName); }
+  catch(e){ loading(false); $('aclGo').disabled = false; handleErr(e,'aclErr'); }
 }
 
 /* ----- Guide: a step by step help for each user ----- */
@@ -2565,6 +2667,7 @@ const ARAL_GUIDE = {
     ['＋','Step 4. Add a missed attendance','If a tutor forgot to sign in, tap <b>Add attendance</b> on that tutor\'s row, or <b>Add attendance for a tutor</b> at the top. Choose the day, tick before or after the regular class, enter the times, and tick the learners present.'],
     ['🔒','Step 5. Read the notes','Tap a tutor\'s name to see the learners present and every note. 🔒 means the note is done. You can unlock a note if it needs to be fixed.'],
     ['🖨','Step 6. Print and sign','In <b>Reports</b>, choose the tutor and print the Daily Log and Accomplishment Report or the Summary. The tutor signs as Prepared by, and you sign as Noted by.'],
+    ['🧹','New school year','Tap <b>Clear ARAL data</b> on the Overview to remove test entries before launching, or to start a new school year. TALA saves a backup of the Google Sheet in your Drive first.'],
     ['❓','Need help again?','Tap <b>How to use ARAL</b> at the top anytime to open this guide again.'] ],
   admin: [
     ['🌉','Welcome to ARAL, Project TULAY','You can view the ARAL tutees, the tutors\' attendance, the time used, and the reports. This page is view only.'],
@@ -2586,9 +2689,9 @@ function aralGuide(i){
 function aralTuteesTab(){
   const D = ARAL.data, head = aralRole()==='head';
   $('aralBody').innerHTML = `${head?`<div class="bar"><button class="btn" onclick="ARAL.tab='tag';aralDraw()">Tag tutees and tutors</button></div>`:'<p class="hint">View only.</p>'}
-    <div class="table-wrap"><table class="stft-table"><thead><tr><th>Learner</th><th>Grade and section</th><th>Key Stage</th><th>Tutor</th><th>Latest progress</th><th>Notes</th></tr></thead><tbody>
+    <div class="table-wrap"><table class="stft-table"><thead><tr><th>Learner</th><th>Grade and section</th><th>Key Stage</th><th>Tutor</th><th>Attendance in ARAL</th><th>Latest progress</th><th>Notes</th></tr></thead><tbody>
     ${aralTutees().map(t => { const ns = aralNotes({ learner:t.learner }), last = ns.find(n => n.data.progress);
-      return `<tr><td><b>${esc(t.data.name)}</b></td><td>${esc(aralSecLabel(t))}</td><td>${t.data.ks}</td><td>${esc(t.tutorName||'')}</td><td>${last?esc(last.data.progress):'<span class="hint">·</span>'}</td><td>${ns.length?`<button class="linkbtn" onclick="aralAllNotes('${t.learner}')">${aralLockTxt(ns)}</button>`:aralLockTxt(ns)}</td></tr>`; }).join('') || '<tr><td colspan="6" class="hint">No ARAL tutees yet.</td></tr>'}</tbody></table></div>`;
+      return `<tr><td><b>${esc(t.data.name)}</b></td><td>${esc(aralSecLabel(t))}</td><td>${t.data.ks}</td><td>${esc(t.tutorName||'')}</td><td>${aralAttTxt(aralLearnerAtt(t))}</td><td>${last?esc(last.data.progress):'<span class="hint">·</span>'}</td><td>${ns.length?`<button class="linkbtn" onclick="aralAllNotes('${t.learner}')">${aralLockTxt(ns)}</button>`:aralLockTxt(ns)}</td></tr>`; }).join('') || '<tr><td colspan="7" class="hint">No ARAL tutees yet.</td></tr>'}</tbody></table></div>`;
 }
 
 /* ----- Reports: Individual Daily Log and Accomplishment Report ----- */
@@ -2814,6 +2917,7 @@ function renderPrivate(){
   if (head) h += teacherTable(scope); else h += myOverview();
   h += `<div class="filters">`;
   if (head) h += `<select onchange="FILTER.teacher=this.value;renderPrivate()" aria-label="Teacher"><option value="">All teachers</option>${(DATA.teachers||[]).map(t=>`<option value="${esc(t.email)}" ${FILTER.teacher===t.email?'selected':''}>${esc(t.name)}</option>`).join('')}</select>`;
+  if (USER && USER.role==='head') h += `<button class="btn ghost small" onclick="msgCenter('lpt')">💬 Ready messages</button>`;
   h += `<input placeholder="Search grade or subject" value="${esc(FILTER.text)}" oninput="FILTER.text=this.value;clearTimeout(window._sq);window._sq=setTimeout(renderList,180)" aria-label="Search">
     <div class="tabs"><button class="${FILTER.view==='cards'?'on':''}" onclick="FILTER.view='cards';renderPrivate()">Cards</button><button class="${FILTER.view==='table'?'on':''}" onclick="FILTER.view='table';renderPrivate()">Table</button></div></div>
     <div id="entryList"></div>`;
@@ -4897,7 +5001,7 @@ function drawHome(){
       ${head?`<div class="hacts"><button class="btn sun small" onclick="openFeature('obs');setTimeout(obsChooser,50)">\u002B New observation</button><button class="btn ghost small" onclick="openFeature('obs');setTimeout(openCal,50)">Observation calendar</button></div>`:''}</div>`;
   }
   $('viewHome').innerHTML = `
-    <div class="hhero"><div class="hhero-t"><h2>${greet}, ${esc(first)}!</h2><p>Today is ${esc(today)}. Enjoy your class, and be an inspiration.</p>${head?`<button class="btn sun small" style="margin-top:12px" onclick="openFeature('mne')">PIR Presentation</button>`:`<button class="btn sun small" style="margin-top:12px" onclick="openPir('me')">My status presentation</button>`}</div>
+    <div class="hhero"><div class="hhero-t"><h2>${greet}, ${esc(first)}!</h2><p>Today is ${esc(today)}. Enjoy your class, and be an inspiration.</p>${head?`<button class="btn sun small" style="margin-top:12px" onclick="msgCenter()">💬 Ready messages</button> <button class="btn sun small" style="margin-top:12px" onclick="openFeature('mne')">PIR Presentation</button>`:`<button class="btn sun small" style="margin-top:12px" onclick="openPir('me')">My status presentation</button>`}</div>
       <div class="qcard" id="qCard"><span class="qstar">\u2605</span><p>\u201C${esc(quoteToday())}\u201D</p><small>TALA quote of the day</small>
         <div class="qbtns"><button class="btn ghost small" onclick="quoteSave()">\u2B07 Save picture</button><button class="btn ghost small" onclick="shareQuote()">Share</button></div></div></div>
     ${sbTodoHtml()}
@@ -5230,7 +5334,7 @@ function drawSbfp(){
       <div class="sbtoday"><small>Today</small>${t?`<b>${esc(t.n)}</b><span>${esc(t.g)} parents \u00B7 Day ${t.day} of ${SBFP_MENUS.length}</span>`:'<b>No feeding scheduled today</b>'}</div></div>
     <div class="ktabs">${tabs.map(([k,l])=>`<button class="${SB.tab===k?'on':''}" onclick="SB.tab='${k}';drawSbfp()">${l}</button>`).join('')}</div>
     ${sbTodoHtml()}
-    ${staff?`<div class="sbtools"><button class="btn ghost small" onclick="openModal('sbPrintModal')">\u2399 Print reports</button>${USER.role==='head'?'<button class="btn ghost small danger" onclick="sbClearOpen()">Clear SBFP data</button>':''}</div>`:''}
+    ${staff?`<div class="sbtools"><button class="btn ghost small" onclick="openModal('sbPrintModal')">\u2399 Print reports</button>${USER.role==='head'?'<button class="btn ghost small" onclick="msgCenter(\'sbfp\')">💬 Ready messages</button><button class="btn ghost small danger" onclick="sbClearOpen()">Clear SBFP data</button>':''}</div>`:''}
     <div id="sbBody"></div>`;
   ({ today:sbDayView, cal:sbCalView, sum:sbSumView, people:sbPeopleView, part:sbPartView })[SB.tab]();
 }
@@ -6129,7 +6233,7 @@ function attHome(){
       ${btn('\u{1F3EB}','All classes, live','Today\u2019s attendance per class',"attOpenLive()")}
       ${btn('\u{1F4D1}','SF4 (DepEd)','School report, '+monthName(ATT.month),"showForm('sf4')")}
       ${head?btn('\u2699','Classes and advisers','Set each class and its adviser',"attSecForm()"):''}
-      ${head?btn('\u{1F5D1}','Clear attendance data','Remove test entries before launch',"attClearOpen()",'danger'):''}</div>`:''}`;
+      ${head?btn('\u{1F4AC}','Ready messages','Reminders for Messenger: class attendance, Time in',"msgCenter('att')"):''}${head?btn('\u{1F5D1}','Clear attendance data','Remove test entries before launch',"attClearOpen()",'danger'):''}</div>`:''}`;
   if (ATT.quiet){ const el = $('stfHome'); if (el) el.innerHTML = stfHomeInner(); if (head||admin) schoolTally(); return; }
   maybeGuide('att');
   if (head||admin) schoolTally();
@@ -7757,7 +7861,7 @@ function lacHome(){
       <button class="abtn" onclick="LAC.tab='sess';lacDraw()"><span class="abico">\u{1F4C5}</span><b>Sessions</b><small>LAC sessions and faculty meetings</small></button>
       <button class="abtn" onclick="LAC.tab='hub';lacDraw()"><span class="abico">\u25B6</span><b>Learning Hub</b><small>Videos to learn on your own</small></button>
       <button class="abtn" onclick="LAC.tab='nb';lacDraw()"><span class="abico">\u{1F4D3}</span><b>My Notebooks</b><small>LAC, meetings, and notes</small></button>
-      ${head?`<button class="abtn" onclick="lacSessionForm()"><span class="abico">\uFF0B</span><b>New session</b><small>LAC session or faculty meeting</small></button>`:''}</div>`;
+      ${head?`<button class="abtn" onclick="lacSessionForm()"><span class="abico">\uFF0B</span><b>New session</b><small>LAC session or faculty meeting</small></button><button class="abtn" onclick="msgCenter('lac')"><span class="abico">\u{1F4AC}</span><b>Ready messages</b><small>Reminders and follow ups for Messenger</small></button>`:''}</div>`;
 }
 
 /* ----- Sessions ----- */
@@ -7979,7 +8083,7 @@ async function lacMinutesSave(id, print){
 }
 function lacPara(t){ return String(t||'').split(/\n+/).filter(Boolean).map(p => `<p>${esc(p)}</p>`).join(''); }
 function lacMinutesHtml(s){
-  const M = s.minutes || {}, att = lacRecs(s.id,'ATT').sort((a,b) => String(a.on).localeCompare(String(b.on))), not = lacInvitees(s).filter(p => !att.some(a => a.email===p.email));
+  const M = s.minutes || {}, att = lacRecs(s.id,'ATT').sort((a,b) => String(a.on).localeCompare(String(b.on))), not = lacInvitees(s).filter(p => !att.some(a => a.email===p.email) && p.role!=='head');
   return `<table class="stfp-info"><tr><td>Present (${att.length})</td><td>${esc(att.map(a=>a.name).join(', '))||'None'}</td></tr>${not.length?`<tr><td>Absent (${not.length})</td><td>${esc(not.map(p=>p.name).join(', '))}</td></tr>`:''}</table>
     ${LAC_MIN.map(m => M[m[0]]?`<h4>${m[1]}</h4>${lacPara(M[m[0]])}`:'').join('') || '<p class="hint">No minutes yet.</p>'}`;
 }
@@ -8054,11 +8158,15 @@ async function lacPrint(kind, id, T, html){
   const sigImg = e => sigs[e] ? `<img src="${sigs[e]}" alt="">` : '';
   const signers = `<div class="stfp-sigs"><div><span class="sigimg">${s.documenter?sigImg(s.documenter):''}</span><span>${esc(docN||'\u00A0')}</span><small>Prepared by, LAC Documenter</small></div><div><span class="sigimg">${sigImg(lacHeadEmail())}</span><span>${esc(head)}</span><small>Noted by, School Head</small></div></div>`;
   let title = '', body = '';
-  if (kind==='att'){ const att = lacRecs(id,'ATT').sort((a,b) => String(a.on).localeCompare(String(b.on)));
-    title = 'Attendance Sheet'; body = info + `<table class="stfp-tbl lacatt"><thead><tr><th>No.</th><th>Name</th><th>Position</th><th>Grade level assigned</th><th>Email</th><th>Contact number</th><th>Signature</th></tr></thead><tbody>
-      ${att.map((a,i) => `<tr><td>${i+1}</td><td>${esc(a.name.toUpperCase())}</td><td style="white-space:nowrap">${esc(lacPos(a.email))}</td><td>${esc(lacAsg(a.email))}</td><td class="lacem">${esc(a.email)}</td><td>${esc(lacContact(a.email))}</td><td class="lacsig">${sigImg(a.email)}</td></tr>`).join('')}
-      ${Array.from({length:3}).map((_,i) => `<tr><td>${att.length+i+1}</td><td></td><td></td><td></td><td></td><td></td><td class="lacsig"></td></tr>`).join('')}</tbody></table>` + signers.replace('Prepared by, LAC Documenter','Prepared by, LAC Documenter'); }
-  else if (kind==='min'){ title = 'Minutes of the '+(s.kind==='MEET'?'Faculty Meeting':'LAC Session'); body = info + lacMinutesHtml(s) + signers; }
+  const attTbl = () => { const att = lacRecs(id,'ATT').sort((a,b) => String(a.on).localeCompare(String(b.on)));
+    return `<table class="stfp-tbl lacatt"><thead><tr><th>No.</th><th>Name</th><th>Position</th><th>Grade level assigned</th><th>Email</th><th>Contact number</th><th>Time signed</th><th>Signature</th></tr></thead><tbody>
+      ${att.map((a,i) => `<tr><td>${i+1}</td><td>${esc(String(a.name||'').toUpperCase())}</td><td style="white-space:nowrap">${esc(lacPos(a.email))}</td><td>${esc(lacAsg(a.email))}</td><td class="lacem">${esc(a.email)}</td><td>${esc(lacContact(a.email))}</td><td style="white-space:nowrap">${a.on?esc(time12(String(a.on).slice(11,16))):''}</td><td class="lacsig">${sigImg(a.email) || '<small>Signed in TALA</small>'}</td></tr>`).join('')}
+      ${Array.from({length:3}).map((_,i) => `<tr><td>${att.length+i+1}</td><td></td><td></td><td></td><td></td><td></td><td></td><td class="lacsig"></td></tr>`).join('')}</tbody></table>`; };
+  const photoAnnex = async (h) => { if (!(s.photos||[]).length) return ''; const ph = await lacPhotoFetch(s.photos.map(p => p.id)); return `<h4>${h}</h4><div class="lacprintph">${s.photos.map(p => `<figure>${ph[p.id]?`<img src="${ph[p.id]}" alt="">`:''}<figcaption>${esc(p.caption||'')}</figcaption></figure>`).join('')}</div>`; };
+  if (kind==='att'){ title = 'Attendance Sheet'; body = info + attTbl() + signers; }
+  else if (kind==='min'){ title = 'Minutes of the '+(s.kind==='MEET'?'Faculty Meeting':'LAC Session'); loading(true, 'Adding the attendance and photos');
+    let ph = ''; try{ ph = await photoAnnex('Annex B. Photos (documentation)'); }catch(e){} loading(false);
+    body = info + lacMinutesHtml(s) + signers + `<div class="stfp-break"></div><h4>Annex A. Attendance Sheet</h4>` + attTbl() + (ph ? `<div class="stfp-break"></div>` + ph : ''); }
   else if (kind==='rep'){ const R = Object.assign(lacReportDraft(s), s.report||{}), E = lacEvalData(id,'EVS'), N = lacNotesFor(id), ph = await lacPhotoFetch((s.photos||[]).map(p => p.id));
     title = 'Accomplishment Report';
     body = info + `<h4>I. Rationale</h4>${lacPara(R.rationale)}<h4>II. Objectives</h4><ul>${String(R.objectives||'').split('\n').filter(Boolean).map(o=>`<li>${esc(o)}</li>`).join('')}</ul>
@@ -8547,6 +8655,11 @@ function lacOverview(){
 
 /* ----- Messenger messages for the group chats ----- */
 function lacMsgOpen(kind, id){
+  const t = lacMsgText(kind, id);
+  stfModal(`<h3>Message for the group chat</h3><p class="sub">Copy it, then paste it in Messenger. You can change the words first.</p><textarea id="lmTxt" rows="14" style="width:100%">${esc(t)}</textarea>
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Close</button><button class="btn" onclick="lacCopy()">\u{1F4CB} Copy</button></div>`);
+}
+function lacMsgText(kind, id){
   const head = (LAC.data.headName||USER.name), D = LAC.data; let t = '';
   if (kind==='sess'){ const s = lacS(id), att = lacRecs(id,'ATT'), not = lacInvitees(s).filter(p => !att.some(a => a.email===p.email) && p.role!=='head');
     t = `Good day, Ma'am and Sir! \u{1F31F}\n\n${s.kind==='MEET'?'\u{1F4E2} Faculty Meeting':'\u{1F4DA} LAC Session'}: ${s.title}\n\u{1F4C5} ${fmtLong(s.date)}${lacTime(s)?', '+lacTime(s):''}\n\u{1F4CD} ${s.venue||'Baluyan Elementary School'}${s.link?'\n\u{1F517} Join here: '+s.link:''}${(s.facilitators||[]).length?'\n\u{1F3A4} '+(s.kind==='MEET'?'Presider':'Facilitator')+': '+s.facilitators.map(f=>f.name).join(', '):''}\n\nPlease open TALA, then LAC and Teacher Development:\n\u2705 Tick your attendance\n${s.kind==='LAC'?'\u{1F4D3} Write in your LAC Notebook and answer the reflection\n\u2B50 Evaluate the session and the speaker\n':'\u{1F4D3} Write your notes in the Meeting Notebook\n'}${not.length && s.date <= todayPH()?'\nNot yet signed: '+not.map(p=>p.name).join(', ')+'\n':''}\nThank you and God bless! \u{1F64F}\n${head}\nSchool Head`; }
@@ -8563,10 +8676,209 @@ function lacMsgOpen(kind, id){
   else { const pend = []; lacPeople().filter(p => p.role!=='head').forEach(p => { const n = []; D.sessions.filter(s => s.date <= todayPH() && lacInvited(s, p.email) && !lacRecs(s.id,'ATT').some(r => r.email===p.email)).slice(0,3).forEach(s => n.push('attendance, '+s.title));
       D.hub.filter(h => h.status==='Approved' && hubAssignees(h).some(x => x.email===p.email) && (lacProg(h.id, p.email)||{}).status!=='Finished').slice(0,3).forEach(h => n.push('watch, '+h.title)); if (n.length) pend.push('\u2022 '+p.name+': '+n.join('; ')); });
     t = `Good day, Ma'am and Sir! \u{1F31F}\n\nA friendly reminder from TALA, LAC and Teacher Development:\n\n${pend.join('\n') || 'Everyone is up to date. Thank you!'}\n\nPlease open TALA to finish these. Thank you! \u{1F64F}\n${head}\nSchool Head`; }
-  stfModal(`<h3>Message for the group chat</h3><p class="sub">Copy it, then paste it in Messenger. You can change the words first.</p><textarea id="lmTxt" rows="14" style="width:100%">${esc(t)}</textarea>
-    <div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Close</button><button class="btn" onclick="lacCopy()">\u{1F4CB} Copy</button></div>`);
+  return t;
 }
 async function lacCopy(){ const t = $('lmTxt').value; try{ await navigator.clipboard.writeText(t); }catch(e){ $('lmTxt').select(); document.execCommand('copy'); } toast('Copied. Paste it in Messenger.'); }
+/* =========================================================
+   Ready messages for Messenger (School Head). TALA writes each message from the live data:
+   one for the group chat, and one for each person who needs a follow up. Copy, then paste.
+   ========================================================= */
+const MC = { tab:'', kind:'', texts:[], secs:null, attDays:null, busy:false };
+const MC_TABS = [['lpt','LPT and PPT'],['sbfp','SBFP'],['att','Attendance'],['lac','LAC and Meetings'],['aral','ARAL']];
+function mcSign(){ return (USER ? USER.name : '') + '\nSchool Head'; }
+function mcFirst(n){ n = String(n||'').trim(); const p = n.split(/\s+/); return p.length > 1 && /^(ma\.?|mary|jose|john|juan)$/i.test(p[0]) ? p[0]+' '+p[1] : p[0] || n; }
+function mcPeople(){ const m = {}; [ (DATA||{}).teachers, (typeof ARAL!=='undefined' && ARAL.data) ? ARAL.data.people : null, (typeof LAC!=='undefined' && LAC.data) ? LAC.data.people : null, (typeof STF!=='undefined' && STF.data) ? STF.data.people : null ]
+  .forEach(L => (L||[]).forEach(p => { if (p && p.email && !m[p.email]) m[p.email] = p; })); return m; }
+function mcName(e){ const p = mcPeople()[e]; return p ? p.name : e; }
+function mcGroup(title, items, ask, close){ return `Good day, Ma'am and Sir! 🌟\n\n${title}\n\n${items.map(x => '• '+x.name+(x.need?': '+x.need:'')).join('\n')}\n\n${ask}${close?'\n\n'+close:''}\n\nThank you! 🙏\n${mcSign()}`; }
+function mcOne(x, line, ask){ return `Good day, ${mcFirst(x.name)}! 🌟\n\n${line}\n${x.need ? '\n'+x.need+'\n' : ''}\n${ask}\n\nThank you! 🙏\n${mcSign()}`; }
+
+async function msgCenter(tab){
+  if (!USER || USER.role!=='head') return;
+  MC.tab = tab || MC.tab || ({ lpt:'lpt', sbfp:'sbfp', att:'att', lac:'lac', aral:'aral' })[CUR_FEATURE] || 'lpt'; MC.kind = '';
+  mcDraw(true); await mcLoad(MC.tab); if ($('stfModal').classList.contains('open') && $('mcBody')) mcDraw();
+}
+async function mcLoad(tab){
+  MC.err = '';
+  try{
+    if (tab==='sbfp' || tab==='att'){ if (!MC.secs){ const m = await api('attSections'); MC.secs = m.sections || []; MC.firstDay = m.firstDay || ''; } }
+    if (tab==='att'){ const today = todayPH(); if (!MC.attDays || MC.attFor!==today){ const r = await api('attSchool', { from:addDays(today, -10), to:today }); MC.attDays = r.days || []; MC.attFor = today; }
+      if (typeof STF!=='undefined' && !STF.data){ try{ STF.data = await api('staffLoad', { from: addDays(todayPH(), -10) }); }catch(e){} } }
+    if (tab==='lac' && typeof LAC!=='undefined' && !LAC.data){ LAC.data = await api('lacLoad'); }
+    if (tab==='aral' && typeof ARAL!=='undefined'){ await aralLoad(true); }
+  }catch(e){ MC.err = friendly(e.message); }
+}
+function mcKinds(tab){ try{ return ({ lpt:mcLpt, sbfp:mcSbfp, att:mcAtt, lac:mcLac, aral:mcAral })[tab]() || []; }catch(e){ console.warn('TALA messages', e); return []; } }
+function mcDraw(loading){
+  const kinds = loading ? [] : mcKinds(MC.tab);
+  if (!kinds.some(k => k.id===MC.kind)) MC.kind = (kinds.find(k => (k.items||[]).length) || kinds[0] || {}).id || '';
+  const k = kinds.find(x => x.id===MC.kind); MC.texts = [];
+  let body = '';
+  if (loading) body = `<div class="pirload"><div class="pirdots"><i></i><i></i><i></i></div><b>Checking the latest data</b></div>`;
+  else if (MC.err && !kinds.length) body = `<p class="err">${esc(MC.err)}</p><button class="btn ghost" onclick="msgCenter('${MC.tab}')">Try again</button>`;
+  else if (!kinds.length) body = `<p class="hint">No data yet for this tab.</p>`;
+  else {
+    body = `<div class="mckinds">${kinds.map(x => `<button class="mckind ${x.id===MC.kind?'on':''}" onclick="MC.kind='${x.id}';mcDraw()"><span>${x.ico}</span><b>${esc(x.label)}</b>${x.items?`<i class="${x.items.length?'':'zero'}">${x.items.length}</i>`:''}</button>`).join('')}</div>`;
+    if (k){
+      if (k.action){ body += `<p class="hint">${esc(k.hint||'')}</p><button class="btn" onclick="${k.action}">Open the message</button>`; }
+      else if (k.items && !k.items.length && !k.always){ body += `<div class="mcdone">✔ ${esc(k.done || 'Everyone is done. There is nothing to follow up.')}</div>`; }
+      else {
+        const g = k.group(); MC.texts.push(g);
+        body += `<h4 class="stfgrp">For the group chat</h4><textarea id="mcG" rows="9" style="width:100%">${esc(g)}</textarea>
+          <div class="obs-actions" style="margin-top:6px"><button class="btn" onclick="mcCopyBox('mcG')">📋 Copy for the group chat</button></div>`;
+        if (k.one && (k.items||[]).length){
+          body += `<h4 class="stfgrp">For each person <small>Send a private message to follow up one by one.</small></h4><div class="mcpeople">${k.items.map(x => { const t = k.one(x); MC.texts.push(t); const i = MC.texts.length - 1;
+            return `<div class="mcperson"><div><b>${esc(x.name)}</b><small>${esc(x.need||'')}</small></div><button class="btn ghost small" onclick="mcCopy(${i}, this)">📋 Copy</button></div>`; }).join('')}</div>`;
+        }
+      }
+    }
+  }
+  stfModal(`<h3>💬 Ready messages for Messenger</h3><p class="sub">TALA writes these from the latest data. Copy one, then paste it in Messenger. You can change the words first.</p>
+    <div class="tabs mctabs">${MC_TABS.map(t => `<button class="${MC.tab===t[0]?'on':''}" onclick="msgCenter('${t[0]}')">${t[1]}</button>`).join('')}</div>
+    <div id="mcBody" style="margin-top:12px">${body}</div>
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Close</button></div>`, 'wide');
+}
+async function mcCopyText(t){ try{ await navigator.clipboard.writeText(t); }catch(e){ const a = document.createElement('textarea'); a.value = t; document.body.appendChild(a); a.select(); try{ document.execCommand('copy'); }catch(x){} a.remove(); } }
+async function mcCopyBox(id){ await mcCopyText($(id).value); toast('Copied. Paste it in Messenger.'); }
+async function mcCopy(i, btn){ await mcCopyText(MC.texts[i]||''); if (btn){ btn.textContent = '✔ Copied'; btn.classList.add('ok'); } toast('Copied. Paste it in Messenger.'); }
+
+/* ----- LPT and PPT ----- */
+function mcLpt(){
+  if (!DATA || !DATA.entries) return [];
+  const test = DATA.testEmails||[], T = (DATA.teachers||[]).filter(t => test.indexOf(t.email) < 0), wk = SEL.week==='all' ? '' : SEL.week, label = 'Term '+SEL.term+(wk ? ', Week '+wk : '');
+  const scope = inScope().filter(e => test.indexOf(e.email) < 0), w = wk ? weekOf(SEL.term, wk) : null, due = w ? fmtLong(w.due)+' at '+time12(w.dueTime) : '';
+  const mine = t => scope.filter(e => e.email===t.email), what = e => e.grade+' '+e.subject;
+  const none = T.filter(t => !mine(t).length).map(t => ({ email:t.email, name:t.name, need:'No LPT and PPT uploaded yet for '+label+'.' }));
+  const ret = T.map(t => { const L = []; mine(t).forEach(e => itemsOf(e).forEach(x => { if (x.status==='Returned' || x.status==='Invalid') L.push(x.K+' of '+what(e)+(x.status==='Invalid'?' (wrong file)':' (returned)')); })); return L.length ? { email:t.email, name:t.name, need:'Please fix and upload again: '+L.join('; ')+'.' } : null; }).filter(Boolean);
+  const inc = T.map(t => { const L = []; mine(t).forEach(e => itemsOf(e).forEach(x => { if (x.status==='Incomplete' || (x.K==='LPT' && !x.complete)) L.push(x.K+' of '+what(e)); })); return L.length ? { email:t.email, name:t.name, need:'Still to complete: '+L.join('; ')+'.' } : null; }).filter(Boolean);
+  const late = T.filter(t => mine(t).some(isLate)).map(t => ({ email:t.email, name:t.name, need:'Some files for '+label+' were downloaded, printed, or uploaded late.' }));
+  const done = T.filter(t => mine(t).length && mine(t).every(fullyApproved)).map(t => ({ email:t.email, name:t.name, need:'All files for '+label+' are approved.' }));
+  return [
+    { id:'none', ico:'⬆', label:'Not yet uploaded', items:none, done:'Everyone has uploaded for '+label+'.',
+      group: () => mcGroup(`📚 A friendly reminder for our LPT and PPT, ${label}.${due?' Due: '+due+'.':''}\n\nNot yet uploaded in TALA:`, none, 'Please open TALA, then LPT and PPT Tracking, and upload your files today.'),
+      one: x => mcOne(x, `A friendly reminder: I have not yet received your LPT and PPT for ${label} in TALA.${due?' Due: '+due+'.':''}`, 'Please upload them in TALA, LPT and PPT Tracking, as soon as you can. Message me if you need help.') },
+    { id:'ret', ico:'↩', label:'Returned or wrong file', items:ret, done:'No returned files right now.',
+      group: () => mcGroup(`↩ Some LPT and PPT files for ${label} were returned. Please check my remarks in TALA, fix, and upload again:`, ret.map(x => ({ name:x.name, need:x.need.replace('Please fix and upload again: ','') })), 'Open TALA, then LPT and PPT Tracking, and tap the returned file to see my remarks.'),
+      one: x => mcOne(x, `I returned some of your files for ${label}. My remarks are in TALA.`, 'Please open TALA, LPT and PPT Tracking, read my remarks, then upload the corrected file. Thank you for your hard work!') },
+    { id:'inc', ico:'🧩', label:'Incomplete', items:inc, done:'No incomplete files right now.',
+      group: () => mcGroup(`🧩 Some LPT and PPT for ${label} are not yet complete:`, inc.map(x => ({ name:x.name, need:x.need.replace('Still to complete: ','') })), 'Please complete them in TALA today.'),
+      one: x => mcOne(x, `Some of your files for ${label} are not yet complete.`, 'Please complete them in TALA, LPT and PPT Tracking.') },
+    { id:'late', ico:'⏰', label:'Late items', items:late, done:'No late items. Great job, everyone!',
+      group: () => mcGroup(`⏰ A gentle reminder on timeliness for ${label}. TALA recorded late download, printing, or upload for:`, late, 'Let us download, print, and upload on or before the due time. Thank you for your understanding.'),
+      one: x => mcOne(x, `TALA recorded a late download, printing, or upload in your files for ${label}.`, 'Please try to submit on or before the due time next week. Message me if something is making it hard, so I can help.') },
+    { id:'done', ico:'🎉', label:'Thank you (all approved)', items:done, done:'No teacher has all files approved yet.',
+      group: () => mcGroup(`🎉 Thank you and congratulations! All LPT and PPT for ${label} are approved for:`, done, 'Keep up the good work!'),
+      one: x => mcOne(x, `Thank you! All your LPT and PPT for ${label} are approved. 🎉`, 'Keep up the good work!') }
+  ];
+}
+
+/* ----- SBFP ----- */
+function mcSbfp(){
+  const today = todayPH(), from = [sbFirst(), addDays(today, -30)].sort().pop(), secs = MC.secs || [], per = {};
+  const pm = new Date().toLocaleTimeString('en-GB',{ hour:'2-digit', timeZone:'Asia/Manila' }) >= '12';
+  for (let d = from; d <= today; d = addDays(d, 1)){
+    if (d===today && !pm) continue;
+    const sc = sbSched(d); if (!sc) continue;
+    const r = sbRec(d), att = r.att || {}, need = [];
+    if (!r.status) need.push('status of feeding');
+    if (!r.status || r.status==='Implemented'){ if (!(r.photos||[]).length) need.push('photos of the attendance sheet'); if (!Object.keys(att).some(k => k.charAt(0)!=='_' && att[k])) need.push('parents’ attendance'); }
+    if (!need.length) continue;
+    const g = sbNorm(sc.g), adv = [...new Set(secs.filter(x => sbNorm(x.grade)===g && x.adviser).map(x => x.adviser))];
+    adv.forEach(e => { (per[e] = per[e] || []).push(dShort(d)+' ('+g+' parents): '+need.join(', ')); });
+  }
+  const items = Object.keys(per).map(e => ({ email:e, name:mcName(e), need:per[e].join('; ') }));
+  let next = null; for (let d = addDays(today, 1), i = 0; i < 14 && !next; d = addDays(d, 1), i++){ const sc = sbSched(d); if (sc) next = { d, sc }; }
+  const nextAdv = next ? [...new Set(secs.filter(x => sbNorm(x.grade)===sbNorm(next.sc.g) && x.adviser).map(x => mcName(x.adviser)))] : [];
+  return [
+    { id:'todo', ico:'📸', label:'SBFP records to complete', items, done:'All SBFP days are complete. Thank you!',
+      group: () => mcGroup('🍲 A friendly reminder for our SBFP records. Please complete these in TALA:', items, 'Open TALA, then SBFP Monitoring, tap the day, then add the status, the photos of the attendance sheet, and the parents’ attendance.'),
+      one: x => mcOne(x, 'A friendly reminder: some SBFP days of your grade level parents are not yet complete in TALA.', 'Please open TALA, SBFP Monitoring, and complete them today. Thank you for helping our learners!') },
+    { id:'next', ico:'📅', label:'Next feeding day', items: next ? nextAdv.map(n => ({ name:n, need:'' })) : [], always: !!next, done:'No feeding day in the next two weeks.',
+      group: () => next ? `Good day, Ma'am and Sir! 🌟\n\n🍲 SBFP reminder for ${fmtLong(next.d)}\n🥘 Menu: ${next.sc.n}\n👪 Assigned: ${sbNorm(next.sc.g)} parents${nextAdv.length?'\n👩‍🏫 Adviser: '+nextAdv.join(', '):''}\n\nPlease remind the assigned parents. After the feeding, add the status, the photos of the attendance sheet, and the parents’ attendance in TALA.\n\nThank you! 🙏\n${mcSign()}` : '',
+      one: x => mcOne(x, `SBFP reminder: your grade level parents are assigned on ${next ? fmtLong(next.d) : ''}. Menu: ${next ? next.sc.n : ''}.`, 'Please remind the parents, and complete the SBFP record in TALA after the feeding.') }
+  ];
+}
+
+/* ----- Attendance (learners and personnel) ----- */
+function mcAtt(){
+  const today = todayPH(), secs = (MC.secs||[]).filter(s => s.adviser), days = MC.attDays || [], start = [MC.firstDay||'', addDays(today, -7)].sort().pop(), per = {};
+  const am = new Date().toLocaleTimeString('en-GB',{ hour:'2-digit', timeZone:'Asia/Manila' }) >= '10';
+  secs.forEach(s => { const miss = []; for (let d = start; d <= today; d = addDays(d, 1)){ if (dow(d)===0 || dow(d)===6 || (d===today && !am)) continue; if (!days.some(r => r.sec===s.key && r.date===d)) miss.push(dShort(d)); }
+    if (miss.length) (per[s.adviser] = per[s.adviser] || []).push((s.grade||'')+(s.section?' '+s.section:'')+': '+miss.join(', ')); });
+  const cls = Object.keys(per).map(e => ({ email:e, name:mcName(e), need:'Attendance not yet saved for '+per[e].join('; ') }));
+  let notIn = []; try{ if (typeof STF!=='undefined' && STF.data && dow(today)!==0 && dow(today)!==6) notIn = (STF.data.people||[]).filter(p => p.email!==USER.email).filter(p => { const o = stfDay(p.email, today); return o && o.label==='Not yet in'; }).map(p => ({ email:p.email, name:p.name, need:'No Time in yet today, '+dShort(today)+'.' })); }catch(e){}
+  return [
+    { id:'cls', ico:'📋', label:'Class attendance not saved', items:cls, done:'All classes saved their attendance. Thank you!',
+      group: () => mcGroup('📋 A friendly reminder: the daily attendance of these classes is not yet saved in TALA:', cls.map(x => ({ name:x.name, need:x.need.replace('Attendance not yet saved for ','') })), 'Please open TALA, then Attendance, and mark the AM and PM attendance. This keeps our SF2 complete.'),
+      one: x => mcOne(x, 'A friendly reminder: TALA shows that the daily attendance of your class is not yet saved.', 'Please open TALA, Attendance, and save it today so our SF2 stays complete.') },
+    { id:'timein', ico:'⏰', label:'No Time in yet today', items:notIn, done:'Everyone has tapped Time in today, or the day is not a school day.',
+      group: () => mcGroup('⏰ Reminder: please tap Time in on TALA with your photo. Not yet in today:', notIn, 'If you are on leave or official business, please file it in TALA so it is recorded.'),
+      one: x => mcOne(x, 'A friendly reminder: TALA has no Time in for you yet today.', 'Please tap Time in with your photo. If you are on leave or official business, please file it in TALA.') },
+    { id:'rules', ico:'📌', label:'Time in and out rules', action:"closeModal('stfModal');openFeature('att');setTimeout(()=>{ try{ stfGcMsg(); }catch(e){} }, 1800)", hint:'Opens the full reminder of the Time in and Time out rules and schedule for the group chat.' }
+  ];
+}
+
+/* ----- LAC and meetings ----- */
+function mcLac(){
+  const D = typeof LAC!=='undefined' ? LAC.data : null; if (!D) return [];
+  const today = todayPH(), ppl = lacPeople().filter(p => p.role!=='head'), per = [];
+  ppl.forEach(p => { const n = [];
+    D.sessions.filter(s => s.date <= today && lacInvited(s, p.email) && !lacRecs(s.id,'ATT').some(r => r.email===p.email)).slice(0,3).forEach(s => n.push('attendance of '+s.title));
+    D.sessions.filter(s => s.date <= today && lacRecs(s.id,'ATT').some(r => r.email===p.email) && !nbWritten(s.id, p.email, s.kind)).slice(0,3).forEach(s => n.push((s.kind==='MEET'?'Meeting':'LAC')+' Notebook of '+s.title));
+    D.hub.filter(h => h.status==='Approved' && hubAssignees(h).some(x => x.email===p.email) && (lacProg(h.id, p.email)||{}).status!=='Finished').slice(0,3).forEach(h => n.push('Learning Hub: '+h.title));
+    (D.notebooks||[]).filter(x => x.email===p.email && x.status==='Returned').slice(0,3).forEach(x => n.push('returned notebook entry: '+(x.title||'entry')));
+    if (n.length) per.push({ email:p.email, name:p.name, need:n.join('; ') }); });
+  const held = D.sessions.filter(s => s.date <= today).sort((a,b) => b.date.localeCompare(a.date))[0];
+  const next = D.sessions.filter(s => s.date >= today).sort((a,b) => a.date.localeCompare(b.date))[0];
+  const hub = D.hub.filter(h => h.status==='Approved').sort((a,b) => String(b.updated||b.on||'').localeCompare(String(a.updated||a.on||'')))[0];
+  const k = [{ id:'pend', ico:'⏳', label:'Things to finish', items:per, done:'Everyone is up to date. Thank you!',
+      group: () => mcGroup('📚 A friendly reminder from LAC and Teacher Development. Still to finish in TALA:', per, 'Please open TALA, then LAC and Teacher Development, to finish these.'),
+      one: x => mcOne(x, 'A friendly reminder from LAC and Teacher Development. TALA shows these are still to finish:', 'Please open TALA to finish them. Message me if you need help.') }];
+  if (held){ const rows = lacWhoRows(held.id).filter(r => r.p.role!=='head' && (!r.att || !r.nb)).map(r => ({ email:r.p.email, name:r.p.name, need:[!r.att?'attendance not signed':'', r.att && !r.nb ? 'notebook still empty' : ''].filter(Boolean).join(', ') }));
+    k.push({ id:'held', ico:'✍', label:'Follow up: '+held.title, items:rows, done:'Everyone finished the follow up for this session.',
+      group: () => { try{ return lacMsgText('follow', held.id); }catch(e){ return mcGroup('A friendly follow up for '+held.title+':', rows, 'Please open TALA to finish these.'); } },
+      one: x => mcOne(x, `A friendly follow up for our ${lacKind(held)}: ${held.title} (${fmtLong(held.date)}).`, 'Please open TALA, LAC and Teacher Development, then the session, to finish it today.') }); }
+  if (next) k.push({ id:'next', ico:'📢', label:'Announce: '+next.title, items:null, always:true, group: () => { try{ return lacMsgText('sess', next.id); }catch(e){ return ''; } } });
+  if (hub) k.push({ id:'hub', ico:'▶', label:'Learning Hub: '+hub.title, items:null, always:true, group: () => { try{ return lacMsgText('hub', hub.id); }catch(e){ return ''; } } });
+  return k;
+}
+
+/* ----- ARAL ----- */
+function mcAral(){
+  const D = typeof ARAL!=='undefined' ? ARAL.data : null; if (!D) return [];
+  const today = D.today || todayPH(), tutors = aralTutorList(), wk = dow(today)!==0 && dow(today)!==6;
+  const T = e => (aralRow('TIME', e, today)||{}).data || {};
+  const notIn = wk ? tutors.filter(e => !T(e).in).map(e => ({ email:e, name:aralPName(e), need:aralTutees(e).length+' tutees. No ARAL sign in yet today.' })) : [];
+  const open = tutors.filter(e => T(e).in && !T(e).out).map(e => ({ email:e, name:aralPName(e), need:'Signed in at '+time12(T(e).in)+'. Please sign out after the tutorial.' }));
+  const short = tutors.filter(e => T(e).out && aralUsed(T(e)) < ARAL_NEED).map(e => ({ email:e, name:aralPName(e), need:aralUsed(T(e))+' of 60 minutes today.' }));
+  const drafts = tutors.map(e => { const n = aralNotes({ tutor:e }).filter(x => !x.data.locked); return n.length ? { email:e, name:aralPName(e), need:n.length+' note'+(n.length>1?'s':'')+' still in draft. Please finish and lock.' } : null; }).filter(Boolean);
+  const noNote = tutors.map(e => { const A = aralRow('ATT', e, today); if (!A) return null; const miss = A.data.present.filter(id => !aralNotes({ tutor:e, learner:id, date:today }).length); return miss.length ? { email:e, name:aralPName(e), need:'No note yet today for '+miss.map(aralName).join(', ')+'.' } : null; }).filter(Boolean);
+  const misses = tutors.map(e => { const L = aralTutees(e).map(t => ({ t, a:aralLearnerAtt(t) })).filter(x => x.a.missed >= 3 || x.a.streak >= 2); return L.length ? { email:e, name:aralPName(e), need:'Follow up the parents of '+L.map(x => x.t.data.name+' ('+x.a.missed+' missed)').join(', ')+'.' } : null; }).filter(Boolean);
+  const done = tutors.filter(e => { const n = aralNotes({ tutor:e, date:today }); return T(e).out && aralUsed(T(e)) >= ARAL_NEED && n.length && n.every(x => x.data.locked); }).map(e => ({ email:e, name:aralPName(e), need:'' }));
+  return [
+    { id:'in', ico:'⏰', label:'No ARAL sign in today', items:notIn, done: wk ? 'All tutors signed in today.' : 'Today is not a school day.',
+      group: () => mcGroup('🌉 ARAL reminder for today, '+fmtLong(today)+'. Not yet signed in:', notIn, 'Please tick when the session is held (before or after the regular class), then tap Sign in with your photo in TALA, ARAL.'),
+      one: x => mcOne(x, 'A friendly ARAL reminder: TALA has no sign in for you yet today.', 'Before your tutorial, open TALA, ARAL, tick before or after the regular class, then tap Sign in with your photo. Remember the 1 hour a day.') },
+    { id:'open', ico:'🚪', label:'Not yet signed out', items:open, done:'Nobody is waiting to sign out.',
+      group: () => mcGroup('🌉 ARAL reminder: please tap Sign out after your tutorial.', open, 'Open TALA, ARAL, then tap Sign out with your photo.'),
+      one: x => mcOne(x, 'A friendly reminder: please tap Sign out in TALA after your ARAL tutorial.', 'Open TALA, ARAL, then tap Sign out with your photo.') },
+    { id:'short', ico:'⏱', label:'Short of 1 hour today', items:short, done:'Every tutor who signed out completed the 1 hour.',
+      group: () => mcGroup('⏱ ARAL needs 1 hour a day. Today these tutors were short:', short, 'Please plan for the full 1 hour in the next session.'),
+      one: x => mcOne(x, 'A gentle reminder: ARAL needs 1 hour a day. TALA recorded less time for you today.', 'Please plan for the full 1 hour next time. Message me if the schedule makes it hard, so we can adjust.') },
+    { id:'note', ico:'✍', label:'No notes yet today', items:noNote, done:'Every learner present has a note today.',
+      group: () => mcGroup('✍ ARAL notes: please write a note for each learner present today.', noNote, 'Open TALA, ARAL, Today, then tap each learner.'),
+      one: x => mcOne(x, 'A friendly reminder to write today’s ARAL notes.', 'Open TALA, ARAL, Today, then tap each learner to write the note, and lock it when done.') },
+    { id:'draft', ico:'🔒', label:'Notes still in draft', items:drafts, done:'All ARAL notes are locked. Thank you!',
+      group: () => mcGroup('🔒 ARAL notes still in draft. Please finish and tap Save and lock:', drafts.map(x => ({ name:x.name, need:x.need.replace(' Please finish and lock.','') })), 'Open TALA, ARAL, My tutees and notes. ✎ means draft.'),
+      one: x => mcOne(x, 'Some of your ARAL notes are still in draft.', 'Please open TALA, ARAL, My tutees and notes, finish them, then tap Save and lock.') },
+    { id:'miss', ico:'📞', label:'Learners missing ARAL', items:misses, done:'No learner has many misses right now.',
+      group: () => mcGroup('📞 Some ARAL learners are missing sessions. Please follow up their parents:', misses.map(x => ({ name:x.name, need:x.need.replace('Follow up the parents of ','') })), 'In TALA, ARAL, Today, tap Message the parents to copy a ready message.'),
+      one: x => mcOne(x, 'Some of your ARAL tutees are missing sessions.', 'Please message their parents. In TALA, ARAL, Today, tap Message the parents to copy a ready message.') },
+    { id:'thanks', ico:'🎉', label:'Thank you (done today)', items:done, done:'No tutor has finished everything yet today.',
+      group: () => mcGroup('🎉 Thank you, ARAL tutors! Done today with 1 hour and all notes locked:', done, 'Your effort helps every learner catch up. Keep it up!'),
+      one: x => mcOne(x, 'Thank you for today’s ARAL session! 1 hour completed and all notes locked. 🎉', 'Your effort helps every learner catch up.') }
+  ];
+}
 
 /* ----- New school year: clean slate (LPT and PPT files and records are kept) ----- */
 function openNewSY(){ $('menu').classList.remove('open'); $('nsErr').textContent=''; $('nsConfirm').value=''; openModal('nsModal'); }
