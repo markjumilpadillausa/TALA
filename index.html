@@ -1005,6 +1005,17 @@ textarea.nbt{-webkit-touch-callout:none}
 .aralchips .pm{background:#e3f4e8;color:#1d6b36}.aralchips .pd{background:#fff4d6;color:#8a5a00}.aralchips .pn{background:#fde6e6;color:#a12a2a}
 .aralview{display:grid;gap:10px;margin:10px 0}.aralview>div{background:var(--page);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.aralview small{display:block;font-weight:700;opacity:.7;margin-bottom:4px}.aralview p{margin:0;white-space:normal}
 .aralgram{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:6px 0 12px}.arallock{font-size:18px;margin-left:4px}
+.aralses{margin-top:10px}.aralsesc{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px}
+.aralsesb{display:flex;align-items:center;gap:10px;padding:12px;border:2px solid var(--line);border-radius:12px;background:var(--card);font:inherit;color:var(--ink);cursor:pointer;text-align:left}
+.aralsesb.on{border-color:var(--ok);background:var(--ok-soft)}.aralsesb:disabled{cursor:default;opacity:.85}.aralsesb:disabled:not(.on){opacity:.45}
+.aralbox{width:22px;height:22px;flex:none;border:2px solid var(--line);border-radius:6px;display:grid;place-items:center;font-weight:800;color:var(--ok);background:var(--card)}.aralsesb.on .aralbox{border-color:var(--ok)}
+.aralhour{display:flex;align-items:center;gap:10px;margin-top:10px;font-size:13.5px}.aralhbar{flex:1;height:10px;border-radius:999px;background:var(--line);overflow:hidden}.aralhbar i{display:block;height:100%;background:linear-gradient(90deg,#c76b12,#e9a23b);border-radius:999px}
+.aralhour.ok .aralhbar i{background:var(--ok)}.aralhour span{white-space:nowrap}
+.aralhelp{background:rgba(255,255,255,.95);color:#7a3e00;border:0;border-radius:999px;padding:7px 14px;font:inherit;font-weight:700;font-size:13px;cursor:pointer}
+.aralguide{text-align:center}.aralguide h3{margin:4px 0 8px}.aralguide p{font-size:15.5px;line-height:1.55;margin:0 auto 14px;max-width:440px}.aralgico{font-size:44px;margin:6px 0}
+.aralgdots{display:flex;gap:6px;justify-content:center;margin-bottom:8px}.aralgdots i{width:9px;height:9px;border-radius:50%;background:var(--line)}.aralgdots i.on{background:#c76b12;width:22px;border-radius:6px}.aralgdots i.done{background:#e9a23b}
+.aralpop{display:grid;gap:8px}
+@media (max-width:640px){ .aralsesc{grid-template-columns:1fr} .aralhour span{white-space:normal} }
 </style>
 </head>
 <body>
@@ -1712,8 +1723,8 @@ textarea.nbt{-webkit-touch-callout:none}
 
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
-const MIN_SERVER = '5.9'; // oldest Code.gs this page works with
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'5.9', date:'October 11, 2026' } };
+const MIN_SERVER = '6.0'; // oldest Code.gs this page works with
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'6.0', date:'October 11, 2026' } };
 function verLine(server){
   const old = server && (server.indexOf('older') > -1 || parseFloat(server) < parseFloat(MIN_SERVER));
   const s = server ? ' Server '+server+('.') : '';
@@ -2243,11 +2254,10 @@ async function openAral(){
   $('viewPir').style.display=''; CUR_FEATURE = 'aral'; drawSide(); window.scrollTo(0,0);
   if (!USER){ $('viewPir').innerHTML = '<div class="empty">Please sign in to open ARAL.</div>'; return; }
   if (!ARAL.date) ARAL.date = todayPH();
-  if (!ARAL.session) ARAL.session = new Date().toLocaleTimeString('en-GB',{ hour:'2-digit', timeZone:'Asia/Manila' }) >= '12' ? 'After class' : 'Before class';
   if (!ARAL.data) $('viewPir').innerHTML = `<div class="pirload"><div class="pirstar">★</div><b>Opening ARAL</b><div class="pirdots"><i></i><i></i><i></i></div></div>`;
   else aralDraw();
   try{ await aralLoad(); }catch(e){ return handleErr(e); }
-  if (CUR_FEATURE==='aral') aralDraw();
+  if (CUR_FEATURE==='aral'){ aralDraw(); aralMaybeGuide(); }
 }
 function aralTutees(email){ const D = ARAL.data; return (D.tutees||[]).filter(t => !email || t.tutor===email).sort((a,b) => String(a.data.name).localeCompare(String(b.data.name))); }
 function aralMyTutees(){ return aralTutees(USER.email); }
@@ -2281,38 +2291,12 @@ function aralDraw(){
   else stat = `<b>${(D.tutees||[]).filter(t => (D.mine||[]).indexOf(t.data.sec) > -1).length}</b><span>My learners in ARAL</span>`;
   if (!tabs.some(t => t[0]===ARAL.tab)) ARAL.tab = tabs[0][0];
   $('viewPir').innerHTML = `<div class="aralhero"><div><span class="lktag">ARAL PROGRAM · ${esc(who.toUpperCase())}</span><h2>Project TULAY</h2><p>A bridge for every learner to catch up. ARAL tutorials in reading and numeracy, with the tutors' daily log and accomplishment report.</p></div>
-      <div class="aralstat">${stat}</div></div>
+      <div style="display:flex;flex-direction:column;gap:8px;align-items:center"><div class="aralstat">${stat}</div><button class="aralhelp" onclick="aralGuide(0)">📘 How to use ARAL</button></div></div>
     <div class="tabs lactabs" style="margin-top:12px">${tabs.map(t => `<button class="${ARAL.tab===t[0]?'on':''}" onclick="ARAL.tab='${t[0]}';aralDraw()">${t[1]}</button>`).join('')}</div>
     <div id="aralBody" style="margin-top:14px"></div>`;
   ({ ov:aralOverview, today:aralToday, notes:aralNotesTab, class:aralClass, tag:aralTag, tutees:aralTuteesTab, rep:aralReports, none:aralNone })[ARAL.tab]();
 }
 function aralNone(){ $('aralBody').innerHTML = '<div class="empty">You are not an ARAL tutor, and none of your learners is in ARAL yet. The School Head tags the ARAL tutees and assigns their tutors.</div>'; }
-
-/* ----- Today: sign in before the tutorial, sign out after it ----- */
-function aralToday(){
-  const D = ARAL.data, me = USER.email, list = aralMyTutees(), today = D.today || todayPH(), date = ARAL.date;
-  const T = aralRow('TIME', me, today) || { data:{} }, A = aralRow('ATT', me, date), present = A ? A.data.present : [];
-  if (T.data.session) ARAL.session = T.data.session;
-  const ses = (date!==today && A && A.data.session) || ARAL.session; ARAL.curSes = ses;
-  const tile = (k, l, sub) => T.data[k] ? `<div class="stft on"><small>${l}</small><b>${esc(time12(T.data[k]))}</b><small>${sub}</small></div>` : `<button class="stft" onclick="aralClock('${k}')"><small>${l}</small><b>·</b><small>${sub}</small></button>`;
-  $('aralBody').innerHTML = `
-    <div class="aralbar">${T.data.in ? `<span class="atn ok">Tutorial today: ${esc(T.data.session.toLowerCase())}</span>` : `<div><small class="hint" style="display:block">When is your tutorial today?</small><div class="tabs">${['Before class','After class'].map(x => `<button class="${ses===x?'on':''}" onclick="ARAL.session='${x}';aralDraw()">${x}</button>`).join('')}</div></div>`}
-      <label class="aralday">Date <input type="date" value="${esc(date)}" max="${esc(today)}" onchange="ARAL.date=this.value||todayPH();aralDraw()"></label></div>
-    <div class="stfme"><div class="stfme-h"><div><small>My ARAL attendance today</small><b>${esc(dShort(today))}</b></div>${T.data.in&&T.data.out?`<span class="atn ok">${esc(aralHrs(aralMins(T.data)))}</span>`:''}</div>
-      <div class="stftiles" style="grid-template-columns:repeat(2,1fr)">${tile('in','Sign in','before the tutorial')}${tile('out','Sign out','after the tutorial')}</div></div>
-    ${list.length ? `<h3 class="stfgrp">Tick the tutees present <small>${esc(dShort(date))}</small></h3>
-      <div class="araltick">${list.map(t => `<label class="${present.indexOf(t.learner)>-1?'on':''}"><input type="checkbox" value="${esc(t.learner)}" ${present.indexOf(t.learner)>-1?'checked':''} onchange="this.parentElement.classList.toggle('on',this.checked)"><b>${esc(t.data.name)}</b><small>${esc(aralSecLabel(t))}</small></label>`).join('')}</div>
-      <div class="obs-actions"><button class="btn" onclick="aralAttSave()">Save who is present</button>${A?`<span class="hint">Saved: ${present.length} of ${list.length} present.</span>`:''}</div>
-      <h3 class="stfgrp">ARAL notes for ${esc(dShort(date))}</h3>
-      <div class="abtns">${list.filter(t => !A || present.indexOf(t.learner)>-1).map(t => { const n = aralNotes({ learner:t.learner, tutor:me, date })[0];
-        return `<button class="abtn ${n?'':'main'}" onclick="aralNoteOpen('${t.learner}','${n?n.id:''}')"><span class="abico">${n?(n.data.locked?'🔒':'✎'):'✍'}</span><b>${esc(t.data.name)}</b><small>${n?(n.data.locked?'Saved and locked: ':'Draft: ')+esc(aralFocusTxt(n.data.focus)):'Write what you taught'}</small></button>`; }).join('')}</div>
-      <div class="obs-actions"><button class="btn ghost" onclick="aralPrintDaily('${me}','${date}')">🖨 Print my Daily Log for ${esc(dShort(date))}</button></div>`
-    : `<div class="empty">You have no ARAL tutees yet. The School Head tags the ARAL tutees and assigns their tutors.</div>`}`;
-}
-async function aralClock(slot){ if (!confirm(slot==='in' ? 'Sign in now, before your ARAL tutorial ('+ARAL.session.toLowerCase()+')?' : 'Sign out now, after your ARAL tutorial?')) return;
-  try{ loading(true); ARAL.data = await api('aralTime', { session:ARAL.session, slot }); loading(false); aralDraw(); toast(slot==='in'?'Signed in. Have a good tutorial.':'Signed out. Thank you.'); }catch(e){ loading(false); handleErr(e); } }
-async function aralAttSave(){ const present = [...document.querySelectorAll('.araltick input:checked')].map(x => x.value);
-  try{ loading(true); ARAL.data = await api('aralAtt', { date:ARAL.date, session:ARAL.curSes||ARAL.session, present }); loading(false); aralDraw(); toast('Saved. '+present.length+' present.'); }catch(e){ loading(false); handleErr(e); } }
 
 /* ----- The ARAL note: save a draft, or save and lock when done ----- */
 function aralCanEdit(n){ return !n || n.tutor===USER.email || aralRole()==='head'; }
@@ -2333,7 +2317,7 @@ function aralNoteOpen(learner, id){
     <div class="field"><label for="anAct">What we did</label><textarea id="anAct" rows="3" maxlength="1500" spellcheck="true" lang="en" autocomplete="off" placeholder="Example: Read the word cards, then built words with letter tiles.">${esc(d.activity||'')}</textarea><div class="gfix" id="gx_anAct"></div></div>
     <div class="field"><label>Progress of the learner</label><div class="stfrad">${ARAL_PROG.map(x => `<label class="check" style="margin:0"><input type="radio" name="anProg" value="${x}" ${d.progress===x?'checked':''}>${x}</label>`).join('')}</div></div>
     <div class="field"><label for="anRem">Note for this learner</label><textarea id="anRem" rows="2" maxlength="800" spellcheck="true" lang="en" autocomplete="off" placeholder="What was different for this learner, or what to do next time">${esc(d.remarks||'')}</textarea><div class="gfix" id="gx_anRem"></div></div>
-    <div class="aralgram"><button type="button" class="btn ghost small" onclick="aralGrammar()">✓ Check spelling and grammar</button><span class="hint" id="anG">Misspelled words are underlined in red. Type your own notes: copy and paste are turned off.</span></div>
+    <div class="aralgram"><button type="button" class="btn ghost small" onclick="aralGrammar()">✓ Check spelling and grammar</button><span class="hint" id="anG">Misspelled words are underlined in red.</span></div>
     ${!id && others.length ? `<div class="field"><label>Same lesson for other tutees (optional)</label><div class="lacpick">${others.map(t => `<label class="check" style="margin:0"><input type="checkbox" class="anCopy" value="${esc(t.learner)}">${esc(t.data.name)}</label>`).join('')}</div>
       <small class="hint">Each learner gets their own note, saved as a draft. Open each note later to write what was different for that learner, then lock it.</small></div>` : ''}
     ${d.copied?'<p class="hint">ℹ This note was copied from the same lesson. Write what was different for this learner in the note above.</p>':''}
@@ -2431,21 +2415,156 @@ function aralClass(){
 function aralAllNotes(id){ const ns = aralNotes({ learner:id });
   stfModal(`<h3>ARAL notes</h3><p class="sub">${esc(aralName(id))}</p>${aralProgChips(id)}<ul class="aralnl">${ns.map(n => `<li>${n.data.locked?'🔒':'✎'} <button class="linkbtn" onclick="aralNoteView('${n.id}')">${esc(dShort(n.date))}</button> ${esc(aralFocusTxt(n.data.focus))}${n.data.progress?' · <i>'+esc(n.data.progress)+'</i>':''}</li>`).join('')}</ul><div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Close</button></div>`, 'wide'); }
 
+/* ----- Today: tick when the session was held, sign in before it, sign out after it ----- */
+const ARAL_NEED = 60; // minutes of ARAL a day
+function aralNowHM(){ return new Date().toLocaleTimeString('en-GB',{ hour:'2-digit', minute:'2-digit', hour12:false, timeZone:'Asia/Manila' }); }
+function aralUsed(t, live){ if (!t || !t.in) return 0; if (t.out) return aralMins(t); return live ? aralMins({ in:t.in, out:aralNowHM() }) : 0; }
+function aralMeter(t, live){ const m = aralUsed(t, live), pct = Math.min(100, Math.round(m / ARAL_NEED * 100)), ok = m >= ARAL_NEED, run = t && t.in && !t.out;
+  return `<div class="aralhour ${ok?'ok':''}"><div class="aralhbar"><i style="width:${pct}%"></i></div><span>${ok ? '✔ ' : ''}<b>${m}</b> of ${ARAL_NEED} minutes${run?' so far':''}${ok ? ', the 1 hour is complete' : (t && t.out ? ', '+(ARAL_NEED-m)+' minutes short' : '')}</span></div>`; }
+function aralUsedTxt(t){ const m = aralUsed(t, false); if (!t || !t.in) return '<span class="hint">·</span>'; if (!t.out) return '<span class="atn wait">Still in session</span>';
+  return m >= ARAL_NEED ? `<span class="atn ok">✔ ${esc(aralHrs(m))}</span>` : `<span class="atn bad" title="Short of the 1 hour a day">${esc(aralHrs(m)||'0 min')} of 1 h</span>`; }
+function aralToday(){
+  const D = ARAL.data, me = USER.email, list = aralMyTutees(), today = D.today || todayPH(), date = ARAL.date;
+  const T = aralRow('TIME', me, today) || { data:{} }, A = aralRow('ATT', me, date), present = A ? A.data.present : [];
+  if (T.data.session) ARAL.session = T.data.session;
+  const ses = (date!==today && A && A.data.session) || ARAL.session; ARAL.curSes = ses;
+  const locked = !!T.data.in;
+  const choice = (x, l) => `<button type="button" class="aralsesb ${ARAL.session===x?'on':''}" ${locked?'disabled':''} onclick="ARAL.session='${x}';aralDraw()"><span class="aralbox">${ARAL.session===x?'✔':''}</span><b>${l}</b></button>`;
+  const tile = (k, l, sub) => T.data[k] ? `<div class="stft on"><small>${l}</small><b>${esc(time12(T.data[k]))}</b><small>${sub}</small></div>` : `<button class="stft" onclick="aralClock('${k}')"><small>${l}</small><b>·</b><small>${sub}</small></button>`;
+  $('aralBody').innerHTML = `
+    <div class="stfme"><div class="stfme-h"><div><small>My ARAL attendance today</small><b>${esc(dShort(today))}</b></div></div>
+      <div class="aralses"><b>When is the ARAL session conducted today?</b> <small class="hint">${locked ? 'Ticked when you signed in.' : 'Tick one, then tap Sign in.'}</small>
+        <div class="aralsesc">${choice('Before class','Before the regular class')}${choice('After class','After the regular class')}</div></div>
+      <div class="stftiles" style="grid-template-columns:repeat(2,1fr)">${tile('in','Sign in','before the tutorial')}${tile('out','Sign out','after the tutorial')}</div>
+      ${aralMeter(T.data, true)}
+      <p class="hint" style="margin:6px 0 0">Each tutor needs 1 hour of ARAL a day. Forgot to sign in on a past day? Ask the School Head to add it.</p></div>
+    ${list.length ? `<div class="aralbar" style="margin-top:16px"><h3 class="stfgrp" style="margin:0">Learners present and notes</h3>
+        <label class="aralday">Session date <input type="date" value="${esc(date)}" max="${esc(today)}" onchange="ARAL.date=this.value||todayPH();aralDraw()"></label></div>
+      ${date!==today?`<p class="hint">You are ticking learners and writing notes for a past session, ${esc(fmtLong(date))}.</p>`:''}
+      <div class="araltick">${list.map(t => `<label class="${present.indexOf(t.learner)>-1?'on':''}"><input type="checkbox" value="${esc(t.learner)}" ${present.indexOf(t.learner)>-1?'checked':''} onchange="this.parentElement.classList.toggle('on',this.checked)"><b>${esc(t.data.name)}</b><small>${esc(aralSecLabel(t))}</small></label>`).join('')}</div>
+      <div class="obs-actions"><button class="btn" onclick="aralAttSave()">Save who is present</button>${A?`<span class="hint">Saved: ${present.length} of ${list.length} present.</span>`:''}</div>
+      <h3 class="stfgrp">ARAL notes for ${esc(dShort(date))}</h3>
+      <div class="abtns">${list.filter(t => !A || present.indexOf(t.learner)>-1).map(t => { const n = aralNotes({ learner:t.learner, tutor:me, date })[0];
+        return `<button class="abtn ${n?'':'main'}" onclick="aralNoteOpen('${t.learner}','${n?n.id:''}')"><span class="abico">${n?(n.data.locked?'🔒':'✎'):'✍'}</span><b>${esc(t.data.name)}</b><small>${n?(n.data.locked?'Saved and locked: ':'Draft: ')+esc(aralFocusTxt(n.data.focus)):'Write what you taught'}</small></button>`; }).join('')}</div>
+      <div class="obs-actions"><button class="btn ghost" onclick="aralPrintDaily('${me}','${date}')">🖨 Print my Daily Log for ${esc(dShort(date))}</button></div>`
+    : `<div class="empty">You have no ARAL tutees yet. The School Head tags the ARAL tutees and assigns their tutors.</div>`}`;
+  clearTimeout(ARAL.tick); if (T.data.in && !T.data.out) ARAL.tick = setTimeout(() => { if (CUR_FEATURE==='aral' && ARAL.tab==='today' && !document.querySelector('#stfModal.open')) aralDraw(); }, 60000);
+}
+async function aralClock(slot){
+  const T = aralRow('TIME', USER.email, ARAL.data.today || todayPH()) || { data:{} };
+  if (slot==='in' && !ARAL.session) return toast('Tick first when the ARAL session is conducted: before or after the regular class.');
+  if (slot==='in' && !confirm('Sign in now? ARAL session '+(ARAL.session==='Before class'?'before':'after')+' the regular class.')) return;
+  if (slot==='out'){ const m = aralUsed(T.data, true);
+    if (!confirm(m < ARAL_NEED ? 'The ARAL session needs 1 hour a day. You have '+m+' minutes so far. Sign out now anyway?' : 'Sign out now, after your ARAL tutorial?')) return; }
+  try{ loading(true); ARAL.data = await api('aralTime', { session:ARAL.session, slot }); loading(false); aralDraw(); toast(slot==='in'?'Signed in. Have a good tutorial.':'Signed out. Thank you.'); }catch(e){ loading(false); handleErr(e); } }
+async function aralAttSave(){ const present = [...document.querySelectorAll('.araltick input:checked')].map(x => x.value);
+  try{ loading(true); ARAL.data = await api('aralAtt', { date:ARAL.date, session:ARAL.curSes||ARAL.session||'After class', present }); loading(false); aralDraw(); toast('Saved. '+present.length+' present.'); }catch(e){ loading(false); handleErr(e); } }
+
 /* ----- School Head and AO ----- */
+function aralTutorList(){ const D = ARAL.data; return [...new Set((D.tutees||[]).map(t => t.tutor))].filter(Boolean); }
+function aralPName(e){ const D = ARAL.data; return ((D.people||[]).find(p => p.email===e)||{}).name || ((D.tutees||[]).find(t => t.tutor===e)||{}).tutorName || e; }
 function aralOverview(){
-  const D = ARAL.data, head = aralRole()==='head', today = D.today || todayPH(), tutors = [...new Set((D.tutees||[]).map(t => t.tutor))].filter(Boolean);
-  const name = e => ((D.people||[]).find(p => p.email===e)||{}).name || ((D.tutees||[]).find(t => t.tutor===e)||{}).tutorName || e;
-  const ks = k => (D.tutees||[]).filter(t => t.data.ks===k).length, nt = (D.rows||[]).filter(r => r.kind==='NOTE' && r.date===today), done = tutors.filter(e => { const x = nt.filter(n => n.tutor===e); return x.length && x.every(n => n.data.locked); }).length;
-  $('aralBody').innerHTML = `<div class="ostats"><div class="ostat static"><span class="oico">🧒</span><b>${(D.tutees||[]).length}</b><span>ARAL tutees (KS1 ${ks(1)}, KS2 ${ks(2)})</span></div>
-      <div class="ostat static"><span class="oico">👩‍🏫</span><b>${tutors.length}</b><span>ARAL tutors</span></div>
-      <div class="ostat static"><span class="oico">✍</span><b>${nt.length}</b><span>ARAL notes today</span></div>
-      <div class="ostat static"><span class="oico">🔒</span><b>${done}</b><span>Tutors done today (all notes locked)</span></div></div>
-    ${head?`<div class="bar"><button class="btn" onclick="ARAL.tab='tag';aralDraw()">Tag tutees and tutors</button></div>`:''}
-    <h3 class="stfgrp">Tutors today, ${esc(dShort(today))}</h3>
-    <div class="table-wrap"><table class="stft-table"><thead><tr><th>Tutor</th><th>Tutees</th><th>Tutorial</th><th>Sign in</th><th>Sign out</th><th>Present</th><th>Notes today</th><th></th></tr></thead><tbody>
-    ${tutors.map(e => { const T = aralRow('TIME', e, today), A = aralRow('ATT', e, today), ns = nt.filter(n => n.tutor===e);
-      const c = v => v ? esc(time12(v)) : '<span class="hint">·</span>';
-      return `<tr><td><b>${esc(name(e))}</b></td><td>${aralTutees(e).length}</td><td>${T&&T.data.session?esc(T.data.session):'<span class="hint">·</span>'}</td><td>${c(T&&T.data.in)}</td><td>${c(T&&T.data.out)}</td><td>${A?A.data.present.length:'<span class="hint">·</span>'}</td><td>${aralLockTxt(ns)}</td><td><button class="linkbtn" onclick="ARAL.who='${e}';ARAL.tab='rep';aralDraw()">Reports</button></td></tr>`; }).join('') || `<tr><td colspan="8" class="hint">No tutors yet.${head?' Open Tag tutees and tutors to start.':''}</td></tr>`}</tbody></table></div>`;
+  const D = ARAL.data, head = aralRole()==='head', today = D.today || todayPH(); if (!ARAL.ov) ARAL.ov = today; const day = ARAL.ov, tutors = aralTutorList();
+  const ks = k => (D.tutees||[]).filter(t => t.data.ks===k).length, nt = (D.rows||[]).filter(r => r.kind==='NOTE' && r.date===day);
+  const met = tutors.filter(e => aralUsed((aralRow('TIME', e, day)||{}).data, false) >= ARAL_NEED).length;
+  const done = tutors.filter(e => { const x = nt.filter(n => n.tutor===e); return x.length && x.every(n => n.data.locked); }).length;
+  const card = (ico, n, l, fn) => `<button class="ostat" onclick="${fn}" title="Tap to open"><span class="oico">${ico}</span><b>${n}</b><span>${l} ›</span></button>`;
+  $('aralBody').innerHTML = `<div class="aralbar"><label class="aralday">Day <input type="date" value="${esc(day)}" max="${esc(today)}" onchange="ARAL.ov=this.value||todayPH();aralDraw()"></label>
+      ${head?`<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn ghost" onclick="aralManualOpen('','${day}')">＋ Add attendance for a tutor</button><button class="btn" onclick="ARAL.tab='tag';aralDraw()">Tag tutees and tutors</button></div>`:''}</div>
+    <div class="ostats">${card('🧒', (D.tutees||[]).length, 'ARAL tutees (KS1 '+ks(1)+', KS2 '+ks(2)+')', "ARAL.tab='tutees';aralDraw()")}
+      ${card('👩‍🏫', tutors.length, 'ARAL tutors', "aralTutorsPop()")}
+      ${card('⏱', met+' of '+tutors.length, 'Tutors with 1 hour '+(day===today?'today':'on '+dShort(day)), "aralHoursPop()")}
+      ${card('✍', nt.length, 'ARAL notes '+(day===today?'today':'on '+dShort(day)), "aralDayNotes()")}
+      ${card('🔒', done, 'Tutors done (all notes locked)', "aralTutorsPop()")}</div>
+    <h3 class="stfgrp">Tutors on ${esc(fmtLong(day))} <small>Tap a name to open the details.</small></h3>
+    <div class="table-wrap"><table class="stft-table"><thead><tr><th>Tutor</th><th>Tutees</th><th>Session</th><th>Sign in</th><th>Sign out</th><th>Time used</th><th>Present</th><th>Notes</th><th></th></tr></thead><tbody>
+    ${tutors.map(e => { const T = aralRow('TIME', e, day), A = aralRow('ATT', e, day), ns = nt.filter(n => n.tutor===e), c = v => v ? esc(time12(v)) : '<span class="hint">·</span>';
+      return `<tr><td><button class="linkbtn" onclick="aralTutorDay('${e}')"><b>${esc(aralPName(e))}</b></button>${T&&T.data.addedBy?'<br><small class="hint">Added by the School Head</small>':''}</td><td>${aralTutees(e).length}</td><td>${T&&T.data.session?esc(T.data.session==='Before class'?'Before the regular class':'After the regular class'):'<span class="hint">·</span>'}</td><td>${c(T&&T.data.in)}</td><td>${c(T&&T.data.out)}</td><td>${aralUsedTxt(T&&T.data)}</td><td>${A?A.data.present.length:'<span class="hint">·</span>'}</td><td>${ns.length?`<button class="linkbtn" onclick="aralDayNotes('${e}')">${aralLockTxt(ns)}</button>`:aralLockTxt(ns)}</td>
+        <td style="white-space:nowrap">${head?`<button class="linkbtn" onclick="aralManualOpen('${e}','${day}')">${T?'Edit':'Add'} attendance</button> · `:''}<button class="linkbtn" onclick="ARAL.who='${e}';ARAL.tab='rep';aralDraw()">Reports</button></td></tr>`; }).join('') || `<tr><td colspan="9" class="hint">No tutors yet.${head?' Open Tag tutees and tutors to start.':''}</td></tr>`}</tbody></table></div>`;
+}
+function aralTutorsPop(){ const day = ARAL.ov || todayPH(), nt = (ARAL.data.rows||[]).filter(r => r.kind==='NOTE' && r.date===day);
+  stfModal(`<h3>ARAL tutors</h3><p class="sub">${esc(fmtLong(day))}. Tap a tutor to open the details.</p>
+    <div class="aralpop">${aralTutorList().map(e => { const T = aralRow('TIME', e, day); return `<button class="choice" onclick="aralTutorDay('${e}')"><b>${esc(aralPName(e))}</b><small>${aralTutees(e).length} tutees · Time used: ${T&&T.data.out?esc(aralHrs(aralUsed(T.data))||'0 min'):'not yet'} · ${aralLockTxt(nt.filter(n => n.tutor===e))}</small></button>`; }).join('') || '<p class="hint">No tutors yet.</p>'}</div>
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Close</button></div>`); }
+function aralHoursPop(){ const day = ARAL.ov || todayPH();
+  stfModal(`<h3>Time used for ARAL</h3><p class="sub">${esc(fmtLong(day))}. Each tutor needs 1 hour a day.</p>
+    <div class="table-wrap"><table class="stft-table"><thead><tr><th>Tutor</th><th>Sign in</th><th>Sign out</th><th>Time used</th></tr></thead><tbody>${aralTutorList().map(e => { const T = aralRow('TIME', e, day);
+      return `<tr><td><button class="linkbtn" onclick="aralTutorDay('${e}')">${esc(aralPName(e))}</button></td><td>${T&&T.data.in?esc(time12(T.data.in)):'·'}</td><td>${T&&T.data.out?esc(time12(T.data.out)):'·'}</td><td>${aralUsedTxt(T&&T.data)}</td></tr>`; }).join('')}</tbody></table></div>
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Close</button></div>`, 'wide'); }
+function aralDayNotes(e){ const day = ARAL.ov || todayPH(), ns = (ARAL.data.rows||[]).filter(r => r.kind==='NOTE' && r.date===day && (!e || r.tutor===e));
+  stfModal(`<h3>ARAL notes</h3><p class="sub">${esc(fmtLong(day))}${e?', '+esc(aralPName(e)):''}. Tap a note to read it.</p>
+    <ul class="aralnl">${ns.map(n => `<li>${n.data.locked?'🔒':'✎'} <button class="linkbtn" onclick="aralNoteView('${n.id}')">${esc(aralName(n.learner))}</button> ${esc(aralFocusTxt(n.data.focus))}${n.data.progress?' · <i>'+esc(n.data.progress)+'</i>':''}${e?'':' · '+esc(n.tutorName||'')}</li>`).join('') || '<li class="hint">No notes on this day.</li>'}</ul>
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Close</button></div>`, 'wide'); }
+function aralTutorDay(e){ const D = ARAL.data, day = ARAL.ov || D.today || todayPH(), T = aralRow('TIME', e, day), A = aralRow('ATT', e, day), ns = aralNotes({ tutor:e, date:day }), head = aralRole()==='head';
+  stfModal(`<h3>${esc(aralPName(e))}</h3><p class="sub">ARAL on ${esc(fmtLong(day))}${T&&T.data.session?' · '+(T.data.session==='Before class'?'before':'after')+' the regular class':''}</p>
+    <div class="stftiles" style="grid-template-columns:repeat(2,1fr)"><div class="stft ${T&&T.data.in?'on':''}"><small>Sign in</small><b>${T&&T.data.in?esc(time12(T.data.in)):'·'}</b></div><div class="stft ${T&&T.data.out?'on':''}"><small>Sign out</small><b>${T&&T.data.out?esc(time12(T.data.out)):'·'}</b></div></div>
+    ${aralMeter(T?T.data:{}, day===(D.today||todayPH()))}
+    <h4 class="stfgrp">Learners present (${A?A.data.present.length:0} of ${aralTutees(e).length})</h4><p>${A&&A.data.present.length?A.data.present.map(id => esc(aralName(id))).join(', '):'<span class="hint">Not recorded.</span>'}</p>
+    <h4 class="stfgrp">Notes</h4><ul class="aralnl">${ns.map(n => `<li>${n.data.locked?'🔒':'✎'} <button class="linkbtn" onclick="aralNoteView('${n.id}')">${esc(aralName(n.learner))}</button> ${esc(aralFocusTxt(n.data.focus))}${n.data.progress?' · <i>'+esc(n.data.progress)+'</i>':''}</li>`).join('') || '<li class="hint">No notes.</li>'}</ul>
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Close</button>${head?`<button class="btn ghost" onclick="aralManualOpen('${e}','${day}')">${T?'Edit':'Add'} attendance</button>`:''}<button class="btn" onclick="closeModal('stfModal');aralPrintDaily('${e}','${day}')">🖨 Daily report</button></div>`, 'wide'); }
+// The School Head adds or corrects attendance for a past day
+function aralManualOpen(e, day){
+  const D = ARAL.data, tutors = aralTutorList(); e = e || tutors[0] || ''; day = day || ARAL.ov || todayPH();
+  const T = (aralRow('TIME', e, day)||{}).data || {}, A = aralRow('ATT', e, day), pres = A ? A.data.present : [];
+  ARAL.man = { session: T.session || '' };
+  stfModal(`<h3>${T.in?'Edit':'Add'} ARAL attendance</h3><p class="sub">For a tutor who forgot to sign in, or for a past day.</p>
+    <div class="stfg2"><div class="field"><label for="amT">ARAL tutor</label><select id="amT" onchange="aralManualOpen(this.value, $('amD').value)">${tutors.map(x => `<option value="${esc(x)}" ${x===e?'selected':''}>${esc(aralPName(x))}</option>`).join('')}</select></div>
+      <div class="field"><label for="amD">Date</label><input type="date" id="amD" value="${esc(day)}" max="${esc(D.today||todayPH())}" onchange="aralManualOpen($('amT').value, this.value)"></div></div>
+    <div class="field"><label>When was the ARAL session conducted?</label><div class="aralsesc">${[['Before class','Before the regular class'],['After class','After the regular class']].map(x => `<button type="button" class="aralsesb ${ARAL.man.session===x[0]?'on':''}" onclick="ARAL.man.session='${x[0]}';document.querySelectorAll('#stfModal .aralsesb').forEach(b=>{b.classList.remove('on');b.querySelector('.aralbox').textContent=''});this.classList.add('on');this.querySelector('.aralbox').textContent='✔'"><span class="aralbox">${ARAL.man.session===x[0]?'✔':''}</span><b>${x[1]}</b></button>`).join('')}</div></div>
+    <div class="stfg2"><div class="field"><label for="amIn">Sign in time</label><input type="time" id="amIn" value="${esc(T.in||'')}"></div><div class="field"><label for="amOut">Sign out time</label><input type="time" id="amOut" value="${esc(T.out||'')}"></div></div>
+    <div class="field"><label>Learners present</label><div class="lacpick">${aralTutees(e).map(t => `<label class="check" style="margin:0"><input type="checkbox" class="amP" value="${esc(t.learner)}" ${pres.indexOf(t.learner)>-1?'checked':''}>${esc(t.data.name)}</label>`).join('') || '<span class="hint">This tutor has no tutees.</span>'}</div></div>
+    <p class="err" id="amErr"></p><div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Cancel</button><button class="btn" onclick="aralManualSave()">Save</button></div>`, 'wide');
+}
+async function aralManualSave(){
+  const b = { tutor:$('amT').value, date:$('amD').value, session:ARAL.man.session, in:$('amIn').value, out:$('amOut').value, present:[...document.querySelectorAll('.amP:checked')].map(x => x.value) };
+  if (!b.session) return $('amErr').textContent = 'Tick when the ARAL session was conducted.';
+  if (!b.in) return $('amErr').textContent = 'Enter the sign in time.';
+  try{ loading(true); ARAL.data = await api('aralManual', b); loading(false); closeModal('stfModal'); ARAL.ov = b.date; aralDraw(); toast('ARAL attendance saved.'); }catch(e){ loading(false); handleErr(e,'amErr'); }
+}
+
+/* ----- Guide: a step by step help for each user ----- */
+const ARAL_GUIDE = {
+  teacher: [
+    ['🌉','Welcome to ARAL, Project TULAY','ARAL is the catch up program for learners who need more help in reading and numeracy. This guide shows you what to do every day. It takes 2 minutes.'],
+    ['✔','Step 1. Tick when the session is held','Open the Today tab. Before you start, tick <b>Before the regular class</b> or <b>After the regular class</b>. This is when your ARAL session is conducted today.'],
+    ['⏰','Step 2. Sign in, then sign out','Tap <b>Sign in</b> when the tutorial starts. Tap <b>Sign out</b> when it ends. You only tap twice a day. The time bar shows your minutes. Each tutor needs <b>1 hour a day</b>.'],
+    ['🧒','Step 3. Tick the learners present','Tick the tutees who came, then tap <b>Save who is present</b>. To record a past session, change the <b>Session date</b> first.'],
+    ['✍','Step 4. Write a note for each learner','Tap a learner\'s name. Choose what was taught: letters, word patterns, sight words, and more. Write what you did, choose the progress, and add a note. Tap <b>Check spelling and grammar</b> to fix your writing.'],
+    ['🔒','Step 5. Save and lock when done','<b>Save draft</b> keeps the note so you can finish it later. <b>Save and lock</b> tells the School Head the note is done. A 🔒 shows on the note. You can still tap <b>Unlock to edit</b> if you need to change it.'],
+    ['🏷','Tag learners','In <b>Tag learners</b>, tick a learner from any class to make them your ARAL tutee. A learner who already has a tutor can only be moved by the School Head.'],
+    ['🖨','Print your reports','In <b>My reports</b>, print the Individual Daily Log and Accomplishment Report for one day, or the Summary for a week, a month, or the term. Sign it as Prepared by, then give it to the School Head to sign as Noted by.'],
+    ['❓','Need help again?','Tap <b>How to use ARAL</b> at the top anytime to open this guide again.'] ],
+  adviser: [
+    ['🌉','Welcome to ARAL, Project TULAY','ARAL is the catch up program for learners who need more help in reading and numeracy. Some of your learners may be ARAL tutees.'],
+    ['👀','My learners in ARAL','You can see which of your learners are in ARAL and who their tutor is. This page is view only.'],
+    ['📈','Follow their progress','Each learner shows how many times the tutor marked them <b>Mastered</b>, <b>Developing</b>, or <b>Needs more practice</b>.'],
+    ['📖','Read the notes','Tap a date to read the tutor\'s note. 🔒 means the tutor is done with that note. ✎ means it is still a draft.'],
+    ['❓','Need help again?','Tap <b>How to use ARAL</b> at the top anytime to open this guide again.'] ],
+  head: [
+    ['🌉','Welcome to your ARAL dashboard','Here you tag the ARAL tutees, assign the tutors, check the daily attendance and notes, and sign the reports.'],
+    ['🏷','Step 1. Tag tutees and assign tutors','Open <b>Tag tutees and tutors</b>. Choose a class, tick a learner, then choose the tutor. For Key Stage 1 the adviser is suggested first. Tap <b>Change</b> to move a learner to another tutor. The tutor gets a notice.'],
+    ['📊','Step 2. Check the Overview','Each card opens its details when you tap it: tutees, tutors, tutors with 1 hour, the notes of the day, and tutors who are done. Change the <b>Day</b> to check a past day.'],
+    ['⏱','Step 3. The 1 hour a day','The <b>Time used</b> column shows the minutes of each tutor. ✔ means the 1 hour is complete. Red means the tutor is short.'],
+    ['＋','Step 4. Add a missed attendance','If a tutor forgot to sign in, tap <b>Add attendance</b> on that tutor\'s row, or <b>Add attendance for a tutor</b> at the top. Choose the day, tick before or after the regular class, enter the times, and tick the learners present.'],
+    ['🔒','Step 5. Read the notes','Tap a tutor\'s name to see the learners present and every note. 🔒 means the note is done. You can unlock a note if it needs to be fixed.'],
+    ['🖨','Step 6. Print and sign','In <b>Reports</b>, choose the tutor and print the Daily Log and Accomplishment Report or the Summary. The tutor signs as Prepared by, and you sign as Noted by.'],
+    ['❓','Need help again?','Tap <b>How to use ARAL</b> at the top anytime to open this guide again.'] ],
+  admin: [
+    ['🌉','Welcome to ARAL, Project TULAY','You can view the ARAL tutees, the tutors\' attendance, the time used, and the reports. This page is view only.'],
+    ['📊','Overview','Tap a card to open its details. Change the <b>Day</b> to see a past day. The <b>Time used</b> column shows if each tutor completed the 1 hour.'],
+    ['🖨','Reports','Open <b>Reports</b> to see the time used per day and to print the Daily Log and the Summary of any tutor.'],
+    ['❓','Need help again?','Tap <b>How to use ARAL</b> at the top anytime to open this guide again.'] ]
+};
+function aralGuideKind(){ const r = aralRole(); return r==='head' ? 'head' : r==='admin' ? 'admin' : aralIsTutor() ? 'teacher' : (ARAL.data.mine||[]).length ? 'adviser' : 'teacher'; }
+function aralGuideKey(){ return 'tala_aral_guide_'+(USER?USER.email:'')+'_'+aralGuideKind(); }
+function aralMaybeGuide(){ try{ if (localStorage.getItem(aralGuideKey())==='1' || sessionStorage.getItem(aralGuideKey())==='1') return; sessionStorage.setItem(aralGuideKey(),'1'); }catch(e){} aralGuideWhenFree(0); }
+function aralGuideWhenFree(n){ setTimeout(() => { if (CUR_FEATURE!=='aral') return; if (($('tour') && !$('tour').hidden) || $('stfModal').classList.contains('open')){ if (n < 30) aralGuideWhenFree(n+1); return; } aralGuide(0); }, n ? 2000 : 600); }
+function aralGuide(i){
+  const g = ARAL_GUIDE[aralGuideKind()], s = g[i], last = i===g.length-1;
+  stfModal(`<div class="aralguide"><div class="aralgdots">${g.map((x,j) => `<i class="${j===i?'on':j<i?'done':''}"></i>`).join('')}</div>
+    <div class="aralgico">${s[0]}</div><small class="hint">${i+1} of ${g.length}</small><h3>${s[1]}</h3><p>${s[2]}</p>
+    <label class="check" style="justify-content:center"><input type="checkbox" id="agHide" ${(()=>{ try{ return localStorage.getItem(aralGuideKey())==='1'; }catch(e){ return false; } })()?'checked':''} onchange="try{localStorage.setItem(aralGuideKey(), this.checked?'1':'0')}catch(e){}">Do not show this guide again</label>
+    <div class="modal-actions" style="justify-content:space-between"><button class="btn ghost" onclick="${i?`aralGuide(${i-1})`:`closeModal('stfModal')`}">${i?'‹ Back':'Skip'}</button><button class="btn" onclick="${last?`closeModal('stfModal')`:`aralGuide(${i+1})`}">${last?'Done, start using ARAL':'Next ›'}</button></div></div>`);
 }
 function aralTuteesTab(){
   const D = ARAL.data, head = aralRole()==='head';
@@ -2468,17 +2587,26 @@ function aralReports(){
         <div class="field"><label for="arDay">Date</label><input type="date" id="arDay" value="${esc(ARAL.date||today)}" max="${esc(today)}"></div>
         <button class="btn" onclick="aralPrintDaily(ARAL.who, $('arDay').value)">\u{1F5A8} Print the daily report</button></div>
       <div class="repcard"><div class="repcard-h"><span>\u{1F4CA}</span><div><b>Summary of the Daily Log and Accomplishment Report</b><small>Any period: a week, a month, or the term</small></div></div>
-        <div class="stfg2"><div class="field"><label for="arFrom">From</label><input type="date" id="arFrom" value="${esc(ARAL.from)}"></div><div class="field"><label for="arTo">To</label><input type="date" id="arTo" value="${esc(ARAL.to)}" max="${esc(today)}"></div></div>
-        <button class="btn" onclick="ARAL.from=$('arFrom').value;ARAL.to=$('arTo').value;aralPrintSum(ARAL.who, ARAL.from, ARAL.to)">\u{1F5A8} Print the summary</button></div></div>`;
+        <div class="stfg2"><div class="field"><label for="arFrom">From</label><input type="date" id="arFrom" value="${esc(ARAL.from)}" onchange="ARAL.from=this.value;aralDraw()"></div><div class="field"><label for="arTo">To</label><input type="date" id="arTo" value="${esc(ARAL.to)}" max="${esc(today)}" onchange="ARAL.to=this.value;aralDraw()"></div></div>
+        <button class="btn" onclick="ARAL.from=$('arFrom').value;ARAL.to=$('arTo').value;aralPrintSum(ARAL.who, ARAL.from, ARAL.to)">\u{1F5A8} Print the summary</button></div></div>
+    ${aralTimeTable(ARAL.who, ARAL.from, ARAL.to)}`;
+}
+function aralTimeTable(e, from, to){
+  const T = (ARAL.data.rows||[]).filter(r => r.kind==='TIME' && r.tutor===e && r.date >= from && r.date <= to).sort((a,b) => String(a.date).localeCompare(String(b.date)));
+  const tot = T.reduce((a,r) => a + aralUsed(r.data), 0), met = T.filter(r => aralUsed(r.data) >= ARAL_NEED).length;
+  return `<h3 class="stfgrp">Time used per day <small>${esc(aralPName(e))}, ${esc(dShort(from))} to ${esc(dShort(to))}. Change the dates above to see another period.</small></h3>
+    <div class="ostats"><div class="ostat static"><span class="oico">📅</span><b>${T.length}</b><span>Days with ARAL</span></div><div class="ostat static"><span class="oico">✔</span><b>${met} of ${T.length}</b><span>Days with the full 1 hour</span></div><div class="ostat static"><span class="oico">⏱</span><b>${esc(aralHrs(tot)||'0 min')}</b><span>Total time used</span></div></div>
+    <div class="table-wrap"><table class="stft-table"><thead><tr><th>Date</th><th>Session</th><th>Sign in</th><th>Sign out</th><th>Time used</th></tr></thead><tbody>
+    ${T.map(r => `<tr><td>${esc(dShort(r.date))}${r.data.addedBy?' <small class="hint">(added by the School Head)</small>':''}</td><td>${esc(r.data.session==='Before class'?'Before the regular class':r.data.session==='After class'?'After the regular class':'')}</td><td>${r.data.in?esc(time12(r.data.in)):'·'}</td><td>${r.data.out?esc(time12(r.data.out)):'·'}</td><td>${aralUsedTxt(r.data)}</td></tr>`).join('') || '<tr><td colspan="5" class="hint">No sign in recorded in this period.</td></tr>'}</tbody></table></div>`;
 }
 function aralDayData(e, date){
   const T = aralRow('TIME', e, date), A = aralRow('ATT', e, date), N = aralNotes({ tutor:e, date });
   if (!T && !A && !N.length) return [];
-  const s = (T && T.data.session) || (A && A.data.session) || (N[0] && N[0].data.session) || 'ARAL tutorial';
+  const s0 = (T && T.data.session) || (A && A.data.session) || (N[0] && N[0].data.session) || '', s = s0==='Before class' ? 'Before the regular class' : s0==='After class' ? 'After the regular class' : 'ARAL tutorial';
   return [{ s, T: T ? T.data : {}, present: [...new Set((A ? A.data.present : []).concat(N.map(n => n.learner)))], notes: N }];
 }
 function aralSigs(e){ const D = ARAL.data, p = (D.people||[]).find(x => x.email===e) || {}, head = ((DATA||{}).headName||'').toUpperCase();
-  return `<div class="stfp-sigs"><div><small style="text-align:left">Prepared by:</small><span>${esc((p.name||'').toUpperCase())}</span><small>ARAL Tutor${p.position?', '+esc(p.position):''}</small></div><div><small style="text-align:left">Noted by:</small><span>${esc(head)}</span><small>School Head</small></div></div>`; }
+  return `<div class="stfp-sigs" style="margin:28px 0 24px"><div><small style="text-align:left">Prepared by:</small><span style="display:block;margin-top:34px">${esc((p.name||'').toUpperCase())}</span><small>ARAL Tutor${p.position?', '+esc(p.position):''}</small></div><div><small style="text-align:left">Noted by:</small><span style="display:block;margin-top:34px">${esc(head)}</span><small>School Head</small></div></div>`; }
 function aralPrintDaily(e, date){
   const D = ARAL.data, p = (D.people||[]).find(x => x.email===e) || { name:e }, rows = aralDayData(e, date), mine = aralTutees(e);
   if (!rows.length) return toast('There is no ARAL record on '+dShort(date)+' yet.');
@@ -2489,8 +2617,8 @@ function aralPrintDaily(e, date){
       return `<tr><td>${i+1}</td><td>${esc(aralName(id))}</td><td>${esc(aralSecLabel(t))}</td><td>${j(n => aralFocusTxt(n.data.focus))}</td><td>${j(n => n.data.activity)}</td><td>${j(n => n.data.progress)}</td><td>${j(n => n.data.remarks)}</td></tr>`; }).join('') || '<tr><td colspan="7">No learner present was recorded.</td></tr>'}</tbody></table>`).join('');
   $('printArea').innerHTML = `<div class="stfprint"><div class="stfp-page">${stfPrintHead('Individual Daily Log and Accomplishment Report', 'ARAL Program, Project TULAY')}
     <table class="stfp-info"><tr><td>Name of ARAL tutor</td><td><b>${esc((p.name||'').toUpperCase())}</b></td><td>Date</td><td><b>${esc(fmtLong(date))}</b></td></tr>
-      <tr><td>Position</td><td>${esc(p.position||'Teacher')}</td><td>Time spent</td><td>${esc(aralHrs(mins)||'Not recorded')}</td></tr>
-      <tr><td>Learners present</td><td>${new Set(rows.flatMap(r => r.present)).size} of ${mine.length} tutees</td><td>Tutorial time</td><td>${esc(rows.map(r => r.s).join(' and '))}</td></tr></table>
+      <tr><td>Position</td><td>${esc(p.position||'Teacher')}</td><td>Time spent</td><td>${esc(aralHrs(mins)||'Not recorded')}${mins ? (mins >= ARAL_NEED ? ' (meets the 1 hour a day)' : ' ('+(ARAL_NEED-mins)+' minutes short of 1 hour)') : ''}</td></tr>
+      <tr><td>Learners present</td><td>${new Set(rows.flatMap(r => r.present)).size} of ${mine.length} tutees</td><td>Session</td><td>${esc(rows.map(r => r.s).join(' and '))}</td></tr></table>
     ${body}${aralSigs(e)}<p class="stfp-foot">Generated by TALA on ${esc(fmtLong(todayPH()))}.</p></div></div>`;
   setTimeout(() => window.print(), 300);
 }
@@ -2502,13 +2630,13 @@ function aralPrintSum(e, from, to){
   const lines = dates.flatMap(d => aralDayData(e, d).map(r => { mins += aralMins(r.T); r.present.forEach(id => served.add(id));
     r.notes.forEach(n => { const f = n.data.focus||{}; (f.letters||[]).forEach(L => letters[L] = (letters[L]||0)+1); if (f.pattern) pats[f.pattern] = (pats[f.pattern]||0)+1; });
     const foci = [...new Set(r.notes.map(n => aralFocusTxt(n.data.focus)))];
-    return `<tr><td>${esc(dShort(d))}</td><td>${esc(r.s)}</td><td>${esc(r.T.in?time12(r.T.in):'')}</td><td>${esc(r.T.out?time12(r.T.out):'')}</td><td>${esc(aralHrs(aralMins(r.T)))}</td><td>${r.present.length}</td><td>${esc(foci.join('; '))}</td><td>${r.notes.length}</td></tr>`; }));
+    return `<tr><td>${esc(dShort(d))}</td><td>${esc(r.s)}</td><td>${esc(r.T.in?time12(r.T.in):'')}</td><td>${esc(r.T.out?time12(r.T.out):'')}</td><td>${esc(aralHrs(aralMins(r.T)))}${r.T.out ? (aralMins(r.T) >= ARAL_NEED ? ' ✔' : ' (short)') : ''}</td><td>${r.present.length}</td><td>${esc(foci.join('; '))}</td><td>${r.notes.length}</td></tr>`; }));
   const order = ARAL_LETTERS.filter(L => letters[L]);
   $('printArea').innerHTML = `<div class="stfprint"><div class="stfp-page">${stfPrintHead('Summary of the Individual Daily Log and Accomplishment Report', 'ARAL Program, Project TULAY, '+fmtLong(from)+' to '+fmtLong(to))}
     <table class="stfp-info"><tr><td>Name of ARAL tutor</td><td><b>${esc((p.name||'').toUpperCase())}</b></td><td>Position</td><td>${esc(p.position||'Teacher')}</td></tr>
       <tr><td>Days with ARAL</td><td>${dates.length}</td><td>Total time</td><td>${esc(aralHrs(mins)||'Not recorded')}</td></tr>
       <tr><td>Tutees</td><td>${mine.length}</td><td>Learners served</td><td>${served.size}</td></tr></table>
-    <table class="stfp-tbl"><thead><tr><th>Date</th><th>Tutorial time</th><th>Sign in</th><th>Sign out</th><th>Time spent</th><th>Learners present</th><th>What was taught</th><th>Notes</th></tr></thead><tbody>${lines.join('')}</tbody></table>
+    <table class="stfp-tbl"><thead><tr><th>Date</th><th>Session</th><th>Sign in</th><th>Sign out</th><th>Time spent</th><th>Learners present</th><th>What was taught</th><th>Notes</th></tr></thead><tbody>${lines.join('')}</tbody></table>
     ${order.length?`<h4 class="stfp-n">Letters taught</h4><p>${order.map(L => esc(L)+' ('+letters[L]+')').join(', ')}</p>`:''}
     ${Object.keys(pats).length?`<h4 class="stfp-n">Word patterns and word families taught</h4><p>${Object.keys(pats).map(k => esc(k)+' ('+pats[k]+')').join(', ')}</p>`:''}
     ${aralSigs(e)}<p class="stfp-foot">Generated by TALA on ${esc(fmtLong(todayPH()))}.</p></div></div>`;
@@ -3331,6 +3459,7 @@ function openGuides(){
   $('menu').classList.remove('open');
   const r = USER ? USER.role : 'public', ids = ['home'].concat(['lpt','obs','sbfp','att'].map(f => f+'_'+r).filter(id => GUIDES[id]));
   $('gList').innerHTML = ids.map(id => `<button class="choice" onclick="openGuideFor('${id}')"><b>${esc(GUIDES[id].name)}</b><small>${GUIDES[id].steps.length} short steps</small></button>`).join('');
+  if (USER && (USER.role==='head' || featOn('aral'))) $('gList').insertAdjacentHTML('beforeend', `<button class="choice" onclick="closeModal('guidesModal');openFeature('aral');setTimeout(()=>{ if (ARAL.data) aralGuide(0); }, 1800)"><b>ARAL (Project TULAY)</b><small>Step by step guide for your role</small></button>`);
   openModal('guidesModal');
 }
 function openGuideFor(id){
