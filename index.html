@@ -1034,6 +1034,13 @@ textarea.nbt{-webkit-touch-callout:none}
   .lacprintph img{display:block;margin:0 auto;max-width:100%;max-height:95mm;width:auto;object-fit:contain;border-radius:2px} .lacprintph figcaption{font-size:9.5pt;margin-top:3px}
   .stfp-sigs{break-inside:avoid;page-break-inside:avoid} .nbtbl td{vertical-align:top} .nbtbl td p{margin:0 0 4px} }
 .hubtags{display:flex;flex-wrap:wrap;gap:4px;margin:4px 0}.hubtag{font-size:11.5px;font-weight:700;padding:2px 8px;border-radius:999px}.hubtag.lac{background:#e3eefb;color:#1d4f8a}.hubtag.self{background:#eef3e6;color:#3f5d1d}.hubtag.hold{background:#fff1d6;color:#8a5a00}
+.alticks{display:grid;gap:8px;margin:6px 0 10px}.check.alt{align-items:flex-start;padding:10px;border:1.5px solid var(--line);border-radius:12px}.check.alt small{display:block;color:var(--muted);font-weight:400}
+.olapse{display:inline-block;margin-top:6px;font-size:11.5px;font-weight:700;padding:3px 8px;border-radius:999px;background:#eef2f7;color:#41526a}.olapse.late{background:#fde6e6;color:#a12a2a}.olapse.done{background:#e3f4e8;color:#1d6b36}
+.aralcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px;margin-top:8px}
+.aralcard{display:flex;flex-direction:column;gap:6px;text-align:left;padding:12px;border:1.5px solid var(--line);border-radius:14px;background:var(--card);color:var(--ink);font:inherit;cursor:pointer}
+.aralcard:hover{border-color:var(--brandtxt)}.aralcard-h{display:flex;justify-content:space-between;gap:8px;align-items:center}.aralcard small{color:var(--muted)}
+.aralcard-r{font-size:13.5px;line-height:1.4}.aralcard-r i{display:block;font-style:normal;font-size:11.5px;font-weight:700;color:var(--muted)}
+.nbtodo{background:#eef3fb;border-color:#b9cbe6}.nbtodo>b{color:#1d4f8a}.sbtodo-l button em{display:block;font-style:normal;font-weight:700;color:var(--brandtxt);font-size:12.5px;margin-top:2px}
 </style>
 </head>
 <body>
@@ -1588,8 +1595,13 @@ textarea.nbt{-webkit-touch-callout:none}
     <div class="row4" style="grid-template-columns:1fr 1fr 1fr"><div class="field"><label for="al_last">Last name</label><input id="al_last"></div><div class="field"><label for="al_first">First name</label><input id="al_first"></div><div class="field"><label for="al_middle">Middle name</label><input id="al_middle"></div></div>
     <div class="row2"><div class="field"><label for="al_birth">Birth date</label><input type="date" id="al_birth"></div><div class="field"><label for="al_enrolled">Date enrolled (only if late enrolment)</label><input type="date" id="al_enrolled"></div></div>
     <div class="row2"><div class="field"><label for="al_parent">Parent or guardian (for messages)</label><input id="al_parent" placeholder="Example: Janith V. Arellado"></div><div class="field"><label for="al_contact">Contact number or Messenger name</label><input id="al_contact"></div></div>
-    <div class="field"><label for="al_status">Status</label><select id="al_status" onchange="attStatusSync()"><option>Active</option><option>Transferred In</option><option>Transferred Out</option><option>Dropped Out</option></select></div>
-    <div class="row2" id="al_moveRow"><div class="field"><label for="al_statusDate">Date</label><input type="date" id="al_statusDate"></div><div class="field"><label for="al_reason">Reason or school (for SF2 remarks)</label><input id="al_reason" list="al_reasons" placeholder="Example: a.1 Had to take care of siblings"><datalist id="al_reasons">
+    <input type="hidden" id="al_status" value="Active">
+    <div class="alticks">
+      <label class="check alt"><input type="checkbox" id="al_tin" onchange="attTick('in')"><span><b>This learner transferred in</b><small>Came from another school during the school year. If not ticked, the learner is counted from the first day of classes, even if not in the SF1.</small></span></label>
+      <label class="check alt"><input type="checkbox" id="al_left" onchange="attTick('left')"><span><b>This learner left the class</b><small>Transferred out to another school, or dropped out.</small></span></label>
+      <div id="al_leftKind" class="stfrad" style="display:none;margin:4px 0 0 30px"><label class="check" style="margin:0"><input type="radio" name="al_lk" value="Transferred Out" onchange="attTick()" checked>Transferred out</label><label class="check" style="margin:0"><input type="radio" name="al_lk" value="Dropped Out" onchange="attTick()">Dropped out</label></div>
+    </div>
+    <div class="row2" id="al_moveRow"><div class="field"><label for="al_statusDate" id="al_dateLbl">Date</label><input type="date" id="al_statusDate"></div><div class="field"><label for="al_reason">Reason or school (for SF2 remarks)</label><input id="al_reason" list="al_reasons" placeholder="Example: a.1 Had to take care of siblings"><datalist id="al_reasons">
       <option value="a.1 Had to take care of siblings"><option value="a.2 Early marriage or pregnancy"><option value="a.3 Parents' attitude toward schooling"><option value="a.4 Family problems"><option value="b.1 Illness"><option value="b.2 Overage"><option value="b.3 Death"><option value="b.4 Drug abuse"><option value="b.5 Poor academic performance"><option value="b.6 Lack of interest or distractions"><option value="b.7 Hunger or malnutrition"><option value="c.1 Teacher factor"><option value="c.2 Physical condition of classroom"><option value="c.3 Peer influence"><option value="d.1 Distance between home and school"><option value="d.2 Armed conflict"><option value="d.3 Calamities or disasters"><option value="e.1 Child labor, work"><option value="f. Others"></datalist></div></div>
     <div class="err" id="al_err"></div>
     <div class="modal-actions"><button class="btn danger" id="al_del" onclick="attLearnerDelete()">Remove</button><span style="flex:1"></span><button class="btn ghost" onclick="closeModal('alModal')">Cancel</button><button class="btn" onclick="attLearnerSave()">Save</button></div></div>
@@ -1743,8 +1755,8 @@ textarea.nbt{-webkit-touch-callout:none}
 
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
-const MIN_SERVER = '6.6'; // oldest Code.gs this page works with
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'6.6', date:'October 11, 2026' } };
+const MIN_SERVER = '6.7'; // oldest Code.gs this page works with
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'6.7', date:'October 13, 2026' } };
 function verLine(server){
   const old = server && (server.indexOf('older') > -1 || parseFloat(server) < parseFloat(MIN_SERVER));
   const s = server ? ' Server '+server+('.') : '';
@@ -2176,6 +2188,11 @@ function headNew(id){
   if (id==='aral') return (typeof ARAL!=='undefined' && ARAL.data ? ARAL.data.rows : []).filter(r => r.on && String(r.on) > since && r.tutor !== USER.email).length || (typeof ARAL!=='undefined' ? ARAL.srvNew||0 : 0);
   return 0;
 }
+// A tutor's ARAL work still to do: notes in draft, and learners present without a note. The dot stays until it is done.
+function aralTodoCount(){ if (typeof ARAL==='undefined' || !ARAL.data) return (typeof ARAL!=='undefined' && ARAL.srvNew) || 0; const me = USER.email, R = ARAL.data.rows||[];
+  let n = R.filter(x => x.kind==='NOTE' && x.tutor===me && !x.data.locked).length;
+  R.filter(x => x.kind==='ATT' && x.tutor===me).forEach(a => (a.data.present||[]).forEach(id => { if (!R.some(x => x.kind==='NOTE' && x.tutor===me && x.learner===id && x.date===a.date)) n++; }));
+  return n; }
 function featCount(id){
   if (!USER) return 0;
   const u = featUnread(id);
@@ -2186,7 +2203,8 @@ function featCount(id){
   if (id==='obs') return Math.max(u, (typeof OBS!=='undefined' && OBS.newCount) || 0);
   if (id==='att') return Math.max(u, (typeof STF!=='undefined' && STF.dot) || 0);
   if (id==='lac') return Math.max(u, (typeof LAC!=='undefined' && LAC.dot) || 0);
-  if (id==='aral') return u + headNew('aral');
+  if (id==='aral'){ if (USER.role==='head' || USER.role==='admin') return u + headNew('aral'); return Math.max(u, aralTodoCount()); }
+  if (id==='lpt' && USER.role==='teacher') return Math.max(u, ((DATA||{}).entries||[]).filter(e => e.email===USER.email).reduce((a, e) => a + itemsOf(e).filter(x => x.status==='Returned' || x.status==='Invalid').length, 0));
   if (id==='sbfp'){ try{ if (USER.role==='teacher') return u + sbMyTodo().length; return u + headNew('sbfp'); }catch(e){ return u; } }
   return u;
 }
@@ -2197,7 +2215,7 @@ function appBadge(){
   try{ document.title = (total ? '('+total+') ' : '') + 'TALA'; }catch(e){}
 }
 // Opening a feature marks its notices as read
-function featSeen(id){ if (id==='sbfp' || id==='aral'){ markSeen(id); if (typeof ARAL!=='undefined') ARAL.srvNew = 0; drawSide(); } const ty = FEAT_NT[id]; if (!ty || !featUnread(id)) return; NOTICES.forEach(n => { if (ty.indexOf(n.type) > -1) n.read = true; }); api('readNotices', { types: ty }).catch(()=>{}); const un = NOTICES.filter(n => !n.read).length; $('bellCount').hidden = !un; $('bellCount').textContent = un > 9 ? '9+' : un; LAST_UNREAD = un; drawSide(); }
+function featSeen(id){ if (id==='sbfp' || id==='aral'){ markSeen(id); if (typeof ARAL!=='undefined' && USER && (USER.role==='head' || USER.role==='admin')) ARAL.srvNew = 0; drawSide(); } const ty = FEAT_NT[id]; if (!ty || !featUnread(id)) return; NOTICES.forEach(n => { if (ty.indexOf(n.type) > -1) n.read = true; }); api('readNotices', { types: ty }).catch(()=>{}); const un = NOTICES.filter(n => !n.read).length; $('bellCount').hidden = !un; $('bellCount').textContent = un > 9 ? '9+' : un; LAST_UNREAD = un; drawSide(); }
 // A teacher tagged "ARAL tutor only" in Accounts sees only Home and ARAL
 function aralOnly(){ return !!(USER && USER.role==='teacher' && USER.aral==='only'); }
 function drawSide(){
@@ -2294,7 +2312,7 @@ function aralNorm(d){
   d.me = d.me || {}; return d;
 }
 function aralSave(){ try{ localStorage.setItem(aralKey(), JSON.stringify(ARAL.data)); }catch(e){} }
-function aralSet(d){ const n = aralNorm(d); if (!n) return; ARAL.data = n; ARAL.ver = (ARAL.ver||0) + 1; ARAL.stale = false; aralSave(); }
+function aralSet(d){ const n = aralNorm(d); if (!n) return; ARAL.data = n; ARAL.ver = (ARAL.ver||0) + 1; ARAL.stale = false; aralSave(); try{ drawSide(); }catch(e){} }
 
 /* ----- Attendance of each learner in ARAL: sessions present and missed ----- */
 function aralLearnerAtt(t){
@@ -2366,10 +2384,10 @@ function aralDraw(){
   const D = ARAL.data; if (!D) return;
   const role = aralRole(), head = role==='head', ao = role==='admin', tutor = aralIsTutor(), adviser = (D.mine||[]).length > 0;
   let tabs, who, stat;
-  if (head){ tabs = [['ov','Overview'],['tag','Tag tutees and tutors'],['tutees','Tutees and tutors'],['rep','Reports'],['today','My ARAL today']]; who = 'School Head dashboard'; }
-  else if (ao){ tabs = [['ov','Overview'],['tutees','Tutees and tutors'],['rep','Reports']]; who = 'Administrative Officer, view only'; }
-  else if (tutor){ tabs = [['today','Today'],['notes','My tutees and notes'],['rep','My reports']]; if (adviser) tabs.push(['class','My class in ARAL']); who = 'ARAL tutor'; }
-  else if (adviser){ tabs = [['class','My learners in ARAL']]; who = 'Adviser, view only'; }
+  if (head){ tabs = [['ov','Overview'],['cards','Notes by day'],['tag','Tag tutees and tutors'],['tutees','Tutees and tutors'],['rep','Reports'],['today','My ARAL today']]; who = 'School Head dashboard'; }
+  else if (ao){ tabs = [['ov','Overview'],['cards','Notes by day'],['tutees','Tutees and tutors'],['rep','Reports']]; who = 'Administrative Officer, view only'; }
+  else if (tutor){ tabs = [['today','Today'],['notes','My tutees and notes'],['cards','Notes by day'],['rep','My reports']]; if (adviser) tabs.push(['class','My class in ARAL']); who = 'ARAL tutor'; }
+  else if (adviser){ tabs = [['class','My learners in ARAL'],['cards','Notes by day']]; who = 'Adviser, view only'; }
   else { tabs = [['none','ARAL']]; who = 'Teacher'; }
   if (head || ao) stat = `<b>${(D.tutees||[]).length}</b><span>ARAL tutees</span>`;
   else if (tutor) stat = `<b>${aralMyTutees().length}</b><span>My ARAL tutees</span>`;
@@ -2380,10 +2398,38 @@ function aralDraw(){
     <div class="tabs lactabs" style="margin-top:12px">${tabs.map(t => `<button class="${ARAL.tab===t[0]?'on':''}" onclick="ARAL.tab='${t[0]}';aralDraw()">${t[1]}</button>`).join('')}</div>
     <div id="aralBody" style="margin-top:14px"></div>`;
   if (ARAL.stale) $('aralBody').insertAdjacentHTML('beforebegin', `<div class="aralstale">Showing the copy saved on this device. The newest data could not be loaded. <button class="linkbtn" onclick="aralRefresh()">Try again</button></div>`);
-  try{ ({ ov:aralOverview, today:aralToday, notes:aralNotesTab, class:aralClass, tag:aralTag, tutees:aralTuteesTab, rep:aralReports, none:aralNone })[ARAL.tab](); }
+  try{ ({ ov:aralOverview, today:aralToday, notes:aralNotesTab, class:aralClass, tag:aralTag, tutees:aralTuteesTab, rep:aralReports, none:aralNone, cards:aralCards })[ARAL.tab](); }
   catch(e){ console.warn('TALA ARAL', e); $('aralBody').innerHTML = `<div class="empty">This part could not be shown. Your ARAL data is safe. <button class="btn ghost small" onclick="aralRefresh()">↻ Reload ARAL</button></div>`; }
 }
 async function aralRefresh(){ const b = $('aralRf'); if (b) b.disabled = true; try{ await aralLoad(true); }catch(e){} if (CUR_FEATURE==='aral') aralDraw(); toast(ARAL.stale ? 'Could not reach TALA. Showing the saved copy.' : 'ARAL is up to date.'); }
+/* ----- Notes by day: every note of the day as a card, with a calendar ----- */
+function aralCards(){
+  const D = ARAL.data, role = aralRole(), all = role==='head' || role==='admin', me = USER.email, today = D.today || todayPH();
+  if (!ARAL.nd) ARAL.nd = today; const day = ARAL.nd;
+  // which tutees this person may see: everyone (School Head, AO), my tutees (tutor), my class (adviser)
+  const mine = (D.tutees||[]).filter(t => all || t.tutor===me || (D.mine||[]).indexOf(t.data.sec) > -1);
+  const tutors = [...new Set(mine.map(t => t.tutor))].filter(Boolean); if (ARAL.ct && tutors.indexOf(ARAL.ct) < 0) ARAL.ct = '';
+  const list = mine.filter(t => !ARAL.ct || t.tutor===ARAL.ct), ids = list.map(t => t.learner);
+  const notes = (D.rows||[]).filter(r => r.kind==='NOTE' && r.date===day && ids.indexOf(r.learner) > -1 && (!ARAL.cp || r.data.progress===ARAL.cp)).sort((a,b) => String(aralName(a.learner)).localeCompare(String(aralName(b.learner))));
+  const without = list.filter(t => { const A = aralRow('ATT', t.tutor, day); return A && A.data.present.indexOf(t.learner) > -1 && !notes.some(n => n.learner===t.learner); });
+  const pcls = p => p==='Mastered' ? 'pm' : p==='Developing' ? 'pd' : p ? 'pn' : '';
+  const card = n => { const t = list.find(x => x.learner===n.learner) || { data:{} }, d = n.data;
+    return `<button class="aralcard" onclick="aralNoteView('${n.id}')"><div class="aralcard-h"><b>${esc(aralName(n.learner))}</b>${d.locked?'<span title="Saved and locked">🔒</span>':'<span class="atn wait">Draft</span>'}</div>
+      <small>${esc(aralSecLabel(t))} · Tutor: ${esc(n.tutorName||aralPName(n.tutor))}${d.session?' · '+esc(d.session==='Before class'?'Before the regular class':'After the regular class'):''}</small>
+      <div class="aralcard-r"><i>What was taught</i>${esc(aralFocusTxt(d.focus))}</div>
+      ${d.activity?`<div class="aralcard-r"><i>What we did</i>${esc(d.activity)}</div>`:''}
+      ${d.remarks?`<div class="aralcard-r"><i>Note</i>${esc(d.remarks)}</div>`:''}
+      ${d.progress?`<span class="aralchips"><i class="${pcls(d.progress)}">${esc(d.progress)}</i></span>`:''}</button>`; };
+  $('aralBody').innerHTML = `<div class="aralbar">
+      <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap"><button class="btn ghost small" onclick="ARAL.nd=addDays(ARAL.nd,-1);aralDraw()">‹ Previous day</button>
+        <label class="aralday">Day <input type="date" value="${esc(day)}" max="${esc(today)}" onchange="ARAL.nd=this.value||todayPH();aralDraw()"></label>
+        <button class="btn ghost small" ${day>=today?'disabled':''} onclick="ARAL.nd=addDays(ARAL.nd,1);aralDraw()">Next day ›</button>${day!==today?`<button class="btn ghost small" onclick="ARAL.nd='';aralDraw()">Today</button>`:''}</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">${tutors.length>1?`<select onchange="ARAL.ct=this.value;aralDraw()"><option value="">All tutors</option>${tutors.map(e => `<option value="${esc(e)}" ${ARAL.ct===e?'selected':''}>${esc(aralPName(e))}</option>`).join('')}</select>`:''}
+        <select onchange="ARAL.cp=this.value;aralDraw()"><option value="">All progress</option>${ARAL_PROG.map(p => `<option ${ARAL.cp===p?'selected':''}>${p}</option>`).join('')}</select></div></div>
+    <p class="hint">${esc(fmtLong(day))}: ${notes.length} note${notes.length===1?'':'s'}, ${notes.filter(n => n.data.locked).length} locked. Tap a card to read the whole note.</p>
+    <div class="aralcards">${notes.map(card).join('') || '<div class="empty">No ARAL notes on this day.</div>'}</div>
+    ${without.length?`<h3 class="stfgrp">Present but no note yet (${without.length})</h3><p>${without.map(t => esc(t.data.name)+' <small class="hint">('+esc(aralPName(t.tutor))+')</small>').join(', ')}</p>`:''}`;
+}
 function aralNone(){ $('aralBody').innerHTML = '<div class="empty">You are not an ARAL tutor, and none of your learners is in ARAL yet. The School Head tags the ARAL tutees and assigns their tutors.</div>'; }
 
 /* ----- The ARAL note: save a draft, or save and lock when done ----- */
@@ -2858,7 +2904,10 @@ function applyData(d, first){
   try{ localStorage.setItem('tala_data', JSON.stringify(DATA)); }catch(e){}
   if (first) SEL.term = pickCurrentTerm(DATA.settings);
   render(); renderAll();
-  if (first){ showHome(); setTimeout(attWarm, 2500); } else if ($('viewHome').style.display !== 'none') drawHome();
+  if (first){ showHome(); setTimeout(attWarm, 2500);
+    // personnel: check the notebook entries still to write, then remind once
+    setTimeout(() => { try{ if (USER && USER.role!=='head' && !aralOnly() && featOn('lac') && typeof LAC!=='undefined') lacLoad(true).then(() => { lacDot(); nbTodoPop(); if (CUR_FEATURE==='home') drawHome(); }).catch(()=>{}); }catch(e){} }, 2000); }
+  else if ($('viewHome').style.display !== 'none') drawHome();
 }
 // Saves something and gets the updated page data back in the same trip
 async function apiData(action, payload){
@@ -4055,7 +4104,7 @@ async function obsRefresh(){
   // drafts saved on this device that are not yet on the server
   myPending().filter(x=>x.action==='obsSave').forEach(x => { const i = OBS.list.findIndex(o=>o.id===x.payload.obs.id); const loc = Object.assign({ status:'Draft' }, x.payload.obs, { local:true });
     if (i < 0) OBS.list.push(loc); else if (OBS.list[i].status==='Draft') OBS.list[i] = Object.assign(OBS.list[i], loc); });
-  OBS.newCount = USER.role==='teacher' ? OBS.list.filter(o=>!o.seen).length : 0; drawSide();
+  OBS.newCount = USER.role==='teacher' ? obsTodo() : 0; drawSide();
   if (!OBS.cur && $('viewObs').style.display !== 'none' && !OBS.sub) obsHome();
   if ($('viewHome') && $('viewHome').style.display !== 'none') drawHome();
 }
@@ -4082,6 +4131,7 @@ function obsHome(){
       ${tile('\u2637','Observation calendar', q.lack ? q.lack+' observation'+(q.lack>1?'s':'')+' lacking this term' : 'On target this term', 'openCal()', q.lack?'warn':'good')}
       ${lastDraft?tile('\u270E','Continue draft',esc(lastDraft.teacherName||(otype(lastDraft)==='mwa'?'MWA visit':'Untitled draft'))+(lastDraft.date?', '+esc(dShort(lastDraft.date)):''),`obsOpen('${esc(lastDraft.id)}')`,'hl'):''}
       ${tile('\u2712','For your signature',OBS.list.filter(o=>o.status==='TeacherSigned').length+' waiting',"OBS.status='TeacherSigned';obsHome()")}
+      ${(()=>{ const L = OBS.list.filter(o => o.status==='Sent' && (obsLapse(o)||{}).late); return tile('\u23F0','Not yet signed by teachers', L.length ? L.length+' waiting 3 days or more' : 'None overdue', "OBS.status='Sent';obsHome()", L.length?'warn':'good'); })()}
       ${tile('\u2630','Summary report','Per week, term, and teacher','obsSummary()')}
       ${tile('\u2605','COI and NCOI guide','Read the indicators','openGuide(true)')}
       ${tile('\u2672','Clear observation data','Start fresh, with a backup first','openObsClear()')}
@@ -4112,6 +4162,18 @@ async function obsClearRun(){
   catch(e){ handleErr(e,'ocErr'); }
   $('ocBtn').disabled = false; loading(false);
 }
+// Days an observation has waited: for the teacher's signature after it was sent, or for the School Head's after the teacher signed
+// A teacher's observations still to act on: waiting for my signature, or not yet opened
+function obsTodo(){ return (OBS.list||[]).filter(o => o.teacherEmail===USER.email && (o.status==='Sent' || (o.status!=='Draft' && !o.seen))).length; }
+function obsDays(a, b){ const p = x => { const q = String(x).slice(0,10).split('-').map(Number); return Date.UTC(q[0], q[1]-1, q[2]); }; return Math.max(0, Math.round((p(b) - p(a)) / 864e5)); }
+function obsLapse(o){
+  const today = todayPH(), sent = (o.data||{}).sentOn || (o.status==='Sent' ? o.updated : '');
+  if (o.status==='Sent' && sent){ const d = obsDays(sent, today); return { d, who:'teacher', txt: d ? d+' day'+(d>1?'s':'')+' waiting for the teacher\u2019s signature' : 'Sent today, waiting for the teacher', late: d >= 3 }; }
+  if (o.status==='TeacherSigned' && o.teacherSignedOn){ const d = obsDays(o.teacherSignedOn, today); return { d, who:'head', txt: d ? d+' day'+(d>1?'s':'')+' waiting for the School Head\u2019s signature' : 'Signed by the teacher today', late: d >= 3 }; }
+  if (o.status==='Completed' && sent && o.teacherSignedOn){ const d = obsDays(sent, o.teacherSignedOn); return { d, who:'done', txt: 'The teacher signed '+(d ? d+' day'+(d>1?'s':'')+' after it was sent' : 'on the day it was sent'), late:false }; }
+  return null;
+}
+function obsLapseTag(o){ const L = obsLapse(o); return L ? `<span class="olapse ${L.late?'late':L.who==='done'?'done':''}">${L.late?'\u23F0 ':''}${esc(L.txt)}</span>` : ''; }
 // One column per teacher, newest card on top
 function solitaire(list){
   if (!list.length) return `<div class="empty" style="margin-top:14px">${USER.role==='head'?'Nothing here yet. Tap <b>New observation</b> to start.':'No observations to show yet.'}</div>`;
@@ -4124,6 +4186,7 @@ function solitaire(list){
       <b>${o.date?esc(dShort(o.date)):'No date yet'}</b>
       <small>${esc(otype(o)==='mwa' ? ((o.data||{}).focus||'Focus not set') : ([o.grade,o.subject].filter(Boolean).join(', ')||'Grade and subject not set'))}</small>
       ${o.term?`<small>Term ${esc(o.term)}${o.week?', Week '+esc(o.week):''}</small>`:''}
+      ${obsLapseTag(o)}
       ${USER.role==='teacher'&&!o.seen?'<span class="newdot">New</span>':''}</button>`;
   return `<div class="sol">${order.map(k => { const c = cols[k].sort((a,b)=>String(b.date||b.updated).localeCompare(String(a.date||a.updated))||String(b.updated).localeCompare(String(a.updated)));
     const name = k==='_area' ? 'Area or school-wide visits' : (c[0].teacherName || k);
@@ -4141,7 +4204,7 @@ function obsOpen(id){
   OBS.cur = JSON.parse(JSON.stringify(o)); OBS.cur.data = OBS.cur.data || { notes:{}, ind:{}, inc:[] };
   try{ const w = JSON.parse(localStorage.getItem(wipKey(id))||'null'); if (w && o.status==='Draft' && String(w.updated) >= String(o.updated||'')) OBS.cur = w; }catch(e){}
   if (USER.role==='head' && o.status==='Draft') obsEditor(); else obsViewer();
-  if (USER.role==='teacher' && !o.seen){ o.seen = true; obsLocalSave(); OBS.newCount = OBS.list.filter(x=>!x.seen).length; drawSide(); api('obsSeen',{ id }).catch(()=>{}); }
+  if (USER.role==='teacher' && !o.seen){ o.seen = true; obsLocalSave(); OBS.newCount = obsTodo(); drawSide(); api('obsSeen',{ id }).catch(()=>{}); }
 }
 
 /* ----- Editor (School Head, drafts) ----- */
@@ -4450,7 +4513,7 @@ async function obsViewer(){
   const canTeacherSign = teacher && o.status==='Sent', canHeadSign = head && o.status==='TeacherSigned', canRevise = head && o.status==='Sent';
   const comments = (o.data.comments||[]);
   $('viewObs').innerHTML = `
-    <div class="trk-head"><div><span class="ktag ${otype(o)}">${mwa?'PMCF MWA':'ePMCF Classroom Observation'}</span><h2>${mwa?'Monitoring by Walking Around':'Classroom Observation'}</h2><p><span class="opill ${o.status}">${OBS_PILL[o.status]}</span> ${esc(OBS_STATUS[o.status]||'')}</p></div>
+    <div class="trk-head"><div><span class="ktag ${otype(o)}">${mwa?'PMCF MWA':'ePMCF Classroom Observation'}</span><h2>${mwa?'Monitoring by Walking Around':'Classroom Observation'}</h2><p><span class="opill ${o.status}">${OBS_PILL[o.status]}</span> ${esc(OBS_STATUS[o.status]||'')}</p>${obsLapseTag(o)}</div>
       <div class="head-actions"><button class="btn ghost" onclick="obsBack()">Back to list</button>
         ${mwa?'':'<button class="btn ghost" onclick="openGuide(true)">COI and NCOI guide</button>'}
         ${head && o.status!=='Draft'?'<button class="btn ghost" onclick="obsEdit()">Edit</button>':''}
@@ -5004,6 +5067,8 @@ function drawAralHome(){
 function drawHome(){
   if (!USER) return drawPublicHome();
   if (aralOnly()) return drawAralHome();
+  if (USER.role!=='head' && featOn('lac') && typeof LAC!=='undefined' && !LAC.data && !drawHome._lac){ drawHome._lac = true; lacLoad(true).then(() => { lacDot(); if (CUR_FEATURE==='home') drawHome(); nbTodoPop(); }).catch(()=>{}); }
+  else if (USER.role!=='head' && typeof LAC!=='undefined' && LAC.data) setTimeout(nbTodoPop, 400);
   const hr = Number(new Date().toLocaleString('en-US',{timeZone:'Asia/Manila',hour:'numeric',hour12:false})), greet = hr < 12 ? 'Good morning' : hr < 18 ? 'Good afternoon' : 'Good evening';
   const today = new Date().toLocaleString('en-US',{timeZone:'Asia/Manila',weekday:'long',month:'long',day:'numeric',year:'numeric'});
   const first = USER.name.split(' ')[0].replace(/^./, c=>c.toUpperCase()), head = USER.role==='head', teacher = USER.role==='teacher';
@@ -5034,7 +5099,7 @@ function drawHome(){
     <div class="hhero"><div class="hhero-t"><h2>${greet}, ${esc(first)}!</h2><p>Today is ${esc(today)}. Enjoy your class, and be an inspiration.</p>${head?`<button class="btn sun small" style="margin-top:12px" onclick="msgCenter()">💬 Ready messages</button> <button class="btn sun small" style="margin-top:12px" onclick="openFeature('mne')">PIR Presentation</button>`:`<button class="btn sun small" style="margin-top:12px" onclick="openPir('me')">My status presentation</button>`}</div>
       <div class="qcard" id="qCard"><span class="qstar">\u2605</span><p>\u201C${esc(quoteToday())}\u201D</p><small>TALA quote of the day</small>
         <div class="qbtns"><button class="btn ghost small" onclick="quoteSave()">\u2B07 Save picture</button><button class="btn ghost small" onclick="shareQuote()">Share</button></div></div></div>
-    ${sbTodoHtml()}
+    ${sbTodoHtml()}${nbTodoHtml()}
     <div class="hgrid">${lpt}${obs}</div>
     <div id="homeCal"></div>`;
   drawSchoolCal();
@@ -5339,6 +5404,19 @@ function sbMyTodo(){
   }
   return out;
 }
+// Personnel: LAC and meeting notebook entries still to write (and entries returned by the School Head). It stays until written.
+function nbTodoList(){ try{ if (!USER || USER.role==='head' || aralOnly() || typeof LAC==='undefined' || !LAC.data || !featOn('lac')) return [];
+  return nbReturned().map(n => ({ ret:1, id:n.id, t:(n.title || (lacS(n.session)||{}).title || NB_BOOKS[n.book]), x:'Returned by the School Head'+(n.remark?': '+n.remark:''), book:NB_BOOKS[n.book] }))
+    .concat(nbMissing().map(s => ({ sid:s.id, kind:s.kind==='MEET'?'MEET':'LAC', t:s.title, x:dShort(s.date)+'. You attended, but your notebook is still empty.', book:s.kind==='MEET'?'Meeting Notebook':'LAC Notebook' }))); }catch(e){ return []; } }
+function nbTodoHtml(){ const L = nbTodoList(); if (!L.length) return '';
+  return `<div class="sbtodo nbtodo"><b>\u{1F4D3} Your notebook entries to complete (${L.length})</b>
+    <p>Please write in your notebook for each session or meeting below. This reminder stays until the entry is written.</p>
+    <div class="sbtodo-l">${L.map(x => `<button onclick="${x.ret?`openFeature('lac');setTimeout(()=>nbOpen('${x.id}'),900)`:`openFeature('lac');setTimeout(()=>nbOpenFor('${x.sid}','${x.kind}'),900)`}"><span>${esc(x.book)}</span><b>${esc(x.t)}</b><small>${esc(x.x)}</small><em>${x.ret?'Complete now':'Write now'} ›</em></button>`).join('')}</div></div>`; }
+// Shown once each time the person signs in, while something is still missing
+function nbTodoPop(n){ n = n || 0; const L = nbTodoList(); if (!L.length) return; const k = 'tala_nbpop_'+USER.email+'_'+todayPH(); try{ if (sessionStorage.getItem(k)) return; }catch(e){}
+  setTimeout(() => { if ($('stfModal').classList.contains('open') || ($('tour') && !$('tour').hidden)){ if (n < 20) nbTodoPop(n+1); return; }
+    try{ if (sessionStorage.getItem(k)) return; sessionStorage.setItem(k,'1'); }catch(e){}
+    stfModal(`<h3>\u{1F4D3} Notebook entries to complete</h3><p class="sub">You attended these, but your notebook entry is still missing or was returned.</p>${nbTodoHtml()}<div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Later</button><button class="btn" onclick="closeModal('stfModal');openFeature('lac')">Open my notebooks</button></div>`, 'wide'); }, 1500); }
 function sbTodoHtml(){ const L = sbMyTodo(); if (!L.length) return '';
   return `<div class="sbtodo"><b>\u23F0 Your SBFP days to complete (${L.length})</b>
     <p>These are the feeding days of your grade level parents. Please update each one: the status, the photos of the attendance sheet, and the parents' attendance.</p>
@@ -6369,18 +6447,38 @@ function attLearners(){
     ${can?`<div class="abtns small"><button class="abtn" onclick="attLearnerForm()"><span class="abico">\uFF0B</span><b>Add a learner</b><small>Type the details</small></button>
       <label class="abtn"><input type="file" accept=".xls,.xlsx" hidden onchange="attImportSF1(this)"><span class="abico">\u{1F4E5}</span><b>Import from LIS SF1</b><small>Adds your whole class with LRN</small></label></div>`:''}
     <div class="table-wrap"><table><thead><tr><th>No.</th><th>LRN</th><th>Name</th><th>Sex</th><th>Parent or guardian</th><th>Contact</th><th>Status</th>${can?'<th></th>':''}</tr></thead><tbody>
-    ${list.map((l,i)=>`<tr><td>${i+1}</td><td>${esc(l.lrn||'')}</td><td>${esc(lname(l))}</td><td>${l.sex}</td><td>${esc(l.parent||'')}</td><td>${esc(l.contact||'')}</td><td>${esc(l.status)}${l.statusDate?' ('+esc(dShort(l.statusDate))+')':''}</td>${can?`<td><button class="linkbtn" onclick="attLearnerForm('${l.id}')">Edit</button></td>`:''}</tr>`).join('') || `<tr><td colspan="8" class="empty">No learners yet.</td></tr>`}</tbody></table></div>`;
+    ${list.map((l,i)=>`<tr><td>${i+1}</td><td>${esc(l.lrn||'')}</td><td>${esc(lname(l))}</td><td>${l.sex}</td><td>${esc(l.parent||'')}</td><td>${esc(l.contact||'')}</td><td>${esc(l.status)}${l.statusDate?' ('+esc(dShort(l.statusDate))+')':''}</td>${can?`<td style="white-space:nowrap"><button class="linkbtn" onclick="attLearnerForm('${l.id}')">Edit</button>${l.status==='Active'||l.status==='Transferred In'?` · <button class="linkbtn" onclick="attLearnerLeft('${l.id}')">Transferred out or dropped</button>`:''}</td>`:''}</tr>`).join('') || `<tr><td colspan="8" class="empty">No learners yet.</td></tr>`}</tbody></table></div>`;
 }
 function attLearnerForm(id){
   const l = id ? ATT.learners.find(x=>x.id===id) : { status:'Active', sex:'M' };
   ['lrn','last','first','middle','birth','parent','contact','statusDate','reason','enrolled'].forEach(k => $('al_'+k).value = l[k]||'');
   $('al_id').value = id||''; $('al_sex').value = l.sex||'M'; $('al_status').value = l.status||'Active'; $('al_del').style.display = id ? '' : 'none'; $('al_err').textContent = ''; attStatusSync(); openModal('alModal');
 }
-function attStatusSync(){ $('al_moveRow').style.display = $('al_status').value==='Active' ? 'none' : ''; }
+// The ticks set the status: transferred in (with the date), or left the class (transferred out or dropped out, with the date)
+function attTick(which){
+  if (which==='in' && $('al_tin').checked) $('al_left').checked = false;
+  if (which==='left' && $('al_left').checked) $('al_tin').checked = false;
+  if (which){ $('al_statusDate').value = ''; $('al_reason').value = ''; }   // a new tick asks for its own date
+  const left = $('al_left').checked, kind = (document.querySelector('input[name=al_lk]:checked')||{}).value || 'Transferred Out';
+  $('al_status').value = left ? kind : $('al_tin').checked ? 'Transferred In' : 'Active'; attStatusSync();
+}
+function attStatusSync(){
+  const st = $('al_status').value, left = st==='Transferred Out' || st==='Dropped Out';
+  $('al_tin').checked = st==='Transferred In'; $('al_left').checked = left; $('al_leftKind').style.display = left ? '' : 'none';
+  if (left) document.querySelectorAll('input[name=al_lk]').forEach(r => r.checked = r.value===st);
+  $('al_moveRow').style.display = st==='Active' ? 'none' : '';
+  $('al_dateLbl').textContent = st==='Transferred In' ? 'When did the learner transfer in?' : st==='Transferred Out' ? 'When did the learner transfer out?' : st==='Dropped Out' ? 'When did the learner stop attending?' : 'Date';
+  $('al_reason').placeholder = st==='Transferred In' ? 'School the learner came from' : st==='Transferred Out' ? 'School the learner moved to' : 'Example: a.1 Had to take care of siblings';
+}
+function attLearnerLeft(id){ attLearnerForm(id); $('al_left').checked = true; attTick('left'); }
 async function attLearnerSave(){
   const learner = { sec:ATT.sec, id:$('al_id').value, sex:$('al_sex').value, status:$('al_status').value };
   ['lrn','last','first','middle','birth','parent','contact','statusDate','reason','enrolled'].forEach(k => learner[k] = $('al_'+k).value.trim());
-  if (learner.status!=='Active' && !learner.statusDate) return $('al_err').textContent = 'Choose the date of the '+learner.status.toLowerCase()+'.';
+  if (learner.status!=='Active' && !learner.statusDate) return $('al_err').textContent = learner.status==='Transferred In' ? 'Choose the date the learner transferred in.' : learner.status==='Transferred Out' ? 'Choose the date the learner transferred out.' : 'Choose the date the learner stopped attending.';
+  if (learner.statusDate && learner.statusDate > todayPH() && learner.status!=='Transferred In') return $('al_err').textContent = 'The date cannot be later than today.';
+  // a learner who transferred in and later left keeps the start date
+  const was = learner.id ? ATT.learners.find(x => x.id===learner.id) : null;
+  if (was && was.status==='Transferred In' && was.statusDate && (learner.status==='Transferred Out' || learner.status==='Dropped Out') && !learner.enrolled) learner.enrolled = was.statusDate;
   try{ ATT.learners = await api('learnerSave',{ learner }); attCachePut(); closeModal('alModal'); attDraw(); toast('Saved.'); }catch(e){ handleErr(e,'al_err'); }
 }
 async function attLearnerDelete(){ if (!confirm('Remove this learner from the class? Use Status instead if the learner transferred out or dropped out.')) return; try{ ATT.learners = await api('learnerDelete',{ section:ATT.sec, id:$('al_id').value }); attCachePut(); closeModal('alModal'); attDraw(); }catch(e){ handleErr(e,'al_err'); } }
@@ -7843,8 +7941,8 @@ async function openLac(tab){
 }
 function lacDot(){ if (!LAC.data || !USER) return; const t = todayPH();
   const n = lacHead() ? LAC.data.hub.filter(h => h.status==='Pending').length + (LAC.data.notebooks||[]).filter(x => x.email!==USER.email && !x.checkedOn && x.status!=='Returned').length
-    : LAC.data.hub.filter(h => hubLive(h) && (h.assign==='all' || (h.assign||[]).indexOf(USER.email) > -1) && h.byEmail!==USER.email && !LAC.data.progress.some(p => p.hub===h.id && p.email===USER.email)).length + LAC.data.sessions.filter(s => s.date===t && lacInvited(s, USER.email) && !lacMine(s.id,'ATT')).length;
-  const k = n + (lacHead() ? 0 : nbMissing().length);
+    : LAC.data.hub.filter(h => hubLive(h) && (h.assign==='all' || (h.assign||[]).indexOf(USER.email) > -1) && h.byEmail!==USER.email && !LAC.data.progress.some(p => p.hub===h.id && p.email===USER.email && p.status==='Finished')).length + LAC.data.sessions.filter(s => s.date===t && lacInvited(s, USER.email) && !lacMine(s.id,'ATT')).length;
+  const k = n + (lacHead() ? 0 : nbMissing().length + nbReturned().length);
   if (k !== LAC.dot){ LAC.dot = k; drawSide(); } }
 function lacDraw(){
   const D = LAC.data, head = lacHead(), admin = lacRole()==='admin', doc = D.sessions.some(s => s.documenter===USER.email);
@@ -7880,7 +7978,7 @@ function lacHome(){
   D.sessions.filter(s => s.documenter===me && s.date <= today && !(s.minutes&&s.minutes.on)).forEach(s => { if (!head) todo.push({ ico:'\u{1F4DD}', t:'Write the minutes', x:'You are the LAC Documenter of '+s.title, fn:`lacMinutesOpen('${s.id}')`, main:1 }); });
   const next = D.sessions.filter(s => s.date >= today && lacInvited(s, me)).sort((a,b) => a.date.localeCompare(b.date))[0];
   const done = mine.filter(h => (lacProg(h.id)||{}).status==='Finished').length;
-  $('lacBody').innerHTML = `<div class="ostats">
+  $('lacBody').innerHTML = `${head ? '' : nbTodoHtml()}<div class="ostats">
       <div class="ostat static"><span class="oico">\u{1F4C5}</span><b>${mySess.filter(s => lacMine(s.id,'ATT')).length} of ${mySess.length}</b><span>Sessions attended this school year</span></div>
       <div class="ostat static"><span class="oico">\u25B6</span><b>${done} of ${mine.length}</b><span>Learning Hub materials finished</span></div>
       <div class="ostat static"><span class="oico">\u{1F4D3}</span><b>${D.notebooks.filter(n => n.email===me).length}</b><span>Entries in my notebooks</span></div>
@@ -8804,7 +8902,7 @@ function lacMsgOpen(kind, id){
 function lacMsgText(kind, id){
   const head = (LAC.data.headName||USER.name), D = LAC.data; let t = '';
   if (kind==='sess'){ const s = lacS(id), att = lacRecs(id,'ATT'), not = lacInvitees(s).filter(p => !att.some(a => a.email===p.email) && p.role!=='head');
-    t = `Good day, Ma'am and Sir! \u{1F31F}\n\n${s.kind==='MEET'?'\u{1F4E2} Faculty Meeting':'\u{1F4DA} LAC Session'}: ${s.title}\n\u{1F4C5} ${fmtLong(s.date)}${lacTime(s)?', '+lacTime(s):''}\n\u{1F4CD} ${s.venue||'Baluyan Elementary School'}${s.link?'\n\u{1F517} Join here: '+s.link:''}${(s.facilitators||[]).length?'\n\u{1F3A4} '+(s.kind==='MEET'?'Presider':'Facilitator')+': '+s.facilitators.map(f=>f.name).join(', '):''}\n\nPlease open TALA, then LAC and Teacher Development:\n\u2705 Tick your attendance\n${s.kind==='LAC'?'\u{1F4D3} Write in your LAC Notebook and answer the reflection\n\u2B50 Evaluate the session and the speaker\n':'\u{1F4D3} Write your notes in the Meeting Notebook\n'}${not.length && s.date <= todayPH()?'\nNot yet signed: '+not.map(p=>p.name).join(', ')+'\n':''}\nThank you and God bless! \u{1F64F}\n${head}\nSchool Head`; }
+    t = `Good day, Ma'am and Sir! \u{1F31F}\n\n${s.kind==='MEET'?'\u{1F4E2} Faculty Meeting':'\u{1F4DA} LAC Session'}: ${s.title}\n\u{1F4C5} ${fmtLong(s.date)}${lacTime(s)?', '+lacTime(s):''}\n\u{1F4CD} ${s.venue||'Baluyan Elementary School'}${s.link?'\n\u{1F517} Join here: '+s.link:''}${(s.facilitators||[]).length?'\n\u{1F3A4} '+(s.kind==='MEET'?'Presider':'Facilitator')+': '+s.facilitators.map(f=>f.name).join(', '):''}${s.objectives?'\n\n\u{1F4DD} '+(s.kind==='MEET'?'Agenda':'Objectives')+':\n'+String(s.objectives).split('\n').filter(x=>x.trim()).map(x=>'\u2022 '+x.trim()).join('\n'):''}${Array.isArray(s.attendees)?'\n\n\u{1F465} Required to attend: '+lacInvitees(s).map(p=>p.name).join(', '):''}\n\nPlease open TALA, then LAC and Teacher Development:\n\u2705 Tick your attendance\n${s.kind==='LAC'?'\u{1F4D3} Write in your LAC Notebook and answer the reflection\n\u2B50 Evaluate the session and the speaker\n':'\u{1F4D3} Write your notes in the Meeting Notebook\n'}${not.length && s.date <= todayPH()?'\nNot yet signed: '+not.map(p=>p.name).join(', ')+'\n':''}\nThank you and God bless! \u{1F64F}\n${head}\nSchool Head`; }
   else if (kind==='follow'){ const s = lacS(id), sp = s.facilitators||[], rows = lacWhoRows(id).filter(r => r.p.role!=='head'), names = f => rows.filter(f).map(r => r.p.name);
     const parts = [], a = names(r => !r.att), e = names(r => r.att && !r.evs), f = names(r => r.att && !r.ref);
     if (a.length) parts.push('\u270D Attendance not yet signed:\n'+a.map(n=>'\u2022 '+n).join('\n'));
@@ -8972,7 +9070,7 @@ function mcLac(){
     if (n.length) per.push({ email:p.email, name:p.name, need:n.join('; ') }); });
   const held = D.sessions.filter(s => s.date <= today).sort((a,b) => b.date.localeCompare(a.date))[0];
   const next = D.sessions.filter(s => s.date >= today).sort((a,b) => a.date.localeCompare(b.date))[0];
-  const hub = D.hub.filter(h => hubLive(h)).sort((a,b) => String(b.updated||b.on||'').localeCompare(String(a.updated||a.on||'')))[0];
+  const hub = D.hub.filter(h => hubLive(h)).sort((a,b) => String(b.approvedOn||b.created||'').localeCompare(String(a.approvedOn||a.created||'')))[0];
   const k = [{ id:'pend', ico:'⏳', label:'Things to finish', items:per, done:'Everyone is up to date. Thank you!',
       group: () => mcGroup('📚 A friendly reminder from LAC and Teacher Development. Still to finish in TALA:', per, 'Please open TALA, then LAC and Teacher Development, to finish these.'),
       one: x => mcOne(x, 'A friendly reminder from LAC and Teacher Development. TALA shows these are still to finish:', 'Please open TALA to finish them. Message me if you need help.') }];
@@ -8980,8 +9078,20 @@ function mcLac(){
     k.push({ id:'held', ico:'✍', label:'Follow up: '+held.title, items:rows, done:'Everyone finished the follow up for this session.',
       group: () => { try{ return lacMsgText('follow', held.id); }catch(e){ return mcGroup('A friendly follow up for '+held.title+':', rows, 'Please open TALA to finish these.'); } },
       one: x => mcOne(x, `A friendly follow up for our ${lacKind(held)}: ${held.title} (${fmtLong(held.date)}).`, 'Please open TALA, LAC and Teacher Development, then the session, to finish it today.') }); }
-  if (next) k.push({ id:'next', ico:'📢', label:'Announce: '+next.title, items:null, always:true, group: () => { try{ return lacMsgText('sess', next.id); }catch(e){ return ''; } } });
-  if (hub) k.push({ id:'hub', ico:'▶', label:'Learning Hub: '+hub.title, items:null, always:true, group: () => { try{ return lacMsgText('hub', hub.id); }catch(e){ return ''; } } });
+  // notebook completion of the latest LAC session and the latest meeting
+  const nbKind = (kind, label, ico) => { const s = D.sessions.filter(x => x.kind===kind && x.date <= today).sort((a,b) => b.date.localeCompare(a.date))[0]; if (!s) return;
+    const att = lacInvitees(s).filter(p => p.role!=='head' && lacRecs(s.id,'ATT').some(r => r.email===p.email)), done = att.filter(p => nbWritten(s.id, p.email, kind)), not = att.filter(p => !nbWritten(s.id, p.email, kind)).map(p => ({ email:p.email, name:p.name, need:'No entry yet for '+s.title+'.' }));
+    k.push({ id:'nb'+kind, ico, label:label+': '+s.title, items:not, done:'Everyone who attended has written in the '+label+'. Thank you!',
+      group: () => `Good day, Ma'am and Sir! 🌟\n\n📓 ${label} for ${s.title} (${fmtLong(s.date)})\n\n✅ Completed (${done.length}):\n${done.map(p => '• '+p.name).join('\n') || '• None yet'}\n\n⏳ Not yet completed (${not.length}):\n${not.map(p => '• '+p.name).join('\n') || '• None'}\n\nPlease open TALA, then LAC and Teacher Development, then My Notebooks, and write your entry today.\n\nThank you! 🙏\n${mcSign()}`,
+      one: x => mcOne(x, `A friendly reminder: your ${label} entry for ${s.title} (${fmtLong(s.date)}) is still empty in TALA.`, 'Please open TALA, LAC and Teacher Development, My Notebooks, and write your entry today. Type it in your own words.') }); };
+  nbKind('LAC', 'LAC Notebook', '📓'); nbKind('MEET', 'Meeting Notebook', '🗒');
+  const nextMeet = D.sessions.filter(s => s.kind==='MEET' && s.date >= today).sort((a,b) => a.date.localeCompare(b.date))[0];
+  if (nextMeet) k.push({ id:'meet', ico:'📢', label:'Meeting: '+nextMeet.title, items:null, always:true, group: () => { try{ return lacMsgText('sess', nextMeet.id); }catch(e){ return ''; } } });
+  if (next && (!nextMeet || next.id!==nextMeet.id)) k.push({ id:'next', ico:'📢', label:'Announce: '+next.title, items:null, always:true, group: () => { try{ return lacMsgText('sess', next.id); }catch(e){ return ''; } } });
+  if (hub){ const as = hubAssignees(hub).filter(p => p.role!=='head' && (lacProg(hub.id, p.email)||{}).status!=='Finished').map(p => ({ email:p.email, name:p.name, need:((lacProg(hub.id, p.email)||{}).pct||0)+'% done'+(hub.target?', finish by '+dShort(hub.target):'') }));
+    k.push({ id:'hub', ico:'▶', label:'New material: '+hub.title, items:as, always:true, done:'Everyone finished this material.',
+      group: () => { try{ return lacMsgText('hub', hub.id); }catch(e){ return ''; } },
+      one: x => mcOne(x, `A new material in the TALA Learning Hub was assigned to you and needs your attention: ${hub.title}${hub.facilitator?' ('+hub.facilitator+')':''}.${hub.target?' Please finish it by '+fmtLong(hub.target)+'.':''}`, 'Open TALA, then LAC and Teacher Development, then Learning Hub. Watch or read it until the end so it is counted as finished.') }); }
   return k;
 }
 
