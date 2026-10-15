@@ -1767,8 +1767,8 @@ textarea.nbt{-webkit-touch-callout:none}
 
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
-const MIN_SERVER = '6.9'; // oldest Code.gs this page works with
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'6.9', date:'October 15, 2026' } };
+const MIN_SERVER = '7.0'; // oldest Code.gs this page works with
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'7.0', date:'October 15, 2026' } };
 function verLine(server){
   const old = server && (server.indexOf('older') > -1 || parseFloat(server) < parseFloat(MIN_SERVER));
   const s = server ? ' Server '+server+('.') : '';
@@ -3019,16 +3019,21 @@ function renderPrivate(){
 function tqStats(list, K){
   const docs = []; list.forEach(e => filesOf(e).filter(f => f.K===K && f.d.link && f.d.validation!=='Invalid').forEach(f => docs.push(f.d)));
   const timed = docs.filter(d => d.upLate), on = timed.filter(d => !d.upLate.late).length, pct = timed.length ? Math.round(on / timed.length * 100) : null;
-  const rated = docs.filter(d => Number(d.quality) > 0), q = rated.length ? rated.reduce((a,d) => a + Number(d.quality), 0) / rated.length : null;
-  return { files:docs.length, timed:timed.length, on, pct, tRate: pct===null ? null : pct===100 ? 5 : pct>=85 ? 4 : pct>=70 ? 3 : pct>=50 ? 2 : 1, q, rated:rated.length };
+  // Quality from the returns: a file never returned is 5. Each time it was returned (or marked a wrong file), it goes down by 1, to 1 at the lowest.
+  const all = []; list.forEach(e => filesOf(e).filter(f => f.K===K && f.d.link).forEach(f => all.push(f.d)));
+  const checked = all.filter(d => (d.history||[]).some(h => /^Validated/.test(h.event)));
+  const ret = d => (d.history||[]).filter(h => /^Validated, (Returned|Invalid)/.test(h.event)).length;
+  const score = d => Math.max(1, 5 - ret(d)), q = checked.length ? checked.reduce((a,d) => a + score(d), 0) / checked.length : null;
+  const nRet = checked.filter(d => ret(d) > 0).length, times = checked.reduce((a,d) => a + ret(d), 0);
+  return { files:docs.length, timed:timed.length, on, pct, tRate: pct===null ? null : pct===100 ? 5 : pct>=85 ? 4 : pct>=70 ? 3 : pct>=50 ? 2 : 1, q, rated:checked.length, nRet, times };
 }
 function qWord(n){ if (n===null || n===undefined) return ''; const r = Math.round(n); return ({ 5:'Outstanding', 4:'Very Satisfactory', 3:'Satisfactory', 2:'Unsatisfactory', 1:'Poor' })[Math.max(1, Math.min(5, r))]; }
 function qCls(n){ return n===null ? '' : n >= 4.5 ? 'g' : n >= 3.5 ? 'g2' : n >= 2.5 ? 'y' : 'r'; }
 function tqCards(list, who){
   const L = tqStats(list,'LPT'), P = tqStats(list,'PPT');
   const tc = (x, K) => `<div class="tqc ${qCls(x.tRate)}"><small>${K} Timeliness</small><b>${x.pct===null ? '·' : x.pct+'%'}</b><span>${x.pct===null ? 'No files counted yet' : x.on+' of '+x.timed+' on time · '+x.tRate+' '+qWord(x.tRate)}</span></div>`;
-  const qc = (x, K) => `<div class="tqc ${qCls(x.q)}"><small>${K} Quality</small><b>${x.q===null ? '·' : x.q.toFixed(2)}</b><span>${x.q===null ? 'Not yet rated' : qWord(x.q)+' · '+x.rated+' file'+(x.rated===1?'':'s')+' rated'}</span></div>`;
-  return `<div class="tqwrap"><div class="tqh"><b>${who ? esc(who)+', ' : 'My '}timeliness and quality, Term ${SEL.term}</b><span class="hint">On time means uploaded on or before the due day. By session, one day before that session. Quality is the School Head's rating, 1 to 5.</span></div>
+  const qc = (x, K) => `<div class="tqc ${qCls(x.q)}"><small>${K} Quality</small><b>${x.q===null ? '·' : x.q.toFixed(2)}</b><span>${x.q===null ? 'No file checked yet' : qWord(x.q)+' · '+(x.nRet ? x.nRet+' of '+x.rated+' returned, '+x.times+' time'+(x.times===1?'':'s') : 'none of '+x.rated+' returned')}</span></div>`;
+  return `<div class="tqwrap"><div class="tqh"><b>${who ? esc(who)+', ' : 'My '}timeliness and quality, Term ${SEL.term}</b><span class="hint">On time means uploaded on or before the due day (by session, one day before that session). Quality: a file never returned is 5. Each time a file is returned or marked a wrong file, it goes down by 1, to 1 at the lowest.</span></div>
     <div class="tqgrid">${tc(L,'LPT')}${tc(P,'PPT')}${qc(L,'LPT')}${qc(P,'PPT')}</div></div>`;
 }
 // School Head: every teacher's timeliness and quality for the term, to help in the IPCRF rating
@@ -3037,20 +3042,20 @@ function tqTable(){
   const cell = (v, r) => v===null ? '<span class="hint">·</span>' : `<span class="tqp ${qCls(r)}">${v}</span>`;
   const rows = T.map(t => { const m = DATA.entries.filter(e => e.email===t.email && e.term===SEL.term), L = tqStats(m,'LPT'), P = tqStats(m,'PPT');
     return `<tr><td><button class="linkbtn" onclick="tqOne('${esc(t.email)}')">${esc(t.name)}</button></td><td>${cell(L.pct===null?null:L.pct+'%', L.tRate)}<small>${L.timed?L.on+'/'+L.timed:''}</small></td><td>${cell(P.pct===null?null:P.pct+'%', P.tRate)}<small>${P.timed?P.on+'/'+P.timed:''}</small></td>
-      <td>${cell(L.q===null?null:L.q.toFixed(2), L.q)}<small>${L.q===null?'':qWord(L.q)}</small></td><td>${cell(P.q===null?null:P.q.toFixed(2), P.q)}<small>${P.q===null?'':qWord(P.q)}</small></td></tr>`; }).join('');
+      <td>${cell(L.q===null?null:L.q.toFixed(2), L.q)}<small>${L.q===null?'':qWord(L.q)+', '+L.times+' return'+(L.times===1?'':'s')}</small></td><td>${cell(P.q===null?null:P.q.toFixed(2), P.q)}<small>${P.q===null?'':qWord(P.q)+', '+P.times+' return'+(P.times===1?'':'s')}</small></td></tr>`; }).join('');
   return `<details class="byt" open><summary>Timeliness and quality by teacher, Term ${SEL.term} (for the IPCRF)</summary>
     <div class="table-wrap"><table class="tqtbl"><thead><tr><th>Teacher</th><th>LPT timeliness</th><th>PPT timeliness</th><th>LPT quality</th><th>PPT quality</th></tr></thead><tbody>${rows || '<tr><td colspan="5" class="hint">No teachers yet.</td></tr>'}</tbody></table></div>
-    <div class="obs-actions"><button class="btn ghost small" onclick="tqPrint()">🖨 Print for the IPCRF</button><span class="hint">Timeliness rating: 100% on time is 5, 85% or more is 4, 70% or more is 3, 50% or more is 2, below 50% is 1.</span></div></details>`;
+    <div class="obs-actions"><button class="btn ghost small" onclick="tqPrint()">🖨 Print for the IPCRF</button><span class="hint">Timeliness: 100% on time is 5, 85% or more is 4, 70% or more is 3, 50% or more is 2, below 50% is 1. Quality: each file starts at 5 and goes down by 1 each time it is returned.</span></div></details>`;
 }
 function tqOne(email){ const t = (DATA.teachers||[]).find(x => x.email===email) || { name:email }, m = DATA.entries.filter(e => e.email===email && e.term===SEL.term);
   stfModal(`${tqCards(m, t.name)}<div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Close</button><button class="btn" onclick="closeModal('stfModal');FILTER.teacher='${esc(email)}';FILTER.quick='all';renderPrivate()">See the files</button></div>`, 'wide'); }
 function tqPrint(){
   const test = DATA.testEmails||[], T = (DATA.teachers||[]).filter(t => test.indexOf(t.email) < 0);
   const rows = T.map((t,i) => { const m = DATA.entries.filter(e => e.email===t.email && e.term===SEL.term), L = tqStats(m,'LPT'), P = tqStats(m,'PPT'), f = (v, r) => v===null ? '' : v+' ('+r+')';
-    return `<tr><td>${i+1}</td><td>${esc(t.name.toUpperCase())}</td><td>${L.pct===null?'':L.pct+'%, '+L.on+' of '+L.timed}</td><td>${L.tRate||''}</td><td>${P.pct===null?'':P.pct+'%, '+P.on+' of '+P.timed}</td><td>${P.tRate||''}</td><td>${L.q===null?'':L.q.toFixed(2)}</td><td>${P.q===null?'':P.q.toFixed(2)}</td></tr>`; }).join('');
+    return `<tr><td>${i+1}</td><td>${esc(t.name.toUpperCase())}</td><td>${L.pct===null?'':L.pct+'%, '+L.on+' of '+L.timed}</td><td>${L.tRate||''}</td><td>${P.pct===null?'':P.pct+'%, '+P.on+' of '+P.timed}</td><td>${P.tRate||''}</td><td>${L.q===null?'':L.q.toFixed(2)+' ('+L.times+' return'+(L.times===1?'':'s')+')'}</td><td>${P.q===null?'':P.q.toFixed(2)+' ('+P.times+' return'+(P.times===1?'':'s')+')'}</td></tr>`; }).join('');
   $('printArea').innerHTML = `<div class="stfprint"><div class="stfp-page">${stfPrintHead('Timeliness and Quality of the LPT and PPT', 'Term '+SEL.term+', as of '+fmtLong(todayPH()))}
     <table class="stfp-tbl"><thead><tr><th>No.</th><th>Name of teacher</th><th>LPT on time</th><th>LPT timeliness rating</th><th>PPT on time</th><th>PPT timeliness rating</th><th>LPT quality (1 to 5)</th><th>PPT quality (1 to 5)</th></tr></thead><tbody>${rows}</tbody></table>
-    <p style="font-size:9.5pt">Timeliness: files uploaded on or before the due day (by session, one day before that session). 5 is 100% on time, 4 is 85% or more, 3 is 70% or more, 2 is 50% or more, 1 is below 50%. Quality: the School Head's rating of each approved file, 5 Outstanding, 4 Very Satisfactory, 3 Satisfactory, 2 Unsatisfactory, 1 Poor.</p>
+    <p style="font-size:9.5pt">Timeliness: files uploaded on or before the due day (by session, one day before that session). 5 is 100% on time, 4 is 85% or more, 3 is 70% or more, 2 is 50% or more, 1 is below 50%. Quality: each checked file starts at 5 (never returned) and goes down by 1 each time it was returned or marked a wrong file, to 1 at the lowest. 5 Outstanding, 4 Very Satisfactory, 3 Satisfactory, 2 Unsatisfactory, 1 Poor.</p>
     ${sigBlock([{ label:'', name:'', role:'' }, { label:'Prepared by:', name:USER.name, role:'School Head' }])}<p class="stfp-foot">Generated by TALA on ${esc(fmtLong(todayPH()))}.</p></div></div>`;
   setTimeout(() => window.print(), 250); }
 function myOverview(){
@@ -3127,7 +3132,7 @@ function docAction(e, f){
   if (USER.role==='admin') return d.link ? '' : '<span class="mk-wait">Waiting for the teacher</span>';
   if (USER.role==='head'){
     if (!d.link) return '<span class="mk-wait">Waiting for the teacher</span>';
-    return (s==='Pending' ? `<button class="btn small" onclick="openVal('${id}','${K}',false,${sn})" title="Approve and rate the quality">Approve and rate</button><button class="btn ghost small" onclick="openVal('${id}','${K}',false,${sn});document.querySelector('input[name=vDec][value=Returned]').click()">Return or add remarks</button>`
+    return (s==='Pending' ? `<button class="btn small" onclick="quickValidate('${id}','${K}',${sn},'Approved','')" title="Approve with no remarks">Approve</button><button class="btn ghost small" onclick="openVal('${id}','${K}',false,${sn})">Return or add remarks</button>`
       : `<span class="mk-ok" style="font-size:13px">Validated</span><button class="btn ghost small" onclick="openVal('${id}','${K}',true,${sn})">Edit validation</button>`)
       + `<button class="btn danger small" onclick="removeFile('${id}','${K}',${sn})">Delete ${L}</button>`;
   }
@@ -3452,7 +3457,7 @@ document.querySelectorAll('input[name=vDec]').forEach(r => r.addEventListener('c
 let V_EDIT = false, V_SESS = 0, V_Q = 0;
 const QUAL = { 5:'Outstanding', 4:'Very Satisfactory', 3:'Satisfactory', 2:'Unsatisfactory', 1:'Poor' };
 function vQ(n){ V_Q = n; document.querySelectorAll('#vQual button').forEach(b => b.classList.toggle('on', Number(b.dataset.q)===n)); }
-function vQualSync(){ $('vQualF').style.display = radioVal('vDec')==='Approved' ? '' : 'none'; }
+function vQualSync(){ $('vQualF').style.display = 'none'; }   // quality now comes from the number of returns
 function openVal(id, K, edit, sn){
   const e = DATA.entries.find(x=>x.id===id), d = docOf(e, K, sn);
   V_EDIT = !!edit; V_SESS = sn || 0;
@@ -3466,7 +3471,6 @@ function openVal(id, K, edit, sn){
 async function saveValidation(){
   const dec = radioVal('vDec'), rem = $('vRem').value.trim();
   if (dec === 'Returned' && !rem) return $('vErr').textContent = 'Add remarks so the teacher knows what to fix.';
-  if (dec === 'Approved' && !V_Q) return $('vErr').textContent = 'Rate the quality from 1 to 5 before approving.';
   closeModal('valModal');
   await quickValidate($('vId').value, $('vWhich').value, V_SESS, dec, rem, V_EDIT, V_Q);
 }
