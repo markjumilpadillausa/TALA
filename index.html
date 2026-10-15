@@ -924,7 +924,7 @@ textarea.nbt{-webkit-touch-callout:none}
 @media print{ .lacatt td.lacsig{height:34px;width:30%} .lacatt td.lacsig img{max-height:30px;max-width:150px} .lacprintph{display:grid;grid-template-columns:1fr 1fr;gap:8px} .lacprintph figure{margin:0;break-inside:avoid} .lacprintph img{width:100%;max-height:210px;object-fit:cover} .lacprintph figcaption{font-size:9pt;text-align:center}
   .stfprint h4{margin:10px 0 4px;font-size:11pt} .stfprint p{margin:3px 0} .nbprint{break-inside:auto} .stfprint ul{margin:4px 0} }
 
-/* Learning Hub player with TALA controls, and the floating notebook */
+/* Learning Hub player with TALA controls, and the floating journal */
 .hubstage{background:#000;border-radius:12px;overflow:hidden}.hubstage:fullscreen{display:flex;flex-direction:column;justify-content:center;border-radius:0}.hubstage:fullscreen .hubframe{flex:1;aspect-ratio:auto;border-radius:0}
 .hubmodal.withnotes{max-width:1280px}.hubwrap{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;align-items:stretch}.hubwrap.notes{grid-template-columns:minmax(0,1fr) 340px}
 .hubwrap:fullscreen{background:#000;gap:0;height:100vh;padding:0}.hubwrap:fullscreen .hubstage{display:flex;flex-direction:column;height:100vh;border-radius:0}.hubwrap:fullscreen .hubframe{flex:1;aspect-ratio:auto}.hubwrap:fullscreen .hubnote{border-radius:0;height:100vh;border-width:0 0 0 3px}.hubwrap:fullscreen .nbfab{display:none}
@@ -1041,6 +1041,15 @@ textarea.nbt{-webkit-touch-callout:none}
 .aralcard:hover{border-color:var(--brandtxt)}.aralcard-h{display:flex;justify-content:space-between;gap:8px;align-items:center}.aralcard small{color:var(--muted)}
 .aralcard-r{font-size:13.5px;line-height:1.4}.aralcard-r i{display:block;font-style:normal;font-size:11.5px;font-weight:700;color:var(--muted)}
 .nbtodo{background:#eef3fb;border-color:#b9cbe6}.nbtodo>b{color:#1d4f8a}.sbtodo-l button em{display:block;font-style:normal;font-weight:700;color:var(--brandtxt);font-size:12.5px;margin-top:2px}
+.stfsure{text-align:center}.stfsure-i{font-size:46px}.stfsure h3{margin:6px 0}.stfsure p{font-size:16px;margin:6px 0}.stfsure b{color:var(--brandtxt)}
+.todolist{display:grid;gap:10px}.todoblk{border:1.5px solid var(--line);border-radius:12px;padding:10px 12px}.todoblk-h{display:flex;align-items:center;gap:8px}.todoblk-h b{flex:1}.todoblk ul{margin:6px 0 0;padding-left:18px;font-size:14px}.todoblk li{margin:2px 0}
+.araltutee .stfreq-h{flex-wrap:wrap}.araltutee .stfreq-h>div{flex:1;min-width:160px}
+.vqual{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.vqual button{border:1.5px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font:inherit;padding:6px 2px;cursor:pointer}.vqual button b{display:block;font-size:18px}.vqual button small{font-size:10.5px;line-height:1.1;display:block}.vqual button.on{border-color:var(--brandtxt);background:var(--ok-soft)}
+.tqwrap{margin:10px 0 12px;padding:12px;border:1.5px solid var(--line);border-radius:14px;background:var(--card)}.tqh{display:flex;flex-direction:column;gap:2px;margin-bottom:8px}.tqh b{font-size:16px}
+.tqgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.tqc{border-radius:12px;padding:12px;background:var(--page);border:1.5px solid var(--line)}.tqc small{display:block;font-weight:700;color:var(--muted)}.tqc b{display:block;font-size:30px;line-height:1.15}.tqc span{font-size:12.5px;color:var(--muted)}
+.tqc.g{background:#e3f4e8;border-color:#9fd3ae}.tqc.g b{color:#1d6b36}.tqc.g2{background:#eef6e0;border-color:#c3dc9a}.tqc.g2 b{color:#3f6b12}.tqc.y{background:#fff4d6;border-color:#ecd28a}.tqc.y b{color:#8a5a00}.tqc.r{background:#fde6e6;border-color:#efb0b0}.tqc.r b{color:#a12a2a}
+.tqtbl td small{display:block;color:var(--muted);font-size:11.5px}.tqp{font-weight:800;padding:2px 8px;border-radius:999px;background:var(--page)}.tqp.g{background:#e3f4e8;color:#1d6b36}.tqp.g2{background:#eef6e0;color:#3f6b12}.tqp.y{background:#fff4d6;color:#8a5a00}.tqp.r{background:#fde6e6;color:#a12a2a}
+@media (max-width:700px){ .tqgrid{grid-template-columns:repeat(2,1fr)} }
 </style>
 </head>
 <body>
@@ -1274,6 +1283,9 @@ textarea.nbt{-webkit-touch-callout:none}
       <label><input type="radio" name="vDec" value="Returned">Validated, Returned</label>
       <label><input type="radio" name="vDec" value="Invalid">Wrong file, not counted</label>
     </div><div class="hint" id="vHint"></div></div>
+    <div class="field" id="vQualF"><span class="lbl">Quality of the file (for the IPCRF)</span><div class="vqual" id="vQual">
+      <button type="button" data-q="5" onclick="vQ(5)"><b>5</b><small>Outstanding</small></button><button type="button" data-q="4" onclick="vQ(4)"><b>4</b><small>Very Satisfactory</small></button><button type="button" data-q="3" onclick="vQ(3)"><b>3</b><small>Satisfactory</small></button><button type="button" data-q="2" onclick="vQ(2)"><b>2</b><small>Unsatisfactory</small></button><button type="button" data-q="1" onclick="vQ(1)"><b>1</b><small>Poor</small></button></div>
+      <div class="hint">Rate how complete, correct, and well prepared it is. Needed when you approve.</div></div>
     <div class="field"><label for="vRem">Remarks and findings</label><textarea id="vRem" maxlength="800" placeholder="Required when returning the file"></textarea></div>
     <div class="err" id="vErr"></div>
     <div class="modal-actions">
@@ -1755,8 +1767,8 @@ textarea.nbt{-webkit-touch-callout:none}
 
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
-const MIN_SERVER = '6.7'; // oldest Code.gs this page works with
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'6.7', date:'October 13, 2026' } };
+const MIN_SERVER = '6.9'; // oldest Code.gs this page works with
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'6.9', date:'October 15, 2026' } };
 function verLine(server){
   const old = server && (server.indexOf('older') > -1 || parseFloat(server) < parseFloat(MIN_SERVER));
   const s = server ? ' Server '+server+('.') : '';
@@ -1926,18 +1938,23 @@ function relDays(stamp, e, isUpload){
 function docState(d){ return d.link ? (d.validation||'Pending') : ''; }
 function pill(d){ const s=docState(d); return `<span class="pill ${s||'none'}">${STATE_LABEL[s]}</span>`; }
 // Every file of a submission: the LPT, then either one PPT for the week or one PPT per session
-function isSess(e){ return e.pptMode === 'session'; }
+function isSess(e, K){ return K==='LPT' ? e.lptMode === 'session' : e.pptMode === 'session'; }
 function filesOf(e){
-  const f = [{ K:'LPT', s:0, label:'LPT', d:e.lpt }];
+  const f = isSess(e,'LPT') ? (e.lptSessions||[]).map((d,i) => ({ K:'LPT', s:i+1, label:'LPT Session '+(i+1), d })) : [{ K:'LPT', s:0, label:'LPT', d:e.lpt }];
   if (isSess(e)) (e.pptSessions||[]).forEach((d,i) => f.push({ K:'PPT', s:i+1, label:'PPT Session '+(i+1), d }));
   else f.push({ K:'PPT', s:0, label:'PPT', d:e.ppt });
   return f;
 }
-function docOf(e, K, s){ return K==='LPT' ? e.lpt : (s ? e.pptSessions[s-1] : e.ppt); }
+function docOf(e, K, s){ return K==='LPT' ? (s ? e.lptSessions[s-1] : e.lpt) : (s ? e.pptSessions[s-1] : e.ppt); }
 // The PPT counts as one. By session, it is complete only when every session has a correct file.
-function pptAgg(e){
+// The LPT by session works the same way as the PPT by session
+function lptAgg(e){ return pptAgg(e, 'LPT'); }
+function pptAgg(e, K){
+  if (K==='LPT'){ if (!isSess(e,'LPT')){ const d = e.lpt, s = docState(d); return { sess:false, n:1, done: d.link && s!=='Invalid' ? 1 : 0, status:s||'', complete: !!d.link && s!=='Invalid', late:d.upLate, last:d }; }
+    return sessAgg(e.lptSessions||[]); }
   if (!isSess(e)){ const d = e.ppt, s = docState(d); return { sess:false, n:1, done: d.link && s!=='Invalid' ? 1 : 0, status:s||'', complete: !!d.link && s!=='Invalid', late:d.upLate, last:d }; }
-  const ss = e.pptSessions||[], ok = ss.filter(d=>d.link && d.validation!=='Invalid'), n = ss.length;
+  return sessAgg(e.pptSessions||[]); }
+function sessAgg(ss){ const ok = ss.filter(d=>d.link && d.validation!=='Invalid'), n = ss.length;
   const status = !ok.length ? (ss.some(d=>d.validation==='Invalid') ? 'Invalid' : '') : ss.some(d=>d.validation==='Returned') ? 'Returned'
     : ok.length < n ? 'Incomplete' : ok.every(d=>d.validation==='Approved') ? 'Approved' : 'Pending';
   const last = ok.slice().sort((a,b)=>String(a.countFrom||a.firstUpload).localeCompare(String(b.countFrom||b.firstUpload))).pop() || null;
@@ -1945,10 +1962,10 @@ function pptAgg(e){
   return { sess:true, n, done:ok.length, status, complete, late: complete && last ? last.upLate : null, last };
 }
 // Two items per submission: the LPT and the PPT. Only approved items count as submitted.
-function itemsOf(e){ const l = e.lpt, s = docState(l); return [{ K:'LPT', status:s||'', complete: !!l.link && s!=='Invalid', late:l.upLate, done:0, n:0 }, Object.assign({ K:'PPT' }, pptAgg(e))]; }
+function itemsOf(e){ return [Object.assign({ K:'LPT' }, lptAgg(e)), Object.assign({ K:'PPT' }, pptAgg(e))]; }
 function aggPill(st){ return `<span class="pill ${st||'none'}">${STATE_LABEL[st||'']}</span>`; }
 function fullyApproved(e){
-  return e.lpt.validation==='Approved' && pptAgg(e).status==='Approved';
+  return lptAgg(e).status==='Approved' && pptAgg(e).status==='Approved';
 }
 function isLate(e){ return filesOf(e).some(f => f.d.link && [f.d.downLate,f.d.printLate,f.d.upLate].some(x => x && x.late)); }
 function nowLocal(){ const d=new Date(); d.setMinutes(d.getMinutes()-d.getTimezoneOffset()); return d.toISOString().slice(0,16); }
@@ -2384,8 +2401,8 @@ function aralDraw(){
   const D = ARAL.data; if (!D) return;
   const role = aralRole(), head = role==='head', ao = role==='admin', tutor = aralIsTutor(), adviser = (D.mine||[]).length > 0;
   let tabs, who, stat;
-  if (head){ tabs = [['ov','Overview'],['cards','Notes by day'],['tag','Tag tutees and tutors'],['tutees','Tutees and tutors'],['rep','Reports'],['today','My ARAL today']]; who = 'School Head dashboard'; }
-  else if (ao){ tabs = [['ov','Overview'],['cards','Notes by day'],['tutees','Tutees and tutors'],['rep','Reports']]; who = 'Administrative Officer, view only'; }
+  if (head){ tabs = [['ov','Overview'],['class','Learner cards'],['cards','Notes by day'],['tag','Tag tutees and tutors'],['tutees','Tutees and tutors'],['rep','Reports'],['today','My ARAL today']]; who = 'School Head dashboard'; }
+  else if (ao){ tabs = [['ov','Overview'],['class','Learner cards'],['cards','Notes by day'],['tutees','Tutees and tutors'],['rep','Reports']]; who = 'Administrative Officer, view only'; }
   else if (tutor){ tabs = [['today','Today'],['notes','My tutees and notes'],['cards','Notes by day'],['rep','My reports']]; if (adviser) tabs.push(['class','My class in ARAL']); who = 'ARAL tutor'; }
   else if (adviser){ tabs = [['class','My learners in ARAL'],['cards','Notes by day']]; who = 'Adviser, view only'; }
   else { tabs = [['none','ARAL']]; who = 'Teacher'; }
@@ -2539,10 +2556,19 @@ async function aralTuteeSave(id, on, tutor){ try{ loading(true); aralSet(await a
 
 /* ----- Adviser: view only, the progress of my learners in ARAL ----- */
 function aralClass(){
-  const D = ARAL.data, mine = D.mine||[], list = (D.tutees||[]).filter(t => mine.indexOf(t.data.sec) > -1).sort((a,b) => String(a.data.name).localeCompare(String(b.data.name)));
+  const D = ARAL.data, mine = D.mine||[], all = aralAll();
+  // School Head and AO: every tutee, with filters. Adviser: the learners of my class.
+  let list = (D.tutees||[]).filter(t => all || mine.indexOf(t.data.sec) > -1);
+  const tutors = [...new Set(list.map(t => t.tutor))].filter(Boolean), secs = [...new Set(list.map(t => aralSecLabel(t)))].sort();
+  if (all){ if (ARAL.lt) list = list.filter(t => t.tutor===ARAL.lt); if (ARAL.lg) list = list.filter(t => aralSecLabel(t)===ARAL.lg); if (ARAL.lq) list = list.filter(t => String(t.data.name).toLowerCase().indexOf(ARAL.lq.toLowerCase()) > -1); }
+  list.sort((a,b) => String(a.data.name).localeCompare(String(b.data.name)));
   const out = aralNotInToday(list);
-  $('aralBody').innerHTML = `<p class="hint">View only. The ARAL tutor writes these notes. Here you can follow the attendance and progress of your learners.</p>
-    ${out.length?`<div class="aralout"><b>Not in ARAL today (${out.length}):</b> ${out.map(t => esc(t.data.name)).join(', ')} <button class="btn small" onclick="aralParentMsgs(aralNotInToday((ARAL.data.tutees||[]).filter(t => (ARAL.data.mine||[]).indexOf(t.data.sec) > -1)), 'adviser')">💬 Message the parents</button></div>`:''}
+  $('aralBody').innerHTML = `${all ? `<div class="aralbar"><div style="display:flex;gap:6px;flex-wrap:wrap"><select onchange="ARAL.lt=this.value;aralDraw()"><option value="">All tutors</option>${tutors.map(e => `<option value="${esc(e)}" ${ARAL.lt===e?'selected':''}>${esc(aralPName(e))}</option>`).join('')}</select>
+        <select onchange="ARAL.lg=this.value;aralDraw()"><option value="">All grades and sections</option>${secs.map(g => `<option ${ARAL.lg===g?'selected':''}>${esc(g)}</option>`).join('')}</select>
+        <input placeholder="Search a learner" value="${esc(ARAL.lq||'')}" onchange="ARAL.lq=this.value.trim();aralDraw()" style="padding:7px 10px;border:1px solid var(--line);border-radius:10px;font:inherit"></div><span class="hint">${list.length} learner${list.length===1?'':'s'}</span></div>
+      <p class="hint">Each learner's ARAL attendance, progress, and notes. Tap a date to read the note.</p>`
+    : `<p class="hint">View only. The ARAL tutor writes these notes. Here you can follow the attendance and progress of your learners.</p>`}
+    ${out.length && !all?`<div class="aralout"><b>Not in ARAL today (${out.length}):</b> ${out.map(t => esc(t.data.name)).join(', ')} <button class="btn small" onclick="aralParentMsgs(aralNotInToday((ARAL.data.tutees||[]).filter(t => (ARAL.data.mine||[]).indexOf(t.data.sec) > -1)), 'adviser')">💬 Message the parents</button></div>`:''}
     <div class="araltutees">${list.map(t => { const ns = aralNotes({ learner:t.learner }), last = ns.find(n => n.data.progress);
       return `<div class="araltutee"><div class="stfreq-h"><span class="oav">${esc((t.data.name||'?').charAt(0))}</span><div><b>${esc(t.data.name)}</b><small>${esc(aralSecLabel(t))} · Tutor: ${esc(t.tutorName||'')}</small><div>${aralAttTxt(aralLearnerAtt(t))} ${aralTodayTag(aralLearnerAtt(t))}</div></div>${last?`<span class="atn ${last.data.progress==='Mastered'?'ok':last.data.progress==='Developing'?'wait':'bad'}">Latest: ${esc(last.data.progress)}</span>`:''}</div>
         ${aralProgChips(t.learner)}
@@ -2905,8 +2931,8 @@ function applyData(d, first){
   if (first) SEL.term = pickCurrentTerm(DATA.settings);
   render(); renderAll();
   if (first){ showHome(); setTimeout(attWarm, 2500);
-    // personnel: check the notebook entries still to write, then remind once
-    setTimeout(() => { try{ if (USER && USER.role!=='head' && !aralOnly() && featOn('lac') && typeof LAC!=='undefined') lacLoad(true).then(() => { lacDot(); nbTodoPop(); if (CUR_FEATURE==='home') drawHome(); }).catch(()=>{}); }catch(e){} }, 2000); }
+    // personnel: check the journal entries still to write, then remind once
+    setTimeout(() => { try{ if (USER && USER.role!=='head' && !aralOnly() && featOn('lac') && typeof LAC!=='undefined') lacLoad(true).then(() => { lacDot(); todoPop(); if (CUR_FEATURE==='home') drawHome(); }).catch(() => todoPop()); else todoPop(2); }catch(e){} }, 2500); }
   else if ($('viewHome').style.display !== 'none') drawHome();
 }
 // Saves something and gets the updated page data back in the same trip
@@ -2977,7 +3003,7 @@ function renderPrivate(){
   let h = '';
   if (!st.t1 && !st.t2 && !st.t3) h += `<div class="notice">${head ? 'Set the term start dates so TALA can show week dates and count days late. Tap Term dates and deadline.' : 'Week dates and days late will show once the School Head sets the term dates.'}</div>`;
   h += `<div class="stats">${quick.map(q=>`<button class="stat ${q.warn&&q.n?'warn':''} ${FILTER.quick===q.k?'on':''}" onclick="FILTER.quick='${q.k}';renderPrivate()"><b>${q.n}</b><span>${esc(q.label)}</span></button>`).join('')}</div>`;
-  if (head) h += teacherTable(scope); else h += myOverview();
+  if (head) h += teacherTable(scope) + (USER.role==='head' || USER.role==='admin' ? tqTable() : ''); else h += myOverview();
   h += `<div class="filters">`;
   if (head) h += `<select onchange="FILTER.teacher=this.value;renderPrivate()" aria-label="Teacher"><option value="">All teachers</option>${(DATA.teachers||[]).map(t=>`<option value="${esc(t.email)}" ${FILTER.teacher===t.email?'selected':''}>${esc(t.name)}</option>`).join('')}</select>`;
   if (USER && USER.role==='head') h += `<button class="btn ghost small" onclick="msgCenter('lpt')">💬 Ready messages</button>`;
@@ -2988,6 +3014,45 @@ function renderPrivate(){
   renderList();
 }
 
+/* ----- Timeliness and quality per term (for the IPCRF) ----- */
+// Timeliness: files uploaded on time (by session, one day before the session). Quality: the School Head's rating, 1 to 5.
+function tqStats(list, K){
+  const docs = []; list.forEach(e => filesOf(e).filter(f => f.K===K && f.d.link && f.d.validation!=='Invalid').forEach(f => docs.push(f.d)));
+  const timed = docs.filter(d => d.upLate), on = timed.filter(d => !d.upLate.late).length, pct = timed.length ? Math.round(on / timed.length * 100) : null;
+  const rated = docs.filter(d => Number(d.quality) > 0), q = rated.length ? rated.reduce((a,d) => a + Number(d.quality), 0) / rated.length : null;
+  return { files:docs.length, timed:timed.length, on, pct, tRate: pct===null ? null : pct===100 ? 5 : pct>=85 ? 4 : pct>=70 ? 3 : pct>=50 ? 2 : 1, q, rated:rated.length };
+}
+function qWord(n){ if (n===null || n===undefined) return ''; const r = Math.round(n); return ({ 5:'Outstanding', 4:'Very Satisfactory', 3:'Satisfactory', 2:'Unsatisfactory', 1:'Poor' })[Math.max(1, Math.min(5, r))]; }
+function qCls(n){ return n===null ? '' : n >= 4.5 ? 'g' : n >= 3.5 ? 'g2' : n >= 2.5 ? 'y' : 'r'; }
+function tqCards(list, who){
+  const L = tqStats(list,'LPT'), P = tqStats(list,'PPT');
+  const tc = (x, K) => `<div class="tqc ${qCls(x.tRate)}"><small>${K} Timeliness</small><b>${x.pct===null ? '·' : x.pct+'%'}</b><span>${x.pct===null ? 'No files counted yet' : x.on+' of '+x.timed+' on time · '+x.tRate+' '+qWord(x.tRate)}</span></div>`;
+  const qc = (x, K) => `<div class="tqc ${qCls(x.q)}"><small>${K} Quality</small><b>${x.q===null ? '·' : x.q.toFixed(2)}</b><span>${x.q===null ? 'Not yet rated' : qWord(x.q)+' · '+x.rated+' file'+(x.rated===1?'':'s')+' rated'}</span></div>`;
+  return `<div class="tqwrap"><div class="tqh"><b>${who ? esc(who)+', ' : 'My '}timeliness and quality, Term ${SEL.term}</b><span class="hint">On time means uploaded on or before the due day. By session, one day before that session. Quality is the School Head's rating, 1 to 5.</span></div>
+    <div class="tqgrid">${tc(L,'LPT')}${tc(P,'PPT')}${qc(L,'LPT')}${qc(P,'PPT')}</div></div>`;
+}
+// School Head: every teacher's timeliness and quality for the term, to help in the IPCRF rating
+function tqTable(){
+  const test = DATA.testEmails||[], T = (DATA.teachers||[]).filter(t => test.indexOf(t.email) < 0);
+  const cell = (v, r) => v===null ? '<span class="hint">·</span>' : `<span class="tqp ${qCls(r)}">${v}</span>`;
+  const rows = T.map(t => { const m = DATA.entries.filter(e => e.email===t.email && e.term===SEL.term), L = tqStats(m,'LPT'), P = tqStats(m,'PPT');
+    return `<tr><td><button class="linkbtn" onclick="tqOne('${esc(t.email)}')">${esc(t.name)}</button></td><td>${cell(L.pct===null?null:L.pct+'%', L.tRate)}<small>${L.timed?L.on+'/'+L.timed:''}</small></td><td>${cell(P.pct===null?null:P.pct+'%', P.tRate)}<small>${P.timed?P.on+'/'+P.timed:''}</small></td>
+      <td>${cell(L.q===null?null:L.q.toFixed(2), L.q)}<small>${L.q===null?'':qWord(L.q)}</small></td><td>${cell(P.q===null?null:P.q.toFixed(2), P.q)}<small>${P.q===null?'':qWord(P.q)}</small></td></tr>`; }).join('');
+  return `<details class="byt" open><summary>Timeliness and quality by teacher, Term ${SEL.term} (for the IPCRF)</summary>
+    <div class="table-wrap"><table class="tqtbl"><thead><tr><th>Teacher</th><th>LPT timeliness</th><th>PPT timeliness</th><th>LPT quality</th><th>PPT quality</th></tr></thead><tbody>${rows || '<tr><td colspan="5" class="hint">No teachers yet.</td></tr>'}</tbody></table></div>
+    <div class="obs-actions"><button class="btn ghost small" onclick="tqPrint()">🖨 Print for the IPCRF</button><span class="hint">Timeliness rating: 100% on time is 5, 85% or more is 4, 70% or more is 3, 50% or more is 2, below 50% is 1.</span></div></details>`;
+}
+function tqOne(email){ const t = (DATA.teachers||[]).find(x => x.email===email) || { name:email }, m = DATA.entries.filter(e => e.email===email && e.term===SEL.term);
+  stfModal(`${tqCards(m, t.name)}<div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Close</button><button class="btn" onclick="closeModal('stfModal');FILTER.teacher='${esc(email)}';FILTER.quick='all';renderPrivate()">See the files</button></div>`, 'wide'); }
+function tqPrint(){
+  const test = DATA.testEmails||[], T = (DATA.teachers||[]).filter(t => test.indexOf(t.email) < 0);
+  const rows = T.map((t,i) => { const m = DATA.entries.filter(e => e.email===t.email && e.term===SEL.term), L = tqStats(m,'LPT'), P = tqStats(m,'PPT'), f = (v, r) => v===null ? '' : v+' ('+r+')';
+    return `<tr><td>${i+1}</td><td>${esc(t.name.toUpperCase())}</td><td>${L.pct===null?'':L.pct+'%, '+L.on+' of '+L.timed}</td><td>${L.tRate||''}</td><td>${P.pct===null?'':P.pct+'%, '+P.on+' of '+P.timed}</td><td>${P.tRate||''}</td><td>${L.q===null?'':L.q.toFixed(2)}</td><td>${P.q===null?'':P.q.toFixed(2)}</td></tr>`; }).join('');
+  $('printArea').innerHTML = `<div class="stfprint"><div class="stfp-page">${stfPrintHead('Timeliness and Quality of the LPT and PPT', 'Term '+SEL.term+', as of '+fmtLong(todayPH()))}
+    <table class="stfp-tbl"><thead><tr><th>No.</th><th>Name of teacher</th><th>LPT on time</th><th>LPT timeliness rating</th><th>PPT on time</th><th>PPT timeliness rating</th><th>LPT quality (1 to 5)</th><th>PPT quality (1 to 5)</th></tr></thead><tbody>${rows}</tbody></table>
+    <p style="font-size:9.5pt">Timeliness: files uploaded on or before the due day (by session, one day before that session). 5 is 100% on time, 4 is 85% or more, 3 is 70% or more, 2 is 50% or more, 1 is below 50%. Quality: the School Head's rating of each approved file, 5 Outstanding, 4 Very Satisfactory, 3 Satisfactory, 2 Unsatisfactory, 1 Poor.</p>
+    ${sigBlock([{ label:'', name:'', role:'' }, { label:'Prepared by:', name:USER.name, role:'School Head' }])}<p class="stfp-foot">Generated by TALA on ${esc(fmtLong(todayPH()))}.</p></div></div>`;
+  setTimeout(() => window.print(), 250); }
 function myOverview(){
   const mine = DATA.entries.filter(e => e.term===SEL.term), items = [];
   mine.forEach(e => itemsOf(e).forEach(x => items.push(x)));
@@ -2997,11 +3062,11 @@ function myOverview(){
     const es = mine.filter(e=>e.week===w), it = [].concat(...es.map(itemsOf)).filter(x=>x.status);
     const st = !it.length ? '' : it.some(x=>x.status==='Returned'||x.status==='Invalid') ? 'ret' : it.every(x=>x.status==='Approved') ? 'ok' : 'wait';
     return `<button class="wk ${st} ${SEL.week===w?'on':''}" title="Week ${w}" onclick="SEL.week='${w}';renderAll()">${w}</button>`; }).join('');
-  return `<details class="byt" open><summary>My overview, Term ${SEL.term}</summary><div class="ovwrap">
+  return `${tqCards(mine)}<details class="byt" open><summary>My overview, Term ${SEL.term}</summary><div class="ovwrap">
     <div class="ovgrid">${box(c(x=>x.K==='LPT'&&x.status==='Approved'),'LPT submitted','g')}${box(c(x=>x.K==='PPT'&&x.status==='Approved'),'PPT submitted','g')}
-    ${box(c(x=>x.status==='Pending'),'For checking','y')}${box(c(x=>x.status==='Incomplete'),'PPT incomplete','y')}${box(c(x=>x.status==='Returned'),'Returned','r')}
+    ${box(c(x=>x.status==='Pending'),'For checking','y')}${box(c(x=>x.status==='Incomplete'),'Incomplete (by session)','y')}${box(c(x=>x.status==='Returned'),'Returned','r')}
     ${box(c(x=>x.status==='Invalid'),'Wrong file','r')}${box(c(x=>x.status==='Approved'&&x.late&&!x.late.late),'On time','g')}${box(c(x=>x.complete&&x.late&&x.late.late),'Late','r')}</div>
-    <p class="hint" style="margin:8px 0 0">A file counts as submitted once the School Head approves it. A PPT uploaded by session counts once all sessions are in.</p>
+    <p class="hint" style="margin:8px 0 0">A file counts as submitted once the School Head approves it. An LPT or PPT uploaded by session counts once all sessions are in.</p>
     <div class="wkstrip"><span class="hint">Weeks:</span>${weeks}<span class="hint wklegend"><i class="ok"></i>Approved <i class="wait"></i>Waiting <i class="ret"></i>Returned <i></i>None</span></div></div></details>`;
 }
 function teacherTable(scope){
@@ -3044,8 +3109,8 @@ function docCore(e, f){
   return h + `<div class="act">${docAction(e,f)}</div>`;
 }
 function docBox(e, k){
-  if (k==='ppt' && isSess(e)){ const a = pptAgg(e); return `<div class="doc"><div class="doc-h"><span class="type PPT">PPT</span><span class="src">By session, ${a.done}/${a.n}</span>${aggPill(a.status)}</div>${
-    filesOf(e).filter(f=>f.s).map(f => `<div class="sess"><div class="doc-h"><b>Session ${f.s}</b>${f.d.source?`<span class="src">${esc(f.d.source)}</span>`:''}${pill(f.d)}</div>${docCore(e,f)}</div>`).join('')}</div>`; }
+  if (isSess(e, k.toUpperCase())){ const K = k.toUpperCase(), a = pptAgg(e, K); return `<div class="doc"><div class="doc-h"><span class="type ${K}">${K}</span><span class="src">By session, ${a.done}/${a.n}</span>${aggPill(a.status)}</div>${
+    filesOf(e).filter(f=>f.s && f.K===K).map(f => `<div class="sess"><div class="doc-h"><b>Session ${f.s}</b>${f.d.source?`<span class="src">${esc(f.d.source)}</span>`:''}${pill(f.d)}</div>${docCore(e,f)}</div>`).join('')}</div>`; }
   const f = filesOf(e).find(x => x.K === k.toUpperCase()), K = f.K, d = f.d;
   return `<div class="doc"><div class="doc-h"><span class="type ${K}">${K}</span>${d.source?`<span class="src">${esc(d.source)}</span>`:''}${pill(d)}</div>${docCore(e,f)}</div>`;
 }
@@ -3062,7 +3127,7 @@ function docAction(e, f){
   if (USER.role==='admin') return d.link ? '' : '<span class="mk-wait">Waiting for the teacher</span>';
   if (USER.role==='head'){
     if (!d.link) return '<span class="mk-wait">Waiting for the teacher</span>';
-    return (s==='Pending' ? `<button class="btn small" onclick="quickValidate('${id}','${K}',${sn},'Approved','')" title="Approve with no remarks">Approve</button><button class="btn ghost small" onclick="openVal('${id}','${K}',false,${sn})">Return or add remarks</button>`
+    return (s==='Pending' ? `<button class="btn small" onclick="openVal('${id}','${K}',false,${sn})" title="Approve and rate the quality">Approve and rate</button><button class="btn ghost small" onclick="openVal('${id}','${K}',false,${sn});document.querySelector('input[name=vDec][value=Returned]').click()">Return or add remarks</button>`
       : `<span class="mk-ok" style="font-size:13px">Validated</span><button class="btn ghost small" onclick="openVal('${id}','${K}',true,${sn})">Edit validation</button>`)
       + `<button class="btn danger small" onclick="removeFile('${id}','${K}',${sn})">Delete ${L}</button>`;
   }
@@ -3081,7 +3146,7 @@ function renderList(){
   }
   if (FILTER.view==='table'){
     const cell = (e,k) => {
-      if (k==='ppt' && isSess(e)){ const a = pptAgg(e); return `<div style="margin:0 0 4px">${aggPill(a.status)} <b>By session, ${a.done}/${a.n}</b></div>` + filesOf(e).filter(f=>f.s).map(f => `<div class="tsess"><b>Session ${f.s}</b> ${cellCore(e,f)}</div>`).join(''); }
+      if (isSess(e, k.toUpperCase())){ const K = k.toUpperCase(), a = pptAgg(e, K); return `<div style="margin:0 0 4px">${aggPill(a.status)} <b>By session, ${a.done}/${a.n}</b></div>` + filesOf(e).filter(f=>f.s && f.K===K).map(f => `<div class="tsess"><b>Session ${f.s}</b> ${cellCore(e,f)}</div>`).join(''); }
       return cellCore(e, filesOf(e).find(x => x.K === k.toUpperCase()));
     };
     const cellCore = (e,f) => { const d = f.d;
@@ -3130,7 +3195,7 @@ function renderList(){
 
 /* ---------- Submit wizard ---------- */
 function openSubmit(id){
-  if (typeof W === 'object' && W) W.pptMode = '';
+  if (typeof W === 'object' && W){ W.pptMode = ''; W.lptMode = ''; }
   const e = id ? DATA.entries.find(x=>x.id===id) : null;
   W = e ? {term:e.term, grade:e.grade, subject:e.subject, week:e.week, fixed:true}
         : {term:SEL.term, grade:'', subject:'', week:SEL.week==='all'?'':SEL.week, fixed:false};
@@ -3179,28 +3244,28 @@ function drawWizard(){
   W.scan = null; drawLC();
 
   DOC_KEYS.forEach(K => { if ($(K+'Seg')) { segSync(K+'Seg'); syncSame(K); } });
-  if ($('pptModeSeg')) segSync('pptModeSeg');
+  if ($('pptModeSeg')) segSync('pptModeSeg'); if ($('lptModeSeg')) segSync('lptModeSeg');
 }
+// The LPT and the PPT can each be one file for the whole week, or one file per session.
+// By session, each file is due one day before that session.
 function docBlock(K){
-  if (K==='PPT'){
-    const e = W.entry, sessMode = e ? isSess(e) || (!e.ppt.link && W.pptMode==='session') : W.pptMode==='session';
-    const locked = e && (e.ppt.link || (e.pptSessions||[]).some(d=>d.link)); // mode is fixed once a PPT is uploaded
-    if (!W.pptMode) W.pptMode = e && isSess(e) ? 'session' : 'week';
-    const mode = locked ? (isSess(e) ? 'session' : 'week') : W.pptMode;
-    const modeBox = `<div class="field"><span class="lbl">How is your PPT this week?</span><div class="seg" id="pptModeSeg">
-      <label><input type="radio" name="pptMode" value="week" ${mode==='week'?'checked':''} ${locked?'disabled':''} onchange="W.pptMode='week';redrawPPT()">One file for the whole week</label>
-      <label><input type="radio" name="pptMode" value="session" ${mode==='session'?'checked':''} ${locked?'disabled':''} onchange="W.pptMode='session';redrawPPT()">One file per session</label>
-    </div>${locked?'<div class="hint">This was set when you uploaded your first PPT for this week.</div>':''}</div>`;
-    if (mode==='session') return `<div id="pptWrap">${sessionBlock(modeBox)}</div>`;
-    return `<div id="pptWrap">${singleBlock('PPT', modeBox)}</div>`;
-  }
-  return singleBlock(K, '');
+  const k = K.toLowerCase(), e = W.entry, mk = k+'Mode', sess = e ? (K==='LPT' ? e.lptSessions : e.pptSessions) || [] : [];
+  const locked = e && (e[k].link || sess.some(d=>d.link)); // the way of uploading is fixed once the first file is uploaded
+  if (!W[mk]) W[mk] = e && isSess(e, K) ? 'session' : 'week';
+  const mode = locked ? (isSess(e, K) ? 'session' : 'week') : W[mk];
+  const modeBox = `<div class="field"><span class="lbl">How is your ${K} this week?</span><div class="seg" id="${k}ModeSeg">
+      <label><input type="radio" name="${k}Mode" value="week" ${mode==='week'?'checked':''} ${locked?'disabled':''} onchange="W.${mk}='week';redrawDoc('${K}')">One file for the whole week</label>
+      <label><input type="radio" name="${k}Mode" value="session" ${mode==='session'?'checked':''} ${locked?'disabled':''} onchange="W.${mk}='session';redrawDoc('${K}')">One file per session</label>
+    </div>${locked?`<div class="hint">This was set when you uploaded your first ${K} for this week.</div>`:`<div class="hint">By session, upload each file at least one day before that session to be on time.</div>`}</div>`;
+  if (mode==='session') return `<div id="${k}Wrap">${sessionBlock(K, modeBox)}</div>`;
+  return `<div id="${k}Wrap">${singleBlock(K, modeBox)}</div>`;
 }
-function redrawPPT(){ const w = $('pptWrap'); if (!w) return; w.outerHTML = docBlock('PPT'); segSync('pptModeSeg'); if ($('PPTSeg')){ segSync('PPTSeg'); syncSame('PPT'); } }
+function redrawDoc(K){ const k = K.toLowerCase(), w = $(k+'Wrap'); if (!w) return; w.outerHTML = docBlock(K); segSync(k+'ModeSeg'); if ($(K+'Seg')){ segSync(K+'Seg'); syncSame(K); } }
+function redrawPPT(){ redrawDoc('PPT'); }
 // One PPT file per session: shared source and dates, one upload box per session
-function sessionBlock(modeBox){
-  const e = W.entry, n = sessionsFor(W.grade), base = expected('PPT', W.term, W.grade, W.subject, W.week);
-  const docs = e && isSess(e) ? e.pptSessions : [];
+function sessionBlock(K, modeBox){
+  const e = W.entry, n = sessionsFor(W.grade), base = expected(K, W.term, W.grade, W.subject, W.week);
+  const docs = e && isSess(e, K) ? (K==='LPT' ? e.lptSessions : e.pptSessions) : [];
   const any = Array.from({length:n},(_,i)=>docs[i]||{}).find(d=>d.link) || {};
   const val = v => v ? String(v).replace(' ','T') : '';
   const boxes = Array.from({length:n},(_,i) => {
@@ -3211,33 +3276,33 @@ function sessionBlock(modeBox){
       ${st==='Returned'?`<div class="remarks" style="margin:6px 0"><b>Returned. Upload the revised file. It will replace ${esc(d.fileName)}.</b>${esc(d.remarks||'')}</div>`:''}
       ${st==='Invalid'?`<div class="remarks" style="margin:6px 0"><b>Wrong file, not counted. Upload the correct file for this session.</b>${esc(d.remarks||'')}</div>`:''}
       <div class="namerow"><code>${esc(name)}</code><button type="button" class="btn small" onclick="copyText('${esc(name)}')">Copy name</button></div>
-      <input type="file" id="PPTS${i+1}File" accept=".pdf,.ppt,.pptx" style="margin-top:6px;width:100%" onchange="checkSess(${i+1})">
-      <div class="fcheck" id="PPTS${i+1}Check"></div></div>`; }).join('');
-  return `<div class="docblock" id="PPTBlockS"><h4><span class="type PPT">PPT</span>PPT (PowerPoint Presentation)</h4>${modeBox}
-    <p class="hint" style="margin:0 0 8px">Upload only the sessions you have now. You can upload the rest later. Up to 30 MB each. Tip: save each PPT as PDF first to make it lighter.</p>
-    <div class="field"><span class="lbl">Source</span><div class="seg" id="PPTSeg">
-      <label><input type="radio" name="PPTsrc" value="From DZIIS" ${any.source==='From DZIIS'?'checked':''} onchange="segSync('PPTSeg')">PPT from DZIIS</label>
-      <label><input type="radio" name="PPTsrc" value="Teacher-made" ${any.source==='Teacher-made'?'checked':''} onchange="segSync('PPTSeg')">PPT Teacher-made</label>
+      <input type="file" id="${K}S${i+1}File" accept="${K==='LPT'?'.pdf,.doc,.docx':'.pdf,.ppt,.pptx'}" style="margin-top:6px;width:100%" onchange="checkSess(${i+1},'${K}')">
+      <div class="fcheck" id="${K}S${i+1}Check"></div></div>`; }).join('');
+  return `<div class="docblock" id="${K}BlockS"><h4><span class="type ${K}">${K}</span>${K==='LPT'?'LPT (Lesson Plan for Teachers)':'PPT (PowerPoint Presentation)'}</h4>${modeBox}
+    <p class="hint" style="margin:0 0 8px">Upload only the sessions you have now. You can upload the rest later, at least one day before each session. Up to ${K==='LPT'?10:30} MB each.${K==='PPT'?' Tip: save each PPT as PDF first to make it lighter.':''}</p>
+    <div class="field"><span class="lbl">Source</span><div class="seg" id="${K}Seg">
+      <label><input type="radio" name="${K}src" value="From DZIIS" ${any.source==='From DZIIS'?'checked':''} onchange="segSync('${K}Seg')">${K} from DZIIS</label>
+      <label><input type="radio" name="${K}src" value="Teacher-made" ${any.source==='Teacher-made'?'checked':''} onchange="segSync('${K}Seg')">${K} Teacher-made</label>
     </div></div>
     <div class="sgrid">${boxes}</div>
     <div class="row2" style="margin-top:10px">
-      <div class="field"><label for="PPTDown">Date and time downloaded</label><input type="datetime-local" id="PPTDown" max="${nowLocal()}" value="" oninput="syncSame('PPT')"></div>
-      <div class="field"><label for="PPTPrint">Date and time printed (if printed)</label><input type="datetime-local" id="PPTPrint" max="${nowLocal()}" value=""></div>
+      <div class="field"><label for="${K}Down">Date and time downloaded</label><input type="datetime-local" id="${K}Down" max="${nowLocal()}" value="" oninput="syncSame('${K}')"></div>
+      <div class="field"><label for="${K}Print">Date and time printed${K==='PPT'?' (if printed)':''}</label><input type="datetime-local" id="${K}Print" max="${nowLocal()}" value=""></div>
     </div>
-    <label class="check"><input type="checkbox" id="PPTSame" onchange="syncSame('PPT')">I printed it on the same date and time I downloaded it</label>
+    <label class="check"><input type="checkbox" id="${K}Same" onchange="syncSame('${K}')">I printed it on the same date and time I downloaded it</label>
     <div class="hint">These dates apply to the session files you are uploading now.</div>
   </div>`;
 }
-function checkSess(n){
-  const input = $('PPTS'+n+'File'), f = input.files[0], out = $('PPTS'+n+'Check'); out.innerHTML='';
+function checkSess(n, K){ K = K || 'PPT';
+  const input = $(K+'S'+n+'File'), f = input.files[0], out = $(K+'S'+n+'Check'); out.innerHTML='';
   if (!f) return true;
-  const name = expected('PPT', W.term, W.grade, W.subject, W.week)+'_Session'+n;
+  const name = expected(K, W.term, W.grade, W.subject, W.week)+'_Session'+n, lim = K==='LPT' ? 10 : 30;
   const m = f.name.match(/^(.*)\.([A-Za-z0-9]+)$/), ext = m ? m[2].toLowerCase() : '';
-  if (['pdf','ppt','pptx'].indexOf(ext) < 0){ out.innerHTML = '<span class="mk-late">Upload a PDF or PowerPoint file.</span>'; input.value=''; return false; }
-  if (f.size > 30*1048576){ out.innerHTML = `<span class="mk-late">This file is ${(f.size/1048576).toFixed(1)} MB. The limit is 30 MB. Save it as PDF to make it lighter.</span>`; input.value=''; return false; }
+  if ((K==='LPT' ? ['pdf','doc','docx'] : ['pdf','ppt','pptx']).indexOf(ext) < 0){ out.innerHTML = `<span class="mk-late">Upload a PDF or ${K==='LPT'?'Word':'PowerPoint'} file.</span>`; input.value=''; return false; }
+  if (f.size > lim*1048576){ out.innerHTML = `<span class="mk-late">This file is ${(f.size/1048576).toFixed(1)} MB. The limit is ${lim} MB. Save it as PDF to make it lighter.</span>`; input.value=''; return false; }
   if (m[1].toLowerCase() !== name.toLowerCase()){
     out.innerHTML = `<span class="mk-late">Your file is named "${esc(f.name)}". It must be named ${esc(name)}.${esc(ext)}</span>`;
-    $('renSub').textContent = `Your PPT for Session ${n} is named "${f.name}". TALA only accepts files named exactly like this:`;
+    $('renSub').textContent = `Your ${K} for Session ${n} is named "${f.name}". TALA only accepts files named exactly like this:`;
     $('renName').textContent = name; input.value=''; openModal('renModal'); return false;
   }
   out.innerHTML = '<span class="mk-ok">The file name is correct.</span>'; return true;
@@ -3311,16 +3376,17 @@ function readB64(file){
 async function submitDocs(){
   $('wErr').textContent='';
   const jobs = [];
-  if ($('PPTBlockS')){
-    const n = sessionsFor(W.grade), src = radioVal('PPTsrc'), down = $('PPTDown').value, same = $('PPTSame').checked, pr = same ? down : $('PPTPrint').value;
-    const picked = Array.from({length:n},(_,i)=>i+1).filter(s => $('PPTS'+s+'File') && $('PPTS'+s+'File').files[0]);
+  for (const K of ['LPT','PPT']){ if (!$(K+'BlockS')) continue;
+    const n = sessionsFor(W.grade), src = radioVal(K+'src'), down = $(K+'Down').value, same = $(K+'Same').checked, pr = same ? down : $(K+'Print').value;
+    const picked = Array.from({length:n},(_,i)=>i+1).filter(s => $(K+'S'+s+'File') && $(K+'S'+s+'File').files[0]);
     if (picked.length){
-      if (!src) return $('wErr').textContent = 'Choose where the PPT came from: from DZIIS or Teacher-made.';
-      if (!down) return $('wErr').textContent = 'Enter the date and time the PPT was downloaded.';
-      if (pr && pr < down) return $('wErr').textContent = 'The PPT cannot be printed before it was downloaded.';
+      if (!src) return $('wErr').textContent = 'Choose where the '+K+' came from: from DZIIS or Teacher-made.';
+      if (!down) return $('wErr').textContent = 'Enter the date and time the '+K+' was downloaded.';
+      if (K==='LPT' && !pr) return $('wErr').textContent = 'Enter the date and time the LPT was printed, or tick the same date and time box.';
+      if (pr && pr < down) return $('wErr').textContent = 'The '+K+' cannot be printed before it was downloaded.';
       for (const s of picked){
-        if (!checkSess(s)) return $('wErr').textContent = 'Rename the PPT file for Session '+s+' first, then choose it again.';
-        jobs.push({ x:{ which:'PPT', session:s, term:W.term, grade:W.grade, subject:W.subject, week:W.week, source:src, downloaded:down, same, printed:pr }, file:$('PPTS'+s+'File').files[0] });
+        if (!checkSess(s, K)) return $('wErr').textContent = 'Rename the '+K+' file for Session '+s+' first, then choose it again.';
+        jobs.push({ x:{ which:K, session:s, term:W.term, grade:W.grade, subject:W.subject, week:W.week, source:src, downloaded:down, same, printed:pr }, file:$(K+'S'+s+'File').files[0] });
       }
     }
   }
@@ -3382,8 +3448,11 @@ function vHint(){
     : radioVal('vDec')==='Returned' ? 'The teacher will be able to reupload this file.'
     : radioVal('vDec')==='Invalid' ? 'Use this when the file is not the LPT or PPT. It will not count as submitted, and days late keep counting until the correct file is uploaded.' : '';
 }
-document.querySelectorAll('input[name=vDec]').forEach(r => r.addEventListener('change', () => { segSync('vSeg'); vHint(); }));
-let V_EDIT = false, V_SESS = 0;
+document.querySelectorAll('input[name=vDec]').forEach(r => r.addEventListener('change', () => { segSync('vSeg'); vHint(); vQualSync(); }));
+let V_EDIT = false, V_SESS = 0, V_Q = 0;
+const QUAL = { 5:'Outstanding', 4:'Very Satisfactory', 3:'Satisfactory', 2:'Unsatisfactory', 1:'Poor' };
+function vQ(n){ V_Q = n; document.querySelectorAll('#vQual button').forEach(b => b.classList.toggle('on', Number(b.dataset.q)===n)); }
+function vQualSync(){ $('vQualF').style.display = radioVal('vDec')==='Approved' ? '' : 'none'; }
 function openVal(id, K, edit, sn){
   const e = DATA.entries.find(x=>x.id===id), d = docOf(e, K, sn);
   V_EDIT = !!edit; V_SESS = sn || 0;
@@ -3391,26 +3460,27 @@ function openVal(id, K, edit, sn){
   $('valTitle').textContent = (edit ? 'Edit validation of ' : 'Validate ')+K+(sn?' Session '+sn:'');
   $('valSub').innerHTML = `${esc(e.teacher)}: ${esc(e.grade)}, ${esc(e.subject)}, Term ${esc(e.term)} Week ${esc(e.week)}<br>File: ${fileLink(d)}`;
   document.querySelectorAll('input[name=vDec]').forEach(r => r.checked = r.value === (d.validation==='Returned'||d.validation==='Invalid'?d.validation:'Approved'));
-  segSync('vSeg'); vHint(); $('vRem').value = d.remarks||''; $('vErr').textContent='';
+  segSync('vSeg'); vHint(); $('vRem').value = d.remarks||''; $('vErr').textContent=''; vQ(Number(d.quality||0)); vQualSync();
   openModal('valModal');
 }
 async function saveValidation(){
   const dec = radioVal('vDec'), rem = $('vRem').value.trim();
   if (dec === 'Returned' && !rem) return $('vErr').textContent = 'Add remarks so the teacher knows what to fix.';
+  if (dec === 'Approved' && !V_Q) return $('vErr').textContent = 'Rate the quality from 1 to 5 before approving.';
   closeModal('valModal');
-  await quickValidate($('vId').value, $('vWhich').value, V_SESS, dec, rem, V_EDIT);
+  await quickValidate($('vId').value, $('vWhich').value, V_SESS, dec, rem, V_EDIT, V_Q);
 }
 // The screen updates right away. Saving happens in the background.
-async function quickValidate(id, K, sn, dec, rem, edit){
+async function quickValidate(id, K, sn, dec, rem, edit, q){
   const e = DATA.entries.find(x=>x.id===id); if (!e) return;
   const d = docOf(e, K, sn), L = K + (sn ? ' Session '+sn : ''), before = JSON.stringify(d), on = nowLocal().replace('T',' ')+':00';
-  d.validation = dec; d.remarks = rem || ''; d.validatedOn = on;
+  d.validation = dec; d.remarks = rem || ''; d.validatedOn = on; d.quality = dec==='Approved' ? String(q||'') : '';
   d.history = (d.history||[]).slice();
   if (edit){ for (let i = d.history.length-1; i >= 0; i--) if (/^Validated/.test(d.history[i].event)){ d.history[i] = {on, event:'Validated, '+dec+' (edited)', remarks:rem}; break; } }
   else d.history.push({on, event:'Validated, '+dec, remarks:rem});
   renderList(); toast(L+(dec==='Approved'?' approved and locked.':dec==='Invalid'?' marked as wrong file. It is not counted.':' returned to the teacher.'));
   loading(true);
-  try{ await apiData('validateFile',{id, which:K, session:sn||0, decision:dec, remarks:rem, edit:!!edit}); }
+  try{ await apiData('validateFile',{id, which:K, session:sn||0, decision:dec, remarks:rem, edit:!!edit, quality:q||0}); }
   catch(err){ Object.assign(d, JSON.parse(before)); renderList(); handleErr(err); }
   loading(false);
 }
@@ -3447,21 +3517,23 @@ function printWeek(){
     const lines = e.pptSessions.map((d,k) => { const lastV = dedupe(d.history||[]).filter(x=>/^Validated/.test(x.event)).pop();
       return `<li><b>Session ${k+1}:</b> ${!d.link ? 'Not yet submitted.' : esc(STATE_LABEL[docState(d)])+(lastV && lastV.remarks ? '. <i>\u201C'+esc(lastV.remarks)+'\u201D</i>' : '.')}</li>`; }).join('');
     return `<b>PPT (by session, ${a.done}/${a.n}):</b> ${esc(head.charAt(0).toUpperCase()+head.slice(1))}<ul class="p-hist">${lines}</ul>`; };
-  const remarks = e => `<div>${status(e.lpt,e,'LPT')}</div><div class="p-rmk">${pptStatus(e)}</div>`;
-  const pptRow = e => { const a = pptAgg(e);
+  const lptStatusP = e => { if (!isSess(e,'LPT')) return status(e.lpt,e,'LPT'); const a = lptAgg(e);
+    return `<b>LPT (by session, ${a.done}/${a.n}):</b> ${a.complete ? (a.late ? esc(a.late.text) : 'Complete') : 'Incomplete'}<ul class="p-hist">${e.lptSessions.map((d,k) => `<li><b>Session ${k+1}:</b> ${!d.link ? 'Not yet submitted.' : esc(STATE_LABEL[docState(d)])+(d.upLate?', '+esc(d.upLate.text):'')+'.'}</li>`).join('')}</ul>`; };
+  const remarks = e => `<div>${lptStatusP(e)}</div><div class="p-rmk">${pptStatus(e)}</div>`;
+  const pptRow = (e, K) => { K = K || 'PPT'; const a = pptAgg(e, K);
     if (!a.sess) return null;
     const L = a.last || {};
-    const tiles = e.pptSessions.map((d,k) => (d.link && d.validation!=='Invalid')
+    const tiles = (K==='LPT' ? e.lptSessions : e.pptSessions).map((d,k) => (d.link && d.validation!=='Invalid')
       ? `<span class="p-qs">${qrSmall(d, 46)}<b>S${k+1}</b></span>`
       : `<span class="p-qs none"><i></i><b>S${k+1}</b></span>`).join('');
-    return { file:`<b>${esc(expected('PPT', e.term, e.grade, e.subject, e.week))}_Session1 to ${a.n}</b><br>By session, ${a.done}/${a.n}<div class="p-qrow">${tiles}</div>`, source:esc(L.source||''),
+    return { file:`<b>${esc(expected(K, e.term, e.grade, e.subject, e.week))}_Session1 to ${a.n}</b><br>By session, ${a.done}/${a.n}<div class="p-qrow">${tiles}</div>`, source:esc(L.source||''),
       down: L.link ? dt(L.downloaded, L.downLate) : '', print: L.link ? (L.printed ? dt(L.printed, L.printLate) : 'Not printed') : '',
       up: a.complete ? dt(L.countFrom||L.firstUpload, a.late) : (a.done ? 'Incomplete, '+a.done+'/'+a.n : ''), val: esc(STATE_LABEL[a.status||'']) }; };
   let rows = '', i = 0;
   list.forEach(e => { i++;
-    const fs = [{ K:'LPT', s:0, d:e.lpt }, { K:'PPT', s:0, d:e.ppt }], span = 2, pr = pptRow(e);
-    fs.forEach((f,j) => { const d=f.d;
-      if (f.K==='PPT' && pr){ rows += `<tr><td style="text-align:center"><b>PPT</b></td><td>${pr.file}</td><td>${pr.source}</td><td>${pr.down}</td><td>${pr.print}</td><td>${pr.up}</td><td>${pr.val}</td></tr>`; return; }
+    const fs = [{ K:'LPT', s:0, d:e.lpt }, { K:'PPT', s:0, d:e.ppt }], span = 2, pr = pptRow(e,'PPT'), lr = pptRow(e,'LPT');
+    fs.forEach((f,j) => { const d=f.d, sr = f.K==='PPT' ? pr : lr;
+      if (sr){ rows += `<tr>${j===0?`<td rowspan="${span}" style="text-align:center">${i}</td>${head?`<td rowspan="${span}">${esc(e.teacher)}</td>`:''}<td rowspan="${span}">${esc(e.grade)}</td><td rowspan="${span}">${esc(e.subject)}</td>`:''}<td style="text-align:center"><b>${f.K}</b></td><td>${sr.file}</td><td>${sr.source}</td><td>${sr.down}</td><td>${sr.print}</td><td>${sr.up}</td><td>${sr.val}</td>${j===0?`<td rowspan="${span}" class="p-rem">${remarks(e)}</td><td rowspan="${span}" class="p-sig"></td>`:''}</tr>`; return; }
       rows += `<tr>${j===0?`<td rowspan="${span}" style="text-align:center">${i}</td>${head?`<td rowspan="${span}">${esc(e.teacher)}</td>`:''}<td rowspan="${span}">${esc(e.grade)}</td><td rowspan="${span}">${esc(e.subject)}</td>`:''}
         <td style="text-align:center"><b>${f.K}</b>${f.s?'<br>Session '+f.s:''}</td><td>${esc(d.fileName||'')}${qrBox(d.link, 56)}</td><td>${esc(d.source||'')}</td>
         <td>${dt(d.downloaded,d.downLate)}</td><td>${d.printed?dt(d.printed,d.printLate)+(d.same?'<br>(same as download)':''):(d.link?'Not printed':'')}</td>
@@ -3607,17 +3679,17 @@ GUIDES.stfsum_teacher = { name:'Summary', steps: [ { el:'.stfsum', t:'What you f
 GUIDES.stfsum_admin = { name:'Summary', steps: [ { el:'.stfsum', t:'Per teacher', x:'Leave, locator slips, travel, early outs, and wellness leave per teacher. Print it for the School Head.' } ] };
 GUIDES.stfsum_head = { name:'Summary', steps: [ { el:'.stfsum', t:'Per teacher', x:'How many requests you granted for each teacher, by month, term, or school year. Tap a name to see the list.' } ] };
 GUIDES.lac_teacher = { name:'LAC and Teacher Development', steps: [
-  { el:'.lactabs', t:'Everything in one place', x:'Sessions, the Learning Hub, and your notebooks. Your dashboard shows what you still need to do.' },
-  { el:'#lacBody .abtns', t:'To do', x:'Tick your attendance, evaluate the session and the speaker, write in your LAC Notebook, and watch the materials assigned to you.' } ] };
+  { el:'.lactabs', t:'Everything in one place', x:'Sessions, the Learning Hub, and your journals. Your dashboard shows what you still need to do.' },
+  { el:'#lacBody .abtns', t:'To do', x:'Tick your attendance, evaluate the session and the speaker, write in your LAC Journal, and watch the materials assigned to you.' } ] };
 GUIDES.lac_head = { name:'LAC and Teacher Development', steps: [
-  { el:'.lactabs', t:'Your tabs', x:'Sessions, Learning Hub, your own notebooks, Minutes and reports, and the Overview of everyone.' },
-  { el:'#lacBody .abtns', t:'To do', x:'Materials to approve, minutes to write, and notebook entries to check. You can also attend, evaluate, and write notes like the teachers.' } ] };
+  { el:'.lactabs', t:'Your tabs', x:'Sessions, Learning Hub, your own journals, Minutes and reports, and the Overview of everyone.' },
+  { el:'#lacBody .abtns', t:'To do', x:'Materials to approve, minutes to write, and journal entries to check. You can also attend, evaluate, and write notes like the teachers.' } ] };
 GUIDES.lac_admin = { name:'LAC and Teacher Development', steps: [ { el:'.lactabs', t:'View and print', x:'Open Minutes and reports, and the Overview, to view and print the attendance, evaluations, minutes, and reports.' } ] };
 GUIDES.lachub_teacher = { name:'Learning Hub', steps: [ { el:'.hubgrid', t:'Watch and learn', x:'Tap a video to play it. The bar shows how far you are. Mark it almost finished at 90%, and it is finished at the end. Add your own material with Add a material.' } ] };
 GUIDES.lachub_head = { name:'Learning Hub', steps: [ { el:'#lacBody .tabs', t:'Approve first', x:'Materials from teachers wait for your approval. Approve or return them, then see the progress of everyone.' } ] };
 GUIDES.lachub_admin = GUIDES.lachub_teacher;
-GUIDES.lacnb_teacher = { name:'My Notebooks', steps: [ { el:'.nbbang', t:'Your notebooks', x:'LAC Notebook with the reflection, Meeting Notebook, and Notes. Type in your own words. The School Head can read them. They are saved on your device first when offline.' } ] };
-GUIDES.lacnb_head = { name:'Notebooks', steps: [ { el:'#lacBody select', t:'Read and check', x:'Choose a teacher to read the notebooks, then tap Check and add a remark. "Check this entry" means a large block of text appeared at once.' } ] };
+GUIDES.lacnb_teacher = { name:'My Journals', steps: [ { el:'.nbbang', t:'Your journals', x:'LAC Journal with the reflection, Meeting Journal, and Notes. Type in your own words. The School Head can read them. They are saved on your device first when offline.' } ] };
+GUIDES.lacnb_head = { name:'Journals', steps: [ { el:'#lacBody select', t:'Read and check', x:'Choose a teacher to read the journals, then tap Check and add a remark. "Check this entry" means a large block of text appeared at once.' } ] };
 GUIDES.lacnb_admin = GUIDES.lacnb_teacher;
 GUIDES.att_admin = { name:'Attendance', steps: [ { el:'.abtns', t:'View and print', x:'See any class SF2 live and the SF4, then print them for signing.' } ] };
 var TOUR = [], GKEY = '';
@@ -4269,7 +4341,8 @@ function drawLessonFiles(){
   if (!e){ el.innerHTML = `<div class="lfiles none">No LPT or PPT uploaded for ${esc(g)}, ${esc(s)}, Term ${tw.term} Week ${tw.week}.</div>`; return; }
   const link = (d, label) => d && d.link ? `<a href="${esc(d.link)}" target="_blank" rel="noopener">${esc(label)}</a>` : `<span class="mk-wait">${esc(label)}: not uploaded</span>`;
   const ppt = isSess(e) ? e.pptSessions.map((d,i)=>link(d,'PPT Session '+(i+1))).join(' ') : link(e.ppt,'PPT');
-  el.innerHTML = `<div class="lfiles"><b>Lesson files this week:</b> ${link(e.lpt,'LPT')} ${ppt}</div>`;
+  const lpt = isSess(e,'LPT') ? e.lptSessions.map((d,i)=>link(d,'LPT Session '+(i+1))).join(' ') : link(e.lpt,'LPT');
+  el.innerHTML = `<div class="lfiles"><b>Lesson files this week:</b> ${lpt} ${ppt}</div>`;
 }
 function focusList(){ const own = ((DATA&&DATA.settings)||{}).focus || []; return MWA_FOCUS.filter(f=>f!=='Others').concat(own); }
 function pickFocus(el){ document.querySelectorAll('#mFocus .fchip').forEach(x=>x.classList.toggle('on', x.contains(el) && el.checked)); $('mOther').style.display = el.value==='Others' ? 'flex' : 'none'; if (el.value==='Others') $('mOtherTxt').focus(); }
@@ -5404,19 +5477,47 @@ function sbMyTodo(){
   }
   return out;
 }
-// Personnel: LAC and meeting notebook entries still to write (and entries returned by the School Head). It stays until written.
+// Personnel: LAC and meeting journal entries still to write (and entries returned by the School Head). It stays until written.
 function nbTodoList(){ try{ if (!USER || USER.role==='head' || aralOnly() || typeof LAC==='undefined' || !LAC.data || !featOn('lac')) return [];
   return nbReturned().map(n => ({ ret:1, id:n.id, t:(n.title || (lacS(n.session)||{}).title || NB_BOOKS[n.book]), x:'Returned by the School Head'+(n.remark?': '+n.remark:''), book:NB_BOOKS[n.book] }))
-    .concat(nbMissing().map(s => ({ sid:s.id, kind:s.kind==='MEET'?'MEET':'LAC', t:s.title, x:dShort(s.date)+'. You attended, but your notebook is still empty.', book:s.kind==='MEET'?'Meeting Notebook':'LAC Notebook' }))); }catch(e){ return []; } }
+    .concat(nbMissing().map(s => ({ sid:s.id, kind:s.kind==='MEET'?'MEET':'LAC', t:s.title, x:dShort(s.date)+'. You attended, but your journal is still empty.', book:s.kind==='MEET'?'Meeting Journal':'LAC Journal' }))); }catch(e){ return []; } }
 function nbTodoHtml(){ const L = nbTodoList(); if (!L.length) return '';
-  return `<div class="sbtodo nbtodo"><b>\u{1F4D3} Your notebook entries to complete (${L.length})</b>
-    <p>Please write in your notebook for each session or meeting below. This reminder stays until the entry is written.</p>
+  return `<div class="sbtodo nbtodo"><b>\u{1F4D3} Your journal entries to complete (${L.length})</b>
+    <p>Please write in your journal for each session or meeting below. This reminder stays until the entry is written.</p>
     <div class="sbtodo-l">${L.map(x => `<button onclick="${x.ret?`openFeature('lac');setTimeout(()=>nbOpen('${x.id}'),900)`:`openFeature('lac');setTimeout(()=>nbOpenFor('${x.sid}','${x.kind}'),900)`}"><span>${esc(x.book)}</span><b>${esc(x.t)}</b><small>${esc(x.x)}</small><em>${x.ret?'Complete now':'Write now'} ›</em></button>`).join('')}</div></div>`; }
 // Shown once each time the person signs in, while something is still missing
-function nbTodoPop(n){ n = n || 0; const L = nbTodoList(); if (!L.length) return; const k = 'tala_nbpop_'+USER.email+'_'+todayPH(); try{ if (sessionStorage.getItem(k)) return; }catch(e){}
-  setTimeout(() => { if ($('stfModal').classList.contains('open') || ($('tour') && !$('tour').hidden)){ if (n < 20) nbTodoPop(n+1); return; }
+// One reminder when the person opens TALA: every tab with work still to do, with the details. Shown once per sign in.
+function todoItems(){
+  if (!USER) return [];
+  const out = [], head = USER.role==='head', teacher = USER.role==='teacher', name = id => ((FEATURES.find(f => f.id===id)||{}).name || id);
+  const tabs = aralOnly() ? ['aral'] : ['lpt','obs','sbfp','att','lac','aral'].filter(id => id==='lpt' || head || featOn(id));
+  tabs.forEach(id => { let lines = [];
+    try{
+      if (id==='lpt' && teacher && DATA && DATA.entries){
+        DATA.entries.filter(e => e.email===USER.email).forEach(e => itemsOf(e).forEach(x => { if (x.status==='Returned' || x.status==='Invalid') lines.push(x.K+' of '+e.grade+' '+e.subject+', Week '+e.week+(x.status==='Invalid'?': wrong file, upload again':': returned, fix and upload again')); }));
+        const st = DATA.settings, t = pickCurrentTerm(st), w = pickCurrentWeek(t), wk = w!=='all' ? weekOf(t, w) : null;
+        if (wk && todayPH() >= wk.due && !DATA.entries.some(e => e.email===USER.email && e.term===t && e.week===w)) lines.push('No LPT and PPT uploaded yet for Term '+t+', Week '+w+' (due '+dShort(wk.due)+').'); }
+      if (id==='obs' && teacher && typeof OBS!=='undefined') (OBS.list||[]).filter(o => o.teacherEmail===USER.email && o.status==='Sent').forEach(o => { const L = obsLapse(o); lines.push((otype(o)==='mwa'?'MWA':'ePMCF')+' of '+dShort(o.date)+': please review and sign'+(L&&L.d?', '+L.d+' day'+(L.d>1?'s':'')+' waiting':'')+'.'); });
+      if (id==='sbfp' && teacher) sbMyTodo().forEach(x => lines.push('SBFP '+dShort(x.date)+': '+x.need.join(', ')+'.'));
+      if (id==='lac' && !head && typeof LAC!=='undefined' && LAC.data){ nbTodoList().forEach(x => lines.push(x.book+', '+x.t+': '+(x.ret?'returned, please complete.':'no entry yet.')));
+        LAC.data.sessions.filter(s => s.date===todayPH() && lacInvited(s, USER.email) && !lacMine(s.id,'ATT')).forEach(s => lines.push(s.title+': tick your attendance today.'));
+        lacHubMine().filter(h => (lacProg(h.id)||{}).status!=='Finished').forEach(h => lines.push('Learning Hub: '+h.title+(h.target?', finish by '+dShort(h.target):'')+'.')); }
+      if (id==='aral' && !head && USER.role!=='admin'){ const n = aralTodoCount(); if (n) lines.push(n+' ARAL note'+(n>1?'s':'')+' to write or lock (drafts, and learners present without a note).'); }
+    }catch(e){}
+    const k = featCount(id);
+    if (!lines.length && k) lines.push(head ? ({ lpt:k+' file(s) waiting for your validation.', obs:k+' observation(s) waiting for your signature.', lac:k+' material(s) to approve or journal entries to check.', att:k+' request(s) waiting for your decision.', aral:k+' new ARAL entr'+(k>1?'ies':'y')+' from the tutors.', sbfp:k+' new SBFP entr'+(k>1?'ies':'y')+'.' })[id] || k+' item(s) need your attention.' : k+' item(s) need your attention.');
+    if (lines.length) out.push({ id, label:name(id), n:Math.max(k, lines.length), lines }); });
+  return out;
+}
+function todoPop(n){ n = n || 0; if (!USER || USER.mustChange) return; const k = 'tala_todopop_'+USER.email+'_'+todayPH(); try{ if (sessionStorage.getItem(k)) return; }catch(e){}
+  setTimeout(() => { if ($('stfModal').classList.contains('open') || ($('tour') && !$('tour').hidden) || (typeof CAM!=='undefined' && CAM.res)){ if (n < 30) todoPop(n+1); return; }
+    const L = todoItems(); if (!L.length) return;
     try{ if (sessionStorage.getItem(k)) return; sessionStorage.setItem(k,'1'); }catch(e){}
-    stfModal(`<h3>\u{1F4D3} Notebook entries to complete</h3><p class="sub">You attended these, but your notebook entry is still missing or was returned.</p>${nbTodoHtml()}<div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Later</button><button class="btn" onclick="closeModal('stfModal');openFeature('lac')">Open my notebooks</button></div>`, 'wide'); }, 1500); }
+    stfModal(`<h3>📌 Please check these</h3><p class="sub">${USER.role==='head'?'These tabs have a red number. They need your action.':'You still have these to do. Tabs with a red number need your attention. The number goes away only when the task is done.'}</p>
+      <div class="todolist">${L.map(x => `<div class="todoblk"><div class="todoblk-h"><b>${esc(x.label)}</b><i class="sdot">${x.n > 99 ? '99+' : x.n}</i><button class="btn small" onclick="closeModal('stfModal');openFeature('${x.id}')">Open</button></div>
+        <ul>${x.lines.slice(0,5).map(t => `<li>${esc(t)}</li>`).join('')}${x.lines.length>5?`<li class="hint">and ${x.lines.length-5} more</li>`:''}</ul></div>`).join('')}</div>
+      <div class="modal-actions"><button class="btn" onclick="closeModal('stfModal')">Okay</button></div>`, 'wide'); }, n ? 2000 : 800); }
+function nbTodoPop(){ todoPop(); }
 function sbTodoHtml(){ const L = sbMyTodo(); if (!L.length) return '';
   return `<div class="sbtodo"><b>\u23F0 Your SBFP days to complete (${L.length})</b>
     <p>These are the feeding days of your grade level parents. Please update each one: the status, the photos of the attendance sheet, and the parents' attendance.</p>
@@ -5912,7 +6013,7 @@ function aboutSlides(){
     <div><h3 class="ah3" data-edit>What TALA does</h3>${list(['Keeps everything in one place, online and even offline.','Records every action with the date and time, so we are accountable.','Computes totals, percentages, and lateness automatically.','Prints DepEd ready reports and Division templates in one tap.'])}</div></div>`);
   wrap('One Portal, Many Programs', `<div class="agrid agrid9">${card('\u2637','LPT and PPT Tracking','Weekly upload, validation, lateness, QR codes, and the weekly report.','#1e5a8c')}${card('\u25C9','Observations','ePMCF classroom observation and PMCF MWA, with e-signatures and Division Excel.','#6a2c99')}
     ${card('\u{1F372}','SBFP Monitoring','Menu of the day, parents\u2019 schedule, photos, attendance, and participation.','#d35400')}${card('\u270D','Learner Attendance','AM and PM attendance, the DepEd SF2 and SF4, Messenger messages, and weekly stars.','#1e5a8c')}
-    ${card('\u{1F552}','Time Records and Requests','Time in and Time out, leave on CS Form No. 6, locator slips, travel, and wellness leave.','#2f7a4a')}${card('\u{1F393}','LAC and Learning Hub','Sessions, e-signed attendance, evaluations, minutes, notebooks, videos, and slides to learn.','#b06000')}
+    ${card('\u{1F552}','Time Records and Requests','Time in and Time out, leave on CS Form No. 6, locator slips, travel, and wellness leave.','#2f7a4a')}${card('\u{1F393}','LAC and Learning Hub','Sessions, e-signed attendance, evaluations, minutes, journals, videos, and slides to learn.','#b06000')}
     ${card('\u{1F4C5}','School Calendar','Activities, SBFP menus, and memos with photos and MOVs.','#2f7a4a')}${card('\u{1F4CA}','School M&amp;E Reports','PIR presentation, every report in one place, and annotation tools.','#b06000')}${card('\u2712','E-signatures and Chat','Sign documents online, message the team, and get notified.','#a3271b')}</div>
     <p class="pnote" data-edit>Also linked from TALA: Project e-READ for the Learner Reading Assessment, and Project ABONO for the Reimbursement Inventory.</p>`);
   wrap('LPT and PPT Tracking', `<div class="pcols"><div>${list(['Teachers upload the LPT and PPT with the correct file name, for the whole week or by session.','The School Head validates: Approved, Returned with remarks, or Wrong file.','TALA counts on time and late submissions from the Monday deadline.','Every file gets a QR code for monitoring visitors.'])}</div>
@@ -5925,8 +6026,8 @@ function aboutSlides(){
     <div>${list(['The DepEd SF2 filled on the original LIS template.','The SF4 of the whole school for the School Head and the AO.','Learners absent 5 days in a row are flagged right away.'])}</div></div>`);
   wrap('Time Records, Leave, and Requests', `<div class="pcols"><div>${list(['Everyone taps Time in and Time out with a live photo from the phone camera; the School Head corrects a missed tap.','Leave, locator slip, travel authority, early out, and wellness leave are filed in TALA.','The School Head approves, approves with condition, or disapproves, with a pop up for the reason.'])}</div>
     <div>${list(['CS Form No. 6, the Locator Slip, and the Travel Authority are filled automatically, with the e-signature once approved.','Internal arrangements and the 5 days of wellness leave per year are counted.','A summary per teacher by month, term, or fiscal year.'])}</div></div>`);
-  wrap('LAC and the Learning Hub', `<div class="pcols"><div>${list(['Each LAC session has e-signed attendance, evaluation of the session and of the speakers, minutes, and an accomplishment report.','Teachers keep a LAC Notebook, a Reflection Notebook, a Meeting Notebook, and Notes, typed in their own words.','The School Head reads and checks the notebooks.'])}</div>
-    <div>${list(['The Learning Hub holds videos approved by the School Head and assigned to all or to a few.','Progress counts only the parts actually watched.','Slides in PowerPoint or PDF can be studied on their own or followed during a hybrid LAC.','The notebook opens beside the video or slides, so teachers write while watching.'])}</div></div>`);
+  wrap('LAC and the Learning Hub', `<div class="pcols"><div>${list(['Each LAC session has e-signed attendance, evaluation of the session and of the speakers, minutes, and an accomplishment report.','Teachers keep a LAC Journal, a Reflection Journal, a Meeting Journal, and Notes, typed in their own words.','The School Head reads and checks the journals.'])}</div>
+    <div>${list(['The Learning Hub holds videos approved by the School Head and assigned to all or to a few.','Progress counts only the parts actually watched.','Slides in PowerPoint or PDF can be studied on their own or followed during a hybrid LAC.','The journal opens beside the video or slides, so teachers write while watching.'])}</div></div>`);
   // What teachers can do in each tab, and what they can print
   const tab = (ico, t, can, pr, c) => `<div class="atab" style="--c:${c}"><h4><span>${ico}</span><span data-edit>${t}</span></h4><ul>${can.map(x=>`<li data-edit>${x}</li>`).join('')}</ul>${pr.length?`<div class="apr"><b>Reports you can print</b><ul>${pr.map(x=>`<li data-edit>${x}</li>`).join('')}</ul></div>`:''}</div>`;
   const tabs = (n, body) => wrap('What Teachers Can Do in TALA <small style="font-size:.5em;color:#6b776d">('+n+' of 3)</small>', `<div class="atgrid">${body}</div>`);
@@ -5936,8 +6037,8 @@ function aboutSlides(){
   tabs(2, tab('✍','Attendance: My Learners',['Tick AM and PM attendance, even offline.','Add learners, or import them from the SF1.','Copy a ready Messenger message for parents of absent learners.','See learners who need follow up.'],['SF2 (DepEd)','SF2 school AM and PM','Weekly stars, attendance report, and analysis'],'#1e5a8c')
     + tab('\u{1F552}','Attendance: My Time and Requests',['Tap Time in and Time out with a live photo.','File leave, locator slip, travel, early out, and wellness leave.','See the status of each request and the wellness days left.'],['My time record','CS Form No. 6, Locator Slip, Travel Authority, TALA slip','My summary by month, term, or fiscal year'],'#2f7a4a')
     + tab('\u{1F372}','SBFP Monitoring',['See the menu, recipe, and assigned parents of the day.','Mark if the feeding was implemented, and why if not.','Mark the parents who helped prepare.','See the calendar, menu summary, and participation.'],[],'#d35400'));
-  tabs(3, tab('\u{1F393}','LAC and Teacher Development',['Sign the LAC attendance with your e-signature.','Evaluate the session and each speaker.','Write in your LAC Notebook, Reflection Notebook, Meeting Notebook, and Notes.','As a speaker, see your results without the names.'],['My notebooks and reflections'],'#b06000')
-    + tab('\u{1F3AC}','Learning Hub',['Watch the videos assigned to you: pause, rewind, forward, and adjust the volume.','Study PowerPoint or PDF slides, self-paced or with a live facilitator.','Tap the notebook icon to write beside the video or slides.','See your progress: Almost finished at 90%, Finished at the end.','As a facilitator, share a video for approval.'],['My notes from the videos'],'#a3271b')
+  tabs(3, tab('\u{1F393}','LAC and Teacher Development',['Sign the LAC attendance with your e-signature.','Evaluate the session and each speaker.','Write in your LAC Journal, Reflection Journal, Meeting Journal, and Notes.','As a speaker, see your results without the names.'],['My journals and reflections'],'#b06000')
+    + tab('\u{1F3AC}','Learning Hub',['Watch the videos assigned to you: pause, rewind, forward, and adjust the volume.','Study PowerPoint or PDF slides, self-paced or with a live facilitator.','Tap the journal icon to write beside the video or slides.','See your progress: Almost finished at 90%, Finished at the end.','As a facilitator, share a video for approval.'],['My notes from the videos'],'#a3271b')
     + tab('\u{1F4CA}','School M&amp;E Reports',['See My Status slides about your own work.','Edit the text, draw, save, and present the slides.','Open Reports and documents for everything you made.'],['Only your own reports and documents','My Status as PDF'],'#1F5130'));
   who('\u{1F469}\u200D\u{1F3EB}', 'How Teachers Benefit', ['A clear weekly routine: submit once, see the status anytime.','Fair and transparent observation: read the notes, comment, then sign.','Attendance, SF2, and leave forms are made for them, no more manual writing.','Learn anytime in the Learning Hub, and keep notes and reflections in one place.','Works on the phone, even offline, and installs like an app.'], '#1e5a8c');
   who('\u{1F5C2}', 'How the Administrative Officer Benefits', ['Prints weekly reports, the SF2 and SF4, and LAC reports without collecting papers.','Posts and updates the SBFP menu and monitors parents\u2019 attendance.','Sees the time records and the leave summary of personnel, view and print.','Keeps records safe in Google Drive with automatic backups.'], '#6a2c99');
@@ -6046,10 +6147,10 @@ async function repCenter(){
   html += card('\u{1F552}', 'Time Records and Requests', staff?'All personnel':'Mine', `${sel('rpSM', mo, ym)}${b(staff?'Time records of everyone':'My time record', `STF.month=$('rpSM').value;${staff?'stfRecPrint(true)':"STF.rwho=USER.email;stfRecPrint(false)"}`)}
       ${b(staff?'Summary of leave and requests (month)':'My leave and requests (month)', "STF.period='month';STF.month=$('rpSM').value;stfSumPrint()")}${b('Summary for the term', "STF.period='term';stfSumPrint()")}${b('Fiscal year', "STF.period='fy';stfSumPrint()")}
       <button class="btn ghost small" onclick="openAtt().then(()=>openStaff('req'))">${staff?'Open the request forms':'Open my request forms'}</button>`);
-  if (LAC.data) html += card('\u{1F393}', 'LAC and Teacher Development', staff||doc?'Attendance, evaluations, minutes, reflections, and reports':'My notebooks', `${staff||doc?`${sel('rpSess', sess.filter(s => staff || s.documenter===USER.email).map(s => [s.id, s.title+', '+dShort(s.date)]), (sess[0]||{}).id)}
+  if (LAC.data) html += card('\u{1F393}', 'LAC and Teacher Development', staff||doc?'Attendance, evaluations, minutes, reflections, and reports':'My journals', `${staff||doc?`${sel('rpSess', sess.filter(s => staff || s.documenter===USER.email).map(s => [s.id, s.title+', '+dShort(s.date)]), (sess[0]||{}).id)}
       ${b('Attendance sheet', "repLac('att')")}${b('Evaluations', "repLac('ev')")}${b('Who answered', "repLac('who')")}${b('Minutes', "repLac('min')")}${head?b('Reflections', "repLac('ref')"):''}${b('Accomplishment report', "repLac('rep')")}`:''}
       ${staff?b('Overview', "repLac('ov')")+b('Learning Hub progress', "repLac('hub')"):''}
-      ${sel('rpNB', Object.keys(NB_TABS).map(k => [k, NB_TABS[k]]), 'LAC')}${head?sel('rpNW', [['', 'All personnel']].concat(lacPeople().map(p => [p.email, p.name])), ''):''}${b(head?'Notebooks':'My notebook', "repLac('nb')")}`);
+      ${sel('rpNB', Object.keys(NB_TABS).map(k => [k, NB_TABS[k]]), 'LAC')}${head?sel('rpNW', [['', 'All personnel']].concat(lacPeople().map(p => [p.email, p.name])), ''):''}${b(head?'Journals':'My journal', "repLac('nb')")}`);
   html += card('\u{1F4CA}', 'Presentations', 'Print or edit the slides', `<button class="btn ghost small" onclick="openPir('${head?'pir':'me'}')">${head?'PIR Presentation':'My Status'}</button><button class="btn ghost small" onclick="openPir('about')">About TALA</button>`);
   const tabs = pirDecks().map(([k,l]) => `<button class="${PIR.mode===k?'on':''}" onclick="openPir('${k}')">${l}</button>`).join('');
   $('viewPir').innerHTML = `<div class="ktabs" style="margin-top:0">${tabs}</div><div class="trk-head"><div><h2>Reports and documents</h2><p>${staff?'Every report TALA can make, for all personnel. Choose the period, then print or save as PDF.':'Your own reports and documents. Choose the period, then print or save as PDF.'}</p></div></div>
@@ -7352,8 +7453,9 @@ function stfHoursTxt(H){ return time12(H.amIn)+' to '+time12(H.amOut)+' and '+ti
 function stfSlotWhy(k, L, m){ const noon = 720, pmStart = Math.max(noon, stfMin(stfHoursOf(USER.email).pmIn));
   if (k==='amIn'){ if (m >= noon) return 'The morning Time in is closed after 12:00 noon. Tap PM in instead.'; if (L.amOut) return 'You already tapped AM out.'; }
   if (k==='amOut'){ if (!L.amIn) return 'Tap AM in first.'; if (m >= pmStart) return 'The morning Time out is closed. Ask the School Head to correct it.'; }
-  if (k==='pmIn'){ if (m < noon) return 'The afternoon Time in opens at 12:00 noon.'; if (L.pmOut) return 'You already tapped PM out.'; }
-  if (k==='pmOut'){ if (m < noon) return 'The afternoon Time out opens at 12:00 noon. For the morning, tap AM out.'; if (!L.pmIn && !L.amIn) return 'Tap Time in first.'; }
+  const pmEnd = stfMin(stfHoursOf(USER.email).pmOut);
+  if (k==='pmIn'){ if (m < noon) return 'The afternoon Time in opens at 12:00 noon.'; if (L.pmOut) return 'You already tapped PM out.'; if (L.amIn && !L.amOut && m < pmStart) return 'Tap AM out first. PM in opens after your AM out.'; }
+  if (k==='pmOut'){ if (m < noon) return 'The afternoon Time out opens at 12:00 noon. For the morning, tap AM out.'; if (!L.pmIn && !L.amIn) return 'Tap Time in first.'; if (!L.pmIn && m < pmEnd - 60) return 'Tap PM in first. If you are leaving for lunch, tap AM out.'; }
   return ''; }
 function stfNowM(){ return stfMin(new Date().toLocaleTimeString('en-GB',{ hour:'2-digit', minute:'2-digit', timeZone:'Asia/Manila' })); }
 function stfMyToday(compact){
@@ -7367,9 +7469,18 @@ function stfMyToday(compact){
     ${next?`<button class="btn" onclick="stfClock('${next[0]}')">\u{1F552} ${next[0].slice(2)==='In'?'Time in':'Time out'}, ${next[1].slice(0,2)}</button>`:'<span class="atn ok">Done for today</span>'}</div>
     <div class="stftiles">${tiles}</div><p class="hint" style="margin:6px 0 0">${['head','admin'].indexOf(USER.role)>-1?'Your hours':'School hours'}: ${esc(time12(H.amIn))} to ${esc(time12(H.amOut))}, ${esc(time12(H.pmIn))} to ${esc(time12(H.pmOut))}. TALA uses the time of the server, not of the phone. Missed a tap? Tell the School Head, who can correct it.</p></div>`;
 }
+// Are you sure? A clear question before the camera opens, so the right Time in or Time out is tapped
+const STF_SURE = { amIn:['MORNING Time in','AM in','when you arrive in the morning','\u{1F305}'], amOut:['MORNING Time out','AM out','when you leave for lunch','\u{1F37D}'],
+  pmIn:['AFTERNOON Time in','PM in','when you come back after lunch','\u{1F31E}'], pmOut:['AFTERNOON Time out','PM out','when you go home at the end of the day','\u{1F3E0}'] };
+function stfSure(slot){ const x = STF_SURE[slot], now = time12(new Date().toLocaleTimeString('en-GB',{ hour:'2-digit', minute:'2-digit', timeZone:'Asia/Manila' }));
+  return new Promise(res => { window._stfSure = v => { closeModal('stfModal'); window._stfSure = null; res(v); };
+    stfModal(`<div class="stfsure"><div class="stfsure-i">${x[3]}</div><h3>Are you sure?</h3><p>You are tapping your <b>${x[0]}</b> (${x[1]}) at <b>${esc(now)}</b>.</p>
+      <p class="hint">Use ${x[1]} only ${x[2]}. It cannot be changed after you send it.</p>
+      <div class="modal-actions" style="justify-content:center"><button class="btn ghost" onclick="_stfSure(false)">No, go back</button><button class="btn" onclick="_stfSure(true)">Yes, tap ${x[1]}</button></div></div>`); }); }
 async function stfClock(slot){
   const lab = STF_SLOTS.find(s => s[0]===slot)[1];
   { const why = stfSlotWhy(slot, stfLog(USER.email, todayPH()) || {}, stfNowM()); if (why){ toast(why); return; } }
+  if (!(await stfSure(slot))) return;
   const shot = await camOpen((slot.slice(2)==='In'?'Time in':'Time out')+', '+lab.slice(0,2)); if (!shot) return;
   const today = todayPH(); let L = stfLog(USER.email, today); if (!L){ L = { date:today, email:USER.email, name:USER.name }; STF.data.logs.push(L); }
   const pic = shot.photo ? { photo: shot.photo.split(',')[1] } : { nocam:true };
@@ -7871,23 +7982,23 @@ function stfModal(html, cls){ const m = $('stfModal'); m.querySelector('.modal')
 /* =========================================================
    LAC AND TEACHER DEVELOPMENT
    Sessions (LAC and faculty meetings), attendance with e-signature, evaluations, minutes,
-   accomplishment report, notebooks, and the Learning Hub with progress.
+   accomplishment report, journals, and the Learning Hub with progress.
    ========================================================= */
 var LAC = { data:null, tab:'home', sid:'', nb:'LAC', nbWho:'', hubSt:'', dot:0, play:null, flag:false, ov:'' };
 const LAC_SCALE = [[4,'Strongly Agree'],[3,'Agree'],[2,'Disagree'],[1,'Strongly Disagree']];
 const LAC_EVS = ['The objectives of the session were clearly stated and met.', 'The topic is relevant to my teaching and to my learners.', 'The activities helped me understand the topic.', 'The materials were useful and well prepared.', 'The time was used well.', 'I can apply what I learned in my class.'];
 const LAC_EVR = ['My learnings from this session prepared me for learning applications in my workplace.', 'The expertise of the resource person or subject matter expert guided me to better understand the session\u2019s topics.', 'The resource person appropriately adjusted the content, methodology, and schedule to address my learning needs.', 'The resource person checked my understanding on the topic and processed my responses.', 'My learning environment was established and maintained positively by the resource person.'];
 const LAC_REF = ['What were the most valuable insights or knowledge you gained from this training?', 'How will you apply what you learned to your work or daily practice?', 'What aspects of this training were most impactful or eye opening for you?'];
-const NB_BOOKS = { LAC:'LAC Notebook', REF:'Reflection', MEET:'Meeting Notebook', NOTE:'Learning Hub notes' };
-// Only two notebooks: the LAC Notebook (it keeps the reflections and the Learning Hub notes too) and the Meeting Notebook
-const NB_TABS = { LAC:'LAC Notebook', MEET:'Meeting Notebook' };
+const NB_BOOKS = { LAC:'LAC Journal', REF:'Reflection', MEET:'Meeting Journal', NOTE:'Learning Hub notes' };
+// Only two notebooks: the LAC Journal (it keeps the reflections and the Learning Hub notes too) and the Meeting Journal
+const NB_TABS = { LAC:'LAC Journal', MEET:'Meeting Journal' };
 function nbTabOf(book){ return book==='MEET' ? 'MEET' : 'LAC'; }
-// Whether a person has written something in the notebook of a session
+// Whether a person has written something in the journal of a session
 function nbWritten(sid, email, kind){ const book = kind==='MEET' ? 'MEET' : 'LAC';
   return (LAC.data.notebooks||[]).some(n => n.session===sid && n.email===email && n.book===book && n.status!=='Returned' && Object.values(n.body||{}).some(v => String(v||'').trim())); }
 // Entries the School Head returned to complete
 function nbReturned(email){ return (LAC.data.notebooks||[]).filter(n => n.email===(email||USER.email) && n.status==='Returned'); }
-// Sessions I attended where my notebook is still empty
+// Sessions I attended where my journal is still empty
 function nbMissing(email){ email = email || USER.email; const today = todayPH();
   return (LAC.data.sessions||[]).filter(s => s.date <= today && lacInvited(s, email) && (LAC.data.records||[]).some(r => r.session===s.id && r.kind==='ATT' && r.email===email) && !nbWritten(s.id, email, s.kind)); }
 function lacRole(){ return USER ? USER.role : ''; }
@@ -7908,7 +8019,7 @@ function lacPos(email){ const p = lacPeople().find(x => x.email===email); return
 function lacInvitees(s){ return lacPeople().filter(p => lacInvited(s, p.email)); }
 function lacTime(s){ return (s.start?time12(s.start):'') + (s.end?' to '+time12(s.end):''); }
 function lacKind(s){ return s.kind==='MEET' ? 'Faculty meeting' : 'LAC session'; }
-// Reflections of a session: the Reflection Notebook (and the older LAC entries that had the reflection in them)
+// Reflections of a session: the Reflection Journal (and the older LAC entries that had the reflection in them)
 function lacNotesFor(sid, email){ return (LAC.data.notebooks||[]).filter(n => n.session===sid && (n.book==='REF' || (n.book==='LAC' && (n.body||{}).r0)) && (!email || n.email===email)); }
 function lacMean(list){ const v = list.filter(x => typeof x==='number'); return v.length ? v.reduce((a,b)=>a+b,0)/v.length : 0; }
 function lacDesc(m){ return !m ? '' : m >= 3.5 ? 'Strongly Agree' : m >= 2.5 ? 'Agree' : m >= 1.5 ? 'Disagree' : 'Strongly Disagree'; }
@@ -7947,10 +8058,10 @@ function lacDot(){ if (!LAC.data || !USER) return; const t = todayPH();
 function lacDraw(){
   const D = LAC.data, head = lacHead(), admin = lacRole()==='admin', doc = D.sessions.some(s => s.documenter===USER.email);
   lacDot();
-  const tabs = [['home','My dashboard'],['sess','Sessions'],['hub','Learning Hub'],['nb','My Notebooks']].concat(head||admin||doc ? [['min','Minutes and reports']] : []).concat(head||admin ? [['ov','Overview']] : []);
+  const tabs = [['home','My dashboard'],['sess','Sessions'],['hub','Learning Hub'],['nb','My Journals']].concat(head||admin||doc ? [['min','Minutes and reports']] : []).concat(head||admin ? [['ov','Overview']] : []);
   if (!tabs.some(t => t[0]===LAC.tab)) LAC.tab = 'home';
   if (LAC.sid && LAC.tab==='sess') return lacSession(LAC.sid);
-  $('viewLac').innerHTML = `<div class="trk-head"><div><h2>LAC and Teacher Development</h2><p>${head?'Set up sessions, approve materials, and see everyone\u2019s progress.':admin?'View and print the attendance, evaluations, minutes, and reports.':'Your sessions, learning materials, and notebooks in one place.'}</p></div></div>
+  $('viewLac').innerHTML = `<div class="trk-head"><div><h2>LAC and Teacher Development</h2><p>${head?'Set up sessions, approve materials, and see everyone\u2019s progress.':admin?'View and print the attendance, evaluations, minutes, and reports.':'Your sessions, learning materials, and journals in one place.'}</p></div></div>
     <div class="tabs lactabs">${tabs.map(t => `<button class="${LAC.tab===t[0]?'on':''}" onclick="LAC.tab='${t[0]}';LAC.sid='';lacDraw()">${t[1]}${t[0]==='hub'&&LAC.dot&&head?` <i class="sdot">${LAC.dot}</i>`:''}</button>`).join('')}</div>
     <div id="lacBody" style="margin-top:14px"></div>`;
   ({ home:lacHome, sess:lacSessions, hub:lacHub, nb:lacNotebooks, min:lacMinList, ov:lacOverview })[LAC.tab]();
@@ -7968,27 +8079,27 @@ function lacHome(){
     if (s.kind==='LAC') (s.facilitators||[]).forEach((f,i) => { if (f.email!==me && !lacMine(s.id,'EVR',f.name)) todo.push({ ico:'\u{1F3A4}', t:'Evaluate the speaker', x:f.name+', '+s.title, fn:`lacEval('${s.id}','EVR',${i})` }); });
     if (s.kind==='LAC' && !lacNotesFor(s.id, me).length) todo.push({ ico:'\u{1F4AD}', t:'Write your reflection', x:s.title, fn:`nbOpenFor('${s.id}','REF')` });
   });
-  if (!head) nbReturned().forEach(n => todo.unshift({ ico:'\u21A9', t:'Complete your returned notebook', x:(n.title || (lacS(n.session)||{}).title || NB_BOOKS[n.book])+'. '+(n.remark||''), fn:`nbOpen('${n.id}')`, main:1, warn:1 }));
-  if (!head) nbMissing().forEach(s => todo.unshift({ ico:'\u{1F4D3}', t:'Write in your '+(s.kind==='MEET'?'Meeting':'LAC')+' Notebook', x:s.title+', '+dShort(s.date)+'. Still empty.', fn:`nbOpenFor('${s.id}','${s.kind==='MEET'?'MEET':'LAC'}')`, main:1, warn:1 }));
+  if (!head) nbReturned().forEach(n => todo.unshift({ ico:'\u21A9', t:'Complete your returned journal', x:(n.title || (lacS(n.session)||{}).title || NB_BOOKS[n.book])+'. '+(n.remark||''), fn:`nbOpen('${n.id}')`, main:1, warn:1 }));
+  if (!head) nbMissing().forEach(s => todo.unshift({ ico:'\u{1F4D3}', t:'Write in your '+(s.kind==='MEET'?'Meeting':'LAC')+' Journal', x:s.title+', '+dShort(s.date)+'. Still empty.', fn:`nbOpenFor('${s.id}','${s.kind==='MEET'?'MEET':'LAC'}')`, main:1, warn:1 }));
   const mine = lacHubMine();
   mine.filter(h => { const p = lacProg(h.id); return !p || p.status!=='Finished'; }).forEach(h => { const p = lacProg(h.id); todo.push({ ico:'\u25B6', t:p?'Continue watching':'Watch', x:h.title+(p?', '+p.pct+'%':'')+(h.target?', by '+dShort(h.target):''), fn:`hubPlay('${h.id}')` }); });
   if (head){ const pend = D.hub.filter(h => h.status==='Pending').length; if (pend) todo.unshift({ ico:'\u2714', t:'Approve materials', x:pend+' waiting in the Learning Hub', fn:`LAC.tab='hub';LAC.hubSt='Pending';lacDraw()`, main:1 });
     D.sessions.filter(s => s.date <= today && !(s.minutes&&s.minutes.on)).forEach(s => todo.push({ ico:'\u{1F4DD}', t:'Minutes not yet written', x:s.title+(s.documenter?', documenter '+lacName(s.documenter):''), fn:`lacMinutesOpen('${s.id}')` }));
-    const unchecked = D.notebooks.filter(n => n.email!==me && !n.checkedOn).length; if (unchecked) todo.push({ ico:'\u{1F50D}', t:'Notebook entries to check', x:unchecked+' not yet checked', fn:`LAC.tab='nb';LAC.nbWho='';lacDraw()` }); }
+    const unchecked = D.notebooks.filter(n => n.email!==me && !n.checkedOn).length; if (unchecked) todo.push({ ico:'\u{1F50D}', t:'Journal entries to check', x:unchecked+' not yet checked', fn:`LAC.tab='nb';LAC.nbWho='';lacDraw()` }); }
   D.sessions.filter(s => s.documenter===me && s.date <= today && !(s.minutes&&s.minutes.on)).forEach(s => { if (!head) todo.push({ ico:'\u{1F4DD}', t:'Write the minutes', x:'You are the LAC Documenter of '+s.title, fn:`lacMinutesOpen('${s.id}')`, main:1 }); });
   const next = D.sessions.filter(s => s.date >= today && lacInvited(s, me)).sort((a,b) => a.date.localeCompare(b.date))[0];
   const done = mine.filter(h => (lacProg(h.id)||{}).status==='Finished').length;
   $('lacBody').innerHTML = `${head ? '' : nbTodoHtml()}<div class="ostats">
       <div class="ostat static"><span class="oico">\u{1F4C5}</span><b>${mySess.filter(s => lacMine(s.id,'ATT')).length} of ${mySess.length}</b><span>Sessions attended this school year</span></div>
       <div class="ostat static"><span class="oico">\u25B6</span><b>${done} of ${mine.length}</b><span>Learning Hub materials finished</span></div>
-      <div class="ostat static"><span class="oico">\u{1F4D3}</span><b>${D.notebooks.filter(n => n.email===me).length}</b><span>Entries in my notebooks</span></div>
+      <div class="ostat static"><span class="oico">\u{1F4D3}</span><b>${D.notebooks.filter(n => n.email===me).length}</b><span>Entries in my journals</span></div>
       ${next?`<div class="ostat static"><span class="oico">\u23F0</span><b>${esc(dShort(next.date))}</b><span>Next: ${esc(next.title)}</span></div>`:''}</div>
     <h3 class="stfgrp">To do <small>${todo.length}</small></h3>
     <div class="abtns">${todo.map(x => `<button class="abtn ${x.warn?'warn':x.main?'main':''}" onclick="${x.fn}"><span class="abico">${x.ico}</span><b>${esc(x.t)}</b><small>${esc(x.x)}</small></button>`).join('') || '<div class="empty">All done for now. Well done!</div>'}</div>
     <h3 class="stfgrp">Quick links</h3><div class="abtns small">
       <button class="abtn" onclick="LAC.tab='sess';lacDraw()"><span class="abico">\u{1F4C5}</span><b>Sessions</b><small>LAC sessions and faculty meetings</small></button>
       <button class="abtn" onclick="LAC.tab='hub';lacDraw()"><span class="abico">\u25B6</span><b>Learning Hub</b><small>Videos to learn on your own</small></button>
-      <button class="abtn" onclick="LAC.tab='nb';lacDraw()"><span class="abico">\u{1F4D3}</span><b>My Notebooks</b><small>LAC, meetings, and notes</small></button>
+      <button class="abtn" onclick="LAC.tab='nb';lacDraw()"><span class="abico">\u{1F4D3}</span><b>My Journals</b><small>LAC, meetings, and notes</small></button>
       ${head?`<button class="abtn" onclick="lacSessionForm()"><span class="abico">\uFF0B</span><b>New session</b><small>LAC session or faculty meeting</small></button><button class="abtn" onclick="msgCenter('lac')"><span class="abico">\u{1F4AC}</span><b>Ready messages</b><small>Reminders and follow ups for Messenger</small></button>`:''}</div>`;
 }
 
@@ -8000,7 +8111,7 @@ function lacSessions(){
     return `<button class="lacsess ${nbNo?'needs':''}" onclick="LAC.sid='${s.id}';lacDraw()"><div class="lacdate"><b>${new Date(s.date+'T00:00:00').getDate()}</b><small>${esc(new Date(s.date+'T00:00:00').toLocaleDateString('en-US',{ month:'short' }))}</small></div>
       <div class="lacsess-b"><span class="lackind ${s.kind}">${lacKind(s)}</span><b>${esc(s.title)}</b><small>${esc(lacTime(s))}${s.venue?' \u00B7 '+esc(s.venue):''}</small>
       <small>${(s.facilitators||[]).length?'Facilitator: '+esc(s.facilitators.map(f=>f.name).join(', ')):''}${s.documenter?' \u00B7 Documenter: '+esc(lacName(s.documenter)):''}</small></div>
-      <div class="lacsess-s">${lacViewAll(s)?`<span class="atn ok">${att.length} of ${inv} signed</span>`:''}${lacInvited(s, me)?(signed?'<span class="atn ok">\u2714 You signed</span>'+(nbNo?`<span class="atn bad">\u270D Write in your ${s.kind==='MEET'?'Meeting':'LAC'} Notebook</span>`:''):s.date<=today?'<span class="atn wait">Not yet signed</span>':'<span class="atn off">Upcoming</span>'):''}</div></button>`; };
+      <div class="lacsess-s">${lacViewAll(s)?`<span class="atn ok">${att.length} of ${inv} signed</span>`:''}${lacInvited(s, me)?(signed?'<span class="atn ok">\u2714 You signed</span>'+(nbNo?`<span class="atn bad">\u270D Write in your ${s.kind==='MEET'?'Meeting':'LAC'} Journal</span>`:''):s.date<=today?'<span class="atn wait">Not yet signed</span>':'<span class="atn off">Upcoming</span>'):''}</div></button>`; };
   $('lacBody').innerHTML = `${head?`<div class="bar" style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" onclick="lacSessionForm()">\uFF0B New LAC session</button><button class="btn ghost" onclick="lacSessionForm('','MEET')">\uFF0B New faculty meeting</button></div>`:''}
     <div class="lacsessions">${list.map(card).join('') || '<div class="empty">No sessions yet.'+(head?' Tap New session to set one up.':'')+'</div>'}</div>`;
 }
@@ -8010,11 +8121,11 @@ function lacSessionForm(id, kindNow){
   const P = lacPeople(), names = lacNameList(), meet = s.kind==='MEET';
   const facRow = lacFacRow;
   const hub = LAC.data.hub.filter(h => h.status==='Approved');
-  stfModal(`<h3>${id?(meet?'Edit the meeting':'Edit the session'):(meet?'New faculty meeting':'New LAC session')}</h3><p class="sub">${meet?'Everyone invited gets a notice. They tick their attendance and write in their Meeting Notebook while the meeting goes on.':'Everyone invited gets a notice. They tick their attendance, evaluate, and write in their notebooks here.'}</p>
+  stfModal(`<h3>${id?(meet?'Edit the meeting':'Edit the session'):(meet?'New faculty meeting':'New LAC session')}</h3><p class="sub">${meet?'Everyone invited gets a notice. They tick their attendance and write in their Meeting Journal while the meeting goes on.':'Everyone invited gets a notice. They tick their attendance, evaluate, and write in their journals here.'}</p>
     <div class="field"><label>Kind</label><div class="stfrad"><label class="check" style="margin:0"><input type="radio" name="lsKind" value="LAC" ${!meet?'checked':''} onchange="lacSessionForm('${id||''}','LAC')">LAC session</label><label class="check" style="margin:0"><input type="radio" name="lsKind" value="MEET" ${meet?'checked':''} onchange="lacSessionForm('${id||''}','MEET')">Faculty meeting</label></div></div>
     <div class="field"><label for="lsTitle">Title</label><input id="lsTitle" maxlength="160" value="${esc(s.title||'')}" placeholder="${meet?'Example: Faculty Meeting, October 2026':'Example: LAC Session 3, Differentiated Instruction in Multigrade Classes'}"></div>
     ${lacWhoField(s, P, meet)}
-    ${meet?`<div class="field"><label for="lsLink">Meeting link (optional)</label><input id="lsLink" maxlength="500" value="${esc(s.link||'')}" placeholder="Paste the Microsoft Teams, Google Meet, or Zoom link"><small class="hint">Teachers tap Join the meeting, then write in their Meeting Notebook in TALA at the same time.</small></div>
+    ${meet?`<div class="field"><label for="lsLink">Meeting link (optional)</label><input id="lsLink" maxlength="500" value="${esc(s.link||'')}" placeholder="Paste the Microsoft Teams, Google Meet, or Zoom link"><small class="hint">Teachers tap Join the meeting, then write in their Meeting Journal in TALA at the same time.</small></div>
       <div class="stfg2"><div class="field"><label for="lsDate">Date</label><input type="date" id="lsDate" value="${esc(s.date)}"></div><div class="field"><label for="lsStart">Starts</label><input type="time" id="lsStart" value="${esc(s.start||'')}"><small class="hint">No end time is needed.</small></div></div>
       <div class="field"><label for="lsVenue">Where (optional)</label><input id="lsVenue" maxlength="120" value="${esc(s.venue||'')}" placeholder="Example: Grade 6 classroom, or Online"></div>
       ${lacHead()?`<div class="field"><label for="lsDoc">Who writes the minutes (optional)</label><select id="lsDoc"><option value="">None yet</option>${P.map(p=>`<option value="${esc(p.email)}" ${p.email===s.documenter?'selected':''}>${esc(p.name)}</option>`).join('')}</select></div>`:''}
@@ -8064,7 +8175,7 @@ async function lacSessionSave(id){
   try{ LAC.data = await api('lacSessionSave', { session }); lacSaveLocal(); closeModal('stfModal'); lacDraw(); toast(id ? 'Saved.' : 'Session saved. Everyone invited was notified.'); if (!id) setTimeout(() => lacMsgOpen('sess', LAC.data.sessions.slice(-1)[0].id), 400); }
   catch(e){ handleErr(e, 'lsErr'); }
 }
-async function lacSessionDelete(id){ if (!confirm('Delete this session with its attendance and evaluations? The notebooks of the teachers are kept.')) return; try{ LAC.data = await api('lacSessionDelete', { id }); LAC.sid = ''; closeModal('stfModal'); lacDraw(); toast('Deleted.'); }catch(e){ handleErr(e,'lsErr'); } }
+async function lacSessionDelete(id){ if (!confirm('Delete this session with its attendance and evaluations? The journals of the teachers are kept.')) return; try{ LAC.data = await api('lacSessionDelete', { id }); LAC.sid = ''; closeModal('stfModal'); lacDraw(); toast('Deleted.'); }catch(e){ handleErr(e,'lsErr'); } }
 
 // One session: what I do, and the reports for the School Head, the documenter, and the AO
 function lacSession(id){
@@ -8077,14 +8188,14 @@ function lacSession(id){
       <p class="hint">${(s.facilitators||[]).length?'Facilitator: '+esc(s.facilitators.map(f=>f.name).join(', ')):''}${s.documenter?' \u00B7 LAC Documenter: '+esc(lacName(s.documenter)):''}</p>${all?`<p class="hint">Required to attend: <b>${s.attendees==='all'?'All personnel':invs.length+' selected '+(invs.length===1?'person':'people')}</b>. Only they are counted in the attendance.</p>`:''}</div>
     <div class="head-actions"><button class="btn ghost" onclick="LAC.sid='';lacDraw()">Back</button>${staff?`<button class="btn ghost" onclick="lacSessionForm('${id}')">Edit</button>`:''}${all?`<button class="btn ghost" onclick="lacMsgOpen('sess','${id}')">\u{1F4AC} Messenger message</button>`:''}</div></div>
     ${s.topic||s.objectives?`<div class="lacobj">${s.topic?`<b>${esc(s.topic)}</b>`:''}${s.objectives?`<ul>${s.objectives.split('\n').filter(Boolean).map(o=>`<li>${esc(o)}</li>`).join('')}</ul>`:''}</div>`:''}
-    ${inv && signed && !nbWritten(id, me, s.kind) && !lacHead() ? `<div class="nbmiss static"><b>\u270D Your ${lac?'LAC':'Meeting'} Notebook for this ${lac?'session':'meeting'} is still empty</b><span>This ${lac?'session':'meeting'} is not complete until you write your notes. Tap ${lac?'My LAC Notebook':'My Meeting Notebook'} below.</span></div>`:''}
-    ${!lac && s.link ? `<div class="meetjoin"><div><b>\u{1F4F9} Online meeting</b><small>Join the meeting, then open your Meeting Notebook here to write while it goes on.</small></div><a class="btn" href="${esc(s.link)}" target="_blank" rel="noopener">Join the meeting</a></div>`:''}
+    ${inv && signed && !nbWritten(id, me, s.kind) && !lacHead() ? `<div class="nbmiss static"><b>\u270D Your ${lac?'LAC':'Meeting'} Journal for this ${lac?'session':'meeting'} is still empty</b><span>This ${lac?'session':'meeting'} is not complete until you write your notes. Tap ${lac?'My LAC Journal':'My Meeting Journal'} below.</span></div>`:''}
+    ${!lac && s.link ? `<div class="meetjoin"><div><b>\u{1F4F9} Online meeting</b><small>Join the meeting, then open your Meeting Journal here to write while it goes on.</small></div><a class="btn" href="${esc(s.link)}" target="_blank" rel="noopener">Join the meeting</a></div>`:''}
     ${inv?`<h3 class="stfgrp">For you</h3><div class="abtns">
       ${signed?btn('\u2714','Attendance signed', 'At '+esc(time12(String(signed.on).slice(11,16)))+(signed.local?', not yet synced':''), `lacSign('${id}')`):btn('\u270D','Tick my attendance','Signs with your e-signature',`lacSign('${id}')`,'main')}
       ${lac?btn('\u2B50','Evaluate the session', lacMine(id,'EVS')?'Done. Tap to change.':'Takes one minute', `lacEval('${id}','EVS')`):''}
       ${lac?(s.facilitators||[]).map((f,i) => f.email===me ? '' : btn('\u{1F3A4}','Evaluate the speaker', esc(f.name)+(lacMine(id,'EVR',f.name)?', done':''), `lacEval('${id}','EVR',${i})`)).join(''):''}
-      ${nbWritten(id, me, s.kind) ? btn('\u{1F4D3}', lac?'My LAC Notebook':'My Meeting Notebook', 'Written. Tap to open or edit.', `nbOpenFor('${id}','${lac?'LAC':'MEET'}')`)
-        : btn('\u{1F4D3}', lac?'My LAC Notebook':'My Meeting Notebook', signed ? 'Not yet written. Please write your notes.' : (lac?'Anything I want to write':'My notes of the meeting'), `nbOpenFor('${id}','${lac?'LAC':'MEET'}')`, signed ? 'warn' : '')}
+      ${nbWritten(id, me, s.kind) ? btn('\u{1F4D3}', lac?'My LAC Journal':'My Meeting Journal', 'Written. Tap to open or edit.', `nbOpenFor('${id}','${lac?'LAC':'MEET'}')`)
+        : btn('\u{1F4D3}', lac?'My LAC Journal':'My Meeting Journal', signed ? 'Not yet written. Please write your notes.' : (lac?'Anything I want to write':'My notes of the meeting'), `nbOpenFor('${id}','${lac?'LAC':'MEET'}')`, signed ? 'warn' : '')}
       ${lac?btn('\u{1F4AD}','My Reflection', lacNotesFor(id, me).length?'Written. Tap to open.':'Share your significant learnings', `nbOpenFor('${id}','REF')`):''}
       ${mats.map(h => btn('\u25B6', esc(h.title), (lacProg(h.id)||{}).status || 'Not started', `hubPlay('${h.id}')`)).join('')}</div>`:''}
     ${all||fac?`<h3 class="stfgrp">Reports</h3><div class="abtns">
@@ -8170,7 +8281,7 @@ function lacWhoRows(id){
 }
 function lacWho(id){
   const s = lacS(id), lac = s.kind==='LAC', sp = lac ? (s.facilitators||[]) : [], rows = lacWhoRows(id), ok = v => v===null ? '<span class="hint">Speaker</span>' : v ? '<span class="atn ok">✔ Done</span>' : '<span class="atn bad">Not yet</span>';
-  const html = `<div class="table-wrap"><table class="stft-table stfp-tbl"><thead><tr><th>Name</th><th>Attendance</th>${lac?'<th>Session evaluation</th>':''}${sp.map(f => `<th>Speaker: ${esc(f.name)}</th>`).join('')}${lac?'<th>Reflection</th>':''}<th>${lac?'LAC':'Meeting'} Notebook</th></tr></thead><tbody>
+  const html = `<div class="table-wrap"><table class="stft-table stfp-tbl"><thead><tr><th>Name</th><th>Attendance</th>${lac?'<th>Session evaluation</th>':''}${sp.map(f => `<th>Speaker: ${esc(f.name)}</th>`).join('')}${lac?'<th>Reflection</th>':''}<th>${lac?'LAC':'Meeting'} Journal</th></tr></thead><tbody>
     ${rows.map(r => `<tr><td><b>${esc(r.p.name)}</b></td><td>${ok(r.att)}</td>${lac?`<td>${ok(r.evs)}</td>`:''}${lac?r.evr.map(v => `<td>${ok(v)}</td>`).join(''):''}${lac?`<td>${ok(r.ref)}</td>`:''}<td>${ok(r.nb)}</td></tr>`).join('')}</tbody></table></div>`;
   LAC.viewHtml = html; LAC.lastRep = { title:'Who Answered the Evaluation and Reflection', id };
   stfModal(`<h3>Who answered</h3><p class="sub">${esc(s.title)}. Tap Follow up message to remind those not yet done.</p>${html}
@@ -8229,7 +8340,7 @@ function lacReportOpen(id){
   const f = (k, label, rows, ph) => `<div class="field"><label for="rp_${k}">${label}</label><textarea id="rp_${k}" rows="${rows}" maxlength="6000" placeholder="${esc(ph||'')}">${esc(R[k]||'')}</textarea></div>`;
   stfModal(`<h3>Accomplishment report</h3><p class="sub">TALA drafted this from the session, the minutes, the attendance, and the evaluation. Edit what you need, then save or print.</p>
     ${f('rationale','Rationale',3)}${f('objectives','Objectives (one per line)',3)}${f('attendance','Attendance',2)}${f('highlights','Highlights of the session',5)}${f('evaluation','Evaluation results (the full table is added when printing)',2)}
-    ${f('reflect','Reflections: common learnings and needs',4,'TALA adds a short list from the LAC Notebooks when printing. Write your own summary here if you want.')}${f('next','Agreements and next steps',3)}
+    ${f('reflect','Reflections: common learnings and needs',4,'TALA adds a short list from the LAC Journals when printing. Write your own summary here if you want.')}${f('next','Agreements and next steps',3)}
     <p class="hint">Photos: ${(s.photos||[]).length} added. <button class="linkbtn" onclick="lacPhotosOpen('${id}')">Add or change photos</button></p>
     <p class="err" id="rpErr"></p><div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Close</button><button class="btn ghost" onclick="lacReportSave('${id}',true)">\u{1F5A8} Save and print</button><button class="btn" onclick="lacReportSave('${id}')">Save</button></div>`, 'wide');
 }
@@ -8259,7 +8370,7 @@ async function lacPhotosSave(){
 function lacRefSum(id){
   const s = lacS(id), N = lacNotesFor(id);
   const html = LAC_REF.map((q,i) => `<h4>${i+1}. ${esc(q)}</h4>${N.filter(n => (n.body||{})['r'+i]).map(n => `<div class="lacref"><b>${esc(n.name)}</b>${lacPara(n.body['r'+i])}</div>`).join('') || '<p class="hint">No answers yet.</p>'}`).join('')
-    + `<p class="hint">${N.length} of ${lacRecs(id,'ATT').length} who attended wrote in their LAC Notebook.</p>`;
+    + `<p class="hint">${N.length} of ${lacRecs(id,'ATT').length} who attended wrote in their LAC Journal.</p>`;
   lacReportView('Summary of Reflections', s, html, { print:true });
 }
 
@@ -8356,8 +8467,8 @@ function fitPrintPages(){
 
 function lacHeadEmail(){ const h = lacPeople().find(p => p.role==='head'); return h ? h.email : ''; }
 
-/* ----- Notebooks ----- */
-// Notebooks are typed by hand: no copy, cut, or paste, no right click, no dragging text in or out, and no pasting from the phone's
+/* ----- Journals ----- */
+// Journals are typed by hand: no copy, cut, or paste, no right click, no dragging text in or out, and no pasting from the phone's
 // clipboard bar. A big block of text that appears all at once is taken back out. Only the School Head is not limited.
 function nbGuard(el){
   if (!el || (USER && USER.role==='head')) return;
@@ -8375,7 +8486,7 @@ function nbGuard(el){
     if (grow > 25 && !/^delete/.test(e.inputType||'')){ const pos = el.selectionStart; el.value = el._last; try{ el.selectionStart = el.selectionEnd = Math.max(0, pos - grow); }catch(x){} if (typeof LAC!=='undefined') LAC.flag = true; return; }
     el._last = el.value; });
 }
-function nbBang(){ return `<button class="nbbang" onclick="this.classList.toggle('open')" aria-label="About this notebook">!<span>Your School Head can read this notebook.</span></button>`; }
+function nbBang(){ return `<button class="nbbang" onclick="this.classList.toggle('open')" aria-label="About this journal">!<span>Your School Head can read this journal.</span></button>`; }
 function lacNotebooks(){
   const D = LAC.data, head = lacHead(), who = head ? (LAC.nbWho || '') : USER.email;
   if (!NB_TABS[LAC.nb]) LAC.nb = 'LAC';
@@ -8385,7 +8496,7 @@ function lacNotebooks(){
       ${head?`<select onchange="LAC.nbWho=this.value;lacNotebooks()"><option value="">Everyone</option>${lacPeople().map(p => `<option value="${esc(p.email)}" ${p.email===LAC.nbWho?'selected':''}>${esc(p.name)}${p.email===USER.email?' (me)':''}</option>`).join('')}</select>`:''}
       <button class="btn" onclick="nbOpen('','${LAC.nb}')">\uFF0B New entry</button><button class="btn ghost" onclick="nbPrint()">\u{1F5A8} Print ${head&&!who?'all':who===USER.email||!head?'my':''} ${esc(NB_TABS[LAC.nb])}</button></div>
     ${head ? '' : nbReturned().filter(n => nbTabOf(n.book)===LAC.nb).map(n => `<button class="nbmiss bad" onclick="nbOpen('${n.id}')"><b>\u21A9 Returned by the School Head: please complete</b><span>${esc(n.title || (lacS(n.session)||{}).title || NB_BOOKS[n.book])}. ${esc(n.remark||'')}</span></button>`).join('')}
-    ${miss.map(s => `<button class="nbmiss" onclick="nbOpenFor('${s.id}','${s.kind==='MEET'?'MEET':'LAC'}')"><b>\u270D Please write in your ${s.kind==='MEET'?'Meeting':'LAC'} Notebook</b><span>${esc(s.title)}, ${esc(dShort(s.date))}. You attended, but your notebook for this ${s.kind==='MEET'?'meeting':'session'} is still empty. Tap here to write.</span></button>`).join('')}
+    ${miss.map(s => `<button class="nbmiss" onclick="nbOpenFor('${s.id}','${s.kind==='MEET'?'MEET':'LAC'}')"><b>\u270D Please write in your ${s.kind==='MEET'?'Meeting':'LAC'} Journal</b><span>${esc(s.title)}, ${esc(dShort(s.date))}. You attended, but your journal for this ${s.kind==='MEET'?'meeting':'session'} is still empty. Tap here to write.</span></button>`).join('')}
     ${head?`<p class="hint">${D.notebooks.filter(n => n.email!==USER.email && !n.checkedOn && n.status!=='Returned').length} entries of the teachers are waiting for checking. ${D.notebooks.filter(n => n.status==='Returned').length} returned entries are waiting for the teachers.</p>`:''}
     <div class="nblist">${list.map(nbCard).join('') || '<div class="empty">No entries yet. Tap New entry to start writing.</div>'}</div>`;
 }
@@ -8432,11 +8543,11 @@ async function nbSaveNow(){
   const note = { id:n.id, cid: n.id ? '' : 'N'+Date.now().toString(36)+Math.floor(Math.random()*900+100), book:n.book, session, title, body, flag:LAC.flag };
   try{ if (navigator.onLine===false) throw new Error(MSG.NET);
     const r = await api('nbSave', { note }); const i = LAC.data.notebooks.findIndex(x => x.id===r.note.id); if (i > -1) LAC.data.notebooks[i] = r.note; else LAC.data.notebooks.push(r.note); toast('Saved.'); }
-  catch(e){ if (friendly(e.message)===MSG.NET || friendly(e.message)===MSG.BUSY){ saveOut(outbox().filter(x => !(x.action==='nbSave' && (x.payload.note.id||x.payload.note.cid)===(note.id||note.cid)))); queueOut('nbSave', { note }, 'Notebook entry'); lacPendingApply(); toast('Saved on this device. It will sync when you are online.'); } else return handleErr(e,'nbErr'); }
+  catch(e){ if (friendly(e.message)===MSG.NET || friendly(e.message)===MSG.BUSY){ saveOut(outbox().filter(x => !(x.action==='nbSave' && (x.payload.note.id||x.payload.note.cid)===(note.id||note.cid)))); queueOut('nbSave', { note }, 'Journal entry'); lacPendingApply(); toast('Saved on this device. It will sync when you are online.'); } else return handleErr(e,'nbErr'); }
   lacSaveLocal(); closeModal('stfModal'); if (LAC.sid) lacDraw(); else { LAC.tab = LAC.tab==='home' ? 'home' : 'nb'; LAC.nb = n.book; lacDraw(); }
 }
-async function nbDel(id){ if (!confirm('Delete this notebook entry?')) return;
-  try{ if (navigator.onLine===false) throw new Error(MSG.NET); await api('nbDelete', { id }); }catch(e){ if (friendly(e.message)===MSG.NET || friendly(e.message)===MSG.BUSY) queueOut('nbDelete', { id }, 'Delete notebook entry'); else return handleErr(e); }
+async function nbDel(id){ if (!confirm('Delete this journal entry?')) return;
+  try{ if (navigator.onLine===false) throw new Error(MSG.NET); await api('nbDelete', { id }); }catch(e){ if (friendly(e.message)===MSG.NET || friendly(e.message)===MSG.BUSY) queueOut('nbDelete', { id }, 'Delete journal entry'); else return handleErr(e); }
   LAC.data.notebooks = LAC.data.notebooks.filter(x => x.id!==id); lacSaveLocal(); lacDraw(); toast('Deleted.'); }
 function nbCheckOpen(id){ const n = LAC.data.notebooks.find(x => x.id===id);
   stfModal(`<h3>Check this entry</h3><p class="sub">${esc(n.name)}: ${esc(n.title || (lacS(n.session)||{}).title || NB_BOOKS[n.book])}</p>
@@ -8458,7 +8569,7 @@ function nbTable(n){
   else if (n.book==='MEET'){ rows.push(['My notes of the meeting', b.text]); rows.push(['My tasks from the meeting', b.todo]); }
   else rows.push(['Notes', b.text]);
   return `<table class="stfp-info"><tr><td>Title</td><td colspan="3"><b>${esc(n.title || (s ? s.title : NB_BOOKS[n.book]))}</b></td></tr>
-      <tr><td>${s?esc(lacKind(s)):'Notebook'}</td><td>${s?esc(fmtLong(s.date)):esc(NB_BOOKS[n.book])}</td><td>Last saved</td><td>${esc(dTime(n.updated))}</td></tr>
+      <tr><td>${s?esc(lacKind(s)):'Journal'}</td><td>${s?esc(fmtLong(s.date)):esc(NB_BOOKS[n.book])}</td><td>Last saved</td><td>${esc(dTime(n.updated))}</td></tr>
       <tr><td>Written by</td><td>${esc(n.name)}</td><td>Position</td><td>${esc(lacPos(n.email))}</td></tr></table>
     <table class="stfp-tbl nbtbl"><thead><tr><th style="width:34%">Question or prompt</th><th>Answer</th></tr></thead><tbody>${rows.map(r => `<tr><td><b>${esc(r[0])}</b></td><td>${r[1] ? lacPara(r[1]) : '<span style="color:#888">No answer</span>'}</td></tr>`).join('')}</tbody></table>
     ${n.checkedOn?`<p class="stfnote">\u2714 Checked by ${esc(n.checkedBy)}, ${esc(dTime(n.checkedOn))}${n.remark?'. '+esc(n.remark):''}</p>`:''}`;
@@ -8468,7 +8579,7 @@ async function nbPrint(id){
   const list = id ? [LAC.data.notebooks.find(x => x.id===id)] : LAC.data.notebooks.filter(n => nbTabOf(n.book)===LAC.nb && (!who || n.email===who)).sort((a,b) => String(a.updated).localeCompare(String(b.updated)));
   if (!list.length || !list[0]) return toast('There is nothing to print yet.');
   closeModal('stfModal');
-  const own = list.every(n => n.email===USER.email), doc = list.length > 1 ? 'notebook entries' : 'notebook entry';
+  const own = list.every(n => n.email===USER.email), doc = list.length > 1 ? 'journal entries' : 'journal entry';
   // the writer signs as Prepared by when printing their own; the School Head signs Noted by. Printing everyone's entries, the School Head prints without the teachers' e-signatures.
   const sig = (own || USER.role==='head') && await affixAsk(own ? 'Prepared by' : 'Noted by, School Head', doc) ? await mySigData() : '';
   const headName = LAC.data.headName || (USER.role==='head' ? USER.name : '');
@@ -8503,7 +8614,7 @@ function lacHub(){
         ${(head||admin)&&h.status==='Approved'?`<button class="linkbtn" onclick="lacMsgOpen('hub','${h.id}')">\u{1F4AC} Message</button>`:''}</div></div></div>`; };
   $('lacBody').innerHTML = `<div class="bar" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><button class="btn" onclick="hubForm()">\uFF0B Add a material</button>
       ${head||admin?`<div class="tabs">${[['','All'],['Pending','Waiting for approval'],['Approved','Approved'],['Returned','Returned'],['LAC','For LAC'],['SELF','Self learning']].map(x=>`<button class="${st===x[0]?'on':''}" onclick="LAC.hubSt='${x[0]}';lacHub()">${x[1]}${x[0]?' ('+D.hub.filter(h=>hubMatch(h,x[0])).length+')':''}</button>`).join('')}</div><button class="btn ghost" onclick="hubProgView()">\u{1F4CA} Progress of everyone</button>`:''}</div>
-    <p class="hint">Add a YouTube video (Unlisted) or upload your PowerPoint or PDF slides. Tap a material to open it, and tap the notebook icon to write while you watch. The School Head approves new materials first.</p>
+    <p class="hint">Add a YouTube video (Unlisted) or upload your PowerPoint or PDF slides. Tap a material to open it, and tap the journal icon to write while you watch. The School Head approves new materials first.</p>
     <div class="hubgrid">${list.map(card).join('') || '<div class="empty">No materials yet.</div>'}</div>`;
 }
 function hubForm(id){
@@ -8623,10 +8734,10 @@ async function hubPlay(id){
         <button id="hpMute" onclick="hubMute()" title="Mute" aria-label="Mute">\u{1F50A}</button>
         <input type="range" id="hpVol" min="0" max="100" step="5" value="100" aria-label="Volume" oninput="hubVol(this.value)">
         <select id="hpRate" onchange="hubRate(this.value)" aria-label="Speed"><option value="0.75">0.75x</option><option value="1" selected>1x</option><option value="1.25">1.25x</option><option value="1.5">1.5x</option></select>
-        <button onclick="hubNote()" title="My notebook" aria-label="My notebook">\u{1F4D3}</button>
+        <button onclick="hubNote()" title="My journal" aria-label="My journal">\u{1F4D3}</button>
         <button onclick="hubFull()" title="Full screen" aria-label="Full screen">⛶</button></div>`;
   const ctlSlides = `<div class="hubctl deckctl" oncontextmenu="return false"><button onclick="deckGo(-1)" id="dkPrev" title="Previous slide" aria-label="Previous slide">\u2039 Previous</button><span class="hptime" id="hpTime">Slide 1</span><button onclick="deckGo(1)" id="dkNext" title="Next slide" aria-label="Next slide">Next \u203A</button><span style="flex:1"></span>
-        <button onclick="hubNote()" title="My notebook" aria-label="My notebook">\u{1F4D3} Notebook</button><button onclick="hubFull()" title="Full screen" aria-label="Full screen">⛶</button></div>`;
+        <button onclick="hubNote()" title="My journal" aria-label="My journal">\u{1F4D3} Journal</button><button onclick="hubFull()" title="Full screen" aria-label="Full screen">⛶</button></div>`;
   $('hubPBody').innerHTML = `<div class="hubp-h"><div><b>${esc(h.title)}</b><small>${[h.facilitator, s && s.title, hubKind(h)].filter(Boolean).map(esc).join(' · ')}</small></div>
       <div style="display:flex;gap:6px"><button class="btn ghost small" onclick="hubClose()">Close</button></div></div>
     ${needSign?`<div class="hubsign">✍ This material is part of <b>${esc(s.title)}</b>. Please tick your attendance. <button class="btn small" onclick="hubClose();lacSign('${s.id}')">Tick my attendance</button></div>`:''}
@@ -8636,7 +8747,7 @@ async function hubPlay(id){
           : `<div class="hubframe" id="hubFrame" oncontextmenu="return false"><div class="ytcrop"><div id="ytBox"></div></div><div class="ytshield" onclick="hubToggle()" ondblclick="hubFull()" oncontextmenu="return false"><span id="hpBig">▶</span></div></div>${ctlVideo}`}
       </div>
       <aside class="hubnote" id="hubNote" hidden></aside>
-      <button class="nbfab" id="nbFab" onclick="hubNote()" title="My notebook" aria-label="My notebook">\u{1F4D3}</button>
+      <button class="nbfab" id="nbFab" onclick="hubNote()" title="My journal" aria-label="My journal">\u{1F4D3}</button>
     </div>
     ${slides?'<div class="deckstrip" id="deckStrip" aria-label="Slides viewed"></div>':''}
     <div class="hubresume" id="hubResume" hidden></div>
@@ -8651,7 +8762,7 @@ async function hubPlay(id){
     events:{ onReady: () => hubResumeShow(), onStateChange: e => { hubIcon(); if (e.data===YT.PlayerState.ENDED) hubEnded(); else if (e.data===YT.PlayerState.PAUSED) hubSave(); } } });
   LAC.play.timer = setInterval(hubTick, 1000); setTimeout(() => { if (LAC.play && LAC.play.id===id && $('hubResume') && $('hubResume').hidden) hubResumeShow(); }, 2500);
 }
-/* The notebook beside the material: the round icon shows or hides it. The video or slides get smaller, never covered. */
+/* The journal beside the material: the round icon shows or hides it. The video or slides get smaller, never covered. */
 function hubNote(){
   const w = $('hubWrap'), el = $('hubNote'); if (!w || !el) return;
   if (!el.hidden){ hubNoteHide(); return; }
@@ -8659,10 +8770,10 @@ function hubNote(){
   if (!LAC.fl || LAC.fl.T.label !== T.label) LAC.fl = { T, id: n ? n.id : '', cid: 'N'+Date.now().toString(36)+Math.floor(Math.random()*900+100), flag:false };
   if (!$('nbfText')){
     const draft = nbFloatDraft(), saved = n && n.body ? (n.body.text||'') : '';
-    el.innerHTML = `<div class="hubnote-h"><div><b>\u{1F4D3} ${esc(T.book==='LAC'?'My LAC Notebook':'My Notes')}</b><small>${esc(T.label)}</small></div>${nbBang()}
+    el.innerHTML = `<div class="hubnote-h"><div><b>\u{1F4D3} ${esc(T.book==='LAC'?'My LAC Journal':'My Notes')}</b><small>${esc(T.label)}</small></div>${nbBang()}
         <span class="nbf-b"><button onclick="hubNoteHide()" title="Minimize. Your notes are saved." aria-label="Minimize">\u2212</button><button onclick="hubNoteHide()" title="Close. Your notes are saved." aria-label="Close">\u00D7</button></span></div>
       <textarea class="nbt" id="nbfText" placeholder="Type your notes while you watch...">${esc(draft || saved)}</textarea>
-      <div class="nbf-f"><small id="nbfSt">${draft && draft!==saved ? 'Not yet saved' : n ? 'Saved in your notebook' : 'Saves by itself as you type'}</small><button class="btn small" onclick="nbFloatSave()">Save</button></div>`;
+      <div class="nbf-f"><small id="nbfSt">${draft && draft!==saved ? 'Not yet saved' : n ? 'Saved in your journal' : 'Saves by itself as you type'}</small><button class="btn small" onclick="nbFloatSave()">Save</button></div>`;
     nbGuard($('nbfText'));
     $('nbfText').addEventListener('input', () => { try{ localStorage.setItem(nbFloatKey(), $('nbfText').value); }catch(e){} $('nbfSt').textContent = 'Typing...'; if (LAC.flag) LAC.fl.flag = true;
       clearTimeout(LAC.fl.auto); LAC.fl.auto = setTimeout(() => nbFloatSave(true), 2500); });   // saves by itself 2.5 seconds after typing stops
@@ -8791,7 +8902,7 @@ function hubClose(){ const P = LAC.play; if (document.fullscreenElement) documen
 /* ----- the floating notebook: type while watching. Drag it, make it small, or close it. ----- */
 function nbFloatTarget(){
   const P = LAC.play, h = P && P.h, sid = h && h.session && lacS(h.session) ? h.session : '';
-  if (sid) return { book:'LAC', session:sid, title:'', label:(lacS(sid)||{}).title || 'LAC Notebook' };
+  if (sid) return { book:'LAC', session:sid, title:'', label:(lacS(sid)||{}).title || 'LAC Journal' };
   return { book:'LAC', session:'', title: h ? h.title : 'My notes', label: h ? h.title : 'My notes' };
 }
 function nbFloat(){
@@ -8799,11 +8910,11 @@ function nbFloat(){
   LAC.fl = { T, id: n ? n.id : '', flag:false };
   let el = $('nbFloat'); if (!el){ el = document.createElement('div'); el.id = 'nbFloat'; el.className = 'nbfloat'; document.body.appendChild(el); }
   el.classList.remove('min'); el.hidden = false;
-  el.innerHTML = `<div class="nbf-h" id="nbfHead"><b>\u{1F4D3} ${esc(T.book==='LAC'?'LAC Notebook':'Notes')}</b><small>${esc(T.label)}</small>
+  el.innerHTML = `<div class="nbf-h" id="nbfHead"><b>\u{1F4D3} ${esc(T.book==='LAC'?'LAC Journal':'Notes')}</b><small>${esc(T.label)}</small>
       <span class="nbf-b"><button onclick="nbFloatMin()" title="Make it small" aria-label="Make it small">−</button><button onclick="nbFloatClose()" title="Close" aria-label="Close">×</button></span></div>
     <div class="nbf-body"><textarea class="nbt" id="nbfText" placeholder="Type your notes while watching...">${esc(n && n.body ? (n.body.text||'') : nbFloatDraft())}</textarea>
       <div class="nbf-f"><small id="nbfSt">${n?'Saved':'Not yet saved'}</small><button class="btn small" onclick="nbFloatSave()">Save</button></div></div>
-    <button class="nbf-pill" onclick="nbFloatMax()">\u{1F4D3} Notebook</button>`;
+    <button class="nbf-pill" onclick="nbFloatMax()">\u{1F4D3} Journal</button>`;
   nbGuard($('nbfText')); $('nbfText').addEventListener('input', () => { try{ localStorage.setItem(nbFloatKey(), $('nbfText').value); }catch(e){} $('nbfSt').textContent = 'Typing... tap Save'; if (LAC.flag) LAC.fl.flag = true; });
   nbFloatDrag(el, $('nbfHead')); nbFloatPlace();
   setTimeout(() => $('nbfText').focus(), 100);
@@ -8813,23 +8924,23 @@ function nbFloatDraft(){ try{ return localStorage.getItem(nbFloatKey()) || ''; }
 function nbFloatMin(){ $('nbFloat').classList.add('min'); }
 function nbFloatMax(){ $('nbFloat').classList.remove('min'); }
 async function nbFloatClose(){ const t = $('nbfText'); if (t && t.value.trim() && $('nbfSt').textContent.indexOf('Typing') === 0 && confirm('Save your notes before closing?')) await nbFloatSave(); $('nbFloat').hidden = true; }
-// Saves the notes to the teacher's notebook. quiet: no message when there is nothing to save.
+// Saves the notes to the teacher's journal. quiet: no message when there is nothing to save.
 async function nbFloatSave(quiet){
   const F = LAC.fl, ta = $('nbfText'); if (!F || !ta) return; clearTimeout(F.auto);
   const text = ta.value.trim(), st = $('nbfSt');
   if (!text){ if (!quiet) toast('Write something first.'); return; }
   if (F.saving){ F.again = true; return F.saving; }
-  if (text === F.lastSaved){ if (st) st.textContent = 'Saved in your notebook'; return; }
+  if (text === F.lastSaved){ if (st) st.textContent = 'Saved in your journal'; return; }
   const cur = F.id ? LAC.data.notebooks.find(x => x.id===F.id) : null;
   const note = { id: F.id || '', cid: F.id ? '' : F.cid, book:F.T.book, session:F.T.session, title: cur ? cur.title : F.T.title, body: Object.assign({}, cur ? cur.body : {}, { text }), flag:F.flag };
   if (st) st.textContent = 'Saving...';
   F.saving = (async () => {
     try{ if (navigator.onLine===false) throw new Error(MSG.NET);
       const r = await api('nbSave', { note }); const i = LAC.data.notebooks.findIndex(x => x.id===r.note.id || x.id===note.cid); if (i > -1) LAC.data.notebooks[i] = r.note; else LAC.data.notebooks.push(r.note);
-      F.id = r.note.id; F.lastSaved = text; if ($('nbfSt')) $('nbfSt').textContent = 'Saved in your notebook at '+new Date().toLocaleTimeString('en-US',{ hour:'numeric', minute:'2-digit', timeZone:'Asia/Manila' });
+      F.id = r.note.id; F.lastSaved = text; if ($('nbfSt')) $('nbfSt').textContent = 'Saved in your journal at '+new Date().toLocaleTimeString('en-US',{ hour:'numeric', minute:'2-digit', timeZone:'Asia/Manila' });
       try{ if (($('nbfText')||{}).value === undefined || $('nbfText').value.trim() === text) localStorage.removeItem(nbFloatKey()); }catch(e){} }
     catch(e){ if (friendly(e.message)===MSG.NET || friendly(e.message)===MSG.BUSY){ const key = note.id || note.cid; saveOut(outbox().filter(x => !(x.action==='nbSave' && (x.payload.note.id||x.payload.note.cid)===key)));
-        queueOut('nbSave', { note: Object.assign({}, note, { id:'', cid:key }) }, 'Notebook entry'); lacPendingApply(); F.lastSaved = text; if ($('nbfSt')) $('nbfSt').textContent = 'Saved on this device. It will sync when online.'; }
+        queueOut('nbSave', { note: Object.assign({}, note, { id:'', cid:key }) }, 'Journal entry'); lacPendingApply(); F.lastSaved = text; if ($('nbfSt')) $('nbfSt').textContent = 'Saved on this device. It will sync when online.'; }
       else if (!quiet) handleErr(e); else if ($('nbfSt')) $('nbfSt').textContent = 'Not yet saved. Tap Save.'; }
     lacSaveLocal();
   })();
@@ -8844,7 +8955,7 @@ function nbFloatDrag(el, handle){
   handle.onpointermove = e => { if (!on) return; const x = Math.min(window.innerWidth-80, Math.max(0, ox + e.clientX - sx)), y = Math.min(window.innerHeight-40, Math.max(0, oy + e.clientY - sy)); el.style.left = x+'px'; el.style.top = y+'px'; el.style.right = 'auto'; el.style.bottom = 'auto'; };
   handle.onpointerup = () => { on = false; };
 }
-// When the video is full screen, the notebook moves into it so it stays on top
+// When the video is full screen, the journal moves into it so it stays on top
 function nbFloatPlace(){ const el = $('nbFloat'); if (!el) return; const host = document.fullscreenElement || document.body; if (el.parentElement !== host) host.appendChild(el); }
 document.addEventListener('fullscreenchange', nbFloatPlace);
 // Progress of everyone: each person and each material
@@ -8875,7 +8986,7 @@ function lacOverview(){
     const ev = lacAtt.filter(s => lacRecs(s.id,'EVS').some(r => r.email===p.email)).length, ref = lacAtt.filter(s => lacNotesFor(s.id, p.email).length).length;
     const mh = hubs.filter(h => hubAssignees(h).some(x => x.email===p.email)), mf = mh.filter(h => (lacProg(h.id, p.email)||{}).status==='Finished').length, nb = D.notebooks.filter(n => n.email===p.email);
     return { p, inv:inv.length, att:att.length, lac:lacAtt.length, ev, ref, mh:mh.length, mf, nb:nb.length, ck:nb.filter(n => n.checkedOn).length }; });
-  const table = `<table class="stft-table stfp-tbl"><thead><tr><th>Name</th><th>Sessions attended</th><th>Evaluations done</th><th>Reflections written</th><th>Learning Hub finished</th><th>Notebook entries</th></tr></thead><tbody>
+  const table = `<table class="stft-table stfp-tbl"><thead><tr><th>Name</th><th>Sessions attended</th><th>Evaluations done</th><th>Reflections written</th><th>Learning Hub finished</th><th>Journal entries</th></tr></thead><tbody>
     ${rows.map(r => `<tr><td><b>${esc(r.p.name)}</b></td><td>${r.att} of ${r.inv}</td><td>${r.ev} of ${r.lac}</td><td>${r.ref} of ${r.lac}</td><td>${r.mf} of ${r.mh}</td><td>${r.nb}${lacHead()?` <small>${r.ck} checked</small>`:''}</td></tr>`).join('')}</tbody></table>`;
   const sess = `<table class="stft-table stfp-tbl"><thead><tr><th>Session</th><th>Date</th><th>Attendance</th><th>Session rating</th><th>Speaker rating</th><th>Minutes</th><th>Report</th></tr></thead><tbody>
     ${held.sort((a,b) => b.date.localeCompare(a.date)).map(s => { const i = lacInvitees(s).length, a = lacRecs(s.id,'ATT').length, E = s.kind==='LAC' ? lacEvalData(s.id,'EVS') : null, sp = s.kind==='LAC' ? lacMean((s.facilitators||[]).map(f => lacEvalData(s.id,'EVR',f.name).overall).filter(Boolean)) : 0;
@@ -8888,7 +8999,7 @@ function lacOverview(){
       <div class="ostat static"><span class="oico">\u2B50</span><b>${lacF2(evAll)}</b><span>Average session rating ${esc(lacDesc(evAll))}</span></div>
       <div class="ostat static"><span class="oico">\u{1F3A4}</span><b>${lacF2(spAll)}</b><span>Average speaker rating ${esc(lacDesc(spAll))}</span></div>
       <div class="ostat static"><span class="oico">\u25B6</span><b>${fin} of ${asg}</b><span>Learning Hub materials finished</span></div>
-      <div class="ostat static"><span class="oico">\u{1F4D3}</span><b>${D.notebooks.length}</b><span>Notebook entries${lacHead()?', '+D.notebooks.filter(n=>n.checkedOn).length+' checked':''}</span></div></div>
+      <div class="ostat static"><span class="oico">\u{1F4D3}</span><b>${D.notebooks.length}</b><span>Journal entries${lacHead()?', '+D.notebooks.filter(n=>n.checkedOn).length+' checked':''}</span></div></div>
     <div class="bar" style="margin-top:12px"><button class="btn ghost" onclick="lacPrintPlain('LAC and Teacher Development Overview', LAC.viewHtml, 'School year to date')">\u{1F5A8} Print the overview</button>${lacHead()?`<button class="btn ghost" onclick="lacMsgOpen('remind')">\u{1F4AC} Reminder for the group chat</button>`:''}</div>
     <h3 class="stfgrp">Per teacher</h3><div class="table-wrap">${table}</div><h3 class="stfgrp">Per session</h3><div class="table-wrap">${sess}</div>`;
 }
@@ -8902,14 +9013,14 @@ function lacMsgOpen(kind, id){
 function lacMsgText(kind, id){
   const head = (LAC.data.headName||USER.name), D = LAC.data; let t = '';
   if (kind==='sess'){ const s = lacS(id), att = lacRecs(id,'ATT'), not = lacInvitees(s).filter(p => !att.some(a => a.email===p.email) && p.role!=='head');
-    t = `Good day, Ma'am and Sir! \u{1F31F}\n\n${s.kind==='MEET'?'\u{1F4E2} Faculty Meeting':'\u{1F4DA} LAC Session'}: ${s.title}\n\u{1F4C5} ${fmtLong(s.date)}${lacTime(s)?', '+lacTime(s):''}\n\u{1F4CD} ${s.venue||'Baluyan Elementary School'}${s.link?'\n\u{1F517} Join here: '+s.link:''}${(s.facilitators||[]).length?'\n\u{1F3A4} '+(s.kind==='MEET'?'Presider':'Facilitator')+': '+s.facilitators.map(f=>f.name).join(', '):''}${s.objectives?'\n\n\u{1F4DD} '+(s.kind==='MEET'?'Agenda':'Objectives')+':\n'+String(s.objectives).split('\n').filter(x=>x.trim()).map(x=>'\u2022 '+x.trim()).join('\n'):''}${Array.isArray(s.attendees)?'\n\n\u{1F465} Required to attend: '+lacInvitees(s).map(p=>p.name).join(', '):''}\n\nPlease open TALA, then LAC and Teacher Development:\n\u2705 Tick your attendance\n${s.kind==='LAC'?'\u{1F4D3} Write in your LAC Notebook and answer the reflection\n\u2B50 Evaluate the session and the speaker\n':'\u{1F4D3} Write your notes in the Meeting Notebook\n'}${not.length && s.date <= todayPH()?'\nNot yet signed: '+not.map(p=>p.name).join(', ')+'\n':''}\nThank you and God bless! \u{1F64F}\n${head}\nSchool Head`; }
+    t = `Good day, Ma'am and Sir! \u{1F31F}\n\n${s.kind==='MEET'?'\u{1F4E2} Faculty Meeting':'\u{1F4DA} LAC Session'}: ${s.title}\n\u{1F4C5} ${fmtLong(s.date)}${lacTime(s)?', '+lacTime(s):''}\n\u{1F4CD} ${s.venue||'Baluyan Elementary School'}${s.link?'\n\u{1F517} Join here: '+s.link:''}${(s.facilitators||[]).length?'\n\u{1F3A4} '+(s.kind==='MEET'?'Presider':'Facilitator')+': '+s.facilitators.map(f=>f.name).join(', '):''}${s.objectives?'\n\n\u{1F4DD} '+(s.kind==='MEET'?'Agenda':'Objectives')+':\n'+String(s.objectives).split('\n').filter(x=>x.trim()).map(x=>'\u2022 '+x.trim()).join('\n'):''}${Array.isArray(s.attendees)?'\n\n\u{1F465} Required to attend: '+lacInvitees(s).map(p=>p.name).join(', '):''}\n\nPlease open TALA, then LAC and Teacher Development:\n\u2705 Tick your attendance\n${s.kind==='LAC'?'\u{1F4D3} Write in your LAC Journal and answer the reflection\n\u2B50 Evaluate the session and the speaker\n':'\u{1F4D3} Write your notes in the Meeting Journal\n'}${not.length && s.date <= todayPH()?'\nNot yet signed: '+not.map(p=>p.name).join(', ')+'\n':''}\nThank you and God bless! \u{1F64F}\n${head}\nSchool Head`; }
   else if (kind==='follow'){ const s = lacS(id), sp = s.facilitators||[], rows = lacWhoRows(id).filter(r => r.p.role!=='head'), names = f => rows.filter(f).map(r => r.p.name);
     const parts = [], a = names(r => !r.att), e = names(r => r.att && !r.evs), f = names(r => r.att && !r.ref);
     if (a.length) parts.push('\u270D Attendance not yet signed:\n'+a.map(n=>'\u2022 '+n).join('\n'));
     if (s.kind==='LAC' && e.length) parts.push('\u2B50 Evaluation of the session not yet done:\n'+e.map(n=>'\u2022 '+n).join('\n'));
     if (s.kind==='LAC') sp.forEach((x,i) => { const n = rows.filter(r => r.att && r.evr[i]===false).map(r => r.p.name); if (n.length) parts.push('\u{1F3A4} Evaluation of '+x.name+' not yet done:\n'+n.map(m=>'\u2022 '+m).join('\n')); });
     if (s.kind==='LAC' && f.length) parts.push('\u{1F4AD} Reflection not yet written:\n'+f.map(n=>'\u2022 '+n).join('\n'));
-    const nb = names(r => r.att && !r.nb); if (nb.length) parts.push('\u{1F4D3} '+(s.kind==='LAC'?'LAC':'Meeting')+' Notebook still empty:\n'+nb.map(n=>'\u2022 '+n).join('\n'));
+    const nb = names(r => r.att && !r.nb); if (nb.length) parts.push('\u{1F4D3} '+(s.kind==='LAC'?'LAC':'Meeting')+' Journal still empty:\n'+nb.map(n=>'\u2022 '+n).join('\n'));
     t = `Good day, Ma'am and Sir! \u{1F31F}\n\nA friendly follow up for our ${lacKind(s)}: ${s.title} (${fmtLong(s.date)}).\n\n${parts.join('\n\n') || 'Everyone is done. Thank you very much!'}\n\nPlease open TALA, then LAC and Teacher Development, then the session, to finish these today. Thank you! \u{1F64F}\n${head}\nSchool Head`; }
   else if (kind==='hub'){ const h = D.hub.find(x => x.id===id), as = hubAssignees(h), notDone = as.filter(p => (lacProg(h.id, p.email)||{}).status!=='Finished' && p.role!=='head');
     t = `Good day, Ma'am and Sir! \u{1F31F}\n\nNew in the TALA Learning Hub \u25B6\n\u{1F3AC} ${h.title}${h.facilitator?'\n\u{1F3A4} '+h.facilitator:''}${h.target?'\n\u{1F4C5} Please finish it by '+fmtLong(h.target):''}\n\nOpen TALA, then LAC and Teacher Development, then Learning Hub. Watch it until the end so it is counted as finished.${notDone.length && notDone.length < as.length ? '\n\nNot yet finished: '+notDone.map(p=>p.name).join(', ') : ''}\n\nThank you! \u{1F64F}\n${head}\nSchool Head`; }
@@ -9064,9 +9175,9 @@ function mcLac(){
   const today = todayPH(), ppl = lacPeople().filter(p => p.role!=='head'), per = [];
   ppl.forEach(p => { const n = [];
     D.sessions.filter(s => s.date <= today && lacInvited(s, p.email) && !lacRecs(s.id,'ATT').some(r => r.email===p.email)).slice(0,3).forEach(s => n.push('attendance of '+s.title));
-    D.sessions.filter(s => s.date <= today && lacRecs(s.id,'ATT').some(r => r.email===p.email) && !nbWritten(s.id, p.email, s.kind)).slice(0,3).forEach(s => n.push((s.kind==='MEET'?'Meeting':'LAC')+' Notebook of '+s.title));
+    D.sessions.filter(s => s.date <= today && lacRecs(s.id,'ATT').some(r => r.email===p.email) && !nbWritten(s.id, p.email, s.kind)).slice(0,3).forEach(s => n.push((s.kind==='MEET'?'Meeting':'LAC')+' Journal of '+s.title));
     D.hub.filter(h => hubLive(h) && hubAssignees(h).some(x => x.email===p.email) && (lacProg(h.id, p.email)||{}).status!=='Finished').slice(0,3).forEach(h => n.push('Learning Hub: '+h.title));
-    (D.notebooks||[]).filter(x => x.email===p.email && x.status==='Returned').slice(0,3).forEach(x => n.push('returned notebook entry: '+(x.title||'entry')));
+    (D.notebooks||[]).filter(x => x.email===p.email && x.status==='Returned').slice(0,3).forEach(x => n.push('returned journal entry: '+(x.title||'entry')));
     if (n.length) per.push({ email:p.email, name:p.name, need:n.join('; ') }); });
   const held = D.sessions.filter(s => s.date <= today).sort((a,b) => b.date.localeCompare(a.date))[0];
   const next = D.sessions.filter(s => s.date >= today).sort((a,b) => a.date.localeCompare(b.date))[0];
@@ -9074,17 +9185,17 @@ function mcLac(){
   const k = [{ id:'pend', ico:'⏳', label:'Things to finish', items:per, done:'Everyone is up to date. Thank you!',
       group: () => mcGroup('📚 A friendly reminder from LAC and Teacher Development. Still to finish in TALA:', per, 'Please open TALA, then LAC and Teacher Development, to finish these.'),
       one: x => mcOne(x, 'A friendly reminder from LAC and Teacher Development. TALA shows these are still to finish:', 'Please open TALA to finish them. Message me if you need help.') }];
-  if (held){ const rows = lacWhoRows(held.id).filter(r => r.p.role!=='head' && (!r.att || !r.nb)).map(r => ({ email:r.p.email, name:r.p.name, need:[!r.att?'attendance not signed':'', r.att && !r.nb ? 'notebook still empty' : ''].filter(Boolean).join(', ') }));
+  if (held){ const rows = lacWhoRows(held.id).filter(r => r.p.role!=='head' && (!r.att || !r.nb)).map(r => ({ email:r.p.email, name:r.p.name, need:[!r.att?'attendance not signed':'', r.att && !r.nb ? 'journal still empty' : ''].filter(Boolean).join(', ') }));
     k.push({ id:'held', ico:'✍', label:'Follow up: '+held.title, items:rows, done:'Everyone finished the follow up for this session.',
       group: () => { try{ return lacMsgText('follow', held.id); }catch(e){ return mcGroup('A friendly follow up for '+held.title+':', rows, 'Please open TALA to finish these.'); } },
       one: x => mcOne(x, `A friendly follow up for our ${lacKind(held)}: ${held.title} (${fmtLong(held.date)}).`, 'Please open TALA, LAC and Teacher Development, then the session, to finish it today.') }); }
-  // notebook completion of the latest LAC session and the latest meeting
+  // journal completion of the latest LAC session and the latest meeting
   const nbKind = (kind, label, ico) => { const s = D.sessions.filter(x => x.kind===kind && x.date <= today).sort((a,b) => b.date.localeCompare(a.date))[0]; if (!s) return;
     const att = lacInvitees(s).filter(p => p.role!=='head' && lacRecs(s.id,'ATT').some(r => r.email===p.email)), done = att.filter(p => nbWritten(s.id, p.email, kind)), not = att.filter(p => !nbWritten(s.id, p.email, kind)).map(p => ({ email:p.email, name:p.name, need:'No entry yet for '+s.title+'.' }));
     k.push({ id:'nb'+kind, ico, label:label+': '+s.title, items:not, done:'Everyone who attended has written in the '+label+'. Thank you!',
-      group: () => `Good day, Ma'am and Sir! 🌟\n\n📓 ${label} for ${s.title} (${fmtLong(s.date)})\n\n✅ Completed (${done.length}):\n${done.map(p => '• '+p.name).join('\n') || '• None yet'}\n\n⏳ Not yet completed (${not.length}):\n${not.map(p => '• '+p.name).join('\n') || '• None'}\n\nPlease open TALA, then LAC and Teacher Development, then My Notebooks, and write your entry today.\n\nThank you! 🙏\n${mcSign()}`,
-      one: x => mcOne(x, `A friendly reminder: your ${label} entry for ${s.title} (${fmtLong(s.date)}) is still empty in TALA.`, 'Please open TALA, LAC and Teacher Development, My Notebooks, and write your entry today. Type it in your own words.') }); };
-  nbKind('LAC', 'LAC Notebook', '📓'); nbKind('MEET', 'Meeting Notebook', '🗒');
+      group: () => `Good day, Ma'am and Sir! 🌟\n\n📓 ${label} for ${s.title} (${fmtLong(s.date)})\n\n✅ Completed (${done.length}):\n${done.map(p => '• '+p.name).join('\n') || '• None yet'}\n\n⏳ Not yet completed (${not.length}):\n${not.map(p => '• '+p.name).join('\n') || '• None'}\n\nPlease open TALA, then LAC and Teacher Development, then My Journals, and write your entry today.\n\nThank you! 🙏\n${mcSign()}`,
+      one: x => mcOne(x, `A friendly reminder: your ${label} entry for ${s.title} (${fmtLong(s.date)}) is still empty in TALA.`, 'Please open TALA, LAC and Teacher Development, My Journals, and write your entry today. Type it in your own words.') }); };
+  nbKind('LAC', 'LAC Journal', '📓'); nbKind('MEET', 'Meeting Journal', '🗒');
   const nextMeet = D.sessions.filter(s => s.kind==='MEET' && s.date >= today).sort((a,b) => a.date.localeCompare(b.date))[0];
   if (nextMeet) k.push({ id:'meet', ico:'📢', label:'Meeting: '+nextMeet.title, items:null, always:true, group: () => { try{ return lacMsgText('sess', nextMeet.id); }catch(e){ return ''; } } });
   if (next && (!nextMeet || next.id!==nextMeet.id)) k.push({ id:'next', ico:'📢', label:'Announce: '+next.title, items:null, always:true, group: () => { try{ return lacMsgText('sess', next.id); }catch(e){ return ''; } } });
