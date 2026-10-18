@@ -1064,6 +1064,10 @@ textarea.nbt{-webkit-touch-callout:none}
 .mwlist{list-style:none;margin:0 0 6px;padding:0}.mwlist li{display:flex;gap:8px;align-items:center;padding:4px 0;border-bottom:1px dashed var(--line)}.mwlist li span{width:20px;text-align:center;color:#9aa4b2;font-weight:800}.mwlist li.ok span{color:#2f9a55}.mwlist li.ok button{color:var(--muted);text-decoration:line-through}
 .htools,.myweek{margin:14px 0}.htools .hacts{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.tqc .tipi,.tqtbl .tipi{color:#fff;font-size:11px;font-weight:800;display:inline-flex}.hquiet td{color:#8a94a3;background:#f6f7f9}.wsbody{max-height:62vh;overflow:auto;padding-right:4px}
 .wsp .wsp-h{font-size:11pt;margin:9px 0 4px;border-bottom:1px solid #999;padding-bottom:2px}.wsp p,.wsp .wsp-n{font-size:9.5pt;margin:3px 0}.wsp .stfp-tbl{font-size:9pt;margin-bottom:4px}
+.vpaste{border:2px dashed #b9cbe6;background:#f4f8fd;border-radius:10px;padding:12px;text-align:center;font-size:13.5px;color:#1d4f8a;cursor:text}.vpaste:focus{outline:2px solid #1f5fbf}.vpaste.full{opacity:.5;pointer-events:none}
+.vpics{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.vpic{position:relative;display:inline-flex}.vpic img{height:72px;border-radius:8px;border:1px solid var(--line)}.vpic button{border:1px solid var(--line);background:#fff;border-radius:8px;padding:6px 10px;cursor:pointer;font:inherit;font-size:13px}
+.vpic i{position:absolute;top:-7px;right:-7px;width:20px;height:20px;border-radius:50%;background:#a12a2a;color:#fff;font-style:normal;font-size:13px;line-height:20px;text-align:center;cursor:pointer}
+.vpb{font-size:13px;padding:1px 6px;margin-left:4px}.vpview{display:flex;flex-direction:column;gap:12px;max-height:70vh;overflow:auto}.vpview img{width:100%;border-radius:10px;border:1px solid var(--line)}
 .tipi{display:inline-flex;align-items:center;justify-content:center;width:17px;height:17px;border-radius:50%;background:var(--brand,#1f5fbf);color:#fff;font-size:11px;font-weight:800;cursor:help;vertical-align:middle;margin-left:3px;line-height:1;user-select:none}
 .tipbox{position:fixed;z-index:9999;display:none;background:#1d2733;color:#fff;font-size:13px;line-height:1.45;font-weight:500;padding:10px 12px;border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.25);text-align:left;white-space:normal}.tipbox.on{display:block}
 @media print{ .tipi,.tipbox{display:none!important} }
@@ -1304,6 +1308,10 @@ textarea.nbt{-webkit-touch-callout:none}
       <button type="button" data-q="5" onclick="vQ(5)"><b>5</b><small>Outstanding</small></button><button type="button" data-q="4" onclick="vQ(4)"><b>4</b><small>Very Satisfactory</small></button><button type="button" data-q="3" onclick="vQ(3)"><b>3</b><small>Satisfactory</small></button><button type="button" data-q="2" onclick="vQ(2)"><b>2</b><small>Unsatisfactory</small></button><button type="button" data-q="1" onclick="vQ(1)"><b>1</b><small>Poor</small></button></div>
       <div class="hint">Rate how complete, correct, and well prepared it is. Needed when you approve.</div></div>
     <div class="field"><label for="vRem">Remarks and findings</label><textarea id="vRem" maxlength="800" placeholder="Required when returning the file"></textarea></div>
+    <div class="field"><span class="lbl">📷 Pictures for the teacher (optional, up to 3)</span>
+      <div class="vpaste" id="vPaste" tabindex="0">Click here, then paste a screenshot (Ctrl+V). Or <button type="button" class="linkbtn" onclick="$('vPicIn').click()">choose a picture</button>.</div>
+      <input type="file" id="vPicIn" accept="image/*" multiple hidden onchange="vPicFiles(this.files);this.value=''">
+      <div class="vpics" id="vPics"></div></div>
     <div class="err" id="vErr"></div>
     <div class="modal-actions">
       <button class="btn ghost" onclick="closeModal('valModal')">Cancel</button>
@@ -1784,8 +1792,8 @@ textarea.nbt{-webkit-touch-callout:none}
 
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
-const MIN_SERVER = '7.2'; // oldest Code.gs this page works with
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'7.2', date:'October 15, 2026' } };
+const MIN_SERVER = '7.3'; // oldest Code.gs this page works with
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'7.3', date:'October 18, 2026' } };
 function verLine(server){
   const old = server && (server.indexOf('older') > -1 || parseFloat(server) < parseFloat(MIN_SERVER));
   const s = server ? ' Server '+server+('.') : '';
@@ -3112,7 +3120,7 @@ function renderPrivate(){
   if (head) h += teacherTable(scope) + (USER.role==='head' || USER.role==='admin' ? tqTable() : ''); else h += myOverview();
   h += `<div class="filters">`;
   if (head) h += `<select onchange="FILTER.teacher=this.value;renderPrivate()" aria-label="Teacher"><option value="">All teachers</option>${(DATA.teachers||[]).map(t=>`<option value="${esc(t.email)}" ${FILTER.teacher===t.email?'selected':''}>${esc(t.name)}</option>`).join('')}</select>`;
-  if (USER && USER.role==='head') h += `<button class="btn ghost small" onclick="msgCenter('lpt')">💬 Ready messages</button>`;
+  if (USER && USER.role==='head') h += `<button class="btn ghost small" onclick="msgCenter('lpt')">💬 Ready messages</button><button class="btn ghost small" onclick="cmtOpen()">📝 Comments and returns summary</button>`;
   h += `<input placeholder="Search grade or subject" value="${esc(FILTER.text)}" oninput="FILTER.text=this.value;clearTimeout(window._sq);window._sq=setTimeout(renderList,180)" aria-label="Search">
     <div class="tabs"><button class="${FILTER.view==='cards'?'on':''}" onclick="FILTER.view='cards';renderPrivate()">Cards</button><button class="${FILTER.view==='table'?'on':''}" onclick="FILTER.view='table';renderPrivate()">Table</button></div></div>
     <div id="entryList"></div>`;
@@ -3167,7 +3175,7 @@ function tqTable(){
   const rows = T.map(t => { const m = DATA.entries.filter(e => e.email===t.email && e.term===SEL.term), L = tqStats(m,'LPT'), P = tqStats(m,'PPT');
     return `<tr><td><button class="linkbtn" onclick="tqOne('${esc(t.email)}')">${esc(t.name)}</button></td><td>${cell(L.pct===null?null:L.pct+'%', L.tRate)}<small>${L.timed?L.on+'/'+L.timed:''}</small></td><td>${cell(P.pct===null?null:P.pct+'%', P.tRate)}<small>${P.timed?P.on+'/'+P.timed:''}</small></td>
       <td>${cell(L.qPct===null?null:L.qPct+'%', L.qRate)}<small>${L.qPct===null?'':L.qRate+' '+qWord(L.qRate)+', '+L.times+' return'+(L.times===1?'':'s')}</small></td><td>${cell(P.qPct===null?null:P.qPct+'%', P.qRate)}<small>${P.qPct===null?'':P.qRate+' '+qWord(P.qRate)+', '+P.times+' return'+(P.times===1?'':'s')}</small></td></tr>`; }).join('');
-  return `<details class="byt" open><summary>Timeliness and quality by teacher, Term ${SEL.term} (for the IPCRF)</summary>
+  return `<details class="byt" ${FILTER.openTq?'open':''} ontoggle="FILTER.openTq=this.open"><summary>Timeliness and quality by teacher, Term ${SEL.term} (for the IPCRF)</summary>
     <div class="table-wrap"><table class="tqtbl"><thead><tr><th>Teacher</th><th>LPT timeliness ${tipI(TQ_TIP.t)}</th><th>PPT timeliness ${tipI(TQ_TIP.t)}</th><th>LPT quality ${tipI(TQ_TIP.q)}</th><th>PPT quality ${tipI(TQ_TIP.q)}</th></tr></thead><tbody>${rows || '<tr><td colspan="5" class="hint">No teachers yet.</td></tr>'}</tbody></table></div>
     <div class="obs-actions"><button class="btn ghost small" onclick="tqPrint()">🖨 Print for the IPCRF</button><span class="hint">Both use the same scale: 100% is 5, 85% or more is 4, 70% or more is 3, 50% or more is 2, below 50% is 1. Tap the ! on a heading to see the formula.</span></div></details>`;
 }
@@ -3191,7 +3199,7 @@ function myOverview(){
     const es = mine.filter(e=>e.week===w), it = [].concat(...es.map(itemsOf)).filter(x=>x.status);
     const st = !it.length ? '' : it.some(x=>x.status==='Returned'||x.status==='Invalid') ? 'ret' : it.every(x=>x.status==='Approved') ? 'ok' : 'wait';
     return `<button class="wk ${st} ${SEL.week===w?'on':''}" title="Week ${w}" onclick="SEL.week='${w}';renderAll()">${w}</button>`; }).join('');
-  return `${tqCards(mine)}<details class="byt" open><summary>My overview, Term ${SEL.term}</summary><div class="ovwrap">
+  return `${tqCards(mine)}<details class="byt" ${FILTER.openOv?'open':''} ontoggle="FILTER.openOv=this.open"><summary>My overview, Term ${SEL.term}</summary><div class="ovwrap">
     <div class="ovgrid">${box(c(x=>x.K==='LPT'&&x.status==='Approved'),'LPT submitted','g')}${box(c(x=>x.K==='PPT'&&x.status==='Approved'),'PPT submitted','g')}
     ${box(c(x=>x.status==='Pending'),'For checking','y')}${box(c(x=>x.status==='Incomplete'),'Incomplete (by session)','y')}${box(c(x=>x.status==='Returned'),'Returned','r')}
     ${box(c(x=>x.status==='Invalid'),'Wrong file','r')}${box(c(x=>x.status==='Approved'&&x.late&&!x.late.late),'On time','g')}${box(c(x=>x.complete&&x.late&&x.late.late),'Late','r')}</div>
@@ -3232,7 +3240,7 @@ function docCore(e, f){
       <div class="ln">Printed: ${d.printed ? esc(dTime(d.printed))+' '+lateTag(d.printLate)+(d.same?' <small>(same as download)</small>':'') : 'Not printed'}</div>
       <div class="ln">Uploaded: ${esc(dTime(d.firstUpload))} ${lateTag(d.upLate)}</div>
       ${d.uploads>1?`<div class="ln"><small>Reuploaded, latest on ${esc(dTime(d.lastUpload))}</small></div>`:''}`;
-    if (d.remarks || d.validatedOn) h += `<div class="remarks"><b>${d.validation==='Pending'?'Earlier remarks, '+esc(dTime(d.validatedOn)):'Validated, '+esc(d.validation)+', on '+esc(dTime(d.validatedOn))}</b>${esc(d.remarks||'No remarks.')}</div>`;
+    if (d.remarks || d.validatedOn) h += `<div class="remarks"><b>${d.validation==='Pending'?'Earlier remarks, '+esc(dTime(d.validatedOn)):'Validated, '+esc(d.validation)+', on '+esc(dTime(d.validatedOn))}${vPicBtn(e.id, vPicsOf(d))}</b>${esc(d.remarks||'No remarks.')}</div>`;
     h += historyBox(d, e);
   } else h += `<div class="ln mk-wait">Not yet uploaded</div>`;
   return h + `<div class="act">${docAction(e,f)}</div>`;
@@ -3249,7 +3257,7 @@ function dedupe(hs){ return hs.filter((x,i) => !(i>0 && hs[i-1].event===x.event 
 function historyBox(d, e){
   const hs = dedupe(d.history || []);
   if (!hs.length) return '';
-  return `<details class="hist"><summary>History (${hs.length})</summary><ol>${hs.map(x=>{ const rel = e && !/^Validated/.test(x.event) ? relDays(x.on, e, true) : ''; return `<li><b>${esc(dTime(x.on))}</b> ${esc(evText(x.event))}${rel?' ('+esc(rel)+')':''}${x.remarks?': '+esc(x.remarks):''}</li>`; }).join('')}</ol></details>`;
+  return `<details class="hist"><summary>History (${hs.length})</summary><ol>${hs.map(x=>{ const rel = e && !/^Validated/.test(x.event) ? relDays(x.on, e, true) : ''; return `<li><b>${esc(dTime(x.on))}</b> ${esc(evText(x.event))}${rel?' ('+esc(rel)+')':''}${x.remarks?': '+esc(x.remarks):''}${e?vPicBtn(e.id, x.pics):''}</li>`; }).join('')}</ol></details>`;
 }
 function docAction(e, f){
   const d = f.d, s = docState(d), id = esc(e.id), K = f.K, sn = f.s, L = f.label;
@@ -3286,7 +3294,7 @@ function renderList(){
         <small>${d.printed?'Printed '+esc(dTime(d.printed))+(d.printLate!==null?', '+lateTag(d.printLate):''):'Not printed'}</small>
         <small>Submitted ${esc(dTime(d.firstUpload))}${d.upLate!==null?', '+lateTag(d.upLate):''}</small>
         ${d.uploads>1?`<small>Revised file uploaded ${esc(dTime(d.lastUpload))}</small>`:''}
-        ${d.validatedOn?`<div class="tval"><b>${d.validation==='Pending'?'Earlier remarks':'Validated, '+esc(d.validation)}</b> ${esc(dTime(d.validatedOn))}${d.remarks?`<div>${esc(d.remarks)}</div>`:''}</div>`:''}
+        ${d.validatedOn?`<div class="tval"><b>${d.validation==='Pending'?'Earlier remarks':'Validated, '+esc(d.validation)}</b> ${esc(dTime(d.validatedOn))}${vPicBtn(e.id, vPicsOf(d))}${d.remarks?`<div>${esc(d.remarks)}</div>`:''}</div>`:''}
         ${historyBox(d, e)}<div class="tact">${docAction(e,f)}</div>`; };
     const weeks = SEL.week==='all' ? Array.from({length:DATA.options.weeks},(_,i)=>String(i+1)) : [SEL.week];
     let rows = '';
@@ -3402,7 +3410,7 @@ function sessionBlock(K, modeBox){
     if (st==='Approved') return `<div class="sbox done"><b>Session ${i+1}</b>${pill(d)}<div class="hint">Approved and locked.</div></div>`;
     if (st==='Pending') return `<div class="sbox wait"><b>Session ${i+1}</b>${pill(d)}<div class="hint">This session has been uploaded and is waiting for validation.</div></div>`;
     return `<div class="sbox"><b>Session ${i+1}</b>${st==='Returned'||st==='Invalid'?pill(d):''}
-      ${st==='Returned'?`<div class="remarks" style="margin:6px 0"><b>Returned. Upload the revised file. It will replace ${esc(d.fileName)}.</b>${esc(d.remarks||'')}</div>`:''}
+      ${st==='Returned'?`<div class="remarks" style="margin:6px 0"><b>Returned. Upload the revised file. It will replace ${esc(d.fileName)}.${W.entry?vPicBtn(W.entry.id, vPicsOf(d)):''}</b>${esc(d.remarks||'')}</div>`:''}
       ${st==='Invalid'?`<div class="remarks" style="margin:6px 0"><b>Wrong file, not counted. Upload the correct file for this session.</b>${esc(d.remarks||'')}</div>`:''}
       <div class="namerow"><code>${esc(name)}</code><button type="button" class="btn small" onclick="copyText('${esc(name)}')">Copy name</button></div>
       <input type="file" id="${K}S${i+1}File" accept="${K==='LPT'?'.pdf,.doc,.docx':'.pdf,.ppt,.pptx'}" style="margin-top:6px;width:100%" onchange="checkSess(${i+1},'${K}')">
@@ -3445,7 +3453,7 @@ function singleBlock(K, extra){
   const val = v => v ? String(v).replace(' ','T') : '';
   return `<div class="docblock" id="${K}Block"><h4><span class="type ${K}">${K}</span>${title}${d && d.link ? pill(d) : ''}</h4>
     ${extra||''}
-    ${s==='Returned' ? `<div class="remarks" style="margin:0 0 10px"><b>Returned on ${esc(dTime(d.validatedOn))}. Upload the revised file. It will replace ${esc(d.fileName)}.</b>${esc(d.remarks||'')}</div>` : ''}
+    ${s==='Returned' ? `<div class="remarks" style="margin:0 0 10px"><b>Returned on ${esc(dTime(d.validatedOn))}. Upload the revised file. It will replace ${esc(d.fileName)}.${W.entry?vPicBtn(W.entry.id, vPicsOf(d)):''}</b>${esc(d.remarks||'')}</div>` : ''}
     ${s==='Invalid' ? `<div class="remarks" style="margin:0 0 10px"><b>Marked as a wrong file on ${esc(dTime(d.validatedOn))}. It is not counted. Upload the correct ${K}.</b>${esc(d.remarks||'')}</div>` : ''}
     <div class="field"><span class="lbl">Source</span><div class="seg" id="${K}Seg">
       <label><input type="radio" name="${K}src" value="From DZIIS" ${d.source==='From DZIIS'?'checked':''} onchange="segSync('${K}Seg')">${K} from DZIIS</label>
@@ -3590,25 +3598,53 @@ function openVal(id, K, edit, sn){
   $('valSub').innerHTML = `${esc(e.teacher)}: ${esc(e.grade)}, ${esc(e.subject)}, Term ${esc(e.term)} Week ${esc(e.week)}<br>File: ${fileLink(d)}`;
   document.querySelectorAll('input[name=vDec]').forEach(r => r.checked = r.value === (d.validation==='Returned'||d.validation==='Invalid'?d.validation:'Approved'));
   segSync('vSeg'); vHint(); $('vRem').value = d.remarks||''; $('vErr').textContent=''; vQ(Number(d.quality||0)); vQualSync();
+  V_PICS = []; V_KEEP = edit ? vPicsOf(d).slice() : []; V_ENTRY = id; vPicDraw();
   openModal('valModal');
 }
 async function saveValidation(){
   const dec = radioVal('vDec'), rem = $('vRem').value.trim();
   if (dec === 'Returned' && !rem) return $('vErr').textContent = 'Add remarks so the teacher knows what to fix.';
   closeModal('valModal');
-  await quickValidate($('vId').value, $('vWhich').value, V_SESS, dec, rem, V_EDIT, V_Q);
+  await quickValidate($('vId').value, $('vWhich').value, V_SESS, dec, rem, V_EDIT, V_Q, V_PICS.slice(), V_KEEP.slice());
 }
+/* ----- Pictures with a validation: the School Head pastes or chooses screenshots. Only the School Head can paste here. ----- */
+let V_PICS = [], V_KEEP = [], V_ENTRY = '';
+function vPicsOf(d){ const v = (d && d.history || []).filter(x => /^Validated/.test(x.event)).pop(); return v && Array.isArray(v.pics) ? v.pics : []; }
+function vPicDraw(){ const el = $('vPics'); if (!el) return;
+  el.innerHTML = V_KEEP.map((id,i) => `<span class="vpic old"><button type="button" onclick="valPicView('${V_ENTRY}','${id}')">📷 Attached ${i+1}</button><i title="Remove" onclick="V_KEEP.splice(${i},1);vPicDraw()">×</i></span>`).join('')
+    + V_PICS.map((src,i) => `<span class="vpic"><img src="${src}" alt="Picture ${i+1}"><i title="Remove" onclick="V_PICS.splice(${i},1);vPicDraw()">×</i></span>`).join('');
+  const full = V_KEEP.length + V_PICS.length >= 3; $('vPaste').classList.toggle('full', full); }
+function vPicShrink(file){ return new Promise((ok, no) => { const r = new FileReader(); r.onerror = no; r.onload = () => { const im = new Image(); im.onerror = no;
+  im.onload = () => { const m = 1600, k = Math.min(1, m / Math.max(im.width, im.height)), c = document.createElement('canvas'); c.width = Math.round(im.width*k); c.height = Math.round(im.height*k);
+    const g = c.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0,0,c.width,c.height); g.drawImage(im, 0, 0, c.width, c.height); ok(c.toDataURL('image/jpeg', 0.82)); }; im.src = r.result; }; r.readAsDataURL(file); }); }
+async function vPicFiles(files){ for (const f of [...(files||[])]){ if (!/^image\//.test(f.type)) continue; if (V_KEEP.length + V_PICS.length >= 3){ toast('Up to 3 pictures only.'); break; }
+  try{ V_PICS.push(await vPicShrink(f)); }catch(e){ toast('This picture could not be read.'); } } vPicDraw(); }
+document.addEventListener('paste', e => { if (!$('valModal').classList.contains('open') || !USER || USER.role!=='head') return;
+  const fs = [...((e.clipboardData||{}).items||[])].filter(x => x.kind==='file' && /^image\//.test(x.type)).map(x => x.getAsFile()).filter(Boolean);
+  if (!fs.length) return; e.preventDefault(); vPicFiles(fs); toast('Picture added.'); });
+// The camera button beside a remark: opens the pictures the School Head attached
+function vPicBtn(entryId, ids){ return ids && ids.length ? ` <button type="button" class="picbtn vpb" title="See the picture${ids.length>1?'s':''} from the School Head" onclick="event.stopPropagation();valPicView('${esc(entryId)}','${ids.map(esc).join(',')}')">📷${ids.length>1?' '+ids.length:''}</button>` : ''; }
+const VPIC = {};
+async function valPicView(entryId, list){
+  const ids = String(list).split(',').filter(Boolean), back = $('stfModal').classList.contains('open') ? $('stfMBody').innerHTML : null;
+  const show = () => stfModal(`<h3>📷 Picture${ids.length>1?'s':''} from the School Head</h3><div class="vpview">${ids.map(id => VPIC[id] ? `<a href="${VPIC[id]}" target="_blank" rel="noopener"><img src="${VPIC[id]}" alt=""></a>` : '<p class="hint">This picture could not be loaded.</p>').join('')}</div><div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Close</button></div>`, 'wide');
+  if (ids.every(id => VPIC[id])) return show();
+  stfModal(`<div class="pirload"><div class="pirdots"><i></i><i></i><i></i></div><b>Opening the picture</b></div>`);
+  for (const id of ids){ if (VPIC[id]) continue; try{ VPIC[id] = (await api('valPic', { id:entryId, pic:id })).src; }catch(e){} }
+  show(); }
 // The screen updates right away. Saving happens in the background.
-async function quickValidate(id, K, sn, dec, rem, edit, q){
+async function quickValidate(id, K, sn, dec, rem, edit, q, pics, keep){
+  pics = pics || []; keep = keep || [];
   const e = DATA.entries.find(x=>x.id===id); if (!e) return;
   const d = docOf(e, K, sn), L = K + (sn ? ' Session '+sn : ''), before = JSON.stringify(d), on = nowLocal().replace('T',' ')+':00';
   d.validation = dec; d.remarks = rem || ''; d.validatedOn = on; d.quality = dec==='Approved' ? String(q||'') : '';
   d.history = (d.history||[]).slice();
-  if (edit){ for (let i = d.history.length-1; i >= 0; i--) if (/^Validated/.test(d.history[i].event)){ d.history[i] = {on, event:'Validated, '+dec+' (edited)', remarks:rem}; break; } }
-  else d.history.push({on, event:'Validated, '+dec, remarks:rem});
+  const hv = {on, event:'Validated, '+dec+(edit?' (edited)':''), remarks:rem}; if (keep.length) hv.pics = keep.slice();
+  if (edit){ for (let i = d.history.length-1; i >= 0; i--) if (/^Validated/.test(d.history[i].event)){ d.history[i] = hv; break; } }
+  else d.history.push(hv);
   renderList(); toast(L+(dec==='Approved'?' approved and locked.':dec==='Invalid'?' marked as wrong file. It is not counted.':' returned to the teacher.'));
-  loading(true);
-  try{ await apiData('validateFile',{id, which:K, session:sn||0, decision:dec, remarks:rem, edit:!!edit, quality:q||0}); }
+  loading(true, pics.length ? 'Saving with '+pics.length+' picture'+(pics.length>1?'s':'') : undefined);
+  try{ await apiData('validateFile',{id, which:K, session:sn||0, decision:dec, remarks:rem, edit:!!edit, quality:q||0, pics: pics.map(p => p.split(',')[1]), keepPics: keep}); }
   catch(err){ Object.assign(d, JSON.parse(before)); renderList(); handleErr(err); }
   loading(false);
 }
@@ -3635,7 +3671,7 @@ function printWeek(){
     if (!d.link) return `<b>${K}:</b> Not yet submitted`;
     const o = d.upLate, txt = d.validation==='Invalid' ? 'wrong file, not counted' : o ? o.text : (relDays(d.countFrom||d.firstUpload, e, true) || '');
     const rs = rounds(d).map(r => `<li><b>Upload ${r.n}</b>, ${esc(dTime(r.on))}: ${r.val
-      ? esc(evText(r.val.event).replace(/ \(edited\)$/,''))+(/edited/.test(r.val.event)?' (edited)':'')+' on '+esc(dTime(r.val.on))+(r.val.remarks?'. <i>\u201C'+esc(r.val.remarks)+'\u201D</i>':'.')
+      ? esc(evText(r.val.event).replace(/ \(edited\)$/,''))+(/edited/.test(r.val.event)?' (edited)':'')+' on '+esc(dTime(r.val.on))+(r.val.remarks?'. <i>\u201C'+esc(r.val.remarks)+'\u201D</i>':'.')+((r.val.pics||[]).length?' <b title="With picture">\u{1F4F7}</b>':'')
       : 'For validation.'}</li>`).join('');
     return `<b>${K}:</b> ${esc(txt.charAt(0).toUpperCase()+txt.slice(1))}${rs?`<ul class="p-hist">${rs}</ul>`:''}`; };
   const pptStatus = e => {
@@ -3643,10 +3679,10 @@ function printWeek(){
     if (!a.sess) return status(e.ppt, e, 'PPT');
     const head = a.complete ? (a.late ? a.late.text : 'Complete') : 'Incomplete';
     const lines = e.pptSessions.map((d,k) => { const lastV = dedupe(d.history||[]).filter(x=>/^Validated/.test(x.event)).pop();
-      return `<li><b>Session ${k+1}:</b> ${!d.link ? 'Not yet submitted.' : esc(STATE_LABEL[docState(d)])+(lastV && lastV.remarks ? '. <i>\u201C'+esc(lastV.remarks)+'\u201D</i>' : '.')}</li>`; }).join('');
+      return `<li><b>Session ${k+1}:</b> ${!d.link ? 'Not yet submitted.' : esc(STATE_LABEL[docState(d)])+(lastV && lastV.remarks ? '. <i>\u201C'+esc(lastV.remarks)+'\u201D</i>' : '.')+(lastV && (lastV.pics||[]).length ? ' <b title="With picture">\u{1F4F7}</b>' : '')}</li>`; }).join('');
     return `<b>PPT (by session, ${a.done}/${a.n}):</b> ${esc(head.charAt(0).toUpperCase()+head.slice(1))}<ul class="p-hist">${lines}</ul>`; };
   const lptStatusP = e => { if (!isSess(e,'LPT')) return status(e.lpt,e,'LPT'); const a = lptAgg(e);
-    return `<b>LPT (by session, ${a.done}/${a.n}):</b> ${a.complete ? (a.late ? esc(a.late.text) : 'Complete') : 'Incomplete'}<ul class="p-hist">${e.lptSessions.map((d,k) => `<li><b>Session ${k+1}:</b> ${!d.link ? 'Not yet submitted.' : esc(STATE_LABEL[docState(d)])+(d.upLate?', '+esc(d.upLate.text):'')+'.'}</li>`).join('')}</ul>`; };
+    return `<b>LPT (by session, ${a.done}/${a.n}):</b> ${a.complete ? (a.late ? esc(a.late.text) : 'Complete') : 'Incomplete'}<ul class="p-hist">${e.lptSessions.map((d,k) => `<li><b>Session ${k+1}:</b> ${!d.link ? 'Not yet submitted.' : esc(STATE_LABEL[docState(d)])+(d.upLate?', '+esc(d.upLate.text):'')+'.'+(vPicsOf(d).length?' <b title="With picture">\u{1F4F7}</b>':'')}</li>`).join('')}</ul>`; };
   const remarks = e => `<div>${lptStatusP(e)}</div><div class="p-rmk">${pptStatus(e)}</div>`;
   const pptRow = (e, K) => { K = K || 'PPT'; const a = pptAgg(e, K);
     if (!a.sess) return null;
@@ -4326,7 +4362,7 @@ function obsHome(){
   const tile = (icon, title, sub, fn, cls) => `<button class="otile ${cls||''}" onclick="${fn}"><span class="oico">${icon}</span><b>${title}</b><small>${sub}</small></button>`;
   $('viewObs').innerHTML = `
     <div class="ohero"><div><h2>Observations</h2><p>${head?'Classroom observations (ePMCF) and Monitoring by Walking Around (PMCF MWA). Your target is 2 observations every school day you are in school.':admin?'View completed observations and print the reports.':'Your observations from the School Head. Review, comment on the agreement, and sign.'}</p></div>
-      ${head?`<button class="btn big sun" onclick="obsChooser()">\u002B New observation</button>`:''}</div>
+      ${head?`<div style="display:flex;flex-direction:column;gap:8px;align-items:flex-end"><button class="btn big sun" onclick="obsChooser()">\u002B New observation</button><button class="btn ghost small" onclick="cmtOpen()">📋 LPT and PPT comments (for the MWA)</button></div>`:''}</div>
     ${head?`<div class="otiles">
       ${tile('\u2637','Observation calendar', q.lack ? q.lack+' observation'+(q.lack>1?'s':'')+' lacking this term' : 'On target this term', 'openCal()', q.lack?'warn':'good')}
       ${lastDraft?tile('\u270E','Continue draft',esc(lastDraft.teacherName||(otype(lastDraft)==='mwa'?'MWA visit':'Untitled draft'))+(lastDraft.date?', '+esc(dShort(lastDraft.date)):''),`obsOpen('${esc(lastDraft.id)}')`,'hl'):''}
@@ -4417,7 +4453,7 @@ function obsEditor(){
       <textarea spellcheck="true" lang="en" data-note="${k}" rows="3">${esc(v)}</textarea><div class="gfix" data-for="${k}"></div></details>`; };
   $('viewObs').innerHTML = `
     <div class="trk-head"><div><span class="ktag epmcf">ePMCF Classroom Observation</span><h2>Observation notes and PMCF</h2><p>${OBS_STATUS.Draft}.</p></div>
-      <div class="head-actions"><button class="btn ghost" onclick="openGuide()">COI and NCOI guide</button><button class="btn ghost" onclick="obsBack()">Back to list</button></div></div>
+      <div class="head-actions"><button class="btn ghost" onclick="cmtOpen(($('oTeacher')&&$('oTeacher').value)||OBS.cur.teacherEmail)">📋 LPT and PPT comments</button><button class="btn ghost" onclick="openGuide()">COI and NCOI guide</button><button class="btn ghost" onclick="obsBack()">Back to list</button></div></div>
     <div class="autosave" id="oAuto">${obsPending(o.id)||obsWip(o.id)?'<span class="unsynced">Saved on this device, not yet synced</span>':'Autosave is on. Your notes are saved on this device as you type.'}</div>
     ${(d.revisions||[]).length?`<div class="notice" style="margin-top:10px"><b>Revision ${(d.revisions||[]).length}.</b> The earlier signatures were cleared. When you lock and send it again, the teacher will be told it was revised and must sign again.</div>`:''}
     <div class="obs-main">
@@ -4485,7 +4521,7 @@ function mwaEditor(){
   const o = OBS.cur, d = o.data, it = (d.inc = d.inc && d.inc.length ? d.inc : [{}])[0], tw = findTermWeek(o.date);
   $('viewObs').innerHTML = `
     <div class="trk-head"><div><span class="ktag mwa">PMCF MWA</span><h2>Monitoring by Walking Around</h2><p>For things outside lesson delivery: cleanliness, behavior, safety, routines, and more. ${OBS_STATUS.Draft}.</p></div>
-      <div class="head-actions"><button class="btn ghost" onclick="obsBack()">Back to list</button></div></div>
+      <div class="head-actions"><button class="btn ghost" onclick="cmtOpen(($('oTeacher')&&$('oTeacher').value)||OBS.cur.teacherEmail)">📋 LPT and PPT comments</button><button class="btn ghost" onclick="obsBack()">Back to list</button></div></div>
     <div class="autosave" id="oAuto">${obsPending(o.id)||obsWip(o.id)?'<span class="unsynced">Saved on this device, not yet synced</span>':'Autosave is on. Your notes are saved on this device as you type.'}</div>
     <div class="obs-main">
       <section class="ocard2"><h3>1. Visit details</h3>
@@ -5609,8 +5645,8 @@ function sbMyTodo(){
 // Personnel: LAC and meeting journal entries still to write (and entries returned by the School Head). It stays until written.
 function nbTodoList(){ try{ if (!USER || USER.role==='head' || aralOnly() || typeof LAC==='undefined' || !LAC.data || !featOn('lac')) return [];
   return nbReturned().map(n => ({ ret:1, id:n.id, t:(n.title || (lacS(n.session)||{}).title || NB_BOOKS[n.book]), x:'Returned by the School Head'+(n.remark?': '+n.remark:''), book:NB_BOOKS[n.book] }))
-    .concat(nbMissing().map(s => ({ sid:s.id, kind:s.kind==='MEET'?'MEET':'LAC', t:s.title, x:dShort(s.date)+'. You attended, but your journal is still empty.', book:s.kind==='MEET'?'Meeting Journal':'LAC Journal' })))
-    .concat(hubTodo().filter(x => x.fin && !x.nb).map(x => ({ hub:x.h.id, t:x.h.title, x:'You finished this Learning Hub material, but your LAC Journal for it is still empty.', book:'LAC Journal' }))); }catch(e){ return []; } }
+    .concat(nbMissing().map(s => ({ sid:s.id, kind:s.kind==='MEET'?'MEET':'LAC', t:s.title, x:dShort(s.date)+', '+daysAgo(s.date)+'. You attended, but your journal is still empty.', book:s.kind==='MEET'?'Meeting Journal':'LAC Journal' })))
+    .concat(hubTodo().filter(x => x.fin && !x.nb).map(x => ({ hub:x.h.id, t:x.h.title, x:'You finished this Learning Hub material, but your LAC Journal for it is still empty. Posted '+daysAgo(hubPosted(x.h))+'.', book:'LAC Journal' }))); }catch(e){ return []; } }
 function nbTodoHtml(){ const L = nbTodoList(); if (!L.length) return '';
   return `<div class="sbtodo nbtodo"><b>\u{1F4D3} Your journal entries to complete (${L.length})</b>
     <p>Please write in your journal for each session or meeting below. This reminder stays until the entry is written.</p>
@@ -5629,9 +5665,9 @@ function todoItems(){
         if (wk && todayPH() >= wk.due && !DATA.entries.some(e => e.email===USER.email && e.term===t && e.week===w)) lines.push('No LPT and PPT uploaded yet for Term '+t+', Week '+w+' (due '+dShort(wk.due)+').'); }
       if (id==='obs' && teacher && typeof OBS!=='undefined') (OBS.list||[]).filter(o => o.teacherEmail===USER.email && o.status==='Sent').forEach(o => { const L = obsLapse(o); lines.push((otype(o)==='mwa'?'MWA':'ePMCF')+' of '+dShort(o.date)+': please review and sign'+(L&&L.d?', '+L.d+' day'+(L.d>1?'s':'')+' waiting':'')+'.'); });
       if (id==='sbfp' && teacher) sbMyTodo().forEach(x => lines.push('SBFP '+dShort(x.date)+': '+x.need.join(', ')+'.'));
-      if (id==='lac' && !head && typeof LAC!=='undefined' && LAC.data){ nbTodoList().forEach(x => lines.push(x.hub ? { t:'Learning Hub, '+x.t+': you finished it, but your LAC Journal is still empty.', go:`hubWrite('${x.hub}')`, b:'Write now' } : x.book+', '+x.t+': '+(x.ret?'returned, please complete.':'no entry yet.')));
+      if (id==='lac' && !head && typeof LAC!=='undefined' && LAC.data){ nbTodoList().forEach(x => lines.push(x.hub ? { t:'Learning Hub, '+x.t+': you finished it, but your LAC Journal is still empty. Posted '+x.x.split('Posted ').pop(), go:`hubWrite('${x.hub}')`, b:'Write now' } : x.book+', '+x.t+': '+(x.ret?'returned, please complete.':'no entry yet.')));
         LAC.data.sessions.filter(s => s.date===todayPH() && lacInvited(s, USER.email) && !lacMine(s.id,'ATT')).forEach(s => lines.push(s.title+': tick your attendance today.'));
-        hubTodo().filter(x => !x.fin).forEach(x => lines.push({ t:'Learning Hub: '+x.h.title+(x.h.target?', finish by '+dShort(x.h.target):'')+(x.nb?'.':', then write your LAC Journal.'), go:`hubWrite('${x.h.id}')`, b:'Watch' })); }
+        hubTodo().filter(x => !x.fin).forEach(x => lines.push({ t:'Learning Hub: '+x.h.title+' (posted '+daysAgo(hubPosted(x.h))+')'+(x.h.target?', finish by '+dShort(x.h.target):'')+(x.nb?'.':', then write your LAC Journal.'), go:`hubWrite('${x.h.id}')`, b:'Watch' })); }
       if (id==='aral' && !head && USER.role!=='admin'){
         if (typeof ARAL!=='undefined' && ARAL.data){ aralTodoList().forEach(x => lines.push({ t: dShort(x.date)+', '+aralName(x.learner)+': '+(x.miss ? 'present, but no note yet.' : 'draft, please finish and lock.'), go:`aralGo('${x.learner}','${x.id}','${x.date}')`, b: x.miss ? 'Write now' : 'Finish' }));
           const w = aralAckWaiting().length; if (w) lines.push({ t: w+' ARAL note'+(w>1?'s':'')+' about your learners to read and acknowledge.', go:"openFeature('aral');setTimeout(aralAckPop,700)", b:'Read now' }); }
@@ -5643,7 +5679,7 @@ function todoItems(){
   return out;
 }
 function todoPop(n){ n = n || 0; if (!USER || USER.mustChange) return; const k = 'tala_todopop_'+USER.email+'_'+todayPH(); try{ if (sessionStorage.getItem(k)) return; }catch(e){}
-  setTimeout(() => { if ($('stfModal').classList.contains('open') || ($('tour') && !$('tour').hidden) || (typeof CAM!=='undefined' && CAM.res)){ if (n < 30) todoPop(n+1); return; }
+  setTimeout(() => { if (document.querySelector('.overlay.open') || ($('tour') && !$('tour').hidden) || (typeof CAM!=='undefined' && CAM.res)){ if (n < 30) todoPop(n+1); return; }
     // wait a little for the ARAL data, so the reminder can list each note to write
     if (USER.role==='teacher' && (featOn('aral') || aralOnly()) && typeof ARAL!=='undefined' && !ARAL.data && n < 8){ if (!todoPop._al){ todoPop._al = 1; aralLoad(true).then(() => drawSide()).catch(()=>{}); } todoPop(n+1); return; }
     const L = todoItems(); if (!L.length) return;
@@ -8218,7 +8254,7 @@ function lacHome(){
   if (!head) nbMissing().forEach(s => todo.unshift({ ico:'\u{1F4D3}', t:'Write in your '+(s.kind==='MEET'?'Meeting':'LAC')+' Journal', x:s.title+', '+dShort(s.date)+'. Still empty.', fn:`nbOpenFor('${s.id}','${s.kind==='MEET'?'MEET':'LAC'}')`, main:1, warn:1 }));
   const mine = lacHubMine();
   mine.filter(h => { const p = lacProg(h.id); return !p || p.status!=='Finished'; }).forEach(h => { const p = lacProg(h.id); todo.push({ ico:'\u25B6', t:p?'Continue watching':'Watch', x:h.title+(p?', '+p.pct+'%':'')+(h.target?', by '+dShort(h.target):''), fn:`hubPlay('${h.id}')` }); });
-  if (!head) hubTodo().filter(x => x.fin && !x.nb).forEach(x => todo.unshift({ ico:'\u{1F4D3}', t:'Write your LAC Journal', x:x.h.title+'. You finished it, but the journal is still empty.', fn:`hubWrite('${x.h.id}')`, main:1, warn:1 }));
+  if (!head) hubTodo().filter(x => x.fin && !x.nb).forEach(x => todo.unshift({ ico:'\u{1F4D3}', t:'Write your LAC Journal', x:x.h.title+'. You finished it, but the journal is still empty. Posted '+daysAgo(hubPosted(x.h))+'.', fn:`hubWrite('${x.h.id}')`, main:1, warn:1 }));
   if (head){ const pend = D.hub.filter(h => h.status==='Pending').length; if (pend) todo.unshift({ ico:'\u2714', t:'Approve materials', x:pend+' waiting in the Learning Hub', fn:`LAC.tab='hub';LAC.hubSt='Pending';lacDraw()`, main:1 });
     D.sessions.filter(s => s.date <= today && !(s.minutes&&s.minutes.on)).forEach(s => todo.push({ ico:'\u{1F4DD}', t:'Minutes not yet written', x:s.title+(s.documenter?', documenter '+lacName(s.documenter):''), fn:`lacMinutesOpen('${s.id}')` }));
     const unchecked = D.notebooks.filter(n => n.email!==me && !n.checkedOn).length; if (unchecked) todo.push({ ico:'\u{1F50D}', t:'Journal entries to check', x:unchecked+' not yet checked', fn:`LAC.tab='nb';LAC.nbWho='';lacDraw()` }); }
@@ -8739,6 +8775,16 @@ function hubJournal(h, email){ email = email || USER.email; const sid = h.sessio
 // Each assigned material stays on the red number until it is finished AND its LAC Journal is written
 function hubTodo(){ if (!LAC.data || !USER || USER.role==='head') return [];
   return lacHubMine().filter(h => h.byEmail!==USER.email).map(h => ({ h, fin:(lacProg(h.id)||{}).status==='Finished', nb:hubJournal(h) })).filter(x => !x.fin || (!x.nb && !(x.h.session && nbMissing().some(m => m.id===x.h.session)))); }
+// The day a material was shown to the teachers, and how many days have passed since then
+function hubPosted(h){ const r = String(h.release||''); return (/^\d{4}-\d{2}-\d{2}$/.test(r) && r <= todayPH() ? r : String(h.approvedOn||h.created||'')).slice(0,10); }
+function daysAgo(d){ if (!d) return ''; const n = dayDiffC(todayPH(), String(d).slice(0,10)); return n <= 0 ? 'today' : n===1 ? '1 day ago' : n+' days ago'; }
+function daysN(d){ return d ? Math.max(0, dayDiffC(todayPH(), String(d).slice(0,10))) : 0; }
+// Missing journals of one person: LAC sessions and meetings attended, and Learning Hub materials (finished or not), with the days passed
+function nbMissingAll(email){ const out = [];
+  try{ nbMissing(email).forEach(s => out.push({ kind:s.kind==='MEET'?'Meeting Journal':'LAC Journal', t:s.title, d:s.date, why:'attended '+dShort(s.date)+', '+daysAgo(s.date) })); }catch(e){}
+  try{ (LAC.data.hub||[]).filter(h => hubLive(h) && hubAssignees(h).some(x => x.email===email) && h.byEmail!==email && !hubJournal(h, email) && !(h.session && out.some(o => o.t===(lacS(h.session)||{}).title))).forEach(h => { const fin = (lacProg(h.id, email)||{}).status==='Finished', p = hubPosted(h);
+    out.push({ kind:'Learning Hub', t:h.title, d:p, fin, why:(fin?'finished, ':'not yet finished, ')+'posted '+dShort(p)+', '+daysAgo(p) }); }); }catch(e){}
+  return out.sort((a,b) => String(a.d).localeCompare(String(b.d))); }
 // Opens the material with the journal beside it
 function hubWrite(id){ if (CUR_FEATURE!=='lac') openFeature('lac'); setTimeout(() => { hubPlay(id); setTimeout(() => { try{ const el = $('hubNote'); if (el && el.hidden) hubNote(); }catch(e){} }, 1500); }, CUR_FEATURE==='lac' ? 0 : 900); }
 function hubThumb(h){ return h.thumb || (h.kind==='SLIDES' ? '' : 'https://i.ytimg.com/vi/'+h.vid+'/hqdefault.jpg'); }
@@ -8755,7 +8801,8 @@ function lacHub(){
     return `<div class="hubcard"><button class="hubthumb" onclick="hubPlay('${h.id}')" aria-label="Play ${esc(h.title)}">${hubThumbHtml(h)}<span class="hubplay">${h.kind==='SLIDES'?'\u{1F4D6}':'\u25B6'}</span>${h.status!=='Approved'?`<span class="hubst ${h.status}">${h.status==='Pending'?'Waiting for approval':'Returned'}</span>`:''}</button>
       <div class="hubbody"><b>${esc(h.title)}</b><div class="hubtags">${hubUseTag(h)}${head||admin?hubRelTag(h):''}</div><small>${h.facilitator?esc(h.facilitator):''}</small><small class="hubkind">${esc(hubKind(h))}</small>
       ${mine&&h.status==='Approved'?`<div class="hubbar" title="${p?p.pct:0}% done"><i style="width:${p?p.pct:0}%"></i></div><small>${p?esc(p.status)+', '+p.pct+'%':'Not started'}${h.target?' \u00B7 by '+esc(dShort(h.target)):''}</small>
-      ${!head && h.byEmail!==USER.email ? (hubJournal(h) ? '<span class="atn ok">\u{1F4D3} LAC Journal written</span>' : `<button class="hubjn" onclick="hubWrite('${h.id}')">\u{1F4D3} ${p&&p.status==='Finished'?'Finished, but your LAC Journal is still empty. Write now':'LAC Journal not yet written'} \u203A</button>`) : ''}`:''}
+      ${h.status==='Approved'?`<small class="hint">Posted ${esc(dShort(hubPosted(h)))}, ${esc(daysAgo(hubPosted(h)))}</small>`:''}
+      ${!head && h.byEmail!==USER.email ? (hubJournal(h) ? '<span class="atn ok">\u{1F4D3} LAC Journal written</span>' : `<button class="hubjn" onclick="hubWrite('${h.id}')">\u{1F4D3} ${p&&p.status==='Finished'?'Finished, but your LAC Journal is still empty. Write now':'LAC Journal not yet written'} (posted ${esc(daysAgo(hubPosted(h)))}) \u203A</button>`) : ''}`:''}
       ${(head||admin)&&h.status==='Approved'?`<small>${fin} of ${as.length} finished \u00B7 <button class="linkbtn" onclick="hubProgView('${h.id}')">See progress</button></small>`:''}
       ${h.note&&(head||h.byEmail===USER.email)?`<p class="stfnote">${esc(h.note)}</p>`:''}
       <div class="stfreq-a">${head&&h.status!=='Approved'?`<button class="btn small" onclick="hubDecide('${h.id}','Approved')">\u2714 Approve</button><button class="btn ghost small" onclick="hubDecide('${h.id}','Returned')">Return</button>`:''}
@@ -9112,7 +9159,7 @@ document.addEventListener('fullscreenchange', nbFloatPlace);
 function hubProgView(only){
   const hubs = LAC.data.hub.filter(h => h.status==='Approved' && (!only || h.id===only)), P = lacPeople().filter(p => hubs.some(h => hubAssignees(h).some(x => x.email===p.email)));
   const cell = (h, p) => { if (!hubAssignees(h).some(x => x.email===p.email)) return '<td class="hint">\u00B7</td>'; const g = lacProg(h.id, p.email);
-    const j = hubJournal(h, p.email) ? '<br><small class="ok">\u{1F4D3} Journal written</small>' : '<br><small class="bad">\u{1F4D3} No journal yet</small>';
+    const j = hubJournal(h, p.email) ? '<br><small class="ok">\u{1F4D3} Journal written</small>' : '<br><small class="bad">\u{1F4D3} No journal yet, '+esc(daysN(hubPosted(h)))+' day'+(daysN(hubPosted(h))===1?'':'s')+' since posting</small>';
     return g ? `<td><div class="hubbar"><i style="width:${g.pct}%"></i></div><small>${g.status==='Finished'?'\u2714 Finished '+esc(dShort(g.finished)):esc(g.status)+', '+g.pct+'%'}</small>${j}</td>` : `<td><small class="hint">Not started</small>${j}</td>`; };
   const html = `<div class="table-wrap"><table class="stft-table stfp-tbl"><thead><tr><th>Name</th>${hubs.map(h => `<th>${esc(h.title)}</th>`).join('')}<th>Finished</th></tr></thead><tbody>
     ${P.map(p => { const as = hubs.filter(h => hubAssignees(h).some(x => x.email===p.email)), f = as.filter(h => (lacProg(h.id, p.email)||{}).status==='Finished').length;
@@ -9333,7 +9380,11 @@ function mcLac(){
   const held = D.sessions.filter(s => s.date <= today).sort((a,b) => b.date.localeCompare(a.date))[0];
   const next = D.sessions.filter(s => s.date >= today).sort((a,b) => a.date.localeCompare(b.date))[0];
   const hub = D.hub.filter(h => hubLive(h)).sort((a,b) => String(b.approvedOn||b.created||'').localeCompare(String(a.approvedOn||a.created||'')))[0];
-  const k = [{ id:'pend', ico:'⏳', label:'Things to finish', items:per, done:'Everyone is up to date. Thank you!',
+  const nbPer = ppl.map(p => { const L = nbMissingAll(p.email); return L.length ? { email:p.email, name:p.name, n:L.length, max:Math.max(...L.map(x => daysN(x.d))), need:L.map(x => x.kind+': '+x.t+' ('+x.why+')').join('; ') } : null; }).filter(Boolean).sort((a,b) => b.max - a.max);
+  const k = [{ id:'nbmiss', ico:'📓', label:'No journal yet (LAC and Learning Hub)', items:nbPer, done:'Everyone has written their journals. Thank you!',
+      group: () => `Good day, Ma'am and Sir! 🌟\n\n📓 A friendly reminder: these journals are still empty in TALA. Even if you finished the Learning Hub video, the LAC Journal for it is still needed.\n\n${nbPer.map(x => '• '+x.name+' ('+x.n+'):\n'+x.need.split('; ').map(t => '   ◦ '+t).join('\n')).join('\n\n')}\n\nPlease open TALA, LAC and Teacher Development, then tap Write now. Type your journal in your own words.\n\nThank you! 🙏\n${mcSign()}`,
+      one: x => mcOne({ name:x.name, need:x.need.split('; ').map(t => '• '+t).join('\n') }, 'A friendly reminder: your LAC Journal is still empty for these in TALA. Even if you already finished the video, the journal is still needed.', 'Please open TALA, LAC and Teacher Development, then tap Write now. Type it in your own words. Thank you!') },
+    { id:'pend', ico:'⏳', label:'Things to finish', items:per, done:'Everyone is up to date. Thank you!',
       group: () => mcGroup('📚 A friendly reminder from LAC and Teacher Development. Still to finish in TALA:', per, 'Please open TALA, then LAC and Teacher Development, to finish these.'),
       one: x => mcOne(x, 'A friendly reminder from LAC and Teacher Development. TALA shows these are still to finish:', 'Please open TALA to finish them. Message me if you need help.') }];
   if (held){ const rows = lacWhoRows(held.id).filter(r => r.p.role!=='head' && (!r.att || !r.nb)).map(r => ({ email:r.p.email, name:r.p.name, need:[!r.att?'attendance not signed':'', r.att && !r.nb ? 'journal still empty' : ''].filter(Boolean).join(', ') }));
@@ -9668,6 +9719,50 @@ function reportErr(msg, where){
     fetch(API_URL, { method:'POST', body: JSON.stringify({ action:'logError', token:TOKEN, msg, where: String(where||CUR_FEATURE||'').slice(0, 60), ver: VERSION.current.no }) }).catch(() => {}); }catch(e){} }
 window.addEventListener('error', e => reportErr(e.message + (e.lineno ? ' (line '+e.lineno+')' : ''), CUR_FEATURE));
 window.addEventListener('unhandledrejection', e => { const r = e.reason; if (r && /^(TALA|This|Please|Only|The|You|Choose|Tick|Enter|A photo|Type)/.test(String(r.message||''))) return; reportErr('Promise: '+(r && r.message ? r.message : String(r)), CUR_FEATURE); });
+
+/* ----- Comments and returns summary: every remark the School Head gave on the LPT and PPT, from Term 2 Week 1 by default ----- */
+const CMT = { who:'', ft:'2', fw:'1', only:'all' };
+function cmtRows(){
+  const test = DATA.testEmails||[], from = Number(CMT.ft)*100 + Number(CMT.fw), out = [];
+  DATA.entries.filter(e => test.indexOf(e.email) < 0 && (!CMT.who || e.email===CMT.who) && Number(e.term)*100 + Number(e.week) >= from).forEach(e => filesOf(e).forEach(f => {
+    const hs = dedupe(f.d.history||[]);
+    hs.forEach((x, i) => { if (!/^Validated/.test(x.event)) return; const dec = /Returned/.test(x.event) ? 'Returned' : /Invalid/.test(x.event) ? 'Wrong file' : 'Approved';
+      if (dec==='Approved' && !String(x.remarks||'').trim()) return;
+      if (CMT.only==='ret' && dec==='Approved') return;
+      const later = hs.slice(i+1).some(y => /^Validated, Approved/.test(y.event));
+      out.push({ e, f, x, dec, on:String(x.on||''), fixed: dec!=='Approved' ? later : null, pics:x.pics||[] }); }); }));
+  return out.sort((a,b) => a.e.teacher.localeCompare(b.e.teacher) || a.on.localeCompare(b.on));
+}
+function cmtLine(r){ return dShort(r.on)+', Term '+r.e.term+' Week '+r.e.week+', '+r.e.grade+' '+r.e.subject+', '+r.f.label+': '+r.dec+(r.x.remarks?'. Comment: '+r.x.remarks:'')+(r.fixed===true?' (fixed and approved later)':r.fixed===false?' (not yet fixed)':''); }
+function cmtOpen(who){ if (who !== undefined) CMT.who = who || ''; cmtDraw(); }
+function cmtDraw(){
+  const R = cmtRows(), T = (DATA.teachers||[]).filter(t => (DATA.testEmails||[]).indexOf(t.email) < 0), by = {}; R.forEach(r => (by[r.e.email] = by[r.e.email] || []).push(r));
+  const wk = Array.from({length:(DATA.options.weeks||12)}, (_,i) => String(i+1)); CMT.texts = [];
+  const blocks = Object.keys(by).map(em => { const L = by[em], ret = L.filter(r => r.dec!=='Approved'), open = ret.filter(r => !r.fixed).length;
+    const txt = L[0].e.teacher+'\n'+L.map(r => '• '+cmtLine(r)).join('\n'); CMT.texts.push(txt); const ti = CMT.texts.length - 1;
+    return `<details class="byt cmtb" ${Object.keys(by).length===1?'open':''}><summary><span style="flex:1"><b>${esc(L[0].e.teacher)}</b></span><span class="atn ${ret.length?'bad':'ok'}">${ret.length} returned</span> <span class="atn">${L.length} comment${L.length===1?'':'s'}</span>${open?` <span class="atn wait">${open} not yet fixed</span>`:''}</summary>
+      <div class="table-wrap"><table class="stft-table"><thead><tr><th>Date</th><th>Week</th><th>Grade and subject</th><th>File</th><th>Decision</th><th>Comment</th><th></th></tr></thead><tbody>
+      ${L.map(r => { CMT.texts.push(cmtLine(r)); const i = CMT.texts.length - 1; return `<tr><td>${esc(dShort(r.on))}</td><td>T${esc(r.e.term)} W${esc(r.e.week)}</td><td>${esc(r.e.grade+' '+r.e.subject)}</td><td>${esc(r.f.label)}</td>
+        <td><span class="atn ${r.dec==='Approved'?'ok':'bad'}">${r.dec}</span>${r.fixed===true?'<br><small class="ok">Fixed, approved later</small>':r.fixed===false?'<br><small class="bad">Not yet fixed</small>':''}</td>
+        <td>${esc(r.x.remarks||'')}${vPicBtn(r.e.id, r.pics)}</td><td><button class="linkbtn" onclick="mcCopyText(CMT.texts[${i}]);toast('Copied.')">Copy</button></td></tr>`; }).join('')}</tbody></table></div>
+      <div class="obs-actions"><button class="btn ghost small" onclick="mcCopyText(CMT.texts[${ti}]);toast('Copied all for ${esc(L[0].e.teacher)}.')">📋 Copy all for this teacher</button></div></details>`; }).join('');
+  const nRet = R.filter(r => r.dec!=='Approved').length;
+  stfModal(`<h3>📝 Comments and returns summary</h3><p class="sub">Every remark you gave on the LPT and PPT, with the date, from Term ${esc(CMT.ft)} Week ${esc(CMT.fw)}. Use it to guide your MWA and the TA you give.</p>
+    <div class="obs-actions"><select onchange="CMT.who=this.value;cmtDraw()"><option value="">All teachers</option>${T.map(t => `<option value="${esc(t.email)}" ${CMT.who===t.email?'selected':''}>${esc(t.name)}</option>`).join('')}</select>
+      <label class="hint">From <select onchange="CMT.ft=this.value;cmtDraw()">${['1','2','3'].map(x => `<option value="${x}" ${CMT.ft===x?'selected':''}>Term ${x}</option>`).join('')}</select> <select onchange="CMT.fw=this.value;cmtDraw()">${wk.map(x => `<option value="${x}" ${CMT.fw===x?'selected':''}>Week ${x}</option>`).join('')}</select></label>
+      <select onchange="CMT.only=this.value;cmtDraw()"><option value="all" ${CMT.only==='all'?'selected':''}>Returns and comments</option><option value="ret" ${CMT.only==='ret'?'selected':''}>Returns only</option></select>
+      <button class="btn small" onclick="cmtPrint()">🖨 Print</button></div>
+    <p class="hint">${Object.keys(by).length} teacher${Object.keys(by).length===1?'':'s'}, ${R.length} comment${R.length===1?'':'s'}, ${nRet} returned or wrong file. Tap a name to open the details.</p>
+    <div class="wsbody">${blocks || '<div class="empty">No comments or returns in this range.</div>'}</div>
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Close</button></div>`, 'wide');
+}
+function cmtPrint(){ const R = cmtRows();
+  $('printArea').innerHTML = `<div class="stfprint"><div class="stfp-page wsp">${stfPrintHead('Summary of Comments on the LPT and PPT', 'From Term '+CMT.ft+' Week '+CMT.fw+' to '+fmtLong(todayPH()))}
+    <table class="stfp-tbl"><thead><tr><th>Teacher</th><th>Date</th><th>Week</th><th>Grade and subject</th><th>File</th><th>Decision</th><th>Comment</th></tr></thead><tbody>
+    ${R.map(r => `<tr><td>${esc(r.e.teacher)}</td><td>${esc(dShort(r.on))}</td><td>T${esc(r.e.term)} W${esc(r.e.week)}</td><td>${esc(r.e.grade+' '+r.e.subject)}</td><td>${esc(r.f.label)}</td><td>${r.dec}${r.fixed===true?', fixed later':r.fixed===false?', not yet fixed':''}</td><td>${esc(r.x.remarks||'')}${r.pics.length?' \u{1F4F7}':''}</td></tr>`).join('') || '<tr><td colspan="7">No comments in this range.</td></tr>'}</tbody></table>
+    <p class="wsp-n">\u{1F4F7} means a picture is attached to the validation in TALA.</p>
+    ${sigBlock([{ label:'', name:'', role:'' }, { label:'Prepared by:', name:USER.name, role:'School Head' }])}<p class="stfp-foot">Generated by TALA on ${esc(fmtLong(todayPH()))}.</p></div></div>`;
+  setTimeout(() => window.print(), 250); }
 
 /* ----- New school year: clean slate (LPT and PPT files and records are kept) ----- */
 function openNewSY(){ $('menu').classList.remove('open'); $('nsErr').textContent=''; $('nsConfirm').value=''; openModal('nsModal'); }
