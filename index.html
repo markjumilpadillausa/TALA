@@ -1069,6 +1069,8 @@ textarea.nbt{-webkit-touch-callout:none}
 .vpic i{position:absolute;top:-7px;right:-7px;width:20px;height:20px;border-radius:50%;background:#a12a2a;color:#fff;font-style:normal;font-size:13px;line-height:20px;text-align:center;cursor:pointer}
 .vpb{font-size:13px;padding:1px 6px;margin-left:4px}.vpview{display:flex;flex-direction:column;gap:12px;max-height:70vh;overflow:auto}.vpview img{width:100%;border-radius:10px;border:1px solid var(--line)}
 
+.dtrs .g tr:last-child td,.lbt tr:last-child td,.dtrchg tr:last-child td{border-bottom:1px solid #000!important}.lbt td{vertical-align:middle}.lbt td.rm{vertical-align:top}
+.dtrall{margin:14px 0 22px;border-top:2px dashed var(--line);padding-top:10px}
 .dtrbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px}.dtrhead{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;margin:6px 0}
 .dtrwrap{display:flex;gap:14px;align-items:flex-start;overflow-x:auto;padding-bottom:8px}.dtrpaper{background:#fff;border:1px solid var(--line);border-radius:8px;padding:14px 16px;flex:0 0 auto;box-shadow:0 2px 10px rgba(0,0,0,.06)}
 .dtrside{flex:1 1 240px;min-width:220px;border:2px solid #1f5fbf;border-radius:10px;padding:10px 12px;background:#f4f8fd;font-size:13px}.dtrside h4{margin:0 0 2px;color:#1d4f8a}.dtrside ul{padding-left:16px;margin:6px 0}.dtrside li{margin:3px 0}
@@ -1090,7 +1092,7 @@ textarea.nbt{-webkit-touch-callout:none}
 .dtrs td.dtrc{cursor:pointer}.dtrs td.dtrc:hover{outline:2px solid #1f5fbf;outline-offset:-2px}.dtrs td.edm{box-shadow:inset 0 -3px 0 #f0c040}
 .dtrchg{width:17.2cm;font:9pt Arial,sans-serif;margin-top:10px}.dtrchg h4{margin:8px 0 4px;font-size:11pt}.dtrchg table{border-collapse:collapse;width:100%;min-width:0}.dtrchg th,.dtrchg td{border:1px solid #000;padding:3px 5px;text-align:left;vertical-align:top;font-size:8.6pt;color:#000;background:#fff}.dtrchg th{background:#eee}.dtrchg td.y{background:#ffe066;font-weight:700;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 @page dtrpg{size:A4 portrait;margin:2.5cm 1.9cm}
-@media print{ .dtrprint{page:dtrpg;display:block} .dtrpage{height:24.6cm;display:flex;flex-direction:column;align-items:center;justify-content:center;page-break-after:always;break-after:page} .dtrpage:last-child{page-break-after:auto;break-after:auto} }
+@media print{ .dtrprint .dtrs,.dtrprint .dtrnote,.dtrprint .dtrchg{width:17cm} .dtrprint{page:dtrpg;display:block} .dtrpage{height:24.6cm;display:flex;flex-direction:column;align-items:center;justify-content:center;page-break-after:always;break-after:page} .dtrpage:last-child{page-break-after:auto;break-after:auto} }
 .lbpg{width:297mm;height:210mm;position:relative;overflow:hidden;background:#fff;color:#000;font-family:"Times New Roman",serif}
 .lbhd{position:absolute;top:5mm;left:0;right:0;text-align:center;line-height:1.12}.lbhd img{height:10mm;display:block;margin:0 auto .5mm}.lbhd small,.lbhd b{display:block}
 .lbhd .rp{font:italic 9.5pt serif}.lbhd .de{font-size:13pt}.lbhd small{font-size:8.5pt}.lbhd .sd{font-weight:700}.lbhd hr{width:120mm;margin:1.2mm auto;border:0;border-top:1px solid #666}.lbhd .fo{font-size:11pt;color:#555}.lbhd .ad{color:#555;font-size:9.5pt}.lbhd .sc{font-size:11.5pt;color:#555}
@@ -1099,9 +1101,10 @@ textarea.nbt{-webkit-touch-callout:none}
 table.lbt{border-collapse:collapse;table-layout:fixed;min-width:0;width:auto}
 .lbt th,.lbt td{border:1px solid #000;text-align:center;font-size:9pt;padding:0 2px;overflow:hidden;white-space:nowrap;color:#000;background:#fff}
 .lbt thead tr:first-child th{font-size:9.5pt;height:5mm}.lbt thead tr:nth-child(2) th{height:4.6mm;font-size:8.5pt}
-.lbt tbody td{height:7.2mm;max-height:7.2mm}.lbt td.nm{text-align:left;font-size:8.6pt}.lbt td.rm{font-size:8pt;white-space:normal;line-height:1.1}
-.lbsg{height:6.2mm;display:flex;align-items:center;justify-content:center;overflow:hidden}.lbsg img{max-height:6mm;max-width:24mm;width:auto;height:auto;display:block}
-.lbft{position:absolute;top:184mm;left:10mm;right:10mm;text-align:center;font-size:9pt;line-height:1.3}.lbft span{font-size:7.8pt}.lbft small{font:7pt Arial,sans-serif;color:#555}
+.lbt tbody td{height:auto;padding-top:0;padding-bottom:0;line-height:1.05}.lbt tbody tr{box-sizing:border-box}.lbt td.nm{text-align:left;font-size:8.6pt}.lbt td.rm{font-size:8pt;white-space:normal;line-height:1.1}
+.lbt td.rm{vertical-align:top;text-align:left}.lbrm{font:6.6pt Arial,sans-serif;line-height:1.15;color:#000;padding-top:.3mm}
+.lbsg{height:5.6mm;display:flex;align-items:center;justify-content:center;overflow:hidden}.lbsg img{max-height:5.4mm;max-width:24mm;width:auto;height:auto;display:block}
+.lbft{position:absolute;top:187mm;left:10mm;right:10mm;text-align:center;font-size:9pt;line-height:1.3}.lbft span{font-size:7.8pt}.lbft small{font:7pt Arial,sans-serif;color:#555}
 .lbprev{overflow:auto;border:1px solid var(--line);border-radius:8px;background:#e9edf2;padding:8px}.lbscale{zoom:.55;width:297mm;box-shadow:0 2px 10px rgba(0,0,0,.15)}
 @page lbpg{size:A4 landscape;margin:0}
 @media print{ .lbprint{page:lbpg;display:block} .lbprint .lbpg{page-break-after:auto} }
@@ -1829,8 +1832,8 @@ table.lbt{border-collapse:collapse;table-layout:fixed;min-width:0;width:auto}
 
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
-const MIN_SERVER = '7.5'; // oldest Code.gs this page works with
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'7.5', date:'October 21, 2026' } };
+const MIN_SERVER = '7.6'; // oldest Code.gs this page works with
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'7.6', date:'October 21, 2026' } };
 function verLine(server){
   const old = server && (server.indexOf('older') > -1 || parseFloat(server) < parseFloat(MIN_SERVER));
   const s = server ? ' Server '+server+('.') : '';
@@ -7686,7 +7689,7 @@ function stfMyToday(compact){
   let next = STF_SLOTS.find(s => !L[s[0]] && !stfSlotWhy(s[0], L, nowM));
   const tiles = STF_SLOTS.map(s => L[s[0]] ? `<div class="stft on"><small>${s[1]}</small><b>${stfTimeCell(Object.assign({ email:USER.email, date:today }, L), s[0])}</b></div>` : (stfSlotWhy(s[0], L, nowM) ? `<button class="stft shut" onclick="toast('${esc(stfSlotWhy(s[0], L, nowM))}')" title="${esc(stfSlotWhy(s[0], L, nowM))}"><small>${s[1]}</small><b>·</b></button>` : `<button class="stft" onclick="stfClock('${s[0]}')" title="Tap to record ${s[1]} now"><small>${s[1]}</small><b>·</b></button>`)).join('');
   return `<div class="stfme ${compact?'compact':''}"><div class="stfme-h"><div><small>My time today</small><b>${esc(dShort(today))}</b> ${o&&o.label&&o.label!=='Not yet in'?stfChip(o):''} ${L.local?'<span class="unsynced">Not yet synced</span>':''}</div>
-    ${next?`<button class="btn" onclick="stfClock('${next[0]}')">\u{1F552} ${next[0].slice(2)==='In'?'Time in':'Time out'}, ${next[1].slice(0,2)}</button>`:'<span class="atn ok">Done for today</span>'}</div>
+    ${next?`<button class="btn" onclick="stfClock('${next[0]}')">\u{1F552} ${next[0].slice(2)==='In'?'Time in':'Time out'}, ${next[1].slice(0,2)}</button>`:(L.pmOut && !L.local ? (stfConf(USER.email, today) ? `<span class="atn ok">\u2714 ${stfConf(USER.email, today).ok?'Times confirmed':'Problem sent'}</span>` : `<button class="btn" onclick="stfConfirmAsk('${today}')">\u2714 Confirm my times today</button>`) : '<span class="atn ok">Done for today</span>')}</div>
     <div class="stftiles">${tiles}</div><p class="hint" style="margin:6px 0 0">${H.reg ? 'ARAL session: '+esc(time12(H.pmIn))+' to '+esc(time12(H.pmOut))+'. As a Regular ARAL Tutor, tap PM in before the session and PM out after it' : (['head','admin'].indexOf(USER.role)>-1?'Your hours':'School hours')+': '+esc(time12(H.amIn))+' to '+esc(time12(H.amOut))+', '+esc(time12(H.pmIn))+' to '+esc(time12(H.pmOut))}. TALA uses the time of the server, not of the phone.</p></div>`;
 }
 // Are you sure? A clear question before the camera opens, so the right Time in or Time out is tapped
@@ -7697,6 +7700,22 @@ function stfSure(slot){ const x = STF_SURE[slot], now = time12(new Date().toLoca
     stfModal(`<div class="stfsure"><div class="stfsure-i">${x[3]}</div><h3>Are you sure?</h3><p>You are tapping your <b>${x[0]}</b> (${x[1]}) at <b>${esc(now)}</b>.</p>
       <p class="hint">Use ${x[1]} only ${x[2]}. It cannot be changed after you send it.</p>
       <div class="modal-actions" style="justify-content:center"><button class="btn ghost" onclick="_stfSure(false)">No, go back</button><button class="btn" onclick="_stfSure(true)">Yes, tap ${x[1]}</button></div></div>`); }); }
+// At PM Time out: the times of the day are shown, and each personnel confirms them or says what is wrong
+function stfConf(email, date){ return ((STF.data||{}).confirms||[]).find(c => c.email===email && c.date===date); }
+function stfConfirmAsk(date){
+  const L = stfLog(USER.email, date) || {}, H = stfHoursOf(USER.email), sl = H.reg ? STF_SLOTS.slice(2) : STF_SLOTS;
+  stfModal(`<div class="stfsure"><div class="stfsure-i">\u{1F3E0}</div><h3>Are these times correct?</h3><p>${esc(fmtLong(date))}</p>
+    <div class="stftiles" style="grid-template-columns:repeat(${sl.length},1fr)">${sl.map(x => `<div class="stft ${L[x[0]]?'on':''}"><small>${x[1]}</small><b>${L[x[0]]?esc(time12(L[x[0]])):'\u00B7'}</b></div>`).join('')}</div>
+    <div id="cfWrong" hidden><div class="field" style="margin-top:10px"><label for="cfNote">What is not correct?</label><textarea id="cfNote" rows="2" maxlength="300" placeholder="Example: My AM in was 7:20, the phone had no signal."></textarea></div></div>
+    <p class="hint">Before going home, please initial your row in the Remarks column of the logbook at the office.</p><p class="err" id="cfErr"></p>
+    <div class="modal-actions" style="justify-content:center" id="cfBtns"><button class="btn ghost" onclick="stfConfirmWrong('${date}')">Something is wrong</button><button class="btn" onclick="stfConfirmSend('${date}',true)">\u2714 Yes, correct</button></div></div>`); }
+function stfConfirmWrong(date){ $('cfWrong').hidden = false; $('cfBtns').innerHTML = `<button class="btn ghost" onclick="closeModal('stfModal')">Later</button><button class="btn" onclick="stfConfirmSend('${date}',false)">Send</button>`; setTimeout(() => $('cfNote').focus(), 50); }
+async function stfConfirmSend(date, ok){
+  const note = ok ? '' : ($('cfNote').value||'').trim(); if (!ok && !note) return $('cfErr').textContent = 'Write what is not correct.';
+  try{ loading(true); const c = await api('staffConfirm', { date, ok, note }); loading(false); STF.data.confirms = (STF.data.confirms||[]).filter(x => !(x.email===USER.email && x.date===date)).concat([c]);
+    try{ localStorage.setItem(stfKey(), JSON.stringify(STF.data)); }catch(e){} closeModal('stfModal'); toast(ok ? 'Thank you. Your times are confirmed.' : 'Sent. Thank you.');
+    if (ATT.view==='staff') stfDraw(); else { const el = $('stfHome'); if (el) el.innerHTML = stfHomeInner(); } }
+  catch(e){ loading(false); handleErr(e, 'cfErr'); } }
 async function stfClock(slot){
   const lab = STF_SLOTS.find(s => s[0]===slot)[1];
   { const why = stfSlotWhy(slot, stfLog(USER.email, todayPH()) || {}, stfNowM()); if (why){ toast(why); return; } }
@@ -7707,7 +7726,7 @@ async function stfClock(slot){
   if (shot.photo) STF_PICS[USER.email+'|'+today+'|'+slot] = shot.photo;
   L.photos = Object.assign({}, L.photos, { [slot]: shot.photo ? 'local' : 'nocam' });
   try{ if (navigator.onLine===false) throw new Error(MSG.NET);
-    loading(true); const r = await api('staffClock', Object.assign({ slot }, pic)); loading(false); Object.assign(L, r.log); delete L.local; if (r.already) toast('This was already recorded at '+time12(r.log[slot])+'.'); else toast(lab+' recorded at '+time12(r.log[slot])+'.'); }
+    loading(true); const r = await api('staffClock', Object.assign({ slot }, pic)); loading(false); Object.assign(L, r.log); delete L.local; if (r.already) toast('This was already recorded at '+time12(r.log[slot])+'.'); else toast(lab+' recorded at '+time12(r.log[slot])+'.'); if (slot==='pmOut' && !r.already) setTimeout(() => stfConfirmAsk(today), 700); }
   catch(e){ loading(false); if (friendly(e.message)===MSG.NET || friendly(e.message)===MSG.BUSY){ const at = nowLocal().replace('T',' ').slice(0,16); queueOut('staffClock', Object.assign({ slot, offlineAt:at }, pic), lab+' '+at); L[slot] = at.slice(11,16); L.local = true; toast('Saved on this device. It will sync when you are online.'); } else return handleErr(e); }
   try{ localStorage.setItem(stfKey(), JSON.stringify(STF.data)); }catch(e){}
   if (ATT.view==='staff') stfDraw(); else { const el = $('stfHome'); if (el) el.innerHTML = stfHomeInner(); }
@@ -7803,7 +7822,7 @@ function stfToday(){
     const pin = grp(r => /^Present/.test(r.o.label)), late = grp(r => r.o.tardy), outs = grp(r => r.o.cls==='exc'), wait = grp(r => r.o.label==='Not yet in'), abs = grp(r => r.o.label==='Absent');
     html += `<div class="attoday" style="margin-top:12px"><div><small>Today</small><b>${esc(dShort(today))}</b></div>${tip('ok',pin.length,'in school',pin)}${tip('tdy',late.length,'late',late)}${tip('exc',outs.length,'on leave or outside',outs)}${tip('wait',wait.length,'not yet in',wait)}${abs.length?tip('bad',abs.length,'absent',abs):''}</div>
     <div class="table-wrap"><table class="stft-table"><thead><tr><th>Name</th>${STF_SLOTS.map(s=>`<th>${s[1]}</th>`).join('')}<th>Status</th>${stfHead()?'<th></th>':''}</tr></thead><tbody>
-    ${rows.map(r => `<tr><td><b>${esc(r.p.name)}</b><small>${esc(r.p.position||(r.p.role==='admin'?'Administrative Officer':'Teacher'))}</small></td>${STF_SLOTS.map(s=>`<td>${stfTimeCell(Object.assign({ email:r.p.email, date:today }, r.L), s[0], '<span class="hint">·</span>')}</td>`).join('')}<td>${stfChip(r.o)}${r.o.req&&r.o.req.length?r.o.req.map(q=>`<small>${esc(REQ_LABEL[q.type])}</small>`).join(''):''}</td>${stfHead()?`<td><button class="linkbtn" onclick="stfMarkOpen('${r.p.email}','${today}')">Mark or correct</button></td>`:''}</tr>`).join('') || `<tr><td colspan="7" class="empty">No personnel accounts yet.</td></tr>`}
+    ${rows.map(r => `<tr><td><b>${esc(r.p.name)}</b><small>${esc(r.p.position||(r.p.role==='admin'?'Administrative Officer':'Teacher'))}</small></td>${STF_SLOTS.map(s=>`<td>${stfTimeCell(Object.assign({ email:r.p.email, date:today }, r.L), s[0], '<span class="hint">·</span>')}</td>`).join('')}<td>${stfChip(r.o)}${stfConf(r.p.email, today)?`<small class="${stfConf(r.p.email, today).ok?'ok':'bad'}">${stfConf(r.p.email, today).ok?'\u2714 Times confirmed':'\u26A0 Says the times are not correct'}</small>`:''}${r.o.req&&r.o.req.length?r.o.req.map(q=>`<small>${esc(REQ_LABEL[q.type])}</small>`).join(''):''}</td>${stfHead()?`<td><button class="linkbtn" onclick="stfMarkOpen('${r.p.email}','${today}')">Mark or correct</button></td>`:''}</tr>`).join('') || `<tr><td colspan="7" class="empty">No personnel accounts yet.</td></tr>`}
     </tbody></table></div>
     ${stfHead()?`<div class="abtns small" style="margin-top:10px"><button class="abtn" onclick="stfRemindOpen()"><span class="abico">\u23F0</span><b>Reminders 30 minutes before</b><small>${(D.remind||{}).on?'On: TALA notice and email to each teacher':'Off. Tap to turn on.'}</small></button>
       <button class="abtn" onclick="stfGcMsg()"><span class="abico">\u{1F4AC}</span><b>Message for the group chat</b><small>Ready to copy and paste, with who is not yet in</small></button><button class="abtn" onclick="stfHoursOpen()"><span class="abico">⚙</span><b>Hours of work and wellness leave</b><small>Teachers ${esc(time12(D.hours.amIn))} to ${esc(time12(D.hours.pmOut))}. School Head and AO ${esc(time12((D.office||STF_OFFICE).amIn))} to ${esc(time12((D.office||STF_OFFICE).pmOut))}. Wellness leave: ${stfWellDays()} days a year.</small></button></div>`:''}`;
@@ -9823,7 +9842,7 @@ function dtrM(t){ if (!t) return null; const p = String(t).split(':').map(Number
 function dtrDays(month){ const [y,m] = month.split('-').map(Number), n = new Date(Date.UTC(y, m, 0)).getUTCDate(); return Array.from({length:n}, (_,i) => month+'-'+String(i+1).padStart(2,'0')); }
 // The original (taps with photos), the final (with the edits), and which parts were edited
 function dtrCalc(D, ver){
-  const H = D.person.hours || {}, days = dtrDays(D.month), rows = {};
+  const H0 = D.person.hours || {}, H = Object.assign({}, H0, { amOut:dtrNoon(H0.amOut), pmIn:dtrNoon(H0.pmIn) }), days = dtrDays(D.month), rows = {};
   days.forEach((date, i) => { const L = (D.logs||[]).find(x => x.date===date) || {}, day = i+1, r = { date, day, w:dow(date), ed:{} };
     DTR_PARTS.forEach(([k]) => { const o = k.slice(0,2)==='ot' ? '' : (L[k]||''), e = (D.edits||{})[day+'|'+k];
       r[k] = ver==='orig' || !e ? o : e.v; if (e && ver!=='orig') r.ed[k] = e; r['o_'+k] = o; });
@@ -9849,7 +9868,8 @@ function dtrCalc(D, ver){
 }
 // All the overtime minutes of the month, shown as hours: 60 minutes is 1 hour
 function dtrOtTxt(m){ m = Math.round(m||0); if (!m) return ''; const h = Math.floor(m/60), r = m%60; return (h ? h+'h' : '')+(h && r ? ' ' : '')+(r ? r+'m' : ''); }
-function dtrHoursLine(H){ return H.reg || !H.amIn ? `${H.pmIn}:00-${H.pmOut}:00` : `${H.amIn}:00 -${H.amOut}:00  ${H.pmIn}:00-${H.pmOut}:00`; }
+function dtrNoon(t){ return t==='00:00' ? '12:00' : t; }   // 12:00 noon picked as 12:00 AM
+function dtrHoursLine(H){ H = Object.assign({}, H, { amOut:dtrNoon(H.amOut), pmIn:dtrNoon(H.pmIn) }); return H.reg || !H.amIn ? `${H.pmIn}:00-${H.pmOut}:00` : `${H.amIn}:00 -${H.amOut}:00  ${H.pmIn}:00-${H.pmOut}:00`; }
 // The sheet, exactly in the layout of the biometric DTR. ver: final, edit (edited parts in yellow), orig
 function dtrSheet(D, ver, clickable){
   const C = dtrCalc(D, ver==='orig' ? 'orig' : 'final'), S = C.S, p = D.person, [y,m] = D.month.split('-'), last = C.days.length;
@@ -9898,7 +9918,7 @@ async function stfDtr(){
   const el = $('stfBody'); el.innerHTML = `<div class="pirload"><div class="pirdots"><i></i><i></i><i></i></div><b>Opening the DTR</b></div>`;
   try{
     if (stfAll()) DTR.list = await api('dtrList', { month:DTR.month });
-    if (stfRole()==='admin' && DTR.email===USER.email){ /* the AO opens her own DTR too */ }
+    if (DTR.email==='*' && stfAll()){ DTR.all = (await api('dtrAll', { month:DTR.month })).list; DTR.d = null; DTR.err = ''; return dtrDrawAll(); }
     DTR.d = await api('dtrLoad', { month:DTR.month, email:DTR.email }); DTR.err = '';
   }catch(e){ DTR.d = null; DTR.err = friendly(e.message); }
   dtrDraw();
@@ -9907,7 +9927,7 @@ function dtrDraw(){
   const el = $('stfBody'); if (!el) return; const D = DTR.d, head = stfHead(), ao = stfRole()==='admin', L = DTR.list;
   const mine = D && D.self, canPrintOrig = !ao || mine;
   if (DTR.ver==='orig' && ao && !mine) {}
-  const pick = (head || ao) && L ? `<select onchange="DTR.email=this.value;DTR.ver='final';stfDtr()">${L.people.map(p => `<option value="${esc(p.email)}" ${p.email===DTR.email?'selected':''}>${esc(p.name)}${p.lockedOn?' \u{1F512}':''}${p.edits?' ('+p.edits+' edited)':''}</option>`).join('')}</select>` : '';
+  const pick = (head || ao) && L ? `<select onchange="DTR.email=this.value;DTR.ver='final';stfDtr()"><option value="*" ${DTR.email==='*'?'selected':''}>Everyone${ao?' (final DTRs)':''}</option>${L.people.map(p => `<option value="${esc(p.email)}" ${p.email===DTR.email?'selected':''}>${esc(p.name)}${p.lockedOn?' \u{1F512}':''}${p.edits?' ('+p.edits+' edited)':''}</option>`).join('')}</select>` : '';
   const top = `<div class="dtrbar">${pick}<select onchange="DTR.month=this.value;stfDtr()">${dtrMonths().map(m => `<option value="${m}" ${m===DTR.month?'selected':''}>${esc(monthName(m))}</option>`).join('')}</select>
     ${head && L ? `<button class="btn ${L.set.edit?'':'ghost'} small" onclick="dtrEditSwitch(${!L.set.edit})">${L.set.edit?'✎ Editing is ON for personnel. Turn off':'\u{1F512} Editing is OFF for personnel. Turn on'}</button><button class="btn ghost small" onclick="dtrSetOpen()">⚙ DTR settings</button>` : ''}</div>
     ${head && L ? `<p class="hint">${L.people.filter(p => p.lockedOn).length} of ${L.people.length} DTRs are final and locked for ${esc(monthName(DTR.month))}.</p>` : ''}
@@ -9927,6 +9947,26 @@ function dtrDraw(){
       <div class="tabs">${tabs.map(t => `<button class="${ver===t[0]?'on':''}" onclick="DTR.ver='${t[0]}';dtrDraw()">${t[1]}</button>`).join('')}</div></div>
     ${note?`<p class="hint">${note}</p>`:''}<div class="obs-actions">${acts.join('')}</div>
     <div class="dtrwrap"><div class="dtrpaper">${ver==='edit'?'<div class="dtrnote">EDITED PARTS. Yellow times were changed. The small crossed out time is the original from TALA.</div>':''}${ver==='orig'?`<div class="dtrnote">ORIGINAL, from the TALA Time in and Time out with photos. Late this month: ${dtrCalc(D,'orig').S.late} time(s), ${dtrCalc(D,'orig').S.lmin} minutes in all.</div>`:''}${dtrSheet(D, ver, canEdit)}${ver==='edit'?dtrChanges(D):''}</div>${side}</div>`;
+}
+// Everyone's DTR, one after the other, to view and print all at once
+function dtrDrawAll(){
+  const el = $('stfBody'), ao = stfRole()==='admin', ver = DTR.ver, A = DTR.all || [];
+  const saved = DTR.d; DTR.d = null; dtrDraw(); DTR.d = saved;   // the bar with the choices
+  const top = el.innerHTML.replace(/<div class="empty">[\s\S]*$/, '');
+  const tabs = [['final','Final (with the edits)'],['edit','Edited parts'],['orig','Original (TALA, with photos)']];
+  const canPrint = !(ver==='orig' && ao);
+  el.innerHTML = top + `<div class="dtrhead"><div><b>Everyone</b> <small>${A.length} DTR${A.length===1?'':'s'}, ${esc(monthName(DTR.month))}, in the order of the ID numbers</small></div>
+      <div class="tabs">${tabs.map(t => `<button class="${ver===t[0]?'on':''}" onclick="DTR.ver='${t[0]}';dtrDrawAll()">${t[1]}</button>`).join('')}</div></div>
+    <div class="obs-actions">${canPrint ? `<button class="btn small" onclick="dtrPrintAll()">\u{1F5A8} Print all ${A.length}, one DTR per page</button>` : '<span class="hint">The original can be viewed but not printed.</span>'}</div>
+    ${A.map(D => `<div class="dtrall"><div class="dtrhead"><div><b>${esc(D.person.name)}</b> <small>ID ${esc(D.person.id)}</small> ${D.lockedOn?'<span class="atn ok">\u{1F512} Final</span>':'<span class="atn wait">Not yet locked</span>'} ${Object.keys(D.edits||{}).length?'<span class="atn">'+Object.keys(D.edits).length+' edited</span>':''}</div><button class="btn ghost small" onclick="DTR.email='${esc(D.person.email)}';stfDtr()">Open</button></div>
+      <div class="dtrwrap"><div class="dtrpaper">${dtrSheet(D, ver, false)}${ver==='edit'?dtrChanges(D):''}</div></div></div>`).join('') || '<div class="empty">No DTR to show for this month.</div>'}`;
+}
+function dtrPrintAll(){
+  const A = DTR.all || [], ver = DTR.ver; if (!A.length) return;
+  if (ver==='orig' && stfRole()==='admin') return toast('The original can be viewed but not printed.');
+  const pages = []; A.forEach(D => { if (ver==='edit'){ pages.push(`<div class="dtrnote">EDITED PARTS, for checking only.</div>${dtrSheet(D, 'edit', false)}`); pages.push(dtrChanges(D)); } else pages.push(dtrSheet(D, ver, false)); });
+  $('printArea').innerHTML = `<div class="dtrprint">${pages.map(h => `<div class="dtrpage">${h}</div>`).join('')}</div>`;
+  setTimeout(() => window.print(), 300);
 }
 // The School Head's whereabouts this month from the TALA calendar, shown beside the DTR while editing. Not printed.
 function dtrWhere(D){
@@ -9999,13 +10039,17 @@ function lbRows(){
 // A different quote every day: the day number of the year picks the quote, so no two days in a row share one
 function lbQuote(d){ if (!QUOTES || !QUOTES.length) return ''; const n = Math.floor(Date.UTC(+d.slice(0,4), +d.slice(5,7)-1, +d.slice(8,10)) / 86400000); return QUOTES[((n + 3) % QUOTES.length + QUOTES.length) % QUOTES.length]; }   // a different quote each day, all 70 before any repeats
 function lbT(t){ return t ? time12(t) : ''; }
+// Remarks: small text at the top, with the confirmation at PM Time out, so there is room below for the initials
+function lbRem(r){ const c = ((LB.d||{}).confirms||[]).find(x => x.email===r.p.email && x.date===LB.date), t = [];
+  if (r.rem) t.push(esc(r.rem)); if (c) t.push(c.ok ? '\u2714 Confirmed '+esc(time12(String(c.on).slice(11,16))) : '\u26A0 Not correct');
+  return t.length ? `<div class="lbrm">${t.join('<br>')}</div>` : ''; }
 function lbSig(r, k){ return r.L[k] && r.p.sig ? `<div class="lbsg"><img src="${r.p.sig}" alt=""></div>` : ''; }
 function lbBlock(kind, R){
-  const n = 15, rows = R.concat(Array(Math.max(0, n - R.length)).fill(null));
-  if (kind===1) return `<table class="lbt"><colgroup><col style="width:8mm"><col style="width:47mm"><col style="width:19mm"><col style="width:27mm"></colgroup><thead><tr><th colspan="4">MORNING TIME IN</th></tr><tr><th>No.</th><th>Teacher's Name</th><th>Time In</th><th>Signature</th></tr></thead><tbody>${rows.map((r,i) => `<tr><td>${i+1}</td><td class="nm">${r?esc(String(r.p.name).toUpperCase()):''}</td><td>${r?lbT(r.L.amIn):''}</td><td>${r?lbSig(r,'amIn'):''}</td></tr>`).join('')}</tbody></table>`;
+  const n = Math.max(15, R.length), rows = R.concat(Array(Math.max(0, n - R.length)).fill(null)), rh = Math.min(6.6, Math.floor(1080 / n) / 10);   // the rows always fit above the quote
+  if (kind===1) return `<table class="lbt"><colgroup><col style="width:8mm"><col style="width:47mm"><col style="width:19mm"><col style="width:27mm"></colgroup><thead><tr><th colspan="4">MORNING TIME IN</th></tr><tr><th>No.</th><th>Teacher's Name</th><th>Time In</th><th>Signature</th></tr></thead><tbody>${rows.map((r,i) => `<tr style="height:${rh}mm"><td>${i+1}</td><td class="nm">${r?esc(String(r.p.name).toUpperCase()):''}</td><td>${r?lbT(r.L.amIn):''}</td><td>${r?lbSig(r,'amIn'):''}</td></tr>`).join('')}</tbody></table>`;
   if (kind===2 || kind===3){ const k = kind===2 ? 'amOut' : 'pmIn';
-    return `<table class="lbt"><colgroup><col style="width:19mm"><col style="width:27mm"></colgroup><thead><tr><th colspan="2">${kind===2?'MORNING TIME OUT':'AFTERNOON TIME IN'}</th></tr><tr><th>Time ${kind===2?'Out':'In'}</th><th>Signature</th></tr></thead><tbody>${rows.map(r => `<tr><td>${r?lbT(r.L[k]):''}</td><td>${r?lbSig(r,k):''}</td></tr>`).join('')}</tbody></table>`; }
-  return `<table class="lbt"><colgroup><col style="width:19mm"><col style="width:27mm"><col style="width:26mm"></colgroup><thead><tr><th colspan="3">AFTERNOON TIME OUT</th></tr><tr><th>Time Out</th><th>Signature</th><th>Remarks</th></tr></thead><tbody>${rows.map(r => `<tr><td>${r?lbT(r.L.pmOut):''}</td><td>${r?lbSig(r,'pmOut'):''}</td><td class="rm">${r?esc(r.rem):''}</td></tr>`).join('')}</tbody></table>`;
+    return `<table class="lbt"><colgroup><col style="width:19mm"><col style="width:27mm"></colgroup><thead><tr><th colspan="2">${kind===2?'MORNING TIME OUT':'AFTERNOON TIME IN'}</th></tr><tr><th>Time ${kind===2?'Out':'In'}</th><th>Signature</th></tr></thead><tbody>${rows.map(r => `<tr style="height:${rh}mm"><td>${r?lbT(r.L[k]):''}</td><td>${r?lbSig(r,k):''}</td></tr>`).join('')}</tbody></table>`; }
+  return `<table class="lbt"><colgroup><col style="width:19mm"><col style="width:27mm"><col style="width:26mm"></colgroup><thead><tr><th colspan="3">AFTERNOON TIME OUT</th></tr><tr><th>Time Out</th><th>Signature</th><th>Remarks</th></tr></thead><tbody>${rows.map(r => `<tr style="height:${rh}mm"><td>${r?lbT(r.L.pmOut):''}</td><td>${r?lbSig(r,'pmOut'):''}</td><td class="rm">${r?lbRem(r):''}</td></tr>`).join('')}</tbody></table>`;
 }
 const LB_X = { 1:10, 2:115, 3:165, 4:215 };   // mm from the left edge, with a 4 mm gap between the boxes
 function lbPage(show){
