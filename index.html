@@ -1068,6 +1068,43 @@ textarea.nbt{-webkit-touch-callout:none}
 .vpics{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.vpic{position:relative;display:inline-flex}.vpic img{height:72px;border-radius:8px;border:1px solid var(--line)}.vpic button{border:1px solid var(--line);background:#fff;border-radius:8px;padding:6px 10px;cursor:pointer;font:inherit;font-size:13px}
 .vpic i{position:absolute;top:-7px;right:-7px;width:20px;height:20px;border-radius:50%;background:#a12a2a;color:#fff;font-style:normal;font-size:13px;line-height:20px;text-align:center;cursor:pointer}
 .vpb{font-size:13px;padding:1px 6px;margin-left:4px}.vpview{display:flex;flex-direction:column;gap:12px;max-height:70vh;overflow:auto}.vpview img{width:100%;border-radius:10px;border:1px solid var(--line)}
+
+.dtrbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px}.dtrhead{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;margin:6px 0}
+.dtrwrap{display:flex;gap:14px;align-items:flex-start;overflow-x:auto;padding-bottom:8px}.dtrpaper{background:#fff;border:1px solid var(--line);border-radius:8px;padding:14px 16px;flex:0 0 auto;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+.dtrside{flex:1 1 240px;min-width:220px;border:2px solid #1f5fbf;border-radius:10px;padding:10px 12px;background:#f4f8fd;font-size:13px}.dtrside h4{margin:0 0 2px;color:#1d4f8a}.dtrside ul{padding-left:16px;margin:6px 0}.dtrside li{margin:3px 0}
+.dtrnote{width:17.2cm;box-sizing:border-box;margin:0 0 6px;font:700 8pt Arial,sans-serif;color:#7a5200;background:#fff4d6;border:1.5px solid #b07a00;padding:3px 6px;text-align:center}
+.dtrs{width:17.2cm;color:#000;background:#fff}
+.dtrs .csf{font:italic 10pt Calibri,Carlito,sans-serif}
+.dtrs .ttl{font:700 17pt "Bookman Old Style","URW Bookman","Bookman",serif;text-align:center;letter-spacing:.5px;margin:1px 0 2px}
+.dtrs .ln{display:flex;font:11pt "Bookman Old Style","URW Bookman",serif;line-height:1.35}.dtrs .ln span{white-space:nowrap}.dtrs .ln u{flex:1;text-decoration:none;border-bottom:1px solid #000;padding-left:1.3cm}
+.dtrs .oh{font:italic 11pt "Bookman Old Style","URW Bookman",serif;text-align:center}
+.dtrs table.g{width:100%;border-collapse:collapse;table-layout:fixed;min-width:0}
+.dtrs .g td{border:1px solid #000;font:700 7.6pt Arial,"Liberation Sans",sans-serif;padding:0 2px;height:.5cm;white-space:nowrap;overflow:hidden;color:#000;background:#fff}
+.dtrs .g tr.gr td{background:#d0cece;height:.48cm;-webkit-print-color-adjust:exact;print-color-adjust:exact}.dtrs .g tr.hh td{height:.85cm;vertical-align:top}
+.dtrs .g tr.dr td{text-align:center;height:.52cm}.dtrs .g tr.dr td:nth-child(1),.dtrs .g tr.dr td:nth-child(9){text-align:left}
+.dtrs .otv{font-size:6.6pt;letter-spacing:-.1px}
+.dtrs .cert{font:italic 8.6pt "Bookman Old Style","URW Bookman",serif;text-align:center;margin-top:3px;line-height:1.5}
+.dtrs .sg1,.dtrs .sg2{font:10.5pt "Bookman Old Style","URW Bookman",serif;text-align:center;margin-top:12px}.dtrs .sg1 u,.dtrs .sg2 u{text-decoration:underline}
+.dtrs .ver{font:italic 8.6pt "Bookman Old Style","URW Bookman",serif;text-align:center}.dtrs .sg3{font:10.5pt "Bookman Old Style","URW Bookman",serif;text-align:center}
+.dtrs td.ed{background:#ffe066!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;line-height:1}.dtrs td.ed s{display:block;font:400 5.6pt Arial,sans-serif;color:#a12a2a;line-height:1}
+.dtrs td.dtrc{cursor:pointer}.dtrs td.dtrc:hover{outline:2px solid #1f5fbf;outline-offset:-2px}.dtrs td.edm{box-shadow:inset 0 -3px 0 #f0c040}
+.dtrchg{width:17.2cm;font:9pt Arial,sans-serif;margin-top:10px}.dtrchg h4{margin:8px 0 4px;font-size:11pt}.dtrchg table{border-collapse:collapse;width:100%;min-width:0}.dtrchg th,.dtrchg td{border:1px solid #000;padding:3px 5px;text-align:left;vertical-align:top;font-size:8.6pt;color:#000;background:#fff}.dtrchg th{background:#eee}.dtrchg td.y{background:#ffe066;font-weight:700;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+@page dtrpg{size:A4 portrait;margin:2.5cm 1.9cm}
+@media print{ .dtrprint{page:dtrpg;display:block} .dtrpage{height:24.6cm;display:flex;flex-direction:column;align-items:center;justify-content:center;page-break-after:always;break-after:page} .dtrpage:last-child{page-break-after:auto;break-after:auto} }
+.lbpg{width:297mm;height:210mm;position:relative;overflow:hidden;background:#fff;color:#000;font-family:"Times New Roman",serif}
+.lbhd{position:absolute;top:5mm;left:0;right:0;text-align:center;line-height:1.12}.lbhd img{height:10mm;display:block;margin:0 auto .5mm}.lbhd small,.lbhd b{display:block}
+.lbhd .rp{font:italic 9.5pt serif}.lbhd .de{font-size:13pt}.lbhd small{font-size:8.5pt}.lbhd .sd{font-weight:700}.lbhd hr{width:120mm;margin:1.2mm auto;border:0;border-top:1px solid #666}.lbhd .fo{font-size:11pt;color:#555}.lbhd .ad{color:#555;font-size:9.5pt}.lbhd .sc{font-size:11.5pt;color:#555}
+.lbtt{position:absolute;top:53mm;left:10mm;right:10mm;height:8.5mm;border:1px solid #000;display:flex;flex-direction:column;justify-content:center;text-align:center;line-height:1.15}.lbtt b{font-size:11pt}.lbtt span{font-size:9pt;font-weight:700}
+.lbbk{position:absolute;top:64mm}
+table.lbt{border-collapse:collapse;table-layout:fixed;min-width:0;width:auto}
+.lbt th,.lbt td{border:1px solid #000;text-align:center;font-size:9pt;padding:0 2px;overflow:hidden;white-space:nowrap;color:#000;background:#fff}
+.lbt thead tr:first-child th{font-size:9.5pt;height:5mm}.lbt thead tr:nth-child(2) th{height:4.6mm;font-size:8.5pt}
+.lbt tbody td{height:7.2mm;max-height:7.2mm}.lbt td.nm{text-align:left;font-size:8.6pt}.lbt td.rm{font-size:8pt;white-space:normal;line-height:1.1}
+.lbsg{height:6.2mm;display:flex;align-items:center;justify-content:center;overflow:hidden}.lbsg img{max-height:6mm;max-width:24mm;width:auto;height:auto;display:block}
+.lbft{position:absolute;top:184mm;left:10mm;right:10mm;text-align:center;font-size:9pt;line-height:1.3}.lbft span{font-size:7.8pt}.lbft small{font:7pt Arial,sans-serif;color:#555}
+.lbprev{overflow:auto;border:1px solid var(--line);border-radius:8px;background:#e9edf2;padding:8px}.lbscale{zoom:.55;width:297mm;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+@page lbpg{size:A4 landscape;margin:0}
+@media print{ .lbprint{page:lbpg;display:block} .lbprint .lbpg{page-break-after:auto} }
 .tipi{display:inline-flex;align-items:center;justify-content:center;width:17px;height:17px;border-radius:50%;background:var(--brand,#1f5fbf);color:#fff;font-size:11px;font-weight:800;cursor:help;vertical-align:middle;margin-left:3px;line-height:1;user-select:none}
 .tipbox{position:fixed;z-index:9999;display:none;background:#1d2733;color:#fff;font-size:13px;line-height:1.45;font-weight:500;padding:10px 12px;border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.25);text-align:left;white-space:normal}.tipbox.on{display:block}
 @media print{ .tipi,.tipbox{display:none!important} }
@@ -1367,8 +1404,8 @@ textarea.nbt{-webkit-touch-callout:none}
     <div class="field"><label for="eaPos">Position</label><input id="eaPos" list="posList" maxlength="60" placeholder="Choose or type a position">
       <datalist id="posList"></datalist></div>
     <div class="field"><label for="eaGrade">Grade handled (optional)</label><input id="eaGrade" maxlength="40"></div>
-    <div class="field" id="eaAralF"><label for="eaAral">Teacher profile</label><select id="eaAral"><option value="">Regular teacher</option><option value="both">Regular teacher and ARAL tutor</option><option value="only">ARAL tutor only</option></select>
-      <small class="hint">ARAL tutor only: sees only Home and ARAL, signs in and out in ARAL, and is not counted in LPT and PPT, Time in and Time out, and LAC.</small></div>
+    <div class="field" id="eaAralF"><label for="eaAral">Teacher profile</label><select id="eaAral"><option value="">Regular teacher</option><option value="both">Regular teacher and ARAL tutor</option><option value="only|GIP">ARAL tutor only, GIP Tutor</option><option value="only|Regular">ARAL tutor only, Regular Tutor</option></select>
+      <small class="hint">GIP Tutor: in school like the teachers, with AM and PM Time in and Time out. Regular Tutor: comes only for the ARAL session, taps PM in before it and PM out after it. ARAL tutors only see Home, ARAL, and Attendance (their own time), and are not counted in LPT and PPT and LAC.</small></div>
     <div class="err" id="eaErr"></div>
     <div class="modal-actions"><button class="btn ghost" onclick="closeModal('editAccModal')">Cancel</button><button class="btn" id="eaBtn" onclick="saveEditAcc()">Save</button></div>
   </div>
@@ -1536,7 +1573,7 @@ textarea.nbt{-webkit-touch-callout:none}
     <div id="cfList"></div>
     <label class="check confirmbox"><input type="checkbox" id="cfAgree" onchange="$('cfBtn').disabled=!this.checked"><span>I have read, understood, and <b>agree</b> with the agreement and its date, and I affix my e-signature below.</span></label>
     <div class="cfsig"><img id="cfSig" alt="Your e-signature"><small>Your e-signature</small></div>
-    <p class="hint">If you do not agree, tap Cancel and write your suggestion in the comment box. The School Head will see it first.</p>
+    <p class="hint">If you do not agree, tap Cancel and write your suggestion in the comment box.</p>
     <div class="modal-actions"><button class="btn ghost" onclick="closeModal('cfModal')">Cancel</button><button class="btn sun" id="cfBtn" onclick="obsTeacherSignGo()" disabled>I agree, sign now</button></div>
   </div>
 </div>
@@ -1792,8 +1829,8 @@ textarea.nbt{-webkit-touch-callout:none}
 
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
-const MIN_SERVER = '7.3'; // oldest Code.gs this page works with
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'7.3', date:'October 18, 2026' } };
+const MIN_SERVER = '7.5'; // oldest Code.gs this page works with
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'7.5', date:'October 21, 2026' } };
 function verLine(server){
   const old = server && (server.indexOf('older') > -1 || parseFloat(server) < parseFloat(MIN_SERVER));
   const s = server ? ' Server '+server+('.') : '';
@@ -2263,7 +2300,7 @@ function featSeen(id){ if (id==='sbfp' || id==='aral'){ markSeen(id); if (typeof
 function aralOnly(){ return !!(USER && USER.role==='teacher' && USER.aral==='only'); }
 function drawSide(){
   const head = USER && USER.role==='head';
-  const shown = f => aralOnly() ? (f.id==='home' || f.id==='aral') : (f.id==='home' || f.id==='lpt' || f.headOnly || featOn(f.id));
+  const shown = f => aralOnly() ? (f.id==='home' || f.id==='aral' || f.id==='att') : (f.id==='home' || f.id==='lpt' || f.headOnly || featOn(f.id));
   const item = f => {
     const k = featCount(f.id), dot = k ? `<i class="sdot">${k > 99 ? '99+' : k}</i>` : '';
     const tag = f.id==='home' ? '' : f.id==='lpt' ? dot : f.headOnly ? '<em class="vis">Only you</em>' : head ? dot + (featOn(f.id) ? '' : '<em class="hid">Hidden</em>') : dot;
@@ -2331,7 +2368,7 @@ async function aralLoad(quiet){
   const v = ARAL.ver || 0;
   try{ const d = aralNorm(await api('aralLoad'));
     // a reply that started before a save is older than what is on the screen, so it is not used
-    if (d && (ARAL.ver || 0) === v){ ARAL.data = d; ARAL.stale = false; aralSave(); } }
+    if (d && (ARAL.ver || 0) === v){ ARAL.data = d; ARAL.stale = false; aralSave(); try{ if (d.arh) ARAL_NEED = Math.max(10, dtrM(d.arh.out) - dtrM(d.arh.in)); }catch(e){} } }
   catch(e){ ARAL.stale = true; if (!ARAL.data && !quiet) throw e; }
   return ARAL.data;
 }
@@ -2355,7 +2392,7 @@ function aralNorm(d){
   d.me = d.me || {}; return d;
 }
 function aralSave(){ try{ localStorage.setItem(aralKey(), JSON.stringify(ARAL.data)); }catch(e){} }
-function aralSet(d){ const n = aralNorm(d); if (!n) return; ARAL.data = n; ARAL.ver = (ARAL.ver||0) + 1; ARAL.stale = false; aralSave(); try{ drawSide(); }catch(e){} }
+function aralSet(d){ const n = aralNorm(d); if (!n) return; try{ const h = n.arh; if (h) ARAL_NEED = Math.max(10, dtrM(h.out) - dtrM(h.in)); }catch(e){} ARAL.data = n; ARAL.ver = (ARAL.ver||0) + 1; ARAL.stale = false; aralSave(); try{ drawSide(); }catch(e){} }
 
 /* ----- Attendance of each learner in ARAL: sessions present and missed ----- */
 function aralLearnerAtt(t){
@@ -2409,7 +2446,16 @@ function aralTutees(email){ const D = ARAL.data; return (D.tutees||[]).filter(t 
 function aralMyTutees(){ return aralTutees(USER.email); }
 function aralName(id){ const t = (ARAL.data.tutees||[]).find(x => x.learner===id); if (t) return t.data.name; const l = (ARAL.data.learners||[]).find(x => x.id===id); return l ? l.last+', '+l.first : id; }
 function aralSecLabel(t){ return (t.data.grade||'')+(t.data.section?' '+t.data.section:''); }
-function aralRow(kind, tutor, date){ return (ARAL.data.rows||[]).find(r => r.kind===kind && r.tutor===tutor && r.date===date); } // one sign in and one sign out a day
+function aralRow(kind, tutor, date){ const r = (ARAL.data.rows||[]).find(r => r.kind===kind && r.tutor===tutor && r.date===date); return r || (kind==='TIME' ? aralSynth(tutor, date) : r); }
+// ARAL tutors now tap Time in and Time out in Attendance. The ARAL time of a day comes from those taps:
+// a Regular Tutor's PM in and PM out, or the ARAL session time for those in school (GIP Tutors and teachers).
+function aralArh(){ return (ARAL.data && ARAL.data.arh) || { in:'14:40', out:'15:30' }; }
+function aralSynth(tutor, date){ const D = ARAL.data; if (!D) return null; const L = (D.stf||[]).find(x => x.email===tutor && x.date===date); if (!L) return null;
+  const h = aralArh(), typ = (D.types||{})[tutor]; let inn = '', out = '';
+  if (typ==='Regular'){ inn = L.pmIn; out = L.pmOut; }
+  else { if (!(L.amIn || L.pmIn)) return null; if (L.amIn && !L.pmIn && L.amOut) return null; inn = L.pmIn && L.pmIn > h.in ? L.pmIn : h.in; out = L.pmOut ? (L.pmOut < h.out ? L.pmOut : h.out) : ''; }
+  if (!inn) return null; return { id:'SY|'+tutor+'|'+date, kind:'TIME', tutor, date, data:{ in:inn, out:out||'', session:'ARAL session', fromStf:true } }; }
+function aralSesTxt(){ const h = aralArh(); return time12(h.in)+' to '+time12(h.out); } // one sign in and one sign out a day
 function aralNotes(o){ return (ARAL.data.rows||[]).filter(r => r.kind==='NOTE' && (!o.learner || r.learner===o.learner) && (!o.tutor || r.tutor===o.tutor) && (!o.date || r.date===o.date) && (!o.session || r.data.session===o.session)).sort((a,b) => String(b.date).localeCompare(String(a.date)) || String(b.on).localeCompare(String(a.on))); }
 function aralFocusTxt(f){ f = f || {}; if (f.type==='Letter name and sound') return 'Letter name and sound: '+((f.letters||[]).join(', ')||'not set');
   if (f.type==='Word pattern or word family') return 'Word pattern: '+(f.pattern||f.group||'not set');
@@ -2535,7 +2581,7 @@ function aralNoteOpen(learner, id){
   ARAL.nf = { learner, id, letters: (f.letters||[]).slice() };
   stfModal(`<h3>ARAL note</h3><p class="sub">${esc(aralName(learner))}</p>
     <div class="stfg2"><div class="field"><label for="anDate">Date</label><input type="date" id="anDate" value="${esc(n?n.date:ARAL.date)}" max="${esc(todayPH())}"></div>
-      <div class="field"><label for="anSes">Tutorial time</label><select id="anSes">${['Before class','After class'].map(x => `<option ${d.session===x?'selected':''}>${x}</option>`).join('')}</select></div></div>
+      <div class="field" hidden><label for="anSes">Tutorial time</label><select id="anSes">${['Before class','After class'].map(x => `<option ${d.session===x?'selected':''}>${x}</option>`).join('')}</select></div></div>
     <div class="field"><label for="anType">What was taught</label><select id="anType" onchange="aralNoteType()"><option value="">Choose</option>${ARAL_FOCUS.map(x => `<option ${f.type===x?'selected':''}>${x}</option>`).join('')}</select></div>
     <div id="anLet" class="field" hidden><label>Which letters? <small class="hint">The order follows Project e-READ.</small></label><div class="aralletters">${ARAL_LETTERS.map(L => `<button type="button" class="${ARAL.nf.letters.indexOf(L)>-1?'on':''}" onclick="aralLetter(this,'${L}')">${L}<small>${L.toLowerCase()}</small></button>`).join('')}</div></div>
     <div id="anPat" class="stfg2" hidden><div class="field"><label for="anGroup">Group</label><select id="anGroup" onchange="aralPatList()">${Object.keys(ARAL_PATTERNS).map(g => `<option ${f.group===g?'selected':''}>${g}</option>`).join('')}</select></div>
@@ -2691,13 +2737,13 @@ function aralLetterGrid(id){
 }
 
 /* ----- Today: tick when the session was held, sign in before it, sign out after it ----- */
-const ARAL_NEED = 60; // minutes of ARAL a day
+let ARAL_NEED = 50; // minutes of the ARAL session a day (set from the ARAL session time)
 function aralNowHM(){ return new Date().toLocaleTimeString('en-GB',{ hour:'2-digit', minute:'2-digit', hour12:false, timeZone:'Asia/Manila' }); }
 function aralUsed(t, live){ if (!t || !t.in) return 0; if (t.out) return aralMins(t); return live ? aralMins({ in:t.in, out:aralNowHM() }) : 0; }
 function aralMeter(t, live){ const m = aralUsed(t, live), pct = Math.min(100, Math.round(m / ARAL_NEED * 100)), ok = m >= ARAL_NEED, run = t && t.in && !t.out;
-  return `<div class="aralhour ${ok?'ok':''}"><div class="aralhbar"><i style="width:${pct}%"></i></div><span>${ok ? '✔ ' : ''}<b>${m}</b> of ${ARAL_NEED} minutes${run?' so far':''}${ok ? ', the 1 hour is complete' : (t && t.out ? ', '+(ARAL_NEED-m)+' minutes short' : '')}</span></div>`; }
+  return `<div class="aralhour ${ok?'ok':''}"><div class="aralhbar"><i style="width:${pct}%"></i></div><span>${ok ? '✔ ' : ''}<b>${m}</b> of ${ARAL_NEED} minutes${run?' so far':''}${ok ? ', the full session is complete' : (t && t.out ? ', '+(ARAL_NEED-m)+' minutes short' : '')}</span></div>`; }
 function aralUsedTxt(t){ const m = aralUsed(t, false); if (!t || !t.in) return '<span class="hint">·</span>'; if (!t.out) return '<span class="atn wait">Still in session</span>';
-  return m >= ARAL_NEED ? `<span class="atn ok">✔ ${esc(aralHrs(m))}</span>` : `<span class="atn bad" title="Short of the 1 hour a day">${esc(aralHrs(m)||'0 min')} of 1 h</span>`; }
+  return m >= ARAL_NEED ? `<span class="atn ok">✔ ${esc(aralHrs(m))}</span>` : `<span class="atn bad" title="Short of the full ARAL session">${esc(aralHrs(m)||'0 min')} of ${ARAL_NEED} min</span>`; }
 function aralToday(){
   const D = ARAL.data, me = USER.email, list = aralMyTutees(), today = D.today || todayPH(), date = ARAL.date;
   const T = aralRow('TIME', me, today) || { data:{} }, A = aralRow('ATT', me, date), present = A ? A.data.present : [];
@@ -2707,13 +2753,12 @@ function aralToday(){
   const choice = (x, l) => `<button type="button" class="aralsesb ${ARAL.session===x?'on':''}" ${locked?'disabled':''} onclick="ARAL.session='${x}';aralDraw()"><span class="aralbox">${ARAL.session===x?'✔':''}</span><b>${l}</b></button>`;
   const TR = aralRow('TIME', me, today);
   const tile = (k, l, sub) => T.data[k] ? `<div class="stft on"><small>${l}</small><b>${esc(time12(T.data[k]))}${aralPicBtn(TR, k)}</b><small>${sub}</small></div>` : `<button class="stft" onclick="aralClock('${k}')"><small>${l}</small><b>📷</b><small>${sub}, with your photo</small></button>`;
+  const SL = (D.stf||[]).find(x => x.email===me && x.date===today) || {}, reg = (D.types||{})[me]==='Regular';
   $('aralBody').innerHTML = `${aralTodoHtml()}${aralAckBox()}
-    <div class="stfme"><div class="stfme-h"><div><small>My ARAL attendance today</small><b>${esc(dShort(today))}</b></div></div>
-      <div class="aralses"><b>When is the ARAL session conducted today?</b> <small class="hint">${locked ? 'Ticked when you signed in.' : 'Tick one, then tap Sign in.'}</small>
-        <div class="aralsesc">${choice('Before class','Before the regular class')}${choice('After class','After the regular class')}</div></div>
-      <div class="stftiles" style="grid-template-columns:repeat(2,1fr)">${tile('in','Sign in','before the tutorial')}${tile('out','Sign out','after the tutorial')}</div>
+    <div class="stfme"><div class="stfme-h"><div><small>ARAL session today</small><b>${esc(dShort(today))}, ${esc(aralSesTxt())}</b></div><button class="btn" onclick="openFeature('att')">\u{1F552} My Time in and Time out</button></div>
+      <div class="stftiles">${(reg ? [['pmIn','PM in, before ARAL'],['pmOut','PM out, after ARAL']] : [['amIn','AM in'],['amOut','AM out'],['pmIn','PM in'],['pmOut','PM out']]).map(x => `<div class="stft ${SL[x[0]]?'on':''}"><small>${x[1]}</small><b>${SL[x[0]]?esc(time12(SL[x[0]])):'\u00B7'}</b></div>`).join('')}</div>
       ${aralMeter(T.data, true)}
-      <p class="hint" style="margin:6px 0 0">Each tutor needs 1 hour of ARAL a day. Forgot to sign in on a past day? Ask the School Head to add it.</p></div>
+      <p class="hint" style="margin:6px 0 0">${reg ? 'As a Regular ARAL Tutor, tap PM in in Attendance before the ARAL session and PM out after it, with your photo.' : 'Tap your Time in and Time out in Attendance, with your photo, like the teachers.'} The ARAL time is taken from those taps.</p></div>
     ${list.length ? `<div class="aralbar" style="margin-top:16px"><h3 class="stfgrp" style="margin:0">Learners present and notes</h3>
         <label class="aralday">Session date <input type="date" value="${esc(date)}" max="${esc(today)}" onchange="ARAL.date=this.value||todayPH();aralDraw()"></label></div>
       ${date!==today?`<p class="hint">You are ticking learners and writing notes for a past session, ${esc(fmtLong(date))}.</p>`:''}
@@ -2764,7 +2809,7 @@ function aralOverview(){
       ${head?`<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn ghost danger" onclick="aralClearOpen()">Clear ARAL data</button><button class="btn ghost" onclick="aralManualOpen('','${day}')">＋ Add attendance for a tutor</button><button class="btn" onclick="ARAL.tab='tag';aralDraw()">Tag tutees and tutors</button></div>`:''}</div>
     <div class="ostats">${card('🧒', (D.tutees||[]).length, 'ARAL tutees (KS1 '+ks(1)+', KS2 '+ks(2)+')', "ARAL.tab='tutees';aralDraw()")}
       ${card('👩‍🏫', tutors.length, 'ARAL tutors', "aralTutorsPop()")}
-      ${card('⏱', met+' of '+tutors.length, 'Tutors with 1 hour '+(day===today?'today':'on '+dShort(day)), "aralHoursPop()")}
+      ${card('⏱', met+' of '+tutors.length, 'Tutors with the full session '+(day===today?'today':'on '+dShort(day)), "aralHoursPop()")}
       ${card('✍', nt.length, 'ARAL notes '+(day===today?'today':'on '+dShort(day)), "aralDayNotes()")}
       ${card('🔒', done, 'Tutors done (all notes locked)', "aralTutorsPop()")}
       ${(() => { const A = aralAckStats((D.rows||[]).filter(r => r.kind==='NOTE')); return card('👁', A.pct===null ? '·' : A.pct+'%', 'Notes read by the advisers'+(A.need ? ' ('+A.ok+' of '+A.need+')' : ''), "aralAckHeadPop()"); })()}</div>
@@ -2781,7 +2826,7 @@ function aralTutorsPop(){ const day = ARAL.ov || todayPH(), nt = (ARAL.data.rows
     <div class="aralpop">${aralTutorList().map(e => { const T = aralRow('TIME', e, day); return `<button class="choice" onclick="aralTutorDay('${e}')"><b>${esc(aralPName(e))}</b><small>${aralTutees(e).length} tutees · Time used: ${T&&T.data.out?esc(aralHrs(aralUsed(T.data))||'0 min'):'not yet'} · ${aralLockTxt(nt.filter(n => n.tutor===e))}</small></button>`; }).join('') || '<p class="hint">No tutors yet.</p>'}</div>
     <div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Close</button></div>`); }
 function aralHoursPop(){ const day = ARAL.ov || todayPH();
-  stfModal(`<h3>Time used for ARAL</h3><p class="sub">${esc(fmtLong(day))}. Each tutor needs 1 hour a day.</p>
+  stfModal(`<h3>Time used for ARAL</h3><p class="sub">${esc(fmtLong(day))}. Each tutor needs the full ARAL session, ${esc(aralSesTxt())}.</p>
     <div class="table-wrap"><table class="stft-table"><thead><tr><th>Tutor</th><th>Sign in</th><th>Sign out</th><th>Time used</th></tr></thead><tbody>${aralTutorList().map(e => { const T = aralRow('TIME', e, day);
       return `<tr><td><button class="linkbtn" onclick="aralTutorDay('${e}')">${esc(aralPName(e))}</button></td><td>${T&&T.data.in?esc(time12(T.data.in)):'·'}</td><td>${T&&T.data.out?esc(time12(T.data.out)):'·'}</td><td>${aralUsedTxt(T&&T.data)}</td></tr>`; }).join('')}</tbody></table></div>
     <div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Close</button></div>`, 'wide'); }
@@ -2841,8 +2886,8 @@ async function aralClearRun(){
 const ARAL_GUIDE = {
   teacher: [
     ['🌉','Welcome to ARAL, Project TULAY','ARAL is the catch up program for learners who need more help in reading and numeracy. This guide shows you what to do every day. It takes 2 minutes.'],
-    ['✔','Step 1. Tick when the session is held','Open the Today tab. Before you start, tick <b>Before the regular class</b> or <b>After the regular class</b>. This is when your ARAL session is conducted today.'],
-    ['⏰','Step 2. Sign in, then sign out','Tap <b>Sign in</b> when the tutorial starts and <b>Sign out</b> when it ends. Each time, the camera opens: face the camera, tap <b>Take photo</b>, then <b>Send</b>. You can retake before sending. You only tap twice a day. The time bar shows your minutes. Each tutor needs <b>1 hour a day</b>.'],
+    ['⏰','Step 1. Time in and Time out in Attendance','Tap your Time in and Time out in <b>Attendance</b>, with your photo, like the teachers. A <b>GIP Tutor</b> taps AM and PM like the teachers. A <b>Regular Tutor</b> taps <b>PM in</b> before the ARAL session and <b>PM out</b> after it.'],
+    ['⏱','Step 2. The ARAL session','The Today tab shows the ARAL session time and your taps. The time bar shows if you stayed for the full session.'],
     ['🧒','Step 3. Tick the learners present','Tick the tutees who came, then tap <b>Save who is present</b>. To record a past session, change the <b>Session date</b> first.'],
     ['✍','Step 4. Write a note for each learner','Tap a learner\'s name. Choose what was taught: letters, word patterns, sight words, and more. Write what you did, choose the progress, and add a note. Tap <b>Check spelling and grammar</b> to fix your writing.'],
     ['🔒','Step 5. Save and lock when done','<b>Save draft</b> keeps the note so you can finish it later. <b>Save and lock</b> tells the School Head the note is done. A 🔒 shows on the note. You can still tap <b>Unlock to edit</b> if you need to change it.'],
@@ -2995,7 +3040,7 @@ function openSoon(f){
 }
 function openFeature(id){
   toggleSide(false); setTimeout(() => featSeen(id), 800);
-  if (aralOnly() && id!=='home' && id!=='aral') id = 'aral';
+  if (aralOnly() && id!=='home' && id!=='aral' && id!=='att') id = 'aral';
   const f = FEATURES.find(x => x.id === id);
   if (!f){ showHome(); return; }
   if (f.id==='home'){ showHome(); return; }
@@ -3560,7 +3605,7 @@ async function submitDocs(){
       await apiData('submitFile', {doc:j.x}); done++;
     }
     closeModal('subModal'); SEL.term = W.term; SEL.week = W.week;
-    toast('Submitted for validation. The School Head can now see it.');
+    toast('Submitted for validation.');
   }catch(e){ const m = String(e && e.message || e); if (m === MSG.NET || friendly(m) === MSG.BUSY) $('wErr').textContent = (done ? done+' file'+(done>1?'s were':' was')+' sent. ' : '') + MSG.UPLOAD; else handleErr(e,'wErr'); try{ await loadData(); W.entry = null; drawWizard(); }catch(x){} }
   loading(false); $('wBtn').disabled = false;
 }
@@ -3826,7 +3871,7 @@ GUIDES.stf_teacher = { name:'My time record and requests', steps: [
   { el:'.stftabs', t:'Your records', x:'Requests: file a leave, a locator slip, a travel authority, an early out, or a wellness leave. Time records and Summary show your month and what was granted.' } ] };
 GUIDES.stf_admin = { name:'Personnel', steps: [
   { el:'.stfme', t:'Your own time', x:'Tap Time in and Time out for yourself too.' },
-  { el:'.stft-table', t:'Everyone today', x:'Who is in school, who came in late, and who is on leave or outside. You can view and print, and only the School Head can change records.' } ] };
+  { el:'.stft-table', t:'Everyone today', x:'Who is in school, who came in late, and who is on leave or outside. You can view and print.' } ] };
 GUIDES.stf_head = { name:'Teachers and personnel', steps: [
   { el:'.stfaway', t:'In school or away', x:'Tag yourself away on days you are out. Forms you act on those days print without your e-signature, so the OIC signs them.' },
   { el:'.stft-table', t:'Everyone today', x:'Time in and time out of each teacher. Tap Mark or correct for a missed tap, an absence, or a half day.' },
@@ -3852,7 +3897,7 @@ GUIDES.lac_admin = { name:'LAC and Teacher Development', steps: [ { el:'.lactabs
 GUIDES.lachub_teacher = { name:'Learning Hub', steps: [ { el:'.hubgrid', t:'Watch and learn', x:'Tap a video to play it. The bar shows how far you are. Mark it almost finished at 90%, and it is finished at the end. Add your own material with Add a material.' } ] };
 GUIDES.lachub_head = { name:'Learning Hub', steps: [ { el:'#lacBody .tabs', t:'Approve first', x:'Materials from teachers wait for your approval. Approve or return them, then see the progress of everyone.' } ] };
 GUIDES.lachub_admin = GUIDES.lachub_teacher;
-GUIDES.lacnb_teacher = { name:'My Journals', steps: [ { el:'.nbbang', t:'Your journals', x:'LAC Journal with the reflection, Meeting Journal, and Notes. Type in your own words. The School Head can read them. They are saved on your device first when offline.' } ] };
+GUIDES.lacnb_teacher = { name:'My Journals', steps: [ { el:'.nbbang', t:'Your journals', x:'LAC Journal with the reflection, Meeting Journal, and Notes. Type in your own words. They are saved on your device first when offline.' } ] };
 GUIDES.lacnb_head = { name:'Journals', steps: [ { el:'#lacBody select', t:'Read and check', x:'Choose a teacher to read the journals, then tap Check and add a remark. "Check this entry" means a large block of text appeared at once.' } ] };
 GUIDES.lacnb_admin = GUIDES.lacnb_teacher;
 GUIDES.att_admin = { name:'Attendance', steps: [ { el:'.abtns', t:'View and print', x:'See any class SF2 live and the SF4, then print them for signing.' } ] };
@@ -4759,7 +4804,7 @@ async function obsViewer(){
         ${o.status==='Completed'||head?`<button class="btn ghost" onclick="printChoose()">${o.status==='Completed'?'Print as PDF':'Preview PDF'}</button>`:''}
         ${o.status==='Completed'&&!mwa?'<button class="btn" onclick="downloadPmcf()">Download Excel for the Division</button>':''}</div></div>
     ${(o.data.revisions||[]).length && o.status!=='Completed'?`<div class="notice" style="margin-top:12px"><b>This observation was revised</b> on ${esc(dTime(o.data.revisions[o.data.revisions.length-1].on))}. ${canTeacherSign?'Please read it again before signing.':'Both signatures are needed again.'}</div>`:''}
-    ${canTeacherSign?`<div class="notice" style="margin-top:12px"><b>Please review this observation.</b> If you want something added, changed, or removed in the agreement, write it in the comment box below. The School Head will see it and may revise the agreement. When you agree, tap <b>Sign and return</b>.</div>`:''}
+    ${canTeacherSign?`<div class="notice" style="margin-top:12px"><b>Please review this observation.</b> If you want something added, changed, or removed in the agreement, write it in the comment box below. When you agree, tap <b>Sign and return</b>.</div>`:''}
     ${canRevise && comments.some(c=>c.role==='teacher')?`<div class="notice" style="margin-top:12px"><b>The teacher commented on the agreement.</b> Revise the agreement below, then tap Save revised agreement. She will be notified to review and sign.</div>`:''}
     <div class="obs-doc">${mwa ? mwaBody(o, sigs, false) : pmcfBody(o, sigs, false, false)}</div>
     ${canRevise?`<section class="ocard2" style="margin-top:12px"><h3>Revise the agreement</h3>${(o.data.inc||[]).map((it,i)=>`<div class="field"><label>Row ${i+1}${it.situation?': '+esc(String(it.situation).trim()):''}</label><textarea spellcheck="true" lang="en" data-agr="${i}" rows="2">${esc(it.agreement||'')}</textarea></div>`).join('')}
@@ -5631,13 +5676,13 @@ function sbMyGrades(){ if (!USER) return []; const secs = (typeof ATT!=='undefin
 function sbMyTodo(){
   if (!USER || USER.role!=='teacher' || !featOn('sbfp')) return [];
   const mine = sbMyGrades(); if (!mine.length) return [];
-  const today = todayPH(), out = [], from = [sbFirst(), addDays(today, -45)].sort().pop(), afterNoon = new Date().toLocaleTimeString('en-GB',{ hour:'2-digit', timeZone:'Asia/Manila' }) >= '12';
+  const today = todayPH(), out = [], from = [sbFirst(), '2026-07-01'].sort().pop(), afterNoon = new Date().toLocaleTimeString('en-GB',{ hour:'2-digit', timeZone:'Asia/Manila' }) >= '12';
   for (let d = from; d <= today; d = addDays(d, 1)){
     if (d === today && !afterNoon) continue;
     const sc = sbSched(d); if (!sc || mine.indexOf(sbNorm(sc.g)) < 0) continue;
     const r = sbRec(d), att = r.att || {}, need = [];
     if (!r.status) need.push('status of feeding');
-    if (!r.status || r.status==='Implemented'){ if (!(r.photos||[]).length) need.push('photos of the attendance sheet'); if (!Object.keys(att).some(k => k.charAt(0)!=='_' && att[k])) need.push('parents\u2019 attendance'); }
+    if (!r.status || r.status==='Implemented'){ if (!(r.photos||[]).length) need.push('photos of the attendance sheet'); if (!Object.keys(att).some(k => k.charAt(0)!=='_' && att[k])) need.push('parents\u2019 attendance'); else if (!att._lock) need.push('lock the attendance'); }
     if (need.length) out.push({ date:d, s:sc, need });
   }
   return out;
@@ -5691,7 +5736,7 @@ function todoPop(n){ n = n || 0; if (!USER || USER.mustChange) return; const k =
 function nbTodoPop(){ todoPop(); }
 function sbTodoHtml(){ const L = sbMyTodo(); if (!L.length) return '';
   return `<div class="sbtodo"><b>\u23F0 Your SBFP days to complete (${L.length})</b>
-    <p>These are the feeding days of your grade level parents. Please update each one: the status, the photos of the attendance sheet, and the parents' attendance.</p>
+    <p>These are the feeding days of your grade level parents from July 2026 until today. Please update each one: the status, the photos of the attendance sheet, and the parents' attendance, then lock the attendance. This reminder stays until every day is complete.</p>
     <div class="sbtodo-l">${L.map(x => `<button onclick="SB.date='${x.date}';SB.tab='today';openSbfp()"><span>${esc(dShort(x.date))}</span><b>${esc(x.s.n)}</b><small>Still needed: ${esc(x.need.join(', '))}</small></button>`).join('')}</div>
     <p class="sbtodo-n">\u2757 If the menu or the grade level parents assigned on a day are different from what was served, skip that day for now. Message the School Head first before you enter its data. Go on and complete the days with the correct menu and grade level assignment, based on your attendance.</p></div>`; }
 function sbParents(group){
@@ -6549,6 +6594,7 @@ async function openAtt(){
   $('viewAtt').style.display=''; CUR_FEATURE='att'; drawSide(); closeGuide(); window.scrollTo(0,0);
   if (!USER){ $('viewAtt').innerHTML = '<div class="empty">Please sign in to open Attendance.</div>'; return; }
   if (!ATT.month) ATT.month = todayPH().slice(0,7);
+  if (aralOnly()) return openStaff('today');   // ARAL tutors only: their own Time in and Time out, DTR, and requests
   ATT.view = 'home';
   if (!ATT.sections.length){ const m = attCacheMeta(); if (m) Object.assign(ATT, m); }
   if (!ATT.sec) ATT.sec = attDefaultSec();
@@ -6580,7 +6626,7 @@ function attWarm(){
 // Attendance saved on this device but not yet synced is shown too
 function attPendingApply(){ myPending().filter(x=>x.action==='attSave' && x.payload.section===ATT.sec).forEach(x => ATT.days[x.payload.date] = { date:x.payload.date, status:x.payload.status, marks:x.payload.marks, local:true }); }
 function attDraw(){ ({ home:attHome, take:attTake, learners:attLearners, msgs:attMsgs, live:attLive, staff:stfDraw })[ATT.view](); }
-function attBack(){ if (ATT.fromLive && ATT.view==='take'){ ATT.fromLive = false; attOpenLive(ATT.liveDate); return; } ATT.fromLive = false; ATT.view = 'home'; attDraw(); window.scrollTo(0,0); }
+function attBack(){ if (aralOnly()){ openFeature('home'); return; } if (ATT.fromLive && ATT.view==='take'){ ATT.fromLive = false; attOpenLive(ATT.liveDate); return; } ATT.fromLive = false; ATT.view = 'home'; attDraw(); window.scrollTo(0,0); }
 
 /* ----- the dashboard: buttons first ----- */
 function attHome(){
@@ -7609,6 +7655,8 @@ function stfHomeInner(){
     ${btn('\u{1F552}', stfAll()?'Teachers today':'My time today', stfAll()?'Time in and time out of everyone':'Tap Time in and Time out', "openStaff('today')", stfAll()?'':'main')}
     ${btn('\u{1F4E8}', stfHead()?'Requests for action':'Leave and requests', stfHead()?(pend?pend+' waiting for you':'None waiting'):(stfRole()==='admin'?'View and print. File your own.':mine.length+' filed, '+mine.filter(stfGranted).length+' granted. Wellness: '+stfNum(Math.max(0,stfWellDays()-stfWellUsed(USER.email, todayPH().slice(0,4))))+' day(s) left'), "openStaff('req')", stfHead()&&pend?'main':'')}
     ${btn('\u{1F4C5}', 'Time records', 'By month, printable', "openStaff('rec')")}
+    ${btn('\u{1F4C4}', 'DTR', stfHead()?'Everyone\u2019s DTR, edit and print':stfRole()==='admin'?'Final DTRs to print':'My DTR, Civil Service Form 48', "openStaff('dtr')")}
+    ${stfAll()?btn('\u{1F4D2}', 'Logbook', 'Daily Time Record Logbook, 4 printings', "openStaff('lb')"):''}
     ${btn('\u{1F4CA}', 'Summary', stfAll()?'Leave and requests per teacher':'What I filed and what was granted', "openStaff('sum')")}
   </div>`;
   return html;
@@ -7619,9 +7667,10 @@ async function stfHomeRefresh(){ try{ await stfLoad(true); }catch(e){} const el 
 // Teachers follow the school hours; the School Head and the AO follow the office hours
 const STF_OFFICE = { amIn:'08:00', amOut:'12:00', pmIn:'13:00', pmOut:'17:00' };
 function stfRoleOf(email){ const p = ((STF.data||{}).people||[]).find(x => x.email===email); return p ? p.role : (USER && email===USER.email ? USER.role : 'teacher'); }
-function stfHoursOf(email){ const r = stfRoleOf(email); return (r==='head' || r==='admin') ? (STF.data.office || STF_OFFICE) : STF.data.hours; }
+function stfTutorOf(email){ const p = ((STF.data||{}).people||[]).find(x => x.email===email); return p ? (p.aral==='only' ? p.tutor : '') : (USER && email===USER.email && USER.aral==='only' ? (USER.tutor || ((STF.data||{}).me||{}).tutor || 'GIP') : ''); }
+function stfHoursOf(email){ if (stfTutorOf(email)==='Regular'){ const a = (STF.data||{}).aralHours || { in:'14:40', out:'15:30' }; return { amIn:'', amOut:'', pmIn:a.in, pmOut:a.out, reg:true }; } const r = stfRoleOf(email); return (r==='head' || r==='admin') ? (STF.data.office || STF_OFFICE) : STF.data.hours; }
 function stfHoursTxt(H){ return time12(H.amIn)+' to '+time12(H.amOut)+' and '+time12(H.pmIn)+' to '+time12(H.pmOut); }
-function stfSlotWhy(k, L, m){ const noon = 720, pmStart = Math.max(noon, stfMin(stfHoursOf(USER.email).pmIn));
+function stfSlotWhy(k, L, m){ if (stfHoursOf(USER.email).reg && (k==='amIn' || k==='amOut')) return 'As a Regular ARAL Tutor, tap only PM in before the ARAL session and PM out after it.'; const noon = 720, pmStart = Math.max(noon, stfMin(stfHoursOf(USER.email).pmIn));
   if (k==='amIn'){ if (m >= noon) return 'The morning Time in is closed after 12:00 noon. Tap PM in instead.'; if (L.amOut) return 'You already tapped AM out.'; }
   if (k==='amOut'){ if (!L.amIn) return 'Tap AM in first.'; if (m >= pmStart) return 'The morning Time out is closed. Ask the School Head to correct it.'; }
   const pmEnd = stfMin(stfHoursOf(USER.email).pmOut);
@@ -7638,7 +7687,7 @@ function stfMyToday(compact){
   const tiles = STF_SLOTS.map(s => L[s[0]] ? `<div class="stft on"><small>${s[1]}</small><b>${stfTimeCell(Object.assign({ email:USER.email, date:today }, L), s[0])}</b></div>` : (stfSlotWhy(s[0], L, nowM) ? `<button class="stft shut" onclick="toast('${esc(stfSlotWhy(s[0], L, nowM))}')" title="${esc(stfSlotWhy(s[0], L, nowM))}"><small>${s[1]}</small><b>·</b></button>` : `<button class="stft" onclick="stfClock('${s[0]}')" title="Tap to record ${s[1]} now"><small>${s[1]}</small><b>·</b></button>`)).join('');
   return `<div class="stfme ${compact?'compact':''}"><div class="stfme-h"><div><small>My time today</small><b>${esc(dShort(today))}</b> ${o&&o.label&&o.label!=='Not yet in'?stfChip(o):''} ${L.local?'<span class="unsynced">Not yet synced</span>':''}</div>
     ${next?`<button class="btn" onclick="stfClock('${next[0]}')">\u{1F552} ${next[0].slice(2)==='In'?'Time in':'Time out'}, ${next[1].slice(0,2)}</button>`:'<span class="atn ok">Done for today</span>'}</div>
-    <div class="stftiles">${tiles}</div><p class="hint" style="margin:6px 0 0">${['head','admin'].indexOf(USER.role)>-1?'Your hours':'School hours'}: ${esc(time12(H.amIn))} to ${esc(time12(H.amOut))}, ${esc(time12(H.pmIn))} to ${esc(time12(H.pmOut))}. TALA uses the time of the server, not of the phone. Missed a tap? Tell the School Head, who can correct it.</p></div>`;
+    <div class="stftiles">${tiles}</div><p class="hint" style="margin:6px 0 0">${H.reg ? 'ARAL session: '+esc(time12(H.pmIn))+' to '+esc(time12(H.pmOut))+'. As a Regular ARAL Tutor, tap PM in before the session and PM out after it' : (['head','admin'].indexOf(USER.role)>-1?'Your hours':'School hours')+': '+esc(time12(H.amIn))+' to '+esc(time12(H.amOut))+', '+esc(time12(H.pmIn))+' to '+esc(time12(H.pmOut))}. TALA uses the time of the server, not of the phone.</p></div>`;
 }
 // Are you sure? A clear question before the camera opens, so the right Time in or Time out is tapped
 const STF_SURE = { amIn:['MORNING Time in','AM in','when you arrive in the morning','\u{1F305}'], amOut:['MORNING Time out','AM out','when you leave for lunch','\u{1F37D}'],
@@ -7735,12 +7784,12 @@ async function stfPhotoView(email, date, slot){
 /* ----- the personnel page ----- */
 function stfDraw(){
   const D = STF.data; if (!D) return;
-  const tabs = [['today', stfAll()?'Today':'My time today'], ['req', 'Requests'+(STF.dot?` <i class="sdot">${STF.dot}</i>`:'')], ['rec','Time records'], ['sum','Summary']];
-  $('viewAtt').innerHTML = `<div class="trk-head"><div><h2>${stfAll()?'Teachers and personnel':'My time record and requests'}</h2><p>${stfHead()?'Time in and time out, leave and other requests, and summaries per teacher.':stfRole()==='admin'?'You can view and print everything. Only the School Head can act on requests.':'Tap Time in and Time out, file your requests, and see what was granted.'}</p></div>
+  const tabs = [['today', stfAll()?'Today':'My time today'], ['req', 'Requests'+(STF.dot?` <i class="sdot">${STF.dot}</i>`:'')], ['rec','Time records'], ['dtr','DTR'], ['sum','Summary']].concat(stfAll() ? [['lb','Logbook']] : []);
+  $('viewAtt').innerHTML = `<div class="trk-head"><div><h2>${stfAll()?'Teachers and personnel':'My time record and requests'}</h2><p>${stfHead()?'Time in and time out, leave and other requests, and summaries per teacher.':stfRole()==='admin'?'You can view and print everything.':'Tap Time in and Time out, file your requests, and see what was granted.'}</p></div>
     <div class="head-actions"><button class="btn ghost" onclick="attBack()">Back</button></div></div>
     <div class="tabs stftabs">${tabs.map(t => `<button class="${STF.tab===t[0]?'on':''}" onclick="STF.tab='${t[0]}';stfDraw()">${t[1]}</button>`).join('')}</div>
     <div id="stfBody" style="margin-top:14px"></div>`;
-  ({ today:stfToday, req:stfReqs, rec:stfRec, sum:stfSum })[STF.tab]();
+  ({ today:stfToday, req:stfReqs, rec:stfRec, sum:stfSum, dtr:stfDtr, lb:stfLb })[STF.tab]();
   maybeGuide('stf'+(STF.tab==='today'?'':STF.tab));
 }
 function stfToday(){
@@ -8663,7 +8712,7 @@ function nbGuard(el){
     if (grow > 25 && !/^delete/.test(e.inputType||'')){ const pos = el.selectionStart; el.value = el._last; try{ el.selectionStart = el.selectionEnd = Math.max(0, pos - grow); }catch(x){} if (typeof LAC!=='undefined') LAC.flag = true; try{ if (el._onBlock) el._onBlock(); }catch(x){} return; }
     el._last = el.value; });
 }
-function nbBang(){ return `<button class="nbbang" onclick="this.classList.toggle('open')" aria-label="About this journal">!<span>Your School Head can read this journal.</span></button>`; }
+function nbBang(){ return `<button class="nbbang" onclick="this.classList.toggle('open')" aria-label="About this journal">!<span>Type in your own words.</span></button>`; }
 function lacNotebooks(){
   const D = LAC.data, head = lacHead(), who = head ? (LAC.nbWho || '') : USER.email;
   if (!NB_TABS[LAC.nb]) LAC.nb = 'LAC';
@@ -9415,7 +9464,7 @@ function mcAral(){
   const T = e => (aralRow('TIME', e, today)||{}).data || {};
   const notIn = wk ? tutors.filter(e => !T(e).in).map(e => ({ email:e, name:aralPName(e), need:aralTutees(e).length+' tutees. No ARAL sign in yet today.' })) : [];
   const open = tutors.filter(e => T(e).in && !T(e).out).map(e => ({ email:e, name:aralPName(e), need:'Signed in at '+time12(T(e).in)+'. Please sign out after the tutorial.' }));
-  const short = tutors.filter(e => T(e).out && aralUsed(T(e)) < ARAL_NEED).map(e => ({ email:e, name:aralPName(e), need:aralUsed(T(e))+' of 60 minutes today.' }));
+  const short = tutors.filter(e => T(e).out && aralUsed(T(e)) < ARAL_NEED).map(e => ({ email:e, name:aralPName(e), need:aralUsed(T(e))+' of '+ARAL_NEED+' minutes today.' }));
   const drafts = tutors.map(e => { const n = aralNotes({ tutor:e }).filter(x => !x.data.locked); return n.length ? { email:e, name:aralPName(e), need:n.length+' note'+(n.length>1?'s':'')+' still in draft. Please finish and lock.' } : null; }).filter(Boolean);
   const noNote = tutors.map(e => { const A = aralRow('ATT', e, today); if (!A) return null; const miss = A.data.present.filter(id => !aralNotes({ tutor:e, learner:id, date:today }).length); return miss.length ? { email:e, name:aralPName(e), need:'No note yet today for '+miss.map(aralName).join(', ')+'.' } : null; }).filter(Boolean);
   const misses = tutors.map(e => { const L = aralTutees(e).map(t => ({ t, a:aralLearnerAtt(t) })).filter(x => x.a.missed >= 3 || x.a.streak >= 2); return L.length ? { email:e, name:aralPName(e), need:'Follow up the parents of '+L.map(x => x.t.data.name+' ('+x.a.missed+' missed)').join(', ')+'.' } : null; }).filter(Boolean);
@@ -9425,14 +9474,14 @@ function mcAral(){
     { id:'ack', ico:'👁', label:'Notes waiting for the adviser to read', items:ack, done:'The advisers have read all the locked ARAL notes. Thank you!',
       group: () => mcGroup('👁 Dear advisers, the ARAL tutors wrote notes about your learners. Please read and acknowledge them:', ack, 'Open TALA, ARAL, My learners in ARAL, then tap Read the notes now. Tap I have read this note, or Acknowledge all for each learner.'),
       one: x => mcOne(x, 'The ARAL tutor wrote notes about your learners in TALA.', 'Please open TALA, ARAL, My learners in ARAL, then tap Read the notes now and acknowledge each one.') },
-    { id:'in', ico:'⏰', label:'No ARAL sign in today', items:notIn, done: wk ? 'All tutors signed in today.' : 'Today is not a school day.',
-      group: () => mcGroup('🌉 ARAL reminder for today, '+fmtLong(today)+'. Not yet signed in:', notIn, 'Please tick when the session is held (before or after the regular class), then tap Sign in with your photo in TALA, ARAL.'),
-      one: x => mcOne(x, 'A friendly ARAL reminder: TALA has no sign in for you yet today.', 'Before your tutorial, open TALA, ARAL, tick before or after the regular class, then tap Sign in with your photo. Remember the 1 hour a day.') },
+    { id:'in', ico:'⏰', label:'No Time in yet today', items:notIn, done: wk ? 'All tutors signed in today.' : 'Today is not a school day.',
+      group: () => mcGroup('🌉 ARAL reminder for today, '+fmtLong(today)+'. Not yet signed in:', notIn, 'Please tap your Time in with your photo in TALA, Attendance.'),
+      one: x => mcOne(x, 'A friendly ARAL reminder: TALA has no Time in for you yet today.', 'Please open TALA, Attendance, and tap your Time in with your photo. Remember the full ARAL session, '+aralSesTxt()+'.') },
     { id:'open', ico:'🚪', label:'Not yet signed out', items:open, done:'Nobody is waiting to sign out.',
-      group: () => mcGroup('🌉 ARAL reminder: please tap Sign out after your tutorial.', open, 'Open TALA, ARAL, then tap Sign out with your photo.'),
+      group: () => mcGroup('🌉 ARAL reminder: please tap Time out after your tutorial.', open, 'Open TALA, Attendance, then tap Time out with your photo.'),
       one: x => mcOne(x, 'A friendly reminder: please tap Sign out in TALA after your ARAL tutorial.', 'Open TALA, ARAL, then tap Sign out with your photo.') },
-    { id:'short', ico:'⏱', label:'Short of 1 hour today', items:short, done:'Every tutor who signed out completed the 1 hour.',
-      group: () => mcGroup('⏱ ARAL needs 1 hour a day. Today these tutors were short:', short, 'Please plan for the full 1 hour in the next session.'),
+    { id:'short', ico:'⏱', label:'Short of the full session today', items:short, done:'Every tutor completed the full ARAL session.',
+      group: () => mcGroup('⏱ The ARAL session is '+aralSesTxt()+'. Today these tutors were short:', short, 'Please stay for the full ARAL session next time.'),
       one: x => mcOne(x, 'A gentle reminder: ARAL needs 1 hour a day. TALA recorded less time for you today.', 'Please plan for the full 1 hour next time. Message me if the schedule makes it hard, so we can adjust.') },
     { id:'note', ico:'✍', label:'No notes yet today', items:noNote, done:'Every learner present has a note today.',
       group: () => mcGroup('✍ ARAL notes: please write a note for each learner present today.', noNote, 'Open TALA, ARAL, Today, then tap each learner.'),
@@ -9444,8 +9493,8 @@ function mcAral(){
       group: () => mcGroup('📞 Some ARAL learners are missing sessions. Please follow up their parents:', misses.map(x => ({ name:x.name, need:x.need.replace('Follow up the parents of ','') })), 'In TALA, ARAL, Today, tap Message the parents to copy a ready message.'),
       one: x => mcOne(x, 'Some of your ARAL tutees are missing sessions.', 'Please message their parents. In TALA, ARAL, Today, tap Message the parents to copy a ready message.') },
     { id:'thanks', ico:'🎉', label:'Thank you (done today)', items:done, done:'No tutor has finished everything yet today.',
-      group: () => mcGroup('🎉 Thank you, ARAL tutors! Done today with 1 hour and all notes locked:', done, 'Your effort helps every learner catch up. Keep it up!'),
-      one: x => mcOne(x, 'Thank you for today’s ARAL session! 1 hour completed and all notes locked. 🎉', 'Your effort helps every learner catch up.') }
+      group: () => mcGroup('🎉 Thank you, ARAL tutors! Done today with the full session and all notes locked:', done, 'Your effort helps every learner catch up. Keep it up!'),
+      one: x => mcOne(x, 'Thank you for today’s ARAL session! Full session completed and all notes locked. 🎉', 'Your effort helps every learner catch up.') }
   ];
 }
 
@@ -9764,6 +9813,230 @@ function cmtPrint(){ const R = cmtRows();
     ${sigBlock([{ label:'', name:'', role:'' }, { label:'Prepared by:', name:USER.name, role:'School Head' }])}<p class="stfp-foot">Generated by TALA on ${esc(fmtLong(todayPH()))}.</p></div></div>`;
   setTimeout(() => window.print(), 250); }
 
+/* =========================================================
+   7.4: DTR (Civil Service Form No. 48) and the Daily Time Record Logbook
+   The DTR keeps the layout of the biometric DTR noted by the Division. Only the times and the totals are filled in by TALA.
+   ========================================================= */
+const DTR_WK = ['Sun','Mon','Tue','Wed','Thurs','Fri','Sat'];
+const DTR_PARTS = [['amIn','Morning (IN)'],['amOut','Morning (OUT)'],['pmIn','Afternoon (IN)'],['pmOut','Afternoon (OUT)'],['otIn','Overtime (IN)'],['otOut','Overtime (OUT)']];
+function dtrM(t){ if (!t) return null; const p = String(t).split(':').map(Number); return p[0]*60 + (p[1]||0); }
+function dtrDays(month){ const [y,m] = month.split('-').map(Number), n = new Date(Date.UTC(y, m, 0)).getUTCDate(); return Array.from({length:n}, (_,i) => month+'-'+String(i+1).padStart(2,'0')); }
+// The original (taps with photos), the final (with the edits), and which parts were edited
+function dtrCalc(D, ver){
+  const H = D.person.hours || {}, days = dtrDays(D.month), rows = {};
+  days.forEach((date, i) => { const L = (D.logs||[]).find(x => x.date===date) || {}, day = i+1, r = { date, day, w:dow(date), ed:{} };
+    DTR_PARTS.forEach(([k]) => { const o = k.slice(0,2)==='ot' ? '' : (L[k]||''), e = (D.edits||{})[day+'|'+k];
+      r[k] = ver==='orig' || !e ? o : e.v; if (e && ver!=='orig') r.ed[k] = e; r['o_'+k] = o; });
+    rows[day] = r; });
+  const work = days.filter(d => dow(d)!==0 && dow(d)!==6), S = { work:work.length, att:0, late:0, lmin:0, early:0, emin:0, ot:0 };
+  Object.values(rows).forEach(r => {
+    const any = r.amIn || r.amOut || r.pmIn || r.pmOut, wk = r.w!==0 && r.w!==6;
+    if (wk && any) S.att++;
+    if (wk){
+      if (r.amIn && H.amIn && dtrM(r.amIn) > dtrM(H.amIn)){ S.late++; S.lmin += dtrM(r.amIn) - dtrM(H.amIn); }
+      if (r.pmIn && H.pmIn && dtrM(r.pmIn) > dtrM(H.pmIn)){ S.late++; S.lmin += dtrM(r.pmIn) - dtrM(H.pmIn); }
+      if (r.amOut && H.amOut && dtrM(r.amOut) < dtrM(H.amOut)){ S.early++; S.emin += dtrM(H.amOut) - dtrM(r.amOut); }
+      if (r.pmOut && H.pmOut && dtrM(r.pmOut) < dtrM(H.pmOut)){ S.early++; S.emin += dtrM(H.pmOut) - dtrM(r.pmOut); }
+      if (r.pmOut && H.pmOut && dtrM(r.pmOut) > dtrM(H.pmOut)) S.ot += dtrM(r.pmOut) - dtrM(H.pmOut);   // stayed after the official time
+    } else {   // Saturday or Sunday: all the time worked is overtime
+      if (r.amIn && r.amOut) S.ot += Math.max(0, dtrM(r.amOut) - dtrM(r.amIn));
+      if (r.pmIn && r.pmOut) S.ot += Math.max(0, dtrM(r.pmOut) - dtrM(r.pmIn));
+    }
+    if (r.otIn && r.otOut) S.ot += Math.max(0, dtrM(r.otOut) - dtrM(r.otIn));
+  });
+  S.absn = S.work - S.att; S.otT = dtrOtTxt(S.ot) || '0'; S.otH = Math.round(S.ot / 60 * 100) / 100;
+  return { rows, S, days };
+}
+// All the overtime minutes of the month, shown as hours: 60 minutes is 1 hour
+function dtrOtTxt(m){ m = Math.round(m||0); if (!m) return ''; const h = Math.floor(m/60), r = m%60; return (h ? h+'h' : '')+(h && r ? ' ' : '')+(r ? r+'m' : ''); }
+function dtrHoursLine(H){ return H.reg || !H.amIn ? `${H.pmIn}:00-${H.pmOut}:00` : `${H.amIn}:00 -${H.amOut}:00  ${H.pmIn}:00-${H.pmOut}:00`; }
+// The sheet, exactly in the layout of the biometric DTR. ver: final, edit (edited parts in yellow), orig
+function dtrSheet(D, ver, clickable){
+  const C = dtrCalc(D, ver==='orig' ? 'orig' : 'final'), S = C.S, p = D.person, [y,m] = D.month.split('-'), last = C.days.length;
+  const short = String(p.name).trim().split(/\s+/).filter(w => !/^(jr\.?|sr\.?|ii|iii|iv)$/i.test(w)).pop().normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+  const cell = (r, k) => { if (!r) return '<td></td>'; const v = r[k], e = r.ed[k], hl = ver==='edit' && e;
+    const click = clickable ? ` onclick="dtrCellOpen(${r.day},'${k}')" class="dtrc${hl?' ed':''}${e&&ver!=='edit'?' edm':''}"` : (hl ? ' class="ed"' : '');
+    return `<td${click}>${esc(v||'')}${hl?`<s>${esc(e.o||'blank')}</s>`:''}</td>`; };
+  const half = i => { const r = C.rows[i]; if (!r) return '<td></td>'.repeat(8);
+    return `<td>${m}.${String(r.day).padStart(2,'0')}</td><td>${DTR_WK[r.w]}</td>${['amIn','amOut','pmIn','pmOut','otIn','otOut'].map(k => cell(r, k)).join('')}`; };
+  let body = ''; for (let i = 1; i <= 16; i++) body += `<tr class="dr">${half(i)}${half(i+16)}</tr>`;
+  const ver2 = p.role==='head' ? [D.set.psds, D.set.psdsRole] : [D.head.name, 'School Head'];
+  return `<div class="dtrs">
+<div class="csf">Civil Service Form No. 48</div>
+<div class="ttl">DAILY TIME RECORD</div>
+<div class="ln"><span>Name:</span><u>${esc(String(p.name).toUpperCase())}</u></div>
+<div class="ln"><span>Station:</span><u>BALUYAN ELEMENTARY SCHOOL</u></div>
+<div class="ln"><span>Official Hours:</span><u>${esc(dtrHoursLine(p.hours))}</u></div>
+<div class="ln"><span>For the Month of</span><u>${esc(monthName(D.month))}</u></div>
+<div class="oh">Official hours for arrival and departure</div>
+<table class="g"><colgroup>${'<col>'.repeat(16)}</colgroup>
+<tr class="gr"><td colspan="4">Company Name:</td><td colspan="3">Name:${esc(short)}</td><td colspan="2">ID:${esc(p.id)}</td><td colspan="3">Depart.:</td><td colspan="4">Date:${y.slice(2)}.${m}.01～${y.slice(2)}.${m}.${last}</td></tr>
+<tr class="gr"><td colspan="3">Working days:${S.work}</td><td colspan="3">Attendance days:${S.att}</td><td colspan="2">Late Num:${S.late}</td><td colspan="2">Early Num:${S.early}</td><td colspan="3">Absences days:${S.absn}</td><td colspan="3">Overtime Hours: <span class="otv">${dtrOtTxt(S.ot)}</span></td></tr>
+<tr class="gr"><td colspan="3">Sick hours: </td><td colspan="2">Leave Hours:</td><td colspan="2">Daily Salary:</td><td colspan="2">Overtime Pay:</td><td colspan="2">Allowances: </td><td colspan="2">Charges:</td><td colspan="3">Real Pay：</td></tr>
+<tr class="gr"><td colspan="2">Device ID:</td><td colspan="2">Morning</td><td colspan="2">Afternoon</td><td colspan="2">Overtime</td><td></td><td></td><td colspan="2">Morning</td><td colspan="2">Afternoon</td><td colspan="2">Overtime</td></tr>
+<tr class="gr hh">${'<td>Date</td><td>Week</td><td>(IN)</td><td>(OUT)</td><td>(IN)</td><td>(OUT)</td><td>(IN)</td><td>(OUT)</td>'.repeat(2)}</tr>
+${body}</table>
+<div class="cert">I CERTIFY on my honor that the above is a true and correct report<br>of the hours of work  performed  record of   which was made daily at the<br>time of arrival and the departure from office.</div>
+<div class="sg1"><u>${esc(String(p.name).toUpperCase())}</u></div><div class="ver">Verified as to the prescribed office hours.</div>
+<div class="sg2"><u>${esc(String(ver2[0]||'').toUpperCase().replace(/, EDD$/, ', EdD'))}</u></div><div class="sg3">${esc(ver2[1]||'')}</div></div>`;
+}
+// The list of changes and the totals before and after
+function dtrChanges(D){
+  const E = Object.keys(D.edits||{}).map(k => { const [day, part] = k.split('|'); return Object.assign({ day:Number(day), part }, D.edits[k]); }).sort((a,b) => a.day-b.day);
+  const o = dtrCalc(D, 'orig').S, f = dtrCalc(D, 'final').S, K = [['att','Attendance days'],['late','Late Num'],['lmin','Minutes late'],['early','Early Num'],['absn','Absences days'],['otT','Overtime Hours']];
+  const nm = Object.fromEntries(DTR_PARTS);
+  return `<div class="dtrchg"><h4>Changes made to the DTR (${E.length})</h4>
+    ${E.length ? `<table><tr><th>Day</th><th>Part</th><th>Original (TALA, with photo)</th><th>Edited to</th><th>Edited on</th><th>By</th><th>Reason</th></tr>${E.map(e => `<tr><td>${esc(dShort(D.month+'-'+String(e.day).padStart(2,'0')))}</td><td>${esc(nm[e.part])}</td><td>${esc(e.o||'Blank')}</td><td class="y">${esc(e.v||'Blank')}</td><td>${esc(dTime(e.on))}</td><td>${esc(e.by||'')}</td><td>${esc(e.why||'')}</td></tr>`).join('')}</table>` : '<p>No changes. The DTR is the same as the original.</p>'}
+    <h4>Totals</h4><table><tr><th></th>${K.map(k => `<th>${k[1]}</th>`).join('')}</tr><tr><td>Original</td>${K.map(k => `<td>${o[k[0]]}</td>`).join('')}</tr><tr><td>Final</td>${K.map(k => `<td class="${o[k[0]]!==f[k[0]]?'y':''}">${f[k[0]]}</td>`).join('')}</tr></table></div>`;
+}
+/* ----- The DTR tab in Attendance ----- */
+const DTR = { month:'', email:'', ver:'final', d:null, list:null };
+function dtrMonths(){ const out = [], t = todayPH().slice(0,7); let [y,m] = t.split('-').map(Number); for (let i = 0; i < 12; i++){ out.push(y+'-'+String(m).padStart(2,'0')); m--; if (!m){ m = 12; y--; } } return out; }
+async function stfDtr(){
+  if (!DTR.month) DTR.month = todayPH().slice(0,7);
+  if (!DTR.email) DTR.email = USER.email;
+  const el = $('stfBody'); el.innerHTML = `<div class="pirload"><div class="pirdots"><i></i><i></i><i></i></div><b>Opening the DTR</b></div>`;
+  try{
+    if (stfAll()) DTR.list = await api('dtrList', { month:DTR.month });
+    if (stfRole()==='admin' && DTR.email===USER.email){ /* the AO opens her own DTR too */ }
+    DTR.d = await api('dtrLoad', { month:DTR.month, email:DTR.email }); DTR.err = '';
+  }catch(e){ DTR.d = null; DTR.err = friendly(e.message); }
+  dtrDraw();
+}
+function dtrDraw(){
+  const el = $('stfBody'); if (!el) return; const D = DTR.d, head = stfHead(), ao = stfRole()==='admin', L = DTR.list;
+  const mine = D && D.self, canPrintOrig = !ao || mine;
+  if (DTR.ver==='orig' && ao && !mine) {}
+  const pick = (head || ao) && L ? `<select onchange="DTR.email=this.value;DTR.ver='final';stfDtr()">${L.people.map(p => `<option value="${esc(p.email)}" ${p.email===DTR.email?'selected':''}>${esc(p.name)}${p.lockedOn?' \u{1F512}':''}${p.edits?' ('+p.edits+' edited)':''}</option>`).join('')}</select>` : '';
+  const top = `<div class="dtrbar">${pick}<select onchange="DTR.month=this.value;stfDtr()">${dtrMonths().map(m => `<option value="${m}" ${m===DTR.month?'selected':''}>${esc(monthName(m))}</option>`).join('')}</select>
+    ${head && L ? `<button class="btn ${L.set.edit?'':'ghost'} small" onclick="dtrEditSwitch(${!L.set.edit})">${L.set.edit?'✎ Editing is ON for personnel. Turn off':'\u{1F512} Editing is OFF for personnel. Turn on'}</button><button class="btn ghost small" onclick="dtrSetOpen()">⚙ DTR settings</button>` : ''}</div>
+    ${head && L ? `<p class="hint">${L.people.filter(p => p.lockedOn).length} of ${L.people.length} DTRs are final and locked for ${esc(monthName(DTR.month))}.</p>` : ''}
+    ${ao && L ? `<p class="hint">You can open, view, and print only the DTRs that the personnel locked as final. ${L.people.filter(p => p.lockedOn).length} of ${L.people.length} are final.</p>` : ''}`;
+  if (!D){ el.innerHTML = top + `<div class="empty">${esc(DTR.err || 'No DTR to show.')}</div>`; return; }
+  const edits = Object.keys(D.edits||{}).length, ver = DTR.ver, tabs = [['final','Final (with the edits)'],['edit','Edited parts'+(edits?' ('+edits+')':'')],['orig','Original (TALA, with photos)']];
+  const status = D.lockedOn ? `<span class="atn ok">\u{1F512} Final and locked${D.lockedBy?' by '+esc(D.lockedBy):''}, ${esc(dTime(D.lockedOn))}</span>` : `<span class="atn wait">Not yet locked</span>`;
+  const canEdit = D.canEdit && ver==='final';
+  const acts = [`<button class="btn small" onclick="dtrPrint('${ver}')">\u{1F5A8} Print ${ver==='final'?'the final DTR':ver==='edit'?'the edited parts':'the original'}</button>`];
+  if (ver==='orig' && !canPrintOrig) acts[0] = '<span class="hint">The original can be viewed but not printed.</span>';
+  if (mine && !D.lockedOn) acts.push(`<button class="btn ghost small" onclick="dtrLockNow(true)">\u{1F512} Lock my DTR as final</button>`);
+  if (head && D.lockedOn) acts.push(`<button class="btn ghost small" onclick="dtrLockNow(false)">\u{1F513} Unlock</button>`);
+  if (head && !D.lockedOn && !mine) acts.push(`<button class="btn ghost small" onclick="dtrLockNow(true)">\u{1F512} Lock as final</button>`);
+  const note = canEdit ? (head ? 'Tap a time to correct it. Your corrections are listed as edits.' : 'Tap a time to correct it, and write the reason.') : '';
+  const side = D.person.role==='head' && head ? dtrWhere(D) : '';
+  el.innerHTML = top + `<div class="dtrhead"><div><b>${esc(D.person.name)}</b> <small>${esc(D.person.position || (D.person.tutor ? D.person.tutor+' ARAL Tutor' : ''))}</small> ${status}</div>
+      <div class="tabs">${tabs.map(t => `<button class="${ver===t[0]?'on':''}" onclick="DTR.ver='${t[0]}';dtrDraw()">${t[1]}</button>`).join('')}</div></div>
+    ${note?`<p class="hint">${note}</p>`:''}<div class="obs-actions">${acts.join('')}</div>
+    <div class="dtrwrap"><div class="dtrpaper">${ver==='edit'?'<div class="dtrnote">EDITED PARTS. Yellow times were changed. The small crossed out time is the original from TALA.</div>':''}${ver==='orig'?`<div class="dtrnote">ORIGINAL, from the TALA Time in and Time out with photos. Late this month: ${dtrCalc(D,'orig').S.late} time(s), ${dtrCalc(D,'orig').S.lmin} minutes in all.</div>`:''}${dtrSheet(D, ver, canEdit)}${ver==='edit'?dtrChanges(D):''}</div>${side}</div>`;
+}
+// The School Head's whereabouts this month from the TALA calendar, shown beside the DTR while editing. Not printed.
+function dtrWhere(D){
+  const days = dtrDays(D.month), marks = (OBS.cal||[]).filter(x => x.date && x.date.slice(0,7)===D.month);
+  const evs = allEvents().filter(e => (e.date||'').slice(0,7)===D.month || (e.end||'').slice(0,7)===D.month);
+  const items = marks.map(x => ({ d:x.date, t:(x.type||'Away')+(x.note?': '+x.note:'') })).concat(evs.map(e => ({ d:e.date, t:e.type+': '+e.title+(e.end && e.end!==e.date ? ' (to '+dShort(e.end)+')' : '') })))
+    .concat((D.reqs||[]).map(q => ({ d:q.from, t:({ LEAVE:'Leave', TRAVEL:'Official travel', LOCATOR:'Locator slip', EARLY:'Early out', WELLNESS:'Wellness leave' })[q.type] || q.type })))
+    .sort((a,b) => String(a.d).localeCompare(String(b.d)));
+  const noTap = days.filter(d => dow(d)!==0 && dow(d)!==6 && d < todayPH() && !(D.logs||[]).some(l => l.date===d && (l.amIn||l.pmIn)));
+  return `<aside class="dtrside"><h4>\u{1F4C5} My whereabouts, ${esc(monthName(D.month))}</h4><small>From the TALA calendar. Shown only here, not printed.</small>
+    <ul>${items.map(x => `<li><b>${esc(dShort(x.d).replace(/, \d{4}$/,''))}</b> ${esc(x.t)}</li>`).join('') || '<li class="hint">Nothing in the calendar this month.</li>'}</ul>
+    ${noTap.length?`<small><b>School days with no Time in:</b> ${noTap.map(d => esc(dShort(d).replace(/, \d{4}$/,''))).join(', ')}</small>`:''}</aside>`;
+}
+function dtrCellOpen(day, part){
+  const D = DTR.d, r = dtrCalc(D, 'final').rows[day], e = (D.edits||{})[day+'|'+part], nm = Object.fromEntries(DTR_PARTS)[part], head = stfHead();
+  stfModal(`<h3>Correct the DTR</h3><p class="sub">${esc(D.person.name)} · ${esc(fmtLong(r.date))} (${DTR_WK[r.w]}) · ${esc(nm)}</p>
+    <p>Original from TALA: <b>${esc(r['o_'+part] || 'Blank (no tap)')}</b>${e?`<br>Edited to: <b>${esc(e.v||'Blank')}</b> by ${esc(e.by||'')}, ${esc(dTime(e.on))}`:''}</p>
+    <div class="stfg2"><div class="field"><label for="dtV">Time</label><input type="time" id="dtV" value="${esc(r[part]||'')}"><small class="hint">Leave it empty to make it blank.</small></div>
+      <div class="field"><label for="dtW">Reason ${head?'(optional for you)':''}</label><input id="dtW" maxlength="200" value="${esc(e?e.why:'')}" placeholder="Example: Forgot to tap Time out"></div></div>
+    <p class="err" id="dtErr"></p><div class="modal-actions">${e?`<button class="linkbtn" style="margin-right:auto" onclick="dtrCellSave(${day},'${part}',true)">Go back to the original</button>`:''}<button class="btn ghost" onclick="closeModal('stfModal')">Cancel</button><button class="btn" onclick="dtrCellSave(${day},'${part}')">Save</button></div>`);
+}
+async function dtrCellSave(day, part, back){
+  const D = DTR.d, v = back ? (dtrCalc(D,'orig').rows[day][part]||'') : $('dtV').value, why = back ? 'Back to the original' : $('dtW').value.trim();
+  if (!back && !why && !stfHead()) return $('dtErr').textContent = 'Write the reason for the change.';
+  try{ loading(true,'Saving'); DTR.d = await api('dtrEdit', { month:D.month, email:D.person.email, day, part, value:v, why }); loading(false); closeModal('stfModal'); dtrDraw(); toast('Saved. The totals are computed again.'); }
+  catch(e){ loading(false); handleErr(e, 'dtErr'); }
+}
+async function dtrLockNow(lock){
+  const D = DTR.d; if (lock && !confirm((stfHead() ? 'Lock this DTR as final?' : 'Lock your DTR as final? After locking, it can no longer be edited.'))) return;
+  try{ loading(true); DTR.d = await api('dtrLock', { month:D.month, email:D.person.email, lock }); loading(false); if (stfAll()) DTR.list = await api('dtrList', { month:DTR.month }); dtrDraw(); toast(lock ? 'Locked as final.' : 'Unlocked.'); }catch(e){ loading(false); handleErr(e); }
+}
+async function dtrEditSwitch(on){ try{ loading(true); const s = await api('dtrSet', { edit:on }); loading(false); if (DTR.list) DTR.list.set = s; if (DTR.d) DTR.d.set = s; dtrDraw(); toast(on ? 'Editing is ON. Personnel can correct their own DTR and must write the reason.' : 'Editing is OFF. Personnel can only view and print.'); }catch(e){ loading(false); handleErr(e); } }
+function dtrSetOpen(){ const S = (DTR.list||{}).set || {}, A = (STF.data||{}).aralHours || { in:'14:40', out:'15:30' };
+  stfModal(`<h3>DTR settings</h3><div class="field"><label for="dsP">Who verifies the School Head's DTR</label><input id="dsP" value="${esc(S.psds||'')}"></div><div class="field"><label for="dsR">Position</label><input id="dsR" value="${esc(S.psdsRole||'')}"></div>
+    <h4 class="stfgrp">ARAL session time (official hours of the Regular ARAL Tutors)</h4><div class="stfg2"><div class="field"><label for="dsI">Start</label><input type="time" id="dsI" value="${esc(A.in)}"></div><div class="field"><label for="dsO">End</label><input type="time" id="dsO" value="${esc(A.out)}"></div></div>
+    <p class="err" id="dsErr"></p><div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Cancel</button><button class="btn" onclick="dtrSetSave()">Save</button></div>`); }
+async function dtrSetSave(){ try{ loading(true); const s = await api('dtrSet', { psds:$('dsP').value, psdsRole:$('dsR').value }); const a = await api('aralHoursSet', { in:$('dsI').value, out:$('dsO').value }); loading(false);
+  if (DTR.list) DTR.list.set = s; if (STF.data) STF.data.aralHours = a; closeModal('stfModal'); stfDtr(); toast('Saved.'); }catch(e){ loading(false); handleErr(e, 'dsErr'); } }
+// Printing: A4 portrait, margins 2.5 cm top and bottom, 1.9 cm left and right, centered. No "Generated by TALA" on the DTR.
+function dtrPrint(ver){
+  const D = DTR.d; if (!D) return;
+  if (ver==='orig' && stfRole()==='admin' && !D.self) return toast('The original can be viewed but not printed.');
+  const pages = ver==='edit' ? [dtrSheet(D, 'final', false), `<div class="dtrnote">EDITED PARTS, for checking only.</div>${dtrSheet(D, 'edit', false)}`, dtrChanges(D)] : [dtrSheet(D, ver, false)];
+  $('printArea').innerHTML = `<div class="dtrprint">${pages.map(h => `<div class="dtrpage">${h}</div>`).join('')}</div>`;
+  setTimeout(() => window.print(), 250);
+}
+
+/* ----- Daily Time Record Logbook: printed 4 times on the same paper. Each printing has its own box. ----- */
+const LB = { date:'', d:null };
+async function stfLb(){
+  if (!LB.date) LB.date = todayPH();
+  $('stfBody').innerHTML = `<div class="pirload"><div class="pirdots"><i></i><i></i><i></i></div><b>Opening the logbook</b></div>`;
+  try{ LB.d = await api('logbookLoad', { date:LB.date }); LB.err = ''; }catch(e){ LB.d = null; LB.err = friendly(e.message); }
+  lbDraw();
+}
+function lbHours(p){ const S = STF.data || {}; if (p.tutor==='Regular'){ const a = S.aralHours || { in:'14:40', out:'15:30' }; return { pmIn:a.in, pmOut:a.out }; } return (p.role==='head' || p.role==='admin') ? (S.office || STF_OFFICE) : (S.hours || {}); }
+function lbRows(){
+  const D = LB.d, log = e => D.logs.find(l => l.email===e) || {}, ppl = D.people.slice();
+  let order = (D.book && D.book.rows) || null;
+  if (!order){ const withIn = ppl.filter(p => log(p.email).amIn).sort((a,b) => String(log(a.email).amIn).localeCompare(String(log(b.email).amIn)));
+    order = withIn.concat(ppl.filter(p => !log(p.email).amIn).sort((a,b) => a.name.localeCompare(b.name))).map(p => p.email); }
+  else ppl.filter(p => order.indexOf(p.email) < 0).sort((a,b) => a.name.localeCompare(b.name)).forEach(p => order.push(p.email));
+  return order.map(e => ppl.find(p => p.email===e)).filter(Boolean).map(p => { const L = log(p.email), H = lbHours(p);
+    const late = (L.amIn && H.amIn && dtrM(L.amIn) > dtrM(H.amIn)) || (!L.amIn && L.pmIn && H.pmIn && dtrM(L.pmIn) > dtrM(H.pmIn));
+    const rq = { LEAVE:'On leave', TRAVEL:'Official travel', LOCATOR:'Official business', EARLY:'Early out', WELLNESS:'Wellness leave' }[p.req] || '';
+    const any = L.amIn || L.amOut || L.pmIn || L.pmOut;
+    const rem = L.status && L.status!=='Present' ? L.status : rq ? rq : late ? 'Late' : p.tutor==='Regular' && any ? 'ARAL tutor' : (!any && LB.date < todayPH() ? 'Absent' : '');
+    return { p, L, rem }; });
+}
+// A different quote every day: the day number of the year picks the quote, so no two days in a row share one
+function lbQuote(d){ if (!QUOTES || !QUOTES.length) return ''; const n = Math.floor(Date.UTC(+d.slice(0,4), +d.slice(5,7)-1, +d.slice(8,10)) / 86400000); return QUOTES[((n + 3) % QUOTES.length + QUOTES.length) % QUOTES.length]; }   // a different quote each day, all 70 before any repeats
+function lbT(t){ return t ? time12(t) : ''; }
+function lbSig(r, k){ return r.L[k] && r.p.sig ? `<div class="lbsg"><img src="${r.p.sig}" alt=""></div>` : ''; }
+function lbBlock(kind, R){
+  const n = 15, rows = R.concat(Array(Math.max(0, n - R.length)).fill(null));
+  if (kind===1) return `<table class="lbt"><colgroup><col style="width:8mm"><col style="width:47mm"><col style="width:19mm"><col style="width:27mm"></colgroup><thead><tr><th colspan="4">MORNING TIME IN</th></tr><tr><th>No.</th><th>Teacher's Name</th><th>Time In</th><th>Signature</th></tr></thead><tbody>${rows.map((r,i) => `<tr><td>${i+1}</td><td class="nm">${r?esc(String(r.p.name).toUpperCase()):''}</td><td>${r?lbT(r.L.amIn):''}</td><td>${r?lbSig(r,'amIn'):''}</td></tr>`).join('')}</tbody></table>`;
+  if (kind===2 || kind===3){ const k = kind===2 ? 'amOut' : 'pmIn';
+    return `<table class="lbt"><colgroup><col style="width:19mm"><col style="width:27mm"></colgroup><thead><tr><th colspan="2">${kind===2?'MORNING TIME OUT':'AFTERNOON TIME IN'}</th></tr><tr><th>Time ${kind===2?'Out':'In'}</th><th>Signature</th></tr></thead><tbody>${rows.map(r => `<tr><td>${r?lbT(r.L[k]):''}</td><td>${r?lbSig(r,k):''}</td></tr>`).join('')}</tbody></table>`; }
+  return `<table class="lbt"><colgroup><col style="width:19mm"><col style="width:27mm"><col style="width:26mm"></colgroup><thead><tr><th colspan="3">AFTERNOON TIME OUT</th></tr><tr><th>Time Out</th><th>Signature</th><th>Remarks</th></tr></thead><tbody>${rows.map(r => `<tr><td>${r?lbT(r.L.pmOut):''}</td><td>${r?lbSig(r,'pmOut'):''}</td><td class="rm">${r?esc(r.rem):''}</td></tr>`).join('')}</tbody></table>`;
+}
+const LB_X = { 1:10, 2:115, 3:165, 4:215 };   // mm from the left edge, with a 4 mm gap between the boxes
+function lbPage(show){
+  const R = lbRows(), d = LB.date, quote = lbQuote(d);
+  const top = show.indexOf(1) > -1 ? `<div class="lbhd"><img src="${LOGO}" alt=""><small class="rp">Republic of the Philippines</small><b class="de">Department of Education</b><small>REGION IX</small><small class="sd">SCHOOLS DIVISION OF ZAMBOANGA SIBUGAY</small><hr>
+    <b class="fo">FIELD OFFICE OF IMELDA</b><small class="ad">Imelda, Zamboanga Sibugay</small><b class="sc">125592, BALUYAN ELEMENTARY SCHOOL</b><small class="ad">School Year ${esc(String(((DATA||{}).settings||{}).sy || '2026 to 2027').replace(/^\s*(SY|School Year)\s*/i,'').replace(/\s*[-\u2013]\s*/, ' to '))}</small></div>
+    <div class="lbtt"><b>DAILY TIME RECORD LOGBOOK    ${esc(monthName(d.slice(0,7)).toUpperCase())}</b><span>${esc(new Date(d+'T00:00:00').toLocaleDateString('en-US',{ weekday:'long' }).toUpperCase())}  |  ${esc(fmtLong(d))}</span></div>
+    <div class="lbft"><i>“${esc(quote)}”</i><br><span>Times are from the TALA Time in and Time out with photo. Signatures are the e-signatures saved in TALA. Observe <b>WATCH</b>: <b>W</b>e <b>A</b>dvocate <b>T</b>ime <b>C</b>onsciousness and <b>H</b>onesty.</span><br><small>Generated by TALA on ${esc(fmtLong(todayPH()))}</small></div>` : '';
+  return `<div class="lbpg">${top}${show.map(k => `<div class="lbbk" style="left:${LB_X[k]}mm">${lbBlock(k, R)}</div>`).join('')}</div>`;
+}
+function lbDraw(){
+  const el = $('stfBody'), D = LB.d;
+  const bar = `<div class="dtrbar"><label class="aralday">Day <input type="date" value="${esc(LB.date)}" max="${esc(todayPH())}" onchange="LB.date=this.value||todayPH();stfLb()"></label></div>`;
+  if (!D){ el.innerHTML = bar + `<div class="empty">${esc(LB.err||'')}</div>`; return; }
+  const P = (D.book||{}).printed || {}, noSig = D.people.filter(p => !p.sig).map(p => p.name);
+  const b = (k, t, x) => `<button class="abtn ${P[k]?'':'main'}" onclick="lbPrint(${k})"><span class="abico">\u{1F5A8}</span><b>${k}. ${t}</b><small>${P[k] ? '✔ Printed '+esc(dTime(P[k].on))+(P[k].by?' by '+esc(P[k].by):'') : x}</small></button>`;
+  el.innerHTML = bar + `<p class="hint">Print 4 times on the same A4 paper. Each printing has its own box, so nothing prints over the earlier part. Put the paper back the same side up and the same edge first, and use the same printer each time.</p>
+    <div class="abtns">${b(1,'Morning Time in','Header, names, and the AM Time in. Print after the morning time in.')}${b(2,'Morning Time out','Only the AM Time out box. Print after the lunch break starts.')}${b(3,'Afternoon Time in','Only the PM Time in box. Print before 1:00 PM is over.')}${b(4,'Afternoon Time out','Only the PM Time out box and the remarks. Print at the end of the day.')}</div>
+    ${noSig.length?`<p class="hint">⚠ No e-signature saved yet: ${esc(noSig.join(', '))}. Ask them to save one in TALA, My e-signature.</p>`:''}
+    <h4 class="stfgrp">How the paper looks after the 4 printings</h4><div class="lbprev"><div class="lbscale">${lbPage([1,2,3,4])}</div></div>`;
+}
+async function lbPrint(k){
+  const P = ((LB.d||{}).book||{}).printed || {};
+  if (k > 1 && !P[1] && !confirm('Printing 1 (the header and the names) is not yet printed. Print this one anyway?')) return;
+  if (P[k] && !confirm('This printing was already done. Print it again?')) return;
+  const rows = lbRows().map(r => r.p.email);
+  $('printArea').innerHTML = `<div class="lbprint">${lbPage([k])}</div>`;
+  setTimeout(() => window.print(), 300);
+  try{ const d = await api('logbookMark', { date:LB.date, pass:k, rows }); LB.d.book = d; setTimeout(() => { if (ATT.view==='staff' && STF.tab==='lb') lbDraw(); }, 800); }catch(e){}
+}
+
 /* ----- New school year: clean slate (LPT and PPT files and records are kept) ----- */
 function openNewSY(){ $('menu').classList.remove('open'); $('nsErr').textContent=''; $('nsConfirm').value=''; openModal('nsModal'); }
 async function newSchoolYear(){
@@ -9923,7 +10196,7 @@ async function openAccounts(){
 function renderAcc(){
   $('accBody').innerHTML = `<div class="table-wrap"><table><thead><tr><th>Name and email</th><th>Role and position</th><th>PIN</th><th>PIN status</th><th>Last sign in</th><th>Sign ins</th><th>Account</th><th>Notifications</th><th>Test account</th><th></th></tr></thead><tbody>${
     ACC.map(a=>`<tr><td><b>${esc(a.name)}</b><small>${esc(a.email)}</small><button class="linkbtn" style="font-size:12.5px;margin-top:4px" onclick="openEditAcc('${esc(a.email)}')">Edit name, position, and profile</button></td>
-      <td>${a.role==='head'?'School Head':a.role==='admin'?'Administrative Officer':a.aral==='only'?'ARAL tutor only':a.aral==='both'?'Teacher and ARAL tutor':'Teacher'}<small>${esc(a.position||'No position set')}</small></td>
+      <td>${a.role==='head'?'School Head':a.role==='admin'?'Administrative Officer':a.aral==='only'?'ARAL tutor only, '+(a.tutor==='Regular'?'Regular Tutor':'GIP Tutor'):a.aral==='both'?'Teacher and ARAL tutor':'Teacher'}<small>${esc(a.position||'No position set')}</small></td>
       <td style="white-space:nowrap"><span class="pinv" id="pin_${esc(a.email).replace(/[^a-z0-9]/gi,'_')}" data-pin="${esc(a.pin)}">••••</span> <button class="linkbtn" style="font-size:12.5px" onclick="togglePin(this)">Show</button></td>
       <td><span class="${a.pinStatus.indexOf('Default')===0?'mk-wait':'mk-ok'}">${esc(a.pinStatus)}</span>${a.pinChangedOn?`<small>Changed ${esc(dTime(a.pinChangedOn))}</small>`:''}</td>
       <td>${a.lastSignIn?esc(dTime(a.lastSignIn)):'<span class="mk-wait">Never</span>'}</td>
@@ -9941,7 +10214,7 @@ const POSITIONS = ['Teacher I','Teacher II','Teacher III','Teacher IV','Teacher 
 function openEditAcc(email){
   const a = ACC.find(x=>x.email===email);
   $('eaEmail').textContent = a.email; $('eaName').value = a.name; $('eaPos').value = a.position||''; $('eaGrade').value = a.grade||'';
-  $('eaAral').value = a.aral||''; $('eaAralF').style.display = a.role==='teacher' ? '' : 'none';
+  $('eaAral').value = a.aral==='only' ? 'only|'+(a.tutor||'GIP') : (a.aral||''); $('eaAralF').style.display = a.role==='teacher' ? '' : 'none';
   $('posList').innerHTML = POSITIONS.map(p=>`<option value="${p}">`).join(''); $('eaErr').textContent=''; openModal('editAccModal');
 }
 async function saveEditAcc(){
