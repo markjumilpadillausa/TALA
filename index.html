@@ -1174,6 +1174,8 @@ i.req{color:#c62828;font-style:normal}
   <div class="menu" id="menu">
     <div class="who" id="menuWho"></div>
     <button id="menuAcc" onclick="openAccounts()" style="display:none">Teacher accounts</button>
+    <button onclick="$('menu').classList.remove('open');PRF.who='';PRF.tab='me';openFeature('prof')">My profile and 201 File</button>
+    <button onclick="$('menu').classList.remove('open');openFeature('memo')">Memos and advisories</button>
     <button onclick="$('menu').classList.remove('open');openSig()">My e-signature</button>
     <button id="menuMine" onclick="openPir('me')" style="display:none">My status presentation</button>
     <button onclick="installApp()">Install TALA app</button>
