@@ -1147,6 +1147,39 @@ i.req{color:#c62828;font-style:normal}
   .pft,.f2pt{width:100%;border-collapse:collapse;font-size:10.5px}.pft td,.pft th,.f2pt td,.f2pt th{border:1px solid #000;padding:3px 5px;text-align:left;vertical-align:top}.pft th.pg{background:#e6e6e6}.pft td:first-child{width:38%}.f2pt th{background:#e6e6e6}
   .f2page{page-break-after:always;break-after:page}.f2page:last-child{page-break-after:auto;break-after:auto}.f2ph{text-align:center;margin-bottom:8px}.f2ph b{display:block;font-size:14px}.f2ph span{font-size:11px}
   .f2foot,.pfpfoot{font-size:9.5px;color:#444;margin-top:6px} .f2pt a{color:#000;text-decoration:none} }
+
+/* 201 File library */
+.avatar.hasimg{overflow:hidden;padding:0;background:#fff}.avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:block}
+.pfnote{background:#eef6ee;border-radius:10px;padding:8px 12px;margin:10px 0 0;font-size:13.5px;color:#1d5a30}
+.shelf{margin-top:18px}.shelf h4{margin:0 0 10px;color:var(--brandtxt);font-size:15px;border-bottom:3px solid #c9a46a;padding-bottom:6px}
+.shelfrow{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:16px 14px;align-items:start}
+.bk{display:flex;flex-direction:column;gap:6px;min-width:0}
+.bkc{position:relative;aspect-ratio:3/4;border:1px solid var(--line);border-radius:4px 10px 10px 4px;background:#fff;overflow:hidden;cursor:pointer;padding:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;box-shadow:inset 6px 0 0 rgba(0,0,0,.07),0 6px 14px rgba(0,0,0,.12);transition:transform .15s}
+.bkc:hover{transform:translateY(-3px)}.bkc img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+.bkico{font-size:42px}.bkst{position:absolute;left:6px;bottom:6px}.bkst .pfst{font-size:11.5px;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.bk.redo .bkc{outline:3px solid #e57373}
+.bk.bkempty .bkc,.bk.more .bkc{background:repeating-linear-gradient(135deg,var(--bg),var(--bg) 8px,var(--card) 8px,var(--card) 16px);border:2px dashed var(--line);box-shadow:none;color:var(--muted);font-weight:600;font-size:13px}
+.bk.more .bkc{aspect-ratio:auto;min-height:70px}.bk.na{opacity:.6}.bkplus{font-size:30px;line-height:1}
+.bkt{font-size:13px;line-height:1.3}.bkd{margin:0;display:grid;grid-template-columns:auto 1fr;gap:1px 8px;font-size:12px;background:var(--bg);border-radius:8px;padding:6px 8px}.bkd dt{color:var(--muted)}.bkd dd{margin:0;font-weight:700;word-break:break-word}
+.bka{display:flex;gap:6px;flex-wrap:wrap}
+.modal.xwide{max-width:1040px}.f2card{display:grid;grid-template-columns:1.3fr 1fr;gap:16px}.f2cv .fview{height:68vh;margin:0}@media (max-width:820px){.f2card{grid-template-columns:1fr}.f2cv .fview{height:50vh}}
+.f2dr{display:grid;grid-template-columns:1fr 1.4fr auto;gap:6px;margin-bottom:6px}.f2dr input{font:inherit;font-size:13.5px;padding:7px 9px;border:1.5px solid var(--line);border-radius:9px;background:var(--card);color:var(--ink);min-width:0}
+.f2dr.ro{grid-template-columns:1fr 1.4fr;border-bottom:1px dashed var(--line);padding:4px 0}.f2dr.ro span{color:var(--muted);font-size:13px}
+.pfanc{margin-top:12px}.pfarow{display:flex;gap:6px;margin:6px 0}.pfarow input{flex:1;font:inherit;padding:9px 10px;border:1.5px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink)}
+.pfcp{margin-top:14px;border-top:1px dashed var(--line);padding-top:10px}.pfcph{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.cpt tr.cpno td{color:var(--muted);text-decoration:line-through}.cptot{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px}.cptot>div{background:var(--bg);border-radius:10px;padding:8px 12px;flex:1;min-width:200px}.cptot small{display:block;color:var(--muted)}
+.cpok{color:#1d6b35;font-weight:600}.cpbad{color:#b3261e;font-weight:600}.cpe input{font:inherit;font-size:13px;padding:6px;border:1px solid var(--line);border-radius:7px;width:100%;min-width:60px;box-sizing:border-box}.cpe input[type=checkbox]{width:auto;min-width:0}
+@media print{ .f2page.narr h3{margin:6px 0 2px;font-size:15px}.f2page.narr .nsub{margin:0 0 10px;font-size:11px;color:#333}.f2page.narr .ntext{font-size:12.5px;line-height:1.6;text-align:justify} }
+
+.mcw .pff textarea{resize:vertical}.mch{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.mcquick{background:var(--bg);border-radius:10px;padding:8px 12px;margin:6px 0 10px}.mcquick summary{cursor:pointer;font-weight:600}.mcquick textarea{width:100%;box-sizing:border-box;margin:6px 0;font:inherit;padding:8px;border:1.5px solid var(--line);border-radius:10px}
+.mcacts{flex-wrap:wrap;gap:8px;justify-content:flex-end;position:sticky;bottom:-16px;background:var(--card);padding:10px 0 4px;border-top:1px solid var(--line)}
+.mcchk{border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;margin:12px 0;max-height:320px;overflow:auto}.mcchk-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.mcfix{display:flex;gap:8px;align-items:flex-start;padding:7px 0;border-top:1px dashed var(--line);flex-wrap:wrap}.mcfix>div{flex:1;min-width:200px}.mcfix p{margin:2px 0;font-size:13.5px}.mcfix small{color:var(--muted)}
+.mctag{font-size:11px;font-weight:700;border-radius:999px;padding:2px 8px;background:#e8eef8;color:#2c4f7c}.mctag.Spelling{background:#fde6e4;color:#b3261e}.mctag.Format{background:#fff4d6;color:#8a5a00}
+.mcdiff s{color:#b3261e}.mcdiff b{color:#1d6b35}.mcsure{display:inline-flex;gap:8px;align-items:center;flex-wrap:wrap;color:var(--ink);font-weight:600}.mmdraft{border-style:dashed}
+
+.pff .check,.mepick .check{display:flex;flex-direction:row;align-items:center;gap:8px;margin:4px 0}.pff .check input,.mepick input{width:auto!important;flex:none;padding:0}
 </style>
 </head>
 <body>
@@ -1870,8 +1903,8 @@ i.req{color:#c62828;font-style:normal}
 
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
-const MIN_SERVER = '7.8'; // oldest Code.gs this page works with
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'7.8', date:'October 22, 2026' } };
+const MIN_SERVER = '8.0'; // oldest Code.gs this page works with
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'8.0', date:'October 23, 2026' } };
 function verLine(server){
   const old = server && (server.indexOf('older') > -1 || parseFloat(server) < parseFloat(MIN_SERVER));
   const s = server ? ' Server '+server+('.') : '';
@@ -2241,7 +2274,7 @@ function render(){
     : role==='teacher' ? 'Your weekly Lesson Plans for Teachers and PowerPoint Presentations.'
     : 'Public view of weekly submissions. Teachers and the School Head sign in for more tools.';
   if (USER){
-    $('avatar').textContent = (USER.name||USER.email).trim().charAt(0).toUpperCase();
+    $('avatar').textContent = (USER.name||USER.email).trim().charAt(0).toUpperCase(); try{ avatarPhoto(); }catch(e){}
     $('userFirst').textContent = (USER.name||USER.email).split(' ')[0];
     $('menuWho').innerHTML = `<b>${esc(USER.name)}</b><br>${esc(USER.email)}`;
   }
@@ -2280,9 +2313,8 @@ const PRF_F = [
     ['fund','Fund source','sel',0,['','National (DepEd)','Local School Board','LGU','PTA','Other']],
     ['natApp','Nature of appointment','sel',0,['','Original','Promotion','Transfer','Reappointment','Reemployment','Reclassification']],
     ['origDate','Date of original appointment','date'],['curDate','Date of appointment to the current position','date'],['schoolDate','Date assigned to this school','date']] },
-  { g:'School Form 7 (SF7)', deg:true, f:[['elig','Eligibility','sel',0,['','LET (Licensure Examination for Teachers)','PBET','Career Service Professional','Career Service Subprofessional','RA 1080','PD 907 (Honor graduate)','None yet','Other']],
-    ['eligOther','If other, the eligibility','text'],['designation','Designation','text'],['ancillary','Ancillary assignments','text'],['advisory','Advisory class (grade and section)','text'],
-    ['subjects','Subjects and grade levels taught','text'],['minutes','Total actual teaching minutes per week','number']] },
+  { g:'School Form 7 (SF7)', deg:true, anc:true, cp:true, f:[['elig','Eligibility','sel',0,['','LET (Licensure Examination for Teachers)','PBET','Career Service Professional','Career Service Subprofessional','RA 1080','PD 907 (Honor graduate)','None yet','Other']],
+    ['eligOther','If other, the eligibility','text'],['designation','Designation','text'],['advisory','Advisory class (grade and section)','text']] },
   { g:'In case of emergency', f:[['ecName','Contact person','text'],['ecRel','Relationship','sel',0,['','Spouse','Parent','Child','Brother','Sister','Relative','Friend','Other']],['ecNo','Mobile number','tel']] }
 ];
 const PRF_DEG = ["Bachelor's degree","Master's degree","Doctorate degree"];
@@ -2318,10 +2350,12 @@ async function prfFetch(){
   prfCount();
 }
 function prfCount(){ if (!USER || !PRF.f) return; const D = PRF.f.docs||[];
-  PRF.dot = prfHead() ? D.filter(x => x.status==='For checking').length : D.filter(x => x.email===USER.email && x.status==='Redo').length; drawSide(); }
+  if (prfHead()){ if (PRF.tab==='check' || PRF.tab==='all' || PRF.tab==='track') PRF.dot = D.filter(x => x.status==='For checking' && x.code!=='CP').length; }
+  else { PRF.todo = prfTodoLocal(); PRF.dot = prfTodoCount(); }
+  drawSide(); }
 function prfDraw(){
   const all = prfAll(), head = prfHead(), mine = PRF.who===USER.email, A = (PRF.p||{}).account || {};
-  const tabs = [['me', mine ? 'My profile' : 'Profile'], ['file', mine ? 'My 201 File' : '201 File']];
+  const tabs = [['me', mine ? 'My Profile' : 'Profile'], ['file', mine ? 'My 201 File' : '201 File']];
   if (all) tabs.push(['all','All personnel'], ['check', head ? '201 to check' : '201 Files'], ['track','Upload tracking']);
   if (!tabs.some(t => t[0]===PRF.tab)) PRF.tab = 'me';
   const left = prfDaysLeft(), dl = (PRF.f && PRF.f.deadline) || '2026-10-30';
@@ -2357,8 +2391,10 @@ function prfDegHtml(v, dis){ const D = Array.isArray(v.degrees) && v.degrees.len
       ${dis ? '' : `<button type="button" class="btn ghost small" onclick="prfDegDel(${i})" aria-label="Remove">✕</button>`}</div>`).join('')}
     ${dis ? '' : '<button type="button" class="btn ghost small" onclick="prfDegAdd()">+ Add a degree</button>'}</div>`; }
 function prfCollect(){ const v = {}; PRF_F.forEach(g => g.f.forEach(f => { const el = $('pf_'+f[0]); if (el) v[f[0]] = el.value.trim(); }));
+  v.ancillary = [...document.querySelectorAll('.an_in')].map(x => x.value.trim()).filter(Boolean);
+  const cpx = cpDoc(PRF.who), cpr = cpx ? ((cpx.details||{}).rows||[]) : []; if (cpr.length){ const T = cpTotals(cpr); v.subjects = T.subjects.join('; '); v.minutes = String(T.minutes); } else { const o = (((PRF.p||{}).profile||{}).data)||{}; if (o.subjects) v.subjects = o.subjects; if (o.minutes) v.minutes = o.minutes; }
   v.degrees = [...document.querySelectorAll('.pfdrow')].map(r => ({ level:r.querySelector('.dg_level').value, course:r.querySelector('.dg_course').value.trim(), major:r.querySelector('.dg_major').value.trim(), school:r.querySelector('.dg_school').value.trim(), year:r.querySelector('.dg_year').value.trim(), status:r.querySelector('.dg_status').value })).filter(d => d.level || d.course);
-  let n = 0, t = 0; PRF_F.forEach(g => g.f.forEach(f => { if (f[0]==='ipGroup' || f[0]==='eligOther') return; t++; if (v[f[0]]) n++; })); t++; if (v.degrees.length) n++;
+  let n = 0, t = 0; PRF_F.forEach(g => g.f.forEach(f => { if (f[0]==='ipGroup' || f[0]==='eligOther') return; t++; if (v[f[0]]) n++; })); t += 3; if (v.degrees.length) n++; if (v.ancillary.length) n++; if (v.minutes) n++;
   v._filled = Math.round(n * 100 / t); return v; }
 function prfDegAdd(){ PRF.draft = prfCollect(); PRF.draft.degrees.push({}); prfForm(); }
 function prfDegDel(i){ PRF.draft = prfCollect(); const r = [...document.querySelectorAll('.pfdrow')]; PRF.draft.degrees = r.map((x, j) => j).filter(j => j!==i).map(j => PRF.draft.degrees[j]).filter(Boolean); prfForm(); }
@@ -2368,7 +2404,8 @@ function prfForm(){
   $('prfBody').innerHTML = `<div class="hcard pfcard"><div class="pftop"><div class="pfphoto">${photo ? `<img src="${photo}" alt="">` : '<span>No photo</span>'}${dis ? '' : '<label class="btn ghost small">📷 Photo<input type="file" accept="image/jpeg,image/png" hidden onchange="prfPhoto(this)"></label>'}</div>
       <div style="flex:1;min-width:200px"><div class="pfsth">${st}${P && P.updated ? `<small>Last saved ${esc(dtTxt(P.updated))}</small>` : ''}</div>
       <div class="pfbar"><i style="width:${(P && P.data && P.data._filled) || 0}%"></i></div><small class="hint">${(P && P.data && P.data._filled) || 0}% complete. Fields with <i class="req">*</i> are needed before locking.</small></div></div>
-    ${PRF_F.map(g => `<fieldset class="pfg"><legend>${esc(g.g)}</legend><div class="pfgrid">${g.f.map(f => prfField(f, v, dis)).join('')}</div>${g.deg ? prfDegHtml(v, dis) : ''}</fieldset>`).join('')}
+    ${PRF.who===USER.email && !locked ? `<p class="pfnote">You can save your profile now even if some details are not available yet. Add them when you have them, on or before ${esc(dShort((PRF.f && PRF.f.deadline) || '2026-10-30'))}.</p>` : ''}
+    ${PRF_F.map(g => `<fieldset class="pfg"><legend>${esc(g.g)}</legend><div class="pfgrid">${g.f.map(f => prfField(f, v, dis)).join('')}</div>${g.deg ? prfDegHtml(v, dis) : ''}${g.anc ? prfAncHtml(v, dis) : ''}${g.cp ? prfCpHtml() : ''}</fieldset>`).join('')}
     <p class="err" id="prfErr"></p>
     <div class="pfacts">${!can ? '' : locked && !prfHead() ? '<button class="btn" onclick="prfSave(\'unlock\')">🔓 Unlock to update</button>' :
       `<button class="btn ghost" onclick="prfSave('draft')">Save as draft</button><button class="btn" onclick="prfSave('lock')">🔒 Save and lock</button>${locked ? '<button class="btn ghost" onclick="prfSave(\'unlock\')">🔓 Unlock</button>' : ''}`}
@@ -2383,6 +2420,7 @@ async function prfSave(mode){
   document.querySelectorAll('.pfacts .btn').forEach(b => b.disabled = true);
   try{ PRF.p = await api('prfSave', body); PRF.draft = null; PRF.photo = undefined;
     if (PRF.who===USER.email && mode==='lock'){ const a = PRF.p.account||{}; if (a.name) USER.name = a.name; if (a.position) USER.position = a.position; }
+    if (PRF.who===USER.email && body.photo !== undefined) avatarPhoto(body.photo || '');
     if (prfAll()){ try{ PRF.list = (await api('prfLoad')).list; }catch(e){} }
     toast(mode==='lock' ? 'Profile saved and locked.' : mode==='unlock' ? 'Unlocked. You can update your profile now.' : 'Saved as draft.'); prfDraw(); }
   catch(e){ if (mode!=='unlock') PRF.draft = body.data; handleErr(e, 'prfErr'); document.querySelectorAll('.pfacts .btn').forEach(b => b.disabled = false); }
@@ -2390,6 +2428,7 @@ async function prfSave(mode){
 function prfPrint(){
   const P = PRF.p.profile, A = PRF.p.account || {}, v = (P && P.data) || {};
   const rows = PRF_F.map(g => `<tr><th colspan="2" class="pg">${esc(g.g)}</th></tr>` + g.f.map(f => `<tr><td>${esc(f[1])}</td><td>${esc(v[f[0]]||'')}</td></tr>`).join('')
+    + (g.anc ? `<tr><td>Ancillary assignments</td><td>${esc(prfAncList(v).join('; '))}</td></tr>` : '') + (g.cp ? `<tr><td>Subjects and grade levels taught</td><td>${esc(v.subjects||'')}</td></tr><tr><td>Total actual teaching minutes per week</td><td>${esc(v.minutes||'')}</td></tr>` : '')
     + (g.deg ? `<tr><td>Degrees</td><td>${(v.degrees||[]).map(d => esc([d.level, d.course, d.major ? 'major in '+d.major : '', d.school, d.year, d.status].filter(Boolean).join(', '))).join('<br>')}</td></tr>` : '')).join('');
   $('printArea').innerHTML = `<div class="pfprint"><h2>PERSONNEL PROFILE</h2><p>${esc(A.name||'')} · ${esc(A.position||'')}</p>${P && P.photo ? `<img class="pfpimg" src="${P.photo}" alt="">` : ''}
     <table class="pft">${rows}</table><p class="pfpfoot">Status: ${esc(P ? P.status : 'Not started')}${P && P.lockedOn ? ', locked on '+esc(dtTxt(P.lockedOn)) : ''}. Last saved ${esc(P ? dtTxt(P.updated) : '')}. Printed ${esc(dtTxt(new Date().toLocaleString('sv-SE',{timeZone:'Asia/Manila'})))}.</p></div>`;
@@ -2400,29 +2439,6 @@ function prfPrint(){
 function f201Na(email){ return ((PRF.f && PRF.f.na) || {})[email] || {}; }
 function f201Of(email){ return ((PRF.f && PRF.f.docs) || []).filter(x => x.email===email); }
 function f201Stat(x){ return !x ? '<span class="pfst none">Not yet</span>' : x.status==='Okay' ? '<span class="pfst ok">✔ Okay</span>' : x.status==='Redo' ? '<span class="pfst bad">↺ Redo</span>' : '<span class="pfst draft">For checking</span>'; }
-function f201Mine(){
-  const me = PRF.who, mine = me===USER.email, head = prfHead(), D = f201Of(me), na = f201Na(me), docs = f201Docs();
-  const up = docs.filter(d => D.some(x => x.code===d.code)).length, ok = D.filter(x => x.status==='Okay').length;
-  const need = docs.filter(d => !d.opt && !D.some(x => x.code===d.code)).length;
-  const q = PRF.docQ.toLowerCase();
-  const rows = g => (g[2]||[]).map(d => ({ code:d[0], doc:d[1], opt:!!d[2] })).map(d => { const xs = D.filter(x => x.code===d.code);
-    if (q && !(d.doc.toLowerCase().includes(q) || xs.some(x => (x.keywords||[]).join(' ').toLowerCase().includes(q) || String(x.fileName).toLowerCase().includes(q)))) return '';
-    const isNa = !!na[d.code];
-    return `<div class="f2row ${isNa?'na':''}"><div class="f2h"><b>${esc(d.code)}</b><span>${esc(d.doc)}${d.opt ? ' <small class="hint">(if applicable)</small>' : ''}</span>${isNa ? '<span class="pfst none">Not applicable</span>' : xs.length ? '' : f201Stat(null)}</div>
-      ${xs.map(x => `<div class="f2file"><div class="f2fn">${x.mime==='application/pdf'?'📄':'🖼'} <button class="linkbtn" onclick="f201View('${x.id}')">${esc(x.fileName)}</button> ${f201Stat(x)}</div>
-        <small class="hint">Uploaded ${esc(dtTxt(x.on))}${x.checkedOn ? ' · checked '+esc(dtTxt(x.checkedOn)) : ''}</small>
-        ${x.remark ? `<div class="f2rem">${esc(x.remark)}</div>` : ''}
-        <div class="f2kw">${(x.keywords||[]).map(k => `<span class="kw">${esc(k)}</span>`).join('')}${mine && x.status!=='Okay' || head ? ` <button class="linkbtn" onclick="f201KwEdit('${x.id}')">Edit keywords</button>` : ''}</div>
-        <div class="f2acts">${head && !mine ? `<button class="btn small" onclick="f201Check('${x.id}','Okay')">✔ Okay</button><button class="btn ghost small" onclick="f201Check('${x.id}','Redo')">↺ Redo</button>` : ''}
-          ${mine && x.status!=='Okay' ? `<button class="btn ghost small" onclick="f201Pick('${d.code}','${x.id}')">Upload again</button><button class="btn ghost small" onclick="f201Del('${x.id}')">Remove</button>` : ''}</div></div>`).join('')}
-      ${mine && !isNa ? `<div class="f2acts"><button class="btn small ${xs.length?'ghost':''}" onclick="f201Pick('${d.code}','')">⬆ ${xs.length ? 'Add another file' : 'Upload'}</button>${d.opt && !xs.length ? `<button class="linkbtn" onclick="f201NaSet('${d.code}',1)">Not applicable to me</button>` : ''}</div>` : ''}
-      ${mine && isNa ? `<div class="f2acts"><button class="linkbtn" onclick="f201NaSet('${d.code}',0)">Undo not applicable</button></div>` : ''}</div>`; }).join('');
-  $('prfBody').innerHTML = `<div class="ostats"><div class="ostat static"><span class="oico">📁</span><b>${up}</b><span>Documents uploaded</span></div><div class="ostat static"><span class="oico">✔</span><b>${ok}</b><span>Okay</span></div>
-      <div class="ostat static"><span class="oico">↺</span><b>${D.filter(x => x.status==='Redo').length}</b><span>To redo</span></div><div class="ostat static"><span class="oico">⏳</span><b>${need}</b><span>Required, not yet uploaded</span></div></div>
-    ${mine ? '<p class="hint" style="margin:10px 2px">Upload a PDF or a clear scanned photo (JPG or PNG) of each document. Word files and other editable files are not accepted.</p>' : ''}
-    <div class="f2tools"><input class="f2q" placeholder="🔍 Search documents or keywords" value="${esc(PRF.docQ)}" oninput="PRF.docQ=this.value;clearTimeout(PRF.qt);PRF.qt=setTimeout(()=>{f201Mine();const i=document.querySelector('.f2q');if(i){i.focus();i.setSelectionRange(i.value.length,i.value.length);}},250)">${head && mine ? '<button class="btn ghost small" onclick="f201ListEdit()">Edit the document list</button>' : ''}</div>
-    ${f201List().map(g => { const r = rows(g); return r ? `<fieldset class="pfg"><legend>${esc(g[0])}. ${esc(g[1])}</legend>${r}</fieldset>` : ''; }).join('') || '<div class="empty">No document matches the search.</div>'}`;
-}
 var F201 = { file:null, code:'', id:'' };
 function f201Pick(code, id){ const i = document.createElement('input'); i.type = 'file'; i.accept = 'application/pdf,image/jpeg,image/png'; i.onchange = () => { if (i.files[0]) f201Prep(i.files[0], code, id); }; i.click(); }
 function f201NameOf(){ const A = (PRF.p||{}).account || {}, v = ((PRF.p||{}).profile||{}).data || {}; const cap = s => String(s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^A-Za-z0-9 ]/g,' ').split(/\s+/).filter(Boolean).map(w => w.charAt(0).toUpperCase()+w.slice(1).toLowerCase()).join('');
@@ -2457,13 +2473,14 @@ function f201KwAdd(){ const i = $('f2kwin'), v = i.value.trim(); if (!v) return;
 async function f201Send(){
   const b = $('f2go'); b.disabled = true; $('f2err').textContent = '';
   try{ const f = F201.file, pdf = f.type==='application/pdf';
-    let base64, mime = f.type, name = $('f2name').value.trim().replace(/[\\/:*?"<>|]/g,'');
+    let base64, mime = f.type, name = $('f2name').value.trim().replace(/[\\/:*?"<>|]/g,''); b.textContent = 'Preparing';
+    const look = pdf ? await f201PdfLook(f) : { thumb: await f201ImgThumb(f), text:'' };
     if (pdf) base64 = await readB64(f); else { const url = await lacShrink(f, 2200, 0.82); base64 = url.split(',')[1]; mime = 'image/jpeg'; name = name.replace(/\.(png|jpeg)$/i, '.jpg'); if (!/\.jpg$/i.test(name)) name += '.jpg'; }
     if (pdf && !/\.pdf$/i.test(name)) name += '.pdf';
     const d = f201Docs().find(x => x.code===F201.code) || { doc:F201.code };
     b.textContent = 'Uploading';
-    PRF.f = await api('f201Upload', { doc: { id:F201.id, code:F201.code, doc:d.doc, mime, base64, fileName:name, keywords:F201.kw } });
-    closeModal('stfModal'); toast('Uploaded. Thank you.'); prfCount(); prfDraw(); }
+    PRF.f = await api('f201Upload', { doc: { id:F201.id, code:F201.code, doc:d.doc, mime, base64, fileName:name, keywords:F201.kw, thumb:look.thumb } });
+    closeModal('stfModal'); toast('Uploaded. Reading the details of the file.'); prfCount(); prfDraw(); if (PRF.f.newId) f201Read(PRF.f.newId, look.text); }
   catch(e){ handleErr(e, 'f2err'); b.disabled = false; b.textContent = '⬆ Upload'; }
 }
 function f201KwEdit(id){ const x = ((PRF.f||{}).docs||[]).find(y => y.id===id); if (!x) return; F201 = { kw:(x.keywords||[]).slice(), id };
@@ -2504,16 +2521,18 @@ async function f201ListSave(){
   try{ PRF.f.list = await api('f201List', { list:L }); closeModal('stfModal'); toast('The document list is saved.'); prfDraw(); }catch(e){ handleErr(e, 'f2err'); } }
 
 /* ----- For the School Head and the AO: all personnel, the documents to check, and the upload tracking ----- */
-function f201Sum(email){ const D = f201Of(email), na = f201Na(email), docs = f201Docs();
+function f201Sum(email){ const D = f201Of(email).filter(x => x.code!=='CP'), na = f201Na(email), docs = f201Docs();
   return { up: docs.filter(d => D.some(x => x.code===d.code)).length, req: docs.filter(d => !d.opt).length, reqUp: docs.filter(d => !d.opt && D.some(x => x.code===d.code)).length,
     ok: D.filter(x => x.status==='Okay').length, chk: D.filter(x => x.status==='For checking').length, redo: D.filter(x => x.status==='Redo').length, last: D.map(x => x.on).sort().pop() || '' }; }
 function prfAllTab(){
   const L = PRF.list || [];
-  $('prfBody').innerHTML = `<div class="hcard"><div class="tblwrap"><table class="pftbl"><thead><tr><th>Name</th><th>Profile</th><th>Complete</th><th>201 File</th><th>Last upload</th><th></th></tr></thead><tbody>
+  $('prfBody').innerHTML = `<div class="hcard"><div class="row" style="justify-content:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:8px"><select id="pfnWho"><option value="">Everyone</option>${L.map(p => `<option value="${p.email}">${esc(p.name)}</option>`).join('')}</select>
+      <button class="btn small" onclick="prfNarrPrint($('pfnWho').value)">🖨 Print the data narrative</button><button class="btn ghost small" onclick="f201BundleAll()">⬇ Download all 201 Files (one PDF each)</button></div>
+    <div class="tblwrap"><table class="pftbl"><thead><tr><th>Name</th><th>Profile</th><th>Complete</th><th>201 File</th><th>Last upload</th><th></th></tr></thead><tbody>
     ${L.map(p => { const s = f201Sum(p.email), hide = USER.role==='admin' && p.role==='head';
       return `<tr><td><b>${esc(p.name)}</b><br><small class="hint">${esc(p.position||'')}</small></td><td>${p.status==='Locked' ? `<span class="pfst ok">Locked</span><br><small class="hint">${esc(dtTxt(p.lockedOn))}</small>` : p.status==='Draft' ? `<span class="pfst draft">Draft</span><br><small class="hint">${esc(dtTxt(p.updated))}</small>` : '<span class="pfst none">Not started</span>'}</td>
         <td>${p.filled||0}%</td><td>${hide ? '<small class="hint">Not shown</small>' : `${s.reqUp} of ${s.req} required${s.chk ? `<br><span class="pfst draft">${s.chk} for checking</span>` : ''}${s.redo ? `<br><span class="pfst bad">${s.redo} redo</span>` : ''}`}</td>
-        <td>${hide ? '' : esc(dtTxt(s.last))}</td><td><button class="btn ghost small" onclick="prfOpen('${p.email}')">Open</button></td></tr>`; }).join('')}</tbody></table></div></div>`;
+        <td>${hide ? '' : esc(dtTxt(s.last))}</td><td><button class="btn ghost small" onclick="prfOpen('${p.email}')">Open</button>${hide || !s.up ? '' : ` <button class="btn ghost small" onclick="f201Bundle('${p.email}','print')" title="Print all the 201 files">🖨</button> <button class="btn ghost small" onclick="f201Bundle('${p.email}','download')" title="Download all as one PDF">⬇</button>`}</td></tr>`; }).join('')}</tbody></table></div></div>`;
 }
 function f201CheckTab(){
   const head = prfHead(), D = ((PRF.f||{}).docs||[]).filter(x => head ? x.status==='For checking' : true).sort((a,b) => String(a.on).localeCompare(String(b.on)));
@@ -2549,9 +2568,172 @@ function f201TrackPrint(who){
 var MEMO = { data:null, tab:'Memorandum', q:'', unread:0, popAt:0, opened:{} };
 async function memoLoad(){ MEMO.data = await api('memoLoad'); memoCount(); return MEMO.data; }
 function memoMine(m){ return !!(m.reads||{})[USER.email]; }
-function memoForMe(m){ return m.to==='all' || (Array.isArray(m.to) && m.to.indexOf(USER.email) > -1); }
+function memoForMe(m){ return m.byEmail !== USER.email && (m.to==='all' || (Array.isArray(m.to) && m.to.indexOf(USER.email) > -1)); }
 function memoCount(){ if (!USER || !MEMO.data) return; MEMO.unread = USER.role==='head' ? 0 : (MEMO.data.memos||[]).filter(m => memoForMe(m) && !memoMine(m)).length; drawSide(); }
-function memoTitle(m){ return m.kind + (m.no ? ' No. '+m.no : ''); }
+const MEMO_K = { Memorandum:'Memorandum', Advisory:'Advisory', Order:'Order', Direct:'Direct Memo' };
+function memoTitle(m){ return (MEMO_K[m.kind]||m.kind) + (m.no ? ' No. '+m.no : ''); }
+function memoCanEdit(m){ return USER.role==='head' || (USER.role==='admin' && m.byEmail===USER.email); }
+
+/* ----- Writing a memo in TALA: boxes for the details, a draft, a check of spelling and grammar, and the signed PDF ----- */
+var MCW = { c:null, id:'', checks:[], lt:{} };
+const MC_TITLE = { Memorandum:'SCHOOL MEMORANDUM', Advisory:'SCHOOL ADVISORY', Order:'SCHOOL ORDER', Direct:'MEMORANDUM' };
+const MC_F = [['to','TO'],['thru','THRU'],['subject','SUBJECT'],['refs','REFERENCES'],['body','BODY'],['encl','ENCLOSURES']];
+function memoYear(m){ const x = String(m.no||'').match(/s\.\s*(\d{4})/i); return x ? x[1] : String(m.date||'').slice(0,4); }
+function memoNextNo(kind, year, exceptId){ const n = (MEMO.data.memos||[]).filter(m => m.kind===kind && m.id!==exceptId && memoYear(m)===year).map(m => parseInt((String(m.no).match(/\d+/)||['0'])[0], 10) || 0);
+  return String((n.length ? Math.max(...n) : 0) + 1).padStart(3, '0')+', s. '+year; }
+function memoMe(){ const p = (MEMO.data.people||[]).find(x => x.role==='head') || {}; return { name: (USER.role==='head' ? USER.name : p.name) || '', pos: (USER.role==='head' ? USER.position : p.position) || 'School Head' }; }
+function memoCompose(id){
+  const m = id ? (MEMO.data.memos||[]).find(x => x.id===id) : null, kind = m ? m.kind : (MEMO.tab==='Drafts' ? 'Memorandum' : MEMO.tab), date = m ? m.date : todayPH(), me = memoMe();
+  const c = Object.assign({ kind, no: memoNextNo(kind, date.slice(0,4), id), date, to: kind==='Direct' ? '' : 'All Teaching and Non Teaching Personnel', thru:'', from: String(me.name).toUpperCase(), fromPos: me.pos, subject:'', refs:'', body:'', encl:'', numbered:true, recip: kind==='Direct' ? [] : 'all', kw:[] }, (m && m.compose) || {}, m ? { kind:m.kind, no:m.no || (m.compose||{}).no, date:m.date, subject: (m.compose||{}).subject || (m.subject==='(No subject yet)' ? '' : m.subject), recip:m.to, kw:m.keywords||[] } : {});
+  MCW = { c, id: id||'', checks:[], lt:{} };
+  const P = (MEMO.data.people||[]).filter(p => p.email!==USER.email && p.role!=='head'), head = USER.role==='head';
+  stfModal(`<div class="mcw"><div class="mch"><h3>${m ? 'Edit the draft' : 'Write a memo'}</h3><span class="hint" id="mcSaved">${m ? 'Draft saved '+esc(dtTxt(m.on)) : 'Not saved yet'}</span></div>
+    <details class="mcquick"><summary>📋 Paste everything at once</summary><p class="hint">Paste the whole text here, for example from a letter or a message. Lines that start with To, Thru, From, Subject, Date, Reference, and Enclosure go to their boxes. The rest goes to the body.</p>
+      <textarea id="mcAll" rows="6"></textarea><button class="btn ghost small" onclick="memoQuick()">Fill the boxes</button></details>
+    <div class="pfgrid"><label class="pff"><span>Kind</span><select id="mc_kind" onchange="memoKindChange()">${['Memorandum','Advisory','Order','Direct'].map(k => `<option value="${k}" ${c.kind===k?'selected':''}>${k==='Direct' ? 'Direct memo or notice' : k}</option>`).join('')}</select></label>
+      <label class="pff"><span>Number <small class="hint">(suggested)</small></span><input id="mc_no" value="${esc(c.no)}"></label>
+      <label class="pff"><span>Date</span><input type="date" id="mc_date" value="${esc(c.date)}" onchange="memoDateChange()"></label></div>
+    <div class="pfgrid"><label class="pff"><span>To</span><textarea id="mc_to" rows="2">${esc(c.to)}</textarea></label><label class="pff"><span>Thru <small class="hint">(if any)</small></span><textarea id="mc_thru" rows="2">${esc(c.thru)}</textarea></label>
+      <label class="pff"><span>From</span><input id="mc_from" value="${esc(c.from)}"><input id="mc_fromPos" value="${esc(c.fromPos)}" style="margin-top:4px"></label></div>
+    <label class="pff"><span>Subject</span><textarea id="mc_subject" rows="2" oninput="memoCKw()">${esc(c.subject)}</textarea></label>
+    <label class="pff"><span>References <small class="hint">(one per line)</small></span><textarea id="mc_refs" rows="3" placeholder="DepEd Order No. 7, s. 2026">${esc(c.refs)}</textarea></label>
+    <label class="pff"><span>Body <small class="hint">(leave an empty line between paragraphs)</small></span><textarea id="mc_body" rows="12">${esc(c.body)}</textarea></label>
+    <label class="check"><input type="checkbox" id="mc_num" ${c.numbered?'checked':''}> Number the paragraphs (1, 2, 3)</label>
+    <label class="pff"><span>Enclosures <small class="hint">(if any, one per line)</small></span><textarea id="mc_encl" rows="2">${esc(c.encl)}</textarea></label>
+    <div class="pff"><span>Send in TALA to</span><label class="check"><input type="radio" name="mcTo" value="all" ${c.recip==='all'?'checked':''} onchange="$('mcPick').hidden=true"> All personnel</label><label class="check"><input type="radio" name="mcTo" value="pick" ${c.recip!=='all'?'checked':''} onchange="$('mcPick').hidden=false"> Choose</label>
+      <div id="mcPick" class="mepick" ${c.recip==='all'?'hidden':''}>${P.map(p => `<label class="check"><input type="checkbox" value="${p.email}" ${c.recip!=='all' && (c.recip||[]).indexOf(p.email) > -1 ? 'checked' : ''}> ${esc(p.name)}</label>`).join('')}</div></div>
+    <div class="pff"><span>Keywords</span><div class="f2kw" id="f2kws"></div><div class="row" style="margin-top:6px"><input id="f2kwin" placeholder="Add a keyword" onkeydown="if(event.key==='Enter'){event.preventDefault();memoKwAdd()}"><button class="btn ghost small" onclick="memoKwAdd()">Add</button></div></div>
+    <div id="mcChecks"></div><p class="err" id="mcErr"></p>
+    <div class="row mcacts"><button class="btn ghost" onclick="closeModal('stfModal')">Close</button><button class="btn ghost" onclick="memoDraftSave()">💾 Save draft</button><button class="btn ghost" id="mcChk" onclick="memoCheckAll()">✔ Check spelling and grammar</button><button class="btn ghost" onclick="memoPreview()">👁 Preview</button>
+      ${head ? '<button class="btn" onclick="memoSignAsk()">✍ Sign and post</button>' : ''}</div>
+    ${head ? '' : '<p class="hint">Save the draft. The School Head signs and posts it.</p>'}</div>`, 'wide xwide');
+  MEMOE = { kw: (c.kw||[]).slice(), auto: !(c.kw||[]).length, id: id||'' }; memoKwDraw();
+}
+function memoCKw(){ if (!MEMOE.auto) return; MEMOE.kw = memoSuggest($('mc_subject').value); memoKwDraw(); }
+function memoKindChange(){ const k = $('mc_kind').value; if (!MCW.id || !(MEMO.data.memos||[]).some(m => m.id===MCW.id && m.kind===k)) $('mc_no').value = memoNextNo(k, ($('mc_date').value||todayPH()).slice(0,4), MCW.id);
+  if (k==='Direct'){ document.querySelector('input[name=mcTo][value=pick]').checked = true; $('mcPick').hidden = false; if (/^All Teaching/.test($('mc_to').value)) $('mc_to').value = ''; } }
+function memoDateChange(){ const y = ($('mc_date').value||'').slice(0,4); if (y && !new RegExp('s\\. '+y).test($('mc_no').value)) $('mc_no').value = memoNextNo($('mc_kind').value, y, MCW.id); }
+function memoGetC(){ const g = id => ($(id) ? $(id).value : ''), pick = (document.querySelector('input[name=mcTo]:checked')||{}).value;
+  return { kind:g('mc_kind'), no:g('mc_no').trim(), date:g('mc_date'), to:g('mc_to').trim(), thru:g('mc_thru').trim(), from:g('mc_from').trim(), fromPos:g('mc_fromPos').trim(), subject:g('mc_subject').trim(), refs:g('mc_refs').trim(), body:g('mc_body').replace(/\r/g,'').trim(), encl:g('mc_encl').trim(), numbered:$('mc_num').checked,
+    recip: pick==='all' ? 'all' : [...document.querySelectorAll('#mcPick input:checked')].map(i => i.value), kw:MEMOE.kw }; }
+function memoQuick(){ const t = $('mcAll').value.replace(/\r/g,''); if (!t.trim()) return; const L = t.split('\n'), body = [], set = (id, v) => { if ($(id)) $(id).value = v; }; let cur = null; const acc = { to:[], thru:[], from:[], subject:[], refs:[], encl:[], date:'' };
+  L.forEach(l => { const m = l.match(/^\s*(to|thru|through|from|subject|re|date|references?|ref\.?|enclosures?|encl\.?)\s*[:.]\s*(.*)$/i);
+    if (m){ const k = m[1].toLowerCase(); cur = /^to/.test(k) ? 'to' : /^th/.test(k) ? 'thru' : /^fr/.test(k) ? 'from' : /^(sub|re$)/.test(k) ? 'subject' : /^date/.test(k) ? 'date' : /^ref/.test(k) ? 'refs' : 'encl';
+      if (cur==='date') { acc.date = m[2]; cur = null; } else if (m[2].trim()) acc[cur].push(m[2].trim()); return; }
+    const no = l.match(/(?:memorandum|advisory|order)\s*no\.?\s*([0-9]+\s*,?\s*s\.?\s*\d{4})/i); if (no && !body.length){ set('mc_no', no[1].replace(/\s*,?\s*s\.?\s*/, ', s. ')); return; }
+    if (!l.trim()){ cur = null; body.push(''); return; }
+    if (cur && cur!=='date' && !body.filter(Boolean).length) acc[cur].push(l.trim()); else { cur = null; body.push(l); } });
+  if (acc.to.length) set('mc_to', acc.to.join('\n')); if (acc.thru.length) set('mc_thru', acc.thru.join('\n')); if (acc.subject.length) set('mc_subject', acc.subject.join(' '));
+  if (acc.refs.length) set('mc_refs', acc.refs.join('\n')); if (acc.encl.length) set('mc_encl', acc.encl.join('\n'));
+  if (acc.from.length){ set('mc_from', acc.from[0].toUpperCase()); if (acc.from[1]) set('mc_fromPos', acc.from[1]); }
+  const d = acc.date && new Date(acc.date); if (d && !isNaN(d)) set('mc_date', d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'));
+  const b = body.join('\n').replace(/\n{3,}/g, '\n\n').trim(); if (b) set('mc_body', b.split(/\n\s*\n/).map(p => p.replace(/\s*\n\s*/g,' ').replace(/^\s*\d+\.\s*/, '')).join('\n\n'));
+  memoCKw(); $('mcAll').value = ''; document.querySelector('.mcquick').open = false; toast('The boxes are filled. Please check them.'); }
+async function memoDraftSave(quiet){
+  const c = memoGetC(); $('mcErr').textContent = '';
+  try{ const r = await api('memoSave', { memo:{ id:MCW.id, draft:true, kind:c.kind, no:c.no, date:c.date, subject:c.subject, to: c.recip, keywords:c.kw, compose:c } });
+    MEMO.data = r; if (!MCW.id){ const d = (r.memos||[]).filter(m => m.status==='Draft' && m.byEmail===USER.email).sort((a,b) => String(b.on).localeCompare(String(a.on)))[0]; if (d) MCW.id = d.id; }
+    $('mcSaved').textContent = 'Draft saved '+dtTxt(new Date().toLocaleString('sv-SE',{timeZone:'Asia/Manila'})); if (!quiet) toast('Draft saved.'); return true; }
+  catch(e){ handleErr(e, 'mcErr'); return false; } }
+// Rules for the format of DepEd memos, plus the spelling and grammar check
+const MC_CONTR = { "don't":'do not', "can't":'cannot', "won't":'will not', "isn't":'is not', "aren't":'are not', "doesn't":'does not', "didn't":'did not', "it's":'it is', "we're":'we are', "they're":'they are', "you're":'you are', "let's":'let us', "shouldn't":'should not', "wouldn't":'would not', "couldn't":'could not', "we'll":'we will', "I'm":'I am' };
+function memoStyle(c){ const out = [], add = (f, msg, from, to) => out.push({ f, msg, from, to, src:'Format' }), MON = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  MC_F.forEach(([f]) => { const t = c[f] || ''; if (!t) return;
+    (t.match(/\s[–—-]\s|—|–/g)||[]).slice(0,1).forEach(x => add(f, 'Avoid dashes. Use a comma or a period instead.', x, ', '));
+    (t.match(/\b(\d{1,2})\/(\d{1,2})\/(\d{4})\b/g)||[]).forEach(x => { const [m, d, y] = x.split('/').map(Number); if (m >= 1 && m <= 12) add(f, 'Write dates in words, like '+MON[m-1]+' '+d+', '+y+'.', x, MON[m-1]+' '+d+', '+y); });
+    (t.match(/\bs\.(?=\d{4})/g)||[]).slice(0,1).forEach(x => add(f, 'Put a space after s., like s. 2026.', 's.', 's. '));
+    (t.match(/\bNo\.(?=\d)/g)||[]).slice(0,1).forEach(x => add(f, 'Put a space after No., like No. 25.', 'No.', 'No. '));
+    (t.match(/\bDO\s+No\./g)||[]).slice(0,1).forEach(x => add(f, 'Write DepEd Order in full.', x, 'DepEd Order No.'));
+    (t.match(/\bDM\s+No\./g)||[]).slice(0,1).forEach(x => add(f, 'Write DepEd Memorandum in full.', x, 'DepEd Memorandum No.'));
+    Object.keys(MC_CONTR).forEach(k => { const re = new RegExp("\\b"+k.replace("'", "['’]")+"\\b", 'i'), m = t.match(re); if (m) add(f, 'Avoid contractions in official memos.', m[0], MC_CONTR[k]); });
+    (t.match(/\b(\d{1,2})(?::(\d{2}))?\s?(am|pm)\b/gi)||[]).forEach(x => { const m = x.match(/(\d{1,2})(?::(\d{2}))?\s?(am|pm)/i), v = m[1]+':'+(m[2]||'00')+' '+m[3].toUpperCase(); if (v!==x) add(f, 'Write the time like 8:00 AM.', x, v); });
+    if (/ {2,}/.test(t)) add(f, 'Remove the extra spaces.', '  ', ' '); });
+  if (c.subject && c.subject !== c.subject.toUpperCase()) add('subject', 'DepEd memos write the subject in capital letters.', c.subject, c.subject.toUpperCase());
+  if (!c.to) add('to', 'Write who the memo is for, like All Teaching and Non Teaching Personnel.', '', 'All Teaching and Non Teaching Personnel');
+  if (!/^\d{1,4}, s\. \d{4}$/.test(c.no)) add('no', 'Write the number like 026, s. 2026.', c.no, memoNextNo(c.kind, (c.date||todayPH()).slice(0,4), MCW.id));
+  const P = (c.body||'').split(/\n\s*\n/).map(x => x.trim()).filter(Boolean);
+  P.forEach(p => { if (!/[.!?:)"”]$/.test(p)) add('body', 'End each paragraph with a period: "'+p.slice(-40)+'"', p, p+'.'); if (/^[a-z]/.test(p)) add('body', 'Start each paragraph with a capital letter.', p.slice(0, 20), p.charAt(0).toUpperCase()+p.slice(1, 20)); });
+  const word = { Memorandum:'Memorandum', Advisory:'Advisory', Order:'Order', Direct:'Memorandum' }[c.kind];
+  if (P.length && c.kind!=='Direct' && !/dissemination|be guided accordingly|for information|for your information|compliance/i.test(P[P.length-1])) out.push({ f:'body', msg:'Add the closing line of DepEd memos.', from:'', to:'Immediate dissemination of and compliance with this '+word+' is desired.', append:true, src:'Format' });
+  if (!P.length) out.push({ f:'body', msg:'The body is empty.', src:'Format' });
+  return out; }
+async function memoCheckAll(){
+  const c = memoGetC(), b = $('mcChk'); b.disabled = true; b.textContent = 'Checking';
+  const lt = []; let err = '';
+  await Promise.all(['subject','to','thru','refs','body','encl'].filter(f => c[f]).map(async f => { try{ const r = await api('memoCheck', { text:c[f] }); if (r.error) err = r.error;
+    (r.matches||[]).forEach(m => { const reps = (m.rep||[]).filter(x => !/[–—]|\s-\s/.test(x)); if (/dash/i.test(m.message) && !reps.length) return; lt.push({ f, msg:m.message, from:c[f].substr(m.offset, m.length), to:reps[0] === undefined ? null : reps[0], alt:reps.slice(1,3), offset:m.offset, src:m.type==='misspelling' ? 'Spelling' : 'Grammar' }); }); }catch(e){ err = e.message; } }));
+  MCW.checks = lt.concat(memoStyle(c)); b.disabled = false; b.textContent = '✔ Check spelling and grammar'; memoChecksDraw(err); }
+function memoChecksDraw(err){ const L = MCW.checks, lab = { to:'To', thru:'Thru', subject:'Subject', refs:'References', body:'Body', encl:'Enclosures', no:'Number' };
+  $('mcChecks').innerHTML = `<div class="mcchk"><div class="mcchk-h"><b>${L.length ? L.length+' suggestion'+(L.length>1?'s':'') : '✔ No problems found'}</b>${L.some(x => x.to!=null) ? '<button class="btn small" onclick="memoFixAll()">Apply all</button>' : ''}</div>${err ? `<p class="hint">${esc(err)}</p>` : ''}
+    ${L.map((x, i) => `<div class="mcfix"><span class="mctag ${x.src}">${esc(x.src)}</span><div><small>${esc(lab[x.f]||x.f)}</small><p>${esc(x.msg)}</p>${x.from || x.to ? `<p class="mcdiff">${x.from ? `<s>${esc(String(x.from).slice(0,80))}</s>` : ''}${x.to!=null ? ` → <b>${esc(String(x.to).slice(0,120))}</b>` : ''}</p>` : ''}</div>
+      ${x.to!=null ? `<button class="btn ghost small" onclick="memoFix(${i})">Apply</button>` : ''}${(x.alt||[]).map((a, j) => `<button class="btn ghost small" onclick="memoFix(${i},${j})">${esc(a)}</button>`).join('')}</div>`).join('')}</div>`; }
+function memoFix(i, alt, noDraw){ const x = MCW.checks[i]; if (!x || x.done) return; const el = x.f==='no' ? $('mc_no') : $('mc_'+x.f); if (!el) return; const to = alt !== undefined ? x.alt[alt] : x.to, v = el.value;
+  if (x.append) el.value = v.replace(/\s+$/,'') + '\n\n' + to;
+  else if (x.offset !== undefined && v.substr(x.offset, x.from.length) === x.from){ el.value = v.slice(0, x.offset) + to + v.slice(x.offset + x.from.length); const d = to.length - x.from.length; MCW.checks.forEach(y => { if (y!==x && y.f===x.f && y.offset !== undefined && y.offset > x.offset) y.offset += d; }); }
+  else if (!x.from) el.value = to; else if (v.indexOf(x.from) > -1) el.value = v.replace(x.from, to);
+  x.done = true; MCW.checks.splice(i, 1); if (!noDraw) memoChecksDraw(); }
+function memoFixAll(){ for (let i = MCW.checks.length - 1; i >= 0; i--){ if (MCW.checks[i].to != null) memoFix(i, undefined, true); } memoChecksDraw(); toast('Applied. Check again to be sure.'); }
+
+/* ----- The memo as a PDF: letterhead, details, body, and the signature with the date and time of signing ----- */
+async function memoLogoBytes(){ try{ const r = await fetch(LOGO); return new Uint8Array(await r.arrayBuffer()); }catch(e){ return null; } }
+async function memoPdf(c, sign){
+  await loadAny(PDFLIB); const { PDFDocument, StandardFonts, rgb, degrees } = PDFLib, doc = await PDFDocument.create();
+  const F = { r: await doc.embedFont(StandardFonts.TimesRoman), b: await doc.embedFont(StandardFonts.TimesRomanBold), i: await doc.embedFont(StandardFonts.TimesRomanItalic), h: await doc.embedFont(StandardFonts.Helvetica) };
+  const ok = {}; const san = (t, f) => String(t||'').replace(/[–—]/g, ', ').split('').map(ch => { const k = ch+(f===F.b?'b':''); if (ok[k] === undefined){ try{ f.widthOfTextAtSize(ch, 10); f.encodeText(ch); ok[k] = true; }catch(e){ ok[k] = false; } } return ok[k] ? ch : ''; }).join('');
+  const W = 595.28, H = 841.89, ML = 72, MR = 72, TW = W - ML - MR, ink = rgb(0,0,0);
+  const pages = []; let pg, y;
+  const newPage = () => { pg = doc.addPage([W, H]); pages.push(pg); y = H - 60; if (!sign) pg.drawText('DRAFT', { x:140, y:300, size:120, font:F.b, color:rgb(0.85,0.85,0.85), rotate:degrees(35), opacity:0.5 }); };
+  const wrap = (t, f, s, w) => { const out = []; String(t).split('\n').forEach(par => { let line = ''; par.split(/\s+/).filter(Boolean).forEach(wd => { const tst = line ? line+' '+wd : wd; if (f.widthOfTextAtSize(san(tst, f), s) > w && line){ out.push(line); line = wd; } else line = tst; }); out.push(line); }); return out; };
+  const need = h => { if (y - h < 70) newPage(); };
+  const center = (t, f, s, col) => { t = san(t, f); pg.drawText(t, { x:(W - f.widthOfTextAtSize(t, s))/2, y, size:s, font:f, color:col||ink }); };
+  newPage();
+  const lb = await memoLogoBytes(); if (lb){ try{ const img = lb[0]===0x89 ? await doc.embedPng(lb) : await doc.embedJpg(lb); pg.drawImage(img, { x:(W-46)/2, y:H-44-46, width:46, height:46 }); }catch(e){} }
+  y = H - 104; center('Republic of the Philippines', F.i, 10.5); y -= 15; center('Department of Education', F.b, 14); y -= 13; center('REGION IX', F.r, 9.5); y -= 12; center('SCHOOLS DIVISION OF ZAMBOANGA SIBUGAY', F.b, 9.5);
+  y -= 7; pg.drawLine({ start:{ x:W/2-170, y }, end:{ x:W/2+170, y }, thickness:0.7, color:rgb(0.4,0.4,0.4) }); y -= 13; center('FIELD OFFICE OF IMELDA', F.b, 10, rgb(0.33,0.33,0.33)); y -= 12; center('Imelda, Zamboanga Sibugay', F.r, 9.5, rgb(0.33,0.33,0.33)); y -= 13; center('125592, BALUYAN ELEMENTARY SCHOOL', F.b, 10.5, rgb(0.33,0.33,0.33));
+  y -= 30; center(MC_TITLE[c.kind] || 'MEMORANDUM', F.b, 13); y -= 15; center('No. '+(c.no||''), F.r, 11.5); y -= 26;
+  const row = (lab, val, f) => { const L = wrap(val, f||F.r, 11.5, TW - 96); need(L.length * 14 + 4); pg.drawText(lab, { x:ML, y, size:11.5, font:F.b }); pg.drawText(':', { x:ML+84, y, size:11.5, font:F.b }); L.forEach((l, i) => { pg.drawText(san(l, f||F.r), { x:ML+96, y: y - i*14, size:11.5, font:f||F.r }); }); y -= L.length * 14 + 6; };
+  row('TO', c.to || ''); if (c.thru) row('THRU', c.thru);
+  { const L1 = wrap(c.from||'', F.b, 11.5, TW-96); need(30); pg.drawText('FROM', { x:ML, y, size:11.5, font:F.b }); pg.drawText(':', { x:ML+84, y, size:11.5, font:F.b }); L1.forEach((l, i) => pg.drawText(san(l, F.b), { x:ML+96, y:y-i*14, size:11.5, font:F.b })); y -= L1.length*14; if (c.fromPos){ pg.drawText(san(c.fromPos, F.r), { x:ML+96, y, size:11.5, font:F.r }); y -= 14; } y -= 6; }
+  row('SUBJECT', (c.subject||'').toUpperCase(), F.b);
+  if (c.refs) row(c.refs.split('\n').filter(Boolean).length > 1 ? 'REFERENCES' : 'REFERENCE', c.refs.split('\n').filter(Boolean).map((r, i, a) => a.length > 1 ? String.fromCharCode(97+i)+'. '+r : r).join('\n'));
+  row('DATE', fmtLong(c.date));
+  y += 2; pg.drawLine({ start:{ x:ML, y }, end:{ x:W-MR, y }, thickness:1.2, color:ink }); y -= 22;
+  const P = (c.body||'').split(/\n\s*\n/).map(x => x.replace(/\s*\n\s*/g,' ').trim()).filter(Boolean);
+  P.forEach((p, n) => { const ind = c.numbered ? 22 : 0, L = wrap(p, F.r, 11.5, TW - ind); L.forEach((l, i) => { need(15); if (i===0 && c.numbered) pg.drawText((n+1)+'.', { x:ML, y, size:11.5, font:F.r }); pg.drawText(san(l, F.r), { x:ML + ind, y, size:11.5, font:F.r }); y -= 15; }); y -= 8; });
+  if (c.encl){ need(30); y -= 4; pg.drawText('Encl.:', { x:ML, y, size:10.5, font:F.b }); c.encl.split('\n').filter(Boolean).forEach((e, i) => { pg.drawText(san(e, F.r), { x:ML+40, y: y - i*13, size:10.5, font:F.r }); }); y -= c.encl.split('\n').filter(Boolean).length*13 + 6; }
+  // signature block
+  need(130); y -= 30; const yName = y - 66, sx = ML;
+  if (sign && sign.sig){ try{ const img = await doc.embedPng(b64ToBytes(sign.sig)), sc = Math.min(150/img.width, 50/img.height), w = img.width*sc, h = img.height*sc;
+      pg.drawImage(img, { x:sx + 10, y:yName + 16, width:w, height:h });
+      // parts of the signature are covered, so a copied picture cannot be used: security lines, a fine pattern, and the signing details over its right side
+      for (let k = 0; k < 4; k++){ let d = ''; for (let xx = 0; xx <= w + 20; xx += 4){ const yy = 12 + k*10 + Math.sin((xx + k*9)/7) * 3; d += (xx ? ' L ' : 'M ') + xx.toFixed(1) + ' ' + yy.toFixed(1); } pg.drawSvgPath(d, { x:sx, y:yName + 66, borderColor:rgb(0.1,0.2,0.55), borderWidth:0.45, borderOpacity:0.55 }); }
+      for (let xx = 0; xx < w + 20; xx += 5) pg.drawLine({ start:{ x:sx + xx, y:yName + 16 }, end:{ x:sx + xx + 14, y:yName + 16 + h }, thickness:0.25, color:rgb(0.2,0.3,0.6), opacity:0.25 });
+      const bx = sx + 10 + w*0.55, L = pkiLines(sign.name, sign.when); pg.drawRectangle({ x:bx - 4, y:yName + 15, width:170, height:48, color:rgb(1,1,1), opacity:0.72, borderColor:rgb(0.1,0.2,0.55), borderWidth:0.5, borderOpacity:0.6 });
+      L.forEach((t, i) => pg.drawText(san(t, i===1 ? F.b : F.h), { x:bx, y:yName + 53 - i*11, size: i===1 ? 8.6 : 7.6, font: i===1 ? F.b : F.h, color:rgb(0.05,0.1,0.4) }));
+      pg.drawText(san('TALA ref. '+(sign.ref||''), F.h), { x:bx, y:yName + 19, size:6.3, font:F.h, color:rgb(0.35,0.35,0.35) }); }catch(e){ console.warn('TALA memo sig', e); } }
+  pg.drawText(san((c.from||'').toUpperCase(), F.b), { x:sx, y:yName, size:11.5, font:F.b }); if (c.fromPos) pg.drawText(san(c.fromPos, F.r), { x:sx, y:yName - 14, size:11, font:F.r });
+  pages.forEach((p, i) => { p.drawLine({ start:{ x:ML, y:48 }, end:{ x:W-MR, y:48 }, thickness:0.5, color:rgb(0.5,0.5,0.5) });
+    p.drawText(san('Baluyan Elementary School, Imelda, Zamboanga Sibugay', F.r), { x:ML, y:36, size:8, font:F.r, color:rgb(0.35,0.35,0.35) });
+    const pt = 'Page '+(i+1)+' of '+pages.length; p.drawText(pt, { x:W-MR-F.r.widthOfTextAtSize(pt, 8), y:36, size:8, font:F.r, color:rgb(0.35,0.35,0.35) }); });
+  return await doc.save();
+}
+async function memoPreview(){ const c = memoGetC(); try{ const bytes = await memoPdf(c, null), url = URL.createObjectURL(new Blob([bytes], { type:'application/pdf' })); window.open(url, '_blank') || toast('Allow pop ups to see the preview.'); MCW.lastPreview = url; }catch(e){ handleErr(e, 'mcErr'); } }
+function memoSignAsk(){ const c = memoGetC(); const miss = [['no','the number'],['date','the date'],['to','To'],['subject','the subject'],['body','the body']].filter(x => !c[x[0]]).map(x => x[1]);
+  if (miss.length) return $('mcErr').textContent = 'Please fill in '+miss.join(', ')+'.';
+  if (c.kind==='Direct' && c.recip==='all') return $('mcErr').textContent = 'A direct memo is for chosen persons only. Tap Choose, then tick the names.';
+  if (c.recip!=='all' && !c.recip.length) return $('mcErr').textContent = 'Choose at least one person.';
+  MCW.pending = c; $('mcErr').innerHTML = `<span class="mcsure">Sign and post ${esc(memoTitle({ kind:c.kind, no:c.no }))}? Your e-signature and the date and time of signing are added, then it is sent in TALA. <button class="btn small" onclick="memoSignPost()">Yes, sign and post</button></span>`; }
+async function memoSignPost(){
+  const c = MCW.pending || memoGetC(); $('mcErr').textContent = 'Signing';
+  try{ const mine = await api('getMySig'); if (!mine || !mine.sig){ $('mcErr').textContent = 'Please save your e-signature first (your name menu, My e-signature).'; return; }
+    if (!MCW.id) await memoDraftSave(true);
+    const when = new Date().toLocaleString('sv-SE', { timeZone:'Asia/Manila' }).slice(0,19), bytes = await memoPdf(c, { sig:mine.sig, name:c.from || USER.name, when, ref: MCW.id });
+    let s = ''; for (let i = 0; i < bytes.length; i += 8192) s += String.fromCharCode.apply(null, bytes.subarray(i, i + 8192));
+    const fn = (MC_TITLE[c.kind]||'Memo').replace(/\s+/g,'')+'_No'+String(c.no).replace(/[^0-9]+/g,'_').replace(/_+$/,'')+'.pdf';
+    MEMO.data = await api('memoSave', { memo:{ id:MCW.id, draft:false, signed:true, kind:c.kind, no:c.no, date:c.date, subject:c.subject, to:c.recip, keywords:c.kw, compose:Object.assign({}, c, { signedOn:when }), base64:btoa(s), mime:'application/pdf', fileName:fn } });
+    MEMO.tab = c.kind; closeModal('stfModal'); toast('Signed and posted. Each one gets a notice.'); memoDraw(); }
+  catch(e){ handleErr(e, 'mcErr'); } }
+
 async function openMemo(){
   ['viewLac','viewTrk','viewAcc','viewBank','viewLog','viewWeeks','viewSig','viewObs','viewHome','viewSbfp','viewAtt'].forEach(v => $(v) && ($(v).style.display='none'));
   $('viewPir').style.display=''; CUR_FEATURE = 'memo'; drawSide(); window.scrollTo(0,0);
@@ -2561,19 +2743,21 @@ async function openMemo(){
   if (CUR_FEATURE==='memo') memoDraw();
 }
 function memoDraw(){
-  const D = MEMO.data, head = USER.role==='head', all = head || USER.role==='admin', q = MEMO.q.toLowerCase();
-  const of = k => (D.memos||[]).filter(m => m.kind===k), un = k => of(k).filter(m => !head && memoForMe(m) && !memoMine(m)).length;
+  const D = MEMO.data, head = USER.role==='head', all = head || USER.role==='admin', q = MEMO.q.toLowerCase(), kinds = ['Memorandum','Advisory','Order','Direct'].filter(k => all || k!=='Direct' || (D.memos||[]).some(m => m.kind==='Direct')).concat(all ? ['Drafts'] : []);
+  const of = k => (D.memos||[]).filter(m => k==='Drafts' ? m.status==='Draft' : m.kind===k && m.status!=='Draft'), un = k => of(k).filter(m => !head && memoForMe(m) && !memoMine(m)).length;
   const list = of(MEMO.tab).filter(m => !q || [m.no, m.subject, (m.keywords||[]).join(' '), m.date, m.note].join(' ').toLowerCase().includes(q));
-  const ppl = all ? (D.people||[]) : [], forN = m => m.to==='all' ? ppl.filter(p => p.role!=='head').length : (m.to||[]).length;
-  $('viewPir').innerHTML = `<div class="ohero mmhero"><div><span class="lktag">MEMOS</span><h2>Memorandum and Advisory</h2><p>${all ? 'Post memorandums and advisories and see who has read them.' : 'Open each one and confirm that you have read it.'}</p></div>
-      ${head ? '<button class="btn sun" onclick="memoEdit()">+ Post a memorandum or advisory</button>' : ''}</div>
-    <div class="row" style="margin-top:12px;justify-content:flex-start;flex-wrap:wrap;gap:10px"><div class="tabs">${['Memorandum','Advisory'].map(k => `<button class="${MEMO.tab===k?'on':''}" onclick="MEMO.tab='${k}';memoDraw()">${k}${un(k) ? ` <i class="sdot">${un(k)}</i>` : ''}</button>`).join('')}</div>
+  const ppl = all ? (D.people||[]) : [], forN = m => m.to==='all' ? ppl.filter(p => p.role!=='head' && p.email!==m.byEmail).length : (m.to||[]).length;
+  if (kinds.indexOf(MEMO.tab) < 0) MEMO.tab = 'Memorandum';
+  $('viewPir').innerHTML = `<div class="ohero mmhero"><div><span class="lktag">MEMOS</span><h2>Memos and Advisories</h2><p>${all ? 'Post memorandums, advisories, orders, and direct memos, and see who has read them.' : 'Open each one and confirm that you have read it.'}</p></div>
+      ${all ? '<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn sun" onclick="memoCompose()">✍ Write a memo</button><button class="btn ghost" style="background:#fff" onclick="memoEdit()">⬆ Upload a signed file</button></div>' : ''}</div>
+    <div class="row" style="margin-top:12px;justify-content:flex-start;flex-wrap:wrap;gap:10px"><div class="tabs">${kinds.map(k => `<button class="${MEMO.tab===k?'on':''}" onclick="MEMO.tab='${k}';memoDraw()">${k==='Drafts' ? '📝 Drafts' : MEMO_K[k]}${k==='Drafts' ? (of('Drafts').length ? ` <i class="sdot" style="background:#8a5a00">${of('Drafts').length}</i>` : '') : un(k) ? ` <i class="sdot">${un(k)}</i>` : ''}</button>`).join('')}</div>
       <input class="f2q" style="max-width:420px" placeholder="🔍 Search number, subject, or keywords" value="${esc(MEMO.q)}" oninput="MEMO.q=this.value;clearTimeout(MEMO.qt);MEMO.qt=setTimeout(()=>{memoDraw();const i=document.querySelector('.f2q');if(i){i.focus();i.setSelectionRange(i.value.length,i.value.length);}},250)"></div>
-    <div style="margin-top:12px">${list.length ? list.map(m => { const rd = (m.reads||{})[USER.email], n = Object.keys(m.reads||{}).filter(e => !ppl.length || ppl.some(p => p.email===e && p.role!=='head')).length, mustRead = !head && memoForMe(m) && !rd;
+    <div style="margin-top:12px">${list.length ? list.map(m => { if (m.status==='Draft') return `<div class="hcard mmcard mmdraft"><div class="mmh"><div><b>${esc(memoTitle(m))}</b><small>${esc(dShort(m.date))}</small></div><span class="pfst draft">Draft, saved ${esc(dtTxt(m.on))}</span></div>
+        <p class="mms">${esc(m.subject)}</p><p class="hint">Written by ${esc(m.by||'')}</p><div class="f2acts"><button class="btn small" onclick="memoCompose('${m.id}')">✍ Continue</button>${memoCanEdit(m) ? `<button class="btn ghost small" onclick="memoDel('${m.id}')">Remove</button>` : ''}</div></div>`; const rd = (m.reads||{})[USER.email], n = Object.keys(m.reads||{}).filter(e => !ppl.length || ppl.some(p => p.email===e && p.role!=='head')).length, mustRead = !head && memoForMe(m) && !rd;
       return `<div class="hcard mmcard ${mustRead ? 'new' : ''}"><div class="mmh"><div><b>${esc(memoTitle(m))}</b><small>${esc(dShort(m.date))}</small></div><div class="mmst">${all ? `<span class="pfst ${n >= forN(m) ? 'ok' : 'draft'}">${n} of ${forN(m)} read</span>` : ''}${head ? '' : rd ? `<span class="pfst ok">✔ Read ${esc(dtTxt(rd.on))}</span>` : memoForMe(m) ? '<span class="pfst bad">Not yet confirmed</span>' : ''}</div></div>
-        <p class="mms">${esc(m.subject)}</p>${m.note ? `<p class="hint">${esc(m.note)}</p>` : ''}<div class="f2kw">${(m.keywords||[]).map(k => `<span class="kw">${esc(k)}</span>`).join('')}</div>
-        <div class="f2acts"><button class="btn small ${mustRead ? '' : 'ghost'}" onclick="memoOpen('${m.id}')">${mustRead ? 'Open and confirm' : 'Open'}</button>${all ? `<button class="btn ghost small" onclick="memoTrack('${m.id}')">👁 Who has read it</button>` : ''}${head ? `<button class="btn ghost small" onclick="memoEdit('${m.id}')">Edit</button><button class="btn ghost small" onclick="memoDel('${m.id}')">Remove</button>` : ''}</div></div>`; }).join('')
-      : `<div class="empty">${q ? 'Nothing matches the search.' : 'No '+MEMO.tab.toLowerCase()+' yet.'}</div>`}</div>`;
+        <p class="mms">${esc(m.subject)}</p>${all && m.to!=='all' ? `<p class="hint">For: ${esc((m.to||[]).map(e => ((ppl.find(p => p.email===e)||{}).name || e)).join(', '))}</p>` : ''}${all && m.by ? `<p class="hint">Posted by ${esc(m.by)}</p>` : ''}${m.note ? `<p class="hint">${esc(m.note)}</p>` : ''}<div class="f2kw">${(m.keywords||[]).map(k => `<span class="kw">${esc(k)}</span>`).join('')}</div>
+        <div class="f2acts"><button class="btn small ${mustRead ? '' : 'ghost'}" onclick="memoOpen('${m.id}')">${mustRead ? 'Open and confirm' : 'Open'}</button>${all ? `<button class="btn ghost small" onclick="memoTrack('${m.id}')">👁 Who has read it</button>` : ''}${memoCanEdit(m) ? `<button class="btn ghost small" onclick="memoEdit('${m.id}')">Edit</button><button class="btn ghost small" onclick="memoDel('${m.id}')">Remove</button>` : ''}</div></div>`; }).join('')
+      : `<div class="empty">${q ? 'Nothing matches the search.' : MEMO.tab==='Drafts' ? 'No drafts.' : 'No '+MEMO_K[MEMO.tab].toLowerCase()+' yet.'}</div>`}</div>`;
 }
 // Opening the file first, then "I have read it" notes the time and the place
 async function memoOpen(id, fromPop){
@@ -2604,13 +2788,13 @@ async function memoPop(force){
   if (document.querySelector('.overlay.open') || ($('tour') && !$('tour').hidden)) return later();
   const m = (MEMO.data.memos||[]).filter(x => memoForMe(x) && !memoMine(x)).sort((a,b) => String(a.date+a.on).localeCompare(String(b.date+b.on)))[0]; if (!m) return;
   MEMO.popAt = Date.now(); const left = MEMO.unread;
-  stfModal(`<div class="mmpop"><span class="lktag">${esc(m.kind.toUpperCase())}</span><h3>${esc(memoTitle(m))}</h3><small>${esc(dShort(m.date))}</small><p class="mms">${esc(m.subject)}</p>${m.note ? `<p class="hint">${esc(m.note)}</p>` : ''}
+  stfModal(`<div class="mmpop"><span class="lktag">${esc((MEMO_K[m.kind]||m.kind).toUpperCase())}</span><h3>${esc(memoTitle(m))}</h3><small>${esc(dShort(m.date))}</small><p class="mms">${esc(m.subject)}</p>${m.note ? `<p class="hint">${esc(m.note)}</p>` : ''}
     ${left > 1 ? `<p class="hint">${left} memos and advisories are waiting for you.</p>` : ''}
     <div class="row"><button class="btn ghost" onclick="closeModal('stfModal')">Later</button><button class="btn" onclick="memoOpen('${m.id}', true)">Open and read</button></div></div>`);
 }
 function memoTrack(id){
   const D = MEMO.data, m = (D.memos||[]).find(x => x.id===id); if (!m) return;
-  const P = (D.people||[]).filter(p => m.to==='all' ? p.role!=='head' : (m.to||[]).indexOf(p.email) > -1), R = m.reads||{};
+  const P = (D.people||[]).filter(p => m.to==='all' ? p.role!=='head' && p.email!==m.byEmail : (m.to||[]).indexOf(p.email) > -1), R = m.reads||{};
   const done = P.filter(p => R[p.email]).sort((a,b) => String(R[a.email].on).localeCompare(String(R[b.email].on))), not = P.filter(p => !R[p.email]);
   stfModal(`<h3>${esc(memoTitle(m))}</h3><p class="sub">${esc(m.subject)}</p><p><b>${done.length} of ${P.length}</b> have read it.</p>
     <div class="tblwrap"><table class="pftbl"><thead><tr><th>Name</th><th>Read on</th><th>Place</th></tr></thead><tbody>
@@ -2627,9 +2811,9 @@ async function memoGeoSet(){ const p = await memoPlace(); if (!p.lat) return toa
   try{ MEMO.data.geo = await api('memoGeo', { lat:p.lat, lng:p.lng }); toast('The school location is saved.'); }catch(e){ toast(e.message || 'Could not save.'); } }
 function memoTrackPrint(id){
   const D = MEMO.data, m = (D.memos||[]).find(x => x.id===id); if (!m) return;
-  const P = (D.people||[]).filter(p => m.to==='all' ? p.role!=='head' : (m.to||[]).indexOf(p.email) > -1), R = m.reads||{};
+  const P = (D.people||[]).filter(p => m.to==='all' ? p.role!=='head' && p.email!==m.byEmail : (m.to||[]).indexOf(p.email) > -1), R = m.reads||{};
   const rows = P.slice().sort((a,b) => (R[a.email] ? 0 : 1) - (R[b.email] ? 0 : 1) || String((R[a.email]||{}).on||'').localeCompare(String((R[b.email]||{}).on||'')));
-  $('printArea').innerHTML = `<div class="f2print"><div class="f2page"><div class="f2ph"><b>${esc(m.kind.toUpperCase())} READING TRACKING</b><span>Baluyan Elementary School</span></div>
+  $('printArea').innerHTML = `<div class="f2print"><div class="f2page"><div class="f2ph"><b>${esc((MEMO_K[m.kind]||m.kind).toUpperCase())} READING TRACKING</b><span>Baluyan Elementary School</span></div>
     <p><b>${esc(memoTitle(m))}</b>, ${esc(dShort(m.date))}<br>${esc(m.subject)}<br>Read by ${Object.keys(R).filter(e => P.some(p => p.email===e)).length} of ${P.length}.</p>
     <table class="f2pt"><thead><tr><th>No.</th><th>Name</th><th>Position</th><th>Read on</th><th>Place</th></tr></thead><tbody>
     ${rows.map((p, i) => `<tr><td>${i+1}</td><td>${esc(p.name)}</td><td>${esc(p.position||'')}</td><td>${R[p.email] ? esc(dtTxt(R[p.email].on)) : '<b>Not yet</b>'}</td><td>${R[p.email] ? memoPlaceTxt(R[p.email], false) : ''}</td></tr>`).join('')}</tbody></table>
@@ -2639,10 +2823,10 @@ function memoTrackPrint(id){
 var MEMOE = { kw:[], file:null };
 function memoSuggest(subject){ const out = []; String(subject||'').replace(/[^A-Za-z0-9 ]/g,' ').split(/\s+/).filter(w => w.length > 3 && KW_STOP.indexOf(w.toLowerCase()) < 0 && !/^(about|their|there|these|those|shall|will|into|other|also|which|school|schools|memorandum|advisory)$/i.test(w)).forEach(w => { if (!out.some(x => x.toLowerCase()===w.toLowerCase())) out.push(w.charAt(0).toUpperCase()+w.slice(1).toLowerCase()); }); return out.slice(0, 6); }
 function memoEdit(id){
-  const m = id ? (MEMO.data.memos||[]).find(x => x.id===id) : null, P = (MEMO.data.people||[]).filter(p => p.role!=='head'), to = m ? m.to : 'all';
+  const m = id ? (MEMO.data.memos||[]).find(x => x.id===id) : null, P = (MEMO.data.people||[]).filter(p => p.email!==USER.email && (USER.role!=='head' || p.role!=='head')), kind = m ? m.kind : MEMO.tab, to = m ? m.to : (kind==='Direct' ? [] : 'all');
   MEMOE = { kw: m ? (m.keywords||[]).slice() : [], file:null, id: id||'', auto: !m };
-  stfModal(`<h3>${m ? 'Edit' : 'Post a'} memorandum or advisory</h3>
-    <div class="pfgrid"><label class="pff"><span>Kind</span><select id="meKind">${['Memorandum','Advisory'].map(k => `<option ${(m ? m.kind : MEMO.tab)===k?'selected':''}>${k}</option>`).join('')}</select></label>
+  stfModal(`<h3>${m ? 'Edit' : 'Post'}</h3>
+    <div class="pfgrid"><label class="pff"><span>Kind</span><select id="meKind" onchange="if(this.value==='Direct'){document.querySelector('input[name=meTo][value=pick]').checked=true;$('mePick').hidden=false}">${['Memorandum','Advisory','Order','Direct'].map(k => `<option value="${k}" ${kind===k?'selected':''}>${k==='Direct' ? 'Direct memo, notice, or disciplinary action' : k==='Order' ? 'Order (school or office order)' : k}</option>`).join('')}</select></label>
       <label class="pff"><span>Number</span><input id="meNo" value="${esc(m ? m.no : '')}" placeholder="For example, 25, s. 2026"></label>
       <label class="pff"><span>Date</span><input type="date" id="meDate" value="${esc(m ? m.date : todayPH())}"></label></div>
     <label class="pff"><span>Subject</span><textarea id="meSub" rows="2" oninput="memoKwAuto()">${esc(m ? m.subject : '')}</textarea></label>
@@ -2662,15 +2846,300 @@ async function memoSave(){
   try{ const f = $('meFile').files[0], x = { id:MEMOE.id, kind:$('meKind').value, no:$('meNo').value.trim(), date:$('meDate').value, subject:$('meSub').value.trim(), note:$('meNote').value.trim(), keywords:MEMOE.kw };
     const pick = document.querySelector('input[name=meTo]:checked').value; x.to = pick==='all' ? 'all' : [...document.querySelectorAll('#mePick input:checked')].map(i => i.value);
     if (pick!=='all' && !x.to.length) throw new Error('Choose at least one person.');
+    if (x.kind==='Direct' && pick==='all') throw new Error('A direct memo is for chosen persons only. Tap Choose, then tick the names.');
     if (f){ if (!/^application\/pdf$|^image\/(jpeg|png)$/.test(f.type)) throw new Error('Choose a PDF or a picture (JPG or PNG).'); if (f.size > 15*1024*1024) throw new Error('The file is too large.');
       if (f.type==='application/pdf'){ x.base64 = await readB64(f); x.mime = f.type; x.fileName = f.name; } else { x.base64 = (await lacShrink(f, 2200, 0.85)).split(',')[1]; x.mime = 'image/jpeg'; x.fileName = f.name.replace(/\.(png|jpe?g)$/i,'')+'.jpg'; } }
     else if (!x.id) throw new Error('Attach the file of the memo or advisory.');
-    b.textContent = 'Saving'; MEMO.data = await api('memoSave', { memo:x }); MEMO.tab = x.kind; closeModal('stfModal'); toast(x.id ? 'Saved.' : 'Posted. Everyone gets a notice.'); memoDraw(); }
+    b.textContent = 'Saving'; MEMO.data = await api('memoSave', { memo:x }); MEMO.tab = x.kind; closeModal('stfModal'); toast(x.id ? 'Saved.' : 'Posted. Each one gets a notice.'); memoDraw(); }
   catch(e){ handleErr(e, 'meErr'); b.disabled = false; b.textContent = MEMOE.id ? 'Save' : 'Post'; }
 }
 function memoDel(id){ stfModal(`<h3>Remove this?</h3><p class="sub">The file and its reading record are removed.</p><p class="err" id="meErr"></p><div class="row"><button class="btn ghost" onclick="closeModal('stfModal')">Cancel</button><button class="btn" onclick="memoDelGo('${id}')">Remove</button></div>`); }
 async function memoDelGo(id){ try{ MEMO.data = await api('memoDel', { id }); closeModal('stfModal'); memoDraw(); }catch(e){ handleErr(e, 'meErr'); } }
 
+
+/* ----- 201 File as a small library: each document is a book with its picture and the details read from it ----- */
+const PDFJS = ['https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js', 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js'];
+async function pdfJs(){ if (!window.pdfjsLib) await loadAny(PDFJS); const w = (document.querySelector('script[src*="pdf.min.js"]')||{}).src || PDFJS[0];
+  try{ pdfjsLib.GlobalWorkerOptions.workerSrc = w.replace('pdf.min.js', 'pdf.worker.min.js'); }catch(e){} return window.pdfjsLib; }
+// A small picture of page 1 and the words of the first pages (for a PDF made on a computer)
+async function f201PdfLook(file){ const out = { thumb:'', text:'' };
+  try{ const L = await pdfJs(), doc = await L.getDocument({ data: new Uint8Array(await file.arrayBuffer()) }).promise, pg = await doc.getPage(1);
+    const v1 = pg.getViewport({ scale:1 }), sc = 260 / v1.width, v = pg.getViewport({ scale:sc }), c = document.createElement('canvas'); c.width = Math.round(v.width); c.height = Math.round(v.height);
+    const g = c.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, c.width, c.height); await pg.render({ canvasContext:g, viewport:v }).promise; out.thumb = c.toDataURL('image/jpeg', 0.62);
+    for (let i = 1; i <= Math.min(3, doc.numPages); i++){ const p = await doc.getPage(i), t = await p.getTextContent(); let last = null, line = '';
+      t.items.forEach(it => { const y = Math.round(it.transform[5]); if (last !== null && Math.abs(y - last) > 3){ out.text += line.trim()+'\n'; line = ''; } line += it.str+' '; last = y; }); out.text += line.trim()+'\n'; } }
+  catch(e){ console.warn('TALA pdf look', e); }
+  return out; }
+async function f201ImgThumb(file){ try{ return await lacShrink(file, 260, 0.62); }catch(e){ return ''; } }
+
+// Reads the important details from the words of a document. Each kind of document has its own details.
+const DMON = '(?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|June?|July?|Aug(?:ust)?|Sept?(?:ember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)';
+const DATE_RE = new RegExp('('+DMON+'\\.?\\s+\\d{1,2},?\\s+\\d{4}|\\d{1,2}\\s+'+DMON+'\\.?,?\\s+\\d{4}|\\d{4}[/.]\\d{1,2}[/.]\\d{1,2}|\\d{4}-\\d{2}-\\d{2}|\\d{1,2}[/.]\\d{1,2}[/.]\\d{2,4})', 'i');
+function f201Extract(code, doc, text){
+  const T = String(text||'').replace(/\r/g,'').replace(/[ \t ]+/g,' '), L = T.split('\n').map(x => x.trim()).filter(Boolean), up = T.toUpperCase(), items = [], d = String(doc||'').toLowerCase();
+  const add = (k, v) => { v = String(v||'').replace(/\s+/g,' ').replace(/^[\s:.\-#]+|[\s,;:]+$/g,'').trim(); if (!v || v.length > 120 || items.some(x => x.k===k)) return; items.push({ k, v }); };
+  const near = (lab, re, k, span) => { for (let i = 0; i < L.length; i++){ if (!lab.test(L[i])) continue; const s = L.slice(i, i + (span||2)).join(' '), after = s.slice(s.search(lab)); const m = after.match(re) || s.match(re); if (m){ add(k, m[1] || m[0]); return true; } } return false; };
+  const any = (re, k) => { const m = T.match(re); if (m) add(k, m[1] || m[0]); };
+  const isId = /A4|F3/.test(code) || /\bid\b|ids|membership|tin|gsis|philhealth|pag ibig/.test(d), isPsa = /psa|birth|marriage/.test(d), isAppt = /appointment|oath|assumption|position description|service record|designation|salary/.test(d);
+  const isEdu = /transcript|diploma|units/.test(d), isElig = /prc|eligib|license|board/.test(d), isPerf = /ipcrf|performance/.test(d), isNbi = /nbi|clearance/.test(d), isMed = /medical/.test(d);
+  // names
+  near(/\bname\b/i, /name\s*[:.]?\s*([A-ZÑ][A-ZÑa-zñ.,' ]{4,60})/i, 'Name', 1);
+  // ID numbers
+  if (isId || !isPsa){ near(/\bTIN\b|tax ?payer/i, /(\d{3}[- ]\d{3}[- ]\d{3}(?:[- ]\d{3,5})?)/, 'TIN', 3); }
+  near(/philhealth/i, /(\d{2}[- ]?\d{9}[- ]?\d)\b/, 'PhilHealth number', 3);
+  near(/pag.?ibig|\bMID\b|HDMF/i, /(\d{4}[- ]\d{4}[- ]\d{4})/, 'Pag IBIG MID number', 3);
+  near(/\bCRN\b|UMID|common reference/i, /(\d{4}[- ]\d{7}[- ]\d)/, 'UMID CRN', 3);
+  near(/\bGSIS\b|\bBP\s*(no|number)/i, /(?:BP\s*(?:No\.?|Number)?\s*[:#.]?\s*)?(\d{8,12})/i, 'GSIS BP number', 3);
+  near(/\bSSS\b/i, /(\d{2}[- ]\d{7}[- ]\d)/, 'SSS number', 3);
+  near(/driver|license no|licence/i, /([A-Z]\d{2}[- ]\d{2}[- ]\d{6})/, "Driver's license number", 3);
+  near(/passport/i, /\b([A-Z]{1,2}\d{6,8}[A-Z]?)\b/, 'Passport number', 3);
+  if (isElig || /PROFESSIONAL REGULATION/.test(up)){ near(/registration\s*(no|number)|license\s*(no|number)|reg\.?\s*no/i, /(\d{6,8})/, 'PRC license number', 2); near(/rating/i, /(\d{2}\.\d{1,2})\s*%?/, 'Board rating', 2); }
+  if (isNbi){ near(/NBI\s*ID|ID\s*no|NBI\s*no|clearance\s*no/i, /([A-Z0-9]{8,20})/, 'NBI clearance number', 2); }
+  if (isPsa){ near(/registry\s*(no|number)/i, /registry\s*(?:no\.?|number)\s*[:.]?\s*([0-9][0-9 \-]{3,20})/i, 'Registry number', 2); near(/place of (birth|marriage)/i, /place of (?:birth|marriage)\s*[:.]?\s*([A-Za-zñÑ ,.]{4,60})/i, /marriage/.test(d) ? 'Place of marriage' : 'Place of birth', 2); }
+  // dates by label
+  near(/valid\s*(until|thru|through)|validity|expir|exp\.?\s*date|valid up to/i, DATE_RE, 'Valid until', 2);
+  near(/date of birth|birth\s*date|\bborn\b|\bDOB\b/i, DATE_RE, 'Date of birth', 2);
+  if (/marriage/.test(d)) near(/date of marriage/i, DATE_RE, 'Date of marriage', 2);
+  near(/registration date|date of registration|registered on|date registered/i, DATE_RE, 'Registration date', 2);
+  near(/date (of )?issu|issued on|date issued/i, DATE_RE, 'Date issued', 2);
+  if (isAppt){ const pos = PRF_POS.filter(x => x!=='Other' && up.indexOf(x.toUpperCase()) > -1).sort((a,b) => b.length - a.length)[0]; if (pos) add('Position', pos);
+    near(/item\s*no|plantilla/i, /item\s*(?:no\.?|number)\s*[:.]?\s*([A-Z0-9][A-Z0-9\-]{3,40})/i, 'Item number', 2);
+    any(/\b(Original|Promotion|Transfer|Reappointment|Reemployment|Reclassification)\b/i, 'Nature of appointment');
+    any(/\b(Permanent|Provisional|Temporary|Substitute|Casual|Contractual)\b/i, 'Status');
+    near(/date of (signing|appointment|issuance)|effective/i, DATE_RE, 'Date of appointment', 2);
+    near(/assum|sworn|oath/i, DATE_RE, /oath/.test(d) ? 'Date of oath' : 'Date of assumption', 2); }
+  if (isEdu){ any(/\b((?:Bachelor|Master|Doctor)\s+(?:of|in)\s+[A-Za-z ]{3,60}?)(?=\s+(?:major|with|from|at|in\s+[A-Z][a-z]+ University)|[\n,.]|$)/i, 'Degree');
+    any(/major(?:ing|ed)?\s*(?:in|:)?\s*([A-Za-z ]{3,50}?)(?=[\n,.]|$)/i, 'Major');
+    const sch = L.find(x => /university|college|institute|polytechnic|academy/i.test(x) && x.length < 90); if (sch) add('School', sch);
+    near(/graduat|date of graduation|conferred/i, /((?:19|20)\d{2})/, 'Year graduated', 3);
+    any(/(\d{1,3})\s*units/i, 'Units earned'); }
+  if (isPerf){ near(/final|overall|numerical|rating/i, /\b([1-5]\.\d{1,3})\b/, 'Final rating', 3);
+    any(/\b(Outstanding|Very Satisfactory|Satisfactory|Unsatisfactory|Poor)\b/i, 'Adjectival rating');
+    any(/((?:January|July)\s+(?:to|-)\s+(?:June|December)\s+\d{4}|(?:SY|School Year)\s*\d{4}\s*(?:to|-)\s*\d{4}|Calendar Year\s*\d{4})/i, 'Rating period'); }
+  if (isMed) near(/date of exam|examined|date/i, DATE_RE, 'Date of examination', 2);
+  if (/salary|step increment/.test(d)){ near(/effectiv/i, DATE_RE, 'Effective date', 2); any(/\b(Step\s*\d)\b/i, 'Step'); }
+  if (/training|seminar|award|recognition/.test(d)){ const t = L.find(x => /training|seminar|workshop|conference|award|recogni|certificate of/i.test(x) && x.length > 12 && x.length < 120); if (t) add('Title', t);
+    any(/(\d{1,3})\s*(?:training\s*)?hours/i, 'Hours'); }
+  if (!items.some(x => /date|valid|year/i.test(x.k))){ const m = T.match(DATE_RE); if (m) add('Date on the document', m[1]); }
+  return items.slice(0, 8);
+}
+// After an upload: the words are read (from the PDF, or with Google Drive for a scan), then the details are kept with the document
+async function f201Read(id, text, quiet){
+  let t = text || '';
+  if (t.replace(/\s/g,'').length < 40){ try{ const r = await api('f201Scan', { id }); t = r.text || ''; if (r.need==='drive' && USER.role==='head') toast('To read scanned files, turn on the Drive service in Apps Script. See the update notes.'); }catch(e){} }
+  const x = ((PRF.f||{}).docs||[]).find(y => y.id===id); if (!x) return;
+  const items = f201Extract(x.code, x.doc, t);
+  try{ const o = await api('f201Details', { id, details:{ items, read:true } }); const D = PRF.f.docs, i = D.findIndex(y => y.id===id); if (i > -1) D[i] = o; }catch(e){}
+  if (!quiet) toast(items.length ? 'Details were read from the file. Please check them.' : 'Uploaded. You can type the details of the document.');
+  if (CUR_FEATURE==='prof' && PRF.tab==='file') prfDraw();
+}
+function f201Book(x, d, mine, head){
+  const det = ((x.details||{}).items||[]);
+  const cover = x.thumb && x.thumb!=='yes' ? `<img src="${x.thumb}" alt="">` : `<span class="bkico">${x.mime==='application/pdf'?'📄':'🖼'}</span>`;
+  return `<div class="bk ${x.status==='Redo'?'redo':''}"><button class="bkc" onclick="f201Card('${x.id}')" title="Open">${cover}<span class="bkst">${f201Stat(x)}</span></button>
+    <div class="bkt"><b>${esc(d.code)}</b> ${esc(d.doc)}</div>
+    ${det.length ? `<dl class="bkd">${det.slice(0, 5).map(i => `<dt>${esc(i.k)}</dt><dd>${esc(i.v)}</dd>`).join('')}</dl>` : `<small class="hint">${(x.details||{}).read ? 'No details found yet.' : 'Details not read yet.'}</small>`}
+    ${x.remark ? `<div class="f2rem">${esc(x.remark)}</div>` : ''}
+    <small class="hint">Uploaded ${esc(dtTxt(x.on))}</small>
+    <div class="bka">${head && !mine ? `<button class="btn small" onclick="f201Check('${x.id}','Okay')">✔ Okay</button><button class="btn ghost small" onclick="f201Check('${x.id}','Redo')">↺ Redo</button>` : ''}${mine && x.status!=='Okay' ? `<button class="btn ghost small" onclick="f201Pick('${d.code}','${x.id}')">Upload again</button>` : ''}</div></div>`;
+}
+function f201Empty(d, mine, isNa){
+  return `<div class="bk bkempty ${isNa?'na':''}">${mine && !isNa ? `<button class="bkc" onclick="f201Pick('${d.code}','')"><span class="bkplus">＋</span><span>Upload</span></button>` : `<div class="bkc"><span class="bkplus">${isNa ? '—' : '·'}</span><span>${isNa ? 'Not applicable' : 'Not yet'}</span></div>`}
+    <div class="bkt"><b>${esc(d.code)}</b> ${esc(d.doc)}${d.opt ? ' <small class="hint">(if applicable)</small>' : ''}</div>
+    ${mine && d.opt ? (isNa ? `<button class="linkbtn" onclick="f201NaSet('${d.code}',0)">Undo not applicable</button>` : `<button class="linkbtn" onclick="f201NaSet('${d.code}',1)">Not applicable to me</button>`) : ''}</div>`;
+}
+function f201Mine(){
+  const me = PRF.who, mine = me===USER.email, head = prfHead(), D = f201Of(me).filter(x => x.code!=='CP'), na = f201Na(me), docs = f201Docs();
+  const up = docs.filter(d => D.some(x => x.code===d.code)).length, ok = D.filter(x => x.status==='Okay').length, need = docs.filter(d => !d.opt && !D.some(x => x.code===d.code)).length;
+  const q = PRF.docQ.toLowerCase();
+  const shelf = g => (g[2]||[]).map(d => ({ code:d[0], doc:d[1], opt:!!d[2] })).map(d => { const xs = D.filter(x => x.code===d.code);
+    if (q && !(d.doc.toLowerCase().includes(q) || xs.some(x => [(x.keywords||[]).join(' '), x.fileName, ((x.details||{}).items||[]).map(i => i.k+' '+i.v).join(' ')].join(' ').toLowerCase().includes(q)))) return '';
+    return xs.length ? xs.map(x => f201Book(x, d, mine, head)).join('') + (mine ? `<div class="bk more"><button class="bkc" onclick="f201Pick('${d.code}','')"><span class="bkplus">＋</span><span>Add another page or file</span></button><div class="bkt"><b>${esc(d.code)}</b> ${esc(d.doc)}</div></div>` : '') : f201Empty(d, mine, !!na[d.code]); }).join('');
+  $('prfBody').innerHTML = `<div class="ostats"><div class="ostat static"><span class="oico">📁</span><b>${up}</b><span>Documents uploaded</span></div><div class="ostat static"><span class="oico">✔</span><b>${ok}</b><span>Okay</span></div>
+      <div class="ostat static"><span class="oico">↺</span><b>${D.filter(x => x.status==='Redo').length}</b><span>To redo</span></div><div class="ostat static"><span class="oico">⏳</span><b>${need}</b><span>Required, not yet uploaded</span></div></div>
+    ${mine ? `<p class="hint" style="margin:10px 2px">Upload a PDF or a clear scanned photo (JPG or PNG) of each document. Word files and other editable files are not accepted. You can upload what you have now and add the rest when they are available, on or before ${esc(dShort((PRF.f && PRF.f.deadline) || '2026-10-30'))}.</p>` : ''}
+    <div class="f2tools"><input class="f2q" placeholder="🔍 Search documents, details, or keywords" value="${esc(PRF.docQ)}" oninput="PRF.docQ=this.value;clearTimeout(PRF.qt);PRF.qt=setTimeout(()=>{f201Mine();const i=document.querySelector('.f2q');if(i){i.focus();i.setSelectionRange(i.value.length,i.value.length);}},250)">
+      ${D.length ? `<button class="btn ghost small" onclick="f201Bundle('${me}','print')">🖨 Print all as one</button><button class="btn ghost small" onclick="f201Bundle('${me}','download')">⬇ Download all as one PDF</button><button class="btn ghost small" onclick="f201Bundle('${me}','each')">⬇ Download each file</button>` : ''}
+      ${head && mine ? '<button class="btn ghost small" onclick="f201ListEdit()">Edit the document list</button>' : ''}</div>
+    ${f201List().map(g => { const r = shelf(g); return r ? `<section class="shelf"><h4>${esc(g[0])}. ${esc(g[1])}</h4><div class="shelfrow">${r}</div></section>` : ''; }).join('') || '<div class="empty">No document matches the search.</div>'}`;
+}
+// One document, large: the file, the details (can be corrected), the keywords, and the actions
+async function f201Card(id){
+  const x = ((PRF.f||{}).docs||[]).find(y => y.id===id); if (!x) return; const mine = x.email===USER.email, head = prfHead(), canEd = (mine && x.status!=='Okay') || head;
+  F201 = { id, items: JSON.parse(JSON.stringify(((x.details||{}).items)||[])) };
+  stfModal(`<div class="f2card"><div class="f2cv" id="f2cv"><div class="pirload"><div class="pirdots"><i></i><i></i><i></i></div></div></div>
+    <div class="f2cd"><h3>${esc(x.code)} ${esc(x.doc)}</h3><p class="sub">${f201Stat(x)} Uploaded ${esc(dtTxt(x.on))}${x.checkedOn ? ', checked '+esc(dtTxt(x.checkedOn)) : ''}</p>
+      ${x.remark ? `<div class="f2rem">${esc(x.remark)}</div>` : ''}
+      <b>Details</b><p class="hint" style="margin:2px 0 6px">Read from the file. ${canEd ? 'Check them and correct anything that is not right.' : ''}</p>
+      <div id="f2det"></div>${canEd ? `<div class="row" style="justify-content:flex-start;gap:6px;margin-top:6px"><button class="btn ghost small" onclick="f201DetAdd()">+ Add a detail</button><button class="btn ghost small" onclick="f201Reread('${id}')">↻ Read the file again</button><button class="btn small" onclick="f201DetSave()">Save the details</button></div>` : ''}
+      <b style="display:block;margin-top:12px">Keywords</b><div class="f2kw">${(x.keywords||[]).map(k => `<span class="kw">${esc(k)}</span>`).join('') || '<small class="hint">None</small>'}${canEd ? ` <button class="linkbtn" onclick="f201KwEdit('${id}')">Edit keywords</button>` : ''}</div>
+      <p class="err" id="f2err"></p>
+      <div class="row" style="justify-content:flex-start;flex-wrap:wrap;gap:6px" id="f2acts"></div></div></div>`, 'wide xwide');
+  f201DetDraw(canEd);
+  try{ const r = await api('f201Get', { id }); F201.file = r; const url = URL.createObjectURL(new Blob([b64ToBytes(r.data)], { type:r.mime })); F201.url = url;
+    $('f2cv').innerHTML = r.mime==='application/pdf' ? `<iframe class="fview" src="${url}" title="File"></iframe>` : `<img class="fview" src="${url}" alt="">`;
+    $('f2acts').innerHTML = `<button class="btn ghost small" onclick="f201PrintOne()">🖨 Print</button><a class="btn ghost small" href="${url}" download="${esc(r.name)}">⬇ Download</a><a class="btn ghost small" href="${url}" target="_blank" rel="noopener">Open in a new tab</a>
+      ${head && !mine ? `<button class="btn small" onclick="f201Check('${id}','Okay')">✔ Okay</button><button class="btn ghost small" onclick="f201Check('${id}','Redo')">↺ Redo</button>` : ''}
+      ${mine && x.status!=='Okay' ? `<button class="btn ghost small" onclick="closeModal('stfModal');f201Pick('${x.code}','${id}')">Upload again</button><button class="btn ghost small" onclick="f201Del('${id}')">Remove</button>` : ''}<button class="btn small" onclick="closeModal('stfModal')">Close</button>`; }
+  catch(e){ $('f2cv').innerHTML = `<div class="empty">The file could not be opened. ${esc(e.message||'')}</div>`; }
+}
+function f201DetDraw(canEd){ const b = $('f2det'); if (!b) return; if (canEd === undefined) canEd = !!document.querySelector('#f2det input') || !F201.items.length;
+  b.innerHTML = F201.items.length || canEd ? F201.items.map((i, n) => canEd ? `<div class="f2dr"><input value="${esc(i.k)}" placeholder="Detail, for example TIN" oninput="F201.items[${n}].k=this.value"><input value="${esc(i.v)}" placeholder="Value" oninput="F201.items[${n}].v=this.value"><button class="btn ghost small" onclick="F201.items.splice(${n},1);f201DetDraw(true)" aria-label="Remove">✕</button></div>`
+    : `<div class="f2dr ro"><span>${esc(i.k)}</span><b>${esc(i.v)}</b></div>`).join('') || '<small class="hint">No details yet.</small>' : '<small class="hint">No details yet.</small>'; }
+function f201DetAdd(){ F201.items.push({ k:'', v:'' }); f201DetDraw(true); const r = document.querySelectorAll('#f2det input'); if (r.length > 1) r[r.length-2].focus(); }
+async function f201DetSave(){ try{ const o = await api('f201Details', { id:F201.id, details:{ items:F201.items.filter(i => i.k && i.v), checked:true } }); const D = PRF.f.docs, i = D.findIndex(y => y.id===o.id); if (i > -1) D[i] = o; toast('Details saved.'); closeModal('stfModal'); prfDraw(); }catch(e){ handleErr(e, 'f2err'); } }
+async function f201Reread(id){ toast('Reading the file'); let text = '';
+  try{ if (F201.file && F201.file.mime==='application/pdf'){ const f = new File([b64ToBytes(F201.file.data)], 'x.pdf', { type:'application/pdf' }); text = (await f201PdfLook(f)).text; } }catch(e){}
+  await f201Read(id, text, false); const x = PRF.f.docs.find(y => y.id===id); if (x){ F201.items = JSON.parse(JSON.stringify((x.details||{}).items||[])); f201DetDraw(true); } }
+function f201PrintOne(){ if (!F201.url) return; if (F201.file.mime!=='application/pdf'){ $('printArea').innerHTML = `<div class="f2print"><img src="${F201.url}" style="max-width:100%;max-height:270mm;display:block;margin:auto" alt=""></div>`; setTimeout(() => window.print(), 300); return; }
+  printPdfUrl(F201.url); }
+function printPdfUrl(url){ const fr = document.createElement('iframe'); fr.style.cssText = 'position:fixed;right:0;bottom:0;width:1px;height:1px;border:0;opacity:0'; fr.src = url; document.body.appendChild(fr);
+  fr.onload = () => { try{ fr.contentWindow.focus(); fr.contentWindow.print(); }catch(e){ window.open(url, '_blank'); } setTimeout(() => fr.remove(), 60000); }; }
+// All the 201 files of one person: printed or downloaded as one PDF, or each file by itself
+async function f201Bundle(email, mode, quietName){
+  let docs = f201Of(email);
+  if (!docs.length){ try{ docs = (await api('f201Load', { email })).docs || []; }catch(e){} }
+  const order = f201Docs().map(d => d.code); docs = docs.slice().sort((a,b) => (order.indexOf(a.code) < 0 ? 99 : order.indexOf(a.code)) - (order.indexOf(b.code) < 0 ? 99 : order.indexOf(b.code)) || String(a.on).localeCompare(String(b.on)));
+  if (!docs.length) return toast('No files yet.');
+  const who = docs[0].name || email, base = '201File_'+String(who).normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^A-Za-z0-9]+/g,'');
+  stfModal(`<h3>Preparing the 201 File of ${esc(who)}</h3><p class="sub" id="f2bp">0 of ${docs.length} files</p><div class="pfbar"><i id="f2bb" style="width:0"></i></div>`);
+  const files = [];
+  for (let i = 0; i < docs.length; i++){ try{ files.push({ x:docs[i], r: await api('f201Get', { id:docs[i].id }) }); }catch(e){ files.push({ x:docs[i], err:e.message }); }
+    if ($('f2bp')){ $('f2bp').textContent = (i+1)+' of '+docs.length+' files'; $('f2bb').style.width = Math.round((i+1)*100/docs.length)+'%'; } }
+  const dl = (blob, name) => { const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 4000); };
+  if (mode==='each'){ for (const f of files){ if (f.r){ dl(new Blob([b64ToBytes(f.r.data)], { type:f.r.mime }), f.r.name); await new Promise(r => setTimeout(r, 700)); } } closeModal('stfModal'); return toast('Downloading '+files.filter(f => f.r).length+' files.'); }
+  try{ await loadAny(PDFLIB); const { PDFDocument, StandardFonts, rgb } = PDFLib, out = await PDFDocument.create(), font = await out.embedFont(StandardFonts.Helvetica), bold = await out.embedFont(StandardFonts.HelveticaBold);
+    const cov = out.addPage([595.28, 841.89]); let y = 780; const tx = (t, s, f, x) => { cov.drawText(String(t).replace(/[^\x20-\x7EÑñ]/g,''), { x:x||56, y, size:s, font:f||font, color:rgb(0,0,0) }); };
+    tx('201 FILE', 18, bold); y -= 24; tx(who, 13, bold); y -= 18; tx('Baluyan Elementary School', 10); y -= 14; tx('Printed '+dtTxt(new Date().toLocaleString('sv-SE',{timeZone:'Asia/Manila'})), 9); y -= 28;
+    files.forEach((f, i) => { if (y < 60) return; tx((i+1)+'. '+f.x.code+' '+String(f.x.doc).slice(0,70), 9.5, bold); y -= 12; tx('   '+String(f.x.fileName).slice(0,80)+', uploaded '+dtTxt(f.x.on)+', '+f.x.status+(f.err ? ', could not be added' : ''), 8.5); y -= 15; });
+    for (const f of files){ if (!f.r) continue; const bytes = b64ToBytes(f.r.data);
+      if (f.r.mime==='application/pdf'){ try{ const src = await PDFDocument.load(bytes, { ignoreEncryption:true }), pages = await out.copyPages(src, src.getPageIndices()); pages.forEach(p => out.addPage(p)); }catch(e){ console.warn('TALA bundle pdf', e); } }
+      else { const img = f.r.mime==='image/png' ? await out.embedPng(bytes) : await out.embedJpg(bytes), pg = out.addPage([595.28, 841.89]), sc = Math.min(555/img.width, 802/img.height); pg.drawImage(img, { x:(595.28-img.width*sc)/2, y:(841.89-img.height*sc)/2, width:img.width*sc, height:img.height*sc }); } }
+    const blob = new Blob([await out.save()], { type:'application/pdf' }); closeModal('stfModal');
+    if (mode==='download') dl(blob, (quietName || base)+'.pdf'); else printPdfUrl(URL.createObjectURL(blob));
+    return blob; }
+  catch(e){ console.warn('TALA bundle', e); $('stfMBody').innerHTML = `<h3>The files could not be put together</h3><p class="sub">${esc(e.message||'Please try again.')} You can download each file instead.</p><div class="row"><button class="btn ghost" onclick="closeModal('stfModal')">Close</button><button class="btn" onclick="f201Bundle('${email}','each')">⬇ Download each file</button></div>`; }
+}
+async function f201BundleAll(){ const L = (PRF.list||[]).filter(p => !(USER.role==='admin' && p.role==='head'));
+  for (const p of L){ const n = ((PRF.f||{}).docs||[]).filter(x => x.email===p.email).length; if (!n) continue; await f201Bundle(p.email, 'download'); await new Promise(r => setTimeout(r, 800)); }
+  toast('Done. Each person has one PDF.'); }
+
+/* ----- The class program: the School Head uploads it, the teacher confirms the subjects and minutes ----- */
+const CP_SKIP = /recess|lunch|break|snack|flag|ceremony|dismiss|arrival|assembly|prayer|clean|noon|rest|preparation|homeroom period|time in|time out/i;
+function cpDoc(email){ return ((PRF.f||{}).docs||[]).find(x => x.email===email && x.code==='CP'); }
+function cpTotals(rows){ const R = (rows||[]).filter(r => r.direct), subs = []; R.forEach(r => { const s = [r.subject, r.grade].filter(Boolean).join(', '); if (s && subs.indexOf(s) < 0) subs.push(s); });
+  return { subjects: subs, minutes: R.reduce((a, r) => a + (Number(r.min)||0) * (Number(r.days)||0), 0) }; }
+function cpMin(t){ const m = String(t).match(/(\d{1,2})[:.](\d{2})\s*(am|pm|a\.m\.|p\.m\.)?\s*(?:-|to|–)\s*(\d{1,2})[:.](\d{2})\s*(am|pm|a\.m\.|p\.m\.)?/i); if (!m) return 0;
+  let a = +m[1]*60 + +m[2], b = +m[4]*60 + +m[5]; const ap = (x, h) => /p/i.test(x||'') && h < 12 ? 720 : 0; a += ap(m[3], +m[1]); b += ap(m[6], +m[4]); if (b <= a && b < 720) b += 720; if (a < 360) a += 720; if (b < a) b += 720; return Math.max(0, Math.min(600, b - a)); }
+function cpParse(text){ const out = []; String(text||'').replace(/\r/g,'').split('\n').map(l => l.replace(/\s+/g,' ').trim()).filter(Boolean).forEach(l => {
+  const m = l.match(/(\d{1,2}[:.]\d{2}\s*(?:am|pm|a\.m\.|p\.m\.)?\s*(?:-|to|–)\s*\d{1,2}[:.]\d{2}\s*(?:am|pm|a\.m\.|p\.m\.)?)(.*)$/i); if (!m) return;
+  let rest = m[2].replace(/^[\s|:.\-]+/,'').trim(); const mm = rest.match(/\b(\d{2,3})\s*(?:min|mins|minutes)?\s*$/i); let min = cpMin(m[1]); if (mm){ min = +mm[1] || min; rest = rest.slice(0, mm.index).trim(); }
+  const g = rest.match(/\b(Kinder(?:garten)?|Grade\s*\d|G\d)\b/i);
+  out.push({ time:m[1].trim(), subject:(g ? rest.replace(g[0],'') : rest).replace(/[|,]+/g,' ').replace(/\s+/g,' ').trim().slice(0,80), grade: g ? g[0].replace(/^G(\d)$/i,'Grade $1') : '', min, days:5, direct: !CP_SKIP.test(rest) && !!rest }); });
+  return out.slice(0, 40); }
+function prfCpHtml(){
+  const who = PRF.who, x = cpDoc(who), head = prfHead(), mine = who===USER.email, R = x ? ((x.details||{}).rows||[]) : [], T = cpTotals(R), c = x && (x.details||{}).confirm;
+  if (!x) return `<div class="pfcp"><b>Class program, subjects, and teaching minutes</b><p class="hint">${head ? 'Upload the class program of this teacher. TALA reads the subjects and the minutes, then the teacher confirms them.' : 'Your class program will appear here. Then check your subjects and minutes and confirm them.'}</p>
+    ${head ? `<button type="button" class="btn small" onclick="cpPick()">⬆ Upload the class program</button>` : ''}</div>`;
+  return `<div class="pfcp"><div class="pfcph"><b>Class program, subjects, and teaching minutes</b><button type="button" class="linkbtn" onclick="f201Card('${x.id}')">${x.mime==='application/pdf'?'📄':'🖼'} View the class program</button></div>
+    ${R.length ? `<div class="tblwrap"><table class="pftbl cpt"><thead><tr><th>Time</th><th>Subject or activity</th><th>Grade</th><th>Minutes a day</th><th>Days a week</th><th>Direct teaching</th></tr></thead><tbody>
+      ${R.map(r => `<tr class="${r.direct?'':'cpno'}"><td>${esc(r.time)}</td><td>${esc(r.subject)}</td><td>${esc(r.grade)}</td><td>${r.min}</td><td>${r.days}</td><td>${r.direct?'✔':'Not counted'}</td></tr>`).join('')}</tbody></table></div>
+      <div class="cptot"><div><small>Subjects and grade levels taught</small><b>${esc(T.subjects.join('; ') || 'None')}</b></div><div><small>Total actual teaching minutes per week</small><b>${T.minutes}</b></div></div>`
+      : `<p class="hint">${head ? 'Tap Read the class program, or type the rows.' : 'The subjects and minutes are not ready yet.'}</p>`}
+    ${c ? `<p class="${c.ok?'cpok':'cpbad'}">${c.ok ? '✔ Confirmed by the teacher on '+esc(dtTxt(c.on)) : '✖ The teacher said this is not correct on '+esc(dtTxt(c.on))+(c.note ? ': '+esc(c.note) : '')}</p>` : R.length ? '<p class="hint">Waiting for the teacher to confirm.</p>' : ''}
+    <div class="f2acts">${head ? `<button type="button" class="btn ghost small" onclick="cpEdit()">✎ Edit the rows</button><button type="button" class="btn ghost small" onclick="cpRead()">↻ Read the class program</button><button type="button" class="btn ghost small" onclick="cpPick()">⬆ Upload a new class program</button>` : ''}
+      ${mine && !head && R.length && !(c && c.ok) ? `<button type="button" class="btn small" onclick="cpConfirm(true)">✔ Correct, I confirm</button><button type="button" class="btn ghost small" onclick="cpConfirmNo()">Something is not correct</button>` : ''}</div></div>`;
+}
+function cpPick(){ const i = document.createElement('input'); i.type = 'file'; i.accept = 'application/pdf,image/jpeg,image/png'; i.onchange = () => { if (i.files[0]) cpUpload(i.files[0]); }; i.click(); }
+async function cpUpload(file){
+  if (!/^application\/pdf$|^image\/(jpeg|png)$/.test(file.type)) return toast('Choose a PDF or a picture of the class program.');
+  toast('Uploading the class program'); PRF.draft = $('pf_first') ? prfCollect() : PRF.draft;
+  try{ const pdf = file.type==='application/pdf', look = pdf ? await f201PdfLook(file) : { thumb: await f201ImgThumb(file), text:'' };
+    const base64 = pdf ? await readB64(file) : (await lacShrink(file, 2200, 0.85)).split(',')[1], cur = cpDoc(PRF.who), A = PRF.p.account || {};
+    const r = await api('f201Upload', { doc:{ id: cur ? cur.id : '', code:'CP', doc:'Class Program', email:PRF.who, mime: pdf ? 'application/pdf' : 'image/jpeg', base64, fileName:'ClassProgram_'+f201NameOf()+(pdf?'.pdf':'.jpg'), thumb:look.thumb, keywords:['Class program', A.name||''] } });
+    PRF.f = r; await cpRead(look.text); }
+  catch(e){ toast(e.message || 'Could not upload.'); }
+}
+async function cpRead(text){ const x = cpDoc(PRF.who); if (!x) return; let t = text || '';
+  if (t.replace(/\s/g,'').length < 40){ try{ t = (await api('f201Scan', { id:x.id })).text || ''; }catch(e){} }
+  const rows = cpParse(t); if (!rows.length){ toast('The rows could not be read. Please type them.'); return cpEdit(); }
+  try{ const o = await api('f201Details', { id:x.id, details:{ rows } }); const D = PRF.f.docs, i = D.findIndex(y => y.id===o.id); D[i] = o; toast('Read '+rows.length+' rows. Please check them.'); cpEdit(); }catch(e){ toast(e.message || 'Could not save.'); } }
+function cpEdit(){ const x = cpDoc(PRF.who); if (!x) return; CPE = JSON.parse(JSON.stringify((x.details||{}).rows || [])); if (!CPE.length) CPE.push({ time:'', subject:'', grade:'', min:0, days:5, direct:true });
+  stfModal(`<h3>Class program rows</h3><p class="sub">Untick the rows that are not direct teaching, like recess and lunch. TALA adds only the ticked rows.</p><div id="cpRows"></div>
+    <div class="row" style="justify-content:flex-start"><button class="btn ghost small" onclick="CPE.push({time:'',subject:'',grade:'',min:0,days:5,direct:true});cpRowsDraw()">+ Add a row</button><b id="cpTot" style="margin-left:auto"></b></div>
+    <p class="err" id="cpErr"></p><div class="row"><button class="btn ghost" onclick="closeModal('stfModal')">Cancel</button><button class="btn" onclick="cpSave()">Save</button></div>`, 'wide xwide'); cpRowsDraw(); }
+var CPE = [];
+function cpRowsDraw(){ $('cpRows').innerHTML = `<div class="tblwrap"><table class="pftbl cpe"><thead><tr><th>Time</th><th>Subject</th><th>Grade</th><th>Min a day</th><th>Days</th><th>Direct</th><th></th></tr></thead><tbody>${CPE.map((r, i) => `<tr>
+    <td><input value="${esc(r.time)}" oninput="CPE[${i}].time=this.value;const m=cpMin(this.value);if(m){CPE[${i}].min=m;this.closest('tr').querySelector('.cpm').value=m;cpTotDraw()}"></td><td><input value="${esc(r.subject)}" oninput="CPE[${i}].subject=this.value"></td><td><input value="${esc(r.grade)}" oninput="CPE[${i}].grade=this.value"></td>
+    <td><input class="cpm" type="number" value="${r.min}" oninput="CPE[${i}].min=+this.value;cpTotDraw()"></td><td><input type="number" min="0" max="7" value="${r.days}" oninput="CPE[${i}].days=+this.value;cpTotDraw()"></td>
+    <td><input type="checkbox" ${r.direct?'checked':''} onchange="CPE[${i}].direct=this.checked;cpTotDraw()"></td><td><button class="btn ghost small" onclick="CPE.splice(${i},1);cpRowsDraw()">✕</button></td></tr>`).join('')}</tbody></table></div>`; cpTotDraw(); }
+function cpTotDraw(){ $('cpTot').textContent = 'Direct teaching: '+cpTotals(CPE).minutes+' minutes a week'; }
+async function cpSave(){ const x = cpDoc(PRF.who); try{ const o = await api('f201Details', { id:x.id, details:{ rows: CPE.filter(r => r.subject || r.time) } }); const D = PRF.f.docs, i = D.findIndex(y => y.id===o.id); D[i] = o; closeModal('stfModal'); toast('Saved. The teacher will be asked to confirm.'); prfDraw(); }catch(e){ handleErr(e, 'cpErr'); } }
+async function cpConfirm(ok, note){ const x = cpDoc(PRF.who); if (!x) return; PRF.draft = $('pf_first') ? prfCollect() : PRF.draft;
+  try{ const o = await api('f201Cp', { id:x.id, ok, note:note||'' }); const D = PRF.f.docs, i = D.findIndex(y => y.id===o.id); D[i] = o; closeModal('stfModal'); toast(ok ? 'Thank you. Confirmed.' : 'Sent. The class program will be checked.'); prfCount(); prfDraw(); }catch(e){ toast(e.message || 'Could not save.'); } }
+function cpConfirmNo(){ stfModal(`<h3>What is not correct?</h3><textarea id="cpNote" rows="3" style="width:100%" placeholder="For example, I also teach EPP in Grade 5 on Fridays."></textarea><div class="row"><button class="btn ghost" onclick="closeModal('stfModal')">Cancel</button><button class="btn" onclick="cpConfirm(false, $('cpNote').value)">Send</button></div>`); }
+
+/* ----- Ancillary assignments: one box each ----- */
+function prfAncList(v){ const a = v.ancillary; return Array.isArray(a) ? a : a ? String(a).split(/;\s*/) : []; }
+function prfAncHtml(v, dis){ const A = prfAncList(v), L = A.length ? A : [''];
+  return `<div class="pfanc"><b>Ancillary assignments</b>${L.map((a, i) => `<div class="pfarow"><input class="an_in" value="${esc(a)}" placeholder="For example, School Property Custodian" ${dis}>${dis ? '' : `<button type="button" class="btn ghost small" onclick="prfAncDel(${i})" aria-label="Remove">✕</button>`}</div>`).join('')}
+    ${dis ? '' : '<button type="button" class="btn ghost small" onclick="prfAncAdd()">+ Add an ancillary assignment</button>'}</div>`; }
+function prfAncAdd(){ PRF.draft = prfCollect(); PRF.draft.ancillary.push(''); prfForm(); const r = document.querySelectorAll('.an_in'); if (r.length) r[r.length-1].focus(); }
+function prfAncDel(i){ PRF.draft = prfCollect(); PRF.draft.ancillary = [...document.querySelectorAll('.an_in')].map(x => x.value.trim()).filter((x, j) => j!==i); prfForm(); }
+
+/* ----- What each person still has to do in Profile and 201 File (red number, pop up, and My week) ----- */
+function prfTodoLocal(){ if (!PRF.p || !PRF.f || PRF.who!==USER.email || !PRF.p.profile && !PRF.p.account) return PRF.todo;
+  const D = f201Of(USER.email), cp = cpDoc(USER.email);
+  return { st: PRF.p.profile ? PRF.p.profile.status : '', up: D.filter(x => x.code!=='CP').map(x => x.code), redo: D.filter(x => x.status==='Redo').map(x => x.doc), cp: !!(cp && ((cp.details||{}).rows||[]).length && !((cp.details||{}).confirm||{}).ok), na: Object.keys(f201Na(USER.email)), list: PRF.f.list, dl: PRF.f.deadline }; }
+function prfTodoLines(T){ T = T || PRF.todo; if (!T || !USER || USER.role==='head') return [];
+  const L = Array.isArray(T.list) && T.list.length ? T.list : F201_DEF, dl = dShort(T.dl || '2026-10-30'), out = [];
+  const need = []; L.forEach(g => (g[2]||[]).forEach(d => { if (!d[2] && (T.up||[]).indexOf(d[0]) < 0 && (T.na||[]).indexOf(d[0]) < 0) need.push(d[1]); }));
+  if (T.st!=='Locked') out.push({ t:(T.st ? 'My Profile is still a draft.' : 'My Profile is not started yet.')+' You can save it now even if some details are not available yet, then add them when you have them, on or before '+dl+'.', go:"PRF.tab='me';openFeature('prof')", b:'Open' });
+  (T.redo||[]).forEach(x => out.push({ t:'201 File: please upload again '+x+'.', go:"PRF.tab='file';openFeature('prof')", b:'Upload' }));
+  if (need.length) out.push({ t:'201 File: '+need.length+' required document'+(need.length>1?'s':'')+' not uploaded yet. Upload what you have now and add the rest when they are available, on or before '+dl+'.', go:"PRF.tab='file';openFeature('prof')", b:'Upload' });
+  if (T.cp) out.push({ t:'Class program: please check your subjects and minutes, then confirm.', go:"PRF.tab='me';openFeature('prof')", b:'Check' });
+  return out; }
+function prfTodoCount(T){ T = T || PRF.todo; if (!T) return 0; const L = Array.isArray(T.list) && T.list.length ? T.list : F201_DEF; let need = 0;
+  L.forEach(g => (g[2]||[]).forEach(d => { if (!d[2] && (T.up||[]).indexOf(d[0]) < 0 && (T.na||[]).indexOf(d[0]) < 0) need++; }));
+  return (T.st!=='Locked' ? 1 : 0) + (T.redo||[]).length + need + (T.cp ? 1 : 0); }
+
+/* ----- For the School Head: a short narrative of each person, ready to print ----- */
+function prfNarr(p, docs, na){
+  const v = p.data || {}, he = v.sex==='Female' ? 'She' : v.sex==='Male' ? 'He' : 'This personnel', his = v.sex==='Female' ? 'Her' : v.sex==='Male' ? 'His' : 'The', S = [], dl = dShort((PRF.f && PRF.f.deadline) || '2026-10-30');
+  const nm = [v.first, v.middle, v.last, v.ext].filter(Boolean).join(' ') || p.name, dt = x => x ? fmtLong(x) : '';
+  let a = nm+' is '+(/^[AEIOU]/i.test(v.position || p.position || '') ? 'an ' : 'a ')+(v.position || p.position || 'personnel')+(v.workStatus ? ', '+v.workStatus.toLowerCase().replace(/\s*\(.*\)/,'') : '')+', at Baluyan Elementary School';
+  if (v.schoolDate) a += ' since '+dt(v.schoolDate); a += '.'; S.push(a);
+  if (v.origDate || v.curDate) S.push(his+' original appointment was on '+(dt(v.origDate) || 'a date not yet given')+(v.curDate ? ', and the appointment to the current position was on '+dt(v.curDate) : '')+(v.natApp ? ' ('+v.natApp.toLowerCase()+')' : '')+'.');
+  if (v.birth) S.push(he+' was born on '+dt(v.birth)+(v.birthPlace ? ' in '+v.birthPlace : '')+(v.civil ? ', and is '+v.civil.toLowerCase() : '')+'.');
+  const deg = (v.degrees||[]).filter(d => d.course); if (deg.length) S.push(his+' education: '+deg.map(d => d.course+(d.major ? ', major in '+d.major : '')+(d.school ? ', '+d.school : '')+(d.year ? ', '+d.year : '')+(d.status && d.status!=='Graduated' ? ' ('+d.status.toLowerCase()+')' : '')).join('; ')+'.');
+  const el = v.elig==='Other' ? v.eligOther : v.elig; if (el) S.push(he+' holds the '+el+' eligibility'+(v.prc ? ', with PRC license number '+v.prc+(v.prcExp ? ', valid until '+dt(v.prcExp) : '') : '')+'.');
+  const anc = prfAncList(v).filter(Boolean); if (v.designation || anc.length) S.push((v.designation ? he+' is designated as '+v.designation+'. ' : '')+(anc.length ? his+' ancillary assignments are '+anc.join(', ')+'.' : ''));
+  if (v.advisory) S.push(he+' advises '+v.advisory+'.');
+  if (v.subjects || v.minutes) S.push(he+' teaches '+(v.subjects || 'the subjects in the class program')+(v.minutes ? ', with '+v.minutes+' minutes of actual teaching a week' : '')+'.');
+  const ids = [['empNo','Employee number'],['tin','TIN'],['gsis','GSIS BP number'],['philhealth','PhilHealth number'],['pagibig','Pag IBIG MID number']].filter(x => v[x[0]]).map(x => x[1]+' '+v[x[0]]); if (ids.length) S.push(his+' IDs: '+ids.join('; ')+'.');
+  const D = docs.filter(x => x.code!=='CP'), list = f201Docs(), req = list.filter(d => !d.opt), up = req.filter(d => D.some(x => x.code===d.code)), ok = D.filter(x => x.status==='Okay').length;
+  const miss = req.filter(d => !D.some(x => x.code===d.code) && !(na||{})[d.code]).map(d => d.doc);
+  let f = his+' 201 File has '+up.length+' of '+req.length+' required documents, with '+ok+' marked Okay'; const redo = D.filter(x => x.status==='Redo'); if (redo.length) f += ' and '+redo.length+' to redo'; f += '.'; if (miss.length) f += ' Still needed by '+dl+': '+miss.join(', ')+'.'; S.push(f);
+  const facts = []; D.forEach(x => ((x.details||{}).items||[]).forEach(i => { if (/valid|expir/i.test(i.k)) facts.push(x.doc.split('(')[0].trim()+', valid until '+i.v); if (/final rating|adjectival/i.test(i.k)) facts.push('IPCRF '+i.k.toLowerCase()+' '+i.v); }));
+  if (facts.length) S.push('From the documents: '+facts.slice(0, 6).join('; ')+'.');
+  if (v.ecName) S.push('In case of emergency, contact '+v.ecName+(v.ecRel ? ' ('+v.ecRel.toLowerCase()+')' : '')+(v.ecNo ? ' at '+v.ecNo : '')+'.');
+  if (!p.data) S.push(he==='This personnel' ? 'The profile is not filled in yet.' : his+' profile is not filled in yet.');
+  return S.join(' ');
+}
+async function prfNarrPrint(who){
+  stfModal(`<h3>Preparing the narratives</h3><div class="pirload"><div class="pirdots"><i></i><i></i><i></i></div></div>`);
+  let L = []; try{ L = (await api('prfLoad', { full:true })).list || []; }catch(e){ closeModal('stfModal'); return toast('Could not load the profiles.'); }
+  L = L.filter(p => !who || p.email===who); const D = (PRF.f||{}).docs||[], NA = (PRF.f||{}).na||{}; closeModal('stfModal');
+  $('printArea').innerHTML = `<div class="f2print">${L.map(p => `<div class="f2page narr"><div class="f2ph"><b>PERSONNEL DATA NARRATIVE</b><span>Baluyan Elementary School</span></div>
+    <h3>${esc(p.name)}</h3><p class="nsub">${esc(p.position||'')}${p.lockedOn ? ' · Profile locked on '+esc(dtTxt(p.lockedOn)) : p.updated ? ' · Profile last saved '+esc(dtTxt(p.updated)) : ''}</p>
+    <p class="ntext">${esc(prfNarr(p, D.filter(x => x.email===p.email), NA[p.email]))}</p><p class="f2foot">Printed ${esc(dtTxt(new Date().toLocaleString('sv-SE',{timeZone:'Asia/Manila'})))}</p></div>`).join('')}</div>`;
+  setTimeout(() => window.print(), 300);
+}
+/* ----- The profile picture also shows at the upper right ----- */
+function avatarPhoto(src){ const a = $('avatar'); if (!a || !USER) return; const k = 'tala_photo_'+USER.email;
+  if (src !== undefined){ try{ src ? localStorage.setItem(k, src) : localStorage.removeItem(k); }catch(e){} }
+  else { try{ src = localStorage.getItem(k) || ''; }catch(e){ src = ''; } if (!avatarPhoto._asked){ avatarPhoto._asked = USER.email; api('prfPhoto').then(r => { if ((r.photo||'') !== (src||'')) avatarPhoto(r.photo || ''); }).catch(()=>{}); } }
+  if (src){ a.innerHTML = `<img src="${src}" alt="">`; a.classList.add('hasimg'); } else { a.classList.remove('hasimg'); a.textContent = (USER.name||USER.email).trim().charAt(0).toUpperCase(); } }
 /* ---------- TALA features (left side) ---------- */
 const FEATURES = [
   { id:'home', name:'Home', ready:true, icon:'M12 3 2 12h3v8h5v-6h4v6h5v-8h3z' },
@@ -4544,7 +5013,8 @@ async function poll(){
     if (typeof r.lacNew === 'number' && r.lacNew !== LAC.dot){ LAC.dot = r.lacNew; drawSide(); }
     if (typeof r.aralNew === 'number' && r.aralNew !== ARAL.srvNew){ ARAL.srvNew = r.aralNew; drawSide(); }
     if (typeof r.memoNew === 'number' && r.memoNew !== MEMO.unread){ const more = r.memoNew > MEMO.unread; MEMO.unread = r.memoNew; drawSide(); if (more){ MEMO.data = null; if (CUR_FEATURE==='home') memoPop(true); else if (CUR_FEATURE==='memo') openMemo(); } }
-    if (typeof r.f201New === 'number' && r.f201New !== PRF.dot){ PRF.dot = r.f201New; drawSide(); }
+    if (USER.role==='head'){ if (typeof r.f201New === 'number' && r.f201New !== PRF.dot){ PRF.dot = r.f201New; drawSide(); } }
+    else if (r.prfTodo){ PRF.todo = r.prfTodo; const k = prfTodoCount(); if (k !== PRF.dot){ PRF.dot = k; drawSide(); } }
     if (typeof r.reqNew === 'number' && r.reqNew !== STF.dot){ STF.dot = r.reqNew; drawSide(); if (STF.data && USER.role!=='admin') stfLoad(true).then(() => { if (ATT.view==='staff' && $('viewAtt').style.display!=='none') stfDraw(); }); }
     if ($('bellPanel').classList.contains('open')) drawBell();
     chatBadge(); if (!$('chat').hidden) drawChat();
@@ -6157,7 +6627,7 @@ function nbTodoHtml(){ const L = nbTodoList(); if (!L.length) return '';
 function todoItems(){
   if (!USER) return [];
   const out = [], head = USER.role==='head', teacher = USER.role==='teacher', name = id => ((FEATURES.find(f => f.id===id)||{}).name || id);
-  const tabs = aralOnly() ? ['aral'] : ['lpt','obs','sbfp','att','lac','aral'].filter(id => id==='lpt' || head || featOn(id));
+  const tabs = (aralOnly() ? ['aral'] : ['lpt','obs','sbfp','att','lac','aral'].filter(id => id==='lpt' || head || featOn(id))).concat(featOn('prof') ? ['prof'] : []);
   tabs.forEach(id => { let lines = [];
     try{
       if (id==='lpt' && teacher && DATA && DATA.entries){
@@ -6165,6 +6635,7 @@ function todoItems(){
         const st = DATA.settings, t = pickCurrentTerm(st), w = pickCurrentWeek(t), wk = w!=='all' ? weekOf(t, w) : null;
         if (wk && todayPH() >= wk.due && !DATA.entries.some(e => e.email===USER.email && e.term===t && e.week===w)) lines.push('No LPT and PPT uploaded yet for Term '+t+', Week '+w+' (due '+dShort(wk.due)+').'); }
       if (id==='obs' && teacher && typeof OBS!=='undefined') (OBS.list||[]).filter(o => o.teacherEmail===USER.email && o.status==='Sent').forEach(o => { const L = obsLapse(o); lines.push((otype(o)==='mwa'?'MWA':'ePMCF')+' of '+dShort(o.date)+': please review and sign'+(L&&L.d?', '+L.d+' day'+(L.d>1?'s':'')+' waiting':'')+'.'); });
+      if (id==='prof' && !head) lines = prfTodoLines();
       if (id==='sbfp' && teacher) sbMyTodo().forEach(x => lines.push('SBFP '+dShort(x.date)+': '+x.need.join(', ')+'.'));
       if (id==='lac' && !head && typeof LAC!=='undefined' && LAC.data){ nbTodoList().forEach(x => lines.push(x.hub ? { t:'Learning Hub, '+x.t+': you finished it, but your LAC Journal is still empty. Posted '+x.x.split('Posted ').pop(), go:`hubWrite('${x.hub}')`, b:'Write now' } : x.book+', '+x.t+': '+(x.ret?'returned, please complete.':'no entry yet.')));
         LAC.data.sessions.filter(s => s.date===todayPH() && lacInvited(s, USER.email) && !lacMine(s.id,'ATT')).forEach(s => lines.push(s.title+': tick your attendance today.'));
@@ -6176,7 +6647,7 @@ function todoItems(){
     }catch(e){}
     const k = featCount(id);
     if (!lines.length && k) lines.push(head ? ({ lpt:k+' file(s) waiting for your validation.', obs:k+' observation(s) waiting for your signature.', lac:k+' material(s) to approve or journal entries to check.', att:k+' request(s) waiting for your decision.', aral:k+' new ARAL entr'+(k>1?'ies':'y')+' from the tutors.', sbfp:k+' new SBFP entr'+(k>1?'ies':'y')+'.' })[id] || k+' item(s) need your attention.' : k+' item(s) need your attention.');
-    if (lines.length) out.push({ id, label:name(id), n:Math.max(k, lines.length), lines }); });
+    if (lines.length) out.push({ id, label:name(id), n: id==='prof' ? (k || lines.length) : Math.max(k, lines.length), lines }); });
   return out;
 }
 function todoPop(n){ n = n || 0; if (!USER || USER.mustChange) return; const k = 'tala_todopop_'+USER.email+'_'+todayPH(); try{ if (sessionStorage.getItem(k)) return; }catch(e){}
@@ -10036,6 +10507,9 @@ function myWeekList(){
   try{ if (featOn('sbfp') && sbMyGrades().length) L.push({ t:'SBFP days of my grade level updated', ok: !sbMyTodo().length, go:"openFeature('sbfp')" }); }catch(e){}
   try{ if (featOn('lac') && typeof LAC!=='undefined' && LAC.data){ L.push({ t:'Journals written for the sessions I attended', ok: !nbTodoList().length, go:"openFeature('lac')" });
     const hub = lacHubMine(); if (hub.length) L.push({ t:'Learning Hub materials finished, with LAC Journal', ok: !hubTodo().length, go:"openFeature('lac')" }); } }catch(e){}
+  try{ if (featOn('prof') && PRF.todo){ const T = PRF.todo, dl = dShort(T.dl || '2026-10-30'); L.push({ t:'My Profile saved and locked (you may add missing details until '+dl+')', ok: T.st==='Locked', go:"PRF.tab='me';openFeature('prof')" });
+    const lines = prfTodoLines(T).filter(x => /^201 File/.test(x.t)); L.push({ t:'201 File uploaded (upload what you have now, the rest until '+dl+')', ok: !lines.length, go:"PRF.tab='file';openFeature('prof')" });
+    if (T.cp) L.push({ t:'Class program subjects and minutes confirmed', ok:false, go:"PRF.tab='me';openFeature('prof')" }); } }catch(e){}
   try{ if (featOn('aral') && typeof ARAL!=='undefined' && ARAL.data){ if (aralMyTutees().length) L.push({ t:'ARAL notes written and locked', ok: !aralTodoList().length, go:"openFeature('aral')" });
     if ((ARAL.data.mine||[]).length) L.push({ t:'ARAL notes of my learners read', ok: !aralAckWaiting().length, go:"openFeature('aral')" }); } }catch(e){}
   return { L, mon, fri };
