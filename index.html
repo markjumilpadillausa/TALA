@@ -1195,6 +1195,21 @@ i.req{color:#c62828;font-style:normal}
 .pmsg{border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;margin:10px 0}.pmsg-h{display:flex;justify-content:space-between;align-items:center;gap:8px}.pmsg pre{white-space:pre-wrap;font:inherit;font-size:13px;margin:8px 0 0;max-height:200px;overflow:auto;background:var(--bg);border-radius:8px;padding:8px}
 
 .dtrside small.dtrok,.dtrside small.dtrwarn{display:block;margin-top:8px;border-radius:8px;padding:6px 8px}.dtrside small.dtrok{background:#e9f6ec}.dtrside small.dtrwarn{background:#fff1e6}
+
+.mcgrid{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:16px;align-items:start}@media (max-width:900px){.mcgrid{grid-template-columns:1fr}.mcguide{position:static!important}}
+.mcguide{position:sticky;top:0;background:#f5f8f2;border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;font-size:12.5px;max-height:80vh;overflow:auto}.mcguide dl{margin:6px 0 0}.mcguide dt{font-weight:700;margin-top:7px;color:var(--brandtxt)}.mcguide dd{margin:1px 0 0}.mcguide code{background:#fff;border:1px solid var(--line);border-radius:5px;padding:0 4px}
+.mctools{display:flex;gap:6px;margin:2px 0 4px}
+.mcann{margin:4px 0 8px;padding-left:0;list-style:none}.mcann li{display:grid;grid-template-columns:auto 1fr auto;gap:4px 8px;align-items:center;border:1.5px solid var(--line);border-radius:10px;padding:6px 8px;margin:6px 0}
+.mcann li input{grid-column:1/-1;font:inherit;font-size:13px;padding:6px 8px;border:1.5px solid var(--line);border-radius:8px}.mcann-n{font-weight:700;color:var(--brandtxt);font-size:12.5px}.mcann-f{font-size:13px;word-break:break-all}.mcann-b{display:flex;gap:4px}
+.mcchk.ai{border-color:#b9a3e3;background:#faf7ff}.mcnotes{margin:6px 0;padding-left:18px;font-size:13px}
+
+img.pav,span.pav{width:22px;height:22px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:6px;display:inline-block;border:1.5px solid #fff;box-shadow:0 0 0 1px var(--line)}span.pav.none{background:var(--sun);color:var(--onsun);font-size:11px;font-weight:700;text-align:center;line-height:22px}
+@media print{ img.pav,span.pav{display:none!important} }
+.pgal{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:18px 14px}.pgc{display:flex;flex-direction:column;gap:4px;min-width:0}
+.pgcov{position:relative;aspect-ratio:3/4;border:1px solid var(--line);border-radius:6px 12px 12px 6px;background:linear-gradient(135deg,#e8eef8,#eef6ee);overflow:hidden;padding:0;cursor:pointer;box-shadow:inset 6px 0 0 rgba(0,0,0,.07),0 6px 14px rgba(0,0,0,.12);display:grid;place-items:center;transition:transform .15s}
+.pgcov:hover{transform:translateY(-3px)}.pgcov img{width:100%;height:100%;object-fit:cover;object-position:center top}.pgcov span{font-size:64px;font-weight:800;color:#2c4f7c;opacity:.6}
+.pglock{position:absolute;left:6px;bottom:6px;background:#e3f4e8;color:#1d6b35;font-style:normal;font-size:11.5px;font-weight:700;border-radius:999px;padding:2px 8px}
+.pgn{font-size:14.5px;margin-top:4px}.pgrow{display:flex;justify-content:space-between;font-size:12.5px;margin-top:4px}.pgrow span{color:var(--muted)}.pfbar.f2 i{background:#2c4f7c}.pgact{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}
 </style>
 </head>
 <body>
@@ -1918,8 +1933,8 @@ i.req{color:#c62828;font-style:normal}
 
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
-const MIN_SERVER = '8.0'; // oldest Code.gs this page works with
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'8.3', date:'October 23, 2026' } };
+const MIN_SERVER = '8.4'; // oldest Code.gs this page works with
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'8.4', date:'October 23, 2026' } };
 function verLine(server){
   const old = server && (server.indexOf('older') > -1 || parseFloat(server) < parseFloat(MIN_SERVER));
   const s = server ? ' Server '+server+('.') : '';
@@ -2289,7 +2304,7 @@ function render(){
     : role==='teacher' ? 'Your weekly Lesson Plans for Teachers and PowerPoint Presentations.'
     : 'Public view of weekly submissions. Teachers and the School Head sign in for more tools.';
   if (USER){
-    $('avatar').textContent = (USER.name||USER.email).trim().charAt(0).toUpperCase(); try{ avatarPhoto(); }catch(e){}
+    $('avatar').textContent = (USER.name||USER.email).trim().charAt(0).toUpperCase(); try{ avatarPhoto(); photosLoad(); photoWatch(); }catch(e){}
     $('userFirst').textContent = (USER.name||USER.email).split(' ')[0];
     $('menuWho').innerHTML = `<b>${esc(USER.name)}</b><br>${esc(USER.email)}`;
   }
@@ -2425,6 +2440,7 @@ function prfForm(){
   $('prfBody').innerHTML = `<div class="hcard pfcard"><div class="pftop"><div class="pfphoto">${photo ? `<img src="${photo}" alt="">` : '<span>No photo</span>'}${dis ? '' : '<label class="btn ghost small">📷 Photo<input type="file" accept="image/jpeg,image/png" hidden onchange="prfPhoto(this)"></label>'}</div>
       <div style="flex:1;min-width:200px"><div class="pfsth">${st}${P && P.updated ? `<small>Last saved ${esc(dtTxt(P.updated))}</small>` : ''}</div>
       <div class="pfbar"><i style="width:${(P && P.data && P.data._filled) || 0}%"></i></div><small class="hint">${(P && P.data && P.data._filled) || 0}% complete. Fields with <i class="req">*</i> are needed before locking.</small></div></div>
+    ${prfAll() && PRF.who!==USER.email ? '<div class="row" style="justify-content:flex-start;margin-top:8px"><button class="btn ghost small" onclick="copyMsg(prfMsgProfile())">💬 Copy a reminder of the missing profile details</button></div>' : ''}
     ${prfEmptyHtml(v, PRF.who===USER.email)}
     ${PRF.who===USER.email && !locked ? `<p class="pfnote">You can save your profile now even if some details are not available yet. Add them when you have them, on or before ${esc(dShort((PRF.f && PRF.f.deadline) || '2026-10-30'))}.</p>` : ''}
     ${PRF_F.map(g => `<fieldset class="pfg"><legend>${esc(g.g)}</legend><div class="pfgrid">${g.f.map(f => prfField(f, v, dis)).join('')}</div>${g.deg ? prfDegHtml(v, dis) : ''}${g.anc ? prfAncHtml(v, dis) : ''}${g.cp ? prfCpHtml() : ''}</fieldset>`).join('')}
@@ -2443,6 +2459,7 @@ async function prfSave(mode){
   try{ PRF.p = await api('prfSave', body); PRF.draft = null; PRF.photo = undefined;
     if (PRF.who===USER.email && mode==='lock'){ const a = PRF.p.account||{}; if (a.name) USER.name = a.name; if (a.position) USER.position = a.position; }
     if (PRF.who===USER.email && body.photo !== undefined) avatarPhoto(body.photo || '');
+    if (body.photo !== undefined) photosLoad(true);
     if (prfAll()){ try{ PRF.list = (await api('prfLoad')).list; }catch(e){} }
     toast(mode==='lock' ? 'Profile saved and locked.' : mode==='unlock' ? 'Unlocked. You can update your profile now.' : 'Saved as draft.'); prfDraw(); }
   catch(e){ if (mode!=='unlock') PRF.draft = body.data; handleErr(e, 'prfErr'); document.querySelectorAll('.pfacts .btn').forEach(b => b.disabled = false); }
@@ -2546,16 +2563,57 @@ async function f201ListSave(){
 function f201Sum(email){ const D = f201Of(email).filter(x => x.code!=='CP'), na = f201Na(email), docs = f201Docs();
   return { up: docs.filter(d => D.some(x => x.code===d.code)).length, req: docs.filter(d => !d.opt && !na[d.code]).length, reqUp: docs.filter(d => !d.opt && !na[d.code] && D.some(x => x.code===d.code)).length,
     ok: D.filter(x => x.status==='Okay').length, chk: D.filter(x => x.status==='For checking').length, redo: D.filter(x => x.status==='Redo').length, last: D.map(x => x.on).sort().pop() || '' }; }
+
+/* ----- Profile pictures on the screens of the School Head and the AO (not on printables) ----- */
+var PHOTOS = { map:{}, names:{}, at:0, busy:false };
+function photoKey(){ return 'tala_photos_'+(USER ? USER.email : ''); }
+function photoNorm(n){ return String(n||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9 ]+/g,' ').replace(/\s+/g,' ').trim(); }
+function photoIndex(){ const N = {}; Object.keys(PHOTOS.map).forEach(e => { const o = PHOTOS.map[e]; if (!o || !o.n) return; const n = photoNorm(o.n); N[n] = e; const nomid = n.split(' ').filter(w => !(w.length === 1)).join(' '); N[nomid] = e; }); PHOTOS.names = N; }
+async function photosLoad(force){ if (!USER || (USER.role!=='head' && USER.role!=='admin')) return;
+  if (!PHOTOS.at){ try{ const c = JSON.parse(localStorage.getItem(photoKey())||'null'); if (c && c.map){ PHOTOS.map = c.map; photoIndex(); } }catch(e){} }
+  if (PHOTOS.busy || (!force && Date.now() - PHOTOS.at < 10*60000)) return; PHOTOS.busy = true;
+  try{ const r = await api('photosAll'); PHOTOS.map = r.photos || {}; PHOTOS.at = Date.now(); photoIndex(); try{ localStorage.setItem(photoKey(), JSON.stringify({ map:PHOTOS.map })); }catch(e){} photoDecorate(); }catch(e){}
+  PHOTOS.busy = false; }
+function photoOf(email){ const o = PHOTOS.map[email]; return o ? o.p : ''; }
+function photoAv(email, name, cls){ const p = photoOf(email), init = String(name||email||'?').trim().charAt(0).toUpperCase(); return p ? `<img class="${cls||'pav'}" src="${p}" alt="" data-av="1">` : `<span class="${cls||'pav'} none" data-av="1">${esc(init)}</span>`; }
+// Adds the small picture before each personnel name shown on the screen
+function photoDecorate(){ if (!USER || (USER.role!=='head' && USER.role!=='admin') || !Object.keys(PHOTOS.names).length) return;
+  const roots = ['viewAtt','viewPir','viewTrk','viewObs','viewSbfp','viewLac','viewHome','stfMBody'].map(id => $(id)).filter(x => x && x.offsetParent !== null);
+  roots.forEach(r => r.querySelectorAll('b, strong, td, .nm, .lname, .stfname').forEach(el => { if (el.dataset.avd || el.children.length > 1 || el.closest('#printArea, .bk, .pgal, select, option, .avatar, .mcw, textarea')) return;
+    const t = el.childNodes.length === 1 && el.firstChild.nodeType === 3 ? el.textContent : (el.children.length === 0 ? el.textContent : ''); if (!t || t.length > 60) return;
+    const e = PHOTOS.names[photoNorm(t)]; if (!e) return; el.dataset.avd = '1'; el.insertAdjacentHTML('afterbegin', `<img class="pav" src="${photoOf(e)}" alt="" data-av="1">`); })); }
+var PHOTO_OBS = null;
+function photoWatch(){ if (PHOTO_OBS || !window.MutationObserver) return; let t = 0; PHOTO_OBS = new MutationObserver(() => { clearTimeout(t); t = setTimeout(photoDecorate, 250); }); PHOTO_OBS.observe(document.body, { childList:true, subtree:true }); }
+
+/* ----- All personnel as a gallery: the picture like a book cover, the name, the profile progress, and the 201 files ----- */
 function prfAllTab(){
   const L = PRF.list || [];
-  $('prfBody').innerHTML = `<div class="hcard"><div class="row" style="justify-content:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:8px"><select id="pfnWho"><option value="">Everyone</option>${L.map(p => `<option value="${p.email}">${esc(p.name)}</option>`).join('')}</select>
+  $('prfBody').innerHTML = `<div class="hcard"><div class="row" style="justify-content:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:12px"><select id="pfnWho"><option value="">Everyone</option>${L.map(p => `<option value="${p.email}">${esc(p.name)}</option>`).join('')}</select>
       <button class="btn small" onclick="prfNarrPrint($('pfnWho').value)">🖨 Print the data narrative</button><button class="btn ghost small" onclick="f201BundleAll()">⬇ Download all 201 Files (one PDF each)</button><button class="btn ghost small" onclick="prfMsgOpen()">💬 Ready messages</button></div>
-    <div class="tblwrap"><table class="pftbl"><thead><tr><th>Name</th><th>Profile</th><th>Complete</th><th>201 File</th><th>Last upload</th><th></th></tr></thead><tbody>
-    ${L.map(p => { const s = f201Sum(p.email), hide = USER.role==='admin' && p.role==='head';
-      return `<tr><td><b>${esc(p.name)}</b><br><small class="hint">${esc(p.position||'')}</small></td><td>${p.status==='Locked' ? `<span class="pfst ok">Locked</span><br><small class="hint">${esc(dtTxt(p.lockedOn))}</small>` : p.status==='Draft' ? `<span class="pfst draft">Draft</span><br><small class="hint">${esc(dtTxt(p.updated))}</small>` : '<span class="pfst none">Not started</span>'}</td>
-        <td>${p.filled||0}%</td><td>${hide ? '<small class="hint">Not shown</small>' : `${s.reqUp} of ${s.req} required${s.chk ? `<br><span class="pfst draft">${s.chk} for checking</span>` : ''}${s.redo ? `<br><span class="pfst bad">${s.redo} redo</span>` : ''}`}</td>
-        <td>${hide ? '' : esc(dtTxt(s.last))}</td><td><button class="btn ghost small" onclick="prfOpen('${p.email}')">Open</button>${hide || !s.up ? '' : ` <button class="btn ghost small" onclick="f201Bundle('${p.email}','print')" title="Print all the 201 files">🖨</button> <button class="btn ghost small" onclick="f201Bundle('${p.email}','download')" title="Download all as one PDF">⬇</button>`}</td></tr>`; }).join('')}</tbody></table></div></div>`;
+    <div class="pgal">${L.map(p => { const s = f201Sum(p.email), hide = USER.role==='admin' && p.role==='head', files = f201Of(p.email).filter(x => x.code!=='CP').length, pc = p.status==='Locked' ? 100 : (p.filled||0), ph = photoOf(p.email);
+      return `<div class="pgc"><button class="pgcov" onclick="prfOpen('${p.email}')" title="Open">${ph ? `<img src="${ph}" alt="">` : `<span>${esc(String(p.name).charAt(0))}</span>`}${p.status==='Locked' ? '<i class="pglock">🔒 Locked</i>' : ''}</button>
+        <b class="pgn">${esc(p.name)}</b><small class="hint">${esc(p.position||'')}</small>
+        <div class="pgrow"><span>Profile</span><b>${p.status==='Locked' ? 'Locked' : p.status==='Draft' ? (p.filled||0)+'%' : 'Not started'}</b></div><div class="pfbar"><i style="width:${pc}%"></i></div>
+        ${hide ? '<small class="hint">201 File not shown</small>' : `<div class="pgrow"><span>201 File</span><b>${files} file${files===1?'':'s'}</b></div><div class="pfbar f2"><i style="width:${s.req ? Math.round(s.reqUp*100/s.req) : 0}%"></i></div>
+        <small class="hint">${s.reqUp} of ${s.req} required${s.chk ? ' · '+s.chk+' for checking' : ''}${s.redo ? ' · '+s.redo+' redo' : ''}</small>`}
+        <div class="pgact"><button class="btn ghost small" onclick="prfOpen('${p.email}')">Open</button>${hide || !s.up ? '' : `<button class="btn ghost small" onclick="f201Bundle('${p.email}','print')" title="Print all the 201 files">🖨</button><button class="btn ghost small" onclick="f201Bundle('${p.email}','download')" title="Download all as one PDF">⬇</button>`}</div></div>`; }).join('')}</div></div>`;
 }
+/* ----- Copy and paste reminders for one teacher ----- */
+function prfHon(v, name){ const hon = v.sex==='Male' ? 'Sir' : v.sex==='Female' ? "Ma'am" : "Ma'am/Sir", first = (v.first || String(name||'').split(' ')[0] || '').replace(/^./, c => c.toUpperCase()); return hon+' '+first; }
+function prfGreet(){ const hr = Number(new Date().toLocaleString('en-US',{ timeZone:'Asia/Manila', hour:'numeric', hour12:false })); return hr < 12 ? 'Good morning' : 'Good afternoon'; }
+function prfMsgProfile(){ const P = PRF.p || {}, A = P.account || {}, v = (P.profile && P.profile.data) || {}, E = prfEmpty(v), dl = fmtLong((PRF.f && PRF.f.deadline) || '2026-10-30');
+  let t = prfGreet()+', '+prfHon(v, A.name)+'! 🌞\n\nA reminder about your TALA Profile ('+(P.profile ? (P.profile.status==='Locked' ? 'saved and locked' : 'draft, '+(v._filled||0)+'% complete') : 'not started yet')+').\n\n';
+  t += E.need.length ? '📝 Please fill in:\n'+E.need.map(x => '• '+x).join('\n')+'\n' : '✔ Your main details are complete.\n';
+  if (E.opt.length) t += '\nIf you have them: '+E.opt.join(', ')+'.\n';
+  t += '\nOpen TALA, then Profile and 201 File, then My Profile. You may save it now and add the rest when available, on or before '+dl+'. Thank you! 🙏'; return t; }
+function prf201Msg(){ const P = PRF.p || {}, A = P.account || {}, v = (P.profile && P.profile.data) || {}, S = f201State(PRF.who), dl = fmtLong((PRF.f && PRF.f.deadline) || '2026-10-30'), nm = x => x.replace(/^\w+\s/, '').replace(/\s*\(\d+ files\)$/, '');
+  let t = prfGreet()+', '+prfHon(v, A.name)+'! 🌞\n\nA reminder about your TALA 201 File.\n\n';
+  if (S.need.length) t += '⚠ Please upload:\n'+S.need.map(x => '• '+nm(x)).join('\n')+'\n\n';
+  if (S.redo.length) t += '↺ Please upload again:\n'+S.redo.map(x => '• '+nm(x)).join('\n')+'\n\n';
+  if (S.ok.length || S.chk.length) t += '✔ Already uploaded: '+S.ok.concat(S.chk).map(nm).join(', ')+'.\n\n';
+  if (S.opt.length) t += 'If they apply to you: '+S.opt.map(nm).join(', ')+'. If not, tap Not applicable to me.\n\n';
+  t += 'Upload a PDF or a clear scanned photo, one file at a time. Deadline: '+dl+'. Thank you! 🙏'; return t; }
+
 function f201CheckTab(){
   const head = prfHead(), D = ((PRF.f||{}).docs||[]).filter(x => head ? x.status==='For checking' : true).sort((a,b) => String(a.on).localeCompare(String(b.on)));
   $('prfBody').innerHTML = `<div class="hcard">${D.length ? D.map(x => `<div class="f2file"><div class="f2fn"><b>${esc(x.name)}</b> · ${esc(x.code)} ${esc(x.doc)} ${f201Stat(x)}</div>
@@ -2598,7 +2656,7 @@ function memoCanEdit(m){ return USER.role==='head' || (USER.role==='admin' && m.
 
 /* ----- Writing a memo in TALA: boxes for the details, a draft, a check of spelling and grammar, and the signed PDF ----- */
 var MCW = { c:null, id:'', checks:[], lt:{} };
-const MC_TITLE = { Memorandum:'SCHOOL MEMORANDUM', Advisory:'SCHOOL ADVISORY', Order:'SCHOOL ORDER', Direct:'MEMORANDUM' };
+const MC_TITLE = { Memorandum:'SCHOOL MEMORANDUM', Advisory:'SCHOOL ADVISORY', Order:'SCHOOL ORDER', Direct:'SCHOOL MEMORANDUM' };
 const MC_F = [['to','TO'],['thru','THRU'],['subject','SUBJECT'],['refs','REFERENCES'],['body','BODY'],['encl','ENCLOSURES']];
 function memoYear(m){ const x = String(m.no||'').match(/s\.\s*(\d{4})/i); return x ? x[1] : String(m.date||'').slice(0,4); }
 function memoNextNo(kind, year, exceptId){ const n = (MEMO.data.memos||[]).filter(m => m.kind===kind && m.id!==exceptId && memoYear(m)===year).map(m => parseInt((String(m.no).match(/\d+/)||['0'])[0], 10) || 0);
@@ -2606,29 +2664,31 @@ function memoNextNo(kind, year, exceptId){ const n = (MEMO.data.memos||[]).filte
 function memoMe(){ const p = (MEMO.data.people||[]).find(x => x.role==='head') || {}; return { name: (USER.role==='head' ? USER.name : p.name) || '', pos: (USER.role==='head' ? USER.position : p.position) || 'School Head' }; }
 function memoCompose(id){
   const m = id ? (MEMO.data.memos||[]).find(x => x.id===id) : null, kind = m ? m.kind : (MEMO.tab==='Drafts' ? 'Memorandum' : MEMO.tab), date = m ? m.date : todayPH(), me = memoMe();
-  const c = Object.assign({ kind, no: memoNextNo(kind, date.slice(0,4), id), date, to: kind==='Direct' ? '' : 'All Teaching and Non Teaching Personnel', thru:'', from: String(me.name).toUpperCase(), fromPos: me.pos, subject:'', refs:'', body:'', encl:'', numbered:true, recip: kind==='Direct' ? [] : 'all', kw:[] }, (m && m.compose) || {}, m ? { kind:m.kind, no:m.no || (m.compose||{}).no, date:m.date, subject: (m.compose||{}).subject || (m.subject==='(No subject yet)' ? '' : m.subject), recip:m.to, kw:m.keywords||[] } : {});
-  MCW = { c, id: id||'', checks:[], lt:{} };
+  const c = Object.assign({ kind, no: memoNextNo(kind, date.slice(0,4), id), date, to: kind==='Direct' ? '' : 'All Teaching and Non Teaching Personnel\nBaluyan Elementary School', thru:'', from: String(me.name).toUpperCase(), fromPos: me.pos, subject:'', refs:'', body:'', encl:'', numbered:true, recip: kind==='Direct' ? [] : 'all', kw:[] }, (m && m.compose) || {}, m ? { kind:m.kind, no:m.no || (m.compose||{}).no, date:m.date, subject: (m.compose||{}).subject || (m.subject==='(No subject yet)' ? '' : m.subject), recip:m.to, kw:m.keywords||[] } : {});
+  MCW = { c, id: id||'', checks:[], lt:{}, annex: (c.annex||[]).map(a => Object.assign({}, a)) };
   const P = (MEMO.data.people||[]).filter(p => p.email!==USER.email && p.role!=='head'), head = USER.role==='head';
-  stfModal(`<div class="mcw"><div class="mch"><h3>${m ? 'Edit the draft' : 'Write a memo'}</h3><span class="hint" id="mcSaved">${m ? 'Draft saved '+esc(dtTxt(m.on)) : 'Not saved yet'}</span></div>
+  stfModal(`<div class="mcgrid"><div class="mcw"><div class="mch"><h3>${m ? 'Edit the draft' : 'Write a memo'}</h3><span class="hint" id="mcSaved">${m ? 'Draft saved '+esc(dtTxt(m.on)) : 'Not saved yet'}</span></div>
     <details class="mcquick"><summary>📋 Paste everything at once</summary><p class="hint">Paste the whole text here, for example from a letter or a message. Lines that start with To, Thru, From, Subject, Date, Reference, and Enclosure go to their boxes. The rest goes to the body.</p>
       <textarea id="mcAll" rows="6"></textarea><button class="btn ghost small" onclick="memoQuick()">Fill the boxes</button></details>
     <div class="pfgrid"><label class="pff"><span>Kind</span><select id="mc_kind" onchange="memoKindChange()">${['Memorandum','Advisory','Order','Direct'].map(k => `<option value="${k}" ${c.kind===k?'selected':''}>${k==='Direct' ? 'Direct memo or notice' : k}</option>`).join('')}</select></label>
       <label class="pff"><span>Number <small class="hint">(suggested)</small></span><input id="mc_no" value="${esc(c.no)}"></label>
       <label class="pff"><span>Date</span><input type="date" id="mc_date" value="${esc(c.date)}" onchange="memoDateChange()"></label></div>
     <div class="pfgrid"><label class="pff"><span>To</span><textarea id="mc_to" rows="2">${esc(c.to)}</textarea></label><label class="pff"><span>Thru <small class="hint">(if any)</small></span><textarea id="mc_thru" rows="2">${esc(c.thru)}</textarea></label>
-      <label class="pff"><span>From</span><input id="mc_from" value="${esc(c.from)}"><input id="mc_fromPos" value="${esc(c.fromPos)}" style="margin-top:4px"></label></div>
+      <label class="pff"><span>Signatory</span><input id="mc_from" value="${esc(c.from)}"><input id="mc_fromPos" value="${esc(c.fromPos)}" style="margin-top:4px"></label></div>
     <label class="pff"><span>Subject</span><textarea id="mc_subject" rows="2" oninput="memoCKw()">${esc(c.subject)}</textarea></label>
     <label class="pff"><span>References <small class="hint">(one per line)</small></span><textarea id="mc_refs" rows="3" placeholder="DepEd Order No. 7, s. 2026">${esc(c.refs)}</textarea></label>
-    <label class="pff"><span>Body <small class="hint">(leave an empty line between paragraphs)</small></span><textarea id="mc_body" rows="12">${esc(c.body)}</textarea></label>
+    <div class="pff"><span>Body <small class="hint">(leave an empty line between paragraphs)</small></span><div class="mctools"><button type="button" class="btn ghost small" onclick="memoWrap('**','**')" title="Bold the highlighted words"><b>B</b></button><button type="button" class="btn ghost small" onclick="memoWrap('a. ','',true)" title="Make this line a sub item">a. Sub item</button><button type="button" class="btn ghost small" onclick="memoWrap('> ','',true)" title="Center this line">⇔ Center</button></div><textarea id="mc_body" rows="14">${esc(c.body)}</textarea></div>
     <label class="check"><input type="checkbox" id="mc_num" ${c.numbered?'checked':''}> Number the paragraphs (1, 2, 3)</label>
-    <label class="pff"><span>Enclosures <small class="hint">(if any, one per line)</small></span><textarea id="mc_encl" rows="2">${esc(c.encl)}</textarea></label>
+    <div class="pff"><span>Attachments (Annexes)</span><div id="mcAnnex"></div></div>
+    <label class="pff"><span>Enclosures without a file <small class="hint">(if any, one per line)</small></span><textarea id="mc_encl" rows="2">${esc(c.encl)}</textarea></label>
     <div class="pff"><span>Send in TALA to</span><label class="check"><input type="radio" name="mcTo" value="all" ${c.recip==='all'?'checked':''} onchange="$('mcPick').hidden=true"> All personnel</label><label class="check"><input type="radio" name="mcTo" value="pick" ${c.recip!=='all'?'checked':''} onchange="$('mcPick').hidden=false"> Choose</label>
       <div id="mcPick" class="mepick" ${c.recip==='all'?'hidden':''}>${P.map(p => `<label class="check"><input type="checkbox" value="${p.email}" ${c.recip!=='all' && (c.recip||[]).indexOf(p.email) > -1 ? 'checked' : ''}> ${esc(p.name)}</label>`).join('')}</div></div>
-    <div class="pff"><span>Keywords</span><div class="f2kw" id="f2kws"></div><div class="row" style="margin-top:6px"><input id="f2kwin" placeholder="Add a keyword" onkeydown="if(event.key==='Enter'){event.preventDefault();memoKwAdd()}"><button class="btn ghost small" onclick="memoKwAdd()">Add</button></div></div>
+    <div class="pff"><span>Keywords <small class="hint">(also the Perpetual Index subjects)</small></span><div class="f2kw" id="f2kws"></div><div class="row" style="margin-top:6px"><input id="f2kwin" placeholder="Add a keyword" onkeydown="if(event.key==='Enter'){event.preventDefault();memoKwAdd()}"><button class="btn ghost small" onclick="memoKwAdd()">Add</button></div></div>
     <div id="mcChecks"></div><p class="err" id="mcErr"></p>
-    <div class="row mcacts"><button class="btn ghost" onclick="closeModal('stfModal')">Close</button><button class="btn ghost" onclick="memoDraftSave()">💾 Save draft</button><button class="btn ghost" id="mcChk" onclick="memoCheckAll()">✔ Check spelling and grammar</button><button class="btn ghost" onclick="memoPreview()">👁 Preview</button>
+    <div class="row mcacts"><button class="btn ghost" onclick="closeModal('stfModal')">Close</button><button class="btn ghost" onclick="memoDraftSave()">💾 Save draft</button><button class="btn ghost" id="mcAi" onclick="memoAiRun()">✨ Improve with AI</button><button class="btn ghost" id="mcChk" onclick="memoCheckAll()">✔ Check spelling and grammar</button><button class="btn ghost" onclick="memoPreview()">👁 Preview PDF</button><button class="btn ghost" onclick="memoWord()">⬇ Word</button>
       ${head ? '<button class="btn" onclick="memoSignAsk()">✍ Sign and post</button>' : ''}</div>
-    ${head ? '' : '<p class="hint">Save the draft. The School Head signs and posts it.</p>'}</div>`, 'wide xwide');
+    ${head ? '' : '<p class="hint">Save the draft. The School Head signs and posts it.</p>'}</div>${memoGuideHtml()}</div>`, 'wide xwide');
+  memoAnnexDraw();
   MEMOE = { kw: (c.kw||[]).slice(), auto: !(c.kw||[]).length, id: id||'' }; memoKwDraw();
 }
 function memoCKw(){ if (!MEMOE.auto) return; MEMOE.kw = memoSuggest($('mc_subject').value); memoKwDraw(); }
@@ -2637,7 +2697,8 @@ function memoKindChange(){ const k = $('mc_kind').value; if (!MCW.id || !(MEMO.d
 function memoDateChange(){ const y = ($('mc_date').value||'').slice(0,4); if (y && !new RegExp('s\\. '+y).test($('mc_no').value)) $('mc_no').value = memoNextNo($('mc_kind').value, y, MCW.id); }
 function memoGetC(){ const g = id => ($(id) ? $(id).value : ''), pick = (document.querySelector('input[name=mcTo]:checked')||{}).value;
   return { kind:g('mc_kind'), no:g('mc_no').trim(), date:g('mc_date'), to:g('mc_to').trim(), thru:g('mc_thru').trim(), from:g('mc_from').trim(), fromPos:g('mc_fromPos').trim(), subject:g('mc_subject').trim(), refs:g('mc_refs').trim(), body:g('mc_body').replace(/\r/g,'').trim(), encl:g('mc_encl').trim(), numbered:$('mc_num').checked,
-    recip: pick==='all' ? 'all' : [...document.querySelectorAll('#mcPick input:checked')].map(i => i.value), kw:MEMOE.kw }; }
+    recip: pick==='all' ? 'all' : [...document.querySelectorAll('#mcPick input:checked')].map(i => i.value), kw:MEMOE.kw, annex:(MCW.annex||[]) }; }
+function memoClean(c){ return Object.assign({}, c, { annex:(c.annex||[]).map(a => ({ fileId:a.fileId, name:a.name, mime:a.mime, title:a.title||'' })) }); }
 function memoQuick(){ const t = $('mcAll').value.replace(/\r/g,''); if (!t.trim()) return; const L = t.split('\n'), body = [], set = (id, v) => { if ($(id)) $(id).value = v; }; let cur = null; const acc = { to:[], thru:[], from:[], subject:[], refs:[], encl:[], date:'' };
   L.forEach(l => { const m = l.match(/^\s*(to|thru|through|from|subject|re|date|references?|ref\.?|enclosures?|encl\.?)\s*[:.]\s*(.*)$/i);
     if (m){ const k = m[1].toLowerCase(); cur = /^to/.test(k) ? 'to' : /^th/.test(k) ? 'thru' : /^fr/.test(k) ? 'from' : /^(sub|re$)/.test(k) ? 'subject' : /^date/.test(k) ? 'date' : /^ref/.test(k) ? 'refs' : 'encl';
@@ -2653,7 +2714,7 @@ function memoQuick(){ const t = $('mcAll').value.replace(/\r/g,''); if (!t.trim(
   memoCKw(); $('mcAll').value = ''; document.querySelector('.mcquick').open = false; toast('The boxes are filled. Please check them.'); }
 async function memoDraftSave(quiet){
   const c = memoGetC(); $('mcErr').textContent = '';
-  try{ const r = await api('memoSave', { memo:{ id:MCW.id, draft:true, kind:c.kind, no:c.no, date:c.date, subject:c.subject, to: c.recip, keywords:c.kw, compose:c } });
+  try{ const r = await api('memoSave', { memo:{ id:MCW.id, draft:true, kind:c.kind, no:c.no, date:c.date, subject:c.subject, to: c.recip, keywords:c.kw, compose:memoClean(c) } });
     MEMO.data = r; if (!MCW.id){ const d = (r.memos||[]).filter(m => m.status==='Draft' && m.byEmail===USER.email).sort((a,b) => String(b.on).localeCompare(String(a.on)))[0]; if (d) MCW.id = d.id; }
     $('mcSaved').textContent = 'Draft saved '+dtTxt(new Date().toLocaleString('sv-SE',{timeZone:'Asia/Manila'})); if (!quiet) toast('Draft saved.'); return true; }
   catch(e){ handleErr(e, 'mcErr'); return false; } }
@@ -2696,49 +2757,198 @@ function memoFix(i, alt, noDraw){ const x = MCW.checks[i]; if (!x || x.done) ret
   x.done = true; MCW.checks.splice(i, 1); if (!noDraw) memoChecksDraw(); }
 function memoFixAll(){ for (let i = MCW.checks.length - 1; i >= 0; i--){ if (MCW.checks[i].to != null) memoFix(i, undefined, true); } memoChecksDraw(); toast('Applied. Check again to be sure.'); }
 
-/* ----- The memo as a PDF: letterhead, details, body, and the signature with the date and time of signing ----- */
-async function memoLogoBytes(){ try{ const r = await fetch(LOGO); return new Uint8Array(await r.arrayBuffer()); }catch(e){ return null; } }
+
+/* ----- School memo branding: the header, the footer, and the Bookman look of Baluyan ES (from the school's own memos) ----- */
+const MC_CODE = { Memorandum:'DM', Advisory:'DA', Order:'DO', Direct:'DN' };
+const MC_DOCREF = { Memorandum:'BES-OSH-F001', Advisory:'BES-OSH-F002', Order:'BES-OSH-F003', Direct:'BES-OSH-F004' };
+const FONTKIT = ['https://cdn.jsdelivr.net/npm/@pdf-lib/fontkit@1.1.1/dist/fontkit.umd.min.js', 'https://unpkg.com/@pdf-lib/fontkit@1.1.1/dist/fontkit.umd.min.js'];
+async function memoKit(){ if (!window.MEMOKIT) await loadScript('memo-kit.js?v=2'); if (!window.MEMOKIT) throw new Error('The memo design file (memo-kit.js) was not found next to index.html.'); return window.MEMOKIT; }
+function memoSY(){ const s = String((MEMO.data && MEMO.data.sy) || ((DATA||{}).settings||{}).sy || ''), y = s.match(/(\d{4})\D+(\d{4})/); if (y) return y[1]+'-'+y[2]; const t = todayPH(), yr = +t.slice(0,4), m = +t.slice(5,7); return m >= 6 ? yr+'-'+(yr+1) : (yr-1)+'-'+yr; }
+function memoNum(no){ const m = String(no||'').match(/^\s*([0-9A-Za-z]+)\s*,?\s*s\.?\s*(\d{4})/); return m ? { n:m[1], s:m[2] } : { n:String(no||'').trim(), s:'' }; }
+function memoInit(name){ return String(name||'').replace(/[^A-Za-zÑñ .]/g,' ').split(/\s+/).filter(w => w && !/^(jr|sr|ii|iii|iv)\.?$/i.test(w)).map(w => w.charAt(0).toUpperCase()).join(''); }
+function memoTrackCode(c){ const n = memoNum(c.no), d = c.date || todayPH(); return ['BES-SH-'+(MC_CODE[c.kind]||'DM')+d.slice(0,4)+'-'+d.slice(5,7)+'-'+String(n.n).replace(/\D/g,'').padStart(3,'0'), memoInit(c.from)+'/'+d]; }
+function memoInline(t){ const out = []; String(t).split(/(\*\*[^*]+\*\*)/).forEach(p => { if (!p) return; const b = /^\*\*[^*]+\*\*$/.test(p); out.push({ t: b ? p.slice(2,-2) : p, b }); }); return out; }
+// The body: blocks are separated by an empty line. Lines with a. b. c. are sub items. Lines with > are centered.
+function memoBlocks(body){ const B = []; String(body||'').replace(/\r/g,'').split(/\n\s*\n/).forEach(blk => { const lines = blk.split('\n').map(x => x.trim()).filter(Boolean); if (!lines.length) return; const items = []; let main = [];
+    const flush = () => { if (main.length){ items.push({ k:'p', t:main.join(' ') }); main = []; } };
+    lines.forEach(l => { if (/^>/.test(l)){ flush(); items.push({ k:'c', t:l.replace(/^>\s*/,'') }); } else if (/^[a-z]\.\s/i.test(l) && (items.length || main.length)){ flush(); items.push({ k:'s', t:l }); } else main.push(l); });
+    flush(); B.push(items); }); return B; }
 async function memoPdf(c, sign){
-  await loadAny(PDFLIB); const { PDFDocument, StandardFonts, rgb, degrees } = PDFLib, doc = await PDFDocument.create();
-  const F = { r: await doc.embedFont(StandardFonts.TimesRoman), b: await doc.embedFont(StandardFonts.TimesRomanBold), i: await doc.embedFont(StandardFonts.TimesRomanItalic), h: await doc.embedFont(StandardFonts.Helvetica) };
-  const ok = {}; const san = (t, f) => String(t||'').replace(/[–—]/g, ', ').split('').map(ch => { const k = ch+(f===F.b?'b':''); if (ok[k] === undefined){ try{ f.widthOfTextAtSize(ch, 10); f.encodeText(ch); ok[k] = true; }catch(e){ ok[k] = false; } } return ok[k] ? ch : ''; }).join('');
-  const W = 595.28, H = 841.89, ML = 72, MR = 72, TW = W - ML - MR, ink = rgb(0,0,0);
+  const K = await memoKit(); await loadAny(PDFLIB); if (!window.fontkit) await loadAny(FONTKIT);
+  const { PDFDocument, StandardFonts, rgb, degrees } = PDFLib, doc = await PDFDocument.create(); doc.registerFontkit(window.fontkit);
+  const F = { r: await doc.embedFont(b64ToBytes(K.fonts.regular)), b: await doc.embedFont(b64ToBytes(K.fonts.bold)), i: await doc.embedFont(b64ToBytes(K.fonts.italic)), h: await doc.embedFont(StandardFonts.Helvetica), hb: await doc.embedFont(StandardFonts.HelveticaBold), hi: await doc.embedFont(StandardFonts.HelveticaOblique) };
+  const HDR = await doc.embedJpg(b64ToBytes(K.hdr)), FTR = await doc.embedJpg(b64ToBytes(K.ftr));
+  const ok = {}; const san = (t, f) => String(t||'').replace(/[–—]/g, ', ').split('').map(ch => { const k = ch+'|'+(f.name||''); if (ok[k] === undefined){ try{ f.encodeText(ch); f.widthOfTextAtSize(ch, 10); ok[k] = true; }catch(e){ ok[k] = false; } } return ok[k] ? ch : ''; }).join('');
+  const W = 595.28, H = 841.89, L = 72, R = 523.3, TW = R - L, ink = rgb(0,0,0), BOT = 100, SZ = 10, LH = 12.4;
   const pages = []; let pg, y;
-  const newPage = () => { pg = doc.addPage([W, H]); pages.push(pg); y = H - 60; if (!sign) pg.drawText('DRAFT', { x:140, y:300, size:120, font:F.b, color:rgb(0.85,0.85,0.85), rotate:degrees(35), opacity:0.5 }); };
-  const wrap = (t, f, s, w) => { const out = []; String(t).split('\n').forEach(par => { let line = ''; par.split(/\s+/).filter(Boolean).forEach(wd => { const tst = line ? line+' '+wd : wd; if (f.widthOfTextAtSize(san(tst, f), s) > w && line){ out.push(line); line = wd; } else line = tst; }); out.push(line); }); return out; };
-  const need = h => { if (y - h < 70) newPage(); };
-  const center = (t, f, s, col) => { t = san(t, f); pg.drawText(t, { x:(W - f.widthOfTextAtSize(t, s))/2, y, size:s, font:f, color:col||ink }); };
+  const head = () => { pg.drawImage(HDR, { x:0, y:H - 31.1 - 116.8, width:W, height:116.8 }); const sy = 'School Year '+memoSY(); pg.drawText(san(sy, F.r), { x:(W - F.r.widthOfTextAtSize(san(sy, F.r), 11))/2, y:H - 157.4, size:11, font:F.r, color:ink });
+    pg.drawLine({ start:{ x:70.7, y:H - 160.4 }, end:{ x:525, y:H - 160.4 }, thickness:1.5, color:ink }); if (!sign) pg.drawText('DRAFT', { x:150, y:330, size:110, font:F.b, color:rgb(0.86,0.86,0.86), rotate:degrees(35), opacity:0.45 }); };
+  const newPage = () => { pg = doc.addPage([W, H]); pages.push(pg); head(); y = H - 182; };
+  const need = h => { if (y - h < BOT) newPage(); };
+  const wTxt = (t, f, s) => f.widthOfTextAtSize(san(t, f), s);
+  // lines of words with bold parts, then drawn left, centered, or justified
+  // words keep their bold parts; a word glued to the next part (like a bold word followed by a comma) stays together
+  const groups = (segs, s) => { const G = []; let space = false; segs.forEach(sg => sg.t.split(/(\s+)/).forEach(w => { if (!w) return; if (/^\s+$/.test(w)){ space = true; return; } const tk = { t:w, b:sg.b, w:wTxt(w, sg.b ? F.b : F.r, s) };
+      if (!G.length || space) G.push({ tk:[tk], w:tk.w }); else { const g = G[G.length-1]; g.tk.push(tk); g.w += tk.w; } space = false; })); return G; };
+  const wrapRich = (segs, width, first, s) => { const G = groups(segs, s), sp = F.r.widthOfTextAtSize(' ', s), lines = []; let cur = [], cw = 0, lim = width - (first||0);
+    G.forEach(g => { const add = (cur.length ? sp : 0) + g.w; if (cur.length && cw + add > lim){ lines.push(cur); cur = []; cw = 0; lim = width; } cw += (cur.length ? sp : 0) + g.w; cur.push(g); });
+    if (cur.length) lines.push(cur); return lines; };
+  const drawRich = (line, x, width, align, s, last) => { const sp = F.r.widthOfTextAtSize(' ', s), tw = line.reduce((a, g) => a + g.w, 0) + Math.max(0, line.length - 1)*sp;
+    let xx = align==='c' ? x + (width - tw)/2 : align==='r' ? x + width - tw : x; const extra = align==='j' && !last && line.length > 1 ? (width - tw)/(line.length - 1) : 0;
+    line.forEach((g, i) => { if (i) xx += sp + extra; g.tk.forEach(t => { pg.drawText(san(t.t, t.b ? F.b : F.r), { x:xx, y, size:s, font: t.b ? F.b : F.r, color:ink }); xx += t.w; }); }); };
+  const para = (text, o) => { o = o || {}; const s = o.size || SZ, x = o.x || L, width = o.width || (R - x), lines = wrapRich(memoInline(text), width, o.first || 0, s);
+    lines.forEach((ln, i) => { need(LH); if (i===0 && o.num){ pg.drawText(o.num, { x:L, y, size:s, font:F.r, color:ink }); } drawRich(ln, i===0 ? x + (o.first||0) : (o.wrapX!=null ? o.wrapX : x), i===0 ? width - (o.first||0) : (o.wrapX!=null ? R - o.wrapX : width), o.align || 'l', s, i===lines.length-1); y -= o.lh || LH; }); };
   newPage();
-  const lb = await memoLogoBytes(); if (lb){ try{ const img = lb[0]===0x89 ? await doc.embedPng(lb) : await doc.embedJpg(lb); pg.drawImage(img, { x:(W-46)/2, y:H-44-46, width:46, height:46 }); }catch(e){} }
-  y = H - 104; center('Republic of the Philippines', F.i, 10.5); y -= 15; center('Department of Education', F.b, 14); y -= 13; center('REGION IX', F.r, 9.5); y -= 12; center('SCHOOLS DIVISION OF ZAMBOANGA SIBUGAY', F.b, 9.5);
-  y -= 7; pg.drawLine({ start:{ x:W/2-170, y }, end:{ x:W/2+170, y }, thickness:0.7, color:rgb(0.4,0.4,0.4) }); y -= 13; center('FIELD OFFICE OF IMELDA', F.b, 10, rgb(0.33,0.33,0.33)); y -= 12; center('Imelda, Zamboanga Sibugay', F.r, 9.5, rgb(0.33,0.33,0.33)); y -= 13; center('125592, BALUYAN ELEMENTARY SCHOOL', F.b, 10.5, rgb(0.33,0.33,0.33));
-  y -= 30; center(MC_TITLE[c.kind] || 'MEMORANDUM', F.b, 13); y -= 15; center('No. '+(c.no||''), F.r, 11.5); y -= 26;
-  const row = (lab, val, f) => { const L = wrap(val, f||F.r, 11.5, TW - 96); need(L.length * 14 + 4); pg.drawText(lab, { x:ML, y, size:11.5, font:F.b }); pg.drawText(':', { x:ML+84, y, size:11.5, font:F.b }); L.forEach((l, i) => { pg.drawText(san(l, f||F.r), { x:ML+96, y: y - i*14, size:11.5, font:f||F.r }); }); y -= L.length * 14 + 6; };
-  row('TO', c.to || ''); if (c.thru) row('THRU', c.thru);
-  { const L1 = wrap(c.from||'', F.b, 11.5, TW-96); need(30); pg.drawText('FROM', { x:ML, y, size:11.5, font:F.b }); pg.drawText(':', { x:ML+84, y, size:11.5, font:F.b }); L1.forEach((l, i) => pg.drawText(san(l, F.b), { x:ML+96, y:y-i*14, size:11.5, font:F.b })); y -= L1.length*14; if (c.fromPos){ pg.drawText(san(c.fromPos, F.r), { x:ML+96, y, size:11.5, font:F.r }); y -= 14; } y -= 6; }
-  row('SUBJECT', (c.subject||'').toUpperCase(), F.b);
-  if (c.refs) row(c.refs.split('\n').filter(Boolean).length > 1 ? 'REFERENCES' : 'REFERENCE', c.refs.split('\n').filter(Boolean).map((r, i, a) => a.length > 1 ? String.fromCharCode(97+i)+'. '+r : r).join('\n'));
-  row('DATE', fmtLong(c.date));
-  y += 2; pg.drawLine({ start:{ x:ML, y }, end:{ x:W-MR, y }, thickness:1.2, color:ink }); y -= 22;
-  const P = (c.body||'').split(/\n\s*\n/).map(x => x.replace(/\s*\n\s*/g,' ').trim()).filter(Boolean);
-  P.forEach((p, n) => { const ind = c.numbered ? 22 : 0, L = wrap(p, F.r, 11.5, TW - ind); L.forEach((l, i) => { need(15); if (i===0 && c.numbered) pg.drawText((n+1)+'.', { x:ML, y, size:11.5, font:F.r }); pg.drawText(san(l, F.r), { x:ML + ind, y, size:11.5, font:F.r }); y -= 15; }); y -= 8; });
-  if (c.encl){ need(30); y -= 4; pg.drawText('Encl.:', { x:ML, y, size:10.5, font:F.b }); c.encl.split('\n').filter(Boolean).forEach((e, i) => { pg.drawText(san(e, F.r), { x:ML+40, y: y - i*13, size:10.5, font:F.r }); }); y -= c.encl.split('\n').filter(Boolean).length*13 + 6; }
-  // signature block
-  need(130); y -= 30; const yName = y - 66, sx = ML;
-  if (sign && sign.sig){ try{ const img = await doc.embedPng(b64ToBytes(sign.sig)), sc = Math.min(150/img.width, 50/img.height), w = img.width*sc, h = img.height*sc;
-      pg.drawImage(img, { x:sx + 10, y:yName + 16, width:w, height:h });
-      // parts of the signature are covered, so a copied picture cannot be used: security lines, a fine pattern, and the signing details over its right side
-      for (let k = 0; k < 4; k++){ let d = ''; for (let xx = 0; xx <= w + 20; xx += 4){ const yy = 12 + k*10 + Math.sin((xx + k*9)/7) * 3; d += (xx ? ' L ' : 'M ') + xx.toFixed(1) + ' ' + yy.toFixed(1); } pg.drawSvgPath(d, { x:sx, y:yName + 66, borderColor:rgb(0.1,0.2,0.55), borderWidth:0.45, borderOpacity:0.55 }); }
-      for (let xx = 0; xx < w + 20; xx += 5) pg.drawLine({ start:{ x:sx + xx, y:yName + 16 }, end:{ x:sx + xx + 14, y:yName + 16 + h }, thickness:0.25, color:rgb(0.2,0.3,0.6), opacity:0.25 });
-      const bx = sx + 10 + w*0.55, L = pkiLines(sign.name, sign.when); pg.drawRectangle({ x:bx - 4, y:yName + 15, width:170, height:48, color:rgb(1,1,1), opacity:0.72, borderColor:rgb(0.1,0.2,0.55), borderWidth:0.5, borderOpacity:0.6 });
-      L.forEach((t, i) => pg.drawText(san(t, i===1 ? F.b : F.h), { x:bx, y:yName + 53 - i*11, size: i===1 ? 8.6 : 7.6, font: i===1 ? F.b : F.h, color:rgb(0.05,0.1,0.4) }));
-      pg.drawText(san('TALA ref. '+(sign.ref||''), F.h), { x:bx, y:yName + 19, size:6.3, font:F.h, color:rgb(0.35,0.35,0.35) }); }catch(e){ console.warn('TALA memo sig', e); } }
-  pg.drawText(san((c.from||'').toUpperCase(), F.b), { x:sx, y:yName, size:11.5, font:F.b }); if (c.fromPos) pg.drawText(san(c.fromPos, F.r), { x:sx, y:yName - 14, size:11, font:F.r });
-  pages.forEach((p, i) => { p.drawLine({ start:{ x:ML, y:48 }, end:{ x:W-MR, y:48 }, thickness:0.5, color:rgb(0.5,0.5,0.5) });
-    p.drawText(san('Baluyan Elementary School, Imelda, Zamboanga Sibugay', F.r), { x:ML, y:36, size:8, font:F.r, color:rgb(0.35,0.35,0.35) });
-    const pt = 'Page '+(i+1)+' of '+pages.length; p.drawText(pt, { x:W-MR-F.r.widthOfTextAtSize(pt, 8), y:36, size:8, font:F.r, color:rgb(0.35,0.35,0.35) }); });
+  // page 1: Office of the School Head, the records stamp, the date, the kind and number, the subject, To
+  pg.drawText('Office of the School Head', { x:L, y:H - 171, size:11, font:F.r, color:ink });
+  if (sign){ const sx = 405, sy = H - 94; pg.drawRectangle({ x:sx, y:sy, width:182, height:60, borderColor:rgb(0.42,0.2,0.85), borderWidth:1.6 }); const pc = rgb(0.42,0.2,0.85), ctr = (t, f, s, yy) => pg.drawText(t, { x:sx + (182 - f.widthOfTextAtSize(t, s))/2, y:yy, size:s, font:f, color:pc });
+    ctr('DepEd, Division of Zamboanga Sibugay', F.h, 6.6, sy + 50); ctr('Baluyan Elementary School', F.hb, 7.2, sy + 42);
+    const n = memoNum(c.no), d = sign.when.slice(0,10), tm = sign.when.slice(11,16), t12 = (() => { let [h, m] = tm.split(':').map(Number); const ap = h >= 12 ? 'PM' : 'AM'; h = h % 12 || 12; return String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+' '+ap; })();
+    pg.drawText('NO.:', { x:sx+4, y:sy+30, size:7, font:F.h, color:pc }); pg.drawText(san(String(n.n), F.h), { x:sx+22, y:sy+31, size:7.5, font:F.h, color:ink }); pg.drawLine({ start:{ x:sx+20, y:sy+29 }, end:{ x:sx+92, y:sy+29 }, thickness:0.5, color:pc });
+    pg.drawText('TIME:', { x:sx+96, y:sy+30, size:7, font:F.h, color:pc }); pg.drawText(t12, { x:sx+120, y:sy+31, size:7.5, font:F.h, color:ink }); pg.drawLine({ start:{ x:sx+118, y:sy+29 }, end:{ x:sx+178, y:sy+29 }, thickness:0.5, color:pc });
+    pg.drawText('BY:', { x:sx+4, y:sy+18, size:7, font:F.h, color:pc }); pg.drawLine({ start:{ x:sx+20, y:sy+17 }, end:{ x:sx+92, y:sy+17 }, thickness:0.5, color:pc });
+    pg.drawText('DATE:', { x:sx+96, y:sy+18, size:7, font:F.h, color:pc }); pg.drawText(d.slice(5,7)+'/'+d.slice(8,10)+'/'+d.slice(0,4), { x:sx+120, y:sy+19, size:7.5, font:F.h, color:ink }); pg.drawLine({ start:{ x:sx+118, y:sy+17 }, end:{ x:sx+178, y:sy+17 }, thickness:0.5, color:pc });
+    ctr('RELEASED', F.hb, 8, sy + 5);
+    try{ const im = await doc.embedPng(b64ToBytes(sign.sig)), sc = Math.min(60/im.width, 13/im.height); pg.drawImage(im, { x:sx+24, y:sy+17, width:im.width*sc, height:im.height*sc });
+      for (let xx = 0; xx < 66; xx += 4) pg.drawLine({ start:{ x:sx+22+xx, y:sy+17 }, end:{ x:sx+28+xx, y:sy+29 }, thickness:0.25, color:pc, opacity:0.5 }); }catch(e){} }
+  y = H - 196; { const dt = fmtLong(c.date); pg.drawText(san(dt, F.r), { x:R - wTxt(dt, F.r, 11), y, size:11, font:F.r, color:ink }); }
+  y -= 26; pg.drawText(MC_TITLE[c.kind] || 'MEMORANDUM', { x:L, y, size:SZ, font:F.b, color:ink }); y -= LH;
+  { const n = memoNum(c.no), a = 'No. ', nn = String(n.n); pg.drawText(a, { x:L, y, size:SZ, font:F.r, color:ink }); const x1 = L + wTxt(a, F.r, SZ); pg.drawText(san(nn, F.r), { x:x1, y, size:SZ, font:F.r, color:ink }); const x2 = x1 + wTxt(nn, F.r, SZ);
+    pg.drawLine({ start:{ x:x1, y:y-1.5 }, end:{ x:x2, y:y-1.5 }, thickness:0.6, color:ink }); pg.drawText(san(n.s ? ', s. '+n.s : '', F.r), { x:x2, y, size:SZ, font:F.r, color:ink }); }
+  y -= LH * 2.2; para('**'+String(c.subject||'').toUpperCase().replace(/\*/g,'')+'**', { align:'c' }); y -= LH * 0.8;
+  const block = (lab, txt) => { const ls = String(txt||'').split('\n').map(x => x.trim()).filter(Boolean); if (!ls.length) return; need(LH * ls.length); pg.drawText(lab, { x:L, y, size:SZ, font:F.r, color:ink });
+    ls.forEach((l, i) => { const segs = i===0 ? [{ t:l.replace(/\*/g,''), b:true }] : memoInline(l); wrapRich(segs, R - L - 36, 0, SZ).forEach(ln => { need(LH); drawRich(ln, L + 36, R - L - 36, 'l', SZ, true); y -= LH; }); }); y -= LH * 0.6; };
+  block('To:', c.to); if (c.thru) block('Thru:', c.thru);
+  // body
+  let n = 0; memoBlocks(c.body).forEach(items => { items.forEach((it, j) => {
+      if (it.k==='p'){ if (j===0 && c.numbered){ n++; para(it.t, { num:n+'.', first:36, align:'j', wrapX:L }); } else para(it.t, { first: c.numbered ? 0 : 36, align:'j' }); }
+      else if (it.k==='s') para(it.t, { x:L + 36, align:'j' });
+      else para(it.t, { align:'c' }); }); y -= LH * 0.7; });
+  // signature
+  need(110); y -= 26; const nx = 360, yName = y - 34, nm = String(c.from||'').toUpperCase(), nw = wTxt(nm, F.b, 10.5);
+  if (sign && sign.sig){ try{ const img = await doc.embedPng(b64ToBytes(sign.sig)), sc = Math.min(130/img.width, 42/img.height), w = img.width*sc, h = img.height*sc, sx = nx + Math.max(0, (nw - w)/2) - 6, sy = yName + 10;
+      pg.drawImage(img, { x:sx, y:sy, width:w, height:h });
+      // parts of the signature are covered: security lines, a fine pattern, and the signing details over its right side
+      for (let k = 0; k < 4; k++){ let d = ''; for (let xx = 0; xx <= w + 16; xx += 4){ const yy = 6 + k*9 + Math.sin((xx + k*9)/7)*2.6; d += (xx ? ' L ' : 'M ')+xx.toFixed(1)+' '+yy.toFixed(1); } pg.drawSvgPath(d, { x:sx - 4, y:sy + h + 2, borderColor:rgb(0.1,0.2,0.55), borderWidth:0.45, borderOpacity:0.55 }); }
+      for (let xx = 0; xx < w + 12; xx += 5) pg.drawLine({ start:{ x:sx + xx - 6, y:sy }, end:{ x:sx + xx + 6, y:sy + h }, thickness:0.25, color:rgb(0.2,0.3,0.6), opacity:0.25 });
+      const bx = sx + w*0.5, PL = pkiLines(sign.name, sign.when); pg.drawRectangle({ x:bx - 4, y:sy + 2, width:150, height:40, color:rgb(1,1,1), opacity:0.74, borderColor:rgb(0.1,0.2,0.55), borderWidth:0.5, borderOpacity:0.6 });
+      PL.forEach((t, i) => pg.drawText(san(t, i===1 ? F.hb : F.h), { x:bx, y:sy + 32 - i*9.5, size: i===1 ? 7.4 : 6.6, font: i===1 ? F.hb : F.h, color:rgb(0.05,0.1,0.4) }));
+      pg.drawText(san('TALA ref. '+(sign.ref||''), F.h), { x:bx, y:sy + 5, size:5.6, font:F.h, color:rgb(0.35,0.35,0.35) }); }catch(e){ console.warn('TALA memo sig', e); } }
+  pg.drawText(san(nm, F.b), { x:nx, y:yName, size:10.5, font:F.b, color:ink }); if (c.fromPos){ const pw = wTxt(c.fromPos, F.r, 10.5); pg.drawText(san(c.fromPos, F.r), { x:nx + Math.max(0, (nw - pw)/2), y:yName - 13, size:10.5, font:F.r, color:ink }); }
+  y = yName - 24;
+  // the small notes at the lower left: enclosures, reference, Perpetual Index, and the tracking code
+  const ann = c.annex || [], small = []; if (ann.length) small.push('Encl.: As stated.'); else if (c.encl) small.push('Encl.: '+c.encl.split('\n').filter(Boolean).join('; '));
+  if (c.refs) small.push((c.refs.split('\n').filter(Boolean).length > 1 ? 'References: ' : 'Reference: ')+c.refs.split('\n').filter(Boolean).join('; '));
+  if ((c.kw||[]).length){ small.push('To be indicated in the Perpetual Index under the following subjects:'); small.push({ __kw:c.kw }); }
+  const tc = memoTrackCode(c); small.push(''); small.push(tc[0]); small.push(tc[1]);
+  if (y - small.length * 9.2 < 84) newPage(); small.forEach(t => { if (!t){ y -= 5; return; } if (t.__kw){ let xx = L; t.__kw.forEach(k => { pg.drawText(san(k, F.hi), { x:xx, y, size:7.6, font:F.hi, color:ink }); xx += Math.max(90, F.hi.widthOfTextAtSize(san(k, F.hi), 7.6) + 24); }); y -= 9.2; return; }
+    let line = ''; String(t).split(' ').forEach(w => { const tst = line ? line+' '+w : w; if (F.hi.widthOfTextAtSize(san(tst, F.hi), 7.6) > 300 && line){ pg.drawText(san(line, F.hi), { x:L, y, size:7.6, font:F.hi, color:ink }); y -= 9.2; line = w; } else line = tst; }); if (line){ pg.drawText(san(line, F.hi), { x:L, y, size:7.6, font:F.hi, color:ink }); y -= 9.2; } });
+  // annexes, in the order added. Page 1 of each annex has the header, ANNEX n, and the title.
+  const firstPages = new Set();
+  for (let i = 0; i < ann.length; i++){ const a = ann[i]; let file; try{ file = a._data ? a._data : await api('memoAttGet', { fileId:a.fileId }); a._data = file; }catch(e){ continue; }
+    newPage(); firstPages.add(pg); y = H - 194; const t1 = 'ANNEX '+(i+1); pg.drawText(t1, { x:(W - wTxt(t1, F.b, 17))/2, y, size:17, font:F.b, color:ink }); y -= 17;
+    if (a.title) para('**'+a.title.replace(/\*/g,'')+'**', { align:'c', size:11, lh:13.5 }); y -= 8;
+    const bytes = b64ToBytes(file.data), top = y, area = { x:L - 10, w:TW + 20, h: top - BOT };
+    if (/pdf/.test(file.mime)){ try{ const src = await PDFDocument.load(bytes, { ignoreEncryption:true }), idx = src.getPageIndices(), [ep] = await doc.embedPdf(src, [0]), sc = Math.min(area.w/ep.width, area.h/ep.height);
+        pg.drawPage(ep, { x: area.x + (area.w - ep.width*sc)/2, y: top - ep.height*sc, width: ep.width*sc, height: ep.height*sc });
+        if (idx.length > 1){ const rest = await doc.copyPages(src, idx.slice(1)); rest.forEach(p => { doc.addPage(p); }); } }catch(e){ para('This attachment could not be added: '+(file.name||''), { align:'c' }); } }
+    else { try{ const im = file.mime==='image/png' ? await doc.embedPng(bytes) : await doc.embedJpg(bytes), sc = Math.min(area.w/im.width, area.h/im.height); pg.drawImage(im, { x: area.x + (area.w - im.width*sc)/2, y: top - im.height*sc, width: im.width*sc, height: im.height*sc }); }catch(e){} } }
+  // footer on each page made by TALA: the logos, the contact details, and the document box
+  const all = doc.getPages(), total = all.length, eff = fmtLong(c.date);
+  all.forEach((p, i) => { if (pages.indexOf(p) < 0) return; p.drawImage(FTR, { x:0, y:0, width:W, height:82.8 }); const cx = (t, x, yy) => p.drawText(t, { x: x - F.hb.widthOfTextAtSize(t, 5.6)/2, y:yy, size:5.6, font:F.hb, color:ink });
+    if (sign) cx(MC_DOCREF[c.kind] || MC_DOCREF.Memorandum, 508.6, 42.6); cx(eff, 508.6, 27.9); cx((i+1)+' of '+total, 572.7, 27.9); });
   return await doc.save();
 }
+/* ----- The Word copy: the same school template, with the text of the memo, ready to edit and sign by hand ----- */
+function dxEsc(t){ return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function dxRun(t, o){ o = o || {}; return `<w:r><w:rPr><w:rFonts w:ascii="${o.font||'Bookman Old Style'}" w:hAnsi="${o.font||'Bookman Old Style'}" w:cs="${o.font||'Bookman Old Style'}"/>${o.b?'<w:b/><w:bCs/>':''}${o.i?'<w:i/><w:iCs/>':''}${o.u?'<w:u w:val="single"/>':''}<w:sz w:val="${o.sz||20}"/><w:szCs w:val="${o.sz||20}"/></w:rPr>${o.tab?'<w:tab/>':''}<w:t xml:space="preserve">${dxEsc(t)}</w:t></w:r>`; }
+function dxRich(t, o){ return memoInline(t).map(s => dxRun(s.t, Object.assign({}, o, { b: (o && o.b) || s.b }))).join(''); }
+function dxP(runs, o){ o = o || {}; return `<w:p><w:pPr><w:pStyle w:val="NoSpacing"/>${o.ind?`<w:ind w:left="${o.ind}"/>`:''}${o.jc?`<w:jc w:val="${o.jc}"/>`:''}</w:pPr>${runs||''}</w:p>`; }
+function dxImg(rid, id, wPt, hPt){ const E = v => Math.round(v * 12700); return `<w:p><w:pPr><w:pStyle w:val="NoSpacing"/><w:jc w:val="center"/></w:pPr><w:r><w:drawing><wp:inline distT="0" distB="0" distL="0" distR="0"><wp:extent cx="${E(wPt)}" cy="${E(hPt)}"/><wp:docPr id="${id}" name="Annex ${id}"/><a:graphic xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"><a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture"><pic:pic xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"><pic:nvPicPr><pic:cNvPr id="${id}" name="annex${id}"/><pic:cNvPicPr/></pic:nvPicPr><pic:blipFill><a:blip r:embed="${rid}"/><a:stretch><a:fillRect/></a:stretch></pic:blipFill><pic:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="${E(wPt)}" cy="${E(hPt)}"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></pic:spPr></pic:pic></a:graphicData></a:graphic></wp:inline></w:drawing></w:r></w:p>`; }
+async function memoDocx(c){
+  const K = await memoKit(); await loadScript(LIBS.zip); const zip = await JSZip.loadAsync(b64ToBytes(K.docx));
+  let x = await zip.file('word/document.xml').async('string'), rels = await zip.file('word/_rels/document.xml.rels').async('string'), ct = await zip.file('[Content_Types].xml').async('string');
+  const out = [], E = '', n0 = memoNum(c.no);
+  out.push(dxP(), dxP(dxRun(fmtLong(c.date), { sz:22 }), { jc:'right' }), dxP());
+  out.push(dxP(dxRun(MC_TITLE[c.kind] || 'MEMORANDUM', { b:true })), dxP(dxRun('No. ')+dxRun(String(n0.n), { u:true })+dxRun(n0.s ? ', s. '+n0.s : '')), dxP());
+  out.push(dxP(dxRun(String(c.subject||'').toUpperCase().replace(/\*/g,''), { b:true }), { jc:'center' }), dxP());
+  const blk = (lab, t) => { String(t||'').split('\n').map(s => s.trim()).filter(Boolean).forEach((l, i) => out.push(dxP((i===0 ? dxRun(lab)+dxRun(l.replace(/\*/g,''), { b:true, tab:true }) : dxRun('', { tab:true })+dxRich(l))))); out.push(dxP()); };
+  blk('To:', c.to); if (c.thru) blk('Thru:', c.thru);
+  let n = 0; memoBlocks(c.body).forEach(items => { items.forEach((it, j) => {
+      if (it.k==='p'){ if (j===0 && c.numbered){ n++; out.push(dxP(dxRun(n+'.')+dxRun('', { tab:true })+dxRich(it.t), { jc:'both' })); } else out.push(dxP((c.numbered ? '' : dxRun('', { tab:true }))+dxRich(it.t), { jc:'both' })); }
+      else if (it.k==='s') out.push(dxP(dxRich(it.t), { ind:720, jc:'both' }));
+      else out.push(dxP(dxRich(it.t), { jc:'center' })); }); out.push(dxP()); });
+  out.push(dxP(), dxP(), dxP(dxRun(String(c.from||'').toUpperCase(), { b:true, sz:22 }), { ind:5760 }), dxP(dxRun(c.fromPos||'', { sz:22 }), { ind:5760 }), dxP());
+  const sm = (t) => out.push(dxP(dxRun(t, { font:'Segoe UI', i:true, sz:16 })));
+  const ann = c.annex || []; if (ann.length) sm('Encl.: As stated.'); else if (c.encl) sm('Encl.: '+c.encl.split('\n').filter(Boolean).join('; '));
+  if (c.refs) sm((c.refs.split('\n').filter(Boolean).length > 1 ? 'References: ' : 'Reference: ')+c.refs.split('\n').filter(Boolean).join('; '));
+  if ((c.kw||[]).length){ sm('To be indicated in the Perpetual Index under the following subjects:'); sm((c.kw||[]).join('          ')); }
+  const tc = memoTrackCode(c); out.push(dxP()); sm(tc[0]); sm(tc[1]);
+  // annexes as pictures (each PDF page becomes a picture)
+  let rn = 900, pid = 900;
+  for (let i = 0; i < ann.length; i++){ const a = ann[i]; let file; try{ file = a._data || await api('memoAttGet', { fileId:a.fileId }); a._data = file; }catch(e){ continue; }
+    const imgs = []; if (/pdf/.test(file.mime)){ try{ const Lb = await pdfJs(), d = await Lb.getDocument({ data:b64ToBytes(file.data) }).promise; for (let p = 1; p <= Math.min(d.numPages, 30); p++){ const pg = await d.getPage(p), v = pg.getViewport({ scale:1.6 }), cv = document.createElement('canvas'); cv.width = v.width; cv.height = v.height; const g = cv.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0,0,cv.width,cv.height); await pg.render({ canvasContext:g, viewport:v }).promise; imgs.push({ data:cv.toDataURL('image/jpeg', 0.82).split(',')[1], w:cv.width, h:cv.height, ext:'jpeg' }); } }catch(e){ console.warn('TALA annex word', e); } }
+    else { const im = await new Promise(res => { const m = new Image(); m.onload = () => res(m); m.onerror = () => res(null); m.src = 'data:'+file.mime+';base64,'+file.data; }); if (im) imgs.push({ data:file.data, w:im.naturalWidth, h:im.naturalHeight, ext: file.mime==='image/png' ? 'png' : 'jpeg' }); }
+    imgs.forEach((im, k) => { rn++; pid++; const rid = 'rIdA'+rn, fn = 'annex'+rn+'.'+im.ext; zip.file('word/media/'+fn, b64ToBytes(im.data)); rels = rels.replace('</Relationships>', `<Relationship Id="${rid}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="media/${fn}"/></Relationships>`);
+      out.push('<w:p><w:r><w:br w:type="page"/></w:r></w:p>'); if (k===0){ out.push(dxP(dxRun('ANNEX '+(i+1), { b:true, sz:34 }), { jc:'center' })); if (a.title) out.push(dxP(dxRich(a.title, { b:true, sz:22 }), { jc:'center' })); out.push(dxP()); }
+      const maxW = 451, maxH = k===0 ? 520 : 600, sc = Math.min(maxW/im.w, maxH/im.h); out.push(dxImg(rid, pid, im.w*sc, im.h*sc)); }); }
+  if (!/Extension="jpeg"/i.test(ct)) ct = ct.replace('<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">', '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="jpeg" ContentType="image/jpeg"/>');
+  if (!/Extension="png"/i.test(ct)) ct = ct.replace('<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">', '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="png" ContentType="image/png"/>');
+  x = x.replace('{{BODY}}', out.join(''));
+  zip.file('word/document.xml', x); zip.file('word/_rels/document.xml.rels', rels); zip.file('[Content_Types].xml', ct);
+  for (const f of ['word/header1.xml', 'word/footer1.xml']){ const z = zip.file(f); if (z){ let s = await z.async('string'); s = s.split('{{SY}}').join(memoSY()).split('{{EFF}}').join(dxEsc(fmtLong(c.date))); zip.file(f, s); } }
+  return await zip.generateAsync({ type:'blob', mimeType:'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
+}
+function memoFileBase(c){ return (MC_TITLE[c.kind]||'Memo').replace(/\s+/g,'')+'_No'+String(memoNum(c.no).n)+(memoNum(c.no).s ? '_s'+memoNum(c.no).s : ''); }
+async function memoWord(){ const c = memoGetC(); $('mcErr').textContent = 'Making the Word file';
+  try{ const bl = await memoDocx(c), a = document.createElement('a'); a.href = URL.createObjectURL(bl); a.download = memoFileBase(c)+'.docx'; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 4000); $('mcErr').textContent = ''; toast('The Word file is downloading.'); }
+  catch(e){ handleErr(e, 'mcErr'); } }
+/* ----- Annexes: attach files one at a time, in the order they should appear ----- */
+function memoAnnexDraw(){ const A = MCW.annex || [], b = $('mcAnnex'); if (!b) return;
+  b.innerHTML = (A.length ? `<ol class="mcann">${A.map((a, i) => `<li><span class="mcann-n">Annex ${i+1}</span><span class="mcann-f">${/pdf/.test(a.mime)?'📄':'🖼'} ${esc(a.name)}</span>
+      <input value="${esc(a.title||'')}" placeholder="Title of the annex, for example Division Memorandum No. 346, s. 2026" oninput="MCW.annex[${i}].title=this.value">
+      <span class="mcann-b"><button type="button" class="btn ghost small" ${i?'':'disabled'} onclick="memoAnnexMove(${i},-1)" aria-label="Move up">↑</button><button type="button" class="btn ghost small" ${i<A.length-1?'':'disabled'} onclick="memoAnnexMove(${i},1)" aria-label="Move down">↓</button><button type="button" class="btn ghost small" onclick="MCW.annex.splice(${i},1);memoAnnexDraw()" aria-label="Remove">✕</button></span></li>`).join('')}</ol>` : '<p class="hint">No attachment yet.</p>')
+    + `<button type="button" class="btn ghost small" onclick="memoAnnexPick()">${A.length ? '＋ Add another attachment' : '📎 Attach a file'}</button> <small class="hint">PDF or picture. One file at a time. They become Annex 1, 2, 3 in this order.</small>`; }
+function memoAnnexMove(i, d){ const A = MCW.annex, t = A[i]; A[i] = A[i+d]; A[i+d] = t; memoAnnexDraw(); }
+function memoAnnexPick(){ const i = document.createElement('input'); i.type = 'file'; i.accept = 'application/pdf,image/jpeg,image/png'; i.onchange = () => { if (i.files[0]) memoAnnexUp(i.files[0]); }; i.click(); }
+async function memoAnnexUp(f){ if (!/^application\/pdf$|^image\/(jpeg|png)$/.test(f.type)) return toast('Attach a PDF or a picture (JPG or PNG).');
+  toast('Attaching '+f.name); try{ const pdf = f.type==='application/pdf', base64 = pdf ? await readB64(f) : (await lacShrink(f, 2400, 0.86)).split(',')[1], mime = pdf ? f.type : 'image/jpeg';
+    const r = await api('memoAttUp', { base64, mime, name:f.name }); (MCW.annex = MCW.annex || []).push({ fileId:r.fileId, name:r.name, mime:r.mime, _data:{ data:base64, mime, name:r.name }, title:f.name.replace(/\.[a-z0-9]+$/i,'').replace(/[_]+/g,' ') }); memoAnnexDraw(); toast('Attached. Type the title of the annex.'); }
+  catch(e){ toast(e.message || 'Could not attach.'); } }
+/* ----- Writing help with AI (Google Gemini). The suggestions are shown first; nothing changes until Apply. ----- */
+async function memoAiRun(){
+  const c = memoGetC(), b = $('mcAi'); if (!MEMO.data.ai){ if (USER.role==='head') return memoAiKey(); return $('mcErr').textContent = 'The School Head has not turned on the AI writing help yet.'; }
+  b.disabled = true; b.textContent = '✨ AI is reading';
+  try{ const r = await api('memoAi', { memo:c }); if (r.need==='key'){ MEMO.data.ai = false; return memoAiKey(); } if (r.error) throw new Error(r.error);
+    const lab = { to:'To', thru:'Thru', subject:'Subject', refs:'References', body:'Body', encl:'Enclosures' }, ch = Object.keys(lab).filter(k => typeof r.fix[k]==='string' && r.fix[k].trim() !== String(c[k]||'').trim());
+    MCW.ai = r.fix; $('mcChecks').innerHTML = `<div class="mcchk ai"><div class="mcchk-h"><b>✨ AI suggestions${ch.length ? '' : ': no changes needed'}</b>${ch.length ? '<button class="btn small" onclick="memoAiApply()">Apply all</button>' : ''}</div>
+      ${(r.fix.notes||[]).length ? `<ul class="mcnotes">${r.fix.notes.map(t => `<li>${esc(t)}</li>`).join('')}</ul>` : ''}
+      ${ch.map(k => `<div class="mcfix"><span class="mctag Grammar">${lab[k]}</span><div><p class="mcdiff"><s>${esc(String(c[k]||'').slice(0, 600))}</s></p><p class="mcdiff"><b>${esc(String(r.fix[k]).slice(0, 1200))}</b></p></div><button class="btn ghost small" onclick="memoAiApply('${k}')">Apply</button></div>`).join('')}
+      <p class="hint">Please read the suggestions before applying. The AI can make mistakes.</p></div>`; }
+  catch(e){ handleErr(e, 'mcErr'); }
+  b.disabled = false; b.textContent = '✨ Improve with AI'; }
+function memoAiApply(k){ const F = MCW.ai || {}; (k ? [k] : ['to','thru','subject','refs','body','encl']).forEach(f => { if (typeof F[f]==='string' && $('mc_'+f)) $('mc_'+f).value = F[f]; }); toast(k ? 'Applied.' : 'All suggestions applied.'); if (!k) $('mcChecks').innerHTML = ''; }
+function memoAiKey(){ const box = $('mcChecks'); box.innerHTML = `<div class="mcchk ai"><b>✨ Turn on the AI writing help</b>
+  <p class="hint">TALA uses Google Gemini to correct the spelling, grammar, and DepEd style of your memos. Get a free key once: open <b>aistudio.google.com/apikey</b> with a Google account, tap <b>Create API key</b>, copy it, then paste it here. The key is kept in Apps Script, never shown to the teachers. The text of the memo is sent to Google Gemini when you tap Improve with AI.</p>
+  <div class="row" style="justify-content:flex-start;gap:6px"><input id="mcKey" type="password" placeholder="Paste the key" style="flex:1;min-width:220px"><button class="btn small" onclick="memoAiKeySave()">Save the key</button></div></div>`; }
+async function memoAiKeySave(){ try{ const r = await api('aiKeySet', { key:$('mcKey').value.trim() }); MEMO.data.ai = r.on; toast(r.on ? 'The AI writing help is on.' : 'The key was removed.'); if (r.on) memoAiRun(); }catch(e){ handleErr(e, 'mcErr'); } }
+/* ----- Body tools and the open guide beside the boxes ----- */
+function memoWrap(pre, post, line){ const t = $('mc_body'), s = t.selectionStart, e = t.selectionEnd, v = t.value;
+  if (line){ const ls = v.lastIndexOf('\n', s - 1) + 1; t.value = v.slice(0, ls) + pre + v.slice(ls); t.focus(); t.selectionStart = t.selectionEnd = e + pre.length; return; }
+  const sel = v.slice(s, e) || 'bold words'; t.value = v.slice(0, s) + pre + sel + post + v.slice(e); t.focus(); t.selectionStart = s + pre.length; t.selectionEnd = s + pre.length + sel.length; }
+function memoGuideHtml(){ return `<aside class="mcguide"><b>📘 Writing guide</b>
+  <dl><dt>New paragraph</dt><dd>Leave one empty line. TALA numbers the paragraphs 1, 2, 3.</dd>
+  <dt><code>**words**</code></dt><dd>Bold. Or highlight the words, then tap <b>B</b>.</dd>
+  <dt><code>a.</code> <code>b.</code></dt><dd>Start a line with a. or b. for an indented sub item under a paragraph.</dd>
+  <dt><code>&gt;</code></dt><dd>Start a line with &gt; to center it, like a signature specimen.</dd>
+  <dt>To</dt><dd>First line is printed in bold (the name or group). Next lines: position, school.</dd>
+  <dt>References</dt><dd>One per line. They print at the lower left as Reference.</dd>
+  <dt>Keywords</dt><dd>They print as the Perpetual Index subjects, as you type them.</dd>
+  <dt>Annexes</dt><dd>Attach files in order. They print as Annex 1, 2, 3, with Encl.: As stated.</dd>
+  <dt>Closing line</dt><dd>Immediate dissemination of and compliance with this Memorandum is desired.</dd>
+  <dt>Dates and time</dt><dd>October 23, 2026 · 8:00 AM</dd>
+  <dt>Avoid</dt><dd>Dashes, contractions, and short forms like DO or DM.</dd></dl></aside>`; }
+
 async function memoPreview(){ const c = memoGetC(); try{ const bytes = await memoPdf(c, null), url = URL.createObjectURL(new Blob([bytes], { type:'application/pdf' })); window.open(url, '_blank') || toast('Allow pop ups to see the preview.'); MCW.lastPreview = url; }catch(e){ handleErr(e, 'mcErr'); } }
 function memoSignAsk(){ const c = memoGetC(); const miss = [['no','the number'],['date','the date'],['to','To'],['subject','the subject'],['body','the body']].filter(x => !c[x[0]]).map(x => x[1]);
   if (miss.length) return $('mcErr').textContent = 'Please fill in '+miss.join(', ')+'.';
@@ -2751,8 +2961,8 @@ async function memoSignPost(){
     if (!MCW.id) await memoDraftSave(true);
     const when = new Date().toLocaleString('sv-SE', { timeZone:'Asia/Manila' }).slice(0,19), bytes = await memoPdf(c, { sig:mine.sig, name:c.from || USER.name, when, ref: MCW.id });
     let s = ''; for (let i = 0; i < bytes.length; i += 8192) s += String.fromCharCode.apply(null, bytes.subarray(i, i + 8192));
-    const fn = (MC_TITLE[c.kind]||'Memo').replace(/\s+/g,'')+'_No'+String(c.no).replace(/[^0-9]+/g,'_').replace(/_+$/,'')+'.pdf';
-    MEMO.data = await api('memoSave', { memo:{ id:MCW.id, draft:false, signed:true, kind:c.kind, no:c.no, date:c.date, subject:c.subject, to:c.recip, keywords:c.kw, compose:Object.assign({}, c, { signedOn:when }), base64:btoa(s), mime:'application/pdf', fileName:fn } });
+    const fn = memoFileBase(c)+'.pdf';
+    MEMO.data = await api('memoSave', { memo:{ id:MCW.id, draft:false, signed:true, kind:c.kind, no:c.no, date:c.date, subject:c.subject, to:c.recip, keywords:c.kw, compose:Object.assign(memoClean(c), { signedOn:when }), base64:btoa(s), mime:'application/pdf', fileName:fn } });
     MEMO.tab = c.kind; closeModal('stfModal'); toast('Signed and posted. Each one gets a notice.'); memoDraw(); }
   catch(e){ handleErr(e, 'mcErr'); } }
 
@@ -3000,6 +3210,7 @@ function f201Mine(){
     return f201DocCard(d, xs, mine, head, !!na[d.code]); }).join('');
   $('prfBody').innerHTML = `<div class="ostats"><div class="ostat static"><span class="oico">📁</span><b>${up}</b><span>Documents uploaded</span></div><div class="ostat static"><span class="oico">✔</span><b>${ok}</b><span>Okay</span></div>
       <div class="ostat static"><span class="oico">↺</span><b>${docs.filter(d => { const xs = D.filter(x => x.code===d.code); return xs.length && f201Agg(xs)==='Redo'; }).length}</b><span>To redo</span></div><div class="ostat static"><span class="oico">⏳</span><b>${need}</b><span>Required, not yet uploaded</span></div></div>
+    ${!mine && prfAll() ? '<div class="row" style="justify-content:flex-start;margin-top:10px"><button class="btn ghost small" onclick="copyMsg(prf201Msg())">💬 Copy a reminder of the files to upload</button></div>' : ''}
     ${f201StateHtml(me, mine)}
     ${mine ? `<p class="hint" style="margin:10px 2px">Upload a PDF or a clear scanned photo (JPG or PNG). One file at a time. If a document has many pages or photos, like the PRC ID and the board rating, tap ＋ under it to add each one. If a document does not apply to you, tap Not applicable to me. Upload what you have now and add the rest on or before ${esc(dShort((PRF.f && PRF.f.deadline) || '2026-10-30'))}.</p>` : ''}
     <div class="f2tools"><input class="f2q" placeholder="🔍 Search documents, details, or keywords" value="${esc(PRF.docQ)}" oninput="PRF.docQ=this.value;clearTimeout(PRF.qt);PRF.qt=setTimeout(()=>{f201Mine();const i=document.querySelector('.f2q');if(i){i.focus();i.setSelectionRange(i.value.length,i.value.length);}},250)">
@@ -10340,7 +10551,7 @@ async function lacCopy(){ const t = $('lmTxt').value; try{ await navigator.clipb
    one for the group chat, and one for each person who needs a follow up. Copy, then paste.
    ========================================================= */
 const MC = { tab:'', kind:'', texts:[], secs:null, attDays:null, busy:false };
-const MC_TABS = [['lpt','LPT and PPT'],['sbfp','SBFP'],['att','Attendance'],['lac','LAC and Meetings'],['aral','ARAL']];
+const MC_TABS = [['lpt','LPT and PPT'],['sbfp','SBFP'],['att','Attendance'],['lac','LAC and Meetings'],['aral','ARAL'],['prof','Profile and 201 File'],['memo','Memos']];
 function mcSign(){ return (USER ? USER.name : '') + '\nSchool Head'; }
 function mcFirst(n){ n = String(n||'').trim(); const p = n.split(/\s+/); return p.length > 1 && /^(ma\.?|mary|jose|john|juan)$/i.test(p[0]) ? p[0]+' '+p[1] : p[0] || n; }
 function mcPeople(){ const m = {}; [ (DATA||{}).teachers, (typeof ARAL!=='undefined' && ARAL.data) ? ARAL.data.people : null, (typeof LAC!=='undefined' && LAC.data) ? LAC.data.people : null, (typeof STF!=='undefined' && STF.data) ? STF.data.people : null ]
@@ -10351,7 +10562,7 @@ function mcOne(x, line, ask){ return `Good day, ${mcFirst(x.name)}! 🌟\n\n${li
 
 async function msgCenter(tab, kind){
   if (!USER || USER.role!=='head') return;
-  MC.tab = tab || MC.tab || ({ lpt:'lpt', sbfp:'sbfp', att:'att', lac:'lac', aral:'aral' })[CUR_FEATURE] || 'lpt'; MC.kind = kind || '';
+  MC.tab = tab || MC.tab || ({ lpt:'lpt', sbfp:'sbfp', att:'att', lac:'lac', aral:'aral', prof:'prof', memo:'memo' })[CUR_FEATURE] || 'lpt'; MC.kind = kind || '';
   mcDraw(true); await mcLoad(MC.tab); if ($('stfModal').classList.contains('open') && $('mcBody')) mcDraw();
 }
 async function mcLoad(tab){
@@ -10362,9 +10573,36 @@ async function mcLoad(tab){
       if (typeof STF!=='undefined' && !STF.data){ try{ STF.data = await api('staffLoad', { from: addDays(todayPH(), -10) }); }catch(e){} } }
     if (tab==='lac' && typeof LAC!=='undefined' && !LAC.data){ LAC.data = await api('lacLoad'); }
     if (tab==='aral' && typeof ARAL!=='undefined'){ await aralLoad(true); }
+    if (tab==='prof'){ const [a, b] = await Promise.all([api('prfLoad', { full:true }), api('f201Load', {})]); MC.prfL = a.list || []; MC.f201 = b; }
+    if (tab==='memo'){ MC.memo = await api('memoLoad'); }
   }catch(e){ MC.err = friendly(e.message); }
 }
-function mcKinds(tab){ try{ return ({ lpt:mcLpt, sbfp:mcSbfp, att:mcAtt, lac:mcLac, aral:mcAral })[tab]() || []; }catch(e){ console.warn('TALA messages', e); return []; } }
+
+/* ----- Ready messages: Profile and 201 File, and Memos ----- */
+function mcWithF(F, fn){ const keep = PRF.f; PRF.f = F || keep; try{ return fn(); } finally { PRF.f = keep; } }
+function mcProf(){ const L = (MC.prfL||[]).filter(p => p.role!=='head'), F = MC.f201, dl = fmtLong((F && F.deadline) || '2026-10-30');
+  if (!L.length) return [];
+  return mcWithF(F, () => { const cut = (a, n) => a.slice(0, n).join(', ') + (a.length > n ? ', and '+(a.length - n)+' more' : '');
+    const prof = L.filter(p => p.status!=='Locked' || prfEmpty(p.data).need.length).map(p => { const E = prfEmpty(p.data); return { email:p.email, name:p.name, need: !p.data ? 'not started yet' : (p.status==='Locked' ? 'locked' : (p.filled||0)+'% done')+(E.need.length ? '; still empty: '+cut(E.need, 6) : '') }; });
+    const docs = L.map(p => ({ p, S:f201State(p.email) })), need = docs.filter(x => x.S.need.length).map(x => ({ email:x.p.email, name:x.p.name, need:x.S.need.length+' to upload: '+cut(x.S.need.map(n => n.replace(/^\w+\s/,'').replace(/\s*\(.*$/,'')), 4) }));
+    const redo = docs.filter(x => x.S.redo.length).map(x => ({ email:x.p.email, name:x.p.name, need:'upload again: '+x.S.redo.map(n => n.replace(/^\w+\s/,'').replace(/\s*\(\d+ files\)$/,'')).join(', ') }));
+    const cp = L.filter(p => { const x = (F.docs||[]).find(d => d.email===p.email && d.code==='CP'); return x && ((x.details||{}).rows||[]).length && !((x.details||{}).confirm||{}).ok; }).map(p => ({ email:p.email, name:p.name, need:'check the subjects and minutes, then confirm' }));
+    const open = 'Please open TALA, then Profile and 201 File.';
+    return [
+      { id:'prof', ico:'📝', label:'Profile still empty', items:prof, done:'Every profile is complete and locked.', group: () => mcGroup('📝 TALA Profile: these details are still empty.', prof, open+' You may save it now and add the rest when available, on or before '+dl+'.'), one: x => mcOne(x, '📝 A reminder about your TALA Profile.', open+' Fill in the empty boxes (marked in yellow), then tap Save. Deadline: '+dl+'.') },
+      { id:'f201', ico:'📁', label:'201 File to upload', items:need, done:'Everyone has uploaded the required 201 documents.', group: () => mcGroup('📁 TALA 201 File: documents still to upload.', need, open+' Upload a PDF or a clear scanned photo, one file at a time. If a document does not apply, tap Not applicable to me. Deadline: '+dl+'.'), one: x => mcOne(x, '📁 A reminder about your TALA 201 File.', open+' Then My 201 File, and tap Upload or ＋ under each document. Deadline: '+dl+'.') },
+      { id:'redo', ico:'↺', label:'201 File to redo', items:redo, done:'Nothing to redo.', group: () => mcGroup('↺ TALA 201 File: please upload these again.', redo, open+' The remark is under each document.'), one: x => mcOne(x, '↺ Some of your 201 File documents need to be uploaded again.', open+' Read the remark under each one, then tap Upload again.') },
+      { id:'cp', ico:'🗓', label:'Class program to confirm', items:cp, done:'Every class program is confirmed.', group: () => mcGroup('🗓 Class program: please check and confirm.', cp, open+' In My Profile, check your subjects and teaching minutes, then tap Correct, I confirm.'), one: x => mcOne(x, '🗓 Your class program is in TALA.', open+' In My Profile, check your subjects and minutes, then tap Correct, I confirm, or tell me what is not correct.') } ]; }); }
+function mcMemo(){ const D = MC.memo; if (!D) return []; const P = (D.people||[]).filter(p => p.role!=='head'), out = [];
+  const posted = (D.memos||[]).filter(m => m.status!=='Draft').sort((a,b) => String(b.date+b.on).localeCompare(String(a.date+a.on)));
+  const latest = posted[0]; if (latest) out.push({ id:'new', ico:'📣', label:'Announce the latest', always:true, items:null, group: () => `Good day, Ma'am and Sir! 🌟\n\n📣 New in TALA, Memos and Advisories:\n${memoTitle(latest)}, ${fmtLong(latest.date)}\n${latest.subject}\n\nPlease open TALA, then Memos and Advisories. Open the file and tap I have read it.\n\nThank you! 🙏\n${mcSign()}` });
+  posted.slice(0, 6).forEach(m => { const to = P.filter(p => p.email!==m.byEmail && (m.to==='all' || (m.to||[]).indexOf(p.email) > -1)), not = to.filter(p => !(m.reads||{})[p.email]).map(p => ({ email:p.email, name:p.name, need:'' }));
+    if (m.kind==='Direct') return; out.push({ id:'m'+m.id, ico:'👁', label:'Not yet read: '+memoTitle(m), items:not, done:'Everyone has read '+memoTitle(m)+'.',
+      group: () => mcGroup('👁 '+memoTitle(m)+' ('+fmtLong(m.date)+'), '+m.subject+'. Not yet confirmed as read:', not, 'Please open TALA, then Memos and Advisories. Open the file and tap I have read it.'),
+      one: x => mcOne(x, '👁 Please read '+memoTitle(m)+': '+m.subject+'.', 'Open TALA, then Memos and Advisories. Open the file and tap I have read it.') }); });
+  return out; }
+
+function mcKinds(tab){ try{ return ({ lpt:mcLpt, sbfp:mcSbfp, att:mcAtt, lac:mcLac, aral:mcAral, prof:mcProf, memo:mcMemo })[tab]() || []; }catch(e){ console.warn('TALA messages', e); return []; } }
 function mcDraw(loading){
   const kinds = loading ? [] : mcKinds(MC.tab);
   if (!loading && !kinds.some(k => k.id===MC.kind)) MC.kind = (kinds.find(k => (k.items||[]).length) || kinds[0] || {}).id || '';
