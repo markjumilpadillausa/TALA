@@ -1180,6 +1180,21 @@ i.req{color:#c62828;font-style:normal}
 .mcdiff s{color:#b3261e}.mcdiff b{color:#1d6b35}.mcsure{display:inline-flex;gap:8px;align-items:center;flex-wrap:wrap;color:var(--ink);font-weight:600}.mmdraft{border-style:dashed}
 
 .pff .check,.mepick .check{display:flex;flex-direction:row;align-items:center;gap:8px;margin:4px 0}.pff .check input,.mepick input{width:auto!important;flex:none;padding:0}
+
+.stfnav{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:12px}.stfnav input[type=date]{font:inherit;padding:7px 10px;border:1.5px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink)}
+
+.bk.bkstack .bkc{box-shadow:inset 6px 0 0 rgba(0,0,0,.07),4px 4px 0 -1px #fff,4px 4px 0 0 var(--line),8px 8px 0 -1px #fff,8px 8px 0 0 var(--line),0 6px 14px rgba(0,0,0,.12)}
+.bkn{position:absolute;right:6px;top:6px;background:#2c4f7c;color:#fff;font-size:11.5px;font-weight:700;border-radius:999px;padding:2px 8px}
+.bkpages{display:flex;flex-wrap:wrap;gap:5px}.bkpg{position:relative;width:38px;height:48px;border:1.5px solid var(--line);border-radius:5px;background:#fff;padding:0;overflow:hidden;cursor:pointer;font-size:16px;display:grid;place-items:center}
+.bkpg img{width:100%;height:100%;object-fit:cover;object-position:top}.bkpg i{position:absolute;right:1px;bottom:1px;font-style:normal;font-size:9.5px;background:rgba(0,0,0,.6);color:#fff;border-radius:4px;padding:0 3px}
+.bkpg.ok{border-color:#5fae74}.bkpg.redo{border-color:#e57373}.bkpg.add{border-style:dashed;color:var(--muted);font-size:20px;background:var(--bg)}
+.f2state{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;margin:12px 0}.f2s{border-radius:12px;padding:10px 12px;font-size:13.5px}.f2s ul{margin:6px 0 0;padding-left:18px}.f2s li{margin:2px 0}
+.f2s.ok{background:#e9f6ec}.f2s.chk{background:#fff7e0}.f2s.redo{background:#fde9e7}.f2s.need{background:#fff1e6;border:1.5px solid #f0b37e}
+.pfempty{background:#fff7e0;border:1.5px solid #f0d27e;border-radius:12px;padding:10px 14px;margin:10px 0 0;font-size:13.5px}.pfempty p{margin:4px 0}.pfempty small{display:block;margin-top:3px}.pfempty.done{background:#e9f6ec;border-color:#9fd3ad}
+.pff.pfe input:not(:disabled),.pff.pfe select:not(:disabled){background:#fffbe8;border-color:#f0d27e}
+.pmsg{border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;margin:10px 0}.pmsg-h{display:flex;justify-content:space-between;align-items:center;gap:8px}.pmsg pre{white-space:pre-wrap;font:inherit;font-size:13px;margin:8px 0 0;max-height:200px;overflow:auto;background:var(--bg);border-radius:8px;padding:8px}
+
+.dtrside small.dtrok,.dtrside small.dtrwarn{display:block;margin-top:8px;border-radius:8px;padding:6px 8px}.dtrside small.dtrok{background:#e9f6ec}.dtrside small.dtrwarn{background:#fff1e6}
 </style>
 </head>
 <body>
@@ -1904,7 +1919,7 @@ i.req{color:#c62828;font-style:normal}
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
 const MIN_SERVER = '8.0'; // oldest Code.gs this page works with
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'8.0', date:'October 23, 2026' } };
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'8.2', date:'October 23, 2026' } };
 function verLine(server){
   const old = server && (server.indexOf('older') > -1 || parseFloat(server) < parseFloat(MIN_SERVER));
   const s = server ? ' Server '+server+('.') : '';
@@ -2377,9 +2392,10 @@ function prfVals(){ const P = PRF.p.profile, A = PRF.p.account || {}; if (PRF.dr
   const parts = String(A.name||'').replace(/\s+[A-Z]\.\s+/,' ').trim().split(/\s+/), last = parts.length > 1 ? parts.pop() : '';
   return { first: parts.join(' '), last, position: A.position || '', contact: A.contact || '', degrees: [] }; }
 function prfField(f, v, dis){ const [k, lab, ty, req, opts] = f, val = v[k] == null ? '' : String(v[k]), id = 'pf_'+k, r = req ? ' <i class="req">*</i>' : '';
+  const emp = !val && k!=='ext' && !(k==='ipGroup' && v.ip!=='Yes') && !(k==='eligOther' && v.elig!=='Other') ? ' pfe' : '';
   if (ty==='sel'){ let o = k==='position' ? [''].concat(PRF_POS) : opts; if (val && o.indexOf(val) < 0) o = o.concat([val]);
-    return `<label class="pff"><span>${esc(lab)}${r}</span><select id="${id}" ${dis}>${o.map(x => `<option value="${esc(x)}" ${x===val?'selected':''}>${esc(x || 'Choose')}</option>`).join('')}</select></label>`; }
-  return `<label class="pff"><span>${esc(lab)}${r}</span><input id="${id}" type="${ty}" value="${esc(val)}" ${dis} ${ty==='tel'?'inputmode="tel"':''}></label>`; }
+    return `<label class="pff${emp}"><span>${esc(lab)}${r}</span><select id="${id}" ${dis}>${o.map(x => `<option value="${esc(x)}" ${x===val?'selected':''}>${esc(x || 'Choose')}</option>`).join('')}</select></label>`; }
+  return `<label class="pff${emp}"><span>${esc(lab)}${r}</span><input id="${id}" type="${ty}" value="${esc(val)}" ${dis} ${ty==='tel'?'inputmode="tel"':''}></label>`; }
 function prfDegHtml(v, dis){ const D = Array.isArray(v.degrees) && v.degrees.length ? v.degrees : [{}];
   return `<div class="pfdeg"><b>Degrees</b><p class="hint" style="margin:2px 0 8px">Choose the level, then write the course and the major or specialization, if any.</p>
     ${D.map((d, i) => `<div class="pfdrow" data-i="${i}"><select class="dg_level" ${dis}>${[''].concat(PRF_DEG).map(x => `<option value="${esc(x)}" ${x===(d.level||'')?'selected':''}>${esc(x||'Level')}</option>`).join('')}</select>
@@ -2404,6 +2420,7 @@ function prfForm(){
   $('prfBody').innerHTML = `<div class="hcard pfcard"><div class="pftop"><div class="pfphoto">${photo ? `<img src="${photo}" alt="">` : '<span>No photo</span>'}${dis ? '' : '<label class="btn ghost small">📷 Photo<input type="file" accept="image/jpeg,image/png" hidden onchange="prfPhoto(this)"></label>'}</div>
       <div style="flex:1;min-width:200px"><div class="pfsth">${st}${P && P.updated ? `<small>Last saved ${esc(dtTxt(P.updated))}</small>` : ''}</div>
       <div class="pfbar"><i style="width:${(P && P.data && P.data._filled) || 0}%"></i></div><small class="hint">${(P && P.data && P.data._filled) || 0}% complete. Fields with <i class="req">*</i> are needed before locking.</small></div></div>
+    ${prfEmptyHtml(v, PRF.who===USER.email)}
     ${PRF.who===USER.email && !locked ? `<p class="pfnote">You can save your profile now even if some details are not available yet. Add them when you have them, on or before ${esc(dShort((PRF.f && PRF.f.deadline) || '2026-10-30'))}.</p>` : ''}
     ${PRF_F.map(g => `<fieldset class="pfg"><legend>${esc(g.g)}</legend><div class="pfgrid">${g.f.map(f => prfField(f, v, dis)).join('')}</div>${g.deg ? prfDegHtml(v, dis) : ''}${g.anc ? prfAncHtml(v, dis) : ''}${g.cp ? prfCpHtml() : ''}</fieldset>`).join('')}
     <p class="err" id="prfErr"></p>
@@ -2522,12 +2539,12 @@ async function f201ListSave(){
 
 /* ----- For the School Head and the AO: all personnel, the documents to check, and the upload tracking ----- */
 function f201Sum(email){ const D = f201Of(email).filter(x => x.code!=='CP'), na = f201Na(email), docs = f201Docs();
-  return { up: docs.filter(d => D.some(x => x.code===d.code)).length, req: docs.filter(d => !d.opt).length, reqUp: docs.filter(d => !d.opt && D.some(x => x.code===d.code)).length,
+  return { up: docs.filter(d => D.some(x => x.code===d.code)).length, req: docs.filter(d => !d.opt && !na[d.code]).length, reqUp: docs.filter(d => !d.opt && !na[d.code] && D.some(x => x.code===d.code)).length,
     ok: D.filter(x => x.status==='Okay').length, chk: D.filter(x => x.status==='For checking').length, redo: D.filter(x => x.status==='Redo').length, last: D.map(x => x.on).sort().pop() || '' }; }
 function prfAllTab(){
   const L = PRF.list || [];
   $('prfBody').innerHTML = `<div class="hcard"><div class="row" style="justify-content:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:8px"><select id="pfnWho"><option value="">Everyone</option>${L.map(p => `<option value="${p.email}">${esc(p.name)}</option>`).join('')}</select>
-      <button class="btn small" onclick="prfNarrPrint($('pfnWho').value)">🖨 Print the data narrative</button><button class="btn ghost small" onclick="f201BundleAll()">⬇ Download all 201 Files (one PDF each)</button></div>
+      <button class="btn small" onclick="prfNarrPrint($('pfnWho').value)">🖨 Print the data narrative</button><button class="btn ghost small" onclick="f201BundleAll()">⬇ Download all 201 Files (one PDF each)</button><button class="btn ghost small" onclick="prfMsgOpen()">💬 Ready messages</button></div>
     <div class="tblwrap"><table class="pftbl"><thead><tr><th>Name</th><th>Profile</th><th>Complete</th><th>201 File</th><th>Last upload</th><th></th></tr></thead><tbody>
     ${L.map(p => { const s = f201Sum(p.email), hide = USER.role==='admin' && p.role==='head';
       return `<tr><td><b>${esc(p.name)}</b><br><small class="hint">${esc(p.position||'')}</small></td><td>${p.status==='Locked' ? `<span class="pfst ok">Locked</span><br><small class="hint">${esc(dtTxt(p.lockedOn))}</small>` : p.status==='Draft' ? `<span class="pfst draft">Draft</span><br><small class="hint">${esc(dtTxt(p.updated))}</small>` : '<span class="pfst none">Not started</span>'}</td>
@@ -2933,36 +2950,102 @@ async function f201Read(id, text, quiet){
   if (!quiet) toast(items.length ? 'Details were read from the file. Please check them.' : 'Uploaded. You can type the details of the document.');
   if (CUR_FEATURE==='prof' && PRF.tab==='file') prfDraw();
 }
-function f201Book(x, d, mine, head){
-  const det = ((x.details||{}).items||[]);
-  const cover = x.thumb && x.thumb!=='yes' ? `<img src="${x.thumb}" alt="">` : `<span class="bkico">${x.mime==='application/pdf'?'📄':'🖼'}</span>`;
-  return `<div class="bk ${x.status==='Redo'?'redo':''}"><button class="bkc" onclick="f201Card('${x.id}')" title="Open">${cover}<span class="bkst">${f201Stat(x)}</span></button>
-    <div class="bkt"><b>${esc(d.code)}</b> ${esc(d.doc)}</div>
-    ${det.length ? `<dl class="bkd">${det.slice(0, 5).map(i => `<dt>${esc(i.k)}</dt><dd>${esc(i.v)}</dd>`).join('')}</dl>` : `<small class="hint">${(x.details||{}).read ? 'No details found yet.' : 'Details not read yet.'}</small>`}
-    ${x.remark ? `<div class="f2rem">${esc(x.remark)}</div>` : ''}
-    <small class="hint">Uploaded ${esc(dtTxt(x.on))}</small>
-    <div class="bka">${head && !mine ? `<button class="btn small" onclick="f201Check('${x.id}','Okay')">✔ Okay</button><button class="btn ghost small" onclick="f201Check('${x.id}','Redo')">↺ Redo</button>` : ''}${mine && x.status!=='Okay' ? `<button class="btn ghost small" onclick="f201Pick('${d.code}','${x.id}')">Upload again</button>` : ''}</div></div>`;
-}
-function f201Empty(d, mine, isNa){
-  return `<div class="bk bkempty ${isNa?'na':''}">${mine && !isNa ? `<button class="bkc" onclick="f201Pick('${d.code}','')"><span class="bkplus">＋</span><span>Upload</span></button>` : `<div class="bkc"><span class="bkplus">${isNa ? '—' : '·'}</span><span>${isNa ? 'Not applicable' : 'Not yet'}</span></div>`}
+function f201Agg(xs){ return xs.some(x => x.status==='Redo') ? 'Redo' : xs.some(x => x.status==='For checking') ? 'For checking' : 'Okay'; }
+// One card for each document. A document can have many pages or files (for example, the PRC ID front and back, and the board rating).
+function f201DocCard(d, xs, mine, head, isNa){
+  if (!xs.length) return `<div class="bk bkempty ${isNa?'na':''}">${mine && !isNa ? `<button class="bkc" onclick="f201Pick('${d.code}','')"><span class="bkplus">＋</span><span>Upload</span></button>` : `<div class="bkc"><span class="bkplus">${isNa ? '—' : '·'}</span><span>${isNa ? 'Not applicable' : 'Not yet'}</span></div>`}
     <div class="bkt"><b>${esc(d.code)}</b> ${esc(d.doc)}${d.opt ? ' <small class="hint">(if applicable)</small>' : ''}</div>
-    ${mine && d.opt ? (isNa ? `<button class="linkbtn" onclick="f201NaSet('${d.code}',0)">Undo not applicable</button>` : `<button class="linkbtn" onclick="f201NaSet('${d.code}',1)">Not applicable to me</button>`) : ''}</div>`;
+    ${mine ? (isNa ? `<button class="linkbtn" onclick="f201NaSet('${d.code}',0)">Undo not applicable</button>` : `<button class="linkbtn" onclick="f201NaSet('${d.code}',1)">Not applicable to me</button>`) : ''}</div>`;
+  const first = xs[0], st = f201Agg(xs), det = []; xs.forEach(x => ((x.details||{}).items||[]).forEach(i => { if (!det.some(y => y.k===i.k)) det.push(i); }));
+  const cover = first.thumb && first.thumb!=='yes' ? `<img src="${first.thumb}" alt="">` : `<span class="bkico">${first.mime==='application/pdf'?'📄':'🖼'}</span>`;
+  return `<div class="bk ${st==='Redo'?'redo':''} ${xs.length>1?'bkstack':''}"><button class="bkc" onclick="f201Card('${first.id}')" title="Open">${cover}<span class="bkst">${f201Stat({ status:st })}</span>${xs.length>1?`<span class="bkn">${xs.length} files</span>`:''}</button>
+    <div class="bkt"><b>${esc(d.code)}</b> ${esc(d.doc)}</div>
+    ${xs.length>1 || mine ? `<div class="bkpages">${xs.map((x, i) => `<button class="bkpg ${x.status==='Redo'?'redo':x.status==='Okay'?'ok':''}" onclick="f201Card('${x.id}')" title="${esc(x.fileName)}, ${esc(x.status)}">${x.thumb && x.thumb!=='yes' ? `<img src="${x.thumb}" alt="">` : (x.mime==='application/pdf'?'📄':'🖼')}<i>${i+1}</i></button>`).join('')}${mine ? `<button class="bkpg add" onclick="f201Pick('${d.code}','')" title="Add another page or file">＋</button>` : ''}</div>` : ''}
+    ${mine ? `<small class="hint">${xs.length} file${xs.length>1?'s':''}. Tap ＋ to add another page or file.</small>` : `<small class="hint">${xs.length} file${xs.length>1?'s':''}</small>`}
+    ${det.length ? `<dl class="bkd">${det.slice(0, 6).map(i => `<dt>${esc(i.k)}</dt><dd>${esc(i.v)}</dd>`).join('')}</dl>` : `<small class="hint">${xs.some(x => (x.details||{}).read) ? 'No details found yet.' : 'Details not read yet.'}</small>`}
+    ${xs.filter(x => x.remark && x.status==='Redo').map(x => `<div class="f2rem">${esc(x.remark)}</div>`).join('')}
+    <small class="hint">Last upload ${esc(dtTxt(xs.map(x => x.on).sort().pop()))}</small>
+    ${head && !mine ? `<div class="bka"><button class="btn small" onclick="f201CheckDoc('${first.email}','${d.code}','Okay')">✔ Okay</button><button class="btn ghost small" onclick="f201CheckDoc('${first.email}','${d.code}','Redo')">↺ Redo</button></div>` : ''}</div>`;
 }
+async function f201CheckDoc(email, code, dec){ const xs = f201Of(email).filter(x => x.code===code); if (!xs.length) return;
+  if (xs.length===1) return f201Check(xs[0].id, dec);
+  if (dec==='Redo') return stfModal(`<h3>Redo</h3><p class="sub">This document has ${xs.length} files. To send back only one file, open it and tap Redo there. This sends back all ${xs.length} files.</p><textarea id="f2rem" rows="3" style="width:100%" placeholder="What needs to be redone"></textarea><p class="err" id="f2err"></p>
+    <div class="row"><button class="btn ghost" onclick="closeModal('stfModal')">Cancel</button><button class="btn" onclick="f201CheckMany('${email}','${code}','Redo',$('f2rem').value)">↺ Send back for redo</button></div>`);
+  return f201CheckMany(email, code, 'Okay', ''); }
+async function f201CheckMany(email, code, decision, remark){ if (decision==='Redo' && !String(remark).trim()) return $('f2err').textContent = 'Write what needs to be redone.';
+  try{ for (const x of f201Of(email).filter(y => y.code===code)){ const o = await api('f201Check', { id:x.id, decision, remark }); const D = PRF.f.docs, i = D.findIndex(y => y.id===o.id); if (i > -1) D[i] = o; }
+    closeModal('stfModal'); prfCount(); toast(decision==='Okay' ? 'Marked Okay.' : 'Sent back for redo.'); prfDraw(); }catch(e){ toast(e.message || 'Could not save.'); } }
+// What is uploaded and what is still needed, in one look
+function f201State(email){ const D = f201Of(email).filter(x => x.code!=='CP'), na = f201Na(email), out = { ok:[], chk:[], redo:[], need:[], na:[], opt:[] };
+  f201Docs().forEach(d => { const xs = D.filter(x => x.code===d.code), nm = d.code+' '+d.doc;
+    if (xs.length){ const st = f201Agg(xs); (st==='Okay' ? out.ok : st==='Redo' ? out.redo : out.chk).push(nm + (xs.length>1 ? ' ('+xs.length+' files)' : '')); }
+    else if (na[d.code]) out.na.push(nm); else if (d.opt) out.opt.push(nm); else out.need.push(nm); });
+  return out; }
+function f201StateHtml(email, mine){ const S = f201State(email), li = a => a.map(x => `<li>${esc(x)}</li>`).join('');
+  return `<div class="f2state"><div class="f2s ok"><b>✔ Okay (${S.ok.length})</b><ul>${li(S.ok) || '<li class="hint">None yet</li>'}</ul></div>
+    <div class="f2s chk"><b>⏳ Uploaded, for checking (${S.chk.length})</b><ul>${li(S.chk) || '<li class="hint">None</li>'}</ul></div>
+    ${S.redo.length ? `<div class="f2s redo"><b>↺ To upload again (${S.redo.length})</b><ul>${li(S.redo)}</ul></div>` : ''}
+    <div class="f2s need"><b>⚠ Still needed (${S.need.length})</b><ul>${li(S.need) || '<li class="hint">None. All required documents are uploaded.</li>'}</ul>${S.opt.length ? `<small class="hint">If they apply to ${mine ? 'you' : 'this teacher'}: ${esc(S.opt.map(x => x.replace(/^\w+\s/,'')).join(', '))}. ${mine ? 'Tap Not applicable to me on those that do not apply.' : ''}</small>` : ''}</div></div>`; }
 function f201Mine(){
   const me = PRF.who, mine = me===USER.email, head = prfHead(), D = f201Of(me).filter(x => x.code!=='CP'), na = f201Na(me), docs = f201Docs();
-  const up = docs.filter(d => D.some(x => x.code===d.code)).length, ok = D.filter(x => x.status==='Okay').length, need = docs.filter(d => !d.opt && !D.some(x => x.code===d.code)).length;
+  const up = docs.filter(d => D.some(x => x.code===d.code)).length, ok = docs.filter(d => { const xs = D.filter(x => x.code===d.code); return xs.length && f201Agg(xs)==='Okay'; }).length, need = docs.filter(d => !d.opt && !na[d.code] && !D.some(x => x.code===d.code)).length;
   const q = PRF.docQ.toLowerCase();
-  const shelf = g => (g[2]||[]).map(d => ({ code:d[0], doc:d[1], opt:!!d[2] })).map(d => { const xs = D.filter(x => x.code===d.code);
+  const shelf = g => (g[2]||[]).map(d => ({ code:d[0], doc:d[1], opt:!!d[2] })).map(d => { const xs = D.filter(x => x.code===d.code).sort((a,b) => String(a.on).localeCompare(String(b.on)));
     if (q && !(d.doc.toLowerCase().includes(q) || xs.some(x => [(x.keywords||[]).join(' '), x.fileName, ((x.details||{}).items||[]).map(i => i.k+' '+i.v).join(' ')].join(' ').toLowerCase().includes(q)))) return '';
-    return xs.length ? xs.map(x => f201Book(x, d, mine, head)).join('') + (mine ? `<div class="bk more"><button class="bkc" onclick="f201Pick('${d.code}','')"><span class="bkplus">＋</span><span>Add another page or file</span></button><div class="bkt"><b>${esc(d.code)}</b> ${esc(d.doc)}</div></div>` : '') : f201Empty(d, mine, !!na[d.code]); }).join('');
+    return f201DocCard(d, xs, mine, head, !!na[d.code]); }).join('');
   $('prfBody').innerHTML = `<div class="ostats"><div class="ostat static"><span class="oico">📁</span><b>${up}</b><span>Documents uploaded</span></div><div class="ostat static"><span class="oico">✔</span><b>${ok}</b><span>Okay</span></div>
-      <div class="ostat static"><span class="oico">↺</span><b>${D.filter(x => x.status==='Redo').length}</b><span>To redo</span></div><div class="ostat static"><span class="oico">⏳</span><b>${need}</b><span>Required, not yet uploaded</span></div></div>
-    ${mine ? `<p class="hint" style="margin:10px 2px">Upload a PDF or a clear scanned photo (JPG or PNG) of each document. Word files and other editable files are not accepted. You can upload what you have now and add the rest when they are available, on or before ${esc(dShort((PRF.f && PRF.f.deadline) || '2026-10-30'))}.</p>` : ''}
+      <div class="ostat static"><span class="oico">↺</span><b>${docs.filter(d => { const xs = D.filter(x => x.code===d.code); return xs.length && f201Agg(xs)==='Redo'; }).length}</b><span>To redo</span></div><div class="ostat static"><span class="oico">⏳</span><b>${need}</b><span>Required, not yet uploaded</span></div></div>
+    ${f201StateHtml(me, mine)}
+    ${mine ? `<p class="hint" style="margin:10px 2px">Upload a PDF or a clear scanned photo (JPG or PNG). One file at a time. If a document has many pages or photos, like the PRC ID and the board rating, tap ＋ under it to add each one. If a document does not apply to you, tap Not applicable to me. Upload what you have now and add the rest on or before ${esc(dShort((PRF.f && PRF.f.deadline) || '2026-10-30'))}.</p>` : ''}
     <div class="f2tools"><input class="f2q" placeholder="🔍 Search documents, details, or keywords" value="${esc(PRF.docQ)}" oninput="PRF.docQ=this.value;clearTimeout(PRF.qt);PRF.qt=setTimeout(()=>{f201Mine();const i=document.querySelector('.f2q');if(i){i.focus();i.setSelectionRange(i.value.length,i.value.length);}},250)">
       ${D.length ? `<button class="btn ghost small" onclick="f201Bundle('${me}','print')">🖨 Print all as one</button><button class="btn ghost small" onclick="f201Bundle('${me}','download')">⬇ Download all as one PDF</button><button class="btn ghost small" onclick="f201Bundle('${me}','each')">⬇ Download each file</button>` : ''}
       ${head && mine ? '<button class="btn ghost small" onclick="f201ListEdit()">Edit the document list</button>' : ''}</div>
     ${f201List().map(g => { const r = shelf(g); return r ? `<section class="shelf"><h4>${esc(g[0])}. ${esc(g[1])}</h4><div class="shelfrow">${r}</div></section>` : ''; }).join('') || '<div class="empty">No document matches the search.</div>'}`;
 }
+/* ----- Profile details still empty ----- */
+const PRF_LONG = { ecName:'Emergency contact person', ecRel:'Relationship of the emergency contact', ecNo:'Mobile number of the emergency contact', ip:'IP community member (Yes or No)', contact:'My mobile number' };
+const PRF_IFANY = ['middle','ext','item','pemail','designation','advisory','prcExp','eligOther','ipGroup','civil'];
+function prfEmpty(v){ v = v || {}; const need = [], opt = [];
+  PRF_F.forEach(g => g.f.forEach(f => { const k = f[0]; if (k==='ext' || (k==='ipGroup' && v.ip!=='Yes') || (k==='eligOther' && v.elig!=='Other')) return; if (String(v[k]||'').trim()) return;
+    (PRF_IFANY.indexOf(k) > -1 && k!=='civil' ? opt : need).push(PRF_LONG[k] || f[1]); }));
+  if (!(v.degrees||[]).some(d => d.course)) need.push('Degrees (course and major)');
+  if (!prfAncList(v).filter(Boolean).length) opt.push('Ancillary assignments');
+  return { need, opt }; }
+function prfEmptyHtml(v, mine){ const E = prfEmpty(v); if (!E.need.length && !E.opt.length) return '<div class="pfempty done">✔ All the details are filled in.</div>';
+  return `<div class="pfempty"><b>${E.need.length ? '📝 Still empty ('+E.need.length+')' : '✔ The main details are filled in.'}</b>${E.need.length ? `<p>${esc(E.need.join(', '))}.</p>` : ''}
+    ${E.opt.length ? `<small class="hint">If ${mine ? 'you have them' : 'any'}: ${esc(E.opt.join(', '))}.</small>` : ''}${mine ? `<small class="hint">The empty boxes are marked in yellow. Fill them in when the details are available, on or before ${esc(dShort((PRF.f && PRF.f.deadline) || '2026-10-30'))}.</small>` : ''}</div>`; }
+/* ----- Ready messages for the School Head: what each teacher still has to fill in and upload ----- */
+async function prfMsgOpen(){
+  stfModal(`<h3>Ready messages</h3><div class="pirload"><div class="pirdots"><i></i><i></i><i></i></div></div>`, 'wide');
+  let L = []; try{ L = (await api('prfLoad', { full:true })).list || []; }catch(e){ closeModal('stfModal'); return toast('Could not load the profiles.'); }
+  PRF.msgL = L.filter(p => p.email!==USER.email && p.role!=='head'); prfMsgDraw(); }
+function prfMsgFor(p){ const v = p.data || {}, E = prfEmpty(v), S = f201State(p.email), dl = (PRF.f && PRF.f.deadline) || '2026-10-30';
+  const hon = v.sex==='Male' ? 'Sir' : v.sex==='Female' ? "Ma'am" : "Ma'am/Sir", first = (v.first || String(p.name).split(' ')[0] || '').replace(/^./, c => c.toUpperCase()), hr = Number(new Date().toLocaleString('en-US',{ timeZone:'Asia/Manila', hour:'numeric', hour12:false }));
+  const nm = x => x.replace(/^\w+\s/, '').replace(/\s*\(\d+ files\)$/, '');
+  let t = (hr < 12 ? 'Good morning' : 'Good afternoon')+', '+hon+' '+first+'! 🌞\n\nHere is your TALA Profile and 201 File update as of '+dtTxt(new Date().toLocaleString('sv-SE',{timeZone:'Asia/Manila'}))+'.\n\n';
+  t += '📝 My Profile: '+(p.status==='Locked' ? 'saved and locked' : p.status==='Draft' ? 'draft, '+(p.filled||0)+'% complete' : 'not started yet')+'.\n';
+  if (E.need.length) t += 'Please fill in: '+E.need.join(', ')+'.\n';
+  t += '\n📁 201 File: '+(S.ok.length + S.chk.length + S.redo.length)+' uploaded, '+S.ok.length+' marked Okay.\n';
+  if (S.ok.length) t += '✔ Okay: '+S.ok.map(nm).join(', ')+'.\n';
+  if (S.chk.length) t += '⏳ For checking: '+S.chk.map(nm).join(', ')+'.\n';
+  if (S.redo.length) t += '↺ Please upload again: '+S.redo.map(nm).join(', ')+'.\n';
+  if (S.need.length) t += '⚠ Still needed: '+S.need.map(nm).join(', ')+'.\n';
+  if (!E.need.length && !S.need.length && !S.redo.length) t += '\nEverything is complete. Thank you very much! 🙏';
+  else t += '\nYou may upload what you have now and add the rest when available. Deadline: '+fmtLong(dl)+'. Thank you! 🙏';
+  return t; }
+function prfMsgGroup(){ const L = PRF.msgL || [], dl = (PRF.f && PRF.f.deadline) || '2026-10-30', hr = Number(new Date().toLocaleString('en-US',{ timeZone:'Asia/Manila', hour:'numeric', hour12:false }));
+  let t = (hr < 12 ? 'Good morning' : 'Good afternoon')+', Baluyan ES family! 🌞\n\nTALA Profile and 201 File update as of '+dtTxt(new Date().toLocaleString('sv-SE',{timeZone:'Asia/Manila'}))+':\n\n';
+  L.forEach((p, i) => { const E = prfEmpty(p.data), S = f201State(p.email), req = S.ok.length + S.chk.length + S.redo.length + S.need.length - S.opt.length * 0;
+    t += (i+1)+'. '+p.name+': Profile '+(p.status==='Locked' ? 'locked ✔' : p.status==='Draft' ? (p.filled||0)+'%' : 'not started')+(E.need.length && p.status!=='Locked' ? ' ('+E.need.length+' empty)' : '')+'; 201 File '+(S.ok.length+S.chk.length+S.redo.length)+' uploaded'+(S.need.length ? ', '+S.need.length+' still needed' : ', complete ✔')+(S.redo.length ? ', '+S.redo.length+' to redo' : '')+'\n'; });
+  t += '\nPlease open TALA, Profile and 201 File, to see what is still empty. You may upload what you have now and add the rest when available. Deadline: '+fmtLong(dl)+'. Thank you! 🙏';
+  return t; }
+function prfMsgDraw(){ const L = PRF.msgL || [];
+  $('stfMBody').innerHTML = `<h3>Ready messages</h3><p class="sub">Copy, then paste in Messenger. The group message lists everyone. Each personal message lists what that teacher still has to fill in and upload.</p>
+    <div class="pmsg"><div class="pmsg-h"><b>Group chat</b><button class="btn small" onclick="copyMsg(prfMsgGroup())">Copy</button></div><pre>${esc(prfMsgGroup())}</pre></div>
+    ${L.map((p, i) => `<div class="pmsg"><div class="pmsg-h"><b>${esc(p.name)}</b><button class="btn small" onclick="copyMsg(prfMsgFor(PRF.msgL[${i}]))">Copy</button></div><pre>${esc(prfMsgFor(p))}</pre></div>`).join('')}
+    <div class="row"><button class="btn" onclick="closeModal('stfModal')">Done</button></div>`; }
+function copyMsg(t){ const ok = () => toast('Copied. Paste it in Messenger.'); if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(t).then(ok, fb); else fb();
+  function fb(){ const a = document.createElement('textarea'); a.value = t; document.body.appendChild(a); a.select(); try{ document.execCommand('copy'); ok(); }catch(e){ toast('Please select the text and copy it.'); } a.remove(); } }
 // One document, large: the file, the details (can be corrected), the keywords, and the actions
 async function f201Card(id){
   const x = ((PRF.f||{}).docs||[]).find(y => y.id===id); if (!x) return; const mine = x.email===USER.email, head = prfHead(), canEd = (mine && x.status!=='Okay') || head;
@@ -8750,16 +8833,25 @@ function stfDraw(){
   ({ today:stfToday, req:stfReqs, rec:stfRec, sum:stfSum, dtr:stfDtr, lb:stfLb })[STF.tab]();
   maybeGuide('stf'+(STF.tab==='today'?'':STF.tab));
 }
+// Go back to an earlier date: the times of that day, for me and (School Head and AO) for everyone
+function stfDayNav(day){ const t = todayPH(), first = (typeof ATT!=='undefined' && ATT.firstDay) || '';
+  return `<div class="stfnav"><button class="btn ghost small" onclick="stfDayGo(-1)" aria-label="Day before">‹</button><input type="date" value="${day}" max="${t}" ${first?`min="${first}"`:''} onchange="STF.day=this.value||'';stfDraw()"><button class="btn ghost small" onclick="stfDayGo(1)" ${day>=t?'disabled':''} aria-label="Next day">›</button>
+    ${day!==t ? `<span class="atn wait">Showing ${esc(fmtLong(day))}</span><button class="btn small" onclick="STF.day='';stfDraw()">Back to today</button>` : '<span class="hint">Choose a date to see an earlier day.</span>'}</div>`; }
+function stfDayGo(d){ const t = todayPH(); let x = addDays(STF.day || t, d); while (d < 0 && (dow(x)===0 || dow(x)===6)) x = addDays(x, -1); while (d > 0 && x < t && (dow(x)===0 || dow(x)===6)) x = addDays(x, 1); if (x > t) x = t; STF.day = x===t ? '' : x; stfDraw(); }
+function stfMyDay(day){ const L = stfLog(USER.email, day) || {}, o = stfDay(USER.email, day);
+  return `<div class="stfme"><div class="stfme-h"><div><small>My time on this day</small><b>${esc(dShort(day))}</b> ${o&&o.label?stfChip(o):''}</div></div>
+    <div class="stftiles">${STF_SLOTS.map(s => `<div class="stft ${L[s[0]]?'on':''}"><small>${s[1]}</small><b>${L[s[0]] ? stfTimeCell(Object.assign({ email:USER.email, date:day }, L), s[0]) : '·'}</b></div>`).join('')}</div></div>`; }
 function stfToday(){
-  const D = STF.data, today = todayPH(); let html = '';
-  if (stfHead()) html += stfAwayCard();
-  html += stfMyToday(false);
+  const D = STF.data, now = todayPH(), today = STF.day && STF.day < now ? STF.day : now, past = today !== now; let html = '';
+  html += stfDayNav(today);
+  if (stfHead() && !past) html += stfAwayCard();
+  html += past ? stfMyDay(today) : stfMyToday(false);
   if (stfAll()){
     const rows = D.people.map(p => ({ p, o: stfDay(p.email, today) || { label:'Weekend', cls:'off' }, L: stfLog(p.email, today) || {} }));
     const grp = f => rows.filter(f).map(r => r.p.name);
     const tip = (cls, n, label, names) => `<span class="atn ${cls} tip" tabindex="0" data-tip="${esc(names.length?names.join('\n'):'None')}">${n} ${label}</span>`;
     const pin = grp(r => /^Present/.test(r.o.label)), late = grp(r => r.o.tardy), outs = grp(r => r.o.cls==='exc'), wait = grp(r => r.o.label==='Not yet in'), abs = grp(r => r.o.label==='Absent');
-    html += `<div class="attoday" style="margin-top:12px"><div><small>Today</small><b>${esc(dShort(today))}</b></div>${tip('ok',pin.length,'in school',pin)}${tip('tdy',late.length,'late',late)}${tip('exc',outs.length,'on leave or outside',outs)}${tip('wait',wait.length,'not yet in',wait)}${abs.length?tip('bad',abs.length,'absent',abs):''}</div>
+    html += `<div class="attoday" style="margin-top:12px"><div><small>${past ? esc(['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][dow(today)]) : 'Today'}</small><b>${esc(dShort(today))}</b></div>${tip('ok',pin.length,'in school',pin)}${tip('tdy',late.length,'late',late)}${tip('exc',outs.length,'on leave or outside',outs)}${tip('wait',wait.length,'not yet in',wait)}${abs.length?tip('bad',abs.length,'absent',abs):''}</div>
     <div class="table-wrap"><table class="stft-table"><thead><tr><th>Name</th>${STF_SLOTS.map(s=>`<th>${s[1]}</th>`).join('')}<th>Status</th>${stfHead()?'<th></th>':''}</tr></thead><tbody>
     ${rows.map(r => `<tr><td><b>${esc(r.p.name)}</b><small>${esc(r.p.position||(r.p.role==='admin'?'Administrative Officer':'Teacher'))}</small></td>${STF_SLOTS.map(s=>`<td>${stfTimeCell(Object.assign({ email:r.p.email, date:today }, r.L), s[0], '<span class="hint">·</span>')}</td>`).join('')}<td>${stfChip(r.o)}${stfConf(r.p.email, today)?`<small class="${stfConf(r.p.email, today).ok?'ok':'bad'}">${stfConf(r.p.email, today).ok?'\u2714 Times confirmed':'\u26A0 Says the times are not correct'}</small>`:''}${r.o.req&&r.o.req.length?r.o.req.map(q=>`<small>${esc(REQ_LABEL[q.type])}</small>`).join(''):''}</td>${stfHead()?`<td><button class="linkbtn" onclick="stfMarkOpen('${r.p.email}','${today}')">Mark or correct</button></td>`:''}</tr>`).join('') || `<tr><td colspan="7" class="empty">No personnel accounts yet.</td></tr>`}
     </tbody></table></div>
@@ -10915,15 +11007,24 @@ function dtrPrintAll(){
 }
 // The School Head's whereabouts this month from the TALA calendar, shown beside the DTR while editing. Not printed.
 function dtrWhere(D){
-  const days = dtrDays(D.month), marks = (OBS.cal||[]).filter(x => x.date && x.date.slice(0,7)===D.month);
-  const evs = allEvents().filter(e => (e.date||'').slice(0,7)===D.month || (e.end||'').slice(0,7)===D.month);
-  const items = marks.map(x => ({ d:x.date, t:(x.type||'Away')+(x.note?': '+x.note:'') })).concat(evs.map(e => ({ d:e.date, t:e.type+': '+e.title+(e.end && e.end!==e.date ? ' (to '+dShort(e.end)+')' : '') })))
-    .concat((D.reqs||[]).map(q => ({ d:q.from, t:({ LEAVE:'Leave', TRAVEL:'Official travel', LOCATOR:'Locator slip', EARLY:'Early out', WELLNESS:'Wellness leave' })[q.type] || q.type })))
-    .sort((a,b) => String(a.d).localeCompare(String(b.d)));
-  const noTap = days.filter(d => dow(d)!==0 && dow(d)!==6 && d < todayPH() && !(D.logs||[]).some(l => l.date===d && (l.amIn||l.pmIn)));
-  return `<aside class="dtrside"><h4>\u{1F4C5} My whereabouts, ${esc(monthName(D.month))}</h4><small>From the TALA calendar. Shown only here, not printed.</small>
-    <ul>${items.map(x => `<li><b>${esc(dShort(x.d).replace(/, \d{4}$/,''))}</b> ${esc(x.t)}</li>`).join('') || '<li class="hint">Nothing in the calendar this month.</li>'}</ul>
-    ${noTap.length?`<small><b>School days with no Time in:</b> ${noTap.map(d => esc(dShort(d).replace(/, \d{4}$/,''))).join(', ')}</small>`:''}</aside>`;
+  const days = dtrDays(D.month), md = d => esc(dShort(d).replace(/, \d{4}$/,'')), inM = d => String(d||'').slice(0,7)===D.month, norm = t => String(t||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+  const marks = (OBS.cal||[]).filter(x => x.date && inM(x.date)), evs = allEvents().filter(e => inM(e.date) || inM(e.end));
+  const items = [], used = new Set();
+  // an event in the calendar that you are attending is saved twice: as the event and as your whereabouts. They are shown once, with the kind of whereabouts.
+  evs.forEach(e => { const end = e.end || e.date, m = marks.find(x => x.date >= e.date && x.date <= end && (norm(x.note)===norm(e.title) || (x.note && norm(e.title).indexOf(norm(x.note)) > -1)));
+    if (m) marks.filter(x => x.date >= e.date && x.date <= end && norm(x.note)===norm(m.note)).forEach(x => used.add(x));
+    items.push({ d:e.date, end, t:(m ? m.type : e.type)+': '+e.title, away: !!m }); });
+  marks.filter(x => !used.has(x)).forEach(x => items.push({ d:x.date, end:x.date, t:(x.type||'Away')+(x.note ? ': '+x.note : ''), away:true }));
+  (D.reqs||[]).forEach(q => { const lab = ({ LEAVE:'Leave', TRAVEL:'Official travel', LOCATOR:'Locator slip', EARLY:'Early out', WELLNESS:'Wellness leave' })[q.type] || q.type, end = q.to || q.from;
+    if (!items.some(x => x.d===q.from && norm(x.t).indexOf(norm(lab)) === 0)) items.push({ d:q.from, end, t:lab+(q.details && (q.details.purpose || q.details.leaveType) ? ': '+(q.details.purpose || q.details.leaveType) : '')+' (approved request)', away: q.type!=='LOCATOR' && q.type!=='EARLY' }); });
+  const seen = new Set(), list = items.filter(x => { const k = x.d+'|'+norm(x.t); if (seen.has(k)) return false; seen.add(k); return true; }).sort((a,b) => String(a.d).localeCompare(String(b.d)));
+  const awayOn = d => list.some(x => x.away && d >= x.d && d <= (x.end||x.d));
+  const school = days.filter(d => dow(d)!==0 && dow(d)!==6 && d < todayPH() && !(D.logs||[]).some(l => l.date===d && (l.amIn||l.pmIn)));
+  const away = school.filter(awayOn), noTap = school.filter(d => !awayOn(d));
+  return `<aside class="dtrside"><h4>\u{1F4C5} My whereabouts, ${esc(monthName(D.month))}</h4><small>From the TALA calendar and approved requests. Shown only here, not printed.</small>
+    <ul>${list.map(x => `<li><b>${md(x.d)}${x.end && x.end!==x.d ? ' to '+md(x.end) : ''}</b> ${esc(x.t)}</li>`).join('') || '<li class="hint">Nothing in the calendar this month.</li>'}</ul>
+    ${away.length ? `<small class="dtrok"><b>Away, no Time in needed:</b> ${away.map(md).join(', ')}</small>` : ''}
+    ${noTap.length ? `<small class="dtrwarn"><b>No Time in and no whereabouts:</b> ${noTap.map(md).join(', ')}. Correct the time, or mark the day in your calendar.</small>` : ''}</aside>`;
 }
 function dtrCellOpen(day, part){
   const D = DTR.d, r = dtrCalc(D, 'final').rows[day], e = (D.edits||{})[day+'|'+part], nm = Object.fromEntries(DTR_PARTS)[part], head = stfHead();
