@@ -1919,7 +1919,7 @@ i.req{color:#c62828;font-style:normal}
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
 const MIN_SERVER = '8.0'; // oldest Code.gs this page works with
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'8.2', date:'October 23, 2026' } };
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'8.3', date:'October 23, 2026' } };
 function verLine(server){
   const old = server && (server.indexOf('older') > -1 || parseFloat(server) < parseFloat(MIN_SERVER));
   const s = server ? ' Server '+server+('.') : '';
@@ -2348,13 +2348,18 @@ function f201Docs(){ const out = []; f201List().forEach(g => (g[2]||[]).forEach(
 function dtTxt(s){ if (!s) return ''; const t = String(s).replace('T',' '); return dShort(t.slice(0,10)) + (t.length > 11 ? ', '+time12(t.slice(11,16)) : ''); }
 function prfDaysLeft(){ const d = (PRF.f && PRF.f.deadline) || '2026-10-30'; return Math.round((new Date(d+'T00:00:00') - new Date(todayPH()+'T00:00:00')) / 864e5); }
 
-async function openProf(){
+// When another person signs in on the same device, what the first one opened is cleared
+function prfReset(){ if (!USER) return; if (PRF.user !== USER.email) Object.assign(PRF, { user:USER.email, tab:'me', who:USER.email, p:null, list:null, f:null, dot:0, draft:null, docQ:'', todo:null, photo:undefined });
+  if (!prfAll()) { PRF.who = USER.email; if (['all','check','track'].indexOf(PRF.tab) > -1) PRF.tab = 'me'; } }
+function memoReset(){ if (USER && MEMO.user !== USER.email) Object.assign(MEMO, { user:USER.email, data:null, tab:'Memorandum', q:'', unread:0, popAt:0, opened:{} }); }
+async function openProf(){ prfReset();
   ['viewLac','viewTrk','viewAcc','viewBank','viewLog','viewWeeks','viewSig','viewObs','viewHome','viewSbfp','viewAtt'].forEach(v => $(v) && ($(v).style.display='none'));
   $('viewPir').style.display=''; CUR_FEATURE = 'prof'; drawSide(); window.scrollTo(0,0);
   if (!USER){ $('viewPir').innerHTML = '<div class="empty">Please sign in to open your profile.</div>'; return; }
   if (!PRF.who) PRF.who = USER.email;
   $('viewPir').innerHTML = `<div class="pirload"><div class="pirstar">★</div><b>Opening the profile</b><div class="pirdots"><i></i><i></i><i></i></div></div>`;
-  try{ await prfFetch(); }catch(e){ $('viewPir').innerHTML = `<div class="empty">The profile could not be opened. Please check the internet. <button class="btn ghost small" onclick="openProf()">Try again</button></div>`; return; }
+  try{ await prfFetch(); }catch(e){ console.warn('TALA profile', e); const net = /fetch|network|internet|offline|timed? ?out/i.test(String(e && e.message || ''));
+    $('viewPir').innerHTML = `<div class="empty">The profile could not be opened. ${net || !e || !e.message ? 'Please check the internet.' : esc(e.message)} <button class="btn ghost small" onclick="openProf()">Try again</button></div>`; try{ reportErr(String(e && e.message || e), 'openProf'); }catch(x){} return; }
   if (CUR_FEATURE==='prof') prfDraw();
 }
 async function prfFetch(){
@@ -2364,7 +2369,7 @@ async function prfFetch(){
   if (prfAll()){ try{ PRF.list = (await api('prfLoad')).list; }catch(e){} }
   prfCount();
 }
-function prfCount(){ if (!USER || !PRF.f) return; const D = PRF.f.docs||[];
+function prfCount(){ if (!USER || !PRF.f || PRF.user !== USER.email) return; const D = PRF.f.docs||[];
   if (prfHead()){ if (PRF.tab==='check' || PRF.tab==='all' || PRF.tab==='track') PRF.dot = D.filter(x => x.status==='For checking' && x.code!=='CP').length; }
   else { PRF.todo = prfTodoLocal(); PRF.dot = prfTodoCount(); }
   drawSide(); }
@@ -2751,7 +2756,7 @@ async function memoSignPost(){
     MEMO.tab = c.kind; closeModal('stfModal'); toast('Signed and posted. Each one gets a notice.'); memoDraw(); }
   catch(e){ handleErr(e, 'mcErr'); } }
 
-async function openMemo(){
+async function openMemo(){ memoReset();
   ['viewLac','viewTrk','viewAcc','viewBank','viewLog','viewWeeks','viewSig','viewObs','viewHome','viewSbfp','viewAtt'].forEach(v => $(v) && ($(v).style.display='none'));
   $('viewPir').style.display=''; CUR_FEATURE = 'memo'; drawSide(); window.scrollTo(0,0);
   if (!USER){ $('viewPir').innerHTML = '<div class="empty">Please sign in to open the memos.</div>'; return; }
@@ -2797,7 +2802,7 @@ async function memoConfirm(id){
 }
 // On Home, an unread memo or advisory pops up until it is confirmed
 async function memoPop(force){
-  if (!USER || USER.role==='head' || !featOn('memo')) return; if (!force && Date.now() - MEMO.popAt < 60000) return;
+  if (!USER || USER.role==='head' || !featOn('memo')) return; memoReset(); if (!force && Date.now() - MEMO.popAt < 60000) return;
   const later = () => { clearTimeout(MEMO.wait); MEMO.wait = setTimeout(() => { if (CUR_FEATURE==='home') memoPop(true); }, 4000); };
   if (document.querySelector('.overlay.open') || ($('tour') && !$('tour').hidden)) return later();   // waits until the other window or the guide is closed
   try{ if (!MEMO.data || MEMO.unread) await memoLoad(); }catch(e){ return; }
