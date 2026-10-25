@@ -1210,6 +1210,9 @@ img.pav,span.pav{width:22px;height:22px;border-radius:50%;object-fit:cover;verti
 .pgcov:hover{transform:translateY(-3px)}.pgcov img{width:100%;height:100%;object-fit:cover;object-position:center top}.pgcov span{font-size:64px;font-weight:800;color:#2c4f7c;opacity:.6}
 .pglock{position:absolute;left:6px;bottom:6px;background:#e3f4e8;color:#1d6b35;font-style:normal;font-size:11.5px;font-weight:700;border-radius:999px;padding:2px 8px}
 .pgn{font-size:14.5px;margin-top:4px}.pgrow{display:flex;justify-content:space-between;font-size:12.5px;margin-top:4px}.pgrow span{color:var(--muted)}.pfbar.f2 i{background:#2c4f7c}.pgact{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}
+
+.sbmeals{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:6px 0}@media (max-width:700px){.sbmeals{grid-template-columns:1fr}}.sbmeal{background:#fff7f0;border:1.5px solid #f2cfae;border-radius:12px;padding:8px 12px}.sbmeal h3{margin:4px 0 2px;font-size:16px}
+.sbml{display:inline-block;font-size:12px;font-weight:700;border-radius:999px;padding:2px 10px;color:#fff}.sbml.am{background:#d35400}.sbc2 td{font-size:12.5px;min-width:150px;vertical-align:top}.sbc2 td small.sbml{font-size:10px;padding:1px 6px}.sbml.pm{background:#a04000}
 </style>
 </head>
 <body>
@@ -1934,7 +1937,7 @@ img.pav,span.pav{width:22px;height:22px;border-radius:50%;object-fit:cover;verti
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
 const MIN_SERVER = '8.4'; // oldest Code.gs this page works with
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'8.4', date:'October 23, 2026' } };
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'8.5', date:'October 25, 2026' } };
 function verLine(server){
   const old = server && (server.indexOf('older') > -1 || parseFloat(server) < parseFloat(MIN_SERVER));
   const s = server ? ' Server '+server+('.') : '';
@@ -6647,8 +6650,8 @@ function drawSchoolCal(){
     const date = SCM+'-'+String(d).padStart(2,'0'), ev = eventsOn(date), mk = head ? calMark(date) : null, n = head ? obsOnDay(date) : 0, sd = head && schoolDay(date);
     cells += `<button class="sday ${date===today?'today':''} ${dow(date)===0||dow(date)===6?'wkend':''}" onclick="${HCT==='sbfp'?`SB.date='${date}';SB.tab='today';openSbfp()`:`dayModal('${date}')`}"><b>${d}</b>
       ${mk && !ev.some(e => e.title===mk.note)?`<span class="evchip" style="background:#777">Out: ${esc(mk.type.replace(/ \(.*/,''))}</span>`:''}
-      ${HCT==='sbfp' ? (sbfpOn(date)?`<span class="evchip" style="background:#d35400">${esc(sbfpOn(date).menu)}</span><span class="evmore">${esc(sbfpOn(date).grade||'')}</span>`:'')
-        : (sbShow && sbfpOn(date)?`<span class="evchip sbchip" title="SBFP: ${esc(sbfpOn(date).menu)}, ${esc(sbfpOn(date).grade)}">\u{1F372} ${esc(sbfpOn(date).menu)}<i>${esc(sbfpOn(date).grade.replace(' parents',''))}</i></span>${sbMarks(date)}`:'') + ev.slice(0,2).map(e=>`<span class="evchip" style="background:${EV_COLOR[e.type]||'#555'}">${mk && mk.note===e.title?'\u2708 ':''}${esc(e.title)}</span>`).join('')+(ev.length>2?`<span class="evmore">+${ev.length-2} more</span>`:'')}
+      ${HCT==='sbfp' ? (sbfpOn(date) ? sbChips(date) + `<span class="evmore">${esc(sbfpOn(date).grade||'')}</span>` : '')
+        : (sbShow && sbfpOn(date) ? sbChips(date, 'sbchip') + sbMarks(date) : '') + ev.slice(0,2).map(e=>`<span class="evchip" style="background:${EV_COLOR[e.type]||'#555'}">${mk && mk.note===e.title?'\u2708 ':''}${esc(e.title)}</span>`).join('')+(ev.length>2?`<span class="evmore">+${ev.length-2} more</span>`:'')}
       ${sd && !mk ? `<span class="cdots">${[0,1].map(i=>`<i class="${i<n?'on':''}"></i>`).join('')}</span>`:''}</button>`;
   }
   const mname = new Date(Date.UTC(y,m-1,1)).toLocaleString('en-US',{month:'long',year:'numeric',timeZone:'UTC'});
@@ -6710,7 +6713,7 @@ function dayModal(date){
   const ev = eventsOn(date), head = USER && USER.role==='head', mk = head ? calMark(date) : null, obs = head ? OBS.list.filter(o=>o.date===date) : [];
   $('dayTitle').textContent = new Date(date+'T00:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
   const sb = sbfpOn(date);
-  $('dayBody').innerHTML = (sb ? `<div class="evrow" style="border-left-color:#d35400"><b>SBFP: ${esc(sb.menu)}</b><small>${esc(sb.grade||'No grade assigned')}${sb.notes?' \u00B7 '+esc(sb.notes):''}${sbRec(date).status?' \u00B7 '+esc(sbRec(date).status):''}</small>${USER?`<span><button class="linkbtn" onclick="closeModal('dayModal');SB.date='${date}';SB.tab='today';openSbfp()">Open in SBFP Monitoring</button></span>`:''}</div>` : '') + (ev.length ? ev.map(e => `<div class="evrow" style="border-left-color:${EV_COLOR[e.type]||'#555'}"><b>${esc(e.title)}</b><small>${EV_ICON[e.type]||''} ${esc(e.type||'')}${e.time?' \u00B7 '+esc(evTimeText(e)):''}${e.end&&e.end!==e.date?' \u00B7 until '+esc(dShort(e.end)):''} \u00B7 ${e.audience==='Everyone'?'Personnel and the public':e.audience==='Personnel'?'All personnel':'Only me'} \u00B7 by ${esc(e.byName||'')}</small>${e.details?`<p>${esc(e.details)}</p>`:''}
+  $('dayBody').innerHTML = (sb ? `<div class="evrow" style="border-left-color:#d35400"><b>SBFP: ${sbSched(date).two ? 'AM (lunch): '+esc(sbSched(date).am)+'<br>PM (3:00 PM): '+esc(sbSched(date).pm) : esc(sb.menu)}</b><small>${esc(sb.grade||'No grade assigned')}${sb.notes?' \u00B7 '+esc(sb.notes):''}${sbRec(date).status?' \u00B7 '+esc(sbRec(date).status):''}</small>${USER?`<span><button class="linkbtn" onclick="closeModal('dayModal');SB.date='${date}';SB.tab='today';openSbfp()">Open in SBFP Monitoring</button></span>`:''}</div>` : '') + (ev.length ? ev.map(e => `<div class="evrow" style="border-left-color:${EV_COLOR[e.type]||'#555'}"><b>${esc(e.title)}</b><small>${EV_ICON[e.type]||''} ${esc(e.type||'')}${e.time?' \u00B7 '+esc(evTimeText(e)):''}${e.end&&e.end!==e.date?' \u00B7 until '+esc(dShort(e.end)):''} \u00B7 ${e.audience==='Everyone'?'Personnel and the public':e.audience==='Personnel'?'All personnel':'Only me'} \u00B7 by ${esc(e.byName||'')}</small>${e.details?`<p>${esc(e.details)}</p>`:''}
       ${(e.files||[]).length?`<div class="evfiles">${e.files.map((f,k)=>f.id && /image|video/.test(f.mime||'') ? `<button class="evthumb" onclick="evInsta('${esc(e.id)}',${k})">${/video/.test(f.mime)?'<span class="vplay">\u25B6</span>':''}<img src="https://drive.google.com/thumbnail?id=${esc(f.id)}&sz=w240" alt="${esc(f.name)}" loading="lazy"></button>` : `<a class="attc" href="${esc(f.url)}" target="_blank" rel="noopener">${attIcon(f)} ${esc(f.name.slice(0,40))}</a>`).join('')}</div>`:''}
       ${USER && (e.byEmail===USER.email || head) ? `<span><button class="linkbtn" onclick="eventForm('${date}','${esc(e.id)}')">Edit</button> <button class="linkbtn" style="color:var(--late)" onclick="eventDelete('${esc(e.id)}')">Remove</button></span>`:''}</div>`).join('') : '<p class="hint">No events on this day.</p>')
     + (head ? `<div class="evrow obsrow"><b>Observations: ${obs.length} of 2</b>${mk?`<small>You were out: ${esc(mk.type)}${mk.note?', '+esc(mk.note):''}</small>`:''}${obs.map(o=>`<small>${otype(o)==='mwa'?'MWA':'ePMCF'}: ${esc(o.teacherName||(o.data||{}).focus||'Visit')}</small>`).join('')}<span><button class="linkbtn" onclick="closeModal('dayModal');calDay('${date}')">Mark in or out of school</button></span></div>` : '');
@@ -6885,10 +6888,41 @@ function sbDayNo(date){
   return (((sbStartDay() - 1 + off) % k) + k) % k;
 }
 function sbCycle(date){ return Math.floor(wkBetween(sbFirst(), date) / SBFP_MENUS.length) + 1; }
+
+/* ----- From October 26, 2026: the Division Cycle Menu for Double Feeding (hot meals). AM is served at lunch, PM at 3:00 PM or before going home.
+   The grade level parents assigned to each day stay the same. The feeding stops after the 100th feeding day. ----- */
+const SB_C2 = '2026-10-26', SB_MAX = 100;
+const SBFP_CYCLE2 = [
+ [['Chicken or Beef Afritada with Potatoes and Carrots, with Rice',425,'Bihon Guisado with Rice',410],['Malu Pakbet with Rice',450,'Chicken Adobo with Rice',419],['Chicken Liver Adobo with Rice',400,'Adobong Sitaw with Rice',367],['Upo Sayote Guisado with Chicken or Fish, with Rice',445,'Fish Escabeche with Rice',450],['Pancit Canton con Moringa with Chicken, with Rice',430,'Pocherong Baka with Rice',450]],
+ [['Native Chicken Tinola with Papaya and Malunggay, with Rice',450,'Malu Pinakbet with Rice',450],['Vegetable Mixed with Fried Fish, with Rice',410,'Chicken Adobo with Rice',419],['Ukoy Makalhip with Corn Soup, with Rice',410,'Chicken Sotanghon Soup with Rice',443],['Chicken Curry with Potato and String Beans, with Rice',420,'Arroz Caldo with Egg',400],['Fish Tinola ala Moringa with Rice',436,'Bihon Guisado with Rice',410]],
+ [['Fish Escabeche with Rice',450,'Ginisang Togue with Chicken, with Rice',469],['Ginataang Mongo with Mixed Veggies and Fried Fish, with Rice',410,'Chicken Adobo with Patatas, with Rice',419],['Ginisang Sayote with Sotanghon and Shredded Chicken, with Rice',406,'Pancit Canton con Moringa with Rice',430],['Misua with Patola and Tuna or Chicken, with Rice',400,'Beef or Chicken Curry with Carrots and String Beans, with Rice',420],['Chicken Adobo with Patatas, with Rice',419,'Arroz Caldo with Egg',400]],
+ [['Pocherong Baka with Saging Saba and Pechay',450,'Malu Pinakbet with Rice',450],['Fish Tinola ala Moringa with Rice',336,'Adobong Sitaw with Rice',367],['Malunggay Veggie Mixed with Rice',410,'Upo Sayote Guisado with Chicken or Fish, with Rice',445],['Upo Sayote Guisado with Chicken or Fish, with Rice',445,'Chicken Adobo with Patatas, with Rice',419],['Native Chicken Tinola with Papaya and Malunggay, with Rice',450,'Pancit Canton con Moringa with Rice',430]],
+ [['Pocherong Baka with Saging Saba and Pechay',450,'Arroz Caldo with Egg',400],['Fish Tinola ala Moringa with Rice',336,'Bihon Guisado with Rice',410],['Chicken Curry with Potato and String Beans, with Rice',420,'Malu Pinakbet with Rice',450],['Vegetable Mixed with Fried Fish, with Rice',450,'Chicken Adobo with Rice',419],['Native Chicken Tinola with Papaya and Malunggay, with Rice',450,'Pancit Canton con Moringa with Rice',430]]
+];
+function sbCycle2(date){ const days = Math.round((new Date(date+'T00:00:00') - new Date(SB_C2+'T00:00:00'))/864e5), w = ((Math.floor(days/7) % 5) + 5) % 5, d = dow(date) - 1, x = SBFP_CYCLE2[w][d];
+  return { w: w+1, am:x[0], amK:x[1], pm:x[2], pmK:x[3] }; }
+// The recipe from the SBFP guide that matches a menu name
+const SB_RCP = [[/afritada/i,'Chicken Afritada ala Moringa'],[/bihon/i,'Bihon with Shredded Chicken'],[/pinakbet|pakbet/i,'Malu Pinakbet'],[/liver/i,'Chicken Liver Adobo with Potato'],[/adobong sitaw/i,'Adobong Sitaw with Fish Flakes'],[/chicken adobo/i,'Chicken Adobo'],
+  [/upo|sayote guisado/i,'Upo/Sayote Guisado'],[/escabeche/i,'Fish Fillet Escabeche'],[/pancit canton/i,'Pancit Canton con Moringa'],[/pochero/i,'Nilagang Baka with Saba (Pochero)'],[/fish tinola/i,'Fish Tinola ala Moringa'],[/tinola/i,'Native Tinolang Manok with Malunggay'],
+  [/vegetable mixed/i,'Vegetable Mix paired with Fried Fish'],[/ukoy/i,'Ukoy Makalhip'],[/sotanghon soup/i,'Chicken Sotanghon Soup'],[/curry/i,'Chicken Curry'],[/arroz/i,'Arroz Caldo Royale'],[/togue/i,'Ginisang Togue'],[/ginisang sayote/i,'Ginisang Sayote with Chicken and Sotanghon'],[/misua|miswa/i,'Miswa Patola with Shredded Chicken'],[/malunggay veg/i,'Malunggay Vege Mix'],[/ginataang mongo/i,'Ginataang Mixed Vegetables']];
+function sbRecipe(name){ const k = SB_RCP.find(x => x[0].test(name||'')); return k ? SBFP_MENUS.find(m => m.n===k[1]) || null : null; }
+// Feeding days from the first day: days with no status yet (or Implemented) count. Holidays, no class days, and days not implemented do not count.
+var SB_FD = { key:'', map:{} };
+function sbFeedDay(date){ const L = sbfpList(), key = L.length+'|'+L.map(x => x.date+(x.status||'')).join(',').length+'|'+sbFirst();
+  if (SB_FD.key !== key){ SB_FD = { key, map:{} }; let n = 0; const skip = { 'Holiday':1, 'No class':1, 'End of term':1, 'Not implemented':1, 'Others':1 };
+    for (let d = sbFirst(), i = 0; i < 500; d = addDays(d, 1), i++){ if (dow(d)===0 || dow(d)===6) continue; const st = sbRec(d).status || ''; if (skip[st]) { SB_FD.map[d] = 0; continue; } n++; SB_FD.map[d] = n; } }
+  return SB_FD.map[date]; }
+function sbChips(date, cls){ const s = sbSched(date); if (!s) return ''; const g = esc(s.g);
+  if (!s.two) return `<span class="evchip ${cls||''}" style="background:#d35400" title="SBFP: ${esc(s.n)}, ${g} parents">\u{1F372} ${esc(s.n)}<i>${g}</i></span>`;
+  return `<span class="evchip ${cls||''}" style="background:#d35400" title="SBFP AM, served at lunch: ${esc(s.am)}, ${g} parents">AM ${esc(s.am.replace(/,? with Rice$/i,''))}</span><span class="evchip ${cls||''}" style="background:#a04000" title="SBFP PM, served at 3:00 PM: ${esc(s.pm)}, ${g} parents">PM ${esc(s.pm.replace(/,? with Rice$/i,''))}<i>${g}</i></span>`; }
+
 function sbSched(date){
   const i = sbDayNo(date); if (i < 0) return null;
+  const fd = sbFeedDay(date); if (fd > SB_MAX) return null;
   const m = libMenu(i), r = sbRec(date);
-  return { i, day:i+1, n: r.menu || m.n, g: r.grade || m.g, on: m.n, og: m.g, changed: !!(r.menu || r.grade), recipe: r.menu ? null : m.r, rec:r, cycle: sbCycle(date) };
+  if (date >= SB_C2){ const c = sbCycle2(date), ov = r.menu ? String(r.menu).split(/\s*\|\s*/) : null, am = ov ? ov[0] : c.am, pm = ov ? (ov[1] || c.pm) : c.pm;
+    return { i, day:i+1, two:true, week:c.w, am, pm, amK: ov ? '' : c.amK, pmK: ov && ov[1] ? '' : c.pmK, n:'AM: '+am+' · PM: '+pm, g: r.grade || m.g, on:'AM: '+c.am+' · PM: '+c.pm, og: m.g, changed: !!(r.menu || r.grade), recipe:null, rcpAm: sbRecipe(am), rcpPm: sbRecipe(pm), rec:r, cycle: sbCycle(date), fd }; }
+  return { i, day:i+1, n: r.menu || m.n, g: r.grade || m.g, on: m.n, og: m.g, changed: !!(r.menu || r.grade), recipe: r.menu ? null : m.r, rec:r, cycle: sbCycle(date), fd };
 }
 function sbfpOn(date){ const s = sbSched(date); return s ? { menu:s.n, grade:s.g+' parents', notes:(s.rec||{}).notes } : null; }
 function isStaff(){ return USER && ['teacher','head','admin'].indexOf(USER.role) > -1; }
@@ -7026,10 +7060,10 @@ function sbDayView(){
   const d = SB.date, s = sbSched(d), r = sbRec(d), staff = isStaff(), can = canSbfp();
   const nav = `<div class="calbar"><button class="btn ghost small" onclick="sbGo(addDays('${d}',${dow(d)===1?-3:-1}))">\u2039 Previous day</button><input type="date" value="${d}" onchange="sbGo(this.value)" class="sbdate"><button class="btn ghost small" onclick="sbGo(addDays('${d}',${dow(d)===5?3:1}))">Next day \u203A</button></div>`;
   if (!s){ $('sbBody').innerHTML = nav + `<div class="empty">${dow(d)===0||dow(d)===6?'No feeding on weekends.':'The SBFP schedule starts on '+esc(dShort(sbFirst()))+'.'}</div>`; return; }
-  const rc = s.recipe;
-  const recipe = rc ? `<details class="byt recipe"><summary>Recipe: ingredients and procedure</summary><div class="rcp">
-      <p class="hint">Serving size 10${rc.cost?' \u00B7 \u20B1'+esc(rc.cost)+' per serving':''}${rc.kcal?' \u00B7 '+esc(rc.kcal)+' with 1 cup of rice':''}${rc.src?' \u00B7 '+esc(rc.src):''}</p>
+  const rcpHtml = (rc, lab) => rc ? `<details class="byt recipe"><summary>${lab || 'Recipe: ingredients and procedure'}</summary><div class="rcp">
+      <p class="hint">${esc(rc.n)} \u00B7 Serving size 10${rc.cost?' \u00B7 \u20B1'+esc(rc.cost)+' per serving':''}${rc.kcal?' \u00B7 '+esc(rc.kcal)+' with 1 cup of rice':''}${rc.src?' \u00B7 '+esc(rc.src):''}</p>
       <b>Ingredients</b><ul>${rc.ing.split('; ').map(x=>`<li>${esc(x)}</li>`).join('')}</ul><b>Procedure</b><ol>${rc.proc.split('|').map(x=>`<li>${esc(x)}</li>`).join('')}</ol></div></details>` : '';
+  const rc = s.recipe, recipe = s.two ? '' : rcpHtml(rc);
   const st = r.status || '', g = sbGroupOf(s.g), parents = sbParents(g), att = r.att || {};
   const locked = !!att._lock;
   const extras = Object.keys(att).filter(k => k.indexOf('x|') === 0).map(k => { const [, parent, grp] = k.split('|'); return { key:k, parent, group:grp }; });
@@ -7043,9 +7077,10 @@ function sbDayView(){
         ${kidList.length?`<div class="sbkids"><span class="hint">On behalf of which learner?</span>${kidList.map(k=>`<label class="sbc"><input type="checkbox" value="${esc(k)}" ${!kidsFor.length||kidsFor.indexOf(k)>-1?'checked':''}>${esc(k)}</label>`).join('')}</div>`:''}</div>
       ${sub?`<small>Learners: ${esc(sub)}</small>`:''}</details>`; };
   $('sbBody').innerHTML = nav + `
-    <div class="sbcard"><div class="sbcard-h"><span class="sbday">Cycle ${s.cycle}<br>Day ${s.day}</span><div>
+    <div class="sbcard"><div class="sbcard-h"><span class="sbday">${s.two ? 'Week '+s.week+'<br>Double feeding' : 'Cycle '+s.cycle+'<br>Day '+s.day}${s.fd ? '<br><small style="color:#fff;font-weight:600">Feeding day '+s.fd+' of '+SB_MAX+'</small>' : ''}</span><div>
       ${s.changed?`<p class="sborig"><span>Original menu</span><s>${esc(s.on)}</s> \u00B7 <s>${esc(s.og)} parents</s></p><p class="sbchg"><span>Changed to</span></p>`:''}
-      <h3>${esc(s.n)}</h3><p><b>${esc(s.g)} parents</b> ${s.changed?'cooked and served':'prepare the food'}${s.changed?' <span class="ktag mwa">Changed by '+esc(r.by||'School Head')+'</span>':''}</p>${r.notes?`<p class="hint">${esc(r.notes)}</p>`:''}</div>
+      ${s.two ? `<div class="sbmeals"><div class="sbmeal"><span class="sbml am">AM \u00B7 served at lunch</span><h3>${esc(s.am)}</h3>${s.amK?`<small class="hint">${s.amK} kcal</small>`:''}${rcpHtml(s.rcpAm, 'Recipe of the AM meal')}</div>
+        <div class="sbmeal"><span class="sbml pm">PM \u00B7 served at 3:00 PM, before going home</span><h3>${esc(s.pm)}</h3>${s.pmK?`<small class="hint">${s.pmK} kcal</small>`:''}${rcpHtml(s.rcpPm, 'Recipe of the PM meal')}</div></div>` : `<h3>${esc(s.n)}</h3>`}<p><b>${esc(s.g)} parents</b> ${s.changed?'cooked and served':'prepare the food'}${s.changed?' <span class="ktag mwa">Changed by '+esc(r.by||'School Head')+'</span>':''}</p>${r.notes?`<p class="hint">${esc(r.notes)}</p>`:''}</div>
       ${can?`<button class="btn ghost small" onclick="sbfpForm('${d}')">Change menu or group</button>`:''}</div>${recipe}</div>
     <section class="ocard2 sbstatus"><div class="sbst-row"><div><span class="lbl">Status of feeding</span>
         ${st?`<span class="sbbadge" style="--c:${SB_COLOR[st]||'#777'}">${esc(st)}</span>${r.reason?`<p class="hint" style="margin:6px 0 0">Reason: ${esc(r.reason)}</p>`:''}<p class="hint" style="margin:4px 0 0">Updated by ${esc(r.by||'')}, ${esc(dTime(r.on||''))}</p>`:'<span class="sbbadge none">No status yet</span>'}</div>
@@ -7167,7 +7202,10 @@ function sbSumView(){
   const owed = skipped.filter(x => !done.some(y => y.s.n === x.s.n && y.date > x.date));
   const pct = h.length ? Math.round(done.length / h.length * 100) : 0;
   const row = x => `<button class="upi" onclick="sbGo('${x.date}')"><span class="upico" style="background:${SB_COLOR[x.st]||'#999'}">${x.s.day}</span><span class="uptxt"><b>${esc(x.s.n)}</b><small>${esc(dShort(x.date))} \u00B7 ${esc(x.s.g)} parents${x.st?' \u00B7 '+esc(x.st):''}${sbRec(x.date).reason?': '+esc(sbRec(x.date).reason):''}</small></span></button>`;
-  $('sbBody').innerHTML = `<div class="ostats"><div class="ostat static"><span class="oico">\u2714</span><b>${done.length} of ${h.length}</b><span>Feeding days implemented (${pct}%)</span></div>
+  const fdNow = sbFeedDay(todayPH()) || 0, c2 = `<details class="byt" open><summary>Division Cycle Menu for Double Feeding, from ${esc(fmtLong(SB_C2))} (AM at lunch, PM at 3:00 PM)</summary><div style="padding:0 14px 12px;overflow-x:auto">
+      <table class="stft-table sbc2"><thead><tr><th>Week</th>${['Monday','Tuesday','Wednesday','Thursday','Friday'].map(d => `<th>${d}</th>`).join('')}</tr></thead><tbody>${SBFP_CYCLE2.map((w, i) => `<tr><td><b>${i+1}</b><small>${esc(dShort(addDays(SB_C2, i*7)).replace(/, \d{4}$/,''))} to ${esc(dShort(addDays(SB_C2, i*7+4)).replace(/, \d{4}$/,''))}</small></td>${w.map(x => `<td><small class="sbml am">AM</small> ${esc(x[0])} <small class="hint">${x[1]}</small><br><small class="sbml pm">PM</small> ${esc(x[2])} <small class="hint">${x[3]}</small></td>`).join('')}</tr>`).join('')}</tbody></table>
+      <p class="hint">The grade level parents assigned to each day stay the same. The cycle repeats after Week 5 until the ${SB_MAX}th feeding day. Today is feeding day ${fdNow} of ${SB_MAX}.</p></div></details>`;
+  $('sbBody').innerHTML = c2 + `<div class="ostats"><div class="ostat static"><span class="oico">\u2714</span><b>${done.length} of ${h.length}</b><span>Feeding days implemented (${pct}%)</span></div>
       <div class="ostat static s-warn"><span class="oico">!</span><b>${owed.length}</b><span>Menus to implement later</span></div><div class="ostat static"><span class="oico">\u21BB</span><b>${repeated.length}</b><span>Menus served more than once</span></div><div class="ostat static"><span class="oico">?</span><b>${none.length}</b><span>Days with no status yet</span></div></div>
     <details class="byt" open><summary>Not implemented, to be served once the regular schedule is over (${owed.length})</summary><div style="padding:0 14px 12px">${owed.map(row).join('') || '<p class="hint">None. Every scheduled menu so far was served.</p>'}</div></details>
     <details class="byt"><summary>Days with a changed menu or group (${h.filter(x=>x.s.changed).length})</summary><div style="padding:0 14px 12px">${h.filter(x=>x.s.changed).map(x=>`<button class="upi" onclick="sbGo('${x.date}')"><span class="upico" style="background:#6a2c99">${x.s.day}</span><span class="uptxt"><b>${esc(x.s.n)} (${esc(x.s.g)})</b><small>${esc(dShort(x.date))} \u00B7 Original: ${esc(x.s.on)} (${esc(x.s.og)})</small></span></button>`).join('') || '<p class="hint">No changes. Every day followed the original menu.</p>'}</div></details>
@@ -7234,7 +7272,7 @@ function sbfpForm(date){
   const s = sbSched(date); if (!s) return toast('No feeding scheduled on this day.');
   if (!canSbfp()){ sbGo(date); return; }
   const r = sbRec(date); $('sbTitle').textContent = 'Change the menu or group for this day';
-  $('sbDate').value = date; $('sbDay').textContent = new Date(date+'T00:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'})+' \u00B7 Scheduled: '+libMenu(s.i).n+' ('+libMenu(s.i).g+')';
+  $('sbDate').value = date; $('sbDay').textContent = new Date(date+'T00:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'})+' \u00B7 Scheduled: '+(s.two ? s.on.replace(/^AM: /,'AM ').replace(' · PM: ',' | PM ') : libMenu(s.i).n)+' ('+libMenu(s.i).g+')'+(s.two ? '. For AM and PM, type: AM menu | PM menu' : '');
   const names = [...new Set(SBFP_MENUS.map((m,i)=>libMenu(i).n))];
   $('sbMenuSel').innerHTML = `<option value="">Follow the schedule: ${esc(libMenu(s.i).n)}</option>`+names.map(n=>`<option ${r.menu===n?'selected':''}>${esc(n)}</option>`).join('')+`<option value="__other" ${r.menu && names.indexOf(r.menu)<0?'selected':''}>Other (type it below)</option>`;
   $('sbMenu').value = r.menu && names.indexOf(r.menu)<0 ? r.menu : ''; $('sbMenuOther').style.display = $('sbMenuSel').value==='__other' ? '' : 'none';
