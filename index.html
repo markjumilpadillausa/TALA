@@ -1213,6 +1213,14 @@ img.pav,span.pav{width:22px;height:22px;border-radius:50%;object-fit:cover;verti
 
 .sbmeals{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:6px 0}@media (max-width:700px){.sbmeals{grid-template-columns:1fr}}.sbmeal{background:#fff7f0;border:1.5px solid #f2cfae;border-radius:12px;padding:8px 12px}.sbmeal h3{margin:4px 0 2px;font-size:16px}
 .sbml{display:inline-block;font-size:12px;font-weight:700;border-radius:999px;padding:2px 10px;color:#fff}.sbml.am{background:#d35400}.sbc2 td{font-size:12.5px;min-width:150px;vertical-align:top}.sbc2 td small.sbml{font-size:10px;padding:1px 6px}.sbml.pm{background:#a04000}
+
+.oav.oavimg{padding:0;overflow:hidden;background:#fff;color:transparent}.oav.oavimg img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:block}
+.practicebar{position:sticky;top:0;z-index:60;background:#6a2c99;color:#fff;text-align:center;font-size:13.5px;font-weight:600;padding:6px 12px}
+
+.gatelist{margin:6px 0 8px;padding-left:22px}.gatelist li{margin:6px 0}.gatelist li span{color:var(--muted)}.gatelist li.ok{color:#1d6b35}.gatelist li.ok::marker{content:'✔ '}
+.gateack{display:block;margin-top:2px}.gateack.ok{color:#1d6b35}
+
+.mhpages{max-height:62vh;overflow:auto;display:flex;flex-direction:column;gap:12px}.mhwrap canvas{width:100%;height:auto;border:1px solid var(--line);border-radius:6px;cursor:crosshair;touch-action:none;background:#fff}
 </style>
 </head>
 <body>
@@ -1936,8 +1944,8 @@ img.pav,span.pav{width:22px;height:22px;border-radius:50%;object-fit:cover;verti
 
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
-const MIN_SERVER = '8.4'; // oldest Code.gs this page works with
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'8.5', date:'October 25, 2026' } };
+const MIN_SERVER = '8.6'; // oldest Code.gs this page works with
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'8.6', date:'October 26, 2026' } };
 function verLine(server){
   const old = server && (server.indexOf('older') > -1 || parseFloat(server) < parseFloat(MIN_SERVER));
   const s = server ? ' Server '+server+('.') : '';
@@ -1970,8 +1978,10 @@ const MSG = {
 };
 const SAFE_RETRY = ['healthLoad','publicData','checkSession','getData','getAccounts','getLog','aralLoad','lacLoad','attSections','attSchool','staffLoad','aralPhoto','lacSigs','lacPhotoData'];
 const wait = ms => new Promise(r => setTimeout(r, ms));
+const SAMPLE_READ = /^(publicData|login|checkSession|version|logout|poll|getData|getMySig|photosAll|prfPhoto|logError|calList|obsList|obsSigs|obsSigsMany|lacSigs|memoGet|f201Get|staffPhoto|reqPrint|changePin)$|Load$|List$|Get$|^get[A-Z]|All$/;
 async function api(action, payload){
   if (!connected()) throw new Error('This page is not connected yet. Please contact the School Head.');
+  if (USER && USER.sample && !SAMPLE_READ.test(action)){ try{ toast('Practice account: nothing is saved.'); }catch(e){} throw new Error('This is a practice account. You can look around, but nothing is saved.'); }
   const tries = SAFE_RETRY.indexOf(action) > -1 ? 3 : 1;
   let last = MSG.NET;
   for (let i = 0; i < tries; i++){
@@ -2307,7 +2317,7 @@ function render(){
     : role==='teacher' ? 'Your weekly Lesson Plans for Teachers and PowerPoint Presentations.'
     : 'Public view of weekly submissions. Teachers and the School Head sign in for more tools.';
   if (USER){
-    $('avatar').textContent = (USER.name||USER.email).trim().charAt(0).toUpperCase(); try{ avatarPhoto(); photosLoad(); photoWatch(); }catch(e){}
+    $('avatar').textContent = (USER.name||USER.email).trim().charAt(0).toUpperCase(); try{ avatarPhoto(); photosLoad(); photoWatch(); practiceBar(); }catch(e){}
     $('userFirst').textContent = (USER.name||USER.email).split(' ')[0];
     $('menuWho').innerHTML = `<b>${esc(USER.name)}</b><br>${esc(USER.email)}`;
   }
@@ -2572,25 +2582,30 @@ var PHOTOS = { map:{}, names:{}, at:0, busy:false };
 function photoKey(){ return 'tala_photos_'+(USER ? USER.email : ''); }
 function photoNorm(n){ return String(n||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9 ]+/g,' ').replace(/\s+/g,' ').trim(); }
 function photoIndex(){ const N = {}; Object.keys(PHOTOS.map).forEach(e => { const o = PHOTOS.map[e]; if (!o || !o.n) return; const n = photoNorm(o.n); N[n] = e; const nomid = n.split(' ').filter(w => !(w.length === 1)).join(' '); N[nomid] = e; }); PHOTOS.names = N; }
-async function photosLoad(force){ if (!USER || (USER.role!=='head' && USER.role!=='admin')) return;
+async function photosLoad(force){ if (!USER) return;
   if (!PHOTOS.at){ try{ const c = JSON.parse(localStorage.getItem(photoKey())||'null'); if (c && c.map){ PHOTOS.map = c.map; photoIndex(); } }catch(e){} }
   if (PHOTOS.busy || (!force && Date.now() - PHOTOS.at < 10*60000)) return; PHOTOS.busy = true;
-  try{ const r = await api('photosAll'); PHOTOS.map = r.photos || {}; PHOTOS.at = Date.now(); photoIndex(); try{ localStorage.setItem(photoKey(), JSON.stringify({ map:PHOTOS.map })); }catch(e){} photoDecorate(); }catch(e){}
+  try{ const r = await api('photosAll'); PHOTOS.map = r.photos || {}; PHOTOS.at = Date.now(); photoIndex(); try{ localStorage.setItem(photoKey(), JSON.stringify({ map:PHOTOS.map })); }catch(e){} photoDecorate(); try{ avatarPhoto(); }catch(x){} }catch(e){}
   PHOTOS.busy = false; }
 function photoOf(email){ const o = PHOTOS.map[email]; return o ? o.p : ''; }
 function photoAv(email, name, cls){ const p = photoOf(email), init = String(name||email||'?').trim().charAt(0).toUpperCase(); return p ? `<img class="${cls||'pav'}" src="${p}" alt="" data-av="1">` : `<span class="${cls||'pav'} none" data-av="1">${esc(init)}</span>`; }
 // Adds the small picture before each personnel name shown on the screen
-function photoDecorate(){ if (!USER || (USER.role!=='head' && USER.role!=='admin') || !Object.keys(PHOTOS.names).length) return;
-  const roots = ['viewAtt','viewPir','viewTrk','viewObs','viewSbfp','viewLac','viewHome','stfMBody'].map(id => $(id)).filter(x => x && x.offsetParent !== null);
+function photoDecorate(){ if (!USER || !Object.keys(PHOTOS.names).length) return;
+  const roots = ['viewAtt','viewPir','viewTrk','viewObs','viewSbfp','viewLac','viewHome','viewAcc','stfMBody','chat','bellPanel'].map(id => $(id)).filter(x => x && x.offsetParent !== null);
   roots.forEach(r => r.querySelectorAll('b, strong, td, .nm, .lname, .stfname').forEach(el => { if (el.dataset.avd || el.children.length > 1 || el.closest('#printArea, .bk, .pgal, select, option, .avatar, .mcw, textarea')) return;
     const t = el.childNodes.length === 1 && el.firstChild.nodeType === 3 ? el.textContent : (el.children.length === 0 ? el.textContent : ''); if (!t || t.length > 60) return;
-    const e = PHOTOS.names[photoNorm(t)]; if (!e) return; el.dataset.avd = '1'; el.insertAdjacentHTML('afterbegin', `<img class="pav" src="${photoOf(e)}" alt="" data-av="1">`); })); }
+    const e = PHOTOS.names[photoNorm(t)]; if (!e) return; el.dataset.avd = '1';
+    // a letter circle beside the name becomes the picture; otherwise a small picture is added before the name
+    const box = el.closest('.solhead, .stfreq-h, .ocard-h, .ocard, button, li, tr, .hcard, div'), av = box && [...box.querySelectorAll('.oav, .chav, .cav, .mav')].find(x => !x.dataset.avd && !x.contains(el) && x.textContent.trim().length <= 2);
+    if (av){ av.dataset.avd = '1'; av.classList.add('oavimg'); av.innerHTML = `<img src="${photoOf(e)}" alt="">`; return; }
+    el.insertAdjacentHTML('afterbegin', `<img class="pav" src="${photoOf(e)}" alt="" data-av="1">`); })); }
 var PHOTO_OBS = null;
 function photoWatch(){ if (PHOTO_OBS || !window.MutationObserver) return; let t = 0; PHOTO_OBS = new MutationObserver(() => { clearTimeout(t); t = setTimeout(photoDecorate, 250); }); PHOTO_OBS.observe(document.body, { childList:true, subtree:true }); }
 
 /* ----- All personnel as a gallery: the picture like a book cover, the name, the profile progress, and the 201 files ----- */
 function prfAllTab(){
   const L = PRF.list || [];
+  setTimeout(() => api('gateAcksList').then(A => document.querySelectorAll('.gateack').forEach(x => { const t = A[x.dataset.em]; x.innerHTML = t ? '✔ Read the LPT rule '+esc(dtTxt(t)) : '○ Has not read the LPT rule'; x.classList.toggle('ok', !!t); })).catch(()=>{}), 50);
   $('prfBody').innerHTML = `<div class="hcard"><div class="row" style="justify-content:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:12px"><select id="pfnWho"><option value="">Everyone</option>${L.map(p => `<option value="${p.email}">${esc(p.name)}</option>`).join('')}</select>
       <button class="btn small" onclick="prfNarrPrint($('pfnWho').value)">🖨 Print the data narrative</button><button class="btn ghost small" onclick="f201BundleAll()">⬇ Download all 201 Files (one PDF each)</button><button class="btn ghost small" onclick="prfMsgOpen()">💬 Ready messages</button></div>
     <div class="pgal">${L.map(p => { const s = f201Sum(p.email), hide = USER.role==='admin' && p.role==='head', files = f201Of(p.email).filter(x => x.code!=='CP').length, pc = p.status==='Locked' ? 100 : (p.filled||0), ph = photoOf(p.email);
@@ -2599,6 +2614,7 @@ function prfAllTab(){
         <div class="pgrow"><span>Profile</span><b>${p.status==='Locked' ? 'Locked' : p.status==='Draft' ? (p.filled||0)+'%' : 'Not started'}</b></div><div class="pfbar"><i style="width:${pc}%"></i></div>
         ${hide ? '<small class="hint">201 File not shown</small>' : `<div class="pgrow"><span>201 File</span><b>${files} file${files===1?'':'s'}</b></div><div class="pfbar f2"><i style="width:${s.req ? Math.round(s.reqUp*100/s.req) : 0}%"></i></div>
         <small class="hint">${s.reqUp} of ${s.req} required${s.chk ? ' · '+s.chk+' for checking' : ''}${s.redo ? ' · '+s.redo+' redo' : ''}</small>`}
+        ${p.role==='teacher' ? `<small class="hint gateack" data-em="${esc(p.email)}"></small>` : ''}
         <div class="pgact"><button class="btn ghost small" onclick="prfOpen('${p.email}')">Open</button>${hide || !s.up ? '' : `<button class="btn ghost small" onclick="f201Bundle('${p.email}','print')" title="Print all the 201 files">🖨</button><button class="btn ghost small" onclick="f201Bundle('${p.email}','download')" title="Download all as one PDF">⬇</button>`}</div></div>`; }).join('')}</div></div>`;
 }
 /* ----- Copy and paste reminders for one teacher ----- */
@@ -2962,7 +2978,7 @@ async function memoSignPost(){
   const c = MCW.pending || memoGetC(); $('mcErr').textContent = 'Signing';
   try{ const mine = await api('getMySig'); if (!mine || !mine.sig){ $('mcErr').textContent = 'Please save your e-signature first (your name menu, My e-signature).'; return; }
     if (!MCW.id) await memoDraftSave(true);
-    const when = new Date().toLocaleString('sv-SE', { timeZone:'Asia/Manila' }).slice(0,19), bytes = await memoPdf(c, { sig:mine.sig, name:c.from || USER.name, when, ref: MCW.id });
+    const when = new Date().toLocaleString('sv-SE', { timeZone:'Asia/Manila' }).slice(0,19), bytes = await memoPdf(c, { sig: await sigObscure(mine.sig), name:c.from || USER.name, when, ref: MCW.id });
     let s = ''; for (let i = 0; i < bytes.length; i += 8192) s += String.fromCharCode.apply(null, bytes.subarray(i, i + 8192));
     const fn = memoFileBase(c)+'.pdf';
     MEMO.data = await api('memoSave', { memo:{ id:MCW.id, draft:false, signed:true, kind:c.kind, no:c.no, date:c.date, subject:c.subject, to:c.recip, keywords:c.kw, compose:Object.assign(memoClean(c), { signedOn:when }), base64:btoa(s), mime:'application/pdf', fileName:fn } });
@@ -3066,6 +3082,7 @@ function memoEdit(id){
       <label class="pff"><span>Date</span><input type="date" id="meDate" value="${esc(m ? m.date : todayPH())}"></label></div>
     <label class="pff"><span>Subject</span><textarea id="meSub" rows="2" oninput="memoKwAuto()">${esc(m ? m.subject : '')}</textarea></label>
     <label class="pff"><span>File (PDF or picture)${m ? ', choose only to replace' : ''}</span><input type="file" id="meFile" accept="application/pdf,image/jpeg,image/png"></label>
+    ${USER.role==='head' ? '<label class="check"><input type="checkbox" id="meHide" checked> Hide my signature on this file (blur it and add the date and time of signing)</label>' : ''}
     <div class="pff"><span>For</span><label class="check"><input type="radio" name="meTo" value="all" ${to==='all'?'checked':''} onchange="$('mePick').hidden=true"> All personnel</label><label class="check"><input type="radio" name="meTo" value="pick" ${to!=='all'?'checked':''} onchange="$('mePick').hidden=false"> Choose</label>
       <div id="mePick" class="mepick" ${to==='all'?'hidden':''}>${P.map(p => `<label class="check"><input type="checkbox" value="${p.email}" ${to!=='all' && to.indexOf(p.email) > -1 ? 'checked' : ''}> ${esc(p.name)}</label>`).join('')}</div></div>
     <div class="pff"><span>Keywords</span><div class="f2kw" id="f2kws"></div><div class="row" style="margin-top:6px"><input id="f2kwin" placeholder="Add a keyword" onkeydown="if(event.key==='Enter'){event.preventDefault();memoKwAdd()}"><button class="btn ghost small" onclick="memoKwAdd()">Add</button></div></div>
@@ -3076,12 +3093,60 @@ function memoEdit(id){
 function memoKwDraw(){ const b = $('f2kws'); if (b) b.innerHTML = MEMOE.kw.map((k, i) => `<span class="kw">${esc(k)} <button type="button" onclick="MEMOE.kw.splice(${i},1);MEMOE.auto=false;memoKwDraw()" aria-label="Remove">✕</button></span>`).join('') || '<small class="hint">No keywords yet</small>'; }
 function memoKwAdd(){ const i = $('f2kwin'), v = i.value.trim(); if (!v) return; MEMOE.auto = false; v.split(',').map(x => x.trim()).filter(Boolean).forEach(x => { if (!MEMOE.kw.some(y => y.toLowerCase()===x.toLowerCase())) MEMOE.kw.push(x.slice(0,40)); }); i.value = ''; memoKwDraw(); i.focus(); }
 function memoKwAuto(){ if (!MEMOE.auto) return; MEMOE.kw = memoSuggest($('meSub').value); memoKwDraw(); }
+
+/* ----- The signature of the School Head is never shown in full: parts are blurred and broken into blocks, with the signing date and time (PNPKI style) ----- */
+function sigObscure(b64){ return new Promise(res => { const im = new Image(); im.onload = () => { const c = document.createElement('canvas'); c.width = im.naturalWidth; c.height = im.naturalHeight; const g = c.getContext('2d'); g.drawImage(im, 0, 0);
+    const W = c.width, H = c.height, t = document.createElement('canvas'); t.width = W; t.height = H; t.getContext('2d').drawImage(c, 0, 0);
+    // right part blurred
+    const x0 = Math.round(W * 0.42); g.clearRect(x0, 0, W - x0, H); g.save(); g.filter = 'blur(' + Math.max(3, Math.round(W / 70)) + 'px)'; g.drawImage(t, x0, 0, W - x0, H, x0, 0, W - x0, H); g.restore();
+    // a middle band broken into blocks
+    const by = Math.round(H * 0.38), bh = Math.round(H * 0.26), bs = Math.max(4, Math.round(W / 45)), sm = document.createElement('canvas'); sm.width = Math.max(1, Math.round(W / bs)); sm.height = Math.max(1, Math.round(bh / bs));
+    sm.getContext('2d').drawImage(t, 0, by, W, bh, 0, 0, sm.width, sm.height); g.clearRect(0, by, W, bh); g.imageSmoothingEnabled = false; g.drawImage(sm, 0, 0, sm.width, sm.height, 0, by, W, bh);
+    res(c.toDataURL('image/png').split(',')[1]); }; im.onerror = () => res(b64); im.src = 'data:image/png;base64,' + String(b64).replace(/^data:[^,]+,/, ''); }); }
+function hideRegion(cv, r, name, when){ const g = cv.getContext('2d'), x = Math.max(0, Math.round(r.x)), y = Math.max(0, Math.round(r.y)), w = Math.min(cv.width - x, Math.round(r.w)), h = Math.min(cv.height - y, Math.round(r.h)); if (w < 4 || h < 4) return;
+  const t = document.createElement('canvas'); t.width = w; t.height = h; t.getContext('2d').drawImage(cv, x, y, w, h, 0, 0, w, h);
+  g.save(); g.filter = 'blur(' + Math.max(4, Math.round(h / 8)) + 'px)'; g.drawImage(t, 0, 0, w, h, x, y, w, h); g.restore();
+  const bs = Math.max(6, Math.round(h / 6)), sm = document.createElement('canvas'); sm.width = Math.max(1, Math.round(w / 2 / bs)); sm.height = Math.max(1, Math.round(h / bs)); sm.getContext('2d').drawImage(t, w / 2, 0, w / 2, h, 0, 0, sm.width, sm.height);
+  g.imageSmoothingEnabled = false; g.drawImage(sm, 0, 0, sm.width, sm.height, x + w / 2, y, w / 2, h); g.imageSmoothingEnabled = true;
+  g.strokeStyle = 'rgba(26,51,140,.55)'; g.lineWidth = Math.max(1, h / 60); for (let k = 0; k < 4; k++){ g.beginPath(); for (let xx = 0; xx <= w; xx += 4){ const yy = y + h * (0.25 + k * 0.17) + Math.sin((xx + k * 9) / 9) * h * 0.04; xx ? g.lineTo(x + xx, yy) : g.moveTo(x + xx, yy); } g.stroke(); }
+  const L = pkiLines(name, when), fs = Math.min(Math.max(9, Math.round(h / 7)), Math.round(cv.width / 62)), bw = Math.max(w * 0.62, fs * 15), bx = Math.min(cv.width - bw - 4, x + w * 0.45), byy = y + h * 0.12, bhh = fs * 3.9;
+  g.fillStyle = 'rgba(255,255,255,.8)'; g.fillRect(bx, byy, bw, bhh); g.strokeStyle = 'rgba(26,51,140,.7)'; g.lineWidth = Math.max(1, fs / 12); g.strokeRect(bx, byy, bw, bhh);
+  g.fillStyle = '#0d1a66'; L.forEach((tx, i) => { g.font = (i === 1 ? 'bold ' : '') + Math.round(fs * (i === 1 ? 1.05 : 0.92)) + 'px Arial, sans-serif'; g.fillText(tx, bx + fs * 0.4, byy + fs * (1.15 + i * 1.15)); }); }
+// An uploaded memo: the School Head draws a box on the signature, then TALA blurs it and adds the signing details
+var MEMOH = { pages:[], x:null };
+async function memoHideStart(f, x){ $('meErr').textContent = 'Opening the file'; MEMOH = { pages:[], x };
+  try{ if (f.type==='application/pdf'){ const L = await pdfJs(), d = await L.getDocument({ data:new Uint8Array(await f.arrayBuffer()) }).promise;
+      for (let p = 1; p <= Math.min(d.numPages, 12); p++){ const pg = await d.getPage(p), v1 = pg.getViewport({ scale:1 }), v = pg.getViewport({ scale:2 }), cv = document.createElement('canvas'); cv.width = v.width; cv.height = v.height; const g = cv.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, cv.width, cv.height); await pg.render({ canvasContext:g, viewport:v }).promise; MEMOH.pages.push({ cv, w:v1.width, h:v1.height, rects:[] }); } }
+    else { const url = await lacShrink(f, 2400, 0.92), im = await new Promise((ok, no) => { const m = new Image(); m.onload = () => ok(m); m.onerror = no; m.src = url; }), cv = document.createElement('canvas'); cv.width = im.naturalWidth; cv.height = im.naturalHeight; cv.getContext('2d').drawImage(im, 0, 0); const sc = Math.min(595.28 / cv.width, 841.89 / cv.height); MEMOH.pages.push({ cv, w:cv.width * sc, h:cv.height * sc, rects:[] }); } }
+  catch(e){ $('meErr').textContent = 'The file could not be opened: '+(e.message||''); return false; }
+  $('stfMBody').innerHTML = `<h3>Hide your signature</h3><p class="sub">Drag a box over your signature on the page (on each page where it appears). TALA blurs it, breaks part of it into blocks, and adds "Digitally signed by" with the date and time.</p>
+    <div id="mhPages" class="mhpages">${MEMOH.pages.map((p, i) => `<div class="mhpg" data-i="${i}"><span class="hint">Page ${i+1}</span><div class="mhwrap"><canvas></canvas></div></div>`).join('')}</div>
+    <p class="err" id="meErr"></p><div class="row mcacts"><button class="btn ghost" onclick="MEMOH.pages.forEach(p => p.rects = []);memoHideDraw()">Clear the boxes</button><button class="btn" id="mhGo" onclick="memoHideApply()">Hide and post</button></div>`;
+  document.querySelectorAll('.mhpg').forEach(el => { const i = +el.dataset.i, P = MEMOH.pages[i], c = el.querySelector('canvas'); c.width = P.cv.width; c.height = P.cv.height;
+    let st = null; const pos = e => { const r = c.getBoundingClientRect(); return [(e.clientX - r.left) * c.width / r.width, (e.clientY - r.top) * c.height / r.height]; };
+    c.addEventListener('pointerdown', e => { e.preventDefault(); c.setPointerCapture(e.pointerId); st = pos(e); P.tmp = { x:st[0], y:st[1], w:0, h:0 }; });
+    c.addEventListener('pointermove', e => { if (!st) return; const q = pos(e); P.tmp = { x:Math.min(st[0], q[0]), y:Math.min(st[1], q[1]), w:Math.abs(q[0] - st[0]), h:Math.abs(q[1] - st[1]) }; memoHideDraw(i); });
+    c.addEventListener('pointerup', () => { if (P.tmp && P.tmp.w > 10 && P.tmp.h > 10) P.rects.push(P.tmp); P.tmp = null; st = null; memoHideDraw(i); }); });
+  memoHideDraw(); return true; }
+function memoHideDraw(only){ document.querySelectorAll('.mhpg').forEach(el => { const i = +el.dataset.i; if (only !== undefined && i !== only) return; const P = MEMOH.pages[i], c = el.querySelector('canvas'), g = c.getContext('2d');
+  g.drawImage(P.cv, 0, 0); g.lineWidth = Math.max(3, c.width / 300); P.rects.concat(P.tmp ? [P.tmp] : []).forEach(r => { g.fillStyle = 'rgba(217,48,37,.18)'; g.fillRect(r.x, r.y, r.w, r.h); g.strokeStyle = '#d93025'; g.strokeRect(r.x, r.y, r.w, r.h); }); }); }
+async function memoHideApply(){ if (!MEMOH.pages.some(p => p.rects.length)) return $('meErr').textContent = 'Drag a box over your signature first.';
+  const b = $('mhGo'); b.disabled = true; b.textContent = 'Hiding';
+  try{ const when = new Date().toLocaleString('sv-SE', { timeZone:'Asia/Manila' }).slice(0,19), name = (USER.name||'').toUpperCase();
+    await loadAny(PDFLIB); const doc = await PDFLib.PDFDocument.create();
+    for (const P of MEMOH.pages){ P.rects.forEach(r => hideRegion(P.cv, r, name, when)); const jpg = await doc.embedJpg(b64ToBytes(P.cv.toDataURL('image/jpeg', 0.86).split(',')[1])), pg = doc.addPage([P.w, P.h]); pg.drawImage(jpg, { x:0, y:0, width:P.w, height:P.h }); }
+    const bytes = await doc.save(); let s = ''; for (let i = 0; i < bytes.length; i += 8192) s += String.fromCharCode.apply(null, bytes.subarray(i, i + 8192));
+    const x = MEMOH.x; x.base64 = btoa(s); x.mime = 'application/pdf'; x.fileName = String(x.fileName || 'memo').replace(/\.(pdf|png|jpe?g)$/i, '') + '_signed.pdf';
+    MEMO.data = await api('memoSave', { memo:x }); MEMO.tab = x.kind; closeModal('stfModal'); toast(x.id ? 'Saved.' : 'Posted. Each one gets a notice.'); memoDraw(); }
+  catch(e){ handleErr(e, 'meErr'); b.disabled = false; b.textContent = 'Hide and post'; } }
+
 async function memoSave(){
   const b = $('meGo'); b.disabled = true; $('meErr').textContent = '';
   try{ const f = $('meFile').files[0], x = { id:MEMOE.id, kind:$('meKind').value, no:$('meNo').value.trim(), date:$('meDate').value, subject:$('meSub').value.trim(), note:$('meNote').value.trim(), keywords:MEMOE.kw };
     const pick = document.querySelector('input[name=meTo]:checked').value; x.to = pick==='all' ? 'all' : [...document.querySelectorAll('#mePick input:checked')].map(i => i.value);
     if (pick!=='all' && !x.to.length) throw new Error('Choose at least one person.');
     if (x.kind==='Direct' && pick==='all') throw new Error('A direct memo is for chosen persons only. Tap Choose, then tick the names.');
+    if (f && $('meHide') && $('meHide').checked){ if (!/^application\/pdf$|^image\/(jpeg|png)$/.test(f.type)) throw new Error('Choose a PDF or a picture (JPG or PNG).'); x.fileName = f.name; b.disabled = false; await memoHideStart(f, x); return; }
     if (f){ if (!/^application\/pdf$|^image\/(jpeg|png)$/.test(f.type)) throw new Error('Choose a PDF or a picture (JPG or PNG).'); if (f.size > 15*1024*1024) throw new Error('The file is too large.');
       if (f.type==='application/pdf'){ x.base64 = await readB64(f); x.mime = f.type; x.fileName = f.name; } else { x.base64 = (await lacShrink(f, 2200, 0.85)).split(',')[1]; x.mime = 'image/jpeg'; x.fileName = f.name.replace(/\.(png|jpe?g)$/i,'')+'.jpg'; } }
     else if (!x.id) throw new Error('Attach the file of the memo or advisory.');
@@ -3440,7 +3505,8 @@ async function prfNarrPrint(who){
 /* ----- The profile picture also shows at the upper right ----- */
 function avatarPhoto(src){ const a = $('avatar'); if (!a || !USER) return; const k = 'tala_photo_'+USER.email;
   if (src !== undefined){ try{ src ? localStorage.setItem(k, src) : localStorage.removeItem(k); }catch(e){} }
-  else { try{ src = localStorage.getItem(k) || ''; }catch(e){ src = ''; } if (!avatarPhoto._asked){ avatarPhoto._asked = USER.email; api('prfPhoto').then(r => { if ((r.photo||'') !== (src||'')) avatarPhoto(r.photo || ''); }).catch(()=>{}); } }
+  else { try{ src = localStorage.getItem(k) || ''; }catch(e){ src = ''; } if (avatarPhoto._asked !== USER.email){ avatarPhoto._asked = USER.email; api('prfPhoto').then(r => { if ((r.photo||'') !== (src||'')) avatarPhoto(r.photo || ''); }).catch(()=>{}); } }
+  if (!src && USER) src = photoOf(USER.email);
   if (src){ a.innerHTML = `<img src="${src}" alt="">`; a.classList.add('hasimg'); } else { a.classList.remove('hasimg'); a.textContent = (USER.name||USER.email).trim().charAt(0).toUpperCase(); } }
 /* ---------- TALA features (left side) ---------- */
 const FEATURES = [
@@ -4601,7 +4667,23 @@ function renderList(){
 }
 
 /* ---------- Submit wizard ---------- */
+
+/* ----- The rule for LPT and PPT: a started Profile and 201 File first. Each teacher confirms reading it. ----- */
+var GATE = { info:null, popAt:0, wait:0 };
+function gateMsgHtml(g){ return `<p>Starting <b>${esc(fmtLong(g.from))}</b>, you can upload your LPT and PPT for validation only after you have:</p>
+  <ol class="gatelist"><li class="${g.myPct >= g.pct ? 'ok' : ''}">completed at least <b>${g.pct}%</b> of your Profile <span>(now ${g.myPct}%)</span></li><li class="${g.myFiles >= g.files ? 'ok' : ''}">uploaded at least <b>${g.files} files</b> in your 201 File <span>(now ${g.myFiles})</span></li></ol>
+  <p class="hint">Once both are done, you can upload your LPT and PPT as usual.</p>`; }
+function gatePop(force){ const g = GATE.info; if (!g || g.acked || !USER || USER.role!=='teacher' || aralOnly()) return; if (!force && Date.now() - GATE.popAt < 60000) return;
+  if (document.querySelector('.overlay.open') || ($('tour') && !$('tour').hidden) || CUR_FEATURE!=='home'){ clearTimeout(GATE.wait); GATE.wait = setTimeout(() => { if (CUR_FEATURE==='home') gatePop(true); }, 5000); return; }
+  GATE.popAt = Date.now();
+  stfModal(`<div class="mmpop"><span class="lktag">LPT AND PPT</span><h3>📢 A new rule for uploading LPT and PPT</h3>${gateMsgHtml(g)}
+    <div class="row"><button class="btn ghost" onclick="closeModal('stfModal');PRF.tab='me';openFeature('prof')">Open Profile and 201 File</button><button class="btn" onclick="gateAck()">✔ I have read and understood</button></div></div>`); }
+async function gateAck(){ try{ GATE.info = await api('gateAck'); closeModal('stfModal'); toast('Thank you.'); }catch(e){ toast(e.message || 'Could not save.'); } }
+function gateBlocks(){ const g = GATE.info; return !!(g && g.on && !g.ok && USER && USER.role==='teacher'); }
+function gateShow(){ const g = GATE.info; stfModal(`<h3>Please complete your Profile and 201 File first</h3>${gateMsgHtml(g)}
+  <div class="row"><button class="btn ghost" onclick="closeModal('stfModal')">Close</button><button class="btn" onclick="closeModal('stfModal');PRF.tab='me';openFeature('prof')">Open Profile and 201 File</button></div>`); }
 function openSubmit(id){
+  if (gateBlocks()) return gateShow();
   if (typeof W === 'object' && W){ W.pptMode = ''; W.lptMode = ''; }
   const e = id ? DATA.entries.find(x=>x.id===id) : null;
   W = e ? {term:e.term, grade:e.grade, subject:e.subject, week:e.week, fixed:true}
@@ -5315,6 +5397,7 @@ async function poll(){
     if (typeof r.lacNew === 'number' && r.lacNew !== LAC.dot){ LAC.dot = r.lacNew; drawSide(); }
     if (typeof r.aralNew === 'number' && r.aralNew !== ARAL.srvNew){ ARAL.srvNew = r.aralNew; drawSide(); }
     if (typeof r.memoNew === 'number' && r.memoNew !== MEMO.unread){ const more = r.memoNew > MEMO.unread; MEMO.unread = r.memoNew; drawSide(); if (more){ MEMO.data = null; if (CUR_FEATURE==='home') memoPop(true); else if (CUR_FEATURE==='memo') openMemo(); } }
+    if (r.gate){ GATE.info = r.gate; if (!r.gate.acked && CUR_FEATURE==='home') gatePop(); }
     if (USER.role==='head'){ if (typeof r.f201New === 'number' && r.f201New !== PRF.dot){ PRF.dot = r.f201New; drawSide(); } }
     else if (r.prfTodo){ PRF.todo = r.prfTodo; const k = prfTodoCount(); if (k !== PRF.dot){ PRF.dot = k; drawSide(); } }
     if (typeof r.reqNew === 'number' && r.reqNew !== STF.dot){ STF.dot = r.reqNew; drawSide(); if (STF.data && USER.role!=='admin') stfLoad(true).then(() => { if (ATT.view==='staff' && $('viewAtt').style.display!=='none') stfDraw(); }); }
@@ -6556,7 +6639,7 @@ function quoteToday(){ const d = todayPH(), n = Math.floor(Date.UTC(+d.slice(0,4
 function quoteNext(){ let q = CUR_QUOTE; while (QUOTES.length > 1 && q === CUR_QUOTE) q = QUOTES[Math.floor(Math.random() * QUOTES.length)]; CUR_QUOTE = q; document.querySelectorAll('.qcard p').forEach(p => p.textContent = '\u201C' + q + '\u201D'); }
 function showHome(){
   ['viewLac','viewTrk','viewAcc','viewBank','viewLog','viewWeeks','viewSig','viewObs','viewSbfp','viewPir','viewAtt'].forEach(v => $(v).style.display='none');
-  closeGuide(); $('viewHome').style.display=''; CUR_FEATURE = 'home'; drawSide(); drawHome(); window.scrollTo(0,0); maybeGuide('home'); setTimeout(() => memoPop(), 1500);
+  closeGuide(); $('viewHome').style.display=''; CUR_FEATURE = 'home'; drawSide(); drawHome(); window.scrollTo(0,0); maybeGuide('home'); setTimeout(() => memoPop(), 1500); setTimeout(() => gatePop(), 4000);
   if (USER && (USER.role==='head' || featOn('obs')) && !OBS.list.length){ obsLocalLoad(); obsRefresh().catch(()=>{}); }
 }
 function drawAralHome(){
@@ -9300,7 +9383,7 @@ function stfReqOpen(id){
 }
 function stfReqForm(){
   const e = STF.edit, d = e.details, t = e.type, head = stfHead(), D = STF.data;
-  const f = (id, label, val, o={}) => `<div class="field"><label for="${id}">${label}</label><${o.ta?'textarea':'input'} id="${id}" ${o.type?`type="${o.type}"`:''} maxlength="${o.max||200}" placeholder="${esc(o.ph||'')}" ${o.ta?'rows="2"':''} oninput="stfF()" ${o.ta?'':`value="${esc(val||'')}"`}>${o.ta?esc(val||'')+'</textarea>':''}</div>`;
+  const f = (id, label, val, o={}) => `<div class="field"><label for="${id}">${label}</label><${o.ta?'textarea':'input'} id="${id}" ${o.type?`type="${o.type}"`:''} maxlength="${o.ta ? 20000 : (o.max||200)}" placeholder="${esc(o.ph||'')}" ${o.ta?'rows="6" style="resize:vertical"':''} oninput="stfF()" ${o.ta?'':`value="${esc(val||'')}"`}>${o.ta?esc(val||'')+'</textarea>':''}</div>`;
   const radio = (name, opts, val) => `<div class="stfrad">${opts.map(o=>`<label class="check" style="margin:0"><input type="radio" name="${name}" value="${esc(o)}" ${val===o?'checked':''} onchange="stfF();stfReqForm()">${esc(o)}</label>`).join('')}</div>`;
   let body = '';
   if (!t){
@@ -9333,7 +9416,7 @@ function stfReqForm(){
     const files = (e.files||[]).filter(x => STF.keep.indexOf(String(x.id||x.url)) > -1);
     body = `<p class="sub">${esc(REQ_HINT[t])} <button class="linkbtn" onclick="STF.edit.type='';stfReqForm()">Change</button></p>${who}${body}
       <div class="field"><label for="rqFiles">Supporting files (optional)</label><input type="file" id="rqFiles" multiple accept="image/*,.pdf,.doc,.docx" onchange="STF.files=[...this.files]">
-        ${files.length?`<div class="hint">${files.map(x=>`<span class="stffile">\u{1F4CE} ${esc(x.name)} <button class="linkbtn" onclick="STF.keep=STF.keep.filter(k=>k!=='${esc(String(x.id||x.url))}');stfF();stfReqForm()">Remove</button></span>`).join(' ')}</div>`:''}<small class="hint">Medical certificate, memo, invitation, or a photo of it. Up to 15 MB each.</small></div>
+        ${files.length?`<div class="hint">${files.map(x=>`<span class="stffile">\u{1F4CE} ${esc(x.name)} <button class="linkbtn" onclick="STF.keep=STF.keep.filter(k=>k!=='${esc(String(x.id||x.url))}');stfF();stfReqForm()">Remove</button></span>`).join(' ')}</div>`:''}<small class="hint">Medical certificate, memo, invitation, or a photo of it. Up to 10 files, 15 MB each.</small></div>
       ${['LEAVE','LOCATOR','TRAVEL'].indexOf(t) > -1?`<label class="check"><input type="checkbox" id="rqSig" ${d.useSig!==false?'checked':''} onchange="stfF()">Put my e-signature on the form</label>`:''}`;
   }
   stfModal(`<h3>${e.record?'Add a past record':e.id?'Edit the request':'New request'}</h3>${e.record&&!t?'<p class="sub">Add a leave, early out, wellness leave or other request that was already acted on, for example through email, so it adds up in the summary. The teacher is not notified.</p>':''}${body}<p class="err" id="rqErr"></p>
@@ -9362,7 +9445,8 @@ async function stfReqSave(){
   if (!e.record && (e.type==='LOCATOR' || e.type==='TRAVEL') && !d.purpose) return $('rqErr').textContent = 'Type the purpose.';
   if (!e.record && ['EARLY','WELLNESS','OTHER'].indexOf(e.type) > -1 && !d.reason) return $('rqErr').textContent = 'Type the reason.';
   if (!e.record && e.type==='EARLY' && !d.time) return $('rqErr').textContent = 'Choose the time you will leave.';
-  if (STF.files.reduce((a,f)=>a+f.size,0) > 25*1048576) return $('rqErr').textContent = 'The files are too large together. Attach fewer or smaller files.';
+  if (STF.files.length + (e.id ? (STF.keep||[]).length : 0) > 10) return $('rqErr').textContent = 'Attach up to 10 files only.';
+  if (STF.files.reduce((a,f)=>a+f.size,0) > 40*1048576) return $('rqErr').textContent = 'The files are too large together. Attach fewer or smaller files.';
   d.fullName = e.type==='LEAVE' ? [d.first, d.middle ? d.middle.charAt(0)+'.' : '', d.last].filter(Boolean).join(' ') : '';
   const auto = ['LEAVE','WELLNESS','TRAVEL'].indexOf(e.type) > -1 ? stfWorkDays(e.from, e.to) : 0;
   const days = e.daysN !== undefined && e.daysN !== '' ? Number(e.daysN) : auto;
@@ -11573,10 +11657,27 @@ async function openAccounts(){
   try{ ACC = await api('getAccounts'); renderAcc(); }catch(e){ handleErr(e); }
   loading(false);
 }
+const PERS_ST = ['Active','Transferred in','End of contract (Substitute)','End of contract (GIP)','Transferred out','Retired','Resigned'];
+function accStatusSel(a){ if (a.role==='head' || a.mirror) return a.mirror ? '<small>Practice account</small>' : ''; const cur = (a.status||'').split(',')[0] || (a.active ? 'Active' : '');
+  return `<select onchange="accStatusSet('${esc(a.email)}', this.value)" style="font:inherit;font-size:13px;padding:4px 6px;border-radius:8px;border:1.5px solid var(--line)">${PERS_ST.map(x => `<option ${x===cur?'selected':''}>${x}</option>`).join('')}</select>${a.status?`<small>${esc(a.status)}</small>`:''}`; }
+async function accStatusSet(email, st){ const out = ['End of contract (Substitute)','End of contract (GIP)','Transferred out','Retired','Resigned'].indexOf(st) > -1, a = ACC.find(x => x.email===email);
+  if (out && !confirm(a.name+': '+st+'. The account will be turned off and left out of the personnel count, submissions, and tracking. Their records stay. Continue?')){ renderAcc(); return; }
+  loading(true, 'Saving'); try{ ACC = await api('setStatus', { email, status:st }); renderAcc(); loadData().catch(()=>{}); toast('Saved: '+st+'.'); }catch(e){ handleErr(e); renderAcc(); } loading(false); }
+function practiceOpen(){ const T = ACC.filter(a => a.role==='teacher' && a.active && !a.test && !a.mirror), pick = (id, def) => `<select id="${id}" style="width:100%">${T.map(a => `<option value="${esc(a.email)}" ${new RegExp(def,'i').test(a.name)?'selected':''}>${esc(a.name)}</option>`).join('')}</select>`;
+  const cur = ACC.filter(a => a.mirror);
+  stfModal(`<h3>Practice accounts</h3><p class="sub">Each one sees TALA exactly as the teacher it mirrors, for training and checking. They are not counted as personnel, and nothing they do is saved.</p>
+    <div class="pfgrid"><label class="pff"><span>Key Stage 1 practice account mirrors</span>${pick('paK1','liezel')}</label><label class="pff"><span>Key Stage 2 practice account mirrors</span>${pick('paK2','mary-an|mary an')}</label><label class="pff"><span>PIN for both</span><input id="paPin" value="2026" inputmode="numeric"></label></div>
+    ${cur.length ? `<p class="hint">Now: ${cur.map(a => esc(a.email)+' ('+esc(a.name)+')').join('; ')}</p>` : ''}
+    <p class="err" id="paErr"></p><div class="row"><button class="btn ghost" onclick="closeModal('stfModal')">Close</button><button class="btn" onclick="practiceSave()">Save</button></div>`); }
+async function practiceSave(){ try{ ACC = await api('samplePractice', { ks1:$('paK1').value, ks2:$('paK2').value, pin:$('paPin').value }); renderAcc();
+    $('stfMBody').innerHTML = `<h3>Practice accounts are ready</h3><p>Sign in with these on another browser or a private window:</p><ul><li><b>practice.ks1@baluyan.tala</b></li><li><b>practice.ks2@baluyan.tala</b></li></ul><p>PIN: <b>${esc($('paPin') ? $('paPin').value : '2026')}</b></p><div class="row"><button class="btn" onclick="closeModal('stfModal')">Done</button></div>`; }
+  catch(e){ handleErr(e, 'paErr'); } }
+function practiceBar(){ const b = $('practiceBar'); if (USER && USER.sample){ if (!b) document.body.insertAdjacentHTML('afterbegin', `<div class="practicebar" id="practiceBar">Practice account: you are viewing TALA as ${esc(USER.name)}. Nothing you do here is saved.</div>`); } else if (b) b.remove(); }
 function renderAcc(){
-  $('accBody').innerHTML = `<div class="table-wrap"><table><thead><tr><th>Name and email</th><th>Role and position</th><th>PIN</th><th>PIN status</th><th>Last sign in</th><th>Sign ins</th><th>Account</th><th>Notifications</th><th>Test account</th><th></th></tr></thead><tbody>${
+  $('accBody').innerHTML = `<div class="row" style="justify-content:flex-start;margin-bottom:10px"><button class="btn ghost small" onclick="practiceOpen()">👀 Practice accounts (KS1 and KS2)</button></div><div class="table-wrap"><table><thead><tr><th>Name and email</th><th>Role and position</th><th>Status</th><th>PIN</th><th>PIN status</th><th>Last sign in</th><th>Sign ins</th><th>Account</th><th>Notifications</th><th>Test account</th><th></th></tr></thead><tbody>${
     ACC.map(a=>`<tr><td><b>${esc(a.name)}</b><small>${esc(a.email)}</small><button class="linkbtn" style="font-size:12.5px;margin-top:4px" onclick="openEditAcc('${esc(a.email)}')">Edit name, position, and profile</button></td>
       <td>${a.role==='head'?'School Head':a.role==='admin'?'Administrative Officer':a.aral==='only'?'ARAL tutor only, '+(a.tutor==='Regular'?'Regular Tutor':'GIP Tutor'):a.aral==='both'?'Teacher and ARAL tutor':'Teacher'}<small>${esc(a.position||'No position set')}</small></td>
+      <td>${accStatusSel(a)}</td>
       <td style="white-space:nowrap"><span class="pinv" id="pin_${esc(a.email).replace(/[^a-z0-9]/gi,'_')}" data-pin="${esc(a.pin)}">••••</span> <button class="linkbtn" style="font-size:12.5px" onclick="togglePin(this)">Show</button></td>
       <td><span class="${a.pinStatus.indexOf('Default')===0?'mk-wait':'mk-ok'}">${esc(a.pinStatus)}</span>${a.pinChangedOn?`<small>Changed ${esc(dTime(a.pinChangedOn))}</small>`:''}</td>
       <td>${a.lastSignIn?esc(dTime(a.lastSignIn)):'<span class="mk-wait">Never</span>'}</td>
