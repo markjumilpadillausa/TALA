@@ -1223,6 +1223,16 @@ img.pav,span.pav{width:22px;height:22px;border-radius:50%;object-fit:cover;verti
 .mhpages{max-height:62vh;overflow:auto;display:flex;flex-direction:column;gap:12px}.mhwrap canvas{width:100%;height:auto;border:1px solid var(--line);border-radius:6px;cursor:crosshair;touch-action:none;background:#fff}
 /* proof pictures */
 .stfnote,.stfreq-w,.ntk-text,.bdx-desc{overflow-wrap:anywhere}
+.drwarn{background:#fff1ee;border:1px solid #f3b4a8;border-radius:12px;padding:10px 12px;margin:8px 0}.drwarn p{margin:4px 0 8px;font-size:14px}.drwarn b{color:#a3271b}
+.winline{margin:8px 0 0;font-size:13px;background:#fff8e1;border:1px solid #f0dc9a;border-radius:10px;padding:8px 10px;line-height:1.5}.winsure{background:#fff8e1;border-radius:10px;padding:8px 10px;font-size:14px}
+.wintbl{width:100%!important;min-width:0!important;max-width:100%;table-layout:fixed;border-collapse:collapse;margin:8px 0}.wintbl td,.wintbl th{border:1px solid #e6e6dc;padding:6px 8px;text-align:left}.wintbl th{background:#f3f7f2}
+.lmcard{background:#fff;border:1px solid #e6e6dc;border-radius:14px;padding:12px;margin:12px 0}.lmc{display:inline-block;min-width:26px;text-align:center;border-radius:999px;padding:1px 8px}.lmc.g{background:#e3f5e8;color:#1d7a3e}.lmc.y{background:#fff4d6;color:#7a5800}.lmc.r{background:#fde3e1;color:#a3271b}
+.derbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:8px 0;padding:10px;border-radius:12px;background:#f6f8f4;border:1px solid #e3e9df}.dercan{display:flex;flex-wrap:wrap;gap:6px;align-items:center;width:100%}
+.derchip{background:#fff4d6;border:1px solid #f0dc9a;color:#5a4300;border-radius:999px;padding:3px 10px;font-weight:700;font-size:13px}.derchip small{font-weight:400}
+.deritem{border:1px solid #eee;border-radius:12px;padding:10px;margin-bottom:8px;background:#fff}.deritem.pend{border-color:#f0dc9a;background:#fffbef}.deri-h{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.derr{white-space:pre-wrap;margin:6px 0;font-size:14px;overflow-wrap:anywhere}
+.dtrdue{display:flex;gap:12px;align-items:center;flex-wrap:wrap;border-radius:16px;padding:14px;margin:14px 0;background:linear-gradient(135deg,#fff3d6,#fffaf0);border:1px solid #f0d58a}.dtrdue>span{font-size:30px}.dtrdue>div{flex:1;min-width:220px}.dtrdue p{margin:4px 0 0;font-size:14px}.dtrdue.last,.dtrdue.late{background:linear-gradient(135deg,#ffe2dc,#fff6f3);border-color:#f3b4a8}
+.derwarn{background:#fff1ee;border:1px solid #f3b4a8;border-radius:12px;padding:10px 12px;margin:10px 0}.derwarn p{margin:6px 0;font-size:14px}.derwarn .check{font-weight:700}
+.sctbl td small{display:block;color:var(--muted);font-size:12px}
 .pqf-bar{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin:6px 0 4px}.pqf-bar .hint{font-size:12px}
 .pqf-strip{display:flex;flex-wrap:wrap;gap:8px;width:100%}.pqf-strip:empty{display:none}
 .pqf-th{position:relative;width:72px;height:72px;border-radius:10px;overflow:hidden;border:1px solid var(--line,#ddd);background:#f6f6f2;display:grid;place-items:center;font-size:11px;color:#666}
@@ -1998,8 +2008,8 @@ body.ntklocked{overflow:hidden}
 
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
-const MIN_SERVER = '8.7'; // oldest Code.gs this page works with
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'8.7', date:'October 27, 2026' } };
+const MIN_SERVER = '8.9'; // oldest Code.gs this page works with
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'8.9', date:'October 29, 2026' } };
 function verLine(server){
   const old = server && (server.indexOf('older') > -1 || parseFloat(server) < parseFloat(MIN_SERVER));
   const s = server ? ' Server '+server+('.') : '';
@@ -2650,9 +2660,13 @@ function photoDecorate(){ if (!USER || !Object.keys(PHOTOS.names).length) return
     const t = el.childNodes.length === 1 && el.firstChild.nodeType === 3 ? el.textContent : (el.children.length === 0 ? el.textContent : ''); if (!t || t.length > 60) return;
     const e = PHOTOS.names[photoNorm(t)]; if (!e) return; el.dataset.avd = '1';
     // a letter circle beside the name becomes the picture; otherwise a small picture is added before the name
-    const box = el.closest('.solhead, .stfreq-h, .ocard-h, .ocard, button, li, tr, .hcard, div'), av = box && [...box.querySelectorAll('.oav, .chav, .cav, .mav')].find(x => !x.dataset.avd && !x.contains(el) && x.textContent.trim().length <= 2);
-    if (av){ av.dataset.avd = '1'; av.classList.add('oavimg'); av.innerHTML = `<img src="${photoOf(e)}" alt="">`; return; }
+    // only one picture per name: if the row already has a picture, nothing is added; a letter circle in the row becomes the picture
+    let anc = el.parentElement, own = null;
+    for (let i = 0; i < 3 && anc && !own; i++, anc = anc.parentElement){ const avs = [...anc.querySelectorAll(PHOTO_AVSEL)].filter(x => !x.contains(el)); if (avs.length > 1) break; if (avs.length === 1) own = avs[0]; }
+    if (own){ if (own.tagName==='IMG' || own.querySelector('img')) return;
+      if (own.textContent.trim().length <= 2){ own.dataset.avd = '1'; if (own.classList.contains('bdx-av')){ own.outerHTML = `<img class="bdx-av" src="${photoOf(e)}" alt="" data-avd="1">`; } else { own.classList.add('oavimg'); own.innerHTML = `<img src="${photoOf(e)}" alt="">`; } return; } }
     el.insertAdjacentHTML('afterbegin', `<img class="pav" src="${photoOf(e)}" alt="" data-av="1">`); })); }
+const PHOTO_AVSEL = '.oav, .chav, .cav, .mav, .bdx-av, img.pav, .pav, .oavimg, .avatar, .pgcov';
 var PHOTO_OBS = null;
 function photoWatch(){ if (PHOTO_OBS || !window.MutationObserver) return; let t = 0; PHOTO_OBS = new MutationObserver(() => { clearTimeout(t); t = setTimeout(photoDecorate, 250); }); PHOTO_OBS.observe(document.body, { childList:true, subtree:true }); }
 
@@ -4507,7 +4521,7 @@ function renderPrivate(){
   let h = '';
   if (!st.t1 && !st.t2 && !st.t3) h += `<div class="notice">${head ? 'Set the term start dates so TALA can show week dates and count days late. Tap Term dates and deadline.' : 'Week dates and days late will show once the School Head sets the term dates.'}</div>`;
   h += `<div class="stats">${quick.map(q=>`<button class="stat ${q.warn&&q.n?'warn':''} ${FILTER.quick===q.k?'on':''}" onclick="FILTER.quick='${q.k}';renderPrivate()"><b>${q.n}</b><span>${esc(q.label)}</span></button>`).join('')}</div>`;
-  if (head) h += teacherTable(scope) + (USER.role==='head' || USER.role==='admin' ? tqTable() : ''); else h += myOverview();
+  if (head) h += teacherTable(scope) + (USER.role==='head' || USER.role==='admin' ? tqTable() + lptMissCard() : ''); else h += myOverview() + lptMissCard();
   h += `<div class="filters">`;
   if (head) h += `<select onchange="FILTER.teacher=this.value;renderPrivate()" aria-label="Teacher"><option value="">All teachers</option>${(DATA.teachers||[]).map(t=>`<option value="${esc(t.email)}" ${FILTER.teacher===t.email?'selected':''}>${esc(t.name)}</option>`).join('')}</select>`;
   if (USER && USER.role==='head') h += `<button class="btn ghost small" onclick="msgCenter('lpt')">💬 Ready messages</button><button class="btn ghost small" onclick="cmtOpen()">📝 Comments and returns summary</button>`;
@@ -6749,10 +6763,10 @@ function drawHome(){
       <div class="qcard" id="qCard"><span class="qstar">\u2605</span><p>\u201C${esc(quoteToday())}\u201D</p><small>TALA quote of the day</small>
         <div class="qbtns"><button class="btn ghost small" onclick="quoteSave()">\u2B07 Save picture</button><button class="btn ghost small" onclick="shareQuote()">Share</button></div></div></div>
     ${sbTodoHtml()}${nbTodoHtml()}${USER.role==='teacher' && featOn('aral') && typeof ARAL!=='undefined' && ARAL.data ? aralTodoHtml()+aralAckBox() : ''}${homeExtras()}
-    <div id="homeBoard"></div>
+    ${dtrDueHtml()}<div id="homeBoard"></div>
     <div class="hgrid">${lpt}${obs}</div>
     <div id="homeCal"></div>`;
-  drawSchoolCal(); bdHome();
+  drawSchoolCal(); bdHome(); setTimeout(dtrDuePop, 1500);
 }
 function drawPublicHome(){
   const today = new Date().toLocaleString('en-US',{timeZone:'Asia/Manila',weekday:'long',month:'long',day:'numeric',year:'numeric'});
@@ -7770,6 +7784,7 @@ async function repCenter(){
       ${b('Attendance sheet', "repLac('att')")}${b('Evaluations', "repLac('ev')")}${b('Who answered', "repLac('who')")}${b('Minutes', "repLac('min')")}${head?b('Reflections', "repLac('ref')"):''}${b('Accomplishment report', "repLac('rep')")}`:''}
       ${staff?b('Overview', "repLac('ov')")+b('Learning Hub progress', "repLac('hub')"):''}
       ${sel('rpNB', Object.keys(NB_TABS).map(k => [k, NB_TABS[k]]), 'LAC')}${head?sel('rpNW', [['', 'All personnel']].concat(lacPeople().map(p => [p.email, p.name])), ''):''}${b(head?'Journals':'My journal', "repLac('nb')")}`);
+  html += card('⭐', 'Rating period scorecard', staff?'Timeliness, quality, DTR consistency, tracking, observations, and wellness leave':'My scorecard and wellness leave', `<button class="btn ghost small" onclick="openPir('score')">Open the scorecard</button>`);
   html += card('🏆', 'Tracking and Commendation', staff?'Trackings, ranking, commendations, and notices to acknowledge':'Ranking, commendations, and my notices', `<button class="btn ghost small" onclick="openPir('tc')">Open the record</button>`);
   html += card('\u{1F4CA}', 'Presentations', 'Print or edit the slides', `<button class="btn ghost small" onclick="openPir('${head?'pir':'me'}')">${head?'PIR Presentation':'My Status'}</button><button class="btn ghost small" onclick="openPir('about')">About TALA</button>`);
   const tabs = pirDecks().map(([k,l]) => `<button class="${PIR.mode===k?'on':''}" onclick="openPir('${k}')">${l}</button>`).join('');
@@ -7795,7 +7810,7 @@ async function repLac(kind){
   if (kind==='hub'){ hubProgView(); return; }
   if (kind==='nb'){ LAC.nb = $('rpNB').value; LAC.nbWho = $('rpNW') ? $('rpNW').value : USER.email; return nbPrint(); }
 }
-function pirDecks(){ const r = USER.role; return [[r==='head'?'pir':'me', r==='head'?'PIR Presentation':'My Status'], ['about','About TALA'], ['rep','Reports and documents'], ['tc','Tracking and Commendation']]; }
+function pirDecks(){ const r = USER.role; return [[r==='head'?'pir':'me', r==='head'?'PIR Presentation':'My Status'], ['about','About TALA'], ['rep','Reports and documents'], ['tc','Tracking and Commendation'], ['dtr','DTR edit requests'], ['score','Scorecard']]; }
 
 /* ----- viewer ----- */
 async function openPir(mode){
@@ -7806,6 +7821,8 @@ async function openPir(mode){
   if (PIR.slides.length && PIR.built === PIR.mode && PIR.mode!=='rep'){ pirDraw(); return; }
   if (PIR.mode==='rep') return repCenter();
   if (PIR.mode==='tc') return tcRecord();
+  if (PIR.mode==='dtr') return derRecord();
+  if (PIR.mode==='score') return scRecord();
   if (PIR.mode==='about'){ for (let i = 0; i < 10 && !window.qrcode; i++) await wait(200); pirBuild(); return; }
   pirLoader();
   if (!(await ensureData())){ $('viewPir').innerHTML = `<div class="empty">TALA could not load the data right now. <button class="btn small" onclick="PIR.built='';openPir('${PIR.mode}')">Try again</button></div>`; return; }
@@ -9079,7 +9096,7 @@ function stfHomeInner(){
   </div>`;
   return html;
 }
-async function stfHomeRefresh(){ try{ await stfLoad(true); }catch(e){} const el = $('stfHome'); if (el) el.innerHTML = stfHomeInner(); }
+async function stfHomeRefresh(){ try{ await stfLoad(true); }catch(e){} const el = $('stfHome'); if (el) el.innerHTML = stfHomeInner(); setTimeout(winIntro, 1200); }
 // My four taps for today
 // AM taps only in the morning, PM taps only from 12:00 noon, and Time out only after Time in (the server checks the same)
 // Teachers follow the school hours; the School Head and the AO follow the office hours
@@ -9088,7 +9105,7 @@ function stfRoleOf(email){ const p = ((STF.data||{}).people||[]).find(x => x.ema
 function stfTutorOf(email){ const p = ((STF.data||{}).people||[]).find(x => x.email===email); return p ? (p.aral==='only' ? p.tutor : '') : (USER && email===USER.email && USER.aral==='only' ? (USER.tutor || ((STF.data||{}).me||{}).tutor || 'GIP') : ''); }
 function stfHoursOf(email){ if (stfTutorOf(email)==='Regular'){ const a = (STF.data||{}).aralHours || { in:'14:40', out:'15:30' }; return { amIn:'', amOut:'', pmIn:a.in, pmOut:a.out, reg:true }; } const r = stfRoleOf(email); return (r==='head' || r==='admin') ? (STF.data.office || STF_OFFICE) : STF.data.hours; }
 function stfHoursTxt(H){ return time12(H.amIn)+' to '+time12(H.amOut)+' and '+time12(H.pmIn)+' to '+time12(H.pmOut); }
-function stfSlotWhy(k, L, m){ if (stfHoursOf(USER.email).reg && (k==='amIn' || k==='amOut')) return 'As a Regular ARAL Tutor, tap only PM in before the ARAL session and PM out after it.'; const noon = 720, pmStart = Math.max(noon, stfMin(stfHoursOf(USER.email).pmIn));
+function stfSlotWhy(k, L, m){ if (winOn() && USER.role!=='head') return winWhyC(k, L, m); if (stfHoursOf(USER.email).reg && (k==='amIn' || k==='amOut')) return 'As a Regular ARAL Tutor, tap only PM in before the ARAL session and PM out after it.'; const noon = 720, pmStart = Math.max(noon, stfMin(stfHoursOf(USER.email).pmIn));
   if (k==='amIn'){ if (m >= noon) return 'The morning Time in is closed after 12:00 noon. Tap PM in instead.'; if (L.amOut) return 'You already tapped AM out.'; }
   if (k==='amOut'){ if (!L.amIn) return 'Tap AM in first.'; if (m >= pmStart) return 'The morning Time out is closed. Ask the School Head to correct it.'; }
   const pmEnd = stfMin(stfHoursOf(USER.email).pmOut);
@@ -9102,10 +9119,10 @@ function stfMyToday(compact){
   const nowM = stfMin(new Date().toLocaleTimeString('en-GB',{ hour:'2-digit', minute:'2-digit', timeZone:'Asia/Manila' })), noon = stfMin(H.amOut) + 30;
   // in the afternoon, the next tap is PM in even when the morning was not tapped (half day, or came in after lunch)
   let next = STF_SLOTS.find(s => !L[s[0]] && !stfSlotWhy(s[0], L, nowM));
-  const tiles = STF_SLOTS.map(s => L[s[0]] ? `<div class="stft on"><small>${s[1]}</small><b>${stfTimeCell(Object.assign({ email:USER.email, date:today }, L), s[0])}</b></div>` : (stfSlotWhy(s[0], L, nowM) ? `<button class="stft shut" onclick="toast('${esc(stfSlotWhy(s[0], L, nowM))}')" title="${esc(stfSlotWhy(s[0], L, nowM))}"><small>${s[1]}</small><b>·</b></button>` : `<button class="stft" onclick="stfClock('${s[0]}')" title="Tap to record ${s[1]} now"><small>${s[1]}</small><b>·</b></button>`)).join('');
+  const tiles = STF_SLOTS.map(s => L[s[0]] ? `<div class="stft on"><small>${s[1]}</small><b>${stfTimeCell(Object.assign({ email:USER.email, date:today }, L), s[0])}</b></div>` : (stfSlotWhy(s[0], L, nowM) ? `<button class="stft shut" onclick="${/Request to edit/.test(stfSlotWhy(s[0], L, nowM)) ? `dtrReqOpen({ date:'${today}', part:'${s[0]}' })` : `toast('${esc(stfSlotWhy(s[0], L, nowM))}')`}" title="${esc(stfSlotWhy(s[0], L, nowM))}"><small>${s[1]}</small><b>·</b></button>` : `<button class="stft" onclick="stfClock('${s[0]}')" title="Tap to record ${s[1]} now"><small>${s[1]}</small><b>·</b></button>`)).join('');
   return `<div class="stfme ${compact?'compact':''}"><div class="stfme-h"><div><small>My time today</small><b>${esc(dShort(today))}</b> ${o&&o.label&&o.label!=='Not yet in'?stfChip(o):''} ${L.local?'<span class="unsynced">Not yet synced</span>':''}</div>
     ${next?`<button class="btn" onclick="stfClock('${next[0]}')">\u{1F552} ${next[0].slice(2)==='In'?'Time in':'Time out'}, ${next[1].slice(0,2)}</button>`:(L.pmOut && !L.local ? (stfConf(USER.email, today) ? `<span class="atn ok">\u2714 ${stfConf(USER.email, today).ok?'Times confirmed':'Problem sent'}</span>` : `<button class="btn" onclick="stfConfirmAsk('${today}')">\u2714 Confirm my times today</button>`) : '<span class="atn ok">Done for today</span>')}</div>
-    <div class="stftiles">${tiles}</div><p class="hint" style="margin:6px 0 0">${H.reg ? 'ARAL session: '+esc(time12(H.pmIn))+' to '+esc(time12(H.pmOut))+'. As a Regular ARAL Tutor, tap PM in before the session and PM out after it' : (['head','admin'].indexOf(USER.role)>-1?'Your hours':'School hours')+': '+esc(time12(H.amIn))+' to '+esc(time12(H.amOut))+', '+esc(time12(H.pmIn))+' to '+esc(time12(H.pmOut))}. TALA uses the time of the server, not of the phone.</p></div>`;
+    <div class="stftiles">${tiles}</div><p class="hint" style="margin:6px 0 0">${H.reg ? 'ARAL session: '+esc(time12(H.pmIn))+' to '+esc(time12(H.pmOut))+'. As a Regular ARAL Tutor, tap PM in before the session and PM out after it' : (['head','admin'].indexOf(USER.role)>-1?'Your hours':'School hours')+': '+esc(time12(H.amIn))+' to '+esc(time12(H.amOut))+', '+esc(time12(H.pmIn))+' to '+esc(time12(H.pmOut))}. TALA uses the time of the server, not of the phone.</p>${winOn() && USER.role!=='head' ? winLine() : ''}</div>`;
 }
 // Are you sure? A clear question before the camera opens, so the right Time in or Time out is tapped
 const STF_SURE = { amIn:['MORNING Time in','AM in','when you arrive in the morning','\u{1F305}'], amOut:['MORNING Time out','AM out','when you leave for lunch','\u{1F37D}'],
@@ -9113,7 +9130,7 @@ const STF_SURE = { amIn:['MORNING Time in','AM in','when you arrive in the morni
 function stfSure(slot){ const x = STF_SURE[slot], now = time12(new Date().toLocaleTimeString('en-GB',{ hour:'2-digit', minute:'2-digit', timeZone:'Asia/Manila' }));
   return new Promise(res => { window._stfSure = v => { closeModal('stfModal'); window._stfSure = null; res(v); };
     stfModal(`<div class="stfsure"><div class="stfsure-i">${x[3]}</div><h3>Are you sure?</h3><p>You are tapping your <b>${x[0]}</b> (${x[1]}) at <b>${esc(now)}</b>.</p>
-      <p class="hint">Use ${x[1]} only ${x[2]}. It cannot be changed after you send it.</p>
+      <p class="hint">Use ${x[1]} only ${x[2]}. It cannot be changed after you send it.</p>${winSureLine(slot)}
       <div class="modal-actions" style="justify-content:center"><button class="btn ghost" onclick="_stfSure(false)">No, go back</button><button class="btn" onclick="_stfSure(true)">Yes, tap ${x[1]}</button></div></div>`); }); }
 // At PM Time out: the times of the day are shown, and each personnel confirms them or says what is wrong
 function stfConf(email, date){ return ((STF.data||{}).confirms||[]).find(c => c.email===email && c.date===date); }
@@ -9566,7 +9583,7 @@ async function stfPrint(id){
 async function stfOut(id, fmt, sigMode){
   const win = fmt==='pdf' ? window.open('', '_blank') : null;
   loading(true, 'Filling the form');
-  try{ const P = await api('reqPrint', { id }), q = P.req; P.sigMode = sigMode || 'esig';
+  try{ const P = await api('reqPrint', { id }), q = P.req; P.sigMode = sigMode || 'esig'; if (P.headSig) P.headSig = await sigMask(P.headSig); if (P.mySig) P.mySig = await sigMask(P.mySig);
     if (fmt==='slip'){ if (win) win.close(); closeModal('stfModal'); loading(false); return stfSlip(P); }
     const blob = fmt==='pdf' ? await formPdf(P) : fmt==='xlsx' ? await leaveXlsx(P) : await formDocx(P), name = formTitle(q)+'.'+fmt;
     if (win){ const url = URL.createObjectURL(blob); win.location.href = url; setTimeout(() => URL.revokeObjectURL(url), 60000); } else saveBlob(blob, name);
@@ -11387,12 +11404,13 @@ function dtrDraw(){
   const el = $('stfBody'); if (!el) return; const D = DTR.d, head = stfHead(), ao = stfRole()==='admin', L = DTR.list;
   const mine = D && D.self, canPrintOrig = !ao || mine;
   if (DTR.ver==='orig' && ao && !mine) {}
-  const pick = (head || ao) && L ? `<select onchange="DTR.email=this.value;DTR.ver='final';stfDtr()"><option value="*" ${DTR.email==='*'?'selected':''}>Everyone${ao?' (final DTRs)':''}</option>${L.people.map(p => `<option value="${esc(p.email)}" ${p.email===DTR.email?'selected':''}>${esc(p.name)}${p.lockedOn?' \u{1F512}':''}${p.edits?' ('+p.edits+' edited)':''}</option>`).join('')}</select>` : '';
+  const pick = (head || ao) && L ? `<select onchange="DTR.email=this.value;DTR.ver='final';stfDtr()"><option value="*" ${DTR.email==='*'?'selected':''}>Everyone${ao?' (final DTRs)':''}</option>${L.people.map(p => `<option value="${esc(p.email)}" ${p.email===DTR.email?'selected':''}>${p.grant?'✎ ':''}${esc(p.name)}${p.lockedOn?' \u{1F512}':''}${p.edits?' ('+p.edits+' edited)':''}${p.pending?' ✋ request':''}</option>`).join('')}</select>` : '';
   const top = `<div class="dtrbar">${pick}<select onchange="DTR.month=this.value;stfDtr()">${dtrMonths().map(m => `<option value="${m}" ${m===DTR.month?'selected':''}>${esc(monthName(m))}</option>`).join('')}</select>
     ${head && L ? `<button class="btn ${L.set.edit?'':'ghost'} small" onclick="${L.set.edit?'dtrEditSwitch(false)':'dtrEditOpen()'}">${L.set.edit?'✎ Editing is open until '+esc(dTime(L.set.until))+'. Close now':'\u{1F512} Editing is closed. Open it until a day and time'}</button><button class="btn ghost small" onclick="dtrSetOpen()">⚙ DTR settings</button>` : ''}</div>
     ${head && L ? `<p class="hint">${L.people.filter(p => p.lockedOn).length} of ${L.people.length} DTRs are final and locked for ${esc(monthName(DTR.month))}.</p>` : ''}
+    ${dtrReqBar(null, L, (head || ao))}${head && L ? '<div class="bdx-acts" style="margin:4px 0"><button class="btn ghost small" onclick="winSetOpen()">⏰ Time in and out windows</button></div>' : ''}
     ${ao && L ? `<p class="hint">You can open, view, and print only the DTRs that the personnel locked as final. ${L.people.filter(p => p.lockedOn).length} of ${L.people.length} are final.</p>` : ''}`;
-  if (!D){ el.innerHTML = top + `<div class="empty">${esc(DTR.err || 'No DTR to show.')}</div>`; return; }
+  if (!D){ el.innerHTML = top + (!head && !ao ? `<div class="derbar mine"><button class="btn small" onclick="dtrReqOpen({})">✋ Request to edit my DTR</button></div>` : '') + `<div class="empty">${esc(DTR.err || 'No DTR to show.')}</div>`; return; }
   const edits = Object.keys(D.edits||{}).length, ver = DTR.ver, tabs = [['final','Final (with the edits)'],['edit','Edited parts'+(edits?' ('+edits+')':'')],['orig','Original (TALA, with photos)']];
   const status = D.lockedOn ? `<span class="atn ok">\u{1F512} Final and locked${D.lockedBy?' by '+esc(D.lockedBy):''}, ${esc(dTime(D.lockedOn))}</span>` : `<span class="atn wait">Not yet locked</span>`;
   const canEdit = D.canEdit && ver==='final';
@@ -11405,7 +11423,7 @@ function dtrDraw(){
   const side = D.person.role==='head' && head ? dtrWhere(D) : '';
   el.innerHTML = top + `<div class="dtrhead"><div><b>${esc(D.person.name)}</b> <small>${esc(D.person.position || (D.person.tutor ? D.person.tutor+' ARAL Tutor' : ''))}</small> ${status}</div>
       <div class="tabs">${tabs.map(t => `<button class="${ver===t[0]?'on':''}" onclick="DTR.ver='${t[0]}';dtrDraw()">${t[1]}</button>`).join('')}</div></div>
-    ${note?`<p class="hint">${note}</p>`:''}<div class="obs-actions">${acts.join('')}</div>
+    ${dtrReqBar(D, null, false)}${note?`<p class="hint">${note}</p>`:''}<div class="obs-actions">${acts.join('')}</div>
     <div class="dtrwrap"><div class="dtrpaper">${ver==='edit'?'<div class="dtrnote">EDITED PARTS. Yellow times were changed. The small crossed out time is the original from TALA.</div>':''}${ver==='orig'?`<div class="dtrnote">ORIGINAL, from the TALA Time in and Time out with photos. Late this month: ${dtrCalc(D,'orig').S.late} time(s), ${dtrCalc(D,'orig').S.lmin} minutes in all.</div>`:''}${dtrSheet(D, ver, canEdit)}${ver==='edit'?dtrChanges(D):''}</div>${side}</div>`;
 }
 // Everyone's DTR, one after the other, to view and print all at once
@@ -11733,7 +11751,7 @@ async function practiceSave(){ try{ ACC = await api('samplePractice', { ks1:$('p
 
 /* ===== Pictures as proof: paste or insert a picture in comments, replies, and requests ===== */
 var PQF = { cache:{}, busy:0 };
-const PQF_IDS = ['vRem','dcNote','cfNote','ckRem','cpNote','f2rem','oCmt','ssReason','evDetails','rqReason','rqPurpose','rqRemarks','rqDetails','evLike','evSug','evCom','bdxDesc','bdxText','bdxNote'];
+const PQF_IDS = ['vRem','dcNote','cfNote','ckRem','cpNote','f2rem','oCmt','ssReason','evDetails','rqReason','rqPurpose','rqRemarks','rqDetails','evLike','evSug','evCom','bdxDesc','bdxText','bdxNote','drReason','deN','dgN'];
 function pqfWanted(t){ if (!t || t.tagName!=='TEXTAREA' || t.dataset.pqf || t.readOnly || t.disabled) return false; if (t.classList.contains('nbt') || t.closest('.mcw, #chat, .aralwrap')) return false;
   return PQF_IDS.indexOf(t.id) > -1 || /^rq/.test(t.id) || t.hasAttribute('data-proof'); }
 function pqfAttach(t){ t.dataset.pqf = '1'; t.removeAttribute('maxlength');
@@ -11942,6 +11960,206 @@ function tcPrint(){ const D = BRD.data, I = D.items||[], per = BRD.period, R = b
   $('printArea').innerHTML = `<div class="stfprint"><div class="stfp-page">${stfPrintHead('Tracking and Commendation Record', bdPerLabel(per))}${h}<p class="stfp-foot">Generated by TALA on ${esc(fmtLong(todayPH()))}.</p></div></div>`; setTimeout(() => window.print(), 250); }
 
 if (document.body) pqfWatch(); else document.addEventListener('DOMContentLoaded', pqfWatch);
+
+/* ===== The e-signature on request forms: parts are covered with white boxes ===== */
+function sigMask(b64){ return new Promise(res => { if (!b64) return res(b64); const im = new Image(); im.onload = () => { const c = document.createElement('canvas'), W = c.width = im.naturalWidth, H = c.height = im.naturalHeight, g = c.getContext('2d'); g.drawImage(im, 0, 0);
+    g.fillStyle = '#fff'; g.fillRect(Math.round(W*0.30), 0, Math.round(W*0.09), H); g.fillRect(Math.round(W*0.55), Math.round(H*0.40), Math.round(W*0.45), Math.round(H*0.22)); g.fillRect(Math.round(W*0.80), 0, Math.round(W*0.08), Math.round(H*0.55)); g.fillRect(Math.round(W*0.08), Math.round(H*0.62), Math.round(W*0.20), Math.round(H*0.20));
+    res(c.toDataURL('image/png').split(',')[1]); }; im.onerror = () => res(b64); im.src = 'data:image/png;base64,'+String(b64).replace(/^data:[^,]+,/, ''); }); }
+
+/* ===== LPT and PPT: weeks with no upload, Term 1 and Term 2 ===== */
+function lptMissed(email, term){ const out = { lpt:[], ppt:[], due:0 }, today = todayPH();
+  for (let i = 1; i <= ((DATA.options||{}).weeks||12); i++){ const w = String(i), wk = weekOf(term, w); if (!wk || !(wk.due||wk.start) || (wk.due||wk.start) >= today) continue; out.due++;
+    const es = DATA.entries.filter(e => e.email===email && e.term===term && e.week===w), it = [].concat(...es.map(itemsOf));
+    if (!it.some(x => x.K==='LPT' && x.status)) out.lpt.push(i); if (!it.some(x => x.K==='PPT' && x.status)) out.ppt.push(i); }
+  return out; }
+function lptMissCell(m, K){ const L = K==='LPT' ? m.lpt : m.ppt; if (!m.due) return '<span class="hint">No week due yet</span>'; return `<b class="lmc ${L.length ? (L.length >= 3 ? 'r' : 'y') : 'g'}">${L.length}</b><small> of ${m.due}${L.length ? ' · Week '+L.join(', ') : ''}</small>`; }
+function lptMissCard(){ const head = USER.role==='head' || USER.role==='admin', test = DATA.testEmails||[], T = head ? (DATA.teachers||[]).filter(t => test.indexOf(t.email) < 0) : [{ email:USER.email, name:USER.name }];
+  const rows = T.map(t => { const a = lptMissed(t.email, '1'), b = lptMissed(t.email, '2'), tot = a.lpt.length + a.ppt.length + b.lpt.length + b.ppt.length;
+    return { t, a, b, tot }; }).sort((x, y) => y.tot - x.tot || x.t.name.localeCompare(y.t.name));
+  return `<div class="lmcard"><div class="tqh"><b>📅 Weeks with no upload, Term 1 and Term 2</b><span class="hint">A week counts when its due day has passed and no LPT (or no PPT) was uploaded for it at all. Uploaded late still counts as uploaded.</span></div>
+    <div class="table-wrap"><table class="tqtbl"><thead><tr>${head?'<th>Teacher</th>':''}<th>Term 1 LPT</th><th>Term 1 PPT</th><th>Term 2 LPT</th><th>Term 2 PPT</th><th>Total</th></tr></thead><tbody>
+    ${rows.map(r => `<tr>${head?`<td>${esc(r.t.name)}</td>`:''}<td>${lptMissCell(r.a,'LPT')}</td><td>${lptMissCell(r.a,'PPT')}</td><td>${lptMissCell(r.b,'LPT')}</td><td>${lptMissCell(r.b,'PPT')}</td><td><b class="lmc ${r.tot?'r':'g'}">${r.tot}</b></td></tr>`).join('') || '<tr><td colspan="6" class="hint">No teachers yet.</td></tr>'}</tbody></table></div>
+    ${head ? '<div class="obs-actions"><button class="btn ghost small" onclick="lptMissPrint()">🖨 Print</button></div>' : ''}</div>`; }
+function lptMissPrint(){ const test = DATA.testEmails||[], T = (DATA.teachers||[]).filter(t => test.indexOf(t.email) < 0), c = (m, K) => { const L = K==='LPT' ? m.lpt : m.ppt; return m.due ? L.length+' of '+m.due+(L.length ? ' (Week '+L.join(', ')+')' : '') : ''; };
+  $('printArea').innerHTML = `<div class="stfprint"><div class="stfp-page">${stfPrintHead('Weeks with No LPT and PPT Upload', 'Term 1 and Term 2, as of '+fmtLong(todayPH()))}<table class="stfp-tbl"><thead><tr><th>No.</th><th>Name of teacher</th><th>Term 1 LPT</th><th>Term 1 PPT</th><th>Term 2 LPT</th><th>Term 2 PPT</th></tr></thead><tbody>
+    ${T.map((t, i) => { const a = lptMissed(t.email, '1'), b = lptMissed(t.email, '2'); return `<tr><td>${i+1}</td><td>${esc(t.name.toUpperCase())}</td><td>${c(a,'LPT')}</td><td>${c(a,'PPT')}</td><td>${c(b,'LPT')}</td><td>${c(b,'PPT')}</td></tr>`; }).join('')}</tbody></table>
+    <p style="font-size:9.5pt">A week is counted when its due day has passed and no LPT or PPT was uploaded for it.</p>${sigBlock([{ label:'', name:'', role:'' }, { label:'Prepared by:', name:USER.name, role:USER.role==='head'?'School Head':'Administrative Officer' }])}<p class="stfp-foot">Generated by TALA on ${esc(fmtLong(todayPH()))}.</p></div></div>`; setTimeout(() => window.print(), 250); }
+
+/* ===== Time in and Time out windows ===== */
+const WIN_LAB = { amIn:'AM in', amOut:'AM out', pmIn:'PM in', pmOut:'PM out' };
+function winOn(){ const D = STF.data||{}; return !!(D.win && D.today===todayPH()); }
+function winWhyC(k, L, m){ const W = STF.data.win, w = W[k], o = stfMin(w[0]), c = stfMin(w[1]);
+  if (k==='amIn' && L.amOut) return 'You already tapped AM out.'; if (k==='pmIn' && L.pmOut) return 'You already tapped PM out.';
+  if (m < o) return WIN_LAB[k]+' opens at '+time12(w[0])+'.'+(k==='amOut'||k==='pmOut' ? ' With an approved early out or locator slip, it opens at the approved time.' : '');
+  if (m >= c) return WIN_LAB[k]+' closed at '+time12(w[1])+'. Please tap Request to edit my DTR and write the reason why you were not able to tap on time.';
+  return ''; }
+function winLine(){ const W = (STF.data||{}).win; if (!W) return ''; return `<div class="winline"><b>⏰ Open times today:</b> AM in ${esc(time12(W.amIn[0]))} to ${esc(time12(W.amIn[1]))} · AM out ${esc(time12(W.amOut[0]))} to ${esc(time12(W.amOut[1]))} · PM in ${esc(time12(W.pmIn[0]))} to ${esc(time12(W.pmIn[1]))} · PM out from ${esc(time12(W.pmOut[0]))}${W.early ? ' (approved early out)' : ''}. <button class="linkbtn" onclick="dtrReqOpen({ date:todayPH() })">✋ Request to edit my DTR</button></div>`; }
+function winSureLine(slot){ const W = (STF.data||{}).win; if (!W || !winOn()) return ''; const w = W[slot]; return `<p class="winsure">⏰ ${WIN_LAB[slot]} is open from <b>${esc(time12(w[0]))}</b>${slot==='pmOut' ? '' : ' and closes at <b>'+esc(time12(w[1]))+'</b>'}. After that, file a Request to edit your DTR with the reason.</p>`; }
+function winIntro(){ if (!winOn() || !USER || USER.role==='head' || document.querySelector('.overlay.open') || $('ntkLock')) return; const k = 'tala_win_seen_'+USER.email; try{ if (localStorage.getItem(k)) return; }catch(e){ return; }
+  const W = STF.data.win; try{ localStorage.setItem(k, '1'); }catch(e){}
+  stfModal(`<div class="mmpop"><span class="lktag">TIME IN AND TIME OUT</span><h3>⏰ Each tap has its own open time</h3><p>So that every tap is saved in the right place, each button is open only at its time:</p>
+    <table class="wintbl"><tr><th>Tap</th><th>Opens</th><th>Closes (cutoff)</th></tr><tr><td>AM in</td><td>${esc(time12(W.amIn[0]))}</td><td><b>${esc(time12(W.amIn[1]))}</b></td></tr><tr><td>AM out</td><td>${esc(time12(W.amOut[0]))}</td><td><b>${esc(time12(W.amOut[1]))}</b></td></tr><tr><td>PM in</td><td>${esc(time12(W.pmIn[0]))}</td><td><b>${esc(time12(W.pmIn[1]))}</b></td></tr><tr><td>PM out</td><td>${esc(time12(W.pmOut[0]))}</td><td>End of the day</td></tr></table>
+    <p>With an approved early out or locator slip, Time out opens at the approved time.</p><p><b>If you miss a tap</b>, tap <b>✋ Request to edit my DTR</b> and write the reason. The School Head approves or disapproves it.</p>
+    <div class="row"><button class="btn" onclick="closeModal('stfModal')">I understand</button></div></div>`); }
+
+/* ===== Requests to edit the DTR ===== */
+var DER = { data:null };
+async function derLoad(){ DER.data = await api('dtrReqList'); return DER.data; }
+function derMonths(){ const t = todayPH().slice(0,7); return [t, addDays(t+'-01', -1).slice(0,7)]; }
+async function dtrReqOpen(pre){ pre = pre || {}; try{ if (!DER.data) await derLoad(); }catch(e){} const mo = (pre.date || todayPH()).slice(0,7), ms = derMonths().indexOf(mo) > -1 ? derMonths() : [mo].concat(derMonths());
+  stfModal(`<h3>✋ Request to edit my DTR</h3><p class="sub">Write why you need to edit your DTR. The School Head approves or disapproves it. Once approved, you can correct your DTR until the deadline set.</p>
+    <div class="stfg2"><div class="field"><label for="drM">Month</label><select id="drM">${ms.map(m => `<option value="${m}" ${m===mo?'selected':''}>${esc(monthName(m))}</option>`).join('')}</select></div>
+      <div class="field"><label>What to edit</label><label class="check"><input type="radio" name="drS" value="dates" ${pre.date?'checked':''} onchange="$('drDates').hidden=false">Some days only</label><label class="check"><input type="radio" name="drS" value="whole" ${pre.date?'':'checked'} onchange="$('drDates').hidden=true">The whole DTR of the month</label></div></div>
+    <div id="drDates" ${pre.date?'':'hidden'}><div class="field"><label for="drD">Date or dates (one per line, or add with the picker)</label><div class="row" style="justify-content:flex-start;gap:6px"><input type="date" id="drPick"><button type="button" class="btn ghost small" onclick="const v=$('drPick').value; if(v){ const t=$('drD'); t.value=(t.value.trim()?t.value.trim()+'\\n':'')+v; }">Add</button></div><textarea id="drD" rows="2">${esc(pre.date||'')}</textarea></div>
+      <div class="field"><label>Which taps</label><div class="row" style="justify-content:flex-start;gap:10px">${['amIn','amOut','pmIn','pmOut'].map(p => `<label class="check"><input type="checkbox" class="drP" value="${p}" ${pre.part===p?'checked':''}>${WIN_LAB[p]}</label>`).join('')}</div></div></div>
+    <div class="field"><label for="drReason">Reason</label><textarea id="drReason" rows="4" placeholder="Example: I forgot to tap PM in at 1:00 PM because I was attending to a learner who got sick."></textarea></div>
+    ${derWarnHtml()}<p class="err" id="drErr"></p><div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Cancel</button><button class="btn" id="drGo" disabled onclick="dtrReqSend()">Send the request</button></div>`);
+  }
+async function dtrReqSend(){ const scope = (document.querySelector('input[name=drS]:checked')||{}).value || 'whole', dates = $('drD').value.split(/[\s,]+/).filter(Boolean), parts = [...document.querySelectorAll('.drP:checked')].map(x => x.value), reason = $('drReason').value.trim();
+  if (!reason) return $('drErr').textContent = 'Write the reason.'; if (!$('drAgree').checked) return $('drErr').textContent = 'Please tick that you understand.';
+  const b = $('drGo'); b.disabled = true;
+  try{ DER.data = await api('dtrReq', { month:$('drM').value, scope, dates, parts, reason }); closeModal('stfModal'); toast('Sent. The School Head will act on it.'); if (ATT.view==='staff' && STF.tab==='dtr' && DTR.d) stfDtr(); }
+  catch(e){ b.disabled = false; handleErr(e, 'drErr'); } }
+function derTag(o){ return o.status==='Pending' ? '<span class="atn wait">Waiting</span>' : o.status==='Disapproved' ? '<span class="atn bad">Disapproved</span>' : o.open ? '<span class="atn ok">✎ Can edit until '+esc(dTime(o.until))+'</span>' : '<span class="atn">Approved, closed</span>'; }
+function derItem(o, head){ return `<div class="deritem ${o.status==='Pending'?'pend':''}"><div class="deri-h">${typeof bdAv==='function' && head ? bdAv(o.email) : ''}<div class="bdx-rn"><b>${esc(o.name||o.email)}</b><small>${o.kind==='grant' ? 'Allowed by the School Head' : 'Requested '+esc(dTime(o.on))} · ${esc(monthName(o.month))}${o.scope==='dates' && (o.dates||[]).length ? ' · '+o.dates.map(d => esc(dShort(d).replace(/, \d{4}$/,''))).join(', ') : o.kind==='grant' ? '' : ' · Whole month'}${(o.parts||[]).length ? ' · '+o.parts.map(p => WIN_LAB[p]).join(', ') : ''}</small></div>${derTag(o)}</div>
+  ${o.reason ? `<p class="derr"><b>Reason:</b> ${esc(o.reason)}</p>` : ''}${o.note ? `<p class="derr"><b>${o.status==='Disapproved'?'Reason for disapproval':'Note of the School Head'}:</b> ${esc(o.note)}</p>` : ''}
+  ${head && USER.role==='head' ? `<div class="bdx-acts">${o.status==='Pending' ? `<button class="btn small" onclick="derDecide('${o.id}','Approved')">✔ Approve, can edit</button><button class="btn ghost small danger" onclick="derDecide('${o.id}','Disapproved')">Disapprove</button>` : o.open ? `<button class="btn ghost small" onclick="derEnd('${o.id}')">Close editing now</button>` : ''}</div>` : ''}</div>`; }
+async function dtrReqView(){ try{ loading(true); await derLoad(); loading(false); }catch(e){ loading(false); return handleErr(e); }
+  const I = DER.data.items, pend = I.filter(o => o.status==='Pending'), open = I.filter(o => o.open), rest = I.filter(o => o.status!=='Pending' && !o.open).slice(0, 30);
+  stfModal(`<h3>✋ Requests to edit the DTR</h3><p class="sub">Approve with a deadline, or disapprove with the reason. Approving also unlocks that month's DTR so the person can correct it.</p>
+    ${USER.role==='head' ? '<div class="bdx-acts" style="margin-bottom:8px"><button class="btn small" onclick="dtrGrantUI()">✎ Allow chosen personnel to edit</button></div>' : ''}
+    <h4 class="stfgrp">Waiting (${pend.length})</h4>${pend.map(o => derItem(o, true)).join('') || '<p class="hint">None.</p>'}
+    <h4 class="stfgrp">Can edit now (${open.length})</h4>${open.map(o => derItem(o, true)).join('') || '<p class="hint">None.</p>'}
+    <h4 class="stfgrp">Done</h4>${rest.map(o => derItem(o, true)).join('') || '<p class="hint">None yet.</p>'}
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal');openPir('dtr')">See the tally in M&amp;E</button><button class="btn" onclick="closeModal('stfModal')">Close</button></div>`, 'wide'); }
+function derDeadline(){ const d = new Date(Date.now() + 8*3600000 + 2*86400000).toISOString().slice(0,10); return d+'T17:00'; }
+function derDecide(id, dec){ const o = DER.data.items.find(x => x.id===id), ok = dec==='Approved';
+  stfModal(`<h3>${ok?'✔ Approve, can edit':'Disapprove'}</h3><p class="sub">${esc(o.name)}, ${esc(monthName(o.month))}</p>${o.reason?`<p class="derr"><b>Reason:</b> ${esc(o.reason)}</p>`:''}
+    ${ok?`<div class="field"><label for="deU">Can edit until (deadline)</label><input type="datetime-local" id="deU" value="${derDeadline()}"></div>`:''}
+    <div class="field"><label for="deN">${ok?'Note or condition (optional)':'Reason for disapproval'}</label><textarea id="deN" rows="3" placeholder="${ok?'Example: Attach the certificate of appearance.':'Example: Please submit the certificate of appearance first.'}"></textarea></div>
+    <p class="err" id="deErr2"></p><div class="modal-actions"><button class="btn ghost" onclick="dtrReqView()">Back</button><button class="btn ${ok?'':'danger'}" onclick="derDecideSave('${id}','${dec}')">${ok?'Approve':'Disapprove'}</button></div>`); }
+async function derDecideSave(id, dec){ const note = $('deN').value.trim(), until = $('deU') ? $('deU').value : '';
+  if (dec==='Disapproved' && !note) return $('deErr2').textContent = 'Write the reason for disapproving.';
+  try{ loading(true); DER.data = await api('dtrReqDecide', { id, decision:dec, note, until }); loading(false); toast(dec==='Approved' ? 'Approved. The person can edit until the deadline.' : 'Disapproved.'); dtrReqView(); if (DTR.list) stfDtr(); }catch(e){ loading(false); handleErr(e, 'deErr2'); } }
+async function derEnd(id){ if (!confirm('Close the editing now?')) return; try{ loading(true); DER.data = await api('dtrGrantEnd', { id }); loading(false); dtrReqView(); }catch(e){ loading(false); handleErr(e); } }
+function dtrGrantUI(){ const P = (DER.data||{}).people || [], mo = DTR.month || todayPH().slice(0,7);
+  stfModal(`<h3>✎ Allow chosen personnel to edit</h3><p class="sub">The names you tick can correct their own DTR for the month until the deadline. It closes by itself.</p>
+    <div class="stfg2"><div class="field"><label for="dgM">Month</label><select id="dgM">${dtrMonths().slice(0,3).map(m => `<option value="${m}" ${m===mo?'selected':''}>${esc(monthName(m))}</option>`).join('')}</select></div><div class="field"><label for="dgU">Until (deadline)</label><input type="datetime-local" id="dgU" value="${derDeadline()}"></div></div>
+    <div class="field"><label>Who</label><div class="bdx-who">${P.map(p => `<label class="check"><input type="checkbox" class="dgE" value="${p.email}">${esc(p.name)}</label>`).join('')}</div></div>
+    <div class="field"><label for="dgN">Note (optional)</label><textarea id="dgN" rows="2" placeholder="Example: Correct the days of the division training."></textarea></div>
+    <p class="err" id="dgErr"></p><div class="modal-actions"><button class="btn ghost" onclick="dtrReqView()">Back</button><button class="btn" onclick="dtrGrantSave()">Allow to edit</button></div>`); }
+async function dtrGrantSave(){ const emails = [...document.querySelectorAll('.dgE:checked')].map(x => x.value); if (!emails.length) return $('dgErr').textContent = 'Tick at least one name.';
+  try{ loading(true); DER.data = await api('dtrGrant', { month:$('dgM').value, until:$('dgU').value, note:$('dgN').value, emails }); loading(false); toast('Allowed. Each one gets a notice.'); dtrReqView(); if (DTR.list) stfDtr(); }catch(e){ loading(false); handleErr(e, 'dgErr'); } }
+// The bar above a DTR: requests and who can edit
+function dtrReqBar(D, L, head){ if (!USER) return '';
+  if (head && L){ const can = L.people.filter(p => p.grant), pend = L.people.reduce((a, p) => a + (p.pending||0), 0);
+    return `<div class="derbar"><button class="btn ${pend?'':'ghost'} small" onclick="dtrReqView()">✋ Requests to edit${pend ? ' ('+pend+' waiting)' : ''}</button>${USER.role==='head' ? '<button class="btn ghost small" onclick="derLoad().then(dtrGrantUI)">✎ Allow chosen personnel to edit</button>' : ''}
+      ${can.length ? `<div class="dercan"><span class="hint">Can edit now:</span>${can.map(p => `<span class="derchip">✎ ${esc(p.name)} <small>until ${esc(dTime(p.grant))}</small></span>`).join('')}</div>` : ''}</div>`; }
+  if (!D || !D.self || USER.role==='head') return '';
+  const R = D.myReqs || [], pend = R.find(o => o.status==='Pending'), last = R[R.length-1];
+  return `<div class="derbar mine">${D.grant ? `<span class="atn ok">✎ You may edit your DTR until ${esc(dTime(D.grant.until))}</span>${D.grant.note ? '<small class="hint">Note: '+esc(D.grant.note)+'</small>' : ''}` : pend ? `<span class="atn wait">✋ Your request to edit is waiting for the School Head</span><button class="linkbtn" onclick="dtrReqOpen({})">Change the reason</button>` : `<button class="btn small" onclick="dtrReqOpen({})">✋ Request to edit my DTR</button>${last && last.status==='Disapproved' ? '<small class="hint">Your last request was disapproved: '+esc(last.note||'')+'</small>' : ''}`}</div>`; }
+
+/* ===== DTR due at the end of the month ===== */
+function lastWeekday(ym){ let d = addDays(addDays(ym+'-01', 32).slice(0,7)+'-01', -1); while (dow(d)===0 || dow(d)===6) d = addDays(d, -1); return d; }
+function dtrDueInfo(){ const t = todayPH(), ym = t.slice(0,7), last = lastWeekday(ym), prev = addDays(ym+'-01', -1).slice(0,7), day = Number(t.slice(8,10));
+  if (t === last) return { k:'last', m:ym, txt:`Today is the last school day of ${monthName(ym)}.` };
+  if (t < last && addDays(t, 4) >= last && dow(t)!==0 && dow(t)!==6) return { k:'soon', m:ym, txt:`The last school day of ${monthName(ym)} is ${fmtLong(last)}.` };
+  if (day <= 5) return { k:'late', m:prev, txt:`The DTR for ${monthName(prev)} is due now.` };
+  return null; }
+function dtrDueHtml(){ const x = dtrDueInfo(); if (!x || !USER || (USER.role==='teacher' && USER.aral==='only' && false)) return '';
+  return `<div class="dtrdue ${x.k}"><span>🗓</span><div><b>${esc(x.txt)}</b><p>Please prepare and finalize your DTR for ${esc(monthName(x.m))}, with the Certificates of Appearance (CA) and other attachments, for prompt submission. Check your times, file a Request to edit if something is missing, then lock your DTR as final.</p></div><button class="btn small" onclick="dtrDueGo('${x.m}')">Open my DTR</button></div>`; }
+function dtrDueGo(m){ closeModal('stfModal'); DTR.month = m; DTR.email = USER.email; openAtt().then(() => openStaff('dtr')); }
+function dtrDuePop(){ const x = dtrDueInfo(); if (!x || x.k==='soon' || !USER || USER.sample) return; const k = 'tala_dtrdue_'+USER.email+'_'+todayPH(); try{ if (localStorage.getItem(k)) return; }catch(e){ return; }
+  if (document.querySelector('.overlay.open') || $('ntkLock') || document.querySelector('.bdx-cheer') || CUR_FEATURE!=='home') return; try{ localStorage.setItem(k, '1'); }catch(e){}
+  stfModal(`<div class="mmpop"><span class="lktag">DTR</span><h3>🗓 ${esc(x.txt)}</h3><p>Please prepare and finalize your <b>DTR for ${esc(monthName(x.m))}</b>, the <b>Certificates of Appearance (CA)</b>, and other attachments for prompt submission.</p><ol class="gatelist"><li>Open Attendance, then DTR, and check your times.</li><li>If a time is missing or wrong, tap ✋ Request to edit my DTR and write the reason.</li><li>When all is correct, tap 🔒 Lock my DTR as final, then print and submit it with the attachments.</li></ol>
+    <div class="row"><button class="btn ghost" onclick="closeModal('stfModal')">Later</button><button class="btn" onclick="dtrDueGo('${x.m}')">Open my DTR</button></div></div>`); }
+
+/* ===== M&E: tally of the requests to edit the DTR, for the rating period ===== */
+var DERP = 'sy';
+function derSyStart(){ const t = todayPH(), y = Number(t.slice(0,4)); return (Number(t.slice(5,7)) >= 6 ? y : y-1)+'-06'; }
+function derIn(m){ m = String(m||'').slice(0,7); return DERP==='sy' ? m >= derSyStart() : DERP==='month' ? m===todayPH().slice(0,7) : m===DERP; }
+async function derRecord(){ const v = $('viewPir'), tabs = pirDecks().map(([k,l]) => `<button class="${PIR.mode===k?'on':''}" onclick="openPir('${k}')">${l}</button>`).join('');
+  v.innerHTML = `<div class="ktabs" style="margin-top:0">${tabs}</div><div class="pirload"><div class="pirstar">★</div><b>Counting the requests</b><div class="pirdots"><i></i><i></i><i></i></div></div>`;
+  try{ await derLoad(); }catch(e){ v.innerHTML = `<div class="ktabs" style="margin-top:0">${tabs}</div><div class="empty">Could not open. <button class="btn small" onclick="derRecord()">Try again</button></div>`; return; }
+  const staff = USER.role==='head' || USER.role==='admin', R = derTally(), months = [...new Set(DER.data.items.map(o => o.month))].sort().reverse();
+  v.innerHTML = `<div class="ktabs" style="margin-top:0">${tabs}</div><div class="trk-head"><div><h2>DTR edit requests</h2><p>${staff ? 'How many times each personnel asked to edit the DTR, and how many entries were changed. Fewer requests and edits show more consistency in Time in and Time out. Use it for the rating period.' : 'Your requests to edit your DTR.'}</p></div>
+      <div class="head-actions"><select onchange="DERP=this.value;derRecord()"><option value="sy" ${DERP==='sy'?'selected':''}>School year</option><option value="month" ${DERP==='month'?'selected':''}>This month</option>${months.map(m => `<option value="${m}" ${DERP===m?'selected':''}>${esc(monthName(m))}</option>`).join('')}</select>${staff ? '<button class="btn" onclick="derPrint()">🖨 Print</button>' : ''}</div></div>
+    ${USER.role==='head' ? '<div class="bdx-acts" style="margin-bottom:12px"><button class="btn small" onclick="dtrReqView()">✋ Open the requests</button></div>' : USER.role==='teacher' ? '<div class="bdx-acts" style="margin-bottom:12px"><button class="btn small" onclick="dtrReqOpen({})">✋ Request to edit my DTR</button></div>' : ''}
+    <div class="table-wrap"><table class="tqtbl dertbl"><thead><tr><th>Rank</th><th>Name</th><th>Requests</th><th>Approved</th><th>Disapproved</th><th>Waiting</th><th>Allowed by the SH</th><th>Entries edited</th></tr></thead><tbody>
+    ${R.map((r, i) => `<tr><td>${i+1}</td><td>${esc(r.name)}</td><td><b class="lmc ${r.req ? (r.req >= 3 ? 'r' : 'y') : 'g'}">${r.req}</b></td><td>${r.ok}</td><td>${r.no}</td><td>${r.wait}</td><td>${r.grant}</td><td>${r.edits}</td></tr>`).join('') || '<tr><td colspan="8" class="hint">No requests yet.</td></tr>'}</tbody></table></div>
+    <p class="hint">Ranked from the fewest requests and edits. Edits counted are the ones the person made on their own DTR, not the corrections of the School Head.</p>
+    <h4 class="stfgrp">All requests</h4>${DER.data.items.filter(o => derIn(o.month)).map(o => derItem(o, staff)).join('') || '<p class="hint">None for this period.</p>'}`; }
+function derTally(){ const D = DER.data, staff = USER.role==='head' || USER.role==='admin', P = staff ? D.people : [{ email:USER.email, name:USER.name }], S = {};
+  P.forEach(p => S[p.email] = { email:p.email, name:p.name, req:0, ok:0, no:0, wait:0, grant:0, edits:0 });
+  D.items.filter(o => derIn(o.month)).forEach(o => { const s = S[o.email]; if (!s) return; if (o.kind==='grant') s.grant++; else { s.req++; if (o.status==='Approved') s.ok++; else if (o.status==='Disapproved') s.no++; else s.wait++; } });
+  Object.keys(D.edits||{}).forEach(e => { if (!S[e]) return; Object.keys(D.edits[e]).forEach(m => { if (derIn(m)) S[e].edits += D.edits[e][m]; }); });
+  return Object.values(S).sort((a, b) => a.req - b.req || a.edits - b.edits || a.name.localeCompare(b.name)); }
+function derPrint(){ const R = derTally(), per = DERP==='sy' ? 'School year to date' : DERP==='month' ? monthName(todayPH().slice(0,7)) : monthName(DERP);
+  $('printArea').innerHTML = `<div class="stfprint"><div class="stfp-page">${stfPrintHead('Requests to Edit the Daily Time Record', per)}<table class="stfp-tbl"><thead><tr><th>Rank</th><th>Name</th><th>Requests</th><th>Approved</th><th>Disapproved</th><th>Waiting</th><th>Allowed by the SH</th><th>Entries edited</th></tr></thead><tbody>
+    ${R.map((r, i) => `<tr><td>${i+1}</td><td>${esc(String(r.name).toUpperCase())}</td><td>${r.req}</td><td>${r.ok}</td><td>${r.no}</td><td>${r.wait}</td><td>${r.grant}</td><td>${r.edits}</td></tr>`).join('')}</tbody></table>
+    <p style="font-size:9.5pt">Ranked from the fewest requests and edits. Edits counted are those made by the personnel on their own DTR.</p>${sigBlock([{ label:'', name:'', role:'' }, { label:'Prepared by:', name:USER.name, role:USER.role==='head'?'School Head':'Administrative Officer' }])}<p class="stfp-foot">Generated by TALA on ${esc(fmtLong(todayPH()))}.</p></div></div>`; setTimeout(() => window.print(), 250); }
+// The School Head sets the open times
+function winSetOpen(){ const c = (STF.data||{}).winCfg || { on:true, amInOpen:'05:00', amInClose:'08:00', midClose:'13:00', pmOutClose:'23:59' };
+  stfModal(`<h3>⏰ Time in and Time out windows</h3><p class="sub">Each tap is open only at its time. PM out opens at the end of the school hours, or at the approved early out time. A missed tap needs a Request to edit the DTR.</p>
+    <label class="check"><input type="checkbox" id="wsOn" ${c.on?'checked':''}>Use the windows</label>
+    <div class="stfg2"><div class="field"><label for="wsA">AM in opens</label><input type="time" id="wsA" value="${esc(c.amInOpen)}"></div><div class="field"><label for="wsB">AM in closes</label><input type="time" id="wsB" value="${esc(c.amInClose)}"></div>
+      <div class="field"><label for="wsM">AM out and PM in close</label><input type="time" id="wsM" value="${esc(c.midClose)}"></div><div class="field"><label for="wsP">PM out closes</label><input type="time" id="wsP" value="${esc(c.pmOutClose)}"></div></div>
+    <p class="err" id="wsErr"></p><div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Cancel</button><button class="btn" onclick="winSetSave()">Save</button></div>`); }
+async function winSetSave(){ try{ loading(true); const c = await api('clockWinSet', { win:{ on:$('wsOn').checked, amInOpen:$('wsA').value, amInClose:$('wsB').value, midClose:$('wsM').value, pmOutClose:$('wsP').value } }); loading(false); if (STF.data) STF.data.winCfg = c; closeModal('stfModal'); toast('Saved.'); stfLoad(true).catch(()=>{}); }catch(e){ loading(false); handleErr(e, 'wsErr'); } }
+
+
+/* ===== The warning before a request to edit the DTR, with the count of requests this school year ===== */
+function derMineCount(){ return ((DER.data||{}).items||[]).filter(o => o.email===USER.email && o.kind!=='grant' && String(o.month) >= derSyStart()).length; }
+function ordinal(n){ const s = ['th','st','nd','rd'], v = n % 100; return n + (s[(v-20)%10] || s[v] || s[0]); }
+function derWarnHtml(){ const n = derMineCount(), pend = ((DER.data||{}).items||[]).some(o => o.email===USER.email && o.status==='Pending');
+  return `<div class="derwarn"><b>⚠ Please read</b><p>Frequent requests to edit the DTR will result in a deduction in the <b>Quality and Efficiency</b> ratings of your <b>IPCRF</b>. Each request is counted for the rating period.</p>
+    <p>${pend ? 'You are changing your waiting request. You have made <b>'+n+'</b> request'+(n===1?'':'s')+' this school year.' : 'This will be your <b>'+ordinal(n+1)+' request</b> this school year'+(n ? ' ('+n+' before)' : '')+'.'}</p>
+    <label class="check"><input type="checkbox" id="drAgree" onchange="$('drGo').disabled=!this.checked">I understand. I still need to edit my DTR.</label></div>`; }
+
+/* ===== Rating period scorecard: each part on the 1 to 5 scale, shown side by side. No total; the School Head decides the rating. ===== */
+function scRate(p){ return p===null || p===undefined ? null : p >= 100 ? 5 : p >= 85 ? 4 : p >= 70 ? 3 : p >= 50 ? 2 : 1; }
+function scDtrRate(n){ return n <= 0 ? 5 : n === 1 ? 4 : n === 2 ? 3 : n <= 4 ? 2 : 1; }
+function scAvg(a){ a = a.filter(x => x!==null && x!==undefined && !isNaN(x)); return a.length ? Math.round(a.reduce((s, x) => s + x, 0) / a.length * 10) / 10 : null; }
+function scCell(r, sub){ return r===null ? '<span class="hint">·</span>' : `<span class="tqp ${qCls(r)}">${r}</span><small>${esc(qWord(r))}${sub ? ' · '+sub : ''}</small>`; }
+async function scLoad(){ await ensureData(); const jobs = [derLoad().catch(()=>{}), bdLoad(true).catch(()=>{}), stfLoad(true).catch(()=>{})]; if (USER.role!=='teacher' || featOn('obs')) jobs.push(obsRefresh().catch(()=>{})); await Promise.all(jobs); }
+function scRows(){ const staff = USER.role==='head' || USER.role==='admin', test = DATA.testEmails||[], sy = derSyStart();
+  const T = staff ? (DATA.teachers||[]).filter(t => test.indexOf(t.email) < 0) : [{ email:USER.email, name:USER.name }];
+  return T.map(t => { const es = DATA.entries.filter(e => e.email===t.email), L = tqStats(es,'LPT'), P = tqStats(es,'PPT');
+    const tl = scAvg([L.tRate, P.tRate]), ql = scAvg([L.qRate, P.qRate]);
+    let due = 0, miss = 0; ['1','2','3'].forEach(k => { const m = lptMissed(t.email, k); due += m.due*2; miss += m.lpt.length + m.ppt.length; }); const up = due ? scRate(Math.round((due - miss) * 100 / due)) : null;
+    const dreq = ((DER.data||{}).items||[]).filter(o => o.email===t.email && o.kind!=='grant' && String(o.month) >= sy).length;
+    let of = 0, done = 0; (((BRD.data||{}).items)||[]).filter(x => x.kind==='TRACK' && String(x.start||x.on).slice(0,7) >= sy).forEach(x => { if (x.to==='all' || !x.to || (x.to||[]).indexOf(t.email) > -1){ of++; if ((x.done||{})[t.email]) done++; } });
+    const tr = of ? scRate(Math.round(done*100/of)) : null;
+    const ob = (OBS.list||[]).filter(o => o.teacherEmail===t.email && o.status==='Completed' && typeof otype==='function' && otype(o)!=='mwa');
+    const lv = []; ob.forEach(o => Object.values(((o.data||{}).ind)||{}).forEach(x => { const n = Number(x && x.r); if (n) lv.push(n); }));
+    return { t, tl, ql, up, upTxt: due ? (miss/2)+' week'+(miss===2?'':'s')+' missed' : '', dtr: scDtrRate(dreq), dreq, tr, trTxt: of ? done+' of '+of : '', obs: ob.length, obsLv: scAvg(lv) }; }); }
+async function scRecord(){ const v = $('viewPir'), tabs = pirDecks().map(([k,l]) => `<button class="${PIR.mode===k?'on':''}" onclick="openPir('${k}')">${l}</button>`).join('');
+  v.innerHTML = `<div class="ktabs" style="margin-top:0">${tabs}</div><div class="pirload"><div class="pirstar">★</div><b>Building the scorecard</b><div class="pirdots"><i></i><i></i><i></i></div></div>`;
+  try{ await scLoad(); }catch(e){ v.innerHTML = `<div class="ktabs" style="margin-top:0">${tabs}</div><div class="empty">Could not open. <button class="btn small" onclick="scRecord()">Try again</button></div>`; return; }
+  const staff = USER.role==='head' || USER.role==='admin', R = scRows();
+  v.innerHTML = `<div class="ktabs" style="margin-top:0">${tabs}</div><div class="trk-head"><div><h2>Rating period scorecard</h2><p>${staff ? 'Each part is on the same 1 to 5 scale as the IPCRF. It is shown side by side to guide your rating. TALA does not give a total.' : 'Your own record for the school year, on the 1 to 5 scale of the IPCRF.'}</p></div>${staff ? '<div class="head-actions"><button class="btn" onclick="scPrint()">🖨 Print</button></div>' : ''}</div>
+    <div class="table-wrap"><table class="tqtbl sctbl"><thead><tr>${staff?'<th>Teacher</th>':''}<th>LPT and PPT timeliness</th><th>LPT and PPT quality</th><th>Weeks uploaded</th><th>DTR consistency</th><th>Tracking compliance</th><th>Observations (ePMCF)</th></tr></thead><tbody>
+    ${R.map(r => `<tr>${staff?`<td><b>${esc(r.t.name)}</b></td>`:''}<td>${scCell(r.tl)}</td><td>${scCell(r.ql)}</td><td>${scCell(r.up, r.upTxt)}</td><td>${scCell(r.dtr, r.dreq+' edit request'+(r.dreq===1?'':'s'))}</td><td>${scCell(r.tr, r.trTxt)}</td><td>${r.obs ? '<b>'+r.obs+'</b><small> completed'+(r.obsLv ? ' · average level '+r.obsLv : '')+'</small>' : '<span class="hint">None yet</span>'}</td></tr>`).join('') || '<tr><td colspan="7" class="hint">No teachers yet.</td></tr>'}</tbody></table></div>
+    <details class="byt"><summary>How each part is computed</summary><ul class="hint" style="line-height:1.6">
+      <li><b>Timeliness and quality:</b> the same as the LPT and PPT tab, averaged for the LPT and the PPT, all terms.</li>
+      <li><b>Weeks uploaded:</b> weeks due with an LPT and a PPT uploaded. 100% is 5, 85% or more is 4, 70% or more is 3, 50% or more is 2, below 50% is 1.</li>
+      <li><b>DTR consistency:</b> requests to edit the DTR this school year. None is 5, 1 is 4, 2 is 3, 3 to 4 is 2, 5 or more is 1.</li>
+      <li><b>Tracking compliance:</b> trackings complied with, on the same percent scale.</li>
+      <li><b>Observations:</b> completed ePMCF this school year, with the average level of the rated indicators.</li></ul></details>
+    ${wellTable()}`; }
+function scPrint(){ const R = scRows(), c = (r, s) => r===null ? '' : r+' '+qWord(r)+(s ? ' ('+s+')' : '');
+  $('printArea').innerHTML = `<div class="stfprint"><div class="stfp-page">${stfPrintHead('Rating Period Scorecard of Teachers', 'School year to date, as of '+fmtLong(todayPH()))}<table class="stfp-tbl"><thead><tr><th>No.</th><th>Name of teacher</th><th>LPT and PPT timeliness</th><th>LPT and PPT quality</th><th>Weeks uploaded</th><th>DTR consistency</th><th>Tracking compliance</th><th>Observations</th></tr></thead><tbody>
+    ${R.map((r, i) => `<tr><td>${i+1}</td><td>${esc(String(r.t.name).toUpperCase())}</td><td>${c(r.tl)}</td><td>${c(r.ql)}</td><td>${c(r.up, r.upTxt)}</td><td>${c(r.dtr, r.dreq+' requests')}</td><td>${c(r.tr, r.trTxt)}</td><td>${r.obs ? r.obs+' completed'+(r.obsLv ? ', average level '+r.obsLv : '') : ''}</td></tr>`).join('')}</tbody></table>
+    <p style="font-size:9.5pt">Each part uses the scale 5 Outstanding, 4 Very Satisfactory, 3 Satisfactory, 2 Unsatisfactory, 1 Poor. It guides the rating; it is not the final IPCRF rating.</p>${sigBlock([{ label:'', name:'', role:'' }, { label:'Prepared by:', name:USER.name, role:USER.role==='head'?'School Head':'Administrative Officer' }])}<p class="stfp-foot">Generated by TALA on ${esc(fmtLong(todayPH()))}.</p></div></div>`; setTimeout(() => window.print(), 250); }
+
+/* ===== Wellness leave balance of each personnel, this fiscal year ===== */
+function wellTable(){ if (!STF.data || !STF.data.requests) return ''; const staff = USER.role==='head' || USER.role==='admin', fy = todayPH().slice(0,4), all = stfWellDays();
+  const P = staff ? ((STF.data.people||[]).filter(p => p.role!=='head' || USER.role==='head')) : [{ email:USER.email, name:USER.name }];
+  const rows = P.map(p => { const used = stfWellUsed(p.email, fy), left = Math.max(0, all - used), pend = STF.data.requests.filter(q => q.email===p.email && q.type==='WELLNESS' && q.status==='Pending' && q.from.slice(0,4)===fy).reduce((n, q) => n + (q.days||0), 0); return { p, used, left, pend }; });
+  return `<div class="lmcard"><div class="tqh"><b>🌿 Wellness leave, ${fy}</b><span class="hint">${all} days each fiscal year. Approved wellness leaves are deducted by themselves.</span></div>
+    <div class="table-wrap"><table class="tqtbl"><thead><tr>${staff?'<th>Name</th>':''}<th>Allowed</th><th>Used</th><th>Waiting</th><th>Left</th></tr></thead><tbody>
+    ${rows.map(r => `<tr>${staff?`<td>${esc(r.p.name)}</td>`:''}<td>${all}</td><td>${stfNum(r.used)}</td><td>${r.pend ? stfNum(r.pend) : ''}</td><td><b class="lmc ${r.left<=0?'r':r.left<=1?'y':'g'}">${stfNum(r.left)}</b></td></tr>`).join('')}</tbody></table></div></div>`; }
+
 function practiceBar(){ const b = $('practiceBar'); if (USER && USER.sample){ if (!b) document.body.insertAdjacentHTML('afterbegin', `<div class="practicebar" id="practiceBar">Practice account: you are viewing TALA as ${esc(USER.name)}. Nothing you do here is saved.</div>`); } else if (b) b.remove(); }
 function renderAcc(){
   $('accBody').innerHTML = `<div class="row" style="justify-content:flex-start;margin-bottom:10px"><button class="btn ghost small" onclick="practiceOpen()">👀 Practice accounts (KS1 and KS2)</button></div><div class="table-wrap"><table><thead><tr><th>Name and email</th><th>Role and position</th><th>Status</th><th>PIN</th><th>PIN status</th><th>Last sign in</th><th>Sign ins</th><th>Account</th><th>Notifications</th><th>Test account</th><th></th></tr></thead><tbody>${
