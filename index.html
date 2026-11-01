@@ -2078,8 +2078,8 @@ body.ntklocked{overflow:hidden}
 
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
-const MIN_SERVER = '9.4'; // oldest Code.gs this page works with
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'9.4', date:'November 1, 2026' } };
+const MIN_SERVER = '9.6'; // oldest Code.gs this page works with
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'9.6', date:'November 1, 2026' } };
 function verLine(server){
   const old = server && (server.indexOf('older') > -1 || parseFloat(server) < parseFloat(MIN_SERVER));
   const s = server ? ' Server '+server+('.') : '';
@@ -2305,7 +2305,7 @@ function copyText(t){
 /* ---------- LPT scanner (ILAW framework) ----------
    Reads the uploaded LPT (.docx or text PDF) in the browser and finds the
    Learning Competencies under Intention, then the Learning Objectives per session. */
-const LIBS = { zip:'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js', xlsx:'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js', exceljs:'https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js',
+const LIBS = { h2c:'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js', jspdf:'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js', zip:'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js', xlsx:'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js', exceljs:'https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js',
   pdf:'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js', worker:'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js' };
 const loaded = {};
 function loadScript(src){
@@ -2721,7 +2721,7 @@ async function photosLoad(force){ if (!USER) return;
   if (PHOTOS.busy || (!force && Date.now() - PHOTOS.at < 10*60000)) return; PHOTOS.busy = true;
   try{ const r = await api('photosAll'); PHOTOS.map = r.photos || {}; PHOTOS.at = Date.now(); photoIndex(); try{ localStorage.setItem(photoKey(), JSON.stringify({ map:PHOTOS.map })); }catch(e){} photoDecorate(); try{ avatarPhoto(); }catch(x){} }catch(e){}
   PHOTOS.busy = false; }
-function photoOf(email){ const o = PHOTOS.map[email]; return o ? o.p : ''; }
+function photoOf(email){ if (USER && USER.sample && email===USER.email) return ''; const o = PHOTOS.map[email]; return o ? o.p : ''; }
 function photoAv(email, name, cls){ const p = photoOf(email), init = String(name||email||'?').trim().charAt(0).toUpperCase(); return p ? `<img class="${cls||'pav'}" src="${p}" alt="" data-av="1">` : `<span class="${cls||'pav'} none" data-av="1">${esc(init)}</span>`; }
 // Adds the small picture before each personnel name shown on the screen
 function photoDecorate(){ if (!USER || !Object.keys(PHOTOS.names).length) return;
@@ -3642,7 +3642,7 @@ async function prfNarrPrint(who){
   setTimeout(() => window.print(), 300);
 }
 /* ----- The profile picture also shows at the upper right ----- */
-function avatarPhoto(src){ const a = $('avatar'); if (!a || !USER) return; const k = 'tala_photo_'+USER.email;
+function avatarPhoto(src){ const a = $('avatar'); if (!a || !USER) return; if (USER.sample){ a.classList.remove('hasimg'); a.textContent = 'P'; return; } const k = 'tala_photo_'+USER.email;
   if (src !== undefined){ try{ src ? localStorage.setItem(k, src) : localStorage.removeItem(k); }catch(e){} }
   else { try{ src = localStorage.getItem(k) || ''; }catch(e){ src = ''; } if (avatarPhoto._asked !== USER.email){ avatarPhoto._asked = USER.email; api('prfPhoto').then(r => { if ((r.photo||'') !== (src||'')) avatarPhoto(r.photo || ''); }).catch(()=>{}); } }
   if (!src && USER) src = photoOf(USER.email);
@@ -11893,14 +11893,15 @@ function accStatusSel(a){ if (a.role==='head' || a.mirror) return a.mirror ? '<s
 async function accStatusSet(email, st){ const out = ['End of contract (Substitute)','End of contract (GIP)','Transferred out','Retired','Resigned'].indexOf(st) > -1, a = ACC.find(x => x.email===email);
   if (out && !confirm(a.name+': '+st+'. The account will be turned off and left out of the personnel count, submissions, and tracking. Their records stay. Continue?')){ renderAcc(); return; }
   loading(true, 'Saving'); try{ ACC = await api('setStatus', { email, status:st }); renderAcc(); loadData().catch(()=>{}); toast('Saved: '+st+'.'); }catch(e){ handleErr(e); renderAcc(); } loading(false); }
-function practiceOpen(){ const T = ACC.filter(a => a.role==='teacher' && a.active && !a.test && !a.mirror), pick = (id, def) => `<select id="${id}" style="width:100%">${T.map(a => `<option value="${esc(a.email)}" ${new RegExp(def,'i').test(a.name)?'selected':''}>${esc(a.name)}</option>`).join('')}</select>`;
+function practiceOpen(){ const T = ACC.filter(a => a.role==='teacher' && a.active && !a.test && !a.mirror), pick = (id, def, only) => `<select id="${id}" style="width:100%">${(only==='aral' ? T.filter(a => a.aral==='only' || a.aral==='both').concat(T.filter(a => !(a.aral==='only' || a.aral==='both'))) : only==='reg' ? T.filter(a => a.aral!=='only') : T).map(a => `<option value="${esc(a.email)}" ${new RegExp(def,'i').test(a.name)?'selected':''}>${esc(a.name)}</option>`).join('')}</select>`;
   const cur = ACC.filter(a => a.mirror);
   stfModal(`<h3>Practice accounts</h3><p class="sub">Each one sees TALA exactly as the teacher it mirrors, for training and checking. They are not counted as personnel, and nothing they do is saved.</p>
-    <div class="pfgrid"><label class="pff"><span>Key Stage 1 practice account mirrors</span>${pick('paK1','liezel')}</label><label class="pff"><span>Key Stage 2 practice account mirrors</span>${pick('paK2','mary-an|mary an')}</label><label class="pff"><span>PIN for both</span><input id="paPin" value="2026" inputmode="numeric"></label></div>
+    <div class="pfgrid"><label class="pff"><span>Key Stage 1 practice account mirrors</span>${pick('paK1','liezel')}</label><label class="pff"><span>Key Stage 2 practice account mirrors</span>${pick('paK2','mary-an|mary an')}</label><label class="pff"><span>Regular teacher practice account mirrors</span>${pick('paReg','mary jane|catherine','reg')}</label><label class="pff"><span>ARAL tutor practice account mirrors</span>${pick('paAral','tutor','aral')}</label><label class="pff"><span>PIN for all</span><input id="paPin" value="2026" inputmode="numeric"></label></div>
+    <p class="hint">On the screen of a practice account, the name, email, and photo of the teacher it mirrors are hidden. It shows the name of the practice account instead, so you can record the screen for training.</p>
     ${cur.length ? `<p class="hint">Now: ${cur.map(a => esc(a.email)+' ('+esc(a.name)+')').join('; ')}</p>` : ''}
     <p class="err" id="paErr"></p><div class="row"><button class="btn ghost" onclick="closeModal('stfModal')">Close</button><button class="btn" onclick="practiceSave()">Save</button></div>`); }
-async function practiceSave(){ try{ ACC = await api('samplePractice', { ks1:$('paK1').value, ks2:$('paK2').value, pin:$('paPin').value }); renderAcc();
-    $('stfMBody').innerHTML = `<h3>Practice accounts are ready</h3><p>Sign in with these on another browser or a private window:</p><ul><li><b>practice.ks1@baluyan.tala</b></li><li><b>practice.ks2@baluyan.tala</b></li></ul><p>PIN: <b>${esc($('paPin') ? $('paPin').value : '2026')}</b></p><div class="row"><button class="btn" onclick="closeModal('stfModal')">Done</button></div>`; }
+async function practiceSave(){ try{ ACC = await api('samplePractice', { ks1:$('paK1').value, ks2:$('paK2').value, reg:$('paReg').value, aral:$('paAral').value, pin:$('paPin').value }); renderAcc();
+    $('stfMBody').innerHTML = `<h3>Practice accounts are ready</h3><p>Sign in with these on another browser or a private window:</p><ul><li><b>practice.ks1@baluyan.tala</b> (Key Stage 1)</li><li><b>practice.ks2@baluyan.tala</b> (Key Stage 2)</li><li><b>practice.teacher@baluyan.tala</b> (regular teacher)</li><li><b>practice.aral@baluyan.tala</b> (ARAL tutor)</li></ul><p>PIN: <b>${esc($('paPin') ? $('paPin').value : '2026')}</b></p><div class="row"><button class="btn" onclick="closeModal('stfModal')">Done</button></div>`; }
   catch(e){ handleErr(e, 'paErr'); } }
 
 /* ===== Pictures as proof: paste or insert a picture in comments, replies, and requests ===== */
@@ -12036,13 +12037,13 @@ function bdCheer(){ const P = BRD.pend; if (!P || !P.cheer || !P.cheer.length ||
   if (!BRD.data && USER) bdLoad().catch(()=>{}); document.body.appendChild(o); }
 
 /* ===== Notices to acknowledge: each person must read and confirm before using TALA ===== */
-function ntkShow(){ const P = BRD.pend; const old = $('ntkLock'); if (!P || !P.must || !P.must.length){ if (old) old.remove(); document.body.classList.remove('ntklocked'); return; }
+function ntkShow(){ const P = BRD.pend; const old = $('ntkLock'); if (P && P.must && USER && USER.sample) P.must = P.must.filter(x => (BRD.prSkip||[]).indexOf(x.id) < 0); if (!P || !P.must || !P.must.length){ if (old) old.remove(); document.body.classList.remove('ntklocked'); return; }
   const n = P.must[0]; if (old && old.dataset.id===n.id) return; if (old) old.remove();
   const o = document.createElement('div'); o.id = 'ntkLock'; o.dataset.id = n.id; o.className = 'ntk-lock';
   o.innerHTML = `<div class="ntk-card ${n.urgent?'urgent':''}"><span class="lktag">${n.urgent ? 'URGENT NOTICE' : 'NOTICE TO ACKNOWLEDGE'}${P.must.length > 1 ? ' · 1 of '+P.must.length : ''}</span><h3>📌 ${esc(n.title)}</h3><small class="hint">From ${esc(n.by)}, ${esc(dTime(n.on))}</small>
     <div class="ntk-text">${esc(n.text)}</div>${(n.pics||[]).length ? `<div class="ntk-pics">${n.pics.map(id => `<img data-pq="${id}" alt="" onclick="pqfView('${id}')">`).join('')}</div>` : ''}
     <label class="check ntk-ok"><input type="checkbox" id="ntkChk" onchange="$('ntkBtn').disabled=!this.checked">I have read and understood this notice.</label>
-    <div class="row"><button class="btn" id="ntkBtn" disabled onclick="ntkAck('${n.id}')">✔ Confirm</button>${USER.sample ? '<button class="btn ghost" onclick="$(\'ntkLock\').remove()">Close (practice account)</button>' : ''}</div><p class="hint">TALA opens after you confirm. You can read it again anytime in your notices.</p></div>`;
+    <div class="row"><button class="btn" id="ntkBtn" disabled onclick="ntkAck('${n.id}')">✔ Confirm</button>${USER.sample ? `<button class="btn ghost" onclick="BRD.prSkip=(BRD.prSkip||[]).concat(['${n.id}']);ntkShow()">Close (practice account)</button>` : ''}</div><p class="hint">TALA opens after you confirm. You can read it again anytime in your notices.</p></div>`;
   document.body.appendChild(o); document.body.classList.add('ntklocked'); o.querySelectorAll('img[data-pq]').forEach(im => pqfLoadImg(im, im.dataset.pq)); }
 async function ntkAck(id){ const b = $('ntkBtn'); b.disabled = true; b.textContent = 'Saving';
   try{ await api('boardAck', { id }); BRD.pend.must = BRD.pend.must.filter(x => x.id!==id); toast('Thank you. Confirmed.'); BRD.at = 0; ntkShow(); if (!BRD.pend.must.length) setTimeout(bdCheer, 600); }
@@ -12388,7 +12389,7 @@ function invDraw(){ const D = INV.data, staff = invStaff(), all = D.items.filter
   const val = all.reduce((a, o) => a + invTotal(o), 0), card = (ico, n, l, st) => `<button class="ostat ${INV.st===st?'on':''}" onclick="INV.st='${st}';invDraw()"><span class="oico">${ico}</span><b>${n}</b><span>${l}</span></button>`;
   const todo = all.filter(invTodo).length;
   $('viewPir').innerHTML = `<div class="trk-head"><div><h2>Project ALAGA: Property and Inventory</h2>${projMean('inv')}<p>${staff ? 'School property held by each personnel, the ICS, property stickers, and the Division inventory template (DZSAMS).' : 'The school property in your care. Add each item in a few short steps, save it as a draft anytime, then lock it.'}</p></div>
-      <div class="head-actions"><button class="btn sun" onclick="invForm()">＋ Add an item</button><button class="btn ghost" onclick="qgOpen('inv')">❓ Quick guide</button>${staff ? '<button class="btn ghost" onclick="invDivision()">⬇ Division template (Excel)</button>' : ''}</div></div>
+      <div class="head-actions"><button class="btn sun" onclick="invForm()">＋ Add an item</button><button class="btn ghost" onclick="qgOpen('inv')">❓ Quick guide</button>${staff ? '<button class="btn ghost" onclick="invDivision()">⬇ Division template (Excel)</button>' : ''}${USER.role==='head' ? '<button class="btn ghost danger" onclick="featClearAsk(\'inv\')">🧹 Clear all data</button>' : ''}</div></div>
     <div class="ostats">${card('📦', all.length, staff ? 'Items in all' : 'My items', '')}${card('🔒', all.filter(o => o.status==='Locked').length, 'Locked, final', 'Locked')}${card('📝', all.filter(o => o.status==='Draft').length, 'Drafts', 'Draft')}
       ${card('🔴', todo, staff ? (USER.role==='head' ? 'Requests waiting' : 'To check') : 'To do', 'todo')}${staff && gone.length ? card('🗄', gone.length, 'Removed, kept on record', 'Removed') : ''}${staff ? `<div class="ostat static"><span class="oico">₱</span><b>${esc(invMoney(val) || '₱0.00')}</b><span>Total value</span></div><div class="ostat static"><span class="oico">👥</span><b>${people.length}</b><span>Accountable personnel</span></div>` : ''}</div>
     <div class="bar invbar"><input id="invQ" placeholder="🔍 Search item, serial, property no., ICS no., location" value="${esc(INV.q)}" oninput="INV.q=this.value;clearTimeout(INV.t);INV.t=setTimeout(invDraw,350)">
@@ -12400,10 +12401,14 @@ function invDraw(){ const D = INV.data, staff = invStaff(), all = D.items.filter
       <div class="invs">${invTag(o)}${d.issued && !d.received ? '<span class="atn bad">Confirm receipt</span>' : ''}</div></button>`; }).join('') || `<div class="empty">${INV.q||INV.st||INV.who ? 'No item matches.' : 'No items yet. Tap Add an item.'}</div>`}</div>`; }
 // The form, in short steps (pop up boxes)
 const INV_STEPS = ['The item', 'Where it came from', 'Where it is and its condition', 'Accountable person and ICS'];
-function invForm(id, step){ const o = id ? INV.data.items.find(x => x.id===id) : null; INV.cur = o ? { id:o.id, email:o.email, data:Object.assign({}, o.data) } : { id:'', email:USER.email, data:{ remarks:'FOUND AT STATION', cond:'Operational and in good condition', qtyCard:'1', qtyCount:'1', unit:'unit' } }; INV.step = step || 0; invStep(); }
-function invGet(){ document.querySelectorAll('#stfMBody [data-k]').forEach(el => { INV.cur.data[el.dataset.k] = el.type==='radio' ? (el.checked ? el.value : INV.cur.data[el.dataset.k]) : el.value; }); const w = $('ivWho'); if (w) INV.cur.email = w.value; }
+function invForm(id, step){ const o = id ? INV.data.items.find(x => x.id===id) : null; INV.cur = o ? { id:o.id, email:o.email, data:Object.assign({}, o.data) } : { id:'', email:USER.email, data:{ remarks:'FOUND AT STATION', cond:'Operational and in good condition', qtyCard:'1', qtyCount:'1', unit:'unit', autoProp:'1', autoOld:'1' } }; INV.step = step || 0; invStep(); }
+function invGet(){ document.querySelectorAll('#stfMBody [data-k]').forEach(el => { INV.cur.data[el.dataset.k] = el.type==='checkbox' ? (el.checked ? '1' : '0') : el.type==='radio' ? (el.checked ? el.value : INV.cur.data[el.dataset.k]) : el.value; }); const w = $('ivWho'); if (w) INV.cur.email = w.value; }
 function invQuick(i){ invGet(); const x = INV_QUICK[i]; Object.assign(INV.cur.data, { article:x[1], group:x[2], sub:x[3], unit:x[4], kind:x[1] }); invStep(); }
 function invIsPrinter(d){ return /printer/i.test((d.article||'')+' '+(d.kind||'')+' '+(d.desc||'')); }
+// a number box with a tick: when ticked and empty, TALA gives the next number of the school series (PN-125592-year-0001)
+function invAutoBox(k, flag, label, ph){ const d = INV.cur.data, has = String(d[k]||'').trim(), on = !has && d[flag]!=='0';
+  return `<input data-k="${k}" value="${esc(d[k]||'')}" placeholder="${esc(on ? 'TALA gives it when you save' : ph)}" ${on ? 'disabled' : ''} id="ivA_${k}">
+    ${has && /^PN-125592-/.test(has) ? '<small class="hint">Given by TALA.</small>' : `<label class="check" style="margin-top:6px;font-size:13px"><input type="checkbox" data-k="${flag}" ${on ? 'checked' : ''} onchange="const i=$('ivA_${k}');i.disabled=this.checked;if(this.checked){i.value='';i.placeholder='TALA gives it when you save'}else{i.placeholder='${esc(ph)}';i.focus()}">${esc(label)}</label>`}`; }
 function invStep(){ const d = INV.cur.data, s = INV.step, staff = invStaff(), sel = (k, list, ph) => `<select data-k="${k}"><option value="">${ph||'Choose'}</option>${list.map(v => `<option ${String(d[k]||'')===String(v)?'selected':''}>${esc(v)}</option>`).join('')}</select>`;
   const inp = (k, label, o={}) => `<div class="field"><label>${label}</label><input data-k="${k}" ${o.type?`type="${o.type}"`:''} ${o.step?`step="${o.step}"`:''} value="${esc(d[k]||'')}" placeholder="${esc(o.ph||'')}"></div>`;
   let body = '';
@@ -12413,21 +12418,22 @@ function invStep(){ const d = INV.cur.data, s = INV.step, staff = invStaff(), se
     ${invIsPrinter(d) ? `<div class="invprint"><b>🖨 For printers</b><div class="stfg2">${inp('inkNo','Ink number used',{ ph:'Example: 003 (black, cyan, magenta, yellow)' })}<div class="field"><label>Where it is used</label><div class="row" style="justify-content:flex-start;gap:14px"><label class="check"><input type="radio" name="ivUse" data-k="useAt" value="Classroom" ${d.useAt==='Classroom'?'checked':''}>In the classroom</label><label class="check"><input type="radio" name="ivUse" data-k="useAt" value="Home" ${d.useAt==='Home'?'checked':''}>At home</label></div></div></div></div>` : ''}`;
   if (s===1) body = `<div class="stfg2"><div class="field"><label>PPE account group *</label><select data-k="group" onchange="invGet();INV.cur.data.sub='';invStep()"><option value="">Choose</option>${INV_REF.groups.map(g => `<option value="${g}" ${d.group===g?'selected':''}>${esc(INV_GROUP_NAME(g))}</option>`).join('')}</select></div>
       <div class="field"><label>Kind *</label>${sel('sub', (INV_REF.sub[d.group]||[]).map(x => x.trim()), d.group ? 'Choose' : 'Choose the group first')}</div></div>
-    <div class="stfg2"><div class="field"><label>Source of fund *</label>${sel('fund', INV_REF.fund)}</div>${inp('acqDate','Date acquired *',{ type:'date' })}</div>
+    <div class="stfg2"><div class="field"><label>Source of fund *</label><select data-k="fund" onchange="$('ivFundO').hidden=this.value!=='Others';if(this.value==='Others')$('ivFundO').querySelector('input').focus()"><option value="">Choose</option>${INV_REF.fund.map(v => `<option ${String(d.fund||'')===v?'selected':''}>${esc(v)}</option>`).join('')}</select>
+      <div id="ivFundO" ${d.fund==='Others'?'':'hidden'} style="margin-top:6px"><input data-k="fundOther" value="${esc(d.fundOther||'')}" placeholder="Specify the source of fund, example: PTA project, alumni, NGO"></div></div>${inp('acqDate','Date acquired *',{ type:'date' })}</div>
     <p class="hint" style="margin-top:-6px">If you cannot remember the exact date, choose January 1 or December 1 of the year.</p>
     <div class="stfg2">${inp('unit','Unit of measure *',{ ph:'Example: unit, set, piece' })}${inp('unitValue','Unit value (₱) *',{ type:'number', step:'0.01', ph:'Example: 8995' })}</div>
     <div class="stfg2">${inp('qtyCard','Quantity per property card *',{ type:'number' })}${inp('qtyCount','Quantity per physical count *',{ type:'number' })}</div>
-    <div class="stfg2">${inp('oldProp','Old property number (if any)')}${inp('life','Estimated useful life',{ ph:'Example: 5 years' })}</div>`;
+    <div class="stfg2"><div class="field"><label>Old property number</label>${invAutoBox('oldProp','autoOld','No old property number. TALA gives one, the same as the property number.','Type the old number, if any')}</div>${inp('life','Estimated useful life',{ ph:'Example: 5 years' })}</div>`;
   if (s===2) body = `${inp('location','Location or whereabouts *',{ ph:'Example: Grade 3 classroom' })}<div class="field"><label>Condition *</label>${sel('cond', INV_REF.cond)}</div>
     <div class="field"><label>Remarks *</label>${sel('remarks', INV_REF.remarks)}</div><div class="field"><label>Additional remarks</label><textarea data-k="addRemarks" rows="2">${esc(d.addRemarks||'')}</textarea></div>`;
   if (s===3) body = `${staff ? `<div class="field"><label>Accountable person</label><select id="ivWho">${INV.data.people.map(p => `<option value="${p.email}" ${INV.cur.email===p.email?'selected':''}>${esc(p.name)}</option>`).join('')}</select></div>` : `<p class="hint">Accountable person: <b>${esc(USER.name)}</b></p>`}
-    <div class="stfg2">${inp('propNo','Property or inventory item number',{ ph:'Given by the AO, if any' })}${inp('icsNo','ICS number',{ ph:'Given when locked: '+INV.data.nextIcs })}</div>
+    <div class="stfg2"><div class="field"><label>Property or inventory item number</label>${invAutoBox('propNo','autoProp','No property number yet. TALA gives the next number in the series.','Type the number given by the AO')}</div>${inp('icsNo','ICS number',{ ph:'Given when locked: '+INV.data.nextIcs })}</div>
     <div class="stfg2">${inp('fundCluster','Fund cluster',{ ph:'Example: 01' })}${inp('assumed','Date received (assumed)',{ type:'date' })}</div>${inp('releasedBy','Released by',{ ph:INV.data.ao || 'Property Custodian' })}
     <div class="field"><label>Notes for the school (not in the Division file)</label><textarea data-k="notes" rows="2">${esc(d.notes||'')}</textarea></div>`;
   stfModal(`<div class="invsteps">${INV_STEPS.map((t,i) => `<button type="button" class="${i===s?'on':''} ${i<s?'done':''}" onclick="invGet();INV.step=${i};invStep()"><b>${i+1}</b><span>${t}</span></button>`).join('')}</div>
     <h3>${INV_STEPS[s]}</h3>${body}<p class="hint">You may leave some boxes empty and save it as a draft. Fields with * are needed before locking.</p><p class="err" id="ivErr"></p>
     <div class="modal-actions">${s?`<button class="btn ghost" onclick="invGet();INV.step--;invStep()">‹ Back</button>`:'<button class="btn ghost" onclick="closeModal(\'stfModal\')">Cancel</button>'}<button class="btn ghost" onclick="invSave(false)">💾 Save as draft</button>${s<3?`<button class="btn" onclick="invGet();INV.step++;invStep()">Next ›</button>`:`<button class="btn" onclick="invSave(true)">🔒 Lock as final</button>`}</div>`, 'wide'); }
-async function invSave(lock){ invGet(); if (lock && !confirm('Lock this item as final? After locking, a change needs a request to the School Head.')) return;
+async function invSave(lock){ invGet(); if (lock && INV.cur.data.fund==='Others' && !String(INV.cur.data.fundOther||'').trim()){ INV.step = 1; invStep(); return $('ivErr').textContent = 'Specify the source of fund under Others.'; } if (lock && !confirm('Lock this item as final? After locking, a change needs a request to the School Head.')) return;
   try{ loading(true); INV.data = await api('invSave', { item:{ id:INV.cur.id, email:INV.cur.email, data:INV.cur.data }, lock }); loading(false); closeModal('stfModal'); toast(lock ? 'Locked as final.' : 'Saved as draft.'); invDraw(); }
   catch(e){ loading(false); handleErr(e, 'ivErr'); } }
 function invView(id){ const o = INV.data.items.find(x => x.id===id); if (!o) return; const d = o.data, staff = invStaff(), mine = o.email===USER.email, head = USER.role==='head';
@@ -12438,7 +12444,7 @@ function invView(id){ const o = INV.data.items.find(x => x.id===id); if (!o) ret
     ${d.req && d.req.status==='Pending' ? `<div class="derr"><b>${d.req.kind==='delete' ? '🗑 Request to remove' : '✋ Request to edit'}:</b> ${esc(d.req.reason)} <small class="hint">(${esc(d.req.by)}, ${esc(dTime(d.req.on))})</small></div>` : ''}
     ${d.req && d.req.status==='Disapproved' ? `<div class="derr"><b>Request not approved:</b> ${esc(d.req.note||'')}</div>` : ''}
     <div class="table-wrap"><table class="stft-table invdet"><tbody>${row('PPE account group', INV_GROUP_NAME(d.group))}${row('Kind', d.sub)}${row('Description', d.desc)}${row('Brand and model', [d.brand, d.model].filter(Boolean).join(' '))}${row('Serial number', d.serial)}
-      ${row('Source of fund', d.fund)}${row('Date acquired', d.acqDate ? fmtLong(d.acqDate) : '')}${row('Unit value', invMoney(d.unitValue))}${row('Quantity', [d.qtyCard ? d.qtyCard+' per property card' : '', d.qtyCount ? d.qtyCount+' per physical count' : ''].filter(Boolean).join(', ')+(d.unit?' ('+d.unit+')':''))}
+      ${row('Source of fund', d.fund==='Others' && d.fundOther ? 'Others: '+d.fundOther : d.fund)}${row('Date acquired', d.acqDate ? fmtLong(d.acqDate) : '')}${row('Unit value', invMoney(d.unitValue))}${row('Quantity', [d.qtyCard ? d.qtyCard+' per property card' : '', d.qtyCount ? d.qtyCount+' per physical count' : ''].filter(Boolean).join(', ')+(d.unit?' ('+d.unit+')':''))}
       ${row('Location', d.location)}${row('Condition', d.cond)}${row('Remarks', d.remarks)}${row('Additional remarks', d.addRemarks)}${row('Ink number', d.inkNo)}${row('Used in', d.useAt)}${row('Old property number', d.oldProp)}${row('Property number', d.propNo)}${row('Estimated useful life', d.life)}
       ${row('Fund cluster', d.fundCluster)}${row('Date received', d.assumed ? fmtLong(d.assumed) : '')}${row('Released by', d.releasedBy)}${row('Received', d.received ? 'Confirmed by '+d.received.by+', '+dTime(d.received.on) : '')}${row('Checked by the AO', d.checked ? d.checked.by+', '+dTime(d.checked.on) : '')}
       ${row('Previously held by', (d.prev||[]).map(p => p.name+' until '+dShort(p.until)).join('; '))}${row('Notes', d.notes)}</tbody></table></div>
@@ -12486,7 +12492,7 @@ async function invStickers(ids){ try{ await coverKit(); }catch(e){} const L = IN
   const K = window.COVER_KIT || {}, one = o => { const d = o.data, f = (l, v) => `<div><span>${l}:</span><b>${esc(v||'')}</b></div>`;
     return `<div class="stkcell"><span class="stkcut">✂</span><div class="stk"><div class="stk-h"><span class="stk-ic"><img src="${K.seal||''}" alt=""></span><div><small>Republic of the Philippines</small><b>DEPARTMENT OF EDUCATION</b><small>Region IX, Zamboanga Peninsula</small><b>SCHOOLS DIVISION OF ZAMBOANGA SIBUGAY</b><small>Baluyan Elementary School, Imelda</small></div><span class="stk-ic"><img src="${K.school||(typeof LOGO!=='undefined'?LOGO:'')}" alt=""></span></div><div class="stk-body">
       <div class="stk-g">${f('Article', d.article)}${f('Property Number', d.propNo)}${f('Brand & Model', [d.brand, d.model].filter(Boolean).join(' '))}${f('Serial No', d.serial)}</div><div class="stk-g one">${f('Description', d.desc)}</div>
-      <div class="stk-g">${f('Acquisition Cost', invMoney(d.unitValue))}${f('Date Acquired', d.acqDate ? dShort(d.acqDate) : '')}${f('Source of Fund', d.fund)}${f('Location', d.location)}${f('Accountable Officer', o.name)}${f('Date Assumed', d.assumed ? dShort(d.assumed) : '')}${f('Released by', d.releasedBy || INV.data.ao)}${f('PAR / ICS No', d.icsNo)}</div>
+      <div class="stk-g">${f('Acquisition Cost', invMoney(d.unitValue))}${f('Date Acquired', d.acqDate ? dShort(d.acqDate) : '')}${f('Source of Fund', d.fund==='Others' && d.fundOther ? d.fundOther : d.fund)}${f('Location', d.location)}${f('Accountable Officer', o.name)}${f('Date Assumed', d.assumed ? dShort(d.assumed) : '')}${f('Released by', d.releasedBy || INV.data.ao)}${f('PAR / ICS No', d.icsNo)}</div>
       <p class="stk-n">Note: Please do not remove. (Unauthorized removal or tampering will be subject to disciplinary action.)</p></div></div></div>`; };
   const pages = []; for (let i = 0; i < L.length; i += 6) pages.push(`<div class="stkpage">${L.slice(i, i+6).map(one).join('')}</div>`);
   printPaper(pages.join(''), 210, 297, 'stkp', stkFit); }
@@ -12512,9 +12518,9 @@ async function invDivision(){ const L = INV.data.items.filter(o => o.status==='L
     // rows 16 to 78 are ready in the template; more items continue on the next rows with the same format
     const lastRow = 78; if (L.length > lastRow - 15){ const r78 = x.match(/<row r="78"[\s\S]*?<\/row>/)[0]; let add = ''; for (let r = 79; r <= 15 + L.length; r++) add += r78.replace(/r="78"/, `r="${r}"`).replace(/r="([A-Z]+)78"/g, (m0, c) => `r="${c}${r}"`); x = x.replace(r78, r78 + add); }
     L.forEach((o, i) => { const r = 16 + i, d = o.data, dt = d.acqDate ? d.acqDate.split('-') : ['','',''];
-      const V = { A:d.group, B:(d.sub||'').trim(), C:d.fund, D:d.article, E:[d.desc, d.brand||d.model ? 'Brand/Model: '+[d.brand, d.model].filter(Boolean).join(' ') : '', d.serial ? 'Serial No.: '+d.serial : ''].filter(Boolean).join('; '), F:d.oldProp,
-        G:dt[2] ? Number(dt[2]) : '', H:dt[1] ? MONTHS[Number(dt[1])-1] : '', I:dt[0] ? Number(dt[0]) : '', J:d.unit, K:d.unitValue, L:d.qtyCard, M:d.qtyCount, N:d.location, O:/@deped\.gov\.ph$/i.test(o.email) ? o.email : '', P:d.cond, Q:d.remarks, R:d.addRemarks };
-      Object.keys(V).forEach(c => { x = setCell(x, c+r, V[c], ['G','I','K','L','M'].indexOf(c) > -1 && V[c]!=='' && !isNaN(Number(V[c]))); }); });
+      const V = { A:d.group, B:(d.sub||'').trim(), C:d.fund, R0:'', D:d.article, E:[d.desc, d.brand||d.model ? 'Brand/Model: '+[d.brand, d.model].filter(Boolean).join(' ') : '', d.serial ? 'Serial No.: '+d.serial : ''].filter(Boolean).join('; '), F:d.oldProp,
+        G:dt[2] ? Number(dt[2]) : '', H:dt[1] ? MONTHS[Number(dt[1])-1] : '', I:dt[0] ? Number(dt[0]) : '', J:d.unit, K:d.unitValue, L:d.qtyCard, M:d.qtyCount, N:d.location, O:/@deped\.gov\.ph$/i.test(o.email) ? o.email : '', P:d.cond, Q:d.remarks, R:[d.addRemarks, d.fund==='Others' && d.fundOther ? 'Source of fund: '+d.fundOther : ''].filter(Boolean).join('; ') };
+      delete V.R0; Object.keys(V).forEach(c => { x = setCell(x, c+r, V[c], ['G','I','K','L','M'].indexOf(c) > -1 && V[c]!=='' && !isNaN(Number(V[c]))); }); });
     if (L.length > lastRow - 15) x = x.replace(/<dimension ref="[^"]*"\/>/, `<dimension ref="A8:AMJ${15 + L.length}"/>`);
     zip.file(path, x, { createFolders:false }); const blob = await zip.generateAsync({ type:'blob', compression:'DEFLATE', mimeType:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
     saveBlob(blob, 'Inventory_125592_Baluyan_ES_'+todayPH()+'.xlsx'); loading(false); toast(L.length+' items filled in the Division template.'); }
@@ -12552,7 +12558,7 @@ function rptDraw(){ const D = RPT.data, I = D.items, staff = rptStaff(), L = rpt
   const card = (ico, n, l, st) => `<button class="ostat ${RPT.st===st?'on':''}" onclick="RPT.st='${st}';rptDraw()"><span class="oico">${ico}</span><b>${n}</b><span>${l}</span></button>`;
   const people = [...new Map(I.map(o => [o.email, o.name])).entries()];
   $('viewPir').innerHTML = `<div class="trk-head"><div><h2>Project DALOY: Reports and Documents</h2>${projMean('rpt')}<p>${staff ? 'Every report and document made by all personnel, including those for personal use, and the documents received from other offices. Search, sort, and track each one. Tap a report to print its cover page or transmittal again.' : 'Each report gets its own document number and QR code. Make the PABALAT cover page, send it with a PADALA transmittal, and follow where it is. Tap a report anytime to print its cover page or transmittal again.'}</p></div>
-      <div class="head-actions"><button class="btn sun" onclick="rptForm()">＋ New report (PABALAT cover page)</button><button class="btn ghost" onclick="trPick()">📨 PADALA transmittal</button><button class="btn ghost" onclick="docScan()">📷 SURI: scan a QR code</button><button class="btn ghost" onclick="qgOpen('rpt')">❓ Quick guide</button></div></div>
+      <div class="head-actions"><button class="btn sun" onclick="rptForm()">＋ New report (PABALAT cover page)</button><button class="btn ghost" onclick="trPick()">📨 PADALA transmittal</button><button class="btn ghost" onclick="docScan()">📷 SURI: scan a QR code</button><button class="btn ghost" onclick="qgOpen('rpt')">❓ Quick guide</button>${USER.role==='head' ? '<button class="btn ghost danger" onclick="featClearAsk(\'rpt\')">🧹 Clear all data</button>' : ''}</div></div>
     <div class="ostats">${card('📚', I.length, staff ? 'Reports in all' : 'My reports', '')}${card('📥', c('Incoming'), 'Incoming', 'Incoming')}${card('📬', c('Received'), 'Received', 'Received')}${card('✔', c('Returned, correct'), 'Returned, correct', 'Returned, correct')}
       ${card('↺', c('For correction'), 'For correction', 'For correction')}${card('🗄', c('For safekeeping'), 'For safekeeping', 'For safekeeping')}${card('🏛', I.filter(o => /^Submitted to/.test(o.status)).length, 'Submitted to District or Division', 'sub')}${card('🔴', I.filter(rptTodo).length, staff ? 'Waiting for you' : 'To correct', 'todo')}${card('🔒', c('Personal'), 'For personal use', 'Personal')}</div>
     ${staff && I.length ? `<details class="byt"><summary>Reports by personnel</summary><div class="table-wrap"><table class="tqtbl"><thead><tr><th>Name</th><th>Submitted</th><th>Correct</th><th>For correction</th><th>Safekeeping</th><th>To District or Division</th></tr></thead><tbody>${people.map(([e, n]) => { const m = I.filter(o => o.email===e && o.status!=='Personal'); return `<tr><td>${esc(n)}</td><td>${m.length}</td><td>${m.filter(o => o.status==='Returned, correct').length}</td><td>${m.filter(o => o.status==='For correction').length}</td><td>${m.filter(o => o.status==='For safekeeping').length}</td><td>${m.filter(o => /^Submitted to/.test(o.status)).length}</td></tr>`; }).join('')}</tbody></table></div></details>` : ''}
@@ -12609,7 +12615,7 @@ function coverAsk(id){ const o = RPT.data.items.find(x => x.id===id); if (!o) re
   stfModal(`<h3>📘 PABALAT cover page</h3><p class="sub">${esc(o.title)} · <code>${esc(o.code)}</code></p>
     <div class="field"><label>Cover page</label><select id="caC"><option value="folder" ${c==='folder'?'selected':''}>For a folder (a box to cut and paste)</option><option value="bind-portrait" ${c==='bind-portrait'?'selected':''}>For binding, portrait (front and back)</option><option value="bind-landscape" ${c==='bind-landscape'?'selected':''}>For binding, landscape (front and back)</option></select></div>
     <div class="field"><label>Paper</label><div class="row" style="justify-content:flex-start;gap:16px"><label class="check"><input type="radio" name="caP" value="A4" ${d.paper==='A4'?'checked':''}>A4</label><label class="check"><input type="radio" name="caP" value="Long" ${d.paper!=='A4'?'checked':''}>Long (8.5 × 13 in)</label></div></div>
-    <div class="modal-actions"><button class="btn ghost" onclick="rptView('${id}')">Back</button><button class="btn" onclick="coverPrint('${id}',{ cover:$('caC').value, paper:(document.querySelector('input[name=caP]:checked')||{}).value||'Long' })">🖨 Print</button></div>`); }
+    <div class="modal-actions"><button class="btn ghost" onclick="rptView('${id}')">Back</button><button class="btn ghost" onclick="coverDownload(Object.assign({}, rptWithContact(RPT.data.items.find(x => x.id==='${id}')), { data:Object.assign({}, rptWithContact(RPT.data.items.find(x => x.id==='${id}')).data, { cover:$('caC').value, paper:(document.querySelector('input[name=caP]:checked')||{}).value||'Long' }) }))">⬇ Download PDF</button><button class="btn" onclick="coverPrint('${id}',{ cover:$('caC').value, paper:(document.querySelector('input[name=caP]:checked')||{}).value||'Long' })">🖨 Print</button></div>`); }
 // a new report for another month or period: the same details, but its own new document number
 function rptCopy(id){ const o = RPT.data.items.find(x => x.id===id); if (!o) return; rptForm();
   setTimeout(() => { try{ $('rfT').value = o.title; $('rfS').value = ''; $('rfS').placeholder = 'The new month or period, example: November 2026'; const t = $('rfY'); if ([...t.options].some(x => x.value===o.data.type)) t.value = o.data.type;
@@ -12672,6 +12678,17 @@ function qgOpen(k, n){ n = n || 0; const S = qgSteps(k), st = S[n];
 function qgMaybe(k){ if (!USER) return; const key = 'tala_qg_'+k+'_'+USER.email; let seen = '1'; try{ seen = localStorage.getItem(key); }catch(e){}
   if (seen || CUR_FEATURE!==k || document.querySelector('.overlay.open')) return; try{ localStorage.setItem(key, '1'); }catch(e){} qgOpen(k); }
 
+/* ----- Clear all the data of Project ALAGA or Project DALOY, for a clean start (School Head only). A copy is kept in the spreadsheet. ----- */
+function featClearAsk(k){ const inv = k==='inv', n = inv ? (INV.data ? INV.data.items.length : 0) : (RPT.data ? RPT.data.items.length : 0);
+  stfModal(`<h3>🧹 Clear all data of ${inv ? 'Project ALAGA' : 'Project DALOY'}</h3><p class="sub">This removes all ${n} ${inv ? 'items of every personnel' : 'reports and documents of every personnel, with their transmittals'}, so the feature starts clean.</p>
+    <div class="derr">It cannot be undone in TALA. A copy is saved in the spreadsheet as a new sheet named ${inv ? 'TALA_Inventory' : 'TALA_Reports'}_Cleared with the date, in case you need it.</div>
+    ${inv ? '' : '<label class="check"><input type="checkbox" id="fcTypes">Also clear the types of report added under Others</label>'}
+    <div class="field"><label>Type CLEAR to confirm</label><input id="fcWord" autocomplete="off" placeholder="CLEAR"></div><p class="err" id="fcErr"></p>
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Cancel</button><button class="btn danger" onclick="featClearGo('${k}')">Clear all data</button></div>`); }
+async function featClearGo(k){ const w = $('fcWord').value.trim().toUpperCase(); if (w!=='CLEAR') return $('fcErr').textContent = 'Type CLEAR in capital letters to confirm.';
+  try{ loading(true, 'Clearing'); const r = await api(k==='inv' ? 'invClear' : 'rptClear', { confirm:w, types:!!($('fcTypes') && $('fcTypes').checked) }); loading(false); closeModal('stfModal');
+    if (k==='inv'){ INV.data = r; INV.st = ''; INV.q = ''; invDraw(); } else { RPT.data = r; RPT.st = ''; RPT.q = ''; rptDraw(); } drawSide(); toast('Cleared. The feature is clean.'); }
+  catch(e){ loading(false); handleErr(e, 'fcErr'); } }
 /* ----- Document numbers and QR codes. Every report has its own document number; the QR code opens TALA on that report. ----- */
 function docUrl(code){ return location.origin + location.pathname + '?doc=' + encodeURIComponent(code); }
 function qrSvg(text){ if (!window.qrcode) return ''; const q = window.qrcode(0, 'M'); q.addData(text); q.make(); const n = q.getModuleCount();
@@ -12682,14 +12699,24 @@ async function qrFill(){ try{ await coverKit(); }catch(e){ return; } document.qu
 /* ----- PADALA: the transmittal. One transmittal for each office; it lists the documents with their numbers and carries a QR code. ----- */
 function trAll(){ const T = {}; (RPT.data.items||[]).forEach(o => (o.data.trans||[]).forEach(t => { (T[t.no] = T[t.no] || { no:t.no, on:t.on, office:t.office, by:t.by, byEmail:t.byEmail, remarks:t.remarks, items:[] }).items.push(o); }));
   return Object.values(T).sort((a,b) => String(b.on).localeCompare(String(a.on))); }
-function trPick(pre){ pre = pre || []; const staff = rptStaff(), L = (RPT.data.items||[]).filter(o => o.status!=='Personal' && (staff || o.email===USER.email)), past = trAll().filter(t => staff || t.byEmail===USER.email);
+function trPick(pre){ pre = pre || []; const staff = rptStaff(), L = (RPT.data.items||[]).filter(o => o.status!=='Personal' && (staff || o.email===USER.email)), pers = (RPT.data.items||[]).filter(o => o.status==='Personal' && o.email===USER.email), past = trAll().filter(t => staff || t.byEmail===USER.email);
   const off = o => o.data.office==='Other office' ? (o.data.otherOffice||'Other office') : o.data.office;
   stfModal(`<h3>📨 PADALA: transmittal</h3><p class="sub">Tick the documents you will hand over. Documents for the same office go in one transmittal. Documents for different offices get separate transmittals, made at the same time.</p>
-    <div class="trlist">${L.map(o => `<label><input type="checkbox" class="trk" value="${o.id}" ${pre.indexOf(o.id) > -1 ? 'checked' : ''}><span><b>${esc(o.title)}</b><small><code>${esc(o.code)}</code> · ${staff ? esc(o.name)+' · ' : ''}to ${esc(off(o))} · ${esc(o.status)}</small></span></label>`).join('') || '<p class="hint">No reports yet.</p>'}</div>
+    <div class="row" style="justify-content:space-between;margin:4px 0"><b>Tick the documents to include (${L.length})</b>${L.length ? `<span><button class="linkbtn" onclick="document.querySelectorAll('.trk').forEach(x=>x.checked=true)">Tick all</button> · <button class="linkbtn" onclick="document.querySelectorAll('.trk').forEach(x=>x.checked=false)">Clear</button></span>` : ''}</div>
+    <div class="trlist">${L.map(o => `<label><input type="checkbox" class="trk" value="${o.id}" ${pre.indexOf(o.id) > -1 ? 'checked' : ''}><span><b>${esc(o.title)}</b><small><code>${esc(o.code)}</code> · ${staff ? esc(o.name)+' · ' : ''}to ${esc(off(o))} · ${esc(o.status)}${(o.data.trans||[]).length ? ' · already in '+esc(o.data.trans.map(t => t.no).join(', ')) : ''}</small></span></label>`).join('') || '<p class="hint">No submitted reports yet. Add a document below, or submit a report first.</p>'}</div>
+    ${pers.length ? `<p class="hint">Not listed: ${pers.length} report${pers.length===1?'':'s'} for personal use (${pers.slice(0,3).map(o => esc(o.title)).join(', ')}${pers.length>3?', and more':''}). A report for personal use is not submitted. To include it, open it and tap Submit it to an office.</p>` : ''}
+    <details class="byt"><summary>＋ Add a document that is not yet in TALA</summary><div class="stfg2"><div class="field"><label>Title</label><input id="trNT" placeholder="Example: Monthly Report on Attendance"></div><div class="field"><label>Period (optional)</label><input id="trNS" placeholder="Example: November 2026"></div></div>
+      <div class="stfg2"><div class="field"><label>Type of report</label><select id="trNY">${rptTypeList().map(t => `<option>${esc(t)}</option>`).join('')}</select></div><div class="field"><label>Office</label><select id="trNO">${RPT.data.offices.map(x => `<option>${esc(x)}</option>`).join('')}</select><input id="trNOo" placeholder="If Other office, which one?" style="margin-top:6px"></div></div>
+      <button class="btn small" onclick="trQuickAdd()">＋ Add and tick it</button><small class="hint"> It gets its own document number.</small></details>
     ${staff ? `<div class="field"><label>Send to (leave empty to use the office of each report)</label><input id="trTo" list="trOffices" placeholder="Example: Records Section, Schools Division Office"><datalist id="trOffices"><option>Records Section, Schools Division Office</option><option>Office of the Public Schools District Supervisor, Imelda District</option><option>Office of the School Head</option><option>Office of the AO</option></datalist></div>` : ''}
     <div class="field"><label>Remarks</label><input id="trRem" value="For submission"></div><p class="err" id="trErr"></p>
     ${past.length ? `<details class="byt"><summary>Past transmittals (${past.length})</summary><div class="bdx-list">${past.map(t => `<button class="bdx-row nbtn" onclick="trPrint('${t.no}')"><div class="bdx-rn"><b>${esc(t.no)}</b><small>To ${esc(t.office)} · ${t.items.length} document${t.items.length===1?'':'s'} · ${esc(dTime(t.on))}</small></div><span class="btn small">Print</span></button>`).join('')}</div></details>` : ''}
     <div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Cancel</button><button class="btn" onclick="trMake()">Make and print</button></div>`, 'wide'); }
+async function trQuickAdd(){ const title = $('trNT').value.trim(); if (!title) return $('trErr').textContent = 'Type the title of the document to add.';
+  const keep = [...document.querySelectorAll('.trk:checked')].map(x => x.value);
+  try{ loading(true); const before = (RPT.data.items||[]).map(o => o.id); RPT.data = await api('rptSave', { rep:{ title, sub:$('trNS').value.trim(), type:$('trNY').value, office:$('trNO').value, otherOffice:$('trNOo').value.trim(), cover:'none', paper:'Long' } }); loading(false); rptDraw();
+    const added = RPT.data.items.find(o => before.indexOf(o.id) < 0); trPick(keep.concat(added ? [added.id] : [])); toast('Added with document number '+(added ? added.code : '')+'.'); }
+  catch(e){ loading(false); handleErr(e, 'trErr'); } }
 async function trMake(){ const ids = [...document.querySelectorAll('.trk:checked')].map(x => x.value); if (!ids.length) return $('trErr').textContent = 'Tick at least one document.';
   try{ loading(true, 'Making the transmittal'); const r = await api('rptTransmit', { ids, office:$('trTo') ? $('trTo').value.trim() : '', remarks:$('trRem').value.trim() }); RPT.data = r; loading(false); closeModal('stfModal'); rptDraw();
     toast(r.made.length===1 ? 'Transmittal '+r.made[0].no+' is ready.' : r.made.length+' transmittals are ready, one for each office.'); trPrint(r.made.map(m => m.no)); }
@@ -12746,14 +12773,14 @@ const CV_DES = {
   pb:{ W:595.5, H:842.25, all:true, pill:[37,552], name:[712,40,36.8], role:[749,24,16.4], ph:[133,779,165,811,176,11.8], ml:[287,779,320,811,326,11.8] },
   lf:{ W:842.25, H:595.5, top:203, bot:478, qr:[756,12,62], title:[30,812,56,26], pill:[406,816], name:[486,34,29.3], role:[516,19,13.1], ph:[482,540,508,566,516,9.4], ml:[605,540,631,566,635,9.4] },
   lb:{ W:842.25, H:595.5, all:true, pill:[187,695], name:[447,52,43.9], role:[500,28,19.6], ph:[228,535,267,574,279,14.1], ml:[412,535,451,574,458,14.1] },
-  ff:{ W:595.5, H:842.25, top:276, bot:568, qr:[510,12,66], title:[15,580,50,22], pill:[40,567], name:[583,40,37.7], role:[621,24,16.8], ph:[128,648,161,681,171,12.1], ml:[286,648,319,681,325,12.1] }
+  ff:{ W:595.5, H:842.25, top:276, bot:568, qr:[500,10,80], title:[15,580,50,22], pill:[40,567], name:[583,40,37.7], role:[621,24,16.8], ph:[128,648,161,681,171,12.1], ml:[286,648,319,681,325,12.1] }
 };
 function cvPerson(o){ const d = o.data || {}; return { name:String(d.name || o.name || '').toUpperCase(), role:d.role || '', contact:d.contact || '', mail:d.mail || '' }; }
 // one page of the design, W x H in mm
 function cvDesign(key, o, K, W, H, opt){ const D = CV_DES[key], P = cvPerson(o), u = Math.min(W / D.W, H / D.H), x0 = (W - D.W*u) / 2, yAll = (H - D.H*u) / 2;
   const X = x => x0 + x*u, Y = y => D.all ? yAll + y*u : y <= D.top ? y*u : H - (D.H - y)*u, mm = v => v.toFixed(2)+'mm';
   const box = (l, t, w, h, inner, cls) => `<div class="${cls}" style="left:${mm(l)};top:${mm(t)};width:${mm(w)};height:${mm(h)}">${inner}</div>`;
-  let h = `<img class="cv-bg" src="${K.bg}" alt="">`;
+  let h = `<div class="cv-bg" style="background-image:url('${K.bg}')"></div>`;
   if (D.all) h += `<img class="cv-lay" src="${K[key+'_all']}" alt="" style="left:${mm(x0)};top:${mm(yAll)};width:${mm(D.W*u)}">`;
   else { h += `<img class="cv-lay" src="${K[key+'_top']}" alt="" style="left:${mm(x0)};top:0;width:${mm(D.W*u)}">` + `<img class="cv-lay" src="${K[key+'_bot']}" alt="" style="left:${mm(x0)};bottom:0;width:${mm(D.W*u)}">`;
     const tl = Math.min(X(D.title[0]), W*0.05), tt = D.top*u, tb = H - (D.H - D.bot)*u, sub = o.data && o.data.sub;
@@ -12769,7 +12796,7 @@ function cvDesign(key, o, K, W, H, opt){ const D = CV_DES[key], P = cvPerson(o),
   return h; }
 function coverPages(o, K){ const d = o.data || {}, [W0, H0] = PAPER[d.paper==='A4' ? 'A4' : 'Long'], land = d.cover==='bind-landscape', W = land ? H0 : W0, H = land ? W0 : H0;
   const pg = (key, w, h) => `<div class="cvp" style="width:${w}mm;height:${h}mm">${cvDesign(key, o, K, w, h)}</div>`;
-  if (d.cover==='folder') return { w:W0, h:H0, html:`<div class="cvp folderpg" style="width:${W0}mm;height:${H0}mm"><p class="cv-cuttip">✂ Cut along the dashed line, then paste the box on the front of the folder.</p><div class="cv-box">${cvDesign('ff', o, K, 155, 155)}</div></div>` };
+  if (d.cover==='folder') return { w:W0, h:H0, html:`<div class="cvp folderpg" style="width:${W0}mm;height:${H0}mm"><p class="cv-cuttip">✂ Cut along the dashed line, then paste the box on the front of the folder.</p><div class="cv-cut"><div class="cv-box">${cvDesign('ff', o, K, 155, 155)}</div></div></div>` };
   if (land) return { w:W, h:H, html: pg('lf', W, H) + pg('lb', W, H) };
   return { w:W, h:H, html: pg('pf', W, H) + pg('pb', W, H) }; }
 // shrink each text until it fits its box: nothing is cut, nothing overlaps
@@ -12789,14 +12816,24 @@ async function coverFonts(){ try{ if (!document.getElementById('cvFonts')){ cons
   await Promise.race([document.fonts.ready, new Promise(r => setTimeout(r, 2500))]); await Promise.race([document.fonts.load('900 20px Barlow'), new Promise(r => setTimeout(r, 1500))]); }catch(e){} }
 // the print area is hidden on screen, so the fitting is measured on a copy laid out off screen
 function coverFitWhenShown(){ const pa = $('printArea'), keep = pa.getAttribute('style') || ''; pa.setAttribute('style', 'display:block;position:absolute;left:-10000px;top:0'); coverFit(pa); pa.setAttribute('style', keep); }
+// PABALAT as a PDF file to download: each page is drawn at about 300 dots per inch
+async function coverDownload(o){ try{ loading(true, 'Making the PDF'); const K = await coverKit(), C = coverPages(o, K); await Promise.all([loadScript(LIBS.h2c), loadScript(LIBS.jspdf), coverFonts()]);
+    const box = document.createElement('div'); box.style.cssText = 'position:absolute;left:-30000px;top:0;background:#fff'; box.innerHTML = C.html; document.body.appendChild(box); coverFit(box);
+    await Promise.all([...box.querySelectorAll('img')].map(im => im.complete ? 0 : new Promise(r => { im.onload = im.onerror = r; })));
+    const pdf = new window.jspdf.jsPDF({ unit:'mm', format:[C.w, C.h], orientation: C.w > C.h ? 'landscape' : 'portrait' }), pages = [...box.querySelectorAll('.cvp')];
+    for (let i = 0; i < pages.length; i++){ const cv = await html2canvas(pages[i], { scale:3, backgroundColor:'#ffffff', useCORS:true, logging:false }); if (i) pdf.addPage([C.w, C.h], C.w > C.h ? 'landscape' : 'portrait'); pdf.addImage(cv.toDataURL('image/jpeg', 0.92), 'JPEG', 0, 0, C.w, C.h); }
+    box.remove(); const name = 'PABALAT_' + String(o.code && !/^\(/.test(o.code) ? o.code : 'preview').replace(/[^\w-]+/g, '_') + '_' + String(o.title||'').replace(/[^\w]+/g, '_').slice(0, 40) + '.pdf';
+    window.NO_SAVE ? (window.__pdf = pdf.output('datauristring')) : pdf.save(name); loading(false); toast('Downloaded: ' + name); }
+  catch(e){ loading(false); handleErr(e); } }
 async function coverInto(doc, o){ const K = await coverKit(), C = coverPages(o, K);
-  doc.open(); doc.write(`<!doctype html><html><head><meta charset="utf-8"><title>Cover page preview</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@800;900&family=Poppins:wght@600;700;800&display=swap"><style>${COVER_CSS} body{margin:0;background:#888} .cvp{margin:10px auto;box-shadow:0 4px 20px rgba(0,0,0,.4)} @page{size:${C.w}mm ${C.h}mm;margin:0} @media print{ body{background:none} .cvp{margin:0;box-shadow:none} }</style></head><body>${C.html}<script>(${coverFit.toString()})(document.body);<\/script></body></html>`); doc.close();
+  doc.open(); doc.write(`<!doctype html><html><head><meta charset="utf-8"><title>Cover page preview</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@800;900&family=Poppins:wght@600;700;800&display=swap"><style>${COVER_CSS} body{margin:0;background:#888} .cvp{margin:10px auto;box-shadow:0 4px 20px rgba(0,0,0,.4)} @page{size:${C.w}mm ${C.h}mm;margin:0} @media print{ body{background:none} .cvp{margin:0;box-shadow:none} .cvbar{display:none} } .cvbar{position:sticky;top:0;z-index:5;display:flex;gap:10px;justify-content:center;align-items:center;padding:10px;background:#1F5130;font:600 14px Arial,sans-serif;color:#fff} .cvbar button{font:700 14px Arial,sans-serif;border:0;border-radius:999px;padding:9px 18px;cursor:pointer;background:#fff;color:#1F5130} .cvbar button.y{background:#f9a61b;color:#111}</style></head><body><div class="cvbar"><span>PABALAT cover page preview</span><button class="y" onclick="opener && opener.coverDownload ? opener.coverDownload(window.__cv) : alert('Close this tab and download from TALA.')">⬇ Download PDF</button><button onclick="print()">🖨 Print</button></div>${C.html}<script>(${coverFit.toString()})(document.body);<\/script></body></html>`); doc.close();
+  try{ doc.defaultView.__cv = o; }catch(e){}
   setTimeout(() => { try{ doc.defaultView.eval('(' + coverFit.toString() + ')(document.body)'); }catch(e){} }, 1500); }
 const COVER_CSS = `
 .cvp{position:relative;overflow:hidden;background:#fff;box-sizing:border-box;break-after:page;page-break-after:always;-webkit-print-color-adjust:exact;print-color-adjust:exact;font-family:Poppins,Arial,sans-serif;color:#000}
 .cvp:last-child{break-after:auto;page-break-after:auto}
 .cvp img{display:block}
-.cv-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.cv-bg{position:absolute;inset:0;background-size:cover;background-position:center;background-repeat:no-repeat}
 .cv-lay,.cv-ic{position:absolute;height:auto}
 .cv-title,.cv-name,.cv-role,.cv-ct{position:absolute;overflow:hidden}
 .cv-title{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
@@ -12808,11 +12845,32 @@ const COVER_CSS = `
 .cv-qr{position:absolute;background:#fff;padding:.9mm .9mm .5mm;box-sizing:content-box;border-radius:1mm;text-align:center}.cv-qr svg{display:block;width:100%;height:auto}.cv-qr b{display:block;font-family:Arial,sans-serif;font-weight:700;line-height:1.15;margin-top:.4mm;white-space:nowrap;letter-spacing:-.02em}
 .folderpg{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:14mm;background:#fff}
 .cv-cuttip{font:600 3.4mm Arial,sans-serif;color:#555;margin:0 0 3mm}
-.cv-box{position:relative;width:155mm;height:155mm;outline:.45mm dashed #333;outline-offset:2.5mm;overflow:hidden;flex:none}
+.cv-cut{border:.45mm dashed #333;padding:2.5mm;flex:none}.cv-box{position:relative;width:155mm;height:155mm;overflow:hidden}
 `;
 (function(){ const st = document.createElement('style'); st.id = 'coverCss'; st.textContent = COVER_CSS; document.head.appendChild(st); })();
 
-function practiceBar(){ const b = $('practiceBar'); if (USER && USER.sample){ if (!b) document.body.insertAdjacentHTML('afterbegin', `<div class="practicebar" id="practiceBar">Practice account: you are viewing TALA as ${esc(USER.name)}. Nothing you do here is saved.</div>`); } else if (b) b.remove(); }
+/* ----- Practice account: the name, email, and photo of the teacher it mirrors never show on the screen (for training and recordings) ----- */
+var MASK = null, MASK_OBS = null;
+function maskSetup(){ const m = USER && USER.sample && USER.mask; if (!m || !m.name){ MASK = null; if (MASK_OBS){ MASK_OBS.disconnect(); MASK_OBS = null; } return; }
+  const rx = x => x.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), label = USER.name || 'Practice account', parts = m.name.trim().replace(/\s+/g, ' ').split(' ');
+  const mi = parts.findIndex((w, i) => i > 0 && /^[A-ZÑ]\.?$/i.test(w) && w.length <= 2), first = mi > 0 ? parts.slice(0, mi).join(' ') : parts.slice(0, -1).join(' '), last = parts[parts.length-1];
+  const full = [m.name.trim(), first+' '+last, mi > 0 ? first+' '+parts[mi]+' '+last : '', last+', '+first, mi > 0 ? last+', '+first+' '+parts[mi] : ''].filter(Boolean).sort((a, b) => b.length - a.length);
+  MASK = { full:new RegExp(full.map(rx).join('|'), 'gi'), first: first ? new RegExp('(^|[^A-Za-zÀ-ÿ])('+rx(first)+')(?![A-Za-zÀ-ÿ])', 'gi') : null, last: last ? new RegExp('(^|[^A-Za-zÀ-ÿ])('+rx(last)+')(?![A-Za-zÀ-ÿ])', 'gi') : null,
+    email:new RegExp(rx(m.email), 'gi'), label, as: m.as || 'practice@baluyan.tala' };
+  maskNode(document.body); try{ document.title = maskText(document.title); }catch(e){}
+  if (!MASK_OBS){ MASK_OBS = new MutationObserver(L => { if (!MASK) return; L.forEach(x => { if (x.type==='characterData') maskNode(x.target); else if (x.type==='attributes') maskNode(x.target, true); else x.addedNodes.forEach(n => maskNode(n)); }); });
+    MASK_OBS.observe(document.body, { childList:true, subtree:true, characterData:true, attributes:true, attributeFilter:['value','placeholder','title','alt'] }); } }
+function maskText(t){ if (!MASK || !t || typeof t!=='string') return t; let v = t.replace(MASK.email, MASK.as).replace(MASK.full, MASK.label);
+  if (MASK.first) v = v.replace(MASK.first, (a, p) => p + MASK.label); if (MASK.last) v = v.replace(MASK.last, (a, p) => p + MASK.label); return v; }
+function maskEl(el){ ['value','placeholder','title','alt'].forEach(a => { if (el.hasAttribute(a)){ const v = el.getAttribute(a), w = maskText(v); if (w!==v) el.setAttribute(a, w); } });
+  if ((el.tagName==='INPUT' || el.tagName==='TEXTAREA') && el.value){ const w = maskText(el.value); if (w!==el.value) el.value = w; } }
+function maskNode(n, attrOnly){ if (!MASK || !n) return;
+  if (n.nodeType===3){ const w = maskText(n.nodeValue); if (w!==n.nodeValue) n.nodeValue = w; return; }
+  if (n.nodeType!==1 || n.tagName==='SCRIPT' || n.tagName==='STYLE') return; maskEl(n); if (attrOnly) return;
+  const tw = document.createTreeWalker(n, NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT); let x;
+  while ((x = tw.nextNode())){ if (x.nodeType===3){ const p = x.parentNode; if (p && (p.tagName==='SCRIPT' || p.tagName==='STYLE')) continue; const w = maskText(x.nodeValue); if (w!==x.nodeValue) x.nodeValue = w; } else maskEl(x); } }
+
+function practiceBar(){ try{ maskSetup(); }catch(e){} const b = $('practiceBar'); if (USER && USER.sample){ if (!b) document.body.insertAdjacentHTML('afterbegin', `<div class="practicebar" id="practiceBar">${esc(USER.sampleName || 'Practice account')}: you are looking around TALA as a teacher. Nothing you do here is saved.</div>`); } else if (b) b.remove(); }
 function renderAcc(){
   $('accBody').innerHTML = `<div class="row" style="justify-content:flex-start;margin-bottom:10px"><button class="btn ghost small" onclick="practiceOpen()">👀 Practice accounts (KS1 and KS2)</button></div><div class="table-wrap"><table><thead><tr><th>Name and email</th><th>Role and position</th><th>Status</th><th>PIN</th><th>PIN status</th><th>Last sign in</th><th>Sign ins</th><th>Account</th><th>Notifications</th><th>Test account</th><th></th></tr></thead><tbody>${
     ACC.map(a=>`<tr><td><b>${esc(a.name)}</b><small>${esc(a.email)}</small><button class="linkbtn" style="font-size:12.5px;margin-top:4px" onclick="openEditAcc('${esc(a.email)}')">Edit name, position, and profile</button></td>
