@@ -1271,6 +1271,17 @@ img.pav,span.pav{width:22px;height:22px;border-radius:50%;object-fit:cover;verti
 .lacfeat-play{position:absolute;inset:0;display:grid;place-items:center;background:linear-gradient(180deg,rgba(0,0,0,0) 45%,rgba(0,0,0,.6))}.lacfeat-play span{width:78px;height:78px;border-radius:50%;background:rgba(255,255,255,.92);display:grid;place-items:center;font-size:30px;color:#1F5130;box-shadow:0 6px 20px rgba(0,0,0,.35)}
 .lacfeat-cap{position:absolute;left:16px;right:16px;bottom:12px;color:#fff;text-align:left;display:grid;gap:2px}.lacfeat-cap b{font-size:18px}.lacfeat-cap small{opacity:.9}
 .lacfeat-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0 14px}.lacnomat{border:1.5px dashed var(--line);border-radius:14px;padding:16px;display:grid;gap:8px;margin:6px 0 14px;background:var(--card)}
+#docPub{position:fixed;inset:0;z-index:100000;background:#eef3ee;overflow:auto;padding:16px;-webkit-overflow-scrolling:touch}body.docpub-on{overflow:hidden}
+.dp-card{max-width:720px;margin:0 auto;background:#fff;border-radius:16px;padding:18px 18px 14px;box-shadow:0 6px 24px rgba(0,0,0,.12)}.dp-load{padding:40px 10px;text-align:center;font-size:17px}
+.dp-h{display:flex;gap:10px;align-items:center;border-bottom:2px solid #1F5130;padding-bottom:10px;margin-bottom:10px}.dp-h img{width:46px;height:46px;border-radius:50%}.dp-h div{display:grid}.dp-h small{color:#5b6b60}
+.dp-k{margin:0;font-size:12px;letter-spacing:.08em;color:#c2410c;font-weight:800}.dp-card h2{margin:2px 0 4px;font-size:22px;line-height:1.25;color:#1F5130}.dp-code{margin:0;font:700 16px monospace}.dp-now{margin:10px 0 4px}
+.dp-chip{display:inline-block;font-weight:800;border-radius:999px;padding:7px 16px;font-size:15px;background:#e6f4ea;color:#1e7a3c}.dp-chip.wait{background:#fff4d6;color:#8a5300}.dp-chip.bad{background:#fdecea;color:#b3261e}
+#docPub *{box-sizing:border-box}.dp-card{width:100%}.dp-t{width:100%;min-width:0 !important;border-collapse:collapse;margin:10px 0;table-layout:fixed}.dp-t td{overflow-wrap:anywhere}.dp-t td{border-bottom:1px solid #e3e6dd;padding:8px 6px;vertical-align:top;font-size:15px}.dp-t td:first-child{color:#5b6b60;width:36%}
+.dp-card h3{font-size:16px;margin:14px 0 6px}.dp-tl{list-style:none;padding:0 0 0 16px;margin:0;border-left:3px solid #c9d8cc}.dp-tl li{position:relative;padding:0 0 12px 10px}.dp-tl li:before{content:'';position:absolute;left:-24px;top:3px;width:13px;height:13px;border-radius:50%;background:#9db7a3}.dp-tl li.now:before{background:#1F5130;box-shadow:0 0 0 4px #cfe5d4}.dp-tl small{display:block;color:#5b6b60}
+.dp-list{display:grid;gap:8px;margin:10px 0}.dp-row{display:flex;justify-content:space-between;gap:10px;align-items:center;text-align:left;border:1.5px solid #e3e6dd;border-radius:12px;padding:10px 12px;background:#fff;font:inherit;cursor:pointer}.dp-row small{display:block;color:#5b6b60}.dp-row .dp-chip{font-size:12.5px;padding:4px 10px;white-space:nowrap}
+.dp-btns{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end;margin-top:14px}
+@media print{ body.docpub-on > *:not(#docPub){display:none !important} body.docpub-on #docPub{position:static;display:block !important;background:#fff;padding:0} body.docpub-on .dp-btns{display:none} body.docpub-on .dp-card{box-shadow:none} }
+.suri-cam{position:relative;border-radius:12px;overflow:hidden;background:#000}.suri-cam video{display:block;width:100%;max-height:56vh;object-fit:cover}.suri-box{position:absolute;left:50%;top:50%;width:62%;aspect-ratio:1;transform:translate(-50%,-50%);border:3px solid rgba(255,255,255,.9);border-radius:14px;box-shadow:0 0 0 2000px rgba(0,0,0,.28)}
 .rdot.inl{position:static;display:inline-block;vertical-align:middle;box-shadow:none;width:9px;height:9px}
 .rptroute{list-style:none;padding:0 0 0 14px;margin:6px 0;border-left:3px solid var(--line)}.rptroute li{position:relative;padding:0 0 10px 8px}.rptroute li:before{content:'';position:absolute;left:-22px;top:4px;width:11px;height:11px;border-radius:50%;background:var(--brand,#2b6cb0)}.rptroute small{display:block;color:var(--muted)}.rptroute p{margin:3px 0 0}
 /* Paper printing: cover pages, ICS, stickers */
@@ -2079,7 +2090,7 @@ body.ntklocked{overflow:hidden}
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
 const MIN_SERVER = '9.6'; // oldest Code.gs this page works with
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'9.6', date:'November 1, 2026' } };
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'9.7', date:'November 1, 2026' } };
 function verLine(server){
   const old = server && (server.indexOf('older') > -1 || parseFloat(server) < parseFloat(MIN_SERVER));
   const s = server ? ' Server '+server+('.') : '';
@@ -12690,10 +12701,6 @@ async function featClearGo(k){ const w = $('fcWord').value.trim().toUpperCase();
     if (k==='inv'){ INV.data = r; INV.st = ''; INV.q = ''; invDraw(); } else { RPT.data = r; RPT.st = ''; RPT.q = ''; rptDraw(); } drawSide(); toast('Cleared. The feature is clean.'); }
   catch(e){ loading(false); handleErr(e, 'fcErr'); } }
 /* ----- Document numbers and QR codes. Every report has its own document number; the QR code opens TALA on that report. ----- */
-function docUrl(code){ return location.origin + location.pathname + '?doc=' + encodeURIComponent(code); }
-function qrSvg(text){ if (!window.qrcode) return ''; const q = window.qrcode(0, 'M'); q.addData(text); q.make(); const n = q.getModuleCount();
-  let d = ''; for (let r = 0; r < n; r++) for (let c = 0; c < n; c++) if (q.isDark(r, c)) d += `M${c} ${r}h1v1h-1z`;
-  return `<svg viewBox="-2 -2 ${n+4} ${n+4}" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"><rect x="-2" y="-2" width="${n+4}" height="${n+4}" fill="#fff"/><path d="${d}" fill="#000"/></svg>`; }
 async function qrFill(){ try{ await coverKit(); }catch(e){ return; } document.querySelectorAll('[data-qr]').forEach(el => { if (!el.dataset.done){ el.innerHTML = qrSvg(el.dataset.qr); el.dataset.done = '1'; } }); }
 
 /* ----- PADALA: the transmittal. One transmittal for each office; it lists the documents with their numbers and carries a QR code. ----- */
@@ -12736,35 +12743,69 @@ async function trPrint(nos){ nos = [].concat(nos); try{ await coverKit(); }catch
   printPaper(pages.join(''), 210, 297, 'trpp'); }
 
 /* ----- SURI: scan or type a document number to see where the document is ----- */
-async function docShow(code){ code = String(code||'').trim(); const m = code.match(/[?&]doc=([^&#]+)/); if (m) code = decodeURIComponent(m[1]); if (!code) return;
-  try{ loading(true, 'Looking for the document'); const r = await api('docGet', { code }); loading(false);
-    const chip = st => (typeof rptChip==='function' ? rptChip(st) : esc(st)), tl = R => `<ol class="suri-tl">${(R||[]).map(x => `<li><b>${esc(x.act)}</b>${x.to ? ' to '+esc(x.to) : ''}<small>${esc(dTime(x.on))}, ${esc(x.by)}</small></li>`).join('')}</ol>`;
-    const mine = RPT.data && (RPT.data.items||[]).find(o => o.code===r.code);
-    if (r.kind==='trans') stfModal(`<h3>📨 Transmittal ${esc(r.no)}</h3><p class="sub">To ${esc(r.office)} · made by ${esc(r.by)} on ${esc(dTime(r.on))}</p>
-      <div class="table-wrap"><table class="tqtbl"><thead><tr><th>Document No.</th><th>Title</th><th>From</th><th>Status now</th></tr></thead><tbody>${r.items.map(x => `<tr><td><button class="linkbtn" onclick="docShow('${esc(x.code)}')">${esc(x.code)}</button></td><td>${esc(x.title)}</td><td>${esc(x.name)}</td><td>${chip(x.status)}</td></tr>`).join('')}</tbody></table></div>
-      <div class="modal-actions"><button class="btn" onclick="closeModal('stfModal')">Close</button></div>`, 'wide');
-    else stfModal(`<h3>${esc(r.title)}</h3><p class="sub"><code>${esc(r.code)}</code> · ${chip(r.status)}</p>
-      <div class="table-wrap"><table class="stft-table invdet"><tbody><tr><td>From</td><td>${esc(r.dir==='in' ? r.from : r.name)}</td></tr>${r.sub?`<tr><td>Period</td><td>${esc(r.sub)}</td></tr>`:''}<tr><td>Type</td><td>${esc(r.type)}</td></tr><tr><td>Office</td><td>${esc(r.office)}</td></tr><tr><td>Date and time</td><td>${esc(dTime(r.on))}</td></tr>${(r.trans||[]).length ? `<tr><td>Transmittal</td><td>${r.trans.map(t => `<button class="linkbtn" onclick="docShow('${esc(t.no)}')">${esc(t.no)}</button> to ${esc(t.office)}`).join('<br>')}</td></tr>` : ''}</tbody></table></div>
-      <h4 class="stfgrp">Where it has been</h4>${tl(r.route)}
-      <div class="modal-actions">${mine ? `<button class="btn ghost" onclick="rptView('${mine.id}')">Open in DALOY</button>` : ''}<button class="btn" onclick="closeModal('stfModal')">Close</button></div>`, 'wide'); }
-  catch(e){ loading(false); stfModal(`<h3>Document not found</h3><p>${esc(friendly(e.message))}</p><div class="modal-actions"><button class="btn" onclick="closeModal('stfModal')">Close</button></div>`); } }
-var SURI = { stream:null, t:0 };
-function docScanStop(){ clearInterval(SURI.t); if (SURI.stream){ SURI.stream.getTracks().forEach(t => t.stop()); SURI.stream = null; } }
-async function docScan(){ const can = 'BarcodeDetector' in window && navigator.mediaDevices;
-  stfModal(`<h3>📷 SURI: scan a QR code</h3><div class="suri">${can ? '<video id="suriV" playsinline muted></video><p class="hint">Point the camera at the QR code on a cover page or a transmittal.</p>' : '<p class="hint">This browser cannot read QR codes inside TALA. Open the camera app of your phone and point it at the QR code; it opens TALA on the document. You may also type the number below.</p>'}</div>
+// The QR code holds a short link, so it has big squares that any scanner or phone camera reads easily
+function docUrl(code){ return location.origin + location.pathname.replace(/index\.html$/i, '') + '?d=' + encodeURIComponent(code); }
+function qrSvg(text){ if (!window.qrcode) return ''; const q = window.qrcode(0, 'M'); q.addData(text); q.make(); const n = q.getModuleCount(), z = 4;
+  let d = ''; for (let r = 0; r < n; r++) for (let c = 0; c < n; c++) if (q.isDark(r, c)) d += `M${c} ${r}h1v1h-1z`;
+  return `<svg viewBox="-${z} -${z} ${n+2*z} ${n+2*z}" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"><rect x="-${z}" y="-${z}" width="${n+2*z}" height="${n+2*z}" fill="#fff"/><path d="${d}" fill="#000"/></svg>`; }
+/* SURI: the status of a document, as a full page. Anyone with the paper can see it, even without signing in to TALA. */
+function docCodeOf(text){ let c = String(text||'').trim(); const m = c.match(/[?&](?:d|doc)=([^&#\s]+)/i); if (m) c = decodeURIComponent(m[1]); return c.toUpperCase(); }
+async function docShow(text){ const code = docCodeOf(text); if (!code) return; docScanStop(); try{ closeModal('stfModal'); }catch(e){}
+  let el = $('docPub'); if (!el){ el = document.createElement('div'); el.id = 'docPub'; document.body.appendChild(el); }
+  el.innerHTML = `<div class="dp-card"><div class="dp-load">🔎 Looking for <b>${esc(code)}</b>...</div></div>`; el.hidden = false; document.body.classList.add('docpub-on');
+  let r; try{ r = await api('docGet', { code }); }catch(e){ el.innerHTML = `<div class="dp-card">${docPubHead()}<h2>Document not found</h2><p>${esc(friendly(e.message))}</p><p class="hint">Check the number: <b>${esc(code)}</b></p>${docPubBtns()}</div>`; return; }
+  const chip = st => `<span class="dp-chip ${/correction/i.test(st)?'bad':/Incoming|personal/i.test(st)?'wait':'ok'}">${esc(st==='Personal'?'For personal use':st)}</span>`;
+  const tl = R => `<ol class="dp-tl">${(R||[]).map((x, i) => `<li class="${i===(R.length-1)?'now':''}"><b>${esc(x.act)}</b>${x.to ? ' to '+esc(x.to) : ''}<small>${esc(dTime(x.on))} · ${esc(x.by)}</small></li>`).join('')}</ol>`;
+  const asOf = `Status as of ${esc(dTime(new Date().toLocaleString('sv-SE', { timeZone:'Asia/Manila' }).slice(0,16)))}`;
+  const mine = typeof RPT!=='undefined' && RPT.data && (RPT.data.items||[]).find(o => o.code===r.code);
+  if (r.kind==='trans') el.innerHTML = `<div class="dp-card">${docPubHead()}<p class="dp-k">PADALA TRANSMITTAL</p><h2>${esc(r.no)}</h2><p>To <b>${esc(r.office)}</b> · made by ${esc(r.by)} on ${esc(dTime(r.on))}</p><p class="hint">${asOf}</p>
+      <div class="dp-list">${r.items.map(x => `<button class="dp-row" onclick="docShow('${esc(x.code)}')"><span><b>${esc(x.title)}</b><small>${esc(x.code)} · ${esc(x.name)}</small></span>${chip(x.status)}</button>`).join('')}</div>
+      <p class="hint">Tap a document to see where it has been.</p>${docPubBtns()}</div>`;
+  else el.innerHTML = `<div class="dp-card">${docPubHead()}<p class="dp-k">DOCUMENT STATUS</p><h2>${esc(r.title)}</h2><p class="dp-code">${esc(r.code)}</p><div class="dp-now">${chip(r.status)}</div><p class="hint">${asOf}</p>
+      <table class="dp-t"><tbody><tr><td>From</td><td>${esc(r.dir==='in' ? (r.from||'') : r.name)}</td></tr>${r.sub ? `<tr><td>Period</td><td>${esc(r.sub)}</td></tr>` : ''}<tr><td>Type</td><td>${esc(r.type)}</td></tr><tr><td>Office</td><td>${esc(r.office)}</td></tr><tr><td>Logged on</td><td>${esc(dTime(r.on))}</td></tr>
+        ${(r.trans||[]).length ? `<tr><td>Transmittal</td><td>${r.trans.map(t => `<button class="linkbtn" onclick="docShow('${esc(t.no)}')">${esc(t.no)}</button> to ${esc(t.office)}`).join('<br>')}</td></tr>` : ''}</tbody></table>
+      ${(r.route||[]).length ? `<h3>Where it has been</h3>${tl(r.route)}` : ''}${docPubBtns(mine)}</div>`; }
+function docPubHead(){ return `<div class="dp-h"><img src="${typeof LOGO!=='undefined' ? LOGO : ''}" alt=""><div><b>Baluyan Elementary School</b><small>TALA · Project DALOY document tracking</small></div></div>`; }
+function docPubBtns(mine){ return `<div class="dp-btns"><button class="btn ghost" onclick="window.print()">🖨 Print this status</button><button class="btn ghost" onclick="docScan()">📷 Scan another</button>${mine ? `<button class="btn ghost" onclick="docPubClose();rptView('${mine.id}')">Open in DALOY</button>` : ''}<button class="btn" onclick="docPubClose()">${USER ? 'Close' : 'Go to TALA'}</button></div>`; }
+function docPubClose(){ const el = $('docPub'); if (el) el.hidden = true; document.body.classList.remove('docpub-on'); }
+/* The scanner inside TALA: the camera picture is read again and again until a QR code is found. It works on Android and iPhone. */
+var SURI = { stream:null, t:0, busy:false, det:null };
+function docScanStop(){ clearInterval(SURI.t); SURI.t = 0; if (SURI.stream){ SURI.stream.getTracks().forEach(t => t.stop()); SURI.stream = null; } }
+async function docScan(){ docPubClose();
+  stfModal(`<h3>📷 SURI: scan a QR code</h3><div class="suri"><div class="suri-cam"><video id="suriV" playsinline muted autoplay></video><span class="suri-box"></span></div><p class="hint" id="suriMsg">Opening the camera...</p></div>
+    <div class="row" style="justify-content:flex-start;gap:8px;flex-wrap:wrap;margin:6px 0"><label class="btn ghost small" style="cursor:pointer">🖼 Take or choose a picture<input type="file" accept="image/*" capture="environment" hidden onchange="docScanFile(this.files[0])"></label></div>
     <div class="field"><label>Or type the document or transmittal number</label><input id="suriN" placeholder="Example: 125592-2026-0001 or TR-125592-2026-0001"></div>
-    <div class="modal-actions"><button class="btn ghost" onclick="docScanStop();closeModal('stfModal')">Close</button><button class="btn" onclick="docScanStop();docShow($('suriN').value)">Find</button></div>`);
-  if (!can) return;
-  try{ const det = new BarcodeDetector({ formats:['qr_code'] }); SURI.stream = await navigator.mediaDevices.getUserMedia({ video:{ facingMode:'environment' } }); const v = $('suriV'); v.srcObject = SURI.stream; await v.play();
-    SURI.t = setInterval(async () => { if (!$('suriV')){ docScanStop(); return; } try{ const c = await det.detect(v); if (c && c[0]){ docScanStop(); docShow(c[0].rawValue); } }catch(e){} }, 350); }
-  catch(e){ docScanStop(); const s = document.querySelector('.suri'); if (s) s.innerHTML = '<p class="hint">The camera could not open. Allow the camera for TALA, or type the number below.</p>'; } }
-// A QR code scanned with the phone camera opens TALA with ?doc= in the link
-(function docFromUrl(){ let code = ''; try{ code = new URLSearchParams(location.search).get('doc') || ''; }catch(e){} if (!code) return;
-  let n = 0; const go = () => { if (typeof connected==='function' && connected() && document.readyState==='complete'){ docShow(code); try{ history.replaceState(null, '', location.pathname); }catch(e){} } else if (n++ < 40) setTimeout(go, 400); };
-  setTimeout(go, 1200); })();
+    <div class="modal-actions"><button class="btn ghost" onclick="docScanStop();closeModal('stfModal')">Close</button><button class="btn" onclick="docShow($('suriN').value)">Find</button></div>`);
+  try{ await coverKit(); }catch(e){}
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){ $('suriMsg').textContent = 'This browser cannot open the camera here. Tap Take or choose a picture, or use the camera app of your phone.'; return; }
+  try{ SURI.stream = await navigator.mediaDevices.getUserMedia({ video:{ facingMode:{ ideal:'environment' }, width:{ ideal:1280 }, height:{ ideal:720 } }, audio:false });
+    const tr = SURI.stream.getVideoTracks()[0]; try{ const cap = tr.getCapabilities ? tr.getCapabilities() : {}; if (cap.focusMode && cap.focusMode.indexOf('continuous') > -1) await tr.applyConstraints({ advanced:[{ focusMode:'continuous' }] }); }catch(e){}
+    const v = $('suriV'); v.srcObject = SURI.stream; await v.play(); $('suriMsg').textContent = 'Hold the QR code inside the box, about a hand away. Hold still for a moment.';
+    try{ if ('BarcodeDetector' in window){ const f = await BarcodeDetector.getSupportedFormats(); if (f.indexOf('qr_code') > -1) SURI.det = new BarcodeDetector({ formats:['qr_code'] }); } }catch(e){ SURI.det = null; }
+    let k = 0; SURI.t = setInterval(() => docScanTick(k++), 220); }
+  catch(e){ docScanStop(); $('suriMsg').textContent = 'The camera could not open. Allow the camera for TALA in the browser settings, or tap Take or choose a picture.'; } }
+const SURI_CV = document.createElement('canvas');
+async function docScanTick(k){ const v = $('suriV'); if (!v){ docScanStop(); return; } if (SURI.busy || !v.videoWidth) return; SURI.busy = true;
+  try{ let code = '';
+    if (SURI.det && k % 2 === 0){ try{ const c = await SURI.det.detect(v); if (c && c[0]) code = c[0].rawValue; }catch(e){} }
+    if (!code && window.jsQR){ const s = Math.min(1, 960 / Math.max(v.videoWidth, v.videoHeight)), w = Math.round(v.videoWidth * s), h = Math.round(v.videoHeight * s);
+      SURI_CV.width = w; SURI_CV.height = h; const g = SURI_CV.getContext('2d', { willReadFrequently:true }); g.drawImage(v, 0, 0, w, h);
+      const r = window.jsQR(g.getImageData(0, 0, w, h).data, w, h, { inversionAttempts:'attemptBoth' }); if (r && r.data) code = r.data; }
+    if (code){ try{ navigator.vibrate && navigator.vibrate(80); }catch(e){} docScanStop(); docShow(code); } }
+  finally{ SURI.busy = false; } }
+async function docScanFile(file){ if (!file) return; try{ await coverKit(); }catch(e){} const img = new Image(); img.onload = () => { let found = '';
+    [1600, 1000, 600].some(mx => { const s = Math.min(1, mx / Math.max(img.width, img.height)), w = Math.round(img.width * s), h = Math.round(img.height * s); SURI_CV.width = w; SURI_CV.height = h;
+      const g = SURI_CV.getContext('2d', { willReadFrequently:true }); g.drawImage(img, 0, 0, w, h); const r = window.jsQR ? window.jsQR(g.getImageData(0, 0, w, h).data, w, h, { inversionAttempts:'attemptBoth' }) : null; if (r && r.data){ found = r.data; return true; } return false; });
+    URL.revokeObjectURL(img.src); if (found) docShow(found); else { const m = $('suriMsg'); if (m) m.textContent = 'No QR code was found in the picture. Take it again closer, with the whole QR code inside.'; } };
+  img.src = URL.createObjectURL(file); }
+// A QR code scanned with any phone camera or scanner app opens TALA with ?d= in the link and shows the status at once, even without signing in
+(function docFromUrl(){ let code = ''; try{ const q = new URLSearchParams(location.search); code = q.get('d') || q.get('doc') || ''; }catch(e){} if (!code) return;
+  let n = 0; const go = () => { if (typeof connected==='function' && connected() && document.body){ docShow(code); try{ history.replaceState(null, '', location.pathname); }catch(e){} } else if (n++ < 60) setTimeout(go, 250); };
+  setTimeout(go, 300); })();
+
 
 /* ----- Cover pages: from the school design. The title always fits: the letters get smaller until nothing is cut or covered. ----- */
-async function coverKit(){ if (!window.COVER_KIT) await loadScript('cover-kit.js?v=3'); if (!window.COVER_KIT) throw new Error('The cover design file (cover-kit.js) was not found next to index.html.'); return window.COVER_KIT; }
+async function coverKit(){ if (!window.COVER_KIT) await loadScript('cover-kit.js?v=4'); if (!window.COVER_KIT) throw new Error('The cover design file (cover-kit.js) was not found next to index.html.'); return window.COVER_KIT; }
 const PAPER = { A4:[210, 297], Long:[215.9, 330.2] };
 /* The cover design of the school (from the Canva file). The header, the logos, the name band, and the icons are the
    design itself, kept as pictures; only the title, the name, the position, and the contacts change for each user. */
