@@ -1267,9 +1267,9 @@ img.pav,span.pav{width:22px;height:22px;border-radius:50%;object-fit:cover;verti
 .acro{margin:2px 0 4px;color:var(--brand,#1F5130);font-size:13.5px;letter-spacing:.01em}.acro b{font-size:15px}
 .rfuse{display:flex;flex-wrap:wrap;gap:6px 18px}.rfsug{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 2px}.rfsug button{border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:4px 10px;font:inherit;font-size:12.5px;cursor:pointer;color:var(--ink)}.rfsug button:hover{border-color:var(--brand,#1F5130)}
 .qg{display:grid;gap:10px}.qg-top{display:flex;gap:10px;align-items:center}.qg-ico{font-size:40px;line-height:1}.qg-step{font-size:12.5px;color:var(--muted)}.qg h3{margin:0}.qg ul{margin:4px 0 0;padding-left:20px;line-height:1.55}.qg-dots{display:flex;gap:5px;justify-content:center}.qg-dots i{width:8px;height:8px;border-radius:50%;background:var(--line)}.qg-dots i.on{background:var(--brand,#1F5130)}
-.lacfeat{position:relative;display:block;width:100%;aspect-ratio:16/9;max-height:62vh;border:0;border-radius:14px;overflow:hidden;background:#1F5130;cursor:pointer;padding:0}.lacfeat img{width:100%;height:100%;object-fit:cover;display:block}.lacfeat .hubslide{display:grid;place-items:center;height:100%;color:#fff}
-.lacfeat-play{position:absolute;inset:0;display:grid;place-items:center;background:linear-gradient(180deg,rgba(0,0,0,0) 45%,rgba(0,0,0,.6))}.lacfeat-play span{width:78px;height:78px;border-radius:50%;background:rgba(255,255,255,.92);display:grid;place-items:center;font-size:30px;color:#1F5130;box-shadow:0 6px 20px rgba(0,0,0,.35)}
-.lacfeat-cap{position:absolute;left:16px;right:16px;bottom:12px;color:#fff;text-align:left;display:grid;gap:2px}.lacfeat-cap b{font-size:18px}.lacfeat-cap small{opacity:.9}
+.lacfeat{position:relative;display:block;width:100%;max-width:520px;aspect-ratio:16/9;border:0;border-radius:14px;overflow:hidden;background:#1F5130;cursor:pointer;padding:0}.lacfeat img{width:100%;height:100%;object-fit:cover;display:block}.lacfeat .hubslide{display:grid;place-items:center;height:100%;color:#fff}
+.lacfeat-play{position:absolute;inset:0;display:grid;place-items:center;background:linear-gradient(180deg,rgba(0,0,0,0) 45%,rgba(0,0,0,.6))}.lacfeat-play span{width:62px;height:62px;border-radius:50%;background:rgba(255,255,255,.92);display:grid;place-items:center;font-size:30px;color:#1F5130;box-shadow:0 6px 20px rgba(0,0,0,.35)}
+.lacfeat-cap{position:absolute;left:16px;right:16px;bottom:12px;color:#fff;text-align:left;display:grid;gap:2px}.lacfeat-cap b{font-size:15px}.lacfeat-cap small{opacity:.9}
 .lacfeat-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0 14px}.lacnomat{border:1.5px dashed var(--line);border-radius:14px;padding:16px;display:grid;gap:8px;margin:6px 0 14px;background:var(--card)}
 #docPub{position:fixed;inset:0;z-index:100000;background:#eef3ee;overflow:auto;padding:16px;-webkit-overflow-scrolling:touch}body.docpub-on{overflow:hidden}
 .dp-card{max-width:720px;margin:0 auto;background:#fff;border-radius:16px;padding:18px 18px 14px;box-shadow:0 6px 24px rgba(0,0,0,.12)}.dp-load{padding:40px 10px;text-align:center;font-size:17px}
@@ -1282,6 +1282,35 @@ img.pav,span.pav{width:22px;height:22px;border-radius:50%;object-fit:cover;verti
 .dp-btns{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end;margin-top:14px}
 @media print{ body.docpub-on > *:not(#docPub){display:none !important} body.docpub-on #docPub{position:static;display:block !important;background:#fff;padding:0} body.docpub-on .dp-btns{display:none} body.docpub-on .dp-card{box-shadow:none} }
 .suri-cam{position:relative;border-radius:12px;overflow:hidden;background:#000}.suri-cam video{display:block;width:100%;max-height:56vh;object-fit:cover}.suri-box{position:absolute;left:50%;top:50%;width:62%;aspect-ratio:1;transform:translate(-50%,-50%);border:3px solid rgba(255,255,255,.9);border-radius:14px;box-shadow:0 0 0 2000px rgba(0,0,0,.28)}
+.lacfeat{transition:transform .25s ease,box-shadow .25s ease}.lacfeat:hover{transform:translateY(-3px) scale(1.01);box-shadow:0 14px 30px rgba(31,81,48,.28)}.lacfeat:after{content:'⛶ Tap to play, then Full screen';position:absolute;top:10px;right:10px;background:rgba(0,0,0,.55);color:#fff;font-size:12px;padding:4px 10px;border-radius:999px}
+/* photos while watching */
+#hubCam{position:fixed;inset:0;z-index:100002;background:rgba(10,30,18,.72);display:grid;place-items:center;padding:14px;overflow:auto}#hubCam[hidden]{display:none}
+.hc-card{background:#fff;border-radius:18px;max-width:560px;width:100%;padding:18px;box-shadow:0 20px 50px rgba(0,0,0,.35);display:grid;gap:8px;animation:hcpop .35s cubic-bezier(.2,1.3,.4,1)}.hc-card h3{margin:0;color:#1F5130}
+.hc-tag{justify-self:start;background:#fff4d6;color:#8a5300;font-weight:800;border-radius:999px;padding:4px 12px;font-size:13px}.hc-steps{margin:0;padding-left:20px;line-height:1.6}
+.hc-cam{border-radius:12px;overflow:hidden;background:#000}.hc-cam video,.hc-cam canvas{display:block;width:100%;max-height:52vh;object-fit:contain}.hc-cam video{transform:scaleX(-1)}
+.hc-btns{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end}.hc-none{justify-self:start;font-size:12.5px}
+@keyframes hcpop{from{transform:scale(.85);opacity:0}to{transform:none;opacity:1}}
+.hcgal{display:grid;gap:12px}.hcp b{display:block;margin-bottom:4px}.hcp-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px}.hcp-g figure{margin:0}.hcp-i{aspect-ratio:4/3;background:var(--page);border-radius:10px;display:grid;place-items:center;overflow:hidden;font-size:26px}.hcp-i img{width:100%;height:100%;object-fit:cover;cursor:zoom-in}.hcp-i.none{background:#fdecea}.hcp-g figcaption{font-size:12px;color:var(--muted);margin-top:3px}
+.livepill{display:inline-block;vertical-align:middle;font-size:12px;font-weight:800;color:#b3261e;background:#fdecea;border-radius:999px;padding:3px 10px;animation:livep 1.6s ease-in-out infinite}@keyframes livep{50%{opacity:.45}}
+.hubjn.ok{background:var(--ok-soft);color:var(--ok)}
+/* what is new in LAC */
+.lacnews{background:var(--card);border:1.5px solid #f2c9c4;border-radius:14px;padding:10px 12px;margin:0 0 12px}.lacnews summary{cursor:pointer;font-weight:800;display:flex;align-items:center;gap:8px;flex-wrap:wrap}.lacnews summary small{font-weight:400;color:var(--muted);font-size:12.5px}.lacnews summary .sdot{position:static}
+.lacnews-l{display:grid;gap:6px;margin-top:8px;max-height:340px;overflow:auto}.lacnews-i{position:relative;display:flex;gap:10px;align-items:flex-start;text-align:left;background:var(--page);border:1.5px solid transparent;border-radius:10px;padding:8px 10px;font:inherit;font-size:13.5px;color:var(--ink);cursor:pointer}.lacnews-i:hover{border-color:var(--line)}
+.lacnews-i small{display:block;color:var(--muted);font-size:12px}.lacnews-i.red{background:#fff1ef}.lacnews-i.new{background:#fff8e6}.lacnews-i .rdot{margin-left:auto;flex:none;align-self:center}
+/* a livelier TALA */
+.abtn,.ostat,.ocard,.hcard,.hubcard,.lacmat,.choice{transition:transform .22s cubic-bezier(.2,.9,.3,1.2),box-shadow .22s ease,border-color .2s;transform:perspective(700px) rotateX(var(--rx,0)) rotateY(var(--ry,0));will-change:transform}
+.abtn:hover,.ostat:hover,.ocard:hover,.hcard:hover,.hubcard:hover,.lacmat:hover,.choice:hover{transform:perspective(700px) rotateX(var(--rx,0)) rotateY(var(--ry,0)) translateY(-3px);box-shadow:0 12px 26px rgba(31,81,48,.16)}
+.abtn,.ostat,.ocard,.hcard,.hubcard,.choice,.invrow,.lacnews-i{background-image:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(249,166,27,.16),transparent 55%)}
+.abtn:active,.ostat:active,.ocard:active,.btn:active{transform:scale(.97)}
+.abico{transition:transform .3s cubic-bezier(.2,1.6,.4,1)}.abtn:hover .abico,.ostat:hover .oico{transform:scale(1.18) rotate(-6deg)}
+.side-i{transition:background .2s,transform .2s,padding .2s}.side-i:hover{transform:translateX(4px)}.side-i svg{transition:transform .3s cubic-bezier(.2,1.6,.4,1)}.side-i:hover svg{transform:scale(1.2) rotate(-8deg)}
+.btn{transition:transform .15s ease,box-shadow .2s,filter .2s}.btn:hover{transform:translateY(-1px);box-shadow:0 6px 14px rgba(0,0,0,.12);filter:brightness(1.04)}
+.ripwrap{position:absolute;inset:0;overflow:hidden;border-radius:inherit;pointer-events:none}.ripple{position:absolute;border-radius:50%;background:rgba(249,166,27,.35);transform:scale(0);animation:ripple .65s ease-out;pointer-events:none;z-index:0}@keyframes ripple{to{transform:scale(1);opacity:0}}
+.in{animation:popin .45s cubic-bezier(.2,1,.3,1) both}@keyframes popin{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
+#talaGlow{position:fixed;left:0;top:0;width:320px;height:320px;border-radius:50%;pointer-events:none;z-index:0;opacity:0;background:radial-gradient(circle,rgba(249,166,27,.10),rgba(46,125,80,.05) 45%,transparent 70%);transition:opacity .4s;mix-blend-mode:multiply}
+.sdot,.rnum,.rdot{animation:dotpulse 2.2s ease-in-out infinite}@keyframes dotpulse{0%,100%{box-shadow:0 0 0 0 rgba(217,48,37,.45)}50%{box-shadow:0 0 0 6px rgba(217,48,37,0)}}
+@media (prefers-reduced-motion: reduce){ .abtn,.ostat,.ocard,.hcard,.hubcard,.lacmat,.choice,.side-i,.btn{transition:none;transform:none !important} .in,.sdot,.rnum,.rdot,.livepill{animation:none} #talaGlow{display:none} }
+@media print{ #talaGlow,.ripple{display:none} }
 .rdot.inl{position:static;display:inline-block;vertical-align:middle;box-shadow:none;width:9px;height:9px}
 .rptroute{list-style:none;padding:0 0 0 14px;margin:6px 0;border-left:3px solid var(--line)}.rptroute li{position:relative;padding:0 0 10px 8px}.rptroute li:before{content:'';position:absolute;left:-22px;top:4px;width:11px;height:11px;border-radius:50%;background:var(--brand,#2b6cb0)}.rptroute small{display:block;color:var(--muted)}.rptroute p{margin:3px 0 0}
 /* Paper printing: cover pages, ICS, stickers */
@@ -2089,8 +2118,8 @@ body.ntklocked{overflow:hidden}
 
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
-const MIN_SERVER = '9.6'; // oldest Code.gs this page works with
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'9.7', date:'November 1, 2026' } };
+const MIN_SERVER = '9.8'; // oldest Code.gs this page works with
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'9.8', date:'November 2, 2026' } };
 function verLine(server){
   const old = server && (server.indexOf('older') > -1 || parseFloat(server) < parseFloat(MIN_SERVER));
   const s = server ? ' Server '+server+('.') : '';
@@ -8181,7 +8210,7 @@ function attHome(){
       ${btn('\u{1F4CA}','Analysis and follow up','Who needs attention, FLP',"attReport('ana')")}
     </div>`:''}
     ${head||admin?`<h3 class="sbh4" style="font-size:16px;margin-top:18px">School</h3><div class="attoday" id="attSchoolTally"><small>Whole school today</small><span class="spin"></span></div><div class="abtns">
-      ${btn('\u{1F3EB}','All classes, live','Today\u2019s attendance per class',"attOpenLive()")}
+      ${btn('\u{1F3EB}','All classes, live','Today\u2019s attendance per class. A red number shows classes newly done.',"attOpenLive()").replace('<button class="abtn ', '<button id="attLiveBtn" class="abtn ')}
       ${btn('\u{1F4D1}','SF4 (DepEd)','School report, '+monthName(ATT.month),"showForm('sf4')")}
       ${head?btn('\u2699','Classes and advisers','Set each class and its adviser',"attSecForm()"):''}
       ${head?btn('\u{1F4AC}','Ready messages','Reminders for Messenger: class attendance, Time in',"msgCenter('att')"):''}${head?btn('\u{1F5D1}','Clear attendance data','Remove test entries before launch',"attClearOpen()",'danger'):''}</div>`:''}`;
@@ -8204,7 +8233,7 @@ async function schoolTally(fresh){
   if (!ATT.school){ try{ ATT.school = JSON.parse(localStorage.getItem(attKey('school'))||'null'); }catch(e){} }
   if (!ATT.school){ await attLoadSchoolQuiet(); fresh = true; }
   else if (!fresh && !ATT.schoolBusy){ ATT.schoolBusy = true; attLoadSchoolQuiet().then(() => { ATT.schoolBusy = false; schoolTally(true); }); }
-  const el = $('attSchoolTally'); if (!el || !ATT.school) return;
+  try{ attBadges(); }catch(e){} const el = $('attSchoolTally'); if (!el || !ATT.school) return;
   const t = todayPH(), all = { P:[], X:[], E:[], T:[] }; let taken = 0;
   ATT.sections.forEach(s => { const r = ATT.school.days[s.key+'|'+t]; if (!r || r.status!=='C') return; taken++;
     const L = ATT.school.learners.filter(l => l.sec===s.key && activeOn(l,t)), T = tally(L, l => mk(l,t,s.key), () => ' ('+secLabel(s.key)+')');
@@ -8506,7 +8535,7 @@ async function attLoadSchool(){
   try{ const r = await api('attSchool',{ from:ATT.firstDay }); const days = {}; r.days.forEach(d => days[d.sec+'|'+d.date] = d); ATT.school = { learners:r.learners, days }; }catch(e){ handleErr(e); }
   loading(false);
 }
-async function attOpenLive(keep){ ATT.liveDate = keep || todayPH(); await attLoadSchool(); ATT.view = 'live'; attDraw(); }
+async function attOpenLive(keep){ ATT.liveDate = keep || todayPH(); await attLoadSchool(); try{ seenAdd('cls', attNewCls()); }catch(e){} ATT.view = 'live'; attDraw(); }
 // All classes on one day. Opens on today; choose any school day to look back.
 function attLive(){
   const today = todayPH(), t = ATT.liveDate && ATT.liveDate <= today ? ATT.liveDate : today, S = ATT.school || { learners:[], days:{} }, isToday = t===today;
@@ -8525,7 +8554,7 @@ function attCards(t){
       pill = `<span class="opill Completed">${T.P.length} present, ${T.X.length} absent</span>${T.E.length?`<span class="opill">${T.E.length} excused</span>`:''}${T.T.length?`<span class="opill">${T.T.length} tardy</span>`:''}`; }
     else if (hol) pill = '<span class="opill">Holiday or no classes</span>';
     const go = isToday ? `ATT.sec='${esc(s.key)}';ATT.loaded='';attLoadClass().then(()=>{ATT.view='home';attDraw()})` : `attLiveOpen('${esc(s.key)}','${t}')`;
-    return `<button class="ocard" onclick="${go}"><div class="ocard-h"><span class="oav">${esc(s.grade.replace('Grade ','').charAt(0))}</span><div><b>${esc(secLabel(s.key))}</b><small>${esc(s.adviserName||'No adviser')}</small></div></div>
+    return `<button class="ocard" data-sec="${esc(s.key)}" onclick="try{seenAdd('cls',['${esc(s.key)}'])}catch(e){};${go}"><div class="ocard-h"><span class="oav">${esc(s.grade.replace('Grade ','').charAt(0))}</span><div><b>${esc(secLabel(s.key))}</b><small>${esc(s.adviserName||'No adviser')}</small></div></div>
       <small>${L.length} enrolled</small><div style="display:flex;gap:6px;flex-wrap:wrap">${pill}</div></button>`; }).join('');
   return { cards, all, taken };
 }
@@ -9173,7 +9202,7 @@ function stfDay(email, date){
 function stfChip(o){ return o && o.label ? `<span class="atn ${o.cls}">${esc(o.label)}${o.tardy?' · late '+o.late+' min':''}</span>` : ''; }
 
 /* ----- entry from Attendance ----- */
-async function openStaff(tab){
+async function openStaff(tab){ if ((tab||STF.tab)==='today' && STF.data && stfAll()) try{ seenAdd('tin', attNewTin()); }catch(e){}
   ATT.view = 'staff'; if (tab) STF.tab = tab; if (!STF.month) STF.month = todayPH().slice(0,7);
   if (!STF.data) $('viewAtt').innerHTML = `<div class="pirload"><div class="pirstar">★</div><b>Opening the personnel records</b><div class="pirdots"><i></i><i></i><i></i></div></div>`;
   try{ await stfLoad(); }catch(e){ handleErr(e); ATT.view = 'home'; return attDraw(); }
@@ -9194,7 +9223,7 @@ function stfHomeInner(){
     const inS = days.filter(o => /^Present/.test(o.label)).length, out = days.filter(o => o.cls==='exc').length, wait = days.filter(o => o.label==='Not yet in').length;
     html += `<div class="attoday"><div><small>Today</small><b>${esc(dShort(today))}</b></div>${dow(today)===0||dow(today)===6?'<span class="hint">Weekend</span>':`<span class="atn ok">${inS} in school</span><span class="atn exc">${out} on leave or outside</span><span class="atn wait">${wait} not yet in</span>`}</div>`; }
   html += `<div class="abtns">
-    ${btn('\u{1F552}', stfAll()?'Teachers today':'My time today', stfAll()?(D.confDot ? D.confDot+' said a time is not correct' : 'Time in and time out of everyone'):'Tap Time in and Time out', "openStaff('today')", stfAll()?'':'main', D.confDot)}
+    ${btn('\u{1F552}', stfAll()?'Teachers today':'My time today', stfAll()?(D.confDot ? D.confDot+' said a time is not correct' : attNewTin().length ? attNewTin().length+' new Time in since you last looked' : 'Time in and time out of everyone'):'Tap Time in and Time out', "openStaff('today')", stfAll()?'':'main', (D.confDot||0) + (stfAll() ? attNewTin().length : 0))}
     ${btn('\u{1F4E8}', stfHead()?'Requests for action':'Leave and requests', stfHead()?(pend?pend+' waiting for you':'None waiting'):(stfRole()==='admin'?'View and print. File your own.':mine.length+' filed, '+mine.filter(stfGranted).length+' granted. Wellness: '+stfNum(Math.max(0,stfWellDays()-stfWellUsed(USER.email, todayPH().slice(0,4))))+' day(s) left'), "openStaff('req')", stfHead()&&pend?'main':'', stfHead() ? pend : (STF.dot||0))}
     ${btn('\u{1F4C5}', 'Time records', 'By month, printable', "openStaff('rec')")}
     ${btn('\u{1F4C4}', 'DTR', stfHead()?(D.dtrDot ? D.dtrDot+' request'+(D.dtrDot===1?'':'s')+' to edit, waiting for you' : 'Everyone\u2019s DTR, edit and print'):stfRole()==='admin'?'Final DTRs to print':(D.dtrDot ? 'You may edit now. Check, then lock it.' : 'My DTR, Civil Service Form 48'), "openStaff('dtr')", D.dtrDot ? 'main' : '', D.dtrDot)}
@@ -9881,11 +9910,11 @@ function lacHome(){
   if (!head) hubTodo().filter(x => x.fin && !x.nb).forEach(x => todo.unshift({ ico:'\u{1F4D3}', t:'Write your LAC Journal', x:x.h.title+'. You finished it, but the journal is still empty. Posted '+daysAgo(hubPosted(x.h))+'.', fn:`hubWrite('${x.h.id}')`, main:1, warn:1 }));
   if (head){ const pend = D.hub.filter(h => h.status==='Pending').length; if (pend) todo.unshift({ ico:'\u2714', t:'Approve materials', x:pend+' waiting in the Learning Hub', fn:`LAC.tab='hub';LAC.hubSt='Pending';lacDraw()`, main:1 });
     D.sessions.filter(s => s.date <= today && !(s.minutes&&s.minutes.on)).forEach(s => todo.push({ ico:'\u{1F4DD}', t:'Minutes not yet written', x:s.title+(s.documenter?', documenter '+lacName(s.documenter):''), fn:`lacMinutesOpen('${s.id}')` }));
-    const unchecked = D.notebooks.filter(n => n.email!==me && !n.checkedOn).length; if (unchecked) todo.push({ ico:'\u{1F50D}', t:'Journal entries to check', x:unchecked+' not yet checked', fn:`LAC.tab='nb';LAC.nbWho='';lacDraw()` }); }
+    const UC = D.notebooks.filter(n => n.email!==me && !n.checkedOn), unchecked = UC.length; if (unchecked) todo.push({ ico:'\u{1F50D}', t:'Journal entries to check', x:unchecked+' not yet checked: '+[...new Set(UC.map(n => n.name || n.email))].slice(0,4).join(', ')+(new Set(UC.map(n => n.email)).size > 4 ? ', and more' : ''), fn:`LAC.tab='nb';LAC.nbWho='';lacDraw()` }); }
   D.sessions.filter(s => s.documenter===me && s.date <= today && !(s.minutes&&s.minutes.on)).forEach(s => { if (!head) todo.push({ ico:'\u{1F4DD}', t:'Write the minutes', x:'You are the LAC Documenter of '+s.title, fn:`lacMinutesOpen('${s.id}')`, main:1 }); });
   const next = D.sessions.filter(s => s.date >= today && lacInvited(s, me)).sort((a,b) => a.date.localeCompare(b.date))[0];
   const done = mine.filter(h => (lacProg(h.id)||{}).status==='Finished').length;
-  $('lacBody').innerHTML = `${head ? '' : nbTodoHtml()}<div class="ostats">
+  $('lacBody').innerHTML = `${head ? lacNewsHtml() : nbTodoHtml()}<div class="ostats">
       <div class="ostat static"><span class="oico">\u{1F4C5}</span><b>${mySess.filter(s => lacMine(s.id,'ATT')).length} of ${mySess.length}</b><span>Sessions attended this school year</span></div>
       <div class="ostat static"><span class="oico">\u25B6</span><b>${done} of ${mine.length}</b><span>Learning Hub materials finished</span></div>
       <div class="ostat static"><span class="oico">\u{1F4D3}</span><b>${D.notebooks.filter(n => n.email===me).length}</b><span>Entries in my journals</span></div>
@@ -10057,7 +10086,7 @@ function lacSession(id){
       ${all?btn('\u{1F4DD}','Minutes', s.minutes&&s.minutes.on?'Saved by '+esc(s.minutes.by):'Not yet written', `lacMinutesOpen('${id}')`, '', DT.min):''}
       ${all&&lac&&lacHead()?btn('\u{1F4AD}','Reflections', notes.length+' written', `lacRefSum('${id}')`):''}
       ${all&&lac?btn('\u{1F3C6}','Accomplishment report', s.report&&s.report.on?'Saved by '+esc(s.report.by):'Draft from the session', `lacReportOpen('${id}')`, '', DT.rep):''}
-      ${staff?btn('\u{1F4F7}','Photos', (s.photos||[]).length+' photo(s), for the report', `lacPhotosOpen('${id}')`, '', DT.pho):''}</div>`:''}`;
+      ${staff?btn('\u{1F4F7}','Photos', (s.photos||[]).length+' photo(s), for the report'+(lacSessMats(s).reduce((a, h) => a + hubPhotoCount(h.id), 0) ? ', and '+lacSessMats(s).reduce((a, h) => a + hubPhotoCount(h.id), 0)+' from the teachers while watching' : ''), `lacPhotosOpen('${id}')`, '', DT.pho):''}</div>`:''}`;
   window.scrollTo(0,0);
 }
 async function lacSign(id){
@@ -10205,8 +10234,9 @@ function lacPhotosOpen(id){
   stfModal(`<h3>Photos for the report</h3><p class="sub">Up to 12 photos, with captions. They are printed as MOVs in the accomplishment report.</p>
     <div class="lacphotos" id="lpList">${(s.photos||[]).map(p => `<div class="lacph" data-id="${p.id}"><div class="lacph-i" id="lpi_${p.id}">\u{1F4F7}</div><input value="${esc(p.caption||'')}" placeholder="Caption" data-cap="${p.id}"><button class="linkbtn danger" onclick="LAC.ph.keep=LAC.ph.keep.filter(k=>k!=='${p.id}');this.parentElement.remove()">Remove</button></div>`).join('')}</div>
     <div class="field"><label for="lpFiles">Add photos</label><input type="file" id="lpFiles" accept="image/*" multiple></div>
+    ${lacSessMats(s).map(h => { const R = (LAC.data.progress||[]).filter(p => p.hub===h.id && (p.photos||[]).length); return R.length ? `<h4 class="stfgrp">📸 Photos from the teachers while watching: ${esc(h.title)}</h4><div class="hcp-g">${R.map(p => p.photos.filter(f => f.id).map(f => `<figure><div class="hcp-i" data-ph="${f.id}">📷</div><figcaption>${esc((lacPeople().find(x => x.email===p.email)||{}).name || p.name || '')}, ${f.n} of 3</figcaption></figure>`).join('')).join('')}</div>` : ''; }).join('')}
     <p class="err" id="lpErr"></p><div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Cancel</button><button class="btn" onclick="lacPhotosSave()">Save</button></div>`);
-  lacPhotoFetch((s.photos||[]).map(p => p.id)).then(m => Object.keys(m).forEach(k => { const el = $('lpi_'+k); if (el) el.innerHTML = `<img src="${m[k]}" alt="">`; }));
+  hubPhotoFill(); lacPhotoFetch((s.photos||[]).map(p => p.id)).then(m => Object.keys(m).forEach(k => { const el = $('lpi_'+k); if (el) el.innerHTML = `<img src="${m[k]}" alt="">`; }));
 }
 const LAC_PH = {};
 async function lacPhotoFetch(ids){ const want = ids.filter(i => !LAC_PH[i]); if (want.length){ try{ Object.assign(LAC_PH, await api('lacPhotoData', { ids:want })); }catch(e){} } const o = {}; ids.forEach(i => { if (LAC_PH[i]) o[i] = LAC_PH[i]; }); return o; }
@@ -10477,13 +10507,13 @@ function hubAssignees(h){ return lacPeople().filter(p => h.assign==='all' || (h.
 function lacHub(){
   const D = LAC.data, head = lacHead(), admin = lacRole()==='admin', st = LAC.hubSt;
   const list = D.hub.filter(h => hubMatch(h, st)).sort((a,b) => (a.status==='Pending'?0:1)-(b.status==='Pending'?0:1) || String(b.created).localeCompare(String(a.created)));
-  const card = h => { const p = lacProg(h.id), mine = h.assign==='all' || (h.assign||[]).indexOf(USER.email) > -1, as = hubAssignees(h), fin = as.filter(x => (lacProg(h.id, x.email)||{}).status==='Finished').length;
+  const card = h => { const p = lacProg(h.id), mine = h.assign==='all' || (h.assign||[]).indexOf(USER.email) > -1, as = hubAssignees(h), fin = as.filter(x => (hubEff(h, x.email)||{}).status==='Finished').length, watched = as.filter(x => (lacProg(h.id, x.email)||{}).status==='Finished').length, nph = hubPhotoCount(h.id);
     return `<div class="hubcard"><button class="hubthumb" onclick="hubPlay('${h.id}')" aria-label="Play ${esc(h.title)}">${hubThumbHtml(h)}<span class="hubplay">${h.kind==='SLIDES'?'\u{1F4D6}':'\u25B6'}</span>${h.status!=='Approved'?`<span class="hubst ${h.status}">${h.status==='Pending'?'Waiting for approval':'Returned'}</span>`:''}</button>
       <div class="hubbody"><b>${esc(h.title)}</b><div class="hubtags">${hubUseTag(h)}${head||admin?hubRelTag(h):''}</div><small>${h.facilitator?esc(h.facilitator):''}</small><small class="hubkind">${esc(hubKind(h))}</small>
       ${mine&&h.status==='Approved'?(() => { const e = hubEff(h); return `<div class="hubbar" title="${e?e.pct:0}% done"><i style="width:${e?e.pct:0}%"></i></div><small>${e?esc(e.status)+', '+e.pct+'%':'Not started'}`; })()+`${h.target?' \u00B7 by '+esc(dShort(h.target)):''}</small>
       ${h.status==='Approved'?`<small class="hint">Posted ${esc(dShort(hubPosted(h)))}, ${esc(daysAgo(hubPosted(h)))}</small>`:''}
-      ${!head && h.byEmail!==USER.email ? (hubJournal(h) ? '<span class="atn ok">\u{1F4D3} LAC Journal written</span>' : `<button class="hubjn" onclick="hubWrite('${h.id}')">\u{1F4D3} ${p&&p.status==='Finished'?'Finished, but your LAC Journal is still empty. Write now':'LAC Journal not yet written'} (posted ${esc(daysAgo(hubPosted(h)))}) \u203A</button>`) : ''}`:''}
-      ${(head||admin)&&h.status==='Approved'?`<small>${fin} of ${as.length} finished \u00B7 <button class="linkbtn" onclick="hubProgView('${h.id}')">See progress</button></small>`:''}
+      ${!head && h.byEmail!==USER.email ? (hubJournal(h) ? `<button class="hubjn ok" onclick="hubWrite('${h.id}')">\u{1F4D3} LAC Journal written. Tap to open and edit it</button>` : `<button class="hubjn" onclick="hubWrite('${h.id}')">\u{1F4D3} ${p&&p.status==='Finished'?'Finished, but your LAC Journal is still empty. Write now':'LAC Journal not yet written'} (posted ${esc(daysAgo(hubPosted(h)))}) \u203A</button>`) : ''}`:''}
+      ${(head||admin)&&h.status==='Approved'?`<small>${fin} of ${as.length} finished${watched > fin ? ' \u00B7 '+watched+' watched the whole '+(h.kind==='SLIDES'?'deck':'video') : ''}${nph ? ' \u00B7 <button class="linkbtn" onclick="hubPhotosView(\''+h.id+'\')">📸 '+nph+' photos</button>' : ''} \u00B7 <button class="linkbtn" onclick="hubProgView('${h.id}')">See progress</button></small>`:''}
       ${h.note&&(head||h.byEmail===USER.email)?`<p class="stfnote">${esc(h.note)}</p>`:''}
       <div class="stfreq-a">${head&&h.status!=='Approved'?`<button class="btn small" onclick="hubDecide('${h.id}','Approved')">\u2714 Approve</button><button class="btn ghost small" onclick="hubDecide('${h.id}','Returned')">Return</button>`:''}
         ${head&&h.status==='Approved'&&(h.release==='hold'||(h.release&&h.release>todayPH()))?`<button class="btn small" onclick="hubShowNow('${h.id}')">\u{1F441} Show now</button>`:''}
@@ -10697,6 +10727,7 @@ function hubTick(){
   const sk = $('hpSeek'); if (sk && !P.seeking){ sk.max = Math.floor(d); sk.value = Math.floor(t); }
   hubIcon();
   if (!P.mine) return;
+  hubPhotoCheck();
   if ($('hpBar')) $('hpBar').style.width = P.pct+'%'; if ($('hpTxt')) $('hpTxt').textContent = hubPTxt();
   if ($('hpAlmost')) $('hpAlmost').disabled = P.pct < 90 || P.status==='Finished'; if ($('hpDone')) $('hpDone').disabled = P.pct < 90 || P.status==='Finished';
   if (Date.now() - P.last > 20000) hubSave();
@@ -10757,6 +10788,7 @@ function hubTickSlides(){
   P.pct = seen === P.n ? 100 : Math.min(99, Math.round(seen / P.n * 100));
   if (P.pct === 100) P.parts = P.parts.map(() => '1');
   if (!P.mine) return;
+  hubPhotoCheck();
   if ($('hpBar')) $('hpBar').style.width = P.pct+'%'; if ($('hpTxt')) $('hpTxt').textContent = hubPTxt();
   if ($('hpAlmost')) $('hpAlmost').disabled = P.pct < 90 || P.status==='Finished'; if ($('hpDone')) $('hpDone').disabled = P.pct < 90 || P.status==='Finished';
   if (P.pct >= 100 && P.status!=='Finished'){ hubSave(true); toast('You viewed every slide. Marked finished.'); return; }
@@ -10774,7 +10806,7 @@ async function hubSave(ended, mark){
   if ($('hpTxt')) $('hpTxt').textContent = hubPTxt();
 }
 async function hubMark(m){ await hubSave(false, m); toast(m==='Finished' ? 'Marked finished. Well done!' : 'Marked almost finished. You can come back to it.'); if ($('hpDone')) $('hpDone').disabled = LAC.play.status==='Finished'; }
-function hubClose(){ const P = LAC.play; if (document.fullscreenElement) document.exitFullscreen().catch(()=>{}); if (P){ clearInterval(P.timer); if (P.slides) hubSave(); else if (hubYT()){ try{ hubTick(); }catch(e){} hubSave(); try{ P.yt.destroy(); }catch(e){} } } if ($('nbfText') && LAC.fl) nbFloatSave(true); LAC.fl = null; document.querySelector('#hubPlayer .hubmodal').classList.remove('withnotes'); LAC.play = null; document.body.classList.remove('hubopen'); $('hubPlayer').classList.remove('open'); $('hubPBody').innerHTML = ''; if (CUR_FEATURE==='lac') lacDraw(); }
+function hubClose(){ const P = LAC.play; if ($('hubCam') && !$('hubCam').hidden){ $('hubCam').hidden = true; hubCamStop(); } if (P) P.photoOpen = false; if (document.fullscreenElement) document.exitFullscreen().catch(()=>{}); if (P){ clearInterval(P.timer); if (P.slides) hubSave(); else if (hubYT()){ try{ hubTick(); }catch(e){} hubSave(); try{ P.yt.destroy(); }catch(e){} } } if ($('nbfText') && LAC.fl) nbFloatSave(true); LAC.fl = null; document.querySelector('#hubPlayer .hubmodal').classList.remove('withnotes'); LAC.play = null; document.body.classList.remove('hubopen'); $('hubPlayer').classList.remove('open'); $('hubPBody').innerHTML = ''; if (CUR_FEATURE==='lac') lacDraw(); }
 
 /* ----- the floating notebook: type while watching. Drag it, make it small, or close it. ----- */
 function nbFloatTarget(){
@@ -10838,16 +10870,25 @@ document.addEventListener('fullscreenchange', nbFloatPlace);
 // Progress of everyone: each person and each material
 function hubProgView(only){
   const hubs = LAC.data.hub.filter(h => h.status==='Approved' && (!only || h.id===only)), P = lacPeople().filter(p => hubs.some(h => hubAssignees(h).some(x => x.email===p.email)));
-  const cell = (h, p) => { if (!hubAssignees(h).some(x => x.email===p.email)) return '<td class="hint">\u00B7</td>'; const g = hubEff(h, p.email);
+  const cell = (h, p) => { if (!hubAssignees(h).some(x => x.email===p.email)) return '<td class="hint">\u00B7</td>'; const g = hubEff(h, p.email), raw = lacProg(h.id, p.email), ph = ((raw||{}).photos||[]);
+    const pv = raw ? `<div class="hubbar"><i style="width:${raw.pct||0}%"></i></div><small>${raw.status==='Finished' ? '\u2714 '+(h.kind==='SLIDES'?'Viewed every slide':'Watched the whole video') : (h.kind==='SLIDES'?'Viewed ':'Watched ')+(raw.pct||0)+'%'}${raw.updated ? ' \u00B7 '+esc(daysAgo(raw.updated)==='today' ? 'today '+String(raw.updated).slice(11,16) : daysAgo(raw.updated)) : ''}</small>` : '';
+    const tk = g && raw && raw.status==='Finished' && g.status!=='Finished' ? `<br><small class="bad">Session tasks not yet done${g.left ? ': '+g.left+' left' : ''}</small>` : g && g.status==='Finished' ? '<br><small class="ok">\u2714 Finished, with the session tasks</small>' : '';
+    const pp = ph.length ? `<br><button class="linkbtn" onclick="hubPhotosView('${h.id}','${p.email}')">📸 ${ph.filter(f => f.id).length} of 3 photos${ph.some(f => !f.id) ? ', '+ph.filter(f => !f.id).length+' without camera' : ''}</button>` : '';
+    const j0 = hubJournal(h, p.email) ? '<br><small class="ok">\u{1F4D3} Journal written</small>' : '<br><small class="bad">\u{1F4D3} No journal yet, '+esc(daysN(hubPosted(h)))+' day'+(daysN(hubPosted(h))===1?'':'s')+' since posting</small>';
+    if (raw) return `<td>${pv}${tk}${j0}${pp}</td>`;
     const j = hubJournal(h, p.email) ? '<br><small class="ok">\u{1F4D3} Journal written</small>' : '<br><small class="bad">\u{1F4D3} No journal yet, '+esc(daysN(hubPosted(h)))+' day'+(daysN(hubPosted(h))===1?'':'s')+' since posting</small>';
     return g ? `<td><div class="hubbar"><i style="width:${g.pct}%"></i></div><small>${g.status==='Finished'?'\u2714 Finished '+esc(dShort(g.fin)):esc(g.status)+', '+g.pct+'%'}</small>${j}</td>` : `<td><small class="hint">Not started</small>${j}</td>`; };
   const html = `<div class="table-wrap"><table class="stft-table stfp-tbl"><thead><tr><th>Name</th>${hubs.map(h => `<th>${esc(h.title)}</th>`).join('')}<th>Finished</th></tr></thead><tbody>
     ${P.map(p => { const as = hubs.filter(h => hubAssignees(h).some(x => x.email===p.email)), f = as.filter(h => (hubEff(h, p.email)||{}).status==='Finished').length;
       return `<tr><td><b>${esc(p.name)}</b></td>${hubs.map(h => cell(h, p)).join('')}<td><b>${f} of ${as.length}</b></td></tr>`; }).join('') || '<tr><td class="empty">No one assigned yet.</td></tr>'}</tbody></table></div>`;
   LAC.viewHtml = html;
-  stfModal(`<h3>Learning Hub progress</h3><p class="sub">${only?esc(hubs[0].title):'All approved materials'}</p>${html}
+  LAC.progOnly = only || ''; clearInterval(LAC.progT); LAC.progT = setInterval(hubProgLive, 15000);
+  stfModal(`<h3>Learning Hub progress <span class="livepill" id="hubProgLive">● Live</span></h3><p class="sub">${only?esc(hubs[0].title):'All approved materials'} · updates by itself every 15 seconds, as the teachers watch. Last update ${new Date().toLocaleTimeString('en-US',{ hour:'numeric', minute:'2-digit', second:'2-digit', timeZone:'Asia/Manila' })}.</p>${html}
     <div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Close</button><button class="btn" onclick="lacPrintPlain('Learning Hub Progress', LAC.viewHtml)">\u{1F5A8} Print</button></div>`, 'wide');
 }
+// the progress table refreshes while it is open, so the bars follow what the teachers watch
+async function hubProgLive(){ if (!$('hubProgLive') || !$('stfModal').classList.contains('open')){ clearInterval(LAC.progT); return; }
+  try{ const r = await api('lacLoad'); LAC.data = r; lacSaveLocal(); if ($('hubProgLive')){ const y = $('stfMBody').scrollTop; hubProgView(LAC.progOnly); $('stfMBody').scrollTop = y; } }catch(e){} }
 async function lacPrintPlain(title, html, sub){ closeModal('stfModal');
   const head = USER.role==='head', sig = await affixAsk(head ? 'Noted by, School Head' : 'Prepared by', title) ? await mySigData() : '';
   const L = head ? [{ label:'', name:'', role:'' }, { label:'Noted by:', name:LAC.data.headName||USER.name, role:'School Head', img:sig }]
@@ -12889,6 +12930,97 @@ const COVER_CSS = `
 .cv-cut{border:.45mm dashed #333;padding:2.5mm;flex:none}.cv-box{position:relative;width:155mm;height:155mm;overflow:hidden}
 `;
 (function(){ const st = document.createElement('style'); st.id = 'coverCss'; st.textContent = COVER_CSS; document.head.appendChild(st); })();
+
+
+/* ===== Photos while watching: three live photos at points TALA chooses, until the end. No upload from the gallery. ===== */
+function hubCps(id){ let s = 7; String(id + '|' + (USER ? USER.email : '')).split('').forEach(c => { s = (s * 31 + c.charCodeAt(0)) >>> 0; });
+  const r = () => { s = (Math.imul(s, 1103515245) + 12345) >>> 0; return (s % 1000) / 1000; }; return [12 + Math.round(r() * 18), 42 + Math.round(r() * 18), 72 + Math.round(r() * 16)]; }
+function hubPhotoCheck(){ const P = LAC.play; if (!P || !P.mine || P.photoOpen || !USER || USER.role==='head' || !P.h || P.h.byEmail===USER.email) return;
+  const p = lacProg(P.id) || {}, n = (p.photos||[]).length; if (n >= 3) return; if (P.pct >= hubCps(P.id)[n]) hubPhotoAsk(n); }
+var HCAM = { stream:null, face:'user', shot:'' };
+function hubCamStop(){ if (HCAM.stream){ HCAM.stream.getTracks().forEach(t => t.stop()); HCAM.stream = null; } }
+function hubPhotoAsk(n){ const P = LAC.play; P.photoOpen = true;
+  try{ if (!P.slides && P.yt && P.yt.pauseVideo) P.yt.pauseVideo(); }catch(e){} try{ if (document.fullscreenElement) document.exitFullscreen().catch(()=>{}); }catch(e){}
+  let el = $('hubCam'); if (!el){ el = document.createElement('div'); el.id = 'hubCam'; document.body.appendChild(el); } el.hidden = false;
+  el.innerHTML = `<div class="hc-card"><span class="hc-tag">📸 Photo ${n+1} of 3</span><h3>A quick photo while you ${P.slides ? 'view the slides' : 'watch'}</h3>
+    <ul class="hc-steps"><li>Sit in front of your ${P.slides ? 'device' : 'laptop or phone'} so your <b>face is clearly seen</b>.</li><li>If you can, let the <b>screen with the ${P.slides ? 'slides' : 'video'}</b> or your <b>journal</b> show in the photo too.</li><li>Use good light. Do not cover the camera.</li><li>This is a <b>live photo</b> from your camera. Pictures from the gallery are not accepted.</li></ul>
+    <p class="hint">TALA asks for 3 photos at different points until the end. They go to the School Head and the LAC Documenter, in the Photos of the session. The ${P.slides ? 'slides wait' : 'video waits'} for you.</p>
+    <div class="hc-cam" id="hcCam" hidden><video id="hcV" playsinline muted autoplay></video><canvas id="hcC" hidden></canvas></div><p class="err" id="hcErr"></p>
+    <div class="hc-btns" id="hcBtns"><button class="btn sun" onclick="hubCamOpen()">📷 Open the camera</button></div>
+    <button class="linkbtn hc-none" onclick="hubCamNone(${n})">My camera does not work</button></div>`; }
+async function hubCamOpen(){ $('hcErr').textContent = ''; hubCamStop();
+  try{ HCAM.stream = await navigator.mediaDevices.getUserMedia({ video:{ facingMode:HCAM.face, width:{ ideal:1280 }, height:{ ideal:960 } }, audio:false });
+    const v = $('hcV'); v.srcObject = HCAM.stream; await v.play(); $('hcCam').hidden = false; v.hidden = false; $('hcC').hidden = true;
+    $('hcBtns').innerHTML = `<button class="btn ghost" onclick="HCAM.face=HCAM.face==='user'?'environment':'user';hubCamOpen()">🔄 Switch camera</button><button class="btn sun" onclick="hubCamShot()">📸 Take the photo</button>`; }
+  catch(e){ $('hcErr').textContent = 'The camera could not open. Allow the camera for TALA in the browser, then tap Open the camera again.'; $('hcBtns').innerHTML = `<button class="btn sun" onclick="hubCamOpen()">📷 Open the camera</button>`; } }
+function hubCamShot(){ const P = LAC.play, v = $('hcV'), c = $('hcC'); if (!v || !v.videoWidth) return; const s = Math.min(1, 1280 / Math.max(v.videoWidth, v.videoHeight)), w = Math.round(v.videoWidth * s), h = Math.round(v.videoHeight * s);
+  c.width = w; c.height = h; const g = c.getContext('2d'); if (HCAM.face==='user'){ g.translate(w, 0); g.scale(-1, 1); } g.drawImage(v, 0, 0, w, h); g.setTransform(1, 0, 0, 1, 0, 0);
+  // the stamp: who, what, where in the material, and when
+  const y = P.slides ? 'slide ' + (P.page||1) : hubFmt(P.pos||0), when = new Date().toLocaleString('en-PH', { timeZone:'Asia/Manila', month:'short', day:'numeric', year:'numeric', hour:'numeric', minute:'2-digit' });
+  const fs = Math.max(14, Math.round(w / 42)), bh = fs * 3.2; g.fillStyle = 'rgba(0,0,0,.62)'; g.fillRect(0, h - bh, w, bh); g.fillStyle = '#fff'; g.font = `bold ${fs}px Arial`;
+  g.fillText(String(USER.name + ' · ' + (P.h ? P.h.title : '')).slice(0, 90), fs * .6, h - bh + fs * 1.25); g.font = `${Math.round(fs*.9)}px Arial`;
+  g.fillText(`TALA photo ${((lacProg(P.id)||{}).photos||[]).length + 1} of 3 · ${P.pct}% ${P.slides ? 'viewed' : 'watched'}, at ${y} · ${when}`, fs * .6, h - bh + fs * 2.5);
+  HCAM.shot = c.toDataURL('image/jpeg', 0.8); hubCamStop(); v.hidden = true; c.hidden = false;
+  $('hcBtns').innerHTML = `<button class="btn ghost" onclick="hubCamOpen()">↺ Take again</button><button class="btn sun" id="hcSend" onclick="hubCamSend()">✔ Send the photo</button>`; }
+async function hubCamSend(none){ const P = LAC.play; const b = $('hcSend'); if (b){ b.disabled = true; b.textContent = 'Sending...'; }
+  const payload = { id:P.id, pct:P.pct, at: P.slides ? 'slide ' + (P.page||1) : hubFmt(P.pos||0) }; if (none) payload.none = none; else payload.base64 = HCAM.shot;
+  try{ let p; if (USER.sample){ p = lacProg(P.id) || { hub:P.id, email:USER.email, photos:[] }; p.photos = (p.photos||[]).concat([{ n:(p.photos||[]).length+1, on:new Date().toISOString(), pct:P.pct }]); if (!lacProg(P.id)) LAC.data.progress.push(p); }
+    else { p = await api('hubPhoto', payload); const i = LAC.data.progress.findIndex(x => x.hub===P.id && x.email===USER.email); if (i > -1) Object.assign(LAC.data.progress[i], { photos:p.photos }); else LAC.data.progress.push(p); }
+    const k = ((lacProg(P.id)||{}).photos||[]).length; $('hubCam').hidden = true; P.photoOpen = false; HCAM.shot = '';
+    toast(none ? 'Noted. Please fix your camera for the next photo.' : `Thank you! Photo ${k} of 3 sent.${k < 3 ? ' Tap Play to continue.' : ' All 3 photos are done.'}`); }
+  catch(e){ if (b){ b.disabled = false; b.textContent = '✔ Send the photo'; } $('hcErr').textContent = friendly(e.message) + ' Tap Send again.'; } }
+function hubCamNone(n){ $('hcBtns').innerHTML = `<div class="field" style="width:100%"><label>What happened to the camera?</label><input id="hcWhy" placeholder="Example: My laptop has no camera"></div><button class="btn ghost" onclick="hubPhotoAsk(${n})">Back</button><button class="btn" onclick="hubCamSend($('hcWhy').value.trim()||'The camera did not work.')">Send this note</button>`; hubCamStop(); $('hcCam').hidden = true; }
+// The photos of one person (or everyone) for a material, for the School Head and the LAC Documenter
+async function hubPhotosView(hid, email){ const h = (LAC.data.hub||[]).find(x => x.id===hid) || { title:'' }, rows = (LAC.data.progress||[]).filter(p => p.hub===hid && (!email || p.email===email) && (p.photos||[]).length);
+  stfModal(`<h3>📸 Photos while watching</h3><p class="sub">${esc(h.title)}</p><div class="hcgal">${rows.map(p => `<div class="hcp"><b>${esc((lacPeople().find(x => x.email===p.email)||{}).name || p.name || p.email)}</b><div class="hcp-g">${p.photos.map(f => f.id ? `<figure><div class="hcp-i" data-ph="${f.id}">📷</div><figcaption>${f.n} of 3 · ${esc(f.pct)}% · ${esc(dTime(String(f.on).replace('T',' ').slice(0,16)))}</figcaption></figure>` : `<figure><div class="hcp-i none">🚫</div><figcaption>${f.n} of 3 · No photo: ${esc(f.none||'')}</figcaption></figure>`).join('')}</div></div>`).join('') || '<p class="hint">No photos yet.</p>'}</div>
+    <div class="modal-actions"><button class="btn" onclick="closeModal('stfModal')">Close</button></div>`, 'wide'); hubPhotoFill(); }
+const HPH = {};
+async function hubPhotoFill(){ for (const el of [...document.querySelectorAll('[data-ph]')]){ const id = el.dataset.ph; try{ if (!HPH[id]){ const r = await api('proofGet', { id }); HPH[id] = 'data:'+r.mime+';base64,'+r.data; } el.innerHTML = `<img src="${HPH[id]}" alt="" onclick="window.open().document.write('<img src=&quot;'+this.src+'&quot; style=&quot;max-width:100%&quot;>')">`; }catch(e){ el.textContent = '⚠'; } } }
+function hubPhotoCount(hid){ return (LAC.data.progress||[]).filter(p => p.hub===hid).reduce((a, p) => a + (p.photos||[]).filter(f => f.id).length, 0); }
+
+/* ===== What is new in LAC, for the School Head: who did what, so the red number is clear ===== */
+function lacSeenKey(){ return 'tala_lacnews_'+USER.email; }
+function lacNewsItems(){ const D = LAC.data, me = USER.email, since = (() => { try{ return localStorage.getItem(lacSeenKey()) || ''; }catch(e){ return ''; } })(), out = [], ago = t => String(t||'').replace('T',' ').slice(0,16);
+  const nm = e => (lacPeople().find(p => p.email===e)||{}).name || e, hubT = id => ((D.hub||[]).find(h => h.id===id)||{}).title || 'a material';
+  (D.notebooks||[]).filter(n => n.email!==me && !n.checkedOn && n.status!=='Returned' && Object.values(n.body||{}).some(v => String(v||'').trim())).forEach(n => out.push({ t:ago(n.updated||n.created), ico:'📓', txt:`<b>${esc(n.name||nm(n.email))}</b> wrote in the ${n.book==='MEET'?'Meeting':n.book==='REF'?'Reflection':'LAC'} Journal: ${esc(n.title || (lacS(n.session)||{}).title || 'Notes')}`, go:`nbOpen('${n.id}')`, red:1 }));
+  (D.hub||[]).filter(h => h.status==='Pending').forEach(h => out.push({ t:ago(h.created), ico:'⏳', txt:`<b>${esc((lacPeople().find(p => p.email===h.byEmail)||{}).name || h.facilitator || 'A teacher')}</b> added a material waiting for your approval: ${esc(h.title)}`, go:`LAC.tab='hub';LAC.hubSt='Pending';lacDraw()`, red:1 }));
+  (D.progress||[]).filter(p => p.email!==me).forEach(p => { if (p.status==='Finished' && p.finished) out.push({ t:ago(p.finished), ico:'✔', txt:`<b>${esc(nm(p.email))}</b> finished watching ${esc(hubT(p.hub))}`, go:`hubProgView('${p.hub}')` });
+    else if (p.updated && p.pct) out.push({ t:ago(p.updated), ico:'▶', txt:`<b>${esc(nm(p.email))}</b> is watching ${esc(hubT(p.hub))}, ${p.pct}%`, go:`hubProgView('${p.hub}')` });
+    (p.photos||[]).forEach(f => out.push({ t:ago(f.on), ico:'📸', txt:`<b>${esc(nm(p.email))}</b> ${f.id ? 'sent photo '+f.n+' of 3' : 'could not take photo '+f.n+' ('+esc(f.none||'')+')'} while watching ${esc(hubT(p.hub))}`, go:`hubPhotosView('${p.hub}','${p.email}')` })); });
+  (D.records||[]).filter(r => r.kind==='ATT' && r.email!==me).forEach(r => out.push({ t:ago(r.on), ico:'✍', txt:`<b>${esc(nm(r.email))}</b> signed the attendance of ${esc((lacS(r.session)||{}).title||'a session')}`, go:`lacSession('${r.session}')` }));
+  out.forEach(x => { x.isNew = !!(x.red || (since && x.t > since)); }); return out.filter(x => x.t).sort((a, b) => b.t.localeCompare(a.t)).slice(0, 40); }
+function lacNewsHtml(){ const L = lacNewsItems(), nNew = L.filter(x => x.isNew).length; if (!L.length) return '';
+  return `<details class="lacnews" ${nNew ? 'open' : ''} ontoggle="if(!this.open){try{localStorage.setItem(lacSeenKey(), new Date().toLocaleString('sv-SE',{timeZone:'Asia/Manila'}).slice(0,16))}catch(e){}}"><summary>🔔 What is new ${nNew ? `<i class="sdot">${nNew}</i>` : ''}<small>Tap an item to open it. Red items still need your action.</small></summary>
+    <div class="lacnews-l">${L.slice(0, 15).map(x => `<button class="lacnews-i ${x.red ? 'red' : x.isNew ? 'new' : ''}" onclick="${x.go}"><span>${x.ico}</span><div>${x.txt}<small>${esc(dTime(x.t))}</small></div>${x.red ? '<i class="rdot inl"></i>' : ''}</button>`).join('')}</div>
+    <button class="linkbtn" style="margin-top:6px" onclick="try{localStorage.setItem(lacSeenKey(), new Date().toLocaleString('sv-SE',{timeZone:'Asia/Manila'}).slice(0,16))}catch(e){};lacDraw()">Mark all as seen</button></details>`; }
+
+/* ===== Attendance: red numbers on the cards that have something new since you last opened them ===== */
+function seenList(k){ try{ return JSON.parse(localStorage.getItem('tala_seen_'+USER.email+'_'+k+'_'+todayPH()) || '[]'); }catch(e){ return []; } }
+function seenAdd(k, ids){ try{ const s = seenList(k); ids.forEach(i => { if (s.indexOf(i) < 0) s.push(i); }); localStorage.setItem('tala_seen_'+USER.email+'_'+k+'_'+todayPH(), JSON.stringify(s)); }catch(e){} }
+function attNewTin(){ if (!STF.data || !stfAll()) return []; const t = todayPH(), seen = seenList('tin'); return STF.data.people.filter(p => p.email!==USER.email && Object.keys(stfLog(p.email, t)||{}).some(k => /^(am|pm)(In|Out)$/.test(k) && (stfLog(p.email, t)||{})[k]) && seen.indexOf(p.email) < 0).map(p => p.email); }
+function attNewCls(){ if (!ATT.school) return []; const t = todayPH(), seen = seenList('cls'); return ATT.sections.filter(s => { const r = ATT.school.days[s.key+'|'+t]; return r && seen.indexOf(s.key) < 0; }).map(s => s.key); }
+function attBadges(){ const a = $('attLiveBtn'), n = attNewCls().length; if (a){ let i = a.querySelector('.rnum'); if (n){ if (!i){ i = document.createElement('i'); i.className = 'rnum'; a.prepend(i); } i.textContent = n; } else if (i) i.remove(); }
+  document.querySelectorAll('#attAllCards .ocard').forEach(c => { const k = c.dataset.sec, on = k && attNewCls().indexOf(k) > -1; let d = c.querySelector('.rdot'); if (on && !d){ d = document.createElement('i'); d.className = 'rdot'; c.prepend(d); } else if (!on && d) d.remove(); }); }
+
+/* ===== A livelier TALA: cards and buttons answer the mouse, and new screens slide in softly ===== */
+(function alive(){ if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const SEL = '.abtn,.ostat,.ocard,.hcard,.invrow,.lacmat,.hubcard,.choice,.bdx-row,.lacnews-i,.side-i,.dp-row,.rprow td';
+  document.addEventListener('pointermove', e => { const el = e.target.closest && e.target.closest(SEL); if (!el) return; const r = el.getBoundingClientRect(); el.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100).toFixed(1)+'%'); el.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100).toFixed(1)+'%');
+    if (el.matches('.abtn,.ostat,.ocard,.hcard,.hubcard,.lacmat,.choice')){ const rx = ((e.clientY - r.top) / r.height - .5) * -5, ry = ((e.clientX - r.left) / r.width - .5) * 6; el.style.setProperty('--rx', rx.toFixed(2)+'deg'); el.style.setProperty('--ry', ry.toFixed(2)+'deg'); } }, { passive:true });
+  document.addEventListener('pointerout', e => { const el = e.target.closest && e.target.closest(SEL); if (el && !el.contains(e.relatedTarget)){ el.style.removeProperty('--rx'); el.style.removeProperty('--ry'); } }, { passive:true });
+  // a soft ripple where you click
+  document.addEventListener('pointerdown', e => { const el = e.target.closest && e.target.closest('.btn,.abtn,.ostat,.ocard,.side-i,.choice,.invrow,.lacnews-i'); if (!el) return; const r = el.getBoundingClientRect(), s = document.createElement('span'), d = Math.max(r.width, r.height) * 1.6;
+    s.className = 'ripple'; s.style.cssText = `width:${d}px;height:${d}px;left:${e.clientX - r.left - d/2}px;top:${e.clientY - r.top - d/2}px`; if (getComputedStyle(el).position==='static') el.style.position = 'relative';
+    const w = document.createElement('span'); w.className = 'ripwrap'; w.appendChild(s); el.appendChild(w); setTimeout(() => w.remove(), 650); }, { passive:true });
+  // new cards come in one after another
+  const seen = new WeakSet(); const pop = root => { const L = [...(root.querySelectorAll ? root.querySelectorAll('.abtn,.ostat,.ocard,.hubcard,.lacmat,.invrow,.hcard,.lacnews-i') : [])].filter(x => !seen.has(x)).slice(0, 40);
+    L.forEach((x, i) => { seen.add(x); x.classList.add('in'); x.style.animationDelay = (i * 35)+'ms'; setTimeout(() => { x.classList.remove('in'); x.style.animationDelay = ''; }, 900 + i * 35); }); };
+  new MutationObserver(M => M.forEach(m => m.addedNodes.forEach(n => { if (n.nodeType===1) pop(n); }))).observe(document.body, { childList:true, subtree:true });
+  // a soft glow that follows the mouse on the page
+  const g = document.createElement('div'); g.id = 'talaGlow'; document.body.appendChild(g); let raf = 0, gx = 0, gy = 0;
+  document.addEventListener('pointermove', e => { gx = e.clientX; gy = e.clientY; if (!raf) raf = requestAnimationFrame(() => { g.style.transform = `translate(${gx - 160}px,${gy - 160}px)`; g.style.opacity = '1'; raf = 0; }); }, { passive:true });
+  document.addEventListener('pointerleave', () => { g.style.opacity = '0'; });
+})();
 
 /* ----- Practice account: the name, email, and photo of the teacher it mirrors never show on the screen (for training and recordings) ----- */
 var MASK = null, MASK_OBS = null;
