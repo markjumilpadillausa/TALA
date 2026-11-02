@@ -1317,6 +1317,7 @@ img.pav,span.pav{width:22px;height:22px;border-radius:50%;object-fit:cover;verti
 @media print{ #printArea .ppage{margin:0;padding:0} body.paper-printing{margin:0} }
 .trp{width:210mm;height:296.6mm;padding:10mm 16mm 12mm;box-sizing:border-box;display:flex;flex-direction:column;font-family:Arial,Helvetica,sans-serif;color:#000;font-size:10pt;break-after:page;overflow:hidden;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 .trp:last-child{break-after:auto}
+.trp{position:relative}.trp-copy{position:absolute;top:6mm;right:14mm;font:800 8.5pt Arial,sans-serif;letter-spacing:.04em;border:.4mm solid #1F5130;color:#1F5130;border-radius:2mm;padding:1mm 2.5mm}.trp-copy.r{border-color:#c2410c;color:#c2410c}
 .trp-h{display:block;width:118mm;height:auto;margin:0 auto 2mm}
 .trp-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8mm;border-top:.5mm solid #000;padding-top:4mm;margin-top:1mm}.trp-top h2{font-size:14pt;margin:0 0 2mm}.trp-top p{margin:.8mm 0}.trp-no b{font-size:11.5pt}
 .trp-qr{width:30mm;flex:none;text-align:center}.trp-qr svg{width:30mm;height:30mm;display:block}.trp-qr small{display:block;font-size:6.8pt;line-height:1.2;margin-top:.8mm}
@@ -2118,8 +2119,8 @@ body.ntklocked{overflow:hidden}
 
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
-const MIN_SERVER = '9.8'; // oldest Code.gs this page works with
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'9.8', date:'November 2, 2026' } };
+const MIN_SERVER = '9.9'; // oldest Code.gs this page works with
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'9.9', date:'November 2, 2026' } };
 function verLine(server){
   const old = server && (server.indexOf('older') > -1 || parseFloat(server) < parseFloat(MIN_SERVER));
   const s = server ? ' Server '+server+('.') : '';
@@ -12652,12 +12653,12 @@ async function rptSave(id){ const v = rptFormVals(); if (!v.title) return $('rfE
   catch(e){ loading(false); handleErr(e, 'rfErr'); } }
 function rptView(id){ const o = RPT.data.items.find(x => x.id===id); if (!o) return; const d = o.data, staff = rptStaff(), mine = o.email===USER.email, act = (a, l, cls) => `<button class="btn ${cls||'ghost'} small" onclick="rptActAsk('${o.id}','${a}')">${l}</button>`;
   stfModal(`<h3>${esc(o.title)}</h3><p class="sub"><code>${esc(o.code)}</code> · ${rptChip(o.status)}</p>
-    <div class="table-wrap"><table class="stft-table invdet"><tbody><tr><td>From</td><td>${esc(o.name)}</td></tr>${d.sub?`<tr><td>Period</td><td>${esc(d.sub)}</td></tr>`:''}<tr><td>Type</td><td>${esc(d.type||'')}</td></tr><tr><td>${o.status==='Personal'?'Use':'Submitted to'}</td><td>${esc(rptOffice(o))}</td></tr><tr><td>Date and time</td><td>${esc(dTime(o.on))}</td></tr>${d.dir==='in'?`<tr><td>Received from</td><td>${esc(d.from||'')}</td></tr>`:''}${(d.trans||[]).length?`<tr><td>Transmittal</td><td>${d.trans.map(t => `<button class="linkbtn" onclick="trPrint('${t.no}')">${esc(t.no)}</button> to ${esc(t.office)}, ${esc(dShort(String(t.on).slice(0,10)))}`).join('<br>')}</td></tr>`:''}${d.note?`<tr><td>Note</td><td>${esc(d.note)}</td></tr>`:''}</tbody></table></div>
+    <div class="table-wrap"><table class="stft-table invdet"><tbody><tr><td>From</td><td>${esc(o.name)}</td></tr>${d.sub?`<tr><td>Period</td><td>${esc(d.sub)}</td></tr>`:''}<tr><td>Type</td><td>${esc(d.type||'')}</td></tr><tr><td>${o.status==='Personal'?'Use':'Submitted to'}</td><td>${esc(rptOffice(o))}</td></tr><tr><td>Date and time</td><td>${esc(dTime(o.on))}</td></tr>${d.dir==='in'?`<tr><td>Received from</td><td>${esc(d.from||'')}</td></tr>`:''}${(d.trans||[]).length?`<tr><td>Transmittal</td><td>${d.trans.map(t => `<button class="linkbtn" onclick="trPrint('${t.no}')">${esc(t.no)}</button> to ${esc(t.office)}, ${esc(dShort(String(t.on).slice(0,10)))}${USER.role==='head' || t.byEmail===USER.email ? ` <button class="linkbtn danger" style="font-size:12px" onclick="trDel('${t.no}','${o.id}')">Remove</button>` : ''}`).join('<br>')}${d.trans.length > 1 && new Set(d.trans.map(t => t.office)).size < d.trans.length ? '<br><small class="bad">Two transmittals to the same office. One was likely made twice by mistake. Remove the extra one.</small>' : ''}</td></tr>`:''}${d.note?`<tr><td>Note</td><td>${esc(d.note)}</td></tr>`:''}</tbody></table></div>
     <h4 class="stfgrp">Route</h4><ol class="rptroute">${(o.route||[]).map(r => `<li><b>${esc(r.act)}</b>${r.to?' to '+esc(r.to):''}<small>${esc(dTime(r.on))}, ${esc(r.by)}</small>${r.note?`<p>${esc(r.note)}</p>`:''}</li>`).join('')}</ol><p class="err" id="raErr"></p>
     <div class="docqr"><div class="docqr-i" data-qr="${esc(docUrl(o.code))}"></div><div><b>Document number</b><code>${esc(o.code)}</code><small>Scan this QR code with a phone camera or a QR scanner to see where this report is.</small></div></div>
     <div class="rptagain"><b>🖨 Print again</b><span class="hint">The same document number and QR code are used each time. For a new month or another period, make a new report so it gets its own number.</span>
-      <div class="row"><button class="btn small" onclick="coverAsk('${o.id}')">📘 PABALAT cover page</button>${(d.trans||[]).map(t => `<button class="btn ghost small" onclick="trPrint('${t.no}')">📨 Transmittal ${esc(t.no)}</button>`).join('')}
-        ${o.status!=='Personal' && (mine || staff) ? `<button class="btn ghost small" onclick="trPick(['${o.id}'])">📨 ${(d.trans||[]).length ? 'New transmittal' : 'PADALA transmittal'}</button>` : ''}${mine || staff ? `<button class="btn ghost small" onclick="rptCopy('${o.id}')">📄 New report for another month or period</button>` : ''}</div></div>
+      <div class="row"><button class="btn small" onclick="coverAsk('${o.id}')">📘 PABALAT cover page</button>${(d.trans||[]).map(t => `<button class="btn ghost small" onclick="trPrint('${t.no}')">📨 Transmittal ${esc(t.no)} (2 copies)</button>`).join('')}
+        ${o.status!=='Personal' && (mine || staff) ? `<button class="btn ghost small" onclick="trPick(['${o.id}'])">📨 ${(d.trans||[]).length ? 'Transmittal to another office' : 'PADALA transmittal'}</button>` : ''}${mine || staff ? `<button class="btn ghost small" onclick="rptCopy('${o.id}')">📄 New report for another month or period</button>` : ''}</div></div>
     <div class="modal-actions invacts">${o.status==='Personal' && mine ? `<button class="btn ghost" onclick="rptForm('${o.id}',1)">📤 Submit it to an office</button>` : ''}
       ${mine && (o.status==='Incoming' || o.status==='For correction' || o.status==='Personal') ? `<button class="btn ghost" onclick="rptForm('${o.id}')">✎ Edit</button>` : ''}${mine && o.status==='For correction' ? `<button class="btn" onclick="rptResubmit('${o.id}')">📤 Resubmit</button>` : ''}
       ${staff && o.status!=='Personal' ? `${o.status==='Incoming' ? act('receive','📬 Received','') : ''}${act('correct','✔ Return, correct')}${act('correction','↺ For correction')}${act('keep','🗄 For safekeeping')}${act('district','🏢 Submitted to the District')}${act('division','🏛 Submitted to the Division')}${act('other','📤 Another office')}` : ''}
@@ -12757,7 +12758,9 @@ function trPick(pre){ pre = pre || []; const staff = rptStaff(), L = (RPT.data.i
       <div class="stfg2"><div class="field"><label>Type of report</label><select id="trNY">${rptTypeList().map(t => `<option>${esc(t)}</option>`).join('')}</select></div><div class="field"><label>Office</label><select id="trNO">${RPT.data.offices.map(x => `<option>${esc(x)}</option>`).join('')}</select><input id="trNOo" placeholder="If Other office, which one?" style="margin-top:6px"></div></div>
       <button class="btn small" onclick="trQuickAdd()">＋ Add and tick it</button><small class="hint"> It gets its own document number.</small></details>
     ${staff ? `<div class="field"><label>Send to (leave empty to use the office of each report)</label><input id="trTo" list="trOffices" placeholder="Example: Records Section, Schools Division Office"><datalist id="trOffices"><option>Records Section, Schools Division Office</option><option>Office of the Public Schools District Supervisor, Imelda District</option><option>Office of the School Head</option><option>Office of the AO</option></datalist></div>` : ''}
-    <div class="field"><label>Remarks</label><input id="trRem" value="For submission"></div><p class="err" id="trErr"></p>
+    <div class="field"><label>Remarks</label><input id="trRem" value="For submission"></div>
+    <div class="field"><label>Copies to print</label><div class="row" style="justify-content:flex-start;gap:16px;flex-wrap:wrap"><label class="check"><input type="radio" name="trCp" value="2" checked>2 copies: one for me, one for the receiving office</label><label class="check"><input type="radio" name="trCp" value="1">1 copy</label></div></div>
+    <p class="hint">A report already in a transmittal for the same office keeps that transmittal. TALA prints it again, with the same number, instead of making a new one.</p><p class="err" id="trErr"></p>
     ${past.length ? `<details class="byt"><summary>Past transmittals (${past.length})</summary><div class="bdx-list">${past.map(t => `<button class="bdx-row nbtn" onclick="trPrint('${t.no}')"><div class="bdx-rn"><b>${esc(t.no)}</b><small>To ${esc(t.office)} · ${t.items.length} document${t.items.length===1?'':'s'} · ${esc(dTime(t.on))}</small></div><span class="btn small">Print</span></button>`).join('')}</div></details>` : ''}
     <div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Cancel</button><button class="btn" onclick="trMake()">Make and print</button></div>`, 'wide'); }
 async function trQuickAdd(){ const title = $('trNT').value.trim(); if (!title) return $('trErr').textContent = 'Type the title of the document to add.';
@@ -12765,22 +12768,27 @@ async function trQuickAdd(){ const title = $('trNT').value.trim(); if (!title) r
   try{ loading(true); const before = (RPT.data.items||[]).map(o => o.id); RPT.data = await api('rptSave', { rep:{ title, sub:$('trNS').value.trim(), type:$('trNY').value, office:$('trNO').value, otherOffice:$('trNOo').value.trim(), cover:'none', paper:'Long' } }); loading(false); rptDraw();
     const added = RPT.data.items.find(o => before.indexOf(o.id) < 0); trPick(keep.concat(added ? [added.id] : [])); toast('Added with document number '+(added ? added.code : '')+'.'); }
   catch(e){ loading(false); handleErr(e, 'trErr'); } }
+async function trDel(no, back){ if (!confirm('Remove transmittal '+no+'? The reports stay. Only the transmittal number is removed.')) return;
+  try{ loading(true); RPT.data = await api('rptTransDel', { no }); loading(false); rptDraw(); toast('Transmittal '+no+' removed.'); if (back) rptView(back); }catch(e){ loading(false); handleErr(e, 'raErr'); } }
 async function trMake(){ const ids = [...document.querySelectorAll('.trk:checked')].map(x => x.value); if (!ids.length) return $('trErr').textContent = 'Tick at least one document.';
-  try{ loading(true, 'Making the transmittal'); const r = await api('rptTransmit', { ids, office:$('trTo') ? $('trTo').value.trim() : '', remarks:$('trRem').value.trim() }); RPT.data = r; loading(false); closeModal('stfModal'); rptDraw();
-    toast(r.made.length===1 ? 'Transmittal '+r.made[0].no+' is ready.' : r.made.length+' transmittals are ready, one for each office.'); trPrint(r.made.map(m => m.no)); }
+  try{ loading(true, 'Making the transmittal'); const cp = Number((document.querySelector('input[name=trCp]:checked')||{}).value || 2), r = await api('rptTransmit', { ids, office:$('trTo') ? $('trTo').value.trim() : '', remarks:$('trRem').value.trim() }); RPT.data = r; loading(false); closeModal('stfModal'); rptDraw();
+    const ex = r.made.filter(m => m.existing), nw = r.made.filter(m => !m.existing);
+    toast((nw.length ? (nw.length===1 ? 'Transmittal '+nw[0].no+' is ready.' : nw.length+' transmittals are ready, one for each office.') : '') + (ex.length ? ' Already sent before, printed again: '+ex.map(m => m.no).join(', ')+'.' : '')); trPrint(r.made.map(m => m.no), cp); }
   catch(e){ loading(false); handleErr(e, 'trErr'); } }
-async function trPrint(nos){ nos = [].concat(nos); try{ await coverKit(); }catch(e){} const K = window.COVER_KIT || {}, T = trAll().filter(t => nos.indexOf(t.no) > -1); if (!T.length) return toast('Transmittal not found.');
+async function trPrint(nos, copies){ nos = [].concat(nos); copies = copies===1 ? 1 : 2; try{ await coverKit(); }catch(e){} const K = window.COVER_KIT || {}, T = trAll().filter(t => nos.indexOf(t.no) > -1); if (!T.length) return toast('Transmittal not found.');
   const pages = T.map(t => { const P = (RPT.data.people||[]).find(p => p.email===t.byEmail) || {}, me = t.byEmail===USER.email ? RPT.data.me : null;
     const pos = me ? (me.role==='head' ? 'School Head' : me.role==='admin' ? 'Administrative Officer' : me.position || 'Teacher') : (P.position || '');
     const rows = t.items.sort((a,b) => String(a.on).localeCompare(String(b.on))).map((o, i) => `<tr><td>${i+1}</td><td class="c"><b>${esc(o.code)}</b></td><td>${esc(String(o.title).toUpperCase())}${o.data.sub ? '<br><small>'+esc(o.data.sub)+'</small>' : ''}<br><small>${esc(o.data.type||'')} · ${esc(o.name)}</small></td><td class="c">${esc(dShort(String(o.on).slice(0,10)))}</td><td>${esc(t.remarks || 'For submission')}</td></tr>`).join('');
-    return `<div class="trp"><img class="trp-h" src="${K.header||''}" alt="">
+    const page = `<div class="trp">__COPY__<img class="trp-h" src="${K.header||''}" alt="">
       <div class="trp-top"><div><h2>TRANSMITTAL LIST</h2><p class="trp-no">PADALA No. <b>${esc(t.no)}</b></p><p>Recipient: <b>${esc(String(t.office).toUpperCase())}</b></p><p>From: <b>${esc(t.by)}</b>${pos ? ', '+esc(pos) : ''}, Baluyan Elementary School</p><p>Date generated: ${esc(fmtLong(String(t.on).slice(0,10)))}</p></div>
         <div class="trp-qr">${qrSvg(docUrl(t.no))}<small>Scan to see the status of each document</small></div></div>
       <table class="trp-t"><thead><tr><th>#</th><th>Document No.</th><th>Details</th><th>Date</th><th>Remarks</th></tr></thead><tbody>${rows}</tbody></table>
       <p class="trp-note">This is a TALA generated document. Each document number is unique and can be traced in TALA, Baluyan Elementary School.</p>
       <div class="trp-sig"><div><span>Released by:</span><b>${esc(String(t.by).toUpperCase())}</b><small>${esc(pos || '')}</small><i>Signature over Printed Name</i></div>
         <div><span>Received by:</span><b class="ln">&nbsp;</b><small>${esc(t.office)}</small><i>Signature over Printed Name</i><small class="dt">Date and time received: ____________________</small></div></div>
-      <div class="trp-f"><img src="${K.logos||''}" alt=""><span>Baluyan Elementary School<br>Baluyan, Imelda, Zamboanga Sibugay<br>School ID 125592</span></div></div>`; });
+      <div class="trp-f"><img src="${K.logos||''}" alt=""><span>Baluyan Elementary School<br>Baluyan, Imelda, Zamboanga Sibugay<br>School ID 125592</span></div></div>`;
+    // two copies of the same transmittal: one stays with the sender, one stays with the receiving office
+    return copies===1 ? page.replace('__COPY__', '') : page.replace('__COPY__', '<span class="trp-copy">COPY 1 · FOR THE SENDER</span>') + page.replace('__COPY__', '<span class="trp-copy r">COPY 2 · FOR THE RECEIVING OFFICE</span>'); });
   printPaper(pages.join(''), 210, 297, 'trpp'); }
 
 /* ----- SURI: scan or type a document number to see where the document is ----- */
@@ -12815,7 +12823,7 @@ function docScanStop(){ clearInterval(SURI.t); SURI.t = 0; if (SURI.stream){ SUR
 async function docScan(){ docPubClose();
   stfModal(`<h3>📷 SURI: scan a QR code</h3><div class="suri"><div class="suri-cam"><video id="suriV" playsinline muted autoplay></video><span class="suri-box"></span></div><p class="hint" id="suriMsg">Opening the camera...</p></div>
     <div class="row" style="justify-content:flex-start;gap:8px;flex-wrap:wrap;margin:6px 0"><label class="btn ghost small" style="cursor:pointer">🖼 Take or choose a picture<input type="file" accept="image/*" capture="environment" hidden onchange="docScanFile(this.files[0])"></label></div>
-    <div class="field"><label>Or type the document or transmittal number</label><input id="suriN" placeholder="Example: 125592-2026-0001 or TR-125592-2026-0001"></div>
+    <div class="field"><label>Or type the document or transmittal number</label><input id="suriN" placeholder="Example: 125592-2026-0001 or TR-125592-2026-0001" onkeydown="if(event.key==='Enter'){event.preventDefault();docShow(this.value)}"></div>
     <div class="modal-actions"><button class="btn ghost" onclick="docScanStop();closeModal('stfModal')">Close</button><button class="btn" onclick="docShow($('suriN').value)">Find</button></div>`);
   try{ await coverKit(); }catch(e){}
   if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){ $('suriMsg').textContent = 'This browser cannot open the camera here. Tap Take or choose a picture, or use the camera app of your phone.'; return; }
@@ -12840,6 +12848,10 @@ async function docScanFile(file){ if (!file) return; try{ await coverKit(); }cat
     URL.revokeObjectURL(img.src); if (found) docShow(found); else { const m = $('suriMsg'); if (m) m.textContent = 'No QR code was found in the picture. Take it again closer, with the whole QR code inside.'; } };
   img.src = URL.createObjectURL(file); }
 // A QR code scanned with any phone camera or scanner app opens TALA with ?d= in the link and shows the status at once, even without signing in
+(function scannerGun(){ let buf = '', last = 0;
+  document.addEventListener('keydown', e => { const t = Date.now(); if (t - last > 80) buf = ''; last = t;
+    if (e.key==='Enter'){ const m = buf.match(/[?&](?:d|doc)=([A-Za-z0-9-]+)/i); if (m){ e.preventDefault(); const a = document.activeElement; if (a && (a.tagName==='INPUT' || a.tagName==='TEXTAREA') && a.id!=='suriN') a.value = a.value.replace(buf, ''); buf = ''; docShow(m[0]); } buf = ''; return; }
+    if (e.key && e.key.length===1) buf += e.key; }, true); })();
 (function docFromUrl(){ let code = ''; try{ const q = new URLSearchParams(location.search); code = q.get('d') || q.get('doc') || ''; }catch(e){} if (!code) return;
   let n = 0; const go = () => { if (typeof connected==='function' && connected() && document.body){ docShow(code); try{ history.replaceState(null, '', location.pathname); }catch(e){} } else if (n++ < 60) setTimeout(go, 250); };
   setTimeout(go, 300); })();
