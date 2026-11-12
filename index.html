@@ -1402,6 +1402,17 @@ body.ntklocked{overflow:hidden}
 .ntk-pics{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}.ntk-pics img{max-width:100%;max-height:260px;border-radius:10px;border:1px solid #ddd;cursor:zoom-in;background:#f3f3ee;min-width:80px;min-height:60px}
 .ntk-ok{margin:12px 0;font-weight:600}
 
+.binslot:empty{display:none}.bincard{margin:14px 0;border:1px dashed var(--line,#d5dbd7);border-radius:14px;background:var(--card,#fff)}.bincard summary{cursor:pointer;padding:11px 14px;font-weight:700;display:flex;gap:8px;align-items:center;list-style:none}.bincard summary::-webkit-details-marker{display:none}.bincard summary small{font-weight:500;color:var(--muted)}.bincard .sdot{margin-left:auto}
+.binlist{display:grid;gap:8px;padding:0 12px 12px}.binit{display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap;padding:10px 12px;border-radius:12px;background:var(--page,#f6f7f5)}.binit>div{flex:1;min-width:200px}.binit b{display:block}.binit small{display:block;color:var(--muted);font-size:12.5px}.binit .atn{font-size:12px;padding:3px 10px;white-space:nowrap}.binit .row{display:flex;gap:6px;flex-wrap:wrap}
+.binwhy{font-size:13px;margin:4px 0 0}
+.welltbl td small{display:block;color:var(--muted);font-size:12px}.welltbl .atn{display:inline-block;font-size:12px;padding:3px 10px;white-space:nowrap}.welltbl input.wnum{width:78px;padding:6px 8px;font-size:15px}
+.wtag{display:inline-block;margin:2px 4px 2px 0;padding:3px 9px;border-radius:999px;background:var(--page,#f2f4f1);font-size:12.5px}.wtag small{color:var(--muted)}
+.wvrow{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:6px 0}.wvrow select,.wvrow input{flex:1;min-width:120px}
+.wbgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:4px 12px;margin:6px 0}.wbgrid .check small{display:block}
+.wtagl{display:grid;gap:4px;max-height:280px;overflow:auto;border:1px solid var(--line,#ddd);border-radius:10px;padding:8px}.wtagr{display:flex;gap:8px;align-items:center;justify-content:space-between}.wtagr select{max-width:170px}
+.wprints{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}.wprint{display:grid;gap:4px;text-align:left;padding:14px;border-radius:14px;border:1px solid var(--line,#ddd);background:var(--card,#fff);cursor:pointer;font:inherit;color:inherit}.wprint span{font-size:24px}.wprint small{color:var(--muted)}.wprint:hover{border-color:var(--brand,#1F5130)}
+@page wellland{size:A4 landscape;margin:8mm}
+@media print{ .stfprint.wellprint{page:wellland} .wellprint .stfp-tbl td,.wellprint .stfp-tbl th{font-size:9pt;padding:3px 5px} .wellprint .stfp-tbl small{font-size:8pt} }
 </style>
 </head>
 <body>
@@ -1432,6 +1443,7 @@ body.ntklocked{overflow:hidden}
     <button onclick="$('menu').classList.remove('open');PRF.who='';PRF.tab='me';openFeature('prof')">My profile and 201 File</button>
     <button onclick="$('menu').classList.remove('open');openFeature('memo')">Memos and advisories</button>
     <button onclick="$('menu').classList.remove('open');openSig()">My e-signature</button>
+    <button id="menuBin" onclick="binAll()" style="display:none">🗑 Deleted items</button>
     <button id="menuMine" onclick="openPir('me')" style="display:none">My status presentation</button>
     <button onclick="installApp()">Install TALA app</button>
     <button id="menuSigBank" onclick="$('menu').classList.remove('open');openSigBank()" style="display:none">Signature bank</button>
@@ -2125,8 +2137,8 @@ body.ntklocked{overflow:hidden}
 
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
-const MIN_SERVER = '10.2'; // oldest Code.gs this page works with
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'10.2', date:'November 3, 2026' } };
+const MIN_SERVER = '10.3'; // oldest Code.gs this page works with
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'10.3', date:'November 12, 2026' } };
 function verLine(server){
   const old = server && (server.indexOf('older') > -1 || parseFloat(server) < parseFloat(MIN_SERVER));
   const s = server ? ' Server '+server+('.') : '';
@@ -2340,7 +2352,7 @@ function savedToken(){
   }catch(e){}
   return null;
 }
-function clearSession(){ TOKEN=null; USER=null; DATA=null; ACC=null; try{ localStorage.removeItem('tala_token'); localStorage.removeItem('tala_data'); sessionStorage.clear(); }catch(e){} }
+function clearSession(){ TOKEN=null; USER=null; DATA=null; ACC=null; try{ localStorage.removeItem('tala_token'); localStorage.removeItem('tala_data'); sessionStorage.clear(); Object.keys(localStorage).filter(k => k.indexOf('tala_c_')===0).forEach(k => localStorage.removeItem(k)); }catch(e){} try{ RPT.data = null; INV.data = null; MEMO.data = null; if (typeof WELL!=='undefined') WELL.data = null; }catch(e){} warmTabs.done = ''; }
 function segSync(id){ document.querySelectorAll('#'+id+' label').forEach(l => l.classList.toggle('on', l.querySelector('input').checked)); }
 function radioVal(name){ const r=document.querySelector('input[name="'+name+'"]:checked'); return r ? r.value : ''; }
 function copyText(t){
@@ -2471,7 +2483,7 @@ function render(){
   if (!USER){ $('chat').hidden = true; $('bellPanel').classList.remove('open'); stopPoll(); } else startPoll();
   $('signInBtn').style.display = USER ? 'none' : '';
   $('userBtn').style.display = USER ? 'flex' : 'none';
-  $('menuAcc').style.display = role==='head' ? '' : 'none';
+  $('menuAcc').style.display = role==='head' ? '' : 'none'; try{ binMenu(); }catch(e){}
 
   $('menuSigBank').style.display = role==='head' ? '' : 'none';
   $('menuNewSY').style.display = role==='head' ? '' : 'none';
@@ -2566,8 +2578,15 @@ async function openProf(){ prfReset();
   $('viewPir').style.display=''; CUR_FEATURE = 'prof'; drawSide(); window.scrollTo(0,0);
   if (!USER){ $('viewPir').innerHTML = '<div class="empty">Please sign in to open your profile.</div>'; return; }
   if (!PRF.who) PRF.who = USER.email;
+  const quick = !!(PRF.p && PRF.f && PRF.p.account && PRF.p.account.email === PRF.who);
+  if (quick){ prfDraw(); if (lcFresh('prf:'+PRF.who, 120000)) return;   // opens at once with what was opened before, then updates quietly
+    const dr = PRF.draft, ph = PRF.photo;
+    try{ await prfFetch(); LC_AT['prf:'+PRF.who] = Date.now(); }catch(e){ return; }
+    if (dr) PRF.draft = dr; if (ph !== undefined) PRF.photo = ph;
+    if (CUR_FEATURE==='prof' && !(document.activeElement && $('viewPir').contains(document.activeElement) && /INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) && !document.querySelector('.overlay.open')){ const y = window.scrollY; prfDraw(); window.scrollTo(0, y); }
+    return; }
   $('viewPir').innerHTML = `<div class="pirload"><div class="pirstar">★</div><b>Opening the profile</b><div class="pirdots"><i></i><i></i><i></i></div></div>`;
-  try{ await prfFetch(); }catch(e){ console.warn('TALA profile', e); const net = /fetch|network|internet|offline|timed? ?out/i.test(String(e && e.message || ''));
+  try{ await prfFetch(); LC_AT['prf:'+PRF.who] = Date.now(); }catch(e){ console.warn('TALA profile', e); const net = /fetch|network|internet|offline|timed? ?out/i.test(String(e && e.message || ''));
     $('viewPir').innerHTML = `<div class="empty">The profile could not be opened. ${net || !e || !e.message ? 'Please check the internet.' : esc(e.message)} <button class="btn ghost small" onclick="openProf()">Try again</button></div>`; try{ reportErr(String(e && e.message || e), 'openProf'); }catch(x){} return; }
   if (CUR_FEATURE==='prof') prfDraw();
 }
@@ -2851,7 +2870,7 @@ function f201TrackPrint(who){
 
 /* ----- Memos: Memorandum and Advisory ----- */
 var MEMO = { data:null, tab:'Memorandum', q:'', unread:0, popAt:0, opened:{} };
-async function memoLoad(){ MEMO.data = await api('memoLoad'); memoCount(); return MEMO.data; }
+async function memoLoad(){ MEMO.data = await api('memoLoad'); LC_AT.memo = Date.now(); lcPut('memo', MEMO.data); memoCount(); return MEMO.data; }
 function memoMine(m){ return !!(m.reads||{})[USER.email]; }
 function memoForMe(m){ return m.byEmail !== USER.email && (m.to==='all' || (Array.isArray(m.to) && m.to.indexOf(USER.email) > -1)); }
 function memoCount(){ if (!USER || !MEMO.data) return; MEMO.unread = USER.role==='head' ? 0 : (MEMO.data.memos||[]).filter(m => memoForMe(m) && !memoMine(m)).length; drawSide(); }
@@ -3175,6 +3194,7 @@ async function openMemo(){ memoReset();
   ['viewLac','viewTrk','viewAcc','viewBank','viewLog','viewWeeks','viewSig','viewObs','viewHome','viewSbfp','viewAtt'].forEach(v => $(v) && ($(v).style.display='none'));
   $('viewPir').style.display=''; CUR_FEATURE = 'memo'; drawSide(); window.scrollTo(0,0);
   if (!USER){ $('viewPir').innerHTML = '<div class="empty">Please sign in to open the memos.</div>'; return; }
+  if (!MEMO.data) MEMO.data = lcGet('memo');
   if (!MEMO.data) $('viewPir').innerHTML = `<div class="pirload"><div class="pirstar">★</div><b>Opening the memos</b><div class="pirdots"><i></i><i></i><i></i></div></div>`; else memoDraw();
   try{ await memoLoad(); }catch(e){ if (!MEMO.data){ $('viewPir').innerHTML = `<div class="empty">The memos could not be opened. Please check the internet. <button class="btn ghost small" onclick="openMemo()">Try again</button></div>`; return; } }
   if (CUR_FEATURE==='memo') memoDraw();
@@ -3723,6 +3743,7 @@ const FEATURES = [
   { id:'memo', name:'Memos and Advisories', built:true, open:() => openMemo(), icon:'M4 4h16v12H7l-3 3zm3 4v2h10V8zm0 4v2h7v-2z' },
   { id:'inv', name:'Property and Inventory (Project ALAGA)', built:true, open:() => openInv(), icon:'M3 7l9-4 9 4v10l-9 4-9-4zm9-2L6 7.6l6 2.7 6-2.7zM5 9.2v6.5l6 2.7v-6.5zm14 0-6 2.7v6.5l6-2.7z' },
   { id:'rpt', name:'Reports and Documents (Project DALOY)', built:true, open:() => openRpt(), icon:'M6 2h9l5 5v15H6zm8 1.5V8h4.5zM8 11v2h10v-2zm0 4v2h10v-2z' },
+  { id:'well', name:'Learner Wellness (Project KALINGA)', built:true, open:() => openWell(), icon:'M12 21s-7-4.4-9.3-9C1.2 8.9 3 5 6.6 5c2 0 3.3 1.1 4.1 2.3h2.6C14.1 6.1 15.4 5 17.4 5 21 5 22.8 8.9 21.3 12 19 16.6 12 21 12 21zm-1-12v3H8v2h3v3h2v-3h3v-2h-3V9z' },
   { id:'aral', name:'ARAL (Project TULAY)', built:true, open:() => openAral(), icon:'M12 2 3 6v2h18V6zM5 10v7h3v-7zm5.5 0v7h3v-7zM16 10v7h3v-7zM3 19v3h18v-3z' },
   { id:'mne', name:'School M&E Reports', built:true, open:() => openPir(USER && USER.role==='head' ? 'pir' : 'me'), icon:'M4 20V10h3v10zm6 0V4h3v16zm6 0v-7h3v7z',
     do:'Bring together results from all TALA trackers into one school monitoring and evaluation view.',
@@ -3730,8 +3751,74 @@ const FEATURES = [
     report:'Quarterly SMEA and PIR tables, ready to print.' }
 ];
 function featOn(id){ const s = (DATA||PUB||{}).settings||{}; return (s.features||{})[id] !== false; } // shown unless the School Head unticked it
+/* 10.3 speed: each tab keeps its last copy on this device. The tab opens from that copy at once, then updates quietly. */
+function lcKey(n){ return 'tala_c_'+n+'_'+(USER?USER.email:''); }
+function lcGet(n){ try{ return JSON.parse(localStorage.getItem(lcKey(n))||'null'); }catch(e){ return null; } }
+const LC_LAST = {};
+function lcPut(n, d){ if (!USER || !d || LC_LAST[n] === d) return; LC_LAST[n] = d; setTimeout(() => { try{ localStorage.setItem(lcKey(n), JSON.stringify(d)); }catch(e){} }, 0); }
+const LC_AT = {};
+function lcFresh(n, ms){ return LC_AT[n] && Date.now() - LC_AT[n] < (ms || 20000); }
+// After signing in, the tabs fetch their data quietly one by one, so each opens without waiting
+function warmTabs(){ if (!USER || !TOKEN || USER.sample || warmTabs.done === USER.email) return; warmTabs.done = USER.email;
+  const jobs = [];
+  if (featOn('rpt')) jobs.push(() => !RPT.data && api('rptLoad').then(d => { if (!RPT.data){ RPT.data = d; LC_AT.rpt = Date.now(); lcPut('rpt', d); } }));
+  if (featOn('inv')) jobs.push(() => !INV.data && api('invLoad').then(d => { if (!INV.data){ INV.data = d; LC_AT.inv = Date.now(); lcPut('inv', d); } }));
+  if (featOn('memo') && USER.aral !== 'only'){ jobs.push(() => { memoReset(); return !MEMO.data && api('memoLoad').then(d => { if (!MEMO.data){ MEMO.data = d; LC_AT.memo = Date.now(); lcPut('memo', d); try{ memoCount(); }catch(e){} } }); }); }
+  if (typeof WELL !== 'undefined' && featOn('well') && USER.aral !== 'only') jobs.push(() => !WELL.data && api('wellLoad').then(d => { if (!WELL.data){ WELL.data = d; LC_AT.well = Date.now(); lcPut('well', d); } }));
+  let i = 0; const next = () => { if (i >= jobs.length || !USER) return; const j = jobs[i++]; Promise.resolve().then(j).catch(()=>{}).then(() => setTimeout(next, 700)); };
+  setTimeout(next, 4000); }
+/* ---------- 10.3 Deleted items. Whatever is deleted is kept for one year. The owner asks the School Head to restore it, with a reason. ---------- */
+var BIN = { data:null, at:0, dot:0, ver:0 };
+const BIN_ICO = { nb:'\u{1F4D3}', hub:'\u{1F3AC}', lacs:'\u{1F465}', f201:'\u{1F4C1}', learner:'\u{1F9D2}', req:'\u{1F4DD}', entry:'\u{1F4DA}', memo:'\u{1F4E2}', obs:'\u{1F441}', ev:'\u{1F4C5}', sbfp:'\u{1F372}', board:'\u{1F4CC}', inv:'\u{1F4E6}', well:'\u{1F49A}' };
+function binSlot(feats){ return `<div class="binslot" data-bf="${feats}"></div>`; }
+async function binLoad(force){ if (!USER || !TOKEN) return;
+  if (!BIN.data){ BIN.data = lcGet('bin'); if (BIN.data){ BIN.ver++; binFill(); } }
+  if (!force && Date.now() - BIN.at < 45000) return; BIN.at = Date.now();
+  try{ BIN.data = await api('binLoad'); lcPut('bin', BIN.data); BIN.ver++; binFill(); binMenu(); }catch(e){ BIN.at = 0; } }
+function binShown(o){ return o.status!=='Restored' || String(o.updated||'').slice(0,10) >= addDays(todayPH(), -14); }   // restored items stay listed for two weeks
+function binItem(o){ const head = USER.role==='head', mine = o.email===USER.email, pend = o.req && o.req.status==='Pending', done = o.status==='Restored';
+  const chip = done ? '<span class="atn ok">✔ Restored</span>' : pend ? '<span class="atn wait">⏳ Waiting for the School Head</span>' : '<span class="atn bad">\u{1F5D1} Deleted</span>';
+  return `<div class="binit"><span class="stfico">${BIN_ICO[o.feat]||'\u{1F5D1}'}</span><div><b>${esc(o.item)}</b><small>${esc(o.featName)} · Deleted ${esc(dTime(o.on))} by ${esc(o.by)}${head && !mine ? ' · Owner: '+esc(o.name) : ''}</small>
+      ${o.req ? `<p class="binwhy"><b>Reason to restore:</b> ${esc(o.req.reason)} <small>${esc(o.req.by)}, ${esc(dTime(o.req.on))}</small></p>` : ''}
+      ${o.dec ? `<p class="binwhy"><b>${o.dec.ok ? 'Restored' : 'Not restored'}</b>${o.dec.note ? ': '+esc(o.dec.note) : ''} <small>${esc(o.dec.by)}, ${esc(dTime(o.dec.on))}</small></p>` : ''}</div>
+    <div class="row">${chip}${!done && mine && !head && !pend ? `<button class="btn small" onclick="binAskOpen('${o.id}')">↺ Ask to restore</button>` : ''}${!done && head ? `<button class="btn small" onclick="binDecideOpen('${o.id}',true)">↺ Restore</button>${pend ? `<button class="btn ghost small" onclick="binDecideOpen('${o.id}',false)">Do not restore</button>` : ''}` : ''}</div></div>`; }
+function binCardHtml(feats){ if (!BIN.data || !USER) return ''; const F = feats.split(','), L = (BIN.data.items||[]).filter(o => F.indexOf(o.feat) > -1 && binShown(o));
+  if (!L.length) return ''; const pend = L.filter(o => o.req && o.req.status==='Pending').length;
+  return `<details class="bincard" ${pend && USER.role==='head' ? 'open' : ''}><summary>\u{1F5D1} Deleted items <small>${L.length}. ${USER.role==='head' ? 'You can restore them.' : 'Ask the School Head to restore one by mistake.'}</small>${pend ? `<i class="sdot">${pend}</i>` : ''}</summary><div class="binlist">${L.map(binItem).join('')}</div></details>`; }
+const BIN_AUTO = { prof:['viewPir','f201'], memo:['viewPir','memo'], inv:['viewPir','inv'], att:['viewAtt','learner,req'], obs:['viewObs','obs'], sbfp:['viewSbfp','sbfp'], lpt:['viewTrk','entry'], home:['viewHome','ev,board'], well:['viewPir','well'] };
+function binFill(){ if (!USER) return;
+  const a = BIN_AUTO[CUR_FEATURE], v = a && $(a[0]);   // each tab shows its own Deleted items at the bottom
+  if (v && v.style.display!=='none' && !v.querySelector('.pirload')){ let sl = v.querySelector(':scope > .binslot.auto'); if (sl && sl.dataset.bf !== a[1]){ sl.remove(); sl = null; } if (!sl) v.insertAdjacentHTML('beforeend', `<div class="binslot auto" data-bf="${a[1]}"></div>`); }
+  const slots = document.querySelectorAll('.binslot'); if (!slots.length) return;
+  if (!BIN.data || Date.now() - BIN.at > 60000) binLoad();
+  slots.forEach(el => { if (el.dataset.v === String(BIN.ver)) return; el.dataset.v = String(BIN.ver); const h = binCardHtml(el.dataset.bf); if (el.innerHTML !== h){ const op = el.querySelector('details[open]'); el.innerHTML = h; if (op && el.querySelector('details')) el.querySelector('details').open = true; } }); }
+try{ new MutationObserver(() => { clearTimeout(BIN.mt); BIN.mt = setTimeout(binFill, 60); }).observe(document.querySelector('main') || document.body, { childList:true, subtree:true }); }catch(e){}
+function binMenu(){ const b = $('menuBin'); if (!b) return; b.style.display = USER ? '' : 'none'; const n = USER && USER.role==='head' ? BIN.dot : 0; b.innerHTML = '\u{1F5D1} Deleted items' + (n ? ` <i class="sdot">${n}</i>` : ''); }
+async function binAll(){ $('menu').classList.remove('open');
+  stfModal(`<h3>\u{1F5D1} Deleted items</h3><p class="sub">${USER.role==='head' ? 'Everything deleted in TALA in the past year. Requests to restore are on top.' : 'What you or the School Head deleted in the past year. If one was deleted by mistake, tap Ask to restore and write the reason.'}</p><div id="binAll" class="binlist" style="padding:0"><div class="skel"><div class="sk-block"></div></div></div><div class="row" style="margin-top:12px"><button class="btn ghost" onclick="closeModal('stfModal')">Close</button></div>`);
+  if (!BIN.data) BIN.data = lcGet('bin'); binAllDraw(); await binLoad(true); binAllDraw(); }
+function binAllDraw(){ const el = $('binAll'); if (!el) return; if (!BIN.data) return;
+  const L = (BIN.data.items||[]).filter(binShown).sort((a,b) => ((b.req&&b.req.status==='Pending')?1:0) - ((a.req&&a.req.status==='Pending')?1:0) || String(b.on).localeCompare(String(a.on)));
+  el.innerHTML = L.map(binItem).join('') || '<div class="empty">Nothing was deleted.</div>'; }
+function binAskOpen(id){ const o = (BIN.data.items||[]).find(x => x.id===id); if (!o) return;
+  stfModal(`<h3>↺ Ask to restore</h3><p class="sub"><b>${esc(o.item)}</b><br>${esc(o.featName)}, deleted ${esc(dTime(o.on))}</p>
+    <div class="field"><label for="baN">Why should it be restored?</label><textarea id="baN" rows="3" placeholder="Example: I deleted it by mistake. It is my journal for the LAC session on Nov 7."></textarea></div>
+    <p class="err" id="baErr"></p><div class="row"><button class="btn" id="baBtn" onclick="binAsk('${id}')">Send to the School Head</button><button class="btn ghost" onclick="closeModal('stfModal')">Cancel</button></div>`); setTimeout(() => $('baN').focus(), 60); }
+async function binAsk(id){ const note = $('baN').value.trim(); if (!note) return $('baErr').textContent = 'Write the reason first.';
+  $('baBtn').disabled = true; try{ BIN.data = await api('binAsk', { id, note }); BIN.ver++; lcPut('bin', BIN.data); closeModal('stfModal'); binFill(); binAllDraw(); toast('Sent. The School Head will restore it after checking.'); }catch(e){ $('baBtn').disabled = false; handleErr(e, 'baErr'); } }
+function binDecideOpen(id, ok){ const o = (BIN.data.items||[]).find(x => x.id===id); if (!o) return;
+  stfModal(`<h3>${ok ? '↺ Restore' : 'Do not restore'}</h3><p class="sub"><b>${esc(o.item)}</b><br>${esc(o.featName)} of ${esc(o.name)}, deleted ${esc(dTime(o.on))} by ${esc(o.by)}</p>${o.req ? `<p class="binwhy"><b>Reason given:</b> ${esc(o.req.reason)}</p>` : ''}
+    <div class="field"><label for="bdN">${ok ? 'Note to the owner (you may leave this blank)' : 'Reason for not restoring it'}</label><textarea id="bdN" rows="3"></textarea></div>
+    <p class="err" id="bdErr"></p><div class="row"><button class="btn" id="bdBtn" onclick="binDecide('${id}',${ok})">${ok ? '↺ Restore now' : 'Send'}</button><button class="btn ghost" onclick="closeModal('stfModal')">Cancel</button></div>`); }
+async function binDecide(id, ok){ const note = $('bdN').value.trim(); if (!ok && !note) return $('bdErr').textContent = 'Write the reason first.';
+  $('bdBtn').disabled = true; try{ BIN.data = await api('binDecide', { id, ok, note }); BIN.ver++; lcPut('bin', BIN.data); closeModal('stfModal'); BIN.dot = Math.max(0, (BIN.dot||0) - 1); binMenu();
+    const o = (BIN.data.items||[]).find(x => x.id===id); Object.keys(LC_AT).forEach(k => LC_AT[k] = 0); toast(ok ? 'Restored. It is back in its tab.' : 'Sent to the owner.');
+    if (ok && o){ if (['nb','hub','lacs'].indexOf(o.feat) > -1 && typeof LAC!=='undefined') lacLoad(true).then(() => { if (CUR_FEATURE==='lac') lacDraw(); });
+      else if (o.feat==='f201' && CUR_FEATURE==='prof') openProf(); else if (o.feat==='memo'){ MEMO.data = null; if (CUR_FEATURE==='memo') openMemo(); } else if (o.feat==='inv'){ INV.data = null; if (CUR_FEATURE==='inv') openInv(); }
+      else if (['entry','ev'].indexOf(o.feat) > -1) loadData().catch(()=>{}); else if (o.feat==='well' && typeof WELL!=='undefined'){ WELL.data = null; if (CUR_FEATURE==='well') openWell(); } }
+    binFill(); binAllDraw(); }catch(e){ $('bdBtn').disabled = false; handleErr(e, 'bdErr'); } }
 /* Red numbers on each feature: what waits for you there, and unread notices about it. The installed app shows the total on its icon. */
-const FEAT_NT = { lpt:['upload','approved','returned'], obs:['obs'], att:['request','decision','remind'], lac:['lac'], sbfp:['sbfp'], aral:['aral'], memo:['memo'], prof:['f201'] };
+const FEAT_NT = { well:['well'], lpt:['upload','approved','returned'], obs:['obs'], att:['request','decision','remind'], lac:['lac'], sbfp:['sbfp'], aral:['aral'], memo:['memo'], prof:['f201'] };
 function featUnread(id){ return (NOTICES||[]).filter(n => !n.read && (FEAT_NT[id]||[]).indexOf(n.type) > -1).length; }
 // For the School Head: new entries since the feature was last opened (SBFP and ARAL), or what waits for checking
 function seenKeyF(id){ return 'tala_fseen_'+(USER?USER.email:'')+'_'+id; }
@@ -3763,6 +3850,7 @@ function featCount(id){
   if (id==='aral'){ if (USER.role==='head' || USER.role==='admin') return u + headNew('aral'); return Math.max(u, aralTodoCount()); }
   if (id==='memo') return USER.role==='head' ? 0 : (MEMO.unread || 0);
   if (id==='prof') return PRF.dot || 0;
+  if (id==='well') return Math.max(u, (typeof WELL!=='undefined' && WELL.dot) || 0);
   if (id==='inv') return typeof INV==='undefined' ? u : Math.max(u, (INV.data ? INV.data.items.filter(invTodo).length : INV.dot) || 0);
   if (id==='rpt') return typeof RPT==='undefined' ? u : Math.max(u, (RPT.data ? RPT.data.items.filter(rptTodo).length : RPT.dot) || 0);
   if (id==='lpt' && USER.role==='teacher') return Math.max(u, ((DATA||{}).entries||[]).filter(e => e.email===USER.email).reduce((a, e) => a + itemsOf(e).filter(x => x.status==='Returned' || x.status==='Invalid').length, 0));
@@ -4570,7 +4658,7 @@ function applyData(d, first){
   try{ localStorage.setItem('tala_data', JSON.stringify(DATA)); }catch(e){}
   if (first) SEL.term = pickCurrentTerm(DATA.settings);
   render(); renderAll();
-  if (first){ showHome(); setTimeout(attWarm, 2500);
+  if (first){ showHome(); setTimeout(attWarm, 2500); try{ warmTabs(); }catch(e){}
     // personnel: check the journal entries still to write, then remind once
     setTimeout(() => { try{ if (USER && USER.role!=='head' && !aralOnly() && featOn('lac') && typeof LAC!=='undefined') lacLoad(true).then(() => { lacDot(); todoPop(); if (CUR_FEATURE==='home') drawHome(); }).catch(() => todoPop()); else todoPop(2); }catch(e){} }, 2500); }
   else if ($('viewHome').style.display !== 'none') drawHome();
@@ -5581,11 +5669,13 @@ async function poll(){
     mergeMsgs(r.messages || []); MSG_SINCE = r.now ? r.now.slice(0,16) : MSG_SINCE;
     const un = r.unread || 0;
     $('bellCount').hidden = !un; $('bellCount').textContent = un > 9 ? '9+' : un;
-    if (un > LAST_UNREAD && LAST_UNREAD >= 0 && NOTICES[0]) { toast(NOTICES[0].text.slice(0,120)); loadData().catch(()=>{}); phoneNotify(NOTICES.filter(n => !n.read).slice(0, un - LAST_UNREAD)); }
+    if (un > LAST_UNREAD && LAST_UNREAD >= 0 && NOTICES[0]) { Object.keys(LC_AT).forEach(k => LC_AT[k] = 0); BIN.at = 0; toast(NOTICES[0].text.slice(0,120)); loadData().catch(()=>{}); phoneNotify(NOTICES.filter(n => !n.read).slice(0, un - LAST_UNREAD)); }
     drawSide();
     LAST_UNREAD = un;
     if (USER.role==='teacher' && typeof r.obsNew === 'number' && r.obsNew !== OBS.newCount){ OBS.newCount = r.obsNew; drawSide(); }
     if (typeof r.lacNew === 'number' && r.lacNew !== LAC.dot){ LAC.dot = r.lacNew; drawSide(); }
+    if (typeof r.wellNew === 'number' && r.wellNew !== WELL.dot){ const more = r.wellNew > (WELL.dot||0); WELL.dot = r.wellNew; if (more){ LC_AT.well = 0; if (CUR_FEATURE==='well') openWell(); } drawSide(); }
+    if (typeof r.binNew === 'number' && r.binNew !== BIN.dot){ BIN.dot = r.binNew; BIN.at = 0; binMenu(); binFill(); }
     if (typeof r.invNew === 'number' && r.invNew !== INV.dot){ const more = r.invNew > (INV.dot||0); INV.dot = r.invNew; if (more && CUR_FEATURE!=='inv') INV.data = null; drawSide(); }
     if (typeof r.rptNew === 'number' && r.rptNew !== RPT.dot){ const more = r.rptNew > (RPT.dot||0); RPT.dot = r.rptNew; if (more && CUR_FEATURE!=='rpt') RPT.data = null; drawSide(); }
     if (typeof r.aralNew === 'number' && r.aralNew !== ARAL.srvNew){ ARAL.srvNew = r.aralNew; drawSide(); }
@@ -9818,10 +9908,11 @@ const LAC_SCALE = [[4,'Strongly Agree'],[3,'Agree'],[2,'Disagree'],[1,'Strongly 
 const LAC_EVS = ['The objectives of the session were clearly stated and met.', 'The topic is relevant to my teaching and to my learners.', 'The activities helped me understand the topic.', 'The materials were useful and well prepared.', 'The time was used well.', 'I can apply what I learned in my class.'];
 const LAC_EVR = ['My learnings from this session prepared me for learning applications in my workplace.', 'The expertise of the resource person or subject matter expert guided me to better understand the session\u2019s topics.', 'The resource person appropriately adjusted the content, methodology, and schedule to address my learning needs.', 'The resource person checked my understanding on the topic and processed my responses.', 'My learning environment was established and maintained positively by the resource person.'];
 const LAC_REF = ['What were the most valuable insights or knowledge you gained from this training?', 'How will you apply what you learned to your work or daily practice?', 'What aspects of this training were most impactful or eye opening for you?'];
-const NB_BOOKS = { LAC:'LAC Journal', REF:'Reflection', MEET:'Meeting Journal', NOTE:'Learning Hub notes' };
+const NB_BOOKS = { LAC:'LAC Journal', REF:'LAC Reflection', MEET:'Meeting Journal', NOTE:'Learning Hub notes' };
 // Only two notebooks: the LAC Journal (it keeps the reflections and the Learning Hub notes too) and the Meeting Journal
-const NB_TABS = { LAC:'LAC Journal', MEET:'Meeting Journal' };
-function nbTabOf(book){ return book==='MEET' ? 'MEET' : 'LAC'; }
+const NB_TABS = { LAC:'LAC Journal', REF:'LAC Reflection', MEET:'Meeting Journal', HUB:'Learning Hub notes' };   // 10.3: kept apart so each is seen at once
+function nbTabOf(n){ const b = typeof n==='string' ? n : (n||{}).book, sid = typeof n==='string' ? 'x' : (n||{}).session; return b==='MEET' ? 'MEET' : b==='REF' ? 'REF' : b==='NOTE' || (b==='LAC' && !sid) ? 'HUB' : 'LAC'; }
+const NB_NEWBOOK = { LAC:'LAC', REF:'REF', MEET:'MEET', HUB:'NOTE' };
 // Whether a person has written something in the journal of a session
 function nbWritten(sid, email, kind){ const book = kind==='MEET' ? 'MEET' : 'LAC';
   return (LAC.data.notebooks||[]).some(n => n.session===sid && n.email===email && n.book===book && n.status!=='Returned' && Object.values(n.body||{}).some(v => String(v||'').trim())); }
@@ -9875,9 +9966,13 @@ async function openLac(tab){
   $('viewLac').style.display=''; CUR_FEATURE='lac'; drawSide(); closeGuide(); window.scrollTo(0,0);
   if (!USER){ $('viewLac').innerHTML = '<div class="empty">Please sign in to open LAC and Teacher Development.</div>'; return; }
   if (tab) LAC.tab = tab;
-  if (!LAC.data) $('viewLac').innerHTML = `<div class="pirload"><div class="pirstar">\u2605</div><b>Opening LAC and Teacher Development</b><div class="pirdots"><i></i><i></i><i></i></div></div>`;
-  try{ await lacLoad(); }catch(e){ return handleErr(e); }
-  lacDraw(); maybeGuide('lac');
+  if (!LAC.data){ try{ LAC.data = JSON.parse(localStorage.getItem(lacKey())||'null'); }catch(e){} if (LAC.data) lacPendingApply(); }
+  if (LAC.data){ lacDraw(); maybeGuide('lac'); if (lcFresh('lac')) return; }   // opens at once from the copy on this device
+  else $('viewLac').innerHTML = `<div class="pirload"><div class="pirstar">\u2605</div><b>Opening LAC and Teacher Development</b><div class="pirdots"><i></i><i></i><i></i></div></div>`;
+  const had = !!LAC.data;
+  try{ await lacLoad(); LC_AT.lac = Date.now(); }catch(e){ if (!had) return handleErr(e); }
+  if (CUR_FEATURE==='lac' && !document.querySelector('#stfModal.open')){ const y = window.scrollY; lacDraw(); window.scrollTo(0, y); }
+  if (!had) maybeGuide('lac');
 }
 function lacDot(){ if (!LAC.data || !USER) return; const t = todayPH();
   const n = lacHead() ? LAC.data.hub.filter(h => h.status==='Pending').length + (LAC.data.notebooks||[]).filter(x => x.email!==USER.email && !x.checkedOn && x.status!=='Returned').length
@@ -9894,7 +9989,7 @@ function lacDraw(){
   if (LAC.sid && LAC.tab==='sess') return lacSession(LAC.sid);
   $('viewLac').innerHTML = `<div class="trk-head"><div><h2>LAC and Teacher Development</h2><p>${head?'Set up sessions, approve materials, and see everyone\u2019s progress.':admin?'View and print the attendance, evaluations, minutes, and reports.':'Your sessions, learning materials, and journals in one place.'}</p></div></div>
     <div class="tabs lactabs">${tabs.map(t => `<button class="${LAC.tab===t[0]?'on':''}" onclick="LAC.tab='${t[0]}';LAC.sid='';lacDraw()">${t[1]}${t[0]==='hub'&&LAC.dot&&head?` <i class="sdot">${LAC.dot}</i>`:''}</button>`).join('')}</div>
-    <div id="lacBody" style="margin-top:14px"></div>`;
+    <div id="lacBody" style="margin-top:14px"></div>${binSlot({ nb:'nb', hub:'hub', sess:'lacs', home:'nb,hub' }[LAC.tab] || '')}`;
   ({ home:lacHome, sess:lacSessions, hub:lacHub, nb:lacNotebooks, min:lacMinList, ov:lacOverview })[LAC.tab]();
   maybeGuide('lac'+(LAC.tab==='home'?'':LAC.tab));
 }
@@ -10384,14 +10479,14 @@ function nbBang(){ return `<button class="nbbang" onclick="this.classList.toggle
 function lacNotebooks(){
   const D = LAC.data, head = lacHead(), who = head ? (LAC.nbWho || '') : USER.email;
   if (!NB_TABS[LAC.nb]) LAC.nb = 'LAC';
-  const list = D.notebooks.filter(n => nbTabOf(n.book)===LAC.nb && (head ? (!who || n.email===who) : n.email===USER.email)).sort((a,b) => String(b.updated).localeCompare(String(a.updated)));
+  const list = D.notebooks.filter(n => nbTabOf(n)===LAC.nb && (head ? (!who || n.email===who) : n.email===USER.email)).sort((a,b) => String(b.updated).localeCompare(String(a.updated)));
   const books = Object.keys(NB_TABS), miss = head ? [] : nbMissing().filter(s => (s.kind==='MEET' ? 'MEET' : 'LAC')===LAC.nb);
-  $('lacBody').innerHTML = `<div class="bar" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><div class="tabs">${books.map(b => { const k = head ? 0 : nbMissing().filter(s => (s.kind==='MEET'?'MEET':'LAC')===b).length; return `<button class="${LAC.nb===b?'on':''}" onclick="LAC.nb='${b}';lacNotebooks()">${NB_TABS[b]}${k?` <i class="sdot">${k}</i>`:''}</button>`; }).join('')}</div>${nbBang()}
+  $('lacBody').innerHTML = `<div class="bar" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><div class="tabs">${books.map(b => { const k = head ? D.notebooks.filter(n => nbTabOf(n)===b && n.email!==USER.email && !n.checkedOn && n.status!=='Returned' && (!who || n.email===who)).length : nbMissing().filter(s => (s.kind==='MEET'?'MEET':'LAC')===b).length; return `<button class="${LAC.nb===b?'on':''}" onclick="LAC.nb='${b}';lacNotebooks()">${NB_TABS[b]}${k?` <i class="sdot">${k}</i>`:''}</button>`; }).join('')}</div>${nbBang()}
       ${head?`<select onchange="LAC.nbWho=this.value;lacNotebooks()"><option value="">Everyone</option>${lacPeople().map(p => `<option value="${esc(p.email)}" ${p.email===LAC.nbWho?'selected':''}>${esc(p.name)}${p.email===USER.email?' (me)':''}</option>`).join('')}</select>`:''}
-      <button class="btn" onclick="nbOpen('','${LAC.nb}')">\uFF0B New entry</button><button class="btn ghost" onclick="nbPrint()">\u{1F5A8} Print ${head&&!who?'all':who===USER.email||!head?'my':''} ${esc(NB_TABS[LAC.nb])}</button></div>
-    ${head ? '' : nbReturned().filter(n => nbTabOf(n.book)===LAC.nb).map(n => `<button class="nbmiss bad" onclick="nbOpen('${n.id}')"><b>\u21A9 Returned by the School Head: please complete</b><span>${esc(n.title || (lacS(n.session)||{}).title || NB_BOOKS[n.book])}. ${esc(n.remark||'')}</span></button>`).join('')}
+      <button class="btn" onclick="nbOpen('','${NB_NEWBOOK[LAC.nb]||'LAC'}')">\uFF0B New entry</button><button class="btn ghost" onclick="nbPrint()">\u{1F5A8} Print ${head&&!who?'all':who===USER.email||!head?'my':''} ${esc(NB_TABS[LAC.nb])}</button></div>
+    ${head ? '' : nbReturned().filter(n => nbTabOf(n)===LAC.nb).map(n => `<button class="nbmiss bad" onclick="nbOpen('${n.id}')"><b>\u21A9 Returned by the School Head: please complete</b><span>${esc(n.title || (lacS(n.session)||{}).title || NB_BOOKS[n.book])}. ${esc(n.remark||'')}</span></button>`).join('')}
     ${miss.map(s => `<button class="nbmiss" onclick="nbOpenFor('${s.id}','${s.kind==='MEET'?'MEET':'LAC'}')"><b>\u270D Please write in your ${s.kind==='MEET'?'Meeting':'LAC'} Journal</b><span>${esc(s.title)}, ${esc(dShort(s.date))}. You attended, but your journal for this ${s.kind==='MEET'?'meeting':'session'} is still empty. Tap here to write.</span></button>`).join('')}
-    ${head?`<p class="hint">${D.notebooks.filter(n => n.email!==USER.email && !n.checkedOn && n.status!=='Returned').length} entries of the teachers are waiting for checking. ${D.notebooks.filter(n => n.status==='Returned').length} returned entries are waiting for the teachers.</p>`:''}
+    ${head?`<p class="hint">${esc(NB_TABS[LAC.nb])}: ${D.notebooks.filter(n => nbTabOf(n)===LAC.nb && n.email!==USER.email && !n.checkedOn && n.status!=='Returned').length} entries of the teachers are waiting for checking. ${D.notebooks.filter(n => nbTabOf(n)===LAC.nb && n.status==='Returned').length} returned entries are waiting for the teachers.</p>${nbDupes().length ? `<p class="stfnote bad">\u26A0 ${nbDupes().length} teacher${nbDupes().length>1?'s have':' has'} the same journal saved more than once. <button class="btn small" onclick="nbMergeAll()">Combine the repeated entries</button></p>` : ''}`:''}
     <div class="nblist">${list.map(nbCard).join('') || '<div class="empty">No entries yet. Tap New entry to start writing.</div>'}</div>`;
 }
 function nbCard(n){
@@ -10408,7 +10503,7 @@ function nbCard(n){
 }
 function nbOpenFor(sid, book){ const s = lacS(sid); book = book || (s.kind==='MEET' ? 'MEET' : 'LAC'); const n = LAC.data.notebooks.find(x => x.email===USER.email && x.session===sid && x.book===book); nbOpen(n ? n.id : '', book, sid); }
 function nbOpen(id, book, sid){
-  const n = id ? LAC.data.notebooks.find(x => x.id===id) : { book: book || LAC.nb, session: sid || '', body:{}, email:USER.email };
+  const n = id ? LAC.data.notebooks.find(x => x.id===id) : { book: book || NB_NEWBOOK[LAC.nb] || 'LAC', session: sid || '', body:{}, email:USER.email };
   const mine = n.email===USER.email, b = n.body || {}, ro = mine ? '' : 'readonly';
   LAC.flag = false; LAC.nbEdit = n;
   const sess = LAC.data.sessions.filter(s => (n.book==='MEET' ? s.kind==='MEET' : s.kind==='LAC') && (lacInvited(s, USER.email) || s.id===n.session)).sort((a,c) => c.date.localeCompare(a.date));
@@ -10428,21 +10523,32 @@ function nbOpen(id, book, sid){
     <p class="err" id="nbErr"></p><div class="modal-actions"><button class="btn ghost" onclick="closeModal('stfModal')">Close</button>${id?`<button class="btn ghost" onclick="nbPrint('${id}')">\u{1F5A8} Print</button>`:''}${mine?`<button class="btn" onclick="nbSaveNow()">Save</button>`:lacHead()?`<button class="btn" onclick="nbCheckOpen('${id}')">\u2714 Check</button>`:''}</div>`, 'wide');
   if (mine) document.querySelectorAll('#stfMBody .nbt').forEach(nbGuard);
 }
+function nbGroupKey(n){ return n.email+'|'+nbTabOf(n)+'|'+(n.session ? 's:'+n.session : 't:'+String(n.title||'').trim().toLowerCase()); }
+function nbDupes(){ const c = {}; (LAC.data.notebooks||[]).forEach(n => { if (!n.session && !String(n.title||'').trim()) return; const k = nbGroupKey(n); c[k] = (c[k]||0) + 1; });
+  const people = new Set(); Object.keys(c).filter(k => c[k] > 1).forEach(k => people.add(k.split('|')[0])); return [...people]; }
+async function nbMergeAll(){ if (!confirm('Combine the journal entries saved more than once for the same session? The words of each copy are kept in one entry. The extra copies go to Deleted items.')) return;
+  try{ loading(true, 'Combining'); LAC.data = await api('nbMerge'); loading(false); lacSaveLocal(); lacDraw(); toast('Done. Each session now has one entry per journal.'); }catch(e){ loading(false); handleErr(e); } }
 async function nbSaveNow(){
+  if (LAC.nbSaving) return;   // 10.3: tapping Save many times saves only once
   const n = LAC.nbEdit, body = {}; document.querySelectorAll('#stfMBody textarea.nbt').forEach(t => body[t.id.slice(3)] = t.value.trim());
   const session = $('nbSess') ? $('nbSess').value : '', title = $('nbTitle') ? $('nbTitle').value.trim() : '';
   if (!Object.values(body).some(Boolean)) return $('nbErr').textContent = 'Write something first.';
   if (n.book==='MEET' && !session) return $('nbErr').textContent = 'Choose the meeting.';
   if ((n.book==='LAC' || n.book==='REF') && !session && !title) return $('nbErr').textContent = 'Choose the LAC session, or type a title.';
-  const note = { id:n.id, cid: n.id ? '' : 'N'+Date.now().toString(36)+Math.floor(Math.random()*900+100), book:n.book, session, title, body, flag:LAC.flag };
+  if (!n.id && !n.cid) n.cid = 'N'+Date.now().toString(36)+Math.floor(Math.random()*900+100);
+  // a new entry for a session that already has one in this journal opens into the same entry
+  const twin = !n.id && session ? (LAC.data.notebooks||[]).find(x => x.email===USER.email && x.book===n.book && x.session===session) : null;
+  const note = { id: n.id || (twin ? twin.id : ''), cid: n.id || twin ? '' : n.cid, book:n.book, session, title, body, flag:LAC.flag };
+  if (twin){ Object.keys(twin.body||{}).forEach(k => { const old = String(twin.body[k]||'').trim(), add = String(body[k]||'').trim(); body[k] = !add ? old : !old ? add : old.indexOf(add) > -1 ? old : add.indexOf(old) > -1 ? add : old+'\n\n'+add; }); }
+  LAC.nbSaving = true; const sb = document.querySelector('#stfMBody button[onclick^="nbSaveNow"]'); if (sb) sb.disabled = true;
   try{ if (navigator.onLine===false) throw new Error(MSG.NET);
-    const r = await api('nbSave', { note }); const i = LAC.data.notebooks.findIndex(x => x.id===r.note.id); if (i > -1) LAC.data.notebooks[i] = r.note; else LAC.data.notebooks.push(r.note); toast('Saved.'); }
-  catch(e){ if (friendly(e.message)===MSG.NET || friendly(e.message)===MSG.BUSY){ saveOut(outbox().filter(x => !(x.action==='nbSave' && (x.payload.note.id||x.payload.note.cid)===(note.id||note.cid)))); queueOut('nbSave', { note }, 'Journal entry'); lacPendingApply(); toast('Saved on this device. It will sync when you are online.'); } else return handleErr(e,'nbErr'); }
-  lacSaveLocal(); closeModal('stfModal'); if (LAC.sid) lacDraw(); else { LAC.tab = LAC.tab==='home' ? 'home' : 'nb'; LAC.nb = n.book; lacDraw(); }
+    const r = await api('nbSave', { note }); LAC.nbSaving = false; const i = LAC.data.notebooks.findIndex(x => x.id===r.note.id); if (i > -1) LAC.data.notebooks[i] = r.note; else LAC.data.notebooks.push(r.note); toast('Saved.'); }
+  catch(e){ if (friendly(e.message)===MSG.NET || friendly(e.message)===MSG.BUSY){ saveOut(outbox().filter(x => !(x.action==='nbSave' && (x.payload.note.id||x.payload.note.cid)===(note.id||note.cid)))); queueOut('nbSave', { note }, 'Journal entry'); lacPendingApply(); toast('Saved on this device. It will sync when you are online.'); } else { LAC.nbSaving = false; if (sb) sb.disabled = false; return handleErr(e,'nbErr'); } }
+  LAC.nbSaving = false; lacSaveLocal(); closeModal('stfModal'); if (LAC.sid) lacDraw(); else { LAC.tab = LAC.tab==='home' ? 'home' : 'nb'; LAC.nb = nbTabOf({ book:n.book, session }); lacDraw(); }
 }
-async function nbDel(id){ if (!confirm('Delete this journal entry?')) return;
+async function nbDel(id){ if (!confirm('Delete this journal entry? It goes to Deleted items below. If it was a mistake, you can ask the School Head to restore it.')) return;
   try{ if (navigator.onLine===false) throw new Error(MSG.NET); await api('nbDelete', { id }); }catch(e){ if (friendly(e.message)===MSG.NET || friendly(e.message)===MSG.BUSY) queueOut('nbDelete', { id }, 'Delete journal entry'); else return handleErr(e); }
-  LAC.data.notebooks = LAC.data.notebooks.filter(x => x.id!==id); lacSaveLocal(); lacDraw(); toast('Deleted.'); }
+  LAC.data.notebooks = LAC.data.notebooks.filter(x => x.id!==id); lacSaveLocal(); lacDraw(); BIN.at = 0; binLoad(true); toast('Deleted. You can find it under Deleted items.'); }
 function nbCheckOpen(id){ const n = LAC.data.notebooks.find(x => x.id===id);
   stfModal(`<h3>Check this entry</h3><p class="sub">${esc(n.name)}: ${esc(n.title || (lacS(n.session)||{}).title || NB_BOOKS[n.book])}</p>
     <div class="nbread">${nbHtml(n)}</div>
@@ -10470,7 +10576,7 @@ function nbTable(n){
 }
 async function nbPrint(id){
   const head = lacHead(), who = head ? LAC.nbWho : USER.email;
-  const list = id ? [LAC.data.notebooks.find(x => x.id===id)] : LAC.data.notebooks.filter(n => nbTabOf(n.book)===LAC.nb && (!who || n.email===who)).sort((a,b) => String(a.updated).localeCompare(String(b.updated)));
+  const list = id ? [LAC.data.notebooks.find(x => x.id===id)] : LAC.data.notebooks.filter(n => nbTabOf(n)===LAC.nb && (!who || n.email===who)).sort((a,b) => String(a.updated).localeCompare(String(b.updated)));
   if (!list.length || !list[0]) return toast('There is nothing to print yet.');
   closeModal('stfModal');
   const own = list.every(n => n.email===USER.email), doc = list.length > 1 ? 'journal entries' : 'journal entry';
@@ -12429,8 +12535,10 @@ const INV_GROUP_NAME = g => String(g||'').replace(/_/g,' ');
 async function openInv(){ setTimeout(() => qgMaybe('inv'), 1600); ['viewLac','viewTrk','viewAcc','viewBank','viewLog','viewWeeks','viewSig','viewObs','viewHome','viewSbfp','viewAtt'].forEach(v => $(v) && ($(v).style.display='none'));
   $('viewPir').style.display=''; CUR_FEATURE = 'inv'; drawSide(); window.scrollTo(0,0);
   if (!USER) return $('viewPir').innerHTML = '<div class="empty">Please sign in.</div>';
+  if (!INV.data) INV.data = lcGet('inv');
   if (!INV.data) $('viewPir').innerHTML = `<div class="pirload"><div class="pirstar">★</div><b>Opening the inventory</b><div class="pirdots"><i></i><i></i><i></i></div></div>`; else invDraw();
-  try{ INV.data = await api('invLoad'); }catch(e){ if (!INV.data){ $('viewPir').innerHTML = `<div class="empty">${esc(friendly(e.message))} <button class="btn ghost small" onclick="openInv()">Try again</button></div>`; return; } }
+  if (INV.data && lcFresh('inv')) return;
+  try{ INV.data = await api('invLoad'); LC_AT.inv = Date.now(); }catch(e){ if (!INV.data){ $('viewPir').innerHTML = `<div class="empty">${esc(friendly(e.message))} <button class="btn ghost small" onclick="openInv()">Try again</button></div>`; return; } }
   if (CUR_FEATURE==='inv') invDraw(); }
 function invStaff(){ return USER && (USER.role==='head' || USER.role==='admin'); }
 function invMoney(n){ n = Number(n||0); return n ? '₱'+n.toLocaleString('en-PH',{ minimumFractionDigits:2, maximumFractionDigits:2 }) : ''; }
@@ -12438,19 +12546,19 @@ function invTotal(o){ return Number(o.data.unitValue||0) * Number(o.data.qtyCoun
 function invTag(o){ const d = o.data; if (o.status==='Removed') return '<span class="atn off">🗄 Removed, kept on record</span>';
   if (d.req && d.req.status==='Pending') return d.req.kind==='delete' ? '<span class="atn bad">🗑 Removal requested</span>' : '<span class="atn wait">✋ Edit requested</span>'; if (d.req && d.req.status==='Approved') return '<span class="atn wait">✎ Edit approved</span>';
   if (o.status==='Draft') return '<span class="atn">Draft</span>'; return '<span class="atn ok">🔒 Locked</span>'; }
-function invTodo(o){ const d = o.data, me = USER.email; if (o.status==='Removed') return false; if (USER.role==='head') return !!(d.req && d.req.status==='Pending'); if (USER.role==='admin') return o.status==='Locked' && !d.checked && !d.issued;
+function invTodo(o){ const d = o.data, me = USER.email; if (o.status==='Removed') return USER.role==='head' && !!(d.resReq && d.resReq.status==='Pending'); if (USER.role==='head') return !!(d.req && d.req.status==='Pending'); if (USER.role==='admin') return o.status==='Locked' && !d.checked && !d.issued;
   return o.email===me && ((d.issued && !d.received) || o.status==='Draft' || (d.req && d.req.status==='Approved')); }
 function invList(){ const D = INV.data, q = INV.q.toLowerCase();
-  return D.items.filter(o => (INV.st==='Removed' ? o.status==='Removed' : o.status!=='Removed') && (!INV.who || o.email===INV.who) && (!INV.st || (INV.st==='todo' ? invTodo(o) : o.status===INV.st || (INV.st==='req' && o.data.req && o.data.req.status==='Pending')))
+  return D.items.filter(o => (INV.st==='Removed' ? o.status==='Removed' : INV.st==='todo' || o.status!=='Removed') && (!INV.who || o.email===INV.who) && (!INV.st || (INV.st==='todo' ? invTodo(o) : o.status===INV.st || (INV.st==='req' && o.data.req && o.data.req.status==='Pending')))
     && (!q || [o.name, o.data.article, o.data.desc, o.data.brand, o.data.model, o.data.serial, o.data.propNo, o.data.icsNo, o.data.location].join(' ').toLowerCase().indexOf(q) > -1))
     .sort((a,b) => String(b.updated).localeCompare(String(a.updated))); }
-function invDraw(){ const D = INV.data, staff = invStaff(), all = D.items.filter(o => o.status!=='Removed'), gone = D.items.filter(o => o.status==='Removed'), L = invList(), people = [...new Set(all.map(o => o.email))];
+function invDraw(){ lcPut('inv', INV.data); const D = INV.data, staff = invStaff(), all = D.items.filter(o => o.status!=='Removed'), gone = D.items.filter(o => o.status==='Removed'), L = invList(), people = [...new Set(all.map(o => o.email))];
   const val = all.reduce((a, o) => a + invTotal(o), 0), card = (ico, n, l, st) => `<button class="ostat ${INV.st===st?'on':''}" onclick="INV.st='${st}';invDraw()"><span class="oico">${ico}</span><b>${n}</b><span>${l}</span></button>`;
-  const todo = all.filter(invTodo).length;
+  const todo = D.items.filter(invTodo).length;
   $('viewPir').innerHTML = `<div class="trk-head"><div><h2>Project ALAGA: Property and Inventory</h2>${projMean('inv')}<p>${staff ? 'School property held by each personnel, the ICS, property stickers, and the Division inventory template (DZSAMS).' : 'The school property in your care. Add each item in a few short steps, save it as a draft anytime, then lock it.'}</p></div>
       <div class="head-actions"><button class="btn sun" onclick="invForm()">＋ Add an item</button><button class="btn ghost" onclick="qgOpen('inv')">❓ Quick guide</button>${staff ? '<button class="btn ghost" onclick="invDivision()">⬇ Division template (Excel)</button>' : ''}${USER.role==='head' ? '<button class="btn ghost danger" onclick="featClearAsk(\'inv\')">🧹 Clear all data</button>' : ''}</div></div>
     <div class="ostats">${card('📦', all.length, staff ? 'Items in all' : 'My items', '')}${card('🔒', all.filter(o => o.status==='Locked').length, 'Locked, final', 'Locked')}${card('📝', all.filter(o => o.status==='Draft').length, 'Drafts', 'Draft')}
-      ${card('🔴', todo, staff ? (USER.role==='head' ? 'Requests waiting' : 'To check') : 'To do', 'todo')}${staff && gone.length ? card('🗄', gone.length, 'Removed, kept on record', 'Removed') : ''}${staff ? `<div class="ostat static"><span class="oico">₱</span><b>${esc(invMoney(val) || '₱0.00')}</b><span>Total value</span></div><div class="ostat static"><span class="oico">👥</span><b>${people.length}</b><span>Accountable personnel</span></div>` : ''}</div>
+      ${card('🔴', todo, staff ? (USER.role==='head' ? 'Requests waiting' : 'To check') : 'To do', 'todo')}${gone.length ? card('🗄', gone.length, 'Removed, kept on record', 'Removed') : ''}${staff ? `<div class="ostat static"><span class="oico">₱</span><b>${esc(invMoney(val) || '₱0.00')}</b><span>Total value</span></div><div class="ostat static"><span class="oico">👥</span><b>${people.length}</b><span>Accountable personnel</span></div>` : ''}</div>
     <div class="bar invbar"><input id="invQ" placeholder="🔍 Search item, serial, property no., ICS no., location" value="${esc(INV.q)}" oninput="INV.q=this.value;clearTimeout(INV.t);INV.t=setTimeout(invDraw,350)">
       ${staff ? `<select onchange="INV.who=this.value;invDraw()"><option value="">Everyone</option>${D.people.map(p => `<option value="${p.email}" ${INV.who===p.email?'selected':''}>${esc(p.name)}</option>`).join('')}</select>` : ''}
       <button class="btn ghost small" onclick="invIcsPick()">🧾 ICS</button><button class="btn ghost small" onclick="invStickerPick()">🏷 TATAK stickers</button><button class="btn ghost small" onclick="invTurnover()">📋 Turnover list</button>${INV.st?`<button class="linkbtn" onclick="INV.st='';invDraw()">Show all</button>`:''}</div>
@@ -12500,6 +12608,7 @@ function invView(id){ const o = INV.data.items.find(x => x.id===id); if (!o) ret
   const can = o.status!=='Removed' && (o.status==='Draft' || (d.req && d.req.status==='Approved') || head), wasLocked = !!(o.lockedOn || o.status==='Locked'), pend = !!(d.req && d.req.status==='Pending');
   stfModal(`<h3>${esc(d.article||'Item')}</h3><p class="sub">${invTag(o)} ${esc(o.name)}${d.icsNo?' · ICS '+esc(d.icsNo):''}</p>
     ${o.status==='Removed' && d.removed ? `<div class="derr"><b>🗄 Removed on ${esc(dTime(d.removed.on))} by ${esc(d.removed.by)}.</b> Reason: ${esc(d.removed.reason||'')}. It stays on record and can be restored by the School Head.</div>` : ''}
+    ${o.status==='Removed' && d.resReq ? `<div class="derr"><b>↺ ${d.resReq.status==='Pending' ? 'Asked to be restored' : 'Restore not approved'}</b> by ${esc(d.resReq.by)}, ${esc(dTime(d.resReq.on))}. Reason: ${esc(d.resReq.reason)}.${d.resReq.note ? ' School Head: '+esc(d.resReq.note) : ''}</div>` : ''}
     ${d.req && d.req.status==='Pending' ? `<div class="derr"><b>${d.req.kind==='delete' ? '🗑 Request to remove' : '✋ Request to edit'}:</b> ${esc(d.req.reason)} <small class="hint">(${esc(d.req.by)}, ${esc(dTime(d.req.on))})</small></div>` : ''}
     ${d.req && d.req.status==='Disapproved' ? `<div class="derr"><b>Request not approved:</b> ${esc(d.req.note||'')}</div>` : ''}
     <div class="table-wrap"><table class="stft-table invdet"><tbody>${row('PPE account group', INV_GROUP_NAME(d.group))}${row('Kind', d.sub)}${row('Description', d.desc)}${row('Brand and model', [d.brand, d.model].filter(Boolean).join(' '))}${row('Serial number', d.serial)}
@@ -12512,20 +12621,22 @@ function invView(id){ const o = INV.data.items.find(x => x.id===id); if (!o) ret
       ${o.status==='Locked' && mine && !pend && !head ? `<button class="btn ghost" onclick="invAsk('${o.id}','request')">✋ Request to edit</button>` : ''}
       ${o.status!=='Removed' && wasLocked && mine && !pend && !head ? `<button class="btn ghost danger" onclick="invAsk('${o.id}','reqdel')">🗑 Request to remove</button>` : ''}
       ${head && pend ? `<button class="btn" onclick="invAsk('${o.id}','approve')">✔ Approve the ${d.req.kind==='delete'?'removal':'edit'}</button><button class="btn ghost danger" onclick="invAsk('${o.id}','disapprove')">Disapprove</button>` : ''}
-      ${head && o.status==='Removed' ? `<button class="btn ghost" onclick="invDo('${o.id}','restore')">↺ Restore</button>` : ''}
+      ${head && o.status==='Removed' ? `<button class="btn ${d.resReq && d.resReq.status==='Pending' ? '' : 'ghost'}" onclick="invDo('${o.id}','restore')">↺ Restore</button>${d.resReq && d.resReq.status==='Pending' ? `<button class="btn ghost" onclick="invAsk('${o.id}','norestore')">Do not restore</button>` : ''}` : ''}
+      ${!head && (mine || o.byEmail===USER.email) && o.status==='Removed' && !(d.resReq && d.resReq.status==='Pending') ? `<button class="btn" onclick="invAsk('${o.id}','askrestore')">↺ Ask to restore</button>` : ''}
       ${mine && d.issued && !d.received ? `<button class="btn" onclick="invDo('${o.id}','receive')">✔ I received this item</button>` : ''}
       ${staff && o.status==='Locked' && !d.checked ? `<button class="btn ghost" onclick="invDo('${o.id}','check')">✔ Checked</button>` : ''}
       ${staff && o.status!=='Removed' ? `<button class="btn ghost" onclick="invTransferAsk('${o.id}')">⇄ Turn over to another person</button>` : ''}
       ${o.status==='Locked' ? `<button class="btn ghost" onclick="invIcsPrint('${o.email}','${esc(d.icsNo||'')}')">🧾 ICS</button><button class="btn ghost" onclick="invStickers(['${o.id}'])">🏷 Sticker</button>` : ''}
-      ${o.status==='Draft' && !wasLocked && (mine || o.byEmail===USER.email) && !head ? `<button class="btn ghost danger" onclick="if(confirm('Remove this draft? It was never locked, so it is removed for good.'))invDo('${o.id}','delete')">Remove draft</button>` : ''}
+      ${o.status==='Draft' && !wasLocked && (mine || o.byEmail===USER.email) && !head ? `<button class="btn ghost danger" onclick="if(confirm('Remove this draft? It goes to Deleted items. You can ask the School Head to restore it.'))invDo('${o.id}','delete','Draft removed by the owner')">Remove draft</button>` : ''}
       ${head && o.status!=='Removed' ? `<button class="btn ghost danger" onclick="invAsk('${o.id}','delete')">🗄 Remove (kept on record)</button>` : ''}
       <button class="btn" onclick="closeModal('stfModal')">Close</button></div>`, 'wide'); }
 function invAsk(id, act){ const o = INV.data.items.find(x => x.id===id) || { data:{} }, rem = o.data.req && o.data.req.kind==='delete';
-  const lab = { request:['✋ Request to edit','Why do you need to edit this item?','Example: The serial number is wrong.'], reqdel:['🗑 Request to remove','Why should this item be removed? The School Head approves it first, and the record is kept.','Example: The item was condemned, or it was returned to the Division.'], delete:['🗄 Remove this item','Reason for removing. The item stays on record, and you can restore it anytime.','Example: Disposed, beyond economic repair.'], approve:[rem ? '✔ Approve the removal' : '✔ Approve the edit', rem ? 'Note (optional). The item is kept on record as removed.' : 'Note (optional)',''], disapprove:['Disapprove','Reason for disapproving','Example: Please bring the item to the office first.'] }[act];
+  const lab = { request:['✋ Request to edit','Why do you need to edit this item?','Example: The serial number is wrong.'], reqdel:['🗑 Request to remove','Why should this item be removed? The School Head approves it first, and the record is kept.','Example: The item was condemned, or it was returned to the Division.'], delete:['🗄 Remove this item','Reason for removing. The item stays on record, and you can restore it anytime.','Example: Disposed, beyond economic repair.'], approve:[rem ? '✔ Approve the removal' : '✔ Approve the edit', rem ? 'Note (optional). The item is kept on record as removed.' : 'Note (optional)',''], disapprove:['Disapprove','Reason for disapproving','Example: Please bring the item to the office first.'],
+    askrestore:['↺ Ask to restore','Why should this item be restored? The School Head checks it first.','Example: It was removed by mistake. The item is still in my classroom.'], norestore:['Do not restore','Your reason. The owner is told.','Example: The item was already condemned.'] }[act];
   stfModal(`<h3>${lab[0]}</h3><div class="field"><label>${lab[1]}</label><textarea id="ivNote" rows="3" placeholder="${esc(lab[2])}"></textarea></div><p class="err" id="ivErr"></p><div class="modal-actions"><button class="btn ghost" onclick="invView('${id}')">Back</button><button class="btn" onclick="invDo('${id}','${act}',$('ivNote').value)">Send</button></div>`); }
 function invTransferAsk(id){ stfModal(`<h3>⇄ Turn over to another person</h3><p class="sub">The item moves to the new accountable person, who confirms receipt. The old holder is kept in the history.</p><div class="field"><label>New accountable person</label><select id="ivTo">${INV.data.people.map(p => `<option value="${p.email}">${esc(p.name)}</option>`).join('')}</select></div><p class="err" id="ivErr"></p>
   <div class="modal-actions"><button class="btn ghost" onclick="invView('${id}')">Back</button><button class="btn" onclick="invDo('${id}','transfer','',$('ivTo').value)">Turn over</button></div>`); }
-async function invDo(id, act, note, email){ if ((act==='reqdel' || act==='delete') && !String(note||'').trim()) return $('ivErr') && ($('ivErr').textContent = 'Write the reason first.'); try{ loading(true); INV.data = await api('invAct', { id, act, note:note||'', email:email||'' }); loading(false); toast('Saved.'); if (act==='delete'){ closeModal('stfModal'); } else invView(id); invDraw(); }catch(e){ loading(false); handleErr(e, 'ivErr'); } }
+async function invDo(id, act, note, email){ if ((act==='reqdel' || act==='delete' || act==='askrestore' || act==='norestore') && !String(note||'').trim()) return $('ivErr') && ($('ivErr').textContent = 'Write the reason first.'); try{ loading(true); INV.data = await api('invAct', { id, act, note:note||'', email:email||'' }); loading(false); toast('Saved.'); if (act==='delete'){ closeModal('stfModal'); } else invView(id); invDraw(); }catch(e){ loading(false); handleErr(e, 'ivErr'); } }
 // ICS: Inventory Custodian Slip, two copies on one page
 function invIcsPick(){ const D = INV.data, L = D.items.filter(o => o.status==='Locked'), groups = {};
   L.forEach(o => { const k = o.email+'|'+(o.data.icsNo||''); (groups[k] = groups[k] || { email:o.email, name:o.name, ics:o.data.icsNo||'', n:0 }).n++; });
@@ -12592,6 +12703,260 @@ function printPaper(html, w, h, cls, fit){ let st = $('paperStyle'); if (!st){ s
   return new Promise(res => setTimeout(() => { if (!window.NO_PRINT) window.print(); res(); }, 400)); }
 window.addEventListener('afterprint', () => document.body.classList.remove('paper-printing'));
 
+/* ======================= Learner Wellness (Project KALINGA) =======================
+   KALINGA means care. One tab with three parts: Nutrition, Vaccines and deworming, and Bullying incidents.
+   The learners come from Attendance. Nutritional status uses the WHO Growth Reference 2007 (5 to 19 years), as in School Form 8. */
+var WELL = { data:null, sec:'', tab:'nut', per:'base', edit:false, dot:0, inc:'' };
+const WHO07 = {"b1":[[-0.7151,15.2679,0.08366],[-0.7387,15.2641,0.0839],[-0.7621,15.2616,0.08414],[-0.7856,15.2604,0.08439],[-0.8089,15.2605,0.08464],[-0.8322,15.2619,0.0849],[-0.8554,15.2645,0.08516],[-0.8785,15.2684,0.08543],[-0.9015,15.2737,0.0857],[-0.9243,15.2801,0.08597],[-0.9471,15.2877,0.08625],[-0.9697,15.2965,0.08653],[-0.9921,15.3062,0.08682],[-1.0144,15.3169,0.08711],[-1.0365,15.3285,0.08741],[-1.0584,15.3408,0.08771],[-1.0801,15.354,0.08802],[-1.1017,15.3679,0.08833],[-1.123,15.3825,0.08865],[-1.1441,15.3978,0.08898],[-1.1649,15.4137,0.08931],[-1.1856,15.4302,0.08964],[-1.206,15.4473,0.08998],[-1.2261,15.465,0.09033],[-1.246,15.4832,0.09068],[-1.2656,15.5019,0.09103],[-1.2849,15.521,0.09139],[-1.304,15.5407,0.09176],[-1.3228,15.5608,0.09213],[-1.3414,15.5814,0.09251],[-1.3596,15.6023,0.09289],[-1.3776,15.6237,0.09327],[-1.3953,15.6455,0.09366],[-1.4126,15.6677,0.09406],[-1.4297,15.6903,0.09445],[-1.4464,15.7133,0.09486],[-1.4629,15.7368,0.09526],[-1.479,15.7606,0.09567],[-1.4947,15.7848,0.09609],[-1.5101,15.8094,0.09651],[-1.5252,15.8344,0.09693],[-1.5399,15.8597,0.09735],[-1.5542,15.8855,0.09778],[-1.5681,15.9116,0.09821],[-1.5817,15.9381,0.09864],[-1.5948,15.9651,0.09907],[-1.6076,15.9925,0.09951],[-1.6199,16.0205,0.09994],[-1.6318,16.049,0.10038],[-1.6433,16.0781,0.10082],[-1.6544,16.1078,0.10126],[-1.6651,16.1381,0.1017],[-1.6753,16.1692,0.10214],[-1.6851,16.2009,0.10259],[-1.6944,16.2333,0.10303],[-1.7032,16.2665,0.10347],[-1.7116,16.3004,0.10391],[-1.7196,16.3351,0.10435],[-1.7271,16.3704,0.10478],[-1.7341,16.4065,0.10522],[-1.7407,16.4433,0.10566],[-1.7468,16.4807,0.10609],[-1.7525,16.5189,0.10652],[-1.7578,16.5578,0.10695],[-1.7626,16.5974,0.10738],[-1.767,16.6376,0.1078],[-1.771,16.6786,0.10823],[-1.7745,16.7203,0.10865],[-1.7777,16.7628,0.10906],[-1.7804,16.8059,0.10948],[-1.7828,16.8497,0.10989],[-1.7847,16.8941,0.1103],[-1.7862,16.9392,0.1107],[-1.7873,16.985,0.1111],[-1.7881,17.0314,0.1115],[-1.7884,17.0784,0.11189],[-1.7884,17.1262,0.11228],[-1.788,17.1746,0.11266],[-1.7873,17.2236,0.11304],[-1.7861,17.2734,0.11342],[-1.7846,17.324,0.11379],[-1.7828,17.3752,0.11415],[-1.7806,17.4272,0.11451],[-1.778,17.4799,0.11487],[-1.7751,17.5334,0.11522],[-1.7719,17.5877,0.11556],[-1.7684,17.6427,0.1159],[-1.7645,17.6985,0.11623],[-1.7604,17.7551,0.11656],[-1.7559,17.8124,0.11688],[-1.7511,17.8704,0.1172],[-1.7461,17.9292,0.11751],[-1.7408,17.9887,0.11781],[-1.7352,18.0488,0.11811],[-1.7293,18.1096,0.11841],[-1.7232,18.171,0.11869],[-1.7168,18.233,0.11898],[-1.7102,18.2955,0.11925],[-1.7033,18.3586,0.11952],[-1.6962,18.4221,0.11979],[-1.6888,18.486,0.12005],[-1.6811,18.5502,0.1203],[-1.6732,18.6148,0.12055],[-1.6651,18.6795,0.12079],[-1.6568,18.7445,0.12102],[-1.6482,18.8095,0.12125],[-1.6394,18.8746,0.12148],[-1.6304,18.9398,0.1217],[-1.6211,19.005,0.12191],[-1.6116,19.0701,0.12212],[-1.602,19.1351,0.12233],[-1.5921,19.2,0.12253],[-1.5821,19.2648,0.12272],[-1.5719,19.3294,0.12291],[-1.5615,19.3937,0.1231],[-1.551,19.4578,0.12328],[-1.5403,19.5217,0.12346],[-1.5294,19.5853,0.12363],[-1.5185,19.6486,0.1238],[-1.5074,19.7117,0.12396],[-1.4961,19.7744,0.12412],[-1.4848,19.8367,0.12428],[-1.4733,19.8987,0.12443],[-1.4617,19.9603,0.12458],[-1.45,20.0215,0.12473],[-1.4382,20.0823,0.12487],[-1.4263,20.1427,0.12501],[-1.4143,20.2026,0.12514],[-1.4022,20.2621,0.12528],[-1.39,20.3211,0.12541],[-1.3777,20.3796,0.12554],[-1.3653,20.4376,0.12567],[-1.3529,20.4951,0.12579],[-1.3403,20.5521,0.12591],[-1.3277,20.6085,0.12603],[-1.3149,20.6644,0.12615],[-1.3021,20.7197,0.12627],[-1.2892,20.7745,0.12638],[-1.2762,20.8287,0.1265],[-1.2631,20.8824,0.12661],[-1.2499,20.9355,0.12672],[-1.2366,20.9881,0.12683],[-1.2233,21.04,0.12694],[-1.2098,21.0914,0.12704],[-1.1962,21.1423,0.12715],[-1.1826,21.1925,0.12726],[-1.1688,21.2423,0.12736],[-1.155,21.2914,0.12746],[-1.141,21.34,0.12756],[-1.127,21.388,0.12767],[-1.1129,21.4354,0.12777],[-1.0986,21.4822,0.12787],[-1.0843,21.5285,0.12797],[-1.0699,21.5742,0.12807],[-1.0553,21.6193,0.12816],[-1.0407,21.6638,0.12826],[-1.026,21.7077,0.12836],[-1.0112,21.751,0.12845],[-0.9962,21.7937,0.12855],[-0.9812,21.8358,0.12864],[-0.9661,21.8773,0.12874],[-0.9509,21.9182,0.12883],[-0.9356,21.9585,0.12893],[-0.9202,21.9982,0.12902],[-0.9048,22.0374,0.12911],[-0.8892,22.076,0.1292],[-0.8735,22.114,0.1293],[-0.8578,22.1514,0.12939],[-0.8419,22.1883,0.12948],[-0.8419,22.1883,0.12948]],"b2":[[-0.8702,15.2453,0.09646],[-0.8886,15.2441,0.09692],[-0.9068,15.2434,0.09738],[-0.9248,15.2433,0.09783],[-0.9427,15.2438,0.09829],[-0.9605,15.2448,0.09875],[-0.978,15.2464,0.0992],[-0.9954,15.2487,0.09966],[-1.0126,15.2516,0.10012],[-1.0296,15.2551,0.10058],[-1.0464,15.2592,0.10104],[-1.063,15.2641,0.10149],[-1.0794,15.2697,0.10195],[-1.0956,15.276,0.10241],[-1.1115,15.2831,0.10287],[-1.1272,15.2911,0.10333],[-1.1427,15.2998,0.10379],[-1.1579,15.3095,0.10425],[-1.1728,15.32,0.10471],[-1.1875,15.3314,0.10517],[-1.2019,15.3439,0.10562],[-1.216,15.3572,0.10608],[-1.2298,15.3717,0.10654],[-1.2433,15.3871,0.107],[-1.2565,15.4036,0.10746],[-1.2693,15.4211,0.10792],[-1.2819,15.4397,0.10837],[-1.2941,15.4593,0.10883],[-1.306,15.4798,0.10929],[-1.3175,15.5014,0.10974],[-1.3287,15.524,0.1102],[-1.3395,15.5476,0.11065],[-1.3499,15.5723,0.1111],[-1.36,15.5979,0.11156],[-1.3697,15.6246,0.11201],[-1.379,15.6523,0.11246],[-1.388,15.681,0.11291],[-1.3966,15.7107,0.11335],[-1.4047,15.7415,0.1138],[-1.4125,15.7732,0.11424],[-1.4199,15.8058,0.11469],[-1.427,15.8394,0.11513],[-1.4336,15.8738,0.11557],[-1.4398,15.909,0.11601],[-1.4456,15.9451,0.11644],[-1.4511,15.9818,0.11688],[-1.4561,16.0194,0.11731],[-1.4607,16.0575,0.11774],[-1.465,16.0964,0.11816],[-1.4688,16.1358,0.11859],[-1.4723,16.1759,0.11901],[-1.4753,16.2166,0.11943],[-1.478,16.258,0.11985],[-1.4803,16.2999,0.12026],[-1.4823,16.3425,0.12067],[-1.4838,16.3858,0.12108],[-1.485,16.4298,0.12148],[-1.4859,16.4746,0.12188],[-1.4864,16.52,0.12228],[-1.4866,16.5663,0.12268],[-1.4864,16.6133,0.12307],[-1.4859,16.6612,0.12346],[-1.4851,16.71,0.12384],[-1.4839,16.7595,0.12422],[-1.4825,16.81,0.1246],[-1.4807,16.8614,0.12497],[-1.4787,16.9136,0.12534],[-1.4763,16.9667,0.12571],[-1.4737,17.0208,0.12607],[-1.4708,17.0757,0.12643],[-1.4677,17.1316,0.12678],[-1.4642,17.1883,0.12713],[-1.4606,17.2459,0.12748],[-1.4567,17.3044,0.12782],[-1.4526,17.3637,0.12816],[-1.4482,17.4238,0.12849],[-1.4436,17.4847,0.12882],[-1.4389,17.5464,0.12914],[-1.4339,17.6088,0.12946],[-1.4288,17.6719,0.12978],[-1.4235,17.7357,0.13009],[-1.418,17.8001,0.1304],[-1.4123,17.8651,0.1307],[-1.4065,17.9306,0.13099],[-1.4006,17.9966,0.13129],[-1.3945,18.063,0.13158],[-1.3883,18.1297,0.13186],[-1.3819,18.1967,0.13214],[-1.3755,18.2639,0.13241],[-1.3689,18.3312,0.13268],[-1.3621,18.3986,0.13295],[-1.3553,18.466,0.13321],[-1.3483,18.5333,0.13347],[-1.3413,18.6006,0.13372],[-1.3341,18.6677,0.13397],[-1.3269,18.7346,0.13421],[-1.3195,18.8012,0.13445],[-1.3121,18.8675,0.13469],[-1.3046,18.9335,0.13492],[-1.297,18.9991,0.13514],[-1.2894,19.0642,0.13537],[-1.2816,19.1289,0.13559],[-1.2739,19.1931,0.1358],[-1.2661,19.2567,0.13601],[-1.2583,19.3197,0.13622],[-1.2504,19.382,0.13642],[-1.2425,19.4437,0.13662],[-1.2345,19.5045,0.13681],[-1.2266,19.5647,0.137],[-1.2186,19.624,0.13719],[-1.2107,19.6824,0.13738],[-1.2027,19.74,0.13756],[-1.1947,19.7966,0.13774],[-1.1867,19.8523,0.13791],[-1.1788,19.907,0.13808],[-1.1708,19.9607,0.13825],[-1.1629,20.0133,0.13841],[-1.1549,20.0648,0.13858],[-1.147,20.1152,0.13873],[-1.139,20.1644,0.13889],[-1.1311,20.2125,0.13904],[-1.1232,20.2595,0.1392],[-1.1153,20.3053,0.13934],[-1.1074,20.3499,0.13949],[-1.0996,20.3934,0.13963],[-1.0917,20.4357,0.13977],[-1.0838,20.4769,0.13991],[-1.076,20.517,0.14005],[-1.0681,20.556,0.14018],[-1.0603,20.5938,0.14031],[-1.0525,20.6306,0.14044],[-1.0447,20.6663,0.14057],[-1.0368,20.7008,0.1407],[-1.029,20.7344,0.14082],[-1.0212,20.7668,0.14094],[-1.0134,20.7982,0.14106],[-1.0055,20.8286,0.14118],[-0.9977,20.858,0.1413],[-0.9898,20.8863,0.14142],[-0.9819,20.9137,0.14153],[-0.974,20.9401,0.14164],[-0.9661,20.9656,0.14176],[-0.9582,20.9901,0.14187],[-0.9503,21.0138,0.14198],[-0.9423,21.0367,0.14208],[-0.9344,21.0587,0.14219],[-0.9264,21.0801,0.1423],[-0.9184,21.1007,0.1424],[-0.9104,21.1206,0.1425],[-0.9024,21.1399,0.14261],[-0.8944,21.1586,0.14271],[-0.8863,21.1768,0.14281],[-0.8783,21.1944,0.14291],[-0.8703,21.2116,0.14301],[-0.8623,21.2282,0.14311],[-0.8542,21.2444,0.1432],[-0.8462,21.2603,0.1433],[-0.8382,21.2757,0.1434],[-0.8301,21.2908,0.14349],[-0.8221,21.3055,0.14359],[-0.814,21.32,0.14368],[-0.806,21.3341,0.14377],[-0.798,21.348,0.14386],[-0.7899,21.3617,0.14396],[-0.7819,21.3752,0.14405],[-0.7738,21.3884,0.14414],[-0.7658,21.4014,0.14423],[-0.7577,21.4143,0.14432],[-0.7496,21.4269,0.14441],[-0.7496,21.4269,0.14441]],"h1":[[1.0,109.7265,0.04156],[1.0,110.2647,0.04164],[1.0,110.8006,0.04172],[1.0,111.3338,0.0418],[1.0,111.8636,0.04187],[1.0,112.3895,0.04195],[1.0,112.911,0.04203],[1.0,113.428,0.04211],[1.0,113.941,0.04218],[1.0,114.45,0.04226],[1.0,114.9547,0.04234],[1.0,115.4549,0.04241],[1.0,115.9509,0.04249],[1.0,116.4432,0.04257],[1.0,116.9325,0.04264],[1.0,117.4196,0.04272],[1.0,117.9046,0.0428],[1.0,118.388,0.04287],[1.0,118.87,0.04295],[1.0,119.3508,0.04303],[1.0,119.8303,0.04311],[1.0,120.3085,0.04318],[1.0,120.7853,0.04326],[1.0,121.2604,0.04334],[1.0,121.7338,0.04342],[1.0,122.2053,0.0435],[1.0,122.675,0.04358],[1.0,123.1429,0.04366],[1.0,123.6092,0.04374],[1.0,124.0736,0.04382],[1.0,124.5361,0.0439],[1.0,124.9964,0.04398],[1.0,125.4545,0.04406],[1.0,125.9104,0.04414],[1.0,126.364,0.04422],[1.0,126.8156,0.0443],[1.0,127.2651,0.04438],[1.0,127.7129,0.04446],[1.0,128.159,0.04454],[1.0,128.6034,0.04462],[1.0,129.0466,0.0447],[1.0,129.4887,0.04478],[1.0,129.93,0.04487],[1.0,130.3705,0.04495],[1.0,130.8103,0.04503],[1.0,131.2495,0.04511],[1.0,131.6884,0.04519],[1.0,132.1269,0.04527],[1.0,132.5652,0.04535],[1.0,133.0031,0.04543],[1.0,133.4404,0.04551],[1.0,133.877,0.04559],[1.0,134.313,0.04566],[1.0,134.7483,0.04574],[1.0,135.1829,0.04582],[1.0,135.6168,0.04589],[1.0,136.0501,0.04597],[1.0,136.4829,0.04604],[1.0,136.9153,0.04612],[1.0,137.3474,0.04619],[1.0,137.7795,0.04626],[1.0,138.2119,0.04633],[1.0,138.6452,0.0464],[1.0,139.0797,0.04647],[1.0,139.5158,0.04654],[1.0,139.954,0.04661],[1.0,140.3948,0.04667],[1.0,140.8387,0.04674],[1.0,141.2859,0.0468],[1.0,141.7368,0.04686],[1.0,142.1916,0.04692],[1.0,142.6501,0.04698],[1.0,143.1126,0.04703],[1.0,143.5795,0.04709],[1.0,144.0511,0.04714],[1.0,144.5276,0.04719],[1.0,145.0093,0.04723],[1.0,145.4964,0.04728],[1.0,145.9891,0.04732],[1.0,146.4878,0.04736],[1.0,146.9927,0.0474],[1.0,147.5041,0.04744],[1.0,148.0224,0.04747],[1.0,148.5478,0.0475],[1.0,149.0807,0.04753],[1.0,149.6212,0.04755],[1.0,150.1694,0.04758],[1.0,150.7256,0.04759],[1.0,151.2899,0.04761],[1.0,151.8623,0.04762],[1.0,152.4425,0.04763],[1.0,153.0298,0.04763],[1.0,153.6234,0.04764],[1.0,154.2223,0.04763],[1.0,154.8258,0.04763],[1.0,155.4329,0.04762],[1.0,156.0426,0.0476],[1.0,156.6539,0.04758],[1.0,157.266,0.04756],[1.0,157.8775,0.04754],[1.0,158.4871,0.04751],[1.0,159.0937,0.04747],[1.0,159.6962,0.04744],[1.0,160.2939,0.0474],[1.0,160.8861,0.04735],[1.0,161.472,0.0473],[1.0,162.0505,0.04725],[1.0,162.6207,0.0472],[1.0,163.1816,0.04714],[1.0,163.7321,0.04707],[1.0,164.2717,0.04701],[1.0,164.7994,0.04694],[1.0,165.3145,0.04687],[1.0,165.8165,0.04679],[1.0,166.305,0.04671],[1.0,166.7799,0.04663],[1.0,167.2415,0.04655],[1.0,167.6899,0.04646],[1.0,168.1255,0.04637],[1.0,168.5482,0.04628],[1.0,168.958,0.04619],[1.0,169.3549,0.04609],[1.0,169.7389,0.04599],[1.0,170.1099,0.04589],[1.0,170.468,0.04579],[1.0,170.8136,0.04569],[1.0,171.1468,0.04559],[1.0,171.468,0.04548],[1.0,171.7773,0.04538],[1.0,172.0748,0.04527],[1.0,172.3606,0.04516],[1.0,172.6345,0.04506],[1.0,172.8967,0.04495],[1.0,173.147,0.04484],[1.0,173.3856,0.04473],[1.0,173.6126,0.04462],[1.0,173.828,0.04451],[1.0,174.0321,0.0444],[1.0,174.2251,0.04429],[1.0,174.4071,0.04418],[1.0,174.5784,0.04407],[1.0,174.7392,0.04396],[1.0,174.8896,0.04385],[1.0,175.0301,0.04375],[1.0,175.1609,0.04364],[1.0,175.2824,0.04353],[1.0,175.3951,0.04343],[1.0,175.4995,0.04332],[1.0,175.5959,0.04322],[1.0,175.685,0.04311],[1.0,175.7672,0.04301],[1.0,175.8432,0.04291],[1.0,175.9133,0.04281],[1.0,175.9781,0.04271],[1.0,176.038,0.04261],[1.0,176.0935,0.04251],[1.0,176.1449,0.04241],[1.0,176.1925,0.04232],[1.0,176.2368,0.04222],[1.0,176.2779,0.04213],[1.0,176.3162,0.04204],[1.0,176.3518,0.04195],[1.0,176.3851,0.04185],[1.0,176.4162,0.04177],[1.0,176.4453,0.04168],[1.0,176.4724,0.04159],[1.0,176.4976,0.0415],[1.0,176.5211,0.04142],[1.0,176.5432,0.04134],[1.0,176.5432,0.04134]],"h2":[[1.0,109.0725,0.04346],[1.0,109.6016,0.04355],[1.0,110.1258,0.04364],[1.0,110.6451,0.04373],[1.0,111.1596,0.04382],[1.0,111.6696,0.0439],[1.0,112.1753,0.04399],[1.0,112.6767,0.04407],[1.0,113.174,0.04415],[1.0,113.6672,0.04423],[1.0,114.1565,0.04431],[1.0,114.6421,0.04439],[1.0,115.1244,0.04447],[1.0,115.6039,0.04454],[1.0,116.0812,0.04461],[1.0,116.5568,0.04469],[1.0,117.0311,0.04475],[1.0,117.5044,0.04482],[1.0,117.9769,0.04489],[1.0,118.4489,0.04495],[1.0,118.9208,0.04502],[1.0,119.3926,0.04508],[1.0,119.8648,0.04514],[1.0,120.3374,0.0452],[1.0,120.8105,0.04525],[1.0,121.2843,0.04531],[1.0,121.7587,0.04536],[1.0,122.2338,0.04542],[1.0,122.7098,0.04547],[1.0,123.1868,0.04551],[1.0,123.6646,0.04556],[1.0,124.1435,0.04561],[1.0,124.6234,0.04565],[1.0,125.1045,0.04569],[1.0,125.5869,0.04573],[1.0,126.0706,0.04577],[1.0,126.5558,0.04581],[1.0,127.0424,0.04585],[1.0,127.5304,0.04588],[1.0,128.0199,0.04591],[1.0,128.5109,0.04594],[1.0,129.0035,0.04597],[1.0,129.4975,0.046],[1.0,129.9932,0.04602],[1.0,130.4904,0.04604],[1.0,130.9891,0.04607],[1.0,131.4895,0.04608],[1.0,131.9912,0.0461],[1.0,132.4944,0.04612],[1.0,132.9989,0.04613],[1.0,133.5046,0.04614],[1.0,134.0118,0.04615],[1.0,134.5202,0.04616],[1.0,135.0299,0.04616],[1.0,135.541,0.04617],[1.0,136.0533,0.04617],[1.0,136.567,0.04616],[1.0,137.0821,0.04616],[1.0,137.5987,0.04616],[1.0,138.1167,0.04615],[1.0,138.6363,0.04614],[1.0,139.1575,0.04612],[1.0,139.6803,0.04611],[1.0,140.2049,0.04609],[1.0,140.7313,0.04607],[1.0,141.2594,0.04605],[1.0,141.7892,0.04603],[1.0,142.3206,0.046],[1.0,142.8534,0.04597],[1.0,143.3874,0.04594],[1.0,143.9222,0.04591],[1.0,144.4575,0.04588],[1.0,144.9929,0.04584],[1.0,145.528,0.0458],[1.0,146.0622,0.04576],[1.0,146.5951,0.04571],[1.0,147.1262,0.04567],[1.0,147.6548,0.04562],[1.0,148.1804,0.04557],[1.0,148.7023,0.04552],[1.0,149.2197,0.04546],[1.0,149.7322,0.04541],[1.0,150.239,0.04535],[1.0,150.7394,0.04529],[1.0,151.2327,0.04523],[1.0,151.7182,0.04516],[1.0,152.1951,0.0451],[1.0,152.6628,0.04503],[1.0,153.1206,0.04497],[1.0,153.5678,0.0449],[1.0,154.0041,0.04483],[1.0,154.429,0.04476],[1.0,154.8423,0.04468],[1.0,155.2437,0.04461],[1.0,155.633,0.04454],[1.0,156.0101,0.04446],[1.0,156.3748,0.04439],[1.0,156.7269,0.04431],[1.0,157.0666,0.04423],[1.0,157.3936,0.04415],[1.0,157.7082,0.04408],[1.0,158.0102,0.044],[1.0,158.2997,0.04392],[1.0,158.5771,0.04384],[1.0,158.8425,0.04376],[1.0,159.0961,0.04369],[1.0,159.3382,0.04361],[1.0,159.5691,0.04353],[1.0,159.789,0.04345],[1.0,159.9983,0.04337],[1.0,160.1971,0.0433],[1.0,160.3857,0.04322],[1.0,160.5643,0.04314],[1.0,160.7332,0.04307],[1.0,160.8927,0.04299],[1.0,161.043,0.04292],[1.0,161.1845,0.04284],[1.0,161.3176,0.04277],[1.0,161.4425,0.0427],[1.0,161.5596,0.04263],[1.0,161.6692,0.04255],[1.0,161.7717,0.04248],[1.0,161.8673,0.04241],[1.0,161.9564,0.04235],[1.0,162.0393,0.04228],[1.0,162.1164,0.04221],[1.0,162.188,0.04214],[1.0,162.2542,0.04208],[1.0,162.3154,0.04201],[1.0,162.3719,0.04195],[1.0,162.4239,0.04189],[1.0,162.4717,0.04182],[1.0,162.5156,0.04176],[1.0,162.556,0.0417],[1.0,162.5933,0.04164],[1.0,162.6276,0.04158],[1.0,162.6594,0.04152],[1.0,162.689,0.04147],[1.0,162.7165,0.04141],[1.0,162.7425,0.04136],[1.0,162.767,0.0413],[1.0,162.7904,0.04125],[1.0,162.8126,0.04119],[1.0,162.834,0.04114],[1.0,162.8545,0.04109],[1.0,162.8743,0.04104],[1.0,162.8935,0.04099],[1.0,162.912,0.04094],[1.0,162.93,0.04089],[1.0,162.9476,0.04084],[1.0,162.9649,0.0408],[1.0,162.9817,0.04075],[1.0,162.9983,0.04071],[1.0,163.0144,0.04066],[1.0,163.03,0.04062],[1.0,163.0451,0.04058],[1.0,163.0595,0.04053],[1.0,163.0733,0.04049],[1.0,163.0862,0.04045],[1.0,163.0982,0.04041],[1.0,163.1092,0.04037],[1.0,163.1192,0.04034],[1.0,163.1279,0.0403],[1.0,163.1355,0.04026],[1.0,163.1418,0.04023],[1.0,163.1469,0.04019],[1.0,163.1508,0.04016],[1.0,163.1534,0.04012],[1.0,163.1548,0.04009],[1.0,163.1548,0.04009]]};
+const WELL_PER = { base:'Baseline', mid:'Midline', end:'Endline' };
+const WELL_BMI = ['Severely wasted','Wasted','Normal','Overweight','Obese'];
+const WELL_HFA = ['Severely stunted','Stunted','Normal','Tall'];
+const WELL_KINDS = ['Physical','Verbal','Psychological or emotional','Social','Cyberbullying','Gender based','Retaliation'];
+const WELL_KIND_TIP = { 'Physical':'hitting, pushing, kicking, taking or damaging things', 'Verbal':'name calling, teasing, threats, insults', 'Psychological or emotional':'acts that cause fear, shame, or distress', 'Social':'leaving someone out on purpose, spreading rumors', 'Cyberbullying':'through phones, social media, or chat', 'Gender based':'about sex, gender, or how one looks or acts', 'Retaliation':'getting back at someone who reported' };
+const WELL_STATUS = ['Reported','Under intervention','Referred','Resolved'];
+const WELL_VACC = ['Measles Rubella (MR)','Tetanus diphtheria (Td)','Human Papillomavirus (HPV)','Measles Mumps Rubella (MMR)','BCG','Oral Polio (OPV)','Inactivated Polio (IPV)','Pentavalent (DPT, HepB, Hib)','Pneumococcal (PCV)','Hepatitis B','Influenza','COVID 19'];
+const WELL_REF = ['School Head','Learner Formation Officer or guidance','School Child Protection Committee','Barangay Council for the Protection of Children (BCPC)','Rural Health Unit','MSWDO or DSWD','Women and Children Protection Desk, PNP'];
+const WELL_BASIS = 'RA 10627 (Anti-Bullying Act of 2013) and its Revised IRR (DepEd Memorandum No. 90, s. 2025), DepEd Order No. 40, s. 2012 (Child Protection Policy), and DepEd Order No. 6, s. 2026 (Safe and Motivating Learning Environment)';
+function wellLms(k, sx, age){ const T = WHO07[k+sx]; if (!T || age < 60 || age >= 229) return null; const lo = Math.trunc(age), d = age - lo, a = T[lo-60], b = T[Math.min(lo+1,229)-60]; return a.map((v,i) => v + (b[i]-v)*d); }
+function wellZAdj(x, p){ if (!p) return null; const [L,M,S] = p; let z = (Math.pow(x/M, L) - 1) / (L*S); const sd = k => M*Math.pow(1 + L*S*k, 1/L);
+  if (z > 3){ const s3 = sd(3); z = 3 + (x - s3) / (s3 - sd(2)); } else if (z < -3){ const s3 = sd(-3); z = -3 + (x - s3) / (sd(-2) - s3); } return Math.round(z*100)/100; }
+function wellZ(x, p){ if (!p) return null; const [L,M,S] = p; return Math.round((Math.pow(x/M, L) - 1) / (L*S) * 100) / 100; }
+function wellBmiCat(z){ return z < -3 ? 'Severely wasted' : z < -2 ? 'Wasted' : z <= 1 ? 'Normal' : z <= 2 ? 'Overweight' : 'Obese'; }
+function wellHfaCat(z){ return z < -3 ? 'Severely stunted' : z < -2 ? 'Stunted' : z <= 2 ? 'Normal' : 'Tall'; }
+function wellCls(c){ return /Severely|Obese/.test(c) ? 'bad' : /Wasted|Stunted|Overweight/.test(c) ? 'wait' : c==='Normal' || c==='Tall' ? 'ok' : ''; }
+function wellAge(birth, on){ if (!birth || !on) return null; const d = (Date.parse(on+'T00:00:00Z') - Date.parse(birth+'T00:00:00Z')) / 86400000; return d > 0 ? d / 30.4375 : null; }
+function wellAgeTxt(m){ if (m == null) return ''; const y = Math.floor(m/12), mo = Math.floor(m - y*12); return y+' y, '+mo+' m'; }
+function wellRec(l){ return ((WELL.data||{}).recs||{})[l.sec+'|'+l.id] || {}; }
+function wellBirth(l){ return l.birth || wellRec(l).birth || ''; }
+function wellCalc(l, p){ const R = wellRec(l), x = R[p]; if (!x || !(x.w > 0) || !(x.h > 0)) return null;
+  const on = x.date || ((WELL.data.sections.find(s => s.key===l.sec)||{}).dates||{})[p] || todayPH(), age = wellAge(wellBirth(l), on), bmi = x.w / Math.pow(x.h/100, 2), sx = /^F/i.test(l.sex) ? '2' : '1';
+  const zb = age == null ? null : wellZAdj(bmi, wellLms('b', sx, age)), zh = age == null ? null : wellZ(x.h, wellLms('h', sx, age));
+  return { w:x.w, h:x.h, h2:Math.pow(x.h/100,2), bmi, age, zb, zh, bs: zb==null ? '' : wellBmiCat(zb), hs: zh==null ? '' : wellHfaCat(zh), date:on }; }
+function wellChip(c, none){ return c ? `<span class="atn ${wellCls(c)}">${esc(c)}</span>` : `<small class="hint">${esc(none||'')}</small>`; }
+function wellWhy(l, p){ const x = wellRec(l)[p]; if (!x || !x.w || !x.h) return ''; if (!wellBirth(l)) return 'Add the birth date'; const a = wellAge(wellBirth(l), x.date || todayPH()); if (a != null && a < 60) return 'Below 5 years old'; if (a != null && a >= 229) return 'Above 19 years old'; return ''; }
+function wellLearners(sec){ return ((WELL.data||{}).learners||[]).filter(l => l.sec===sec).sort((a,b) => (a.sex===b.sex ? 0 : /^M/i.test(a.sex) ? -1 : 1) || (a.last+a.first).localeCompare(b.last+b.first)); }
+function wellActive(l){ return !/drop|transfer|moved/i.test(l.status||''); }
+function wellName(l){ return [l.last, [l.first, l.middle ? l.middle.charAt(0)+'.' : ''].filter(Boolean).join(' ')].filter(Boolean).join(', '); }
+function wellSec(){ return (WELL.data.sections||[]).find(s => s.key===WELL.sec); }
+function wellSecName(s){ return s ? (s.grade+(s.section ? ', '+s.section : '')) : ''; }
+function wellHead(){ return USER && USER.role==='head'; }
+
+async function openWell(){ ['viewLac','viewTrk','viewAcc','viewBank','viewLog','viewWeeks','viewSig','viewObs','viewHome','viewSbfp','viewAtt'].forEach(v => $(v) && ($(v).style.display='none'));
+  $('viewPir').style.display=''; CUR_FEATURE = 'well'; drawSide(); window.scrollTo(0,0);
+  if (!USER) return $('viewPir').innerHTML = '<div class="empty">Please sign in.</div>';
+  if (!WELL.data) WELL.data = lcGet('well');
+  if (!WELL.data) $('viewPir').innerHTML = `<div class="pirload"><div class="pirstar">★</div><b>Opening Learner Wellness</b><div class="pirdots"><i></i><i></i><i></i></div></div>`; else wellDraw();
+  if (WELL.data && lcFresh('well')) return;
+  try{ WELL.data = await api('wellLoad'); LC_AT.well = Date.now(); }catch(e){ if (!WELL.data){ $('viewPir').innerHTML = `<div class="empty">${esc(friendly(e.message))} <button class="btn ghost small" onclick="openWell()">Try again</button></div>`; return; } }
+  if (CUR_FEATURE==='well' && !document.querySelector('.overlay.open') && !WELL.edit) wellDraw(); }
+function wellSet(d){ WELL.data = d; LC_AT.well = Date.now(); lcPut('well', d); }
+function wellDraw(){ lcPut('well', WELL.data); const D = WELL.data, S = D.sections||[];
+  if (!S.some(s => s.key===WELL.sec)) WELL.sec = (S[0]||{}).key || '';
+  const head = wellHead(), openInc = (D.incidents||[]).filter(o => o.status!=='Resolved').length, newInc = head ? (D.incidents||[]).filter(o => !(o.data||{}).seen).length : 0;
+  const tabs = [['nut','🍎 Nutrition'],['health','💉 Vaccines and deworming'],['bul','🛡 Bullying incidents'+(newInc ? ` <i class="sdot">${newInc}</i>` : openInc ? ` <small>(${openInc} open)</small>` : '')],['print','🖨 Printables']];
+  $('viewPir').innerHTML = `<div class="trk-head"><div><h2>Learner Wellness (Project KALINGA)</h2><p>KALINGA means care. The nutrition, health, and safety of each learner in one place. The class list comes from Attendance, so you only add the new data.</p></div></div>
+    ${S.length ? `<div class="bar" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:10px 0">${S.length > 1 ? `<select onchange="WELL.sec=this.value;WELL.edit=false;wellDraw()">${S.map(s => `<option value="${esc(s.key)}" ${s.key===WELL.sec?'selected':''}>${esc(wellSecName(s))}${s.adviserName ? ' ('+esc(s.adviserName)+')' : ''}</option>`).join('')}</select>` : `<b>${esc(wellSecName(S[0]))}</b>`}</div>
+    <div class="tabs lactabs">${tabs.map(t => `<button class="${WELL.tab===t[0]?'on':''}" onclick="WELL.tab='${t[0]}';WELL.edit=false;wellDraw()">${t[1]}</button>`).join('')}</div>
+    <div id="wellBody" style="margin-top:14px"></div>` : `<div class="empty">You have no class in Attendance yet. Ask the School Head to set you as the adviser of your class in Attendance. Your learners will then show here.</div>`}`;
+  if (!S.length) return;
+  ({ nut:wellNut, health:wellHealth, bul:wellBul, print:wellPrints })[WELL.tab](); }
+
+/* ----- Nutrition ----- */
+function wellNut(){ const s = wellSec(), L = wellLearners(WELL.sec).filter(wellActive), p = WELL.per, dates = s.dates||{};
+  const C = L.map(l => ({ l, c: wellCalc(l, p) })), done = C.filter(x => x.c), cnt = k => done.filter(x => x.c.bs===k).length, cntH = k => done.filter(x => x.c.hs===k).length;
+  const noBirth = L.filter(l => !wellBirth(l)).length;
+  $('wellBody').innerHTML = `<div class="tabs" style="margin-bottom:10px">${Object.keys(WELL_PER).map(k => `<button class="${p===k?'on':''}" onclick="WELL.per='${k}';WELL.edit=false;wellNut()">${WELL_PER[k]}${dates[k] ? ` <small>${esc(dShort(dates[k]))}</small>` : ''}</button>`).join('')}</div>
+    <div class="ostats">${WELL_BMI.map(k => `<div class="ostat static"><b>${cnt(k)}</b><span>${k}</span></div>`).join('')}<div class="ostat static"><b>${cntH('Stunted')+cntH('Severely stunted')}</b><span>Stunted or severely stunted</span></div><div class="ostat static"><b>${done.length} of ${L.length}</b><span>Weighed</span></div></div>
+    ${noBirth ? `<p class="stfnote bad">⚠ ${noBirth} learner${noBirth>1?'s have':' has'} no birth date. The age and status need it. Add it in Attendance, or tap the learner below.</p>` : ''}
+    <div class="row" style="margin:10px 0;gap:8px;flex-wrap:wrap">${WELL.edit ? '' : `<button class="btn" onclick="WELL.edit=true;wellNut()">⚖ Enter weight and height (${WELL_PER[p]})</button>`}<button class="btn ghost" onclick="wellPrintNut()">🖨 Print the ${WELL_PER[p]} report</button></div>
+    ${WELL.edit ? `<div class="stfnote"><div class="row2"><div class="field"><label for="wDate">Date of the ${WELL_PER[p].toLowerCase()} weighing</label><input type="date" id="wDate" value="${esc(dates[p] || todayPH())}"></div><div class="field"><label>&nbsp;</label><span class="hint">Weight in kilograms (example 22.5). Height in centimeters (example 118.4). The BMI and status show at once.</span></div></div></div>` : ''}
+    <div class="table-wrap"><table class="stft-table welltbl"><thead><tr><th>#</th><th>Learner</th><th>Birth date</th><th>Age</th><th>Weight (kg)</th><th>Height (cm)</th><th>BMI</th><th>BMI for age</th><th>Height for age</th></tr></thead><tbody>
+    ${C.map((x, i) => { const l = x.l, c = x.c, r = wellRec(l)[p] || {}, why = wellWhy(l, p);
+      return `<tr><td>${i+1}</td><td><b>${esc(wellName(l))}</b><small>${esc(l.sex==='F'?'Female':'Male')}${l.lrn ? ' · LRN '+esc(l.lrn) : ''}</small></td>
+        <td>${wellBirth(l) ? esc(dShort(wellBirth(l))) : `<button class="linkbtn" onclick="wellBirthAsk('${l.id}')">Add</button>`}</td><td>${c ? esc(wellAgeTxt(c.age)) : ''}</td>
+        ${WELL.edit ? `<td><input class="wnum" inputmode="decimal" id="wW_${l.id}" value="${esc(r.w||'')}" oninput="wellLive('${l.id}')"></td><td><input class="wnum" inputmode="decimal" id="wH_${l.id}" value="${esc(r.h||'')}" oninput="wellLive('${l.id}')"></td>`
+          : `<td>${c ? esc(c.w) : ''}</td><td>${c ? esc(c.h) : ''}</td>`}
+        <td id="wB_${l.id}">${c ? c.bmi.toFixed(1) : ''}</td><td id="wS_${l.id}">${c ? wellChip(c.bs, why) : ''}</td><td id="wT_${l.id}">${c ? wellChip(c.hs, why) : ''}</td></tr>`; }).join('') || '<tr><td colspan="9" class="empty">No learners in this class yet. Add them in Attendance.</td></tr>'}
+    </tbody></table></div>
+    ${WELL.edit ? `<p class="err" id="wErr"></p><div class="row" style="gap:8px;margin-top:10px"><button class="btn" id="wSave" onclick="wellSaveAll()">✔ Save all</button><button class="btn ghost" onclick="WELL.edit=false;wellNut()">Cancel</button></div>` : ''}
+    <p class="hint" style="margin-top:12px">Status uses the WHO Growth Reference 2007 for 5 to 19 years old, the same basis as School Form 8 (Learner's Basic Health and Nutrition Report). BMI for age: below minus 3 SD severely wasted, below minus 2 SD wasted, up to plus 1 SD normal, up to plus 2 SD overweight, above that obese. For the SBFP, follow DepEd Order No. 13, s. 2026.</p>`; }
+function wellLive(id){ const l = WELL.data.learners.find(x => x.id===id && x.sec===WELL.sec); if (!l) return;
+  const w = parseFloat($('wW_'+id).value), h = parseFloat($('wH_'+id).value), on = $('wDate') ? $('wDate').value : todayPH();
+  if (!(w > 0) || !(h > 0)){ $('wB_'+id).textContent = ''; $('wS_'+id).innerHTML = ''; $('wT_'+id).innerHTML = ''; return; }
+  const bmi = w / Math.pow(h/100, 2), age = wellAge(wellBirth(l), on), sx = /^F/i.test(l.sex) ? '2' : '1';
+  const zb = age == null ? null : wellZAdj(bmi, wellLms('b', sx, age)), zh = age == null ? null : wellZ(h, wellLms('h', sx, age)), why = !wellBirth(l) ? 'Add the birth date' : age < 60 ? 'Below 5 years old' : '';
+  $('wB_'+id).textContent = bmi.toFixed(1); $('wS_'+id).innerHTML = zb == null ? wellChip('', why) : wellChip(wellBmiCat(zb)); $('wT_'+id).innerHTML = zh == null ? wellChip('', why) : wellChip(wellHfaCat(zh));
+  if (w < 8 || w > 150 || h < 70 || h > 200) $('wS_'+id).innerHTML = '<small class="err">Check the number</small>'; }
+async function wellSaveAll(){ const L = wellLearners(WELL.sec).filter(wellActive), date = $('wDate').value; if (!date) return $('wErr').textContent = 'Enter the date of the weighing.';
+  const rows = [], bad = []; L.forEach(l => { const w = $('wW_'+l.id).value.trim(), h = $('wH_'+l.id).value.trim(); if ((w && !h) || (!w && h)) bad.push(wellName(l)); rows.push({ id:l.id, w, h }); });
+  if (bad.length) return $('wErr').textContent = 'Enter both the weight and the height of: ' + bad.join('; ');
+  $('wSave').disabled = true; try{ loading(true, 'Saving'); wellSet(await api('wellMany', { sec:WELL.sec, period:WELL.per, date, rows })); loading(false); WELL.edit = false; wellDraw(); toast('Saved. The status of each learner is shown.'); }
+  catch(e){ loading(false); $('wSave').disabled = false; handleErr(e, 'wErr'); } }
+function wellBirthAsk(id){ const l = WELL.data.learners.find(x => x.id===id && x.sec===WELL.sec); if (!l) return;
+  stfModal(`<h3>Birth date of ${esc(wellName(l))}</h3><p class="sub">It is best to add it in Attendance too, so all forms have it.</p><div class="field"><label for="wbD">Birth date</label><input type="date" id="wbD" value="${esc(wellRec(l).birth||'')}"></div><p class="err" id="wbErr"></p>
+    <div class="row"><button class="btn" onclick="wellSave1('${id}', { birth:$('wbD').value }, 'wbErr')">Save</button><button class="btn ghost" onclick="closeModal('stfModal')">Cancel</button></div>`); }
+async function wellSave1(id, data, err){ try{ loading(true, 'Saving'); wellSet(await api('wellSave', { sec:WELL.sec, id, data })); loading(false); closeModal('stfModal'); wellDraw(); toast('Saved.'); }catch(e){ loading(false); handleErr(e, err); } }
+
+/* ----- Vaccines and deworming ----- */
+function wellHealth(){ const L = wellLearners(WELL.sec).filter(wellActive);
+  $('wellBody').innerHTML = `<div class="row" style="gap:8px;flex-wrap:wrap;margin-bottom:10px"><button class="btn" onclick="wellBulkOpen('deworm')">💊 Record a deworming day</button><button class="btn" onclick="wellBulkOpen('vacc')">💉 Record a vaccination day</button><button class="btn ghost" onclick="wellPrintHealth()">🖨 Print the health record</button></div>
+    <div class="table-wrap"><table class="stft-table welltbl"><thead><tr><th>#</th><th>Learner</th><th>Vaccines received</th><th>Deworming received</th><th>SBFP</th><th></th></tr></thead><tbody>
+    ${L.map((l, i) => { const R = wellRec(l); return `<tr><td>${i+1}</td><td><b>${esc(wellName(l))}</b><small>${esc(l.sex==='F'?'Female':'Male')}</small></td>
+      <td>${(R.vacc||[]).map(v => `<span class="wtag">${esc(v.name)}${v.dose ? ', '+esc(v.dose) : ''}${v.date ? ' <small>'+esc(dShort(v.date))+'</small>' : ''}</span>`).join('') || '<small class="hint">None recorded</small>'}</td>
+      <td>${(R.deworm||[]).map(v => `<span class="wtag">${esc(v.round || 'Deworming')}${v.drug ? ', '+esc(v.drug) : ''}${v.date ? ' <small>'+esc(dShort(v.date))+'</small>' : ''}</span>`).join('') || '<small class="hint">None recorded</small>'}</td>
+      <td>${R.sbfp ? '<span class="atn ok">Beneficiary</span>' : ''}</td><td><button class="btn ghost small" onclick="wellHealthOpen('${l.id}')">✎ Edit</button></td></tr>`; }).join('') || '<tr><td colspan="6" class="empty">No learners yet.</td></tr>'}</tbody></table></div>`; }
+function wellVRow(v){ v = v || {}; return `<div class="wvrow"><select class="wvN"><option value="">Vaccine</option>${WELL_VACC.concat(v.name && WELL_VACC.indexOf(v.name) < 0 ? [v.name] : []).map(x => `<option ${x===v.name?'selected':''}>${esc(x)}</option>`).join('')}</select><select class="wvD">${['','1st dose','2nd dose','3rd dose','Booster'].map(x => `<option ${x===(v.dose||'')?'selected':''} value="${x}">${x||'Dose'}</option>`).join('')}</select><input type="date" class="wvT" value="${esc(v.date||'')}"><input class="wvW" placeholder="Where (example RHU)" value="${esc(v.where||'')}"><button class="linkbtn danger" onclick="this.parentNode.remove()">✕</button></div>`; }
+function wellDRow(v){ v = v || {}; return `<div class="wvrow"><input type="date" class="wdT" value="${esc(v.date||'')}"><select class="wdD">${['','Albendazole 400 mg','Mebendazole 500 mg'].map(x => `<option ${x===(v.drug||'')?'selected':''} value="${x}">${x||'Medicine'}</option>`).join('')}</select><select class="wdR">${['','1st round','2nd round'].map(x => `<option ${x===(v.round||'')?'selected':''} value="${x}">${x||'Round'}</option>`).join('')}</select><button class="linkbtn danger" onclick="this.parentNode.remove()">✕</button></div>`; }
+function wellHealthOpen(id){ const l = WELL.data.learners.find(x => x.id===id && x.sec===WELL.sec); if (!l) return; const R = wellRec(l);
+  stfModal(`<h3>${esc(wellName(l))}</h3><p class="sub">Vaccines and deworming received. Copy them from the learner's health card or the RHU record.</p>
+    <h4 class="nbsec">💉 Vaccines</h4><div id="wvList">${(R.vacc||[]).map(wellVRow).join('')}</div><button class="btn ghost small" onclick="$('wvList').insertAdjacentHTML('beforeend', wellVRow())">＋ Add a vaccine</button>
+    <h4 class="nbsec">💊 Deworming</h4><div id="wdList">${(R.deworm||[]).map(wellDRow).join('')}</div><button class="btn ghost small" onclick="$('wdList').insertAdjacentHTML('beforeend', wellDRow())">＋ Add a deworming</button>
+    <label class="check" style="margin-top:12px"><input type="checkbox" id="wSb" ${R.sbfp?'checked':''}> SBFP beneficiary this school year</label>
+    <div class="field"><label for="wNote">Health notes (optional)</label><textarea id="wNote" rows="2">${esc(R.note||'')}</textarea></div>
+    <p class="err" id="whErr"></p><div class="row"><button class="btn" onclick="wellHealthSave('${id}')">Save</button><button class="btn ghost" onclick="closeModal('stfModal')">Cancel</button></div>`, 'wide'); }
+function wellHealthSave(id){ const vacc = [...document.querySelectorAll('#wvList .wvrow')].map(r => ({ name:r.querySelector('.wvN').value, dose:r.querySelector('.wvD').value, date:r.querySelector('.wvT').value, where:r.querySelector('.wvW').value.trim() })).filter(x => x.name);
+  const deworm = [...document.querySelectorAll('#wdList .wvrow')].map(r => ({ date:r.querySelector('.wdT').value, drug:r.querySelector('.wdD').value, round:r.querySelector('.wdR').value })).filter(x => x.date || x.drug);
+  wellSave1(id, { vacc, deworm, sbfp:$('wSb').checked, note:$('wNote').value.trim() }, 'whErr'); }
+function wellBulkOpen(t){ const L = wellLearners(WELL.sec).filter(wellActive);
+  stfModal(`<h3>${t==='vacc' ? '💉 Record a vaccination day' : '💊 Record a deworming day'}</h3><p class="sub">Tick the learners who received it. It is added to each one's record.</p>
+    <div class="wvrow">${t==='vacc' ? `<select id="wbN"><option value="">Vaccine</option>${WELL_VACC.map(x => `<option>${esc(x)}</option>`).join('')}</select><select id="wbDo">${['','1st dose','2nd dose','3rd dose','Booster'].map(x => `<option value="${x}">${x||'Dose'}</option>`).join('')}</select><input id="wbW" placeholder="Where (example School based immunization)">` : `<select id="wbDr"><option>Albendazole 400 mg</option><option>Mebendazole 500 mg</option></select><select id="wbR"><option>1st round</option><option>2nd round</option></select>`}<input type="date" id="wbT" value="${todayPH()}"></div>
+    <label class="check"><input type="checkbox" checked onchange="document.querySelectorAll('.wbL').forEach(x => x.checked=this.checked)"> All learners</label>
+    <div class="wbgrid">${L.map(l => `<label class="check"><input type="checkbox" class="wbL" value="${l.id}" checked> ${esc(wellName(l))}</label>`).join('')}</div>
+    <p class="err" id="wbErr"></p><div class="row"><button class="btn" id="wbBtn" onclick="wellBulkSave('${t}')">Save</button><button class="btn ghost" onclick="closeModal('stfModal')">Cancel</button></div>`, 'wide'); }
+async function wellBulkSave(t){ const ids = [...document.querySelectorAll('.wbL:checked')].map(x => x.value), entry = t==='vacc' ? { name:$('wbN').value, dose:$('wbDo').value, where:$('wbW').value.trim(), date:$('wbT').value } : { drug:$('wbDr').value, round:$('wbR').value, date:$('wbT').value };
+  if (t==='vacc' && !entry.name) return $('wbErr').textContent = 'Choose the vaccine.';
+  $('wbBtn').disabled = true; try{ loading(true, 'Saving'); wellSet(await api('wellBulk', { sec:WELL.sec, type:t, entry, ids })); loading(false); closeModal('stfModal'); wellDraw(); toast('Saved for '+ids.length+' learners.'); }catch(e){ loading(false); $('wbBtn').disabled = false; handleErr(e, 'wbErr'); } }
+
+/* ----- Bullying incidents (confidential) ----- */
+function wellIncs(){ return ((WELL.data||{}).incidents||[]).filter(o => wellHead() ? (!WELL.incAll ? o.sec===WELL.sec : true) : o.sec===WELL.sec).sort((a,b) => String(b.data.date).localeCompare(String(a.data.date))); }
+function wellStChip(st){ return `<span class="atn ${st==='Resolved'?'ok':st==='Reported'?'bad':'wait'}">${esc(st)}</span>`; }
+function wellBul(){ const L = wellIncs(), head = wellHead();
+  $('wellBody').innerHTML = `<div class="stfnote"><b>🔒 Confidential.</b> Only the teacher who reported and the School Head see these records. Do not post or share the names of the learners. Basis: ${esc(WELL_BASIS)}.</div>
+    <div class="row" style="gap:8px;flex-wrap:wrap;margin:10px 0"><button class="btn" onclick="wellIncForm('')">＋ Report an incident</button><button class="btn ghost" onclick="wellIncSummary()">🖨 Print the summary (no names)</button>${head ? `<label class="check"><input type="checkbox" ${WELL.incAll?'checked':''} onchange="WELL.incAll=this.checked;wellBul()"> All classes</label>` : ''}</div>
+    <div class="nblist">${L.map(o => { const d = o.data||{}, s = (WELL.data.sections||[]).find(x => x.key===o.sec);
+      return `<div class="nbcard"><div class="stfreq-h"><span class="stfico">🛡</span><div><b>${esc(d.no)} · ${esc((d.kinds||[]).join(', '))}${d.precursor ? ' (sign or precursor)' : ''}</b><small>${esc(fmtLong(d.date))}${d.place ? ', '+esc(d.place) : ''} · ${esc(wellSecName(s))} · Reported by ${esc(o.name)}</small></div>${wellStChip(o.status)}${head && !d.seen ? '<span class="atn bad">New</span>' : ''}</div>
+        <p class="nbprev">${(d.learners||[]).map(x => `<span class="wtag">${esc(x.name)} <small>${esc(x.role)}</small></span>`).join('')}</p>
+        <div class="stfreq-a"><button class="btn ghost small" onclick="wellIncView('${o.id}')">Open</button><button class="btn ghost small" onclick="wellIncPrint('${o.id}')">🖨 Print the report</button></div></div>`; }).join('') || '<div class="empty">No incident recorded. When something happens, tap Report an incident.</div>'}</div>`; }
+function wellIncForm(id){ const o = id ? WELL.data.incidents.find(x => x.id===id) : null, d = o ? o.data : { date:todayPH(), kinds:[], learners:[], referred:[] };
+  const sec = o ? o.sec : WELL.sec, L = wellLearners(sec).filter(wellActive), role = lid => ((d.learners||[]).find(x => x.id===lid)||{}).role || '';
+  stfModal(`<h3>${o ? 'Edit '+esc(d.no) : '🛡 Report a bullying incident'}</h3><p class="sub">${esc(wellSecName((WELL.data.sections||[]).find(s => s.key===sec)))}. Write only what was seen or reported. Keep this confidential.</p>
+    <div class="row2"><div class="field"><label for="wiD">Date</label><input type="date" id="wiD" value="${esc(d.date||'')}"></div><div class="field"><label for="wiT">Time (if known)</label><input type="time" id="wiT" value="${esc(d.time||'')}"></div></div>
+    <div class="field"><label for="wiP">Place</label><input id="wiP" value="${esc(d.place||'')}" placeholder="Example: classroom, playground, on the way home, online"></div>
+    <div class="field"><label>Kind of bullying (tick all that apply)</label><div class="wbgrid">${WELL_KINDS.map(k => `<label class="check"><input type="checkbox" class="wiK" value="${esc(k)}" ${(d.kinds||[]).indexOf(k) > -1 ? 'checked' : ''}> <span>${esc(k)} <small class="hint">${esc(WELL_KIND_TIP[k])}</small></span></label>`).join('')}</div>
+      <label class="check"><input type="checkbox" id="wiPre" ${d.precursor?'checked':''}> This is a sign or precursor only. No actual bullying yet.</label></div>
+    <div class="field"><label>Tag the learners involved</label><div class="wtagl">${L.map(l => `<div class="wtagr"><span>${esc(wellName(l))}</span><select class="wiL" data-id="${l.id}">${['','Bullied','Bullied others','Witness'].map(r => `<option value="${r}" ${role(l.id)===r?'selected':''}>${r||'Not involved'}</option>`).join('')}</select></div>`).join('')}</div></div>
+    <div class="field"><label for="wiO">Others involved, not in this class (optional)</label><input id="wiO" value="${esc(d.others||'')}" placeholder="Example: a Grade 6 learner, an out of school youth"></div>
+    <div class="field"><label for="wiW">What happened</label><textarea id="wiW" rows="4" placeholder="Who reported it, what was done or said, and how the learner was affected.">${esc(d.what||'')}</textarea></div>
+    <div class="field"><label for="wiA">Action taken</label><textarea id="wiA" rows="3" placeholder="Example: Talked with the learners separately. Gave first aid. Informed the School Head.">${esc(d.action||'')}</textarea></div>
+    <div class="row2"><div class="field"><label for="wiPa">Parents or guardians informed</label><input id="wiPa" value="${esc(d.parents||'')}" placeholder="Name and how (call, visit, letter)"></div><div class="field"><label for="wiPo">Date informed</label><input type="date" id="wiPo" value="${esc(d.parentsOn||'')}"></div></div>
+    <div class="field"><label>Referred to</label><div class="wbgrid">${WELL_REF.map(k => `<label class="check"><input type="checkbox" class="wiR" value="${esc(k)}" ${(d.referred||[]).indexOf(k) > -1 ? 'checked' : ''}> ${esc(k)}</label>`).join('')}</div></div>
+    <p class="err" id="wiErr"></p><div class="row"><button class="btn" id="wiBtn" onclick="wellIncSave('${id}','${esc(sec)}')">${o ? 'Save' : 'Save and inform the School Head'}</button><button class="btn ghost" onclick="closeModal('stfModal')">Cancel</button></div>`, 'wide'); }
+async function wellIncSave(id, sec){ const inc = { id, sec, date:$('wiD').value, time:$('wiT').value, place:$('wiP').value.trim(), kinds:[...document.querySelectorAll('.wiK:checked')].map(x => x.value), precursor:$('wiPre').checked,
+    learners:[...document.querySelectorAll('.wiL')].filter(x => x.value).map(x => ({ id:x.dataset.id, role:x.value })), others:$('wiO').value.trim(), what:$('wiW').value.trim(), action:$('wiA').value.trim(), parents:$('wiPa').value.trim(), parentsOn:$('wiPo').value, referred:[...document.querySelectorAll('.wiR:checked')].map(x => x.value) };
+  if (!inc.kinds.length) return $('wiErr').textContent = 'Tick at least one kind of bullying.'; if (!inc.learners.length && !inc.others) return $('wiErr').textContent = 'Tag at least one learner.'; if (!inc.what) return $('wiErr').textContent = 'Write what happened.';
+  $('wiBtn').disabled = true; try{ loading(true, 'Saving'); wellSet(await api('wellInc', { inc })); loading(false); closeModal('stfModal'); WELL.tab = 'bul'; wellDraw(); toast(id ? 'Saved.' : 'Saved. The School Head is informed.'); }catch(e){ loading(false); $('wiBtn').disabled = false; handleErr(e, 'wiErr'); } }
+function wellIncView(id){ const o = WELL.data.incidents.find(x => x.id===id); if (!o) return; const d = o.data, head = wellHead(), mine = o.email===USER.email;
+  if (head && !d.seen) api('wellIncAct', { id, act:'seen' }).then(wellSet).then(() => { WELL.dot = Math.max(0, WELL.dot-1); drawSide(); }).catch(()=>{});
+  const row = (k, v) => v ? `<tr><td>${k}</td><td>${v}</td></tr>` : '';
+  stfModal(`<h3>🛡 ${esc(d.no)}</h3><p class="sub">${wellStChip(o.status)} Reported by ${esc(o.name)}, ${esc(dTime(o.created))}</p>
+    <div class="table-wrap"><table class="stft-table invdet"><tbody>${row('Date and time', esc(fmtLong(d.date))+(d.time ? ', '+esc(time12(d.time)) : ''))}${row('Place', esc(d.place))}${row('Kind', esc((d.kinds||[]).join(', '))+(d.precursor ? ' (sign or precursor only)' : ''))}
+      ${row('Learners', (d.learners||[]).map(x => esc(x.name)+' <small>('+esc(x.role)+')</small>').join('<br>'))}${row('Others involved', esc(d.others))}${row('What happened', esc(d.what).replace(/\n/g,'<br>'))}${row('Action taken', esc(d.action).replace(/\n/g,'<br>'))}
+      ${row('Parents informed', esc(d.parents)+(d.parentsOn ? ', '+esc(dShort(d.parentsOn)) : ''))}${row('Referred to', esc((d.referred||[]).join(', ')))}</tbody></table></div>
+    <h4 class="nbsec">Follow ups</h4><ul class="hint">${(d.follow||[]).map(f => `<li>${esc(dTime(f.on))}, ${esc(f.by)}: ${esc(f.note)}</li>`).join('') || '<li>None yet.</li>'}</ul>
+    <div class="field"><label for="wfN">Add a follow up or note</label><textarea id="wfN" rows="2" placeholder="Example: Met the parents of both learners on Nov 14. Agreed on a behavior plan."></textarea></div>
+    <div class="row" style="gap:6px;flex-wrap:wrap"><button class="btn small" onclick="wellIncDo('${id}','follow')">＋ Add the follow up</button>
+      <select id="wfS">${WELL_STATUS.filter(s => head || s!=='Resolved').map(s => `<option ${s===o.status?'selected':''}>${s}</option>`).join('')}</select><button class="btn ghost small" onclick="wellIncDo('${id}','status')">Set the status</button></div>
+    <p class="err" id="wfErr"></p><div class="modal-actions">${(mine && o.status!=='Resolved') || head ? `<button class="btn ghost" onclick="wellIncForm('${id}')">✎ Edit</button>` : ''}<button class="btn ghost" onclick="wellIncPrint('${id}')">🖨 Print the report</button>
+      ${head || (mine && o.status==='Reported') ? `<button class="btn ghost danger" onclick="wellIncDel('${id}')">Remove</button>` : ''}<button class="btn" onclick="closeModal('stfModal')">Close</button></div>`, 'wide'); }
+async function wellIncDo(id, act){ const note = $('wfN').value.trim(), status = $('wfS').value; if (act==='follow' && !note) return $('wfErr').textContent = 'Write the follow up first.';
+  try{ loading(true, 'Saving'); wellSet(await api('wellIncAct', { id, act, note, status })); loading(false); wellDraw(); wellIncView(id); toast('Saved.'); }catch(e){ loading(false); handleErr(e, 'wfErr'); } }
+async function wellIncDel(id){ const note = prompt('Why should this incident be removed? It goes to Deleted items and can be restored by the School Head.'); if (!note || !note.trim()) return;
+  try{ loading(true); wellSet(await api('wellIncAct', { id, act:'delete', note:note.trim() })); loading(false); closeModal('stfModal'); wellDraw(); BIN.at = 0; toast('Removed. It is kept in Deleted items.'); }catch(e){ loading(false); handleErr(e); } }
+
+/* ----- Printables ----- */
+function wellPrints(){ const head = wellHead(), b = (ico, t, d, fn) => `<button class="wprint" onclick="${fn}"><span>${ico}</span><b>${t}</b><small>${d}</small></button>`;
+  $('wellBody').innerHTML = `<div class="tabs" style="margin-bottom:10px">${Object.keys(WELL_PER).map(k => `<button class="${WELL.per===k?'on':''}" onclick="WELL.per='${k}';wellPrints()">${WELL_PER[k]}</button>`).join('')}</div><div class="wprints">
+    ${b('📋', 'Nutritional status report ('+WELL_PER[WELL.per]+')', 'Per class, like School Form 8. Learners by sex, with BMI and status, and the summary.', 'wellPrintNut()')}
+    ${b('📈', 'Baseline, midline, and endline', 'The status of each learner across the three weighings, and the change.', 'wellPrintProg()')}
+    ${b('🍲', 'Learners for the feeding program', 'Severely wasted, wasted, and stunted learners at the '+WELL_PER[WELL.per].toLowerCase()+', for the SBFP list.', 'wellPrintSbfp()')}
+    ${b('💉', 'Health record', 'Vaccines and deworming received by each learner.', 'wellPrintHealth()')}
+    ${head ? b('🏫', 'School nutritional status summary ('+WELL_PER[WELL.per]+')', 'All classes, by grade and sex.', 'wellPrintSchool()') : ''}
+    ${b('🛡', 'Bullying incidents summary', 'Counts by kind and status, without names. For the school report to the Division.', 'wellIncSummary()')}</div>`; }
+async function wellSig(doc){ const head = wellHead(); return await affixAsk(head ? 'Noted by, School Head' : 'Prepared by', doc) ? await mySigData() : ''; }
+function wellPrintOut(pages){ $('printArea').innerHTML = `<div class="stfprint wellprint">${pages.join('')}</div>`; setTimeout(() => window.print(), 250); }
+function wellSigs(s, sig){ const head = wellHead(); return sigBlock([{ label:'Prepared by:', name: s ? s.adviserName : USER.name, role:'Class Adviser', img: !head ? sig : '' }, { label:'Noted by:', name: WELL.data.head || '', role:'School Head', img: head ? sig : '' }]); }
+function wellFoot(){ return `<p class="stfp-foot">Status per WHO Growth Reference 2007 (5 to 19 years). Generated by TALA on ${esc(fmtLong(todayPH()))}.</p>`; }
+async function wellPrintNut(){ const s = wellSec(), p = WELL.per, L = wellLearners(WELL.sec).filter(wellActive); if (!L.length) return toast('There are no learners yet.');
+  const sig = await wellSig('nutritional status report'), date = (s.dates||{})[p];
+  const grp = sx => L.filter(l => (sx==='F') === /^F/i.test(l.sex)); let n = 0;
+  const rows = sx => grp(sx).map(l => { const c = wellCalc(l, p); n++; return `<tr><td>${n}</td><td>${esc(l.lrn||'')}</td><td>${esc(wellName(l))}</td><td>${esc(wellBirth(l) ? dShort(wellBirth(l)) : '')}</td><td>${c ? esc(wellAgeTxt(c.age)) : ''}</td><td>${c ? c.w : ''}</td><td>${c ? (c.h/100).toFixed(2) : ''}</td><td>${c ? c.h2.toFixed(4) : ''}</td><td>${c ? c.bmi.toFixed(1) : ''}</td><td>${c ? esc(c.bs || wellWhy(l, p)) : 'Not weighed'}</td><td>${c ? esc(c.hs) : ''}</td></tr>`; }).join('');
+  const sum = (sx, k, h) => grp(sx).filter(l => { const c = wellCalc(l, p); return c && (h ? c.hs : c.bs)===k; }).length;
+  const sumRow = (k, h) => `<tr><td>${k}</td><td>${sum('M',k,h)}</td><td>${sum('F',k,h)}</td><td>${sum('M',k,h)+sum('F',k,h)}</td></tr>`;
+  const wM = grp('M').filter(l => wellCalc(l,p)).length, wF = grp('F').filter(l => wellCalc(l,p)).length;
+  wellPrintOut([`<div class="stfp-page">${stfPrintHead('Nutritional Status Report', WELL_PER[p]+' Assessment, '+(WELL.data.sy||'')) }
+    <table class="stfp-info"><tr><td><b>Grade and section:</b> ${esc(wellSecName(s))}</td><td><b>Class adviser:</b> ${esc(s.adviserName||'')}</td><td><b>Date of weighing:</b> ${esc(date ? fmtLong(date) : '')}</td></tr></table>
+    <table class="stfp-tbl"><thead><tr><th>No.</th><th>LRN</th><th>Name of learner</th><th>Birth date</th><th>Age</th><th>Weight (kg)</th><th>Height (m)</th><th>Height² (m²)</th><th>BMI</th><th>BMI for age</th><th>Height for age</th></tr></thead><tbody>
+    <tr class="tot"><td colspan="11">MALE</td></tr>${rows('M')}<tr class="tot"><td colspan="11">FEMALE</td></tr>${rows('F')}</tbody></table>
+    <h4>Summary</h4><table class="stfp-tbl" style="width:60%"><thead><tr><th>Nutritional status</th><th>Male</th><th>Female</th><th>Total</th></tr></thead><tbody>
+    <tr><td>Number of learners</td><td>${grp('M').length}</td><td>${grp('F').length}</td><td>${L.length}</td></tr><tr><td>Number weighed</td><td>${wM}</td><td>${wF}</td><td>${wM+wF}</td></tr>
+    <tr class="tot"><td colspan="4">BMI for age</td></tr>${WELL_BMI.map(k => sumRow(k)).join('')}<tr class="tot"><td colspan="4">Height for age</td></tr>${WELL_HFA.map(k => sumRow(k, 1)).join('')}</tbody></table>
+    ${wellSigs(s, sig)}${wellFoot()}</div>`]); }
+async function wellPrintProg(){ const s = wellSec(), L = wellLearners(WELL.sec).filter(wellActive); if (!L.length) return toast('There are no learners yet.'); const sig = await wellSig('nutritional status progress');
+  const cell = c => c ? `${c.bmi.toFixed(1)}<br><small>${esc(c.bs||'')}</small>` : '';
+  const rank = { 'Severely wasted':0, 'Wasted':1, 'Normal':2, 'Overweight':3, 'Obese':4 };
+  const chg = l => { const a = wellCalc(l,'base'), b = wellCalc(l,'end') || wellCalc(l,'mid'); if (!a || !b || !a.bs || !b.bs) return ''; if (a.bs===b.bs) return 'Same'; const d = Math.abs(rank[b.bs]-2) < Math.abs(rank[a.bs]-2) ? 'Improved' : Math.abs(rank[b.bs]-2) > Math.abs(rank[a.bs]-2) ? 'Needs attention' : 'Changed'; return d; };
+  const cnt = (p, k) => L.filter(l => { const c = wellCalc(l,p); return c && c.bs===k; }).length;
+  wellPrintOut([`<div class="stfp-page">${stfPrintHead('Nutritional Status Progress', 'Baseline, Midline, and Endline, '+(WELL.data.sy||''))}
+    <table class="stfp-info"><tr><td><b>Grade and section:</b> ${esc(wellSecName(s))}</td><td><b>Class adviser:</b> ${esc(s.adviserName||'')}</td>${Object.keys(WELL_PER).map(k => `<td><b>${WELL_PER[k]}:</b> ${esc((s.dates||{})[k] ? dShort(s.dates[k]) : 'not yet')}</td>`).join('')}</tr></table>
+    <table class="stfp-tbl"><thead><tr><th>No.</th><th>Name of learner</th><th>Sex</th><th>Baseline BMI</th><th>Midline BMI</th><th>Endline BMI</th><th>Change</th></tr></thead><tbody>
+    ${L.map((l,i) => `<tr><td>${i+1}</td><td>${esc(wellName(l))}</td><td>${esc(l.sex||'')}</td><td>${cell(wellCalc(l,'base'))}</td><td>${cell(wellCalc(l,'mid'))}</td><td>${cell(wellCalc(l,'end'))}</td><td>${esc(chg(l))}</td></tr>`).join('')}</tbody></table>
+    <h4>Summary</h4><table class="stfp-tbl" style="width:70%"><thead><tr><th>BMI for age</th><th>Baseline</th><th>Midline</th><th>Endline</th></tr></thead><tbody>${WELL_BMI.map(k => `<tr><td>${k}</td><td>${cnt('base',k)}</td><td>${cnt('mid',k)}</td><td>${cnt('end',k)}</td></tr>`).join('')}</tbody></table>
+    ${wellSigs(s, sig)}${wellFoot()}</div>`]); }
+async function wellPrintSbfp(){ const s = wellSec(), p = WELL.per, L = wellLearners(WELL.sec).filter(wellActive).map(l => ({ l, c: wellCalc(l, p) })).filter(x => x.c && (/wasted/i.test(x.c.bs) || /stunted/i.test(x.c.hs)));
+  if (!L.length) return toast('No wasted or stunted learner at the '+WELL_PER[p].toLowerCase()+'.'); const sig = await wellSig('list of learners for the feeding program');
+  wellPrintOut([`<div class="stfp-page">${stfPrintHead('Learners for the School Based Feeding Program', 'Based on the '+WELL_PER[p]+' Nutritional Assessment, '+(WELL.data.sy||''))}
+    <table class="stfp-info"><tr><td><b>Grade and section:</b> ${esc(wellSecName(s))}</td><td><b>Class adviser:</b> ${esc(s.adviserName||'')}</td><td><b>Date of weighing:</b> ${esc((s.dates||{})[p] ? fmtLong(s.dates[p]) : '')}</td></tr></table>
+    <table class="stfp-tbl"><thead><tr><th>No.</th><th>LRN</th><th>Name of learner</th><th>Sex</th><th>Age</th><th>Weight (kg)</th><th>Height (cm)</th><th>BMI</th><th>BMI for age</th><th>Height for age</th><th>Deworming</th></tr></thead><tbody>
+    ${L.map((x,i) => { const R = wellRec(x.l); return `<tr><td>${i+1}</td><td>${esc(x.l.lrn||'')}</td><td>${esc(wellName(x.l))}</td><td>${esc(x.l.sex||'')}</td><td>${esc(wellAgeTxt(x.c.age))}</td><td>${x.c.w}</td><td>${x.c.h}</td><td>${x.c.bmi.toFixed(1)}</td><td>${esc(x.c.bs)}</td><td>${esc(x.c.hs)}</td><td>${esc((R.deworm||[]).map(d => dShort(d.date)).join(', '))}</td></tr>`; }).join('')}</tbody></table>
+    <p class="stfp-cert">Final selection of beneficiaries follows DepEd Order No. 13, s. 2026 (Institutional Guidelines for the School Based Feeding Program).</p>${wellSigs(s, sig)}${wellFoot()}</div>`]); }
+async function wellPrintHealth(){ const s = wellSec(), L = wellLearners(WELL.sec).filter(wellActive); if (!L.length) return toast('There are no learners yet.'); const sig = await wellSig('health record');
+  wellPrintOut([`<div class="stfp-page">${stfPrintHead('Learner Health Record', 'Vaccines and Deworming, '+(WELL.data.sy||''))}
+    <table class="stfp-info"><tr><td><b>Grade and section:</b> ${esc(wellSecName(s))}</td><td><b>Class adviser:</b> ${esc(s.adviserName||'')}</td></tr></table>
+    <table class="stfp-tbl"><thead><tr><th>No.</th><th>Name of learner</th><th>Sex</th><th>Vaccines received (dose, date, where)</th><th>Deworming received (round, medicine, date)</th><th>SBFP</th></tr></thead><tbody>
+    ${L.map((l,i) => { const R = wellRec(l); return `<tr><td>${i+1}</td><td>${esc(wellName(l))}</td><td>${esc(l.sex||'')}</td><td>${(R.vacc||[]).map(v => esc([v.name, v.dose, v.date ? dShort(v.date) : '', v.where].filter(Boolean).join(', '))).join('<br>')}</td><td>${(R.deworm||[]).map(v => esc([v.round, v.drug, v.date ? dShort(v.date) : ''].filter(Boolean).join(', '))).join('<br>')}</td><td>${R.sbfp ? 'Yes' : ''}</td></tr>`; }).join('')}</tbody></table>
+    ${wellSigs(s, sig)}<p class="stfp-foot">Generated by TALA on ${esc(fmtLong(todayPH()))}.</p></div>`]); }
+async function wellPrintSchool(){ const p = WELL.per, S = WELL.data.sections||[]; const sig = await wellSig('school nutritional status summary');
+  const tot = {}; const line = s => { const L = wellLearners(s.key).filter(wellActive), c = L.map(l => ({ l, c: wellCalc(l, p) })).filter(x => x.c);
+    const k = (sx, cat, h) => c.filter(x => (sx==='F') === /^F/i.test(x.l.sex) && (h ? x.c.hs : x.c.bs)===cat).length;
+    const cols = [L.length, c.length].concat(WELL_BMI.map(cat => k('M',cat)+k('F',cat))).concat([k('M','Stunted',1)+k('F','Stunted',1), k('M','Severely stunted',1)+k('F','Severely stunted',1)]);
+    cols.forEach((v,i) => tot[i] = (tot[i]||0) + v); return `<tr><td>${esc(wellSecName(s))}</td>${cols.map(v => `<td>${v}</td>`).join('')}</tr>`; };
+  const body = S.map(line).join('');
+  wellPrintOut([`<div class="stfp-page">${stfPrintHead('School Nutritional Status Summary', WELL_PER[p]+' Assessment, '+(WELL.data.sy||''))}
+    <table class="stfp-tbl"><thead><tr><th>Grade and section</th><th>Learners</th><th>Weighed</th>${WELL_BMI.map(k => `<th>${k}</th>`).join('')}<th>Stunted</th><th>Severely stunted</th></tr></thead><tbody>${body}<tr class="tot"><td>TOTAL</td>${Object.keys(tot).map(i => `<td>${tot[i]}</td>`).join('')}</tr></tbody></table>
+    ${sigBlock([{ label:'Prepared by:', name:'', role:'School Nurse or Health Coordinator' }, { label:'Noted by:', name: WELL.data.head||'', role:'School Head', img: sig }])}${wellFoot()}</div>`]); }
+async function wellIncPrint(id){ const o = WELL.data.incidents.find(x => x.id===id); if (!o) return; const d = o.data, s = (WELL.data.sections||[]).find(x => x.key===o.sec); const sig = await wellSig('bullying incident report');
+  const box = on => `<span class="stfp-box">${on ? '✓' : ''}</span>`;
+  wellPrintOut([`<div class="stfp-page">${stfPrintHead('Bullying Incident Report', 'Confidential. '+d.no)}
+    <table class="stfp-info"><tr><td><b>Date:</b> ${esc(fmtLong(d.date))}${d.time ? ', '+esc(time12(d.time)) : ''}</td><td><b>Place:</b> ${esc(d.place||'')}</td><td><b>Grade and section:</b> ${esc(wellSecName(s))}</td></tr></table>
+    <p class="stfp-n"><b>Kind of bullying</b></p><p>${WELL_KINDS.map(k => `${box((d.kinds||[]).indexOf(k) > -1)} ${esc(k)}`).join(' &nbsp; ')} &nbsp; ${box(d.precursor)} Sign or precursor only</p>
+    <p class="stfp-n"><b>Learners involved</b></p><table class="stfp-tbl"><thead><tr><th>Name</th><th>Sex</th><th>Involvement</th></tr></thead><tbody>${(d.learners||[]).map(x => `<tr><td>${esc(x.name)}</td><td>${esc(x.sex||'')}</td><td>${esc(x.role)}</td></tr>`).join('')}${d.others ? `<tr><td colspan="3">Others: ${esc(d.others)}</td></tr>` : ''}</tbody></table>
+    <p class="stfp-n"><b>What happened</b></p><p>${esc(d.what).replace(/\n/g,'<br>')}</p>
+    <p class="stfp-n"><b>Action taken</b></p><p>${esc(d.action||'').replace(/\n/g,'<br>')}</p>
+    <p class="stfp-n"><b>Parents or guardians informed:</b> ${esc(d.parents||'')}${d.parentsOn ? ', '+esc(fmtLong(d.parentsOn)) : ''}</p>
+    <p class="stfp-n"><b>Referred to:</b> ${esc((d.referred||[]).join(', '))}</p>
+    <p class="stfp-n"><b>Follow ups</b></p><ul>${(d.follow||[]).map(f => `<li>${esc(dShort(f.on))}, ${esc(f.by)}: ${esc(f.note)}</li>`).join('') || '<li>None</li>'}</ul><p><b>Status:</b> ${esc(o.status)}</p>
+    ${sigBlock([{ label:'Reported by:', name:o.name, role:'Teacher', img: o.email===USER.email && !wellHead() ? sig : '' }, { label:'Noted by:', name: WELL.data.head||'', role:'School Head', img: wellHead() ? sig : '' }])}
+    <p class="stfp-foot">Confidential record under ${esc(WELL_BASIS)}, and RA 10173 (Data Privacy Act). Generated by TALA on ${esc(fmtLong(todayPH()))}.</p></div>`]); }
+async function wellIncSummary(){ const L = (WELL.data.incidents||[]).filter(o => wellHead() || o.email===USER.email); const sig = await wellSig('bullying incidents summary');
+  const n = f => L.filter(f).length;
+  wellPrintOut([`<div class="stfp-page">${stfPrintHead('Bullying Incidents Summary', (WELL.data.sy||'')+'. No names are shown.')}
+    <table class="stfp-tbl" style="width:70%"><thead><tr><th>Kind of bullying</th><th>Incidents</th><th>Resolved</th><th>Still open</th></tr></thead><tbody>${WELL_KINDS.map(k => `<tr><td>${k}</td><td>${n(o => (o.data.kinds||[]).indexOf(k) > -1)}</td><td>${n(o => (o.data.kinds||[]).indexOf(k) > -1 && o.status==='Resolved')}</td><td>${n(o => (o.data.kinds||[]).indexOf(k) > -1 && o.status!=='Resolved')}</td></tr>`).join('')}
+      <tr class="tot"><td>All incidents</td><td>${L.length}</td><td>${n(o => o.status==='Resolved')}</td><td>${n(o => o.status!=='Resolved')}</td></tr><tr><td>Signs or precursors only</td><td>${n(o => o.data.precursor)}</td><td></td><td></td></tr></tbody></table>
+    <table class="stfp-tbl" style="width:70%"><thead><tr><th>Status</th><th>Incidents</th></tr></thead><tbody>${WELL_STATUS.map(st => `<tr><td>${st}</td><td>${n(o => o.status===st)}</td></tr>`).join('')}</tbody></table>
+    <table class="stfp-tbl" style="width:70%"><thead><tr><th>Grade and section</th><th>Incidents</th><th>Learners bullied</th></tr></thead><tbody>${(WELL.data.sections||[]).map(s => `<tr><td>${esc(wellSecName(s))}</td><td>${n(o => o.sec===s.key)}</td><td>${L.filter(o => o.sec===s.key).reduce((a,o) => a + (o.data.learners||[]).filter(x => x.role==='Bullied').length, 0)}</td></tr>`).join('')}</tbody></table>
+    ${sigBlock([{ label:'Prepared by:', name: wellHead() ? '' : USER.name, role: wellHead() ? 'Learner Formation Officer or Guidance' : 'Teacher', img: wellHead() ? '' : sig }, { label:'Noted by:', name: WELL.data.head||'', role:'School Head', img: wellHead() ? sig : '' }])}
+    <p class="stfp-foot">For the yearly school report on bullying cases under ${esc(WELL_BASIS)}. Generated by TALA on ${esc(fmtLong(todayPH()))}.</p></div>`]); }
+
 /* ======================= Reports and Cover Pages (school document tracking) ======================= */
 var RPT = { data:null, q:'', st:'', sort:'new', office:'', who:'' };
 const RPT_TYPES = ['Monthly report','Quarterly report','Accomplishment report','School forms (SF2, SF4, and others)','Lesson plans and learning materials','Assessment results','Financial report or liquidation','Program or project proposal','Action research','Training or LAC documents','Memorandum or letter','Others'];
@@ -12603,23 +12968,25 @@ const RPT_STATUS = { 'Ready':['📝','wait'], 'Removed':['🗑','off'], 'Persona
 async function openRpt(){ setTimeout(() => qgMaybe('rpt'), 1600); ['viewLac','viewTrk','viewAcc','viewBank','viewLog','viewWeeks','viewSig','viewObs','viewHome','viewSbfp','viewAtt'].forEach(v => $(v) && ($(v).style.display='none'));
   $('viewPir').style.display=''; CUR_FEATURE = 'rpt'; drawSide(); window.scrollTo(0,0);
   if (!USER) return $('viewPir').innerHTML = '<div class="empty">Please sign in.</div>';
+  if (!RPT.data) RPT.data = lcGet('rpt');
   if (!RPT.data) $('viewPir').innerHTML = `<div class="pirload"><div class="pirstar">★</div><b>Opening the reports</b><div class="pirdots"><i></i><i></i><i></i></div></div>`; else rptDraw();
-  try{ RPT.data = await api('rptLoad'); }catch(e){ if (!RPT.data){ $('viewPir').innerHTML = `<div class="empty">${esc(friendly(e.message))} <button class="btn ghost small" onclick="openRpt()">Try again</button></div>`; return; } }
+  if (RPT.data && lcFresh('rpt')) return;
+  try{ RPT.data = await api('rptLoad'); LC_AT.rpt = Date.now(); }catch(e){ if (!RPT.data){ $('viewPir').innerHTML = `<div class="empty">${esc(friendly(e.message))} <button class="btn ghost small" onclick="openRpt()">Try again</button></div>`; return; } }
   if (CUR_FEATURE==='rpt') rptDraw(); }
 function rptStaff(){ return USER && (USER.role==='head' || USER.role==='admin'); }
 function rptChip(st){ const x = RPT_STATUS[st] || ['•','']; return `<span class="atn ${x[1]}">${x[0]} ${esc(st==='Personal' ? 'For personal use' : st==='Ready' ? 'Not yet submitted' : st)}</span>`; }
 function rptOffice(o){ return o.status==='Personal' ? 'Personal use, not submitted' : o.status==='Ready' ? 'Not yet submitted' : o.data.office==='Other office' ? (o.data.otherOffice||'Other office') : o.data.office; }
-function rptTodo(o){ if (o.status==='Removed') return false; if (USER.role==='head') return (o.status==='Incoming' && o.data.office!=='Office of the AO') || !!(o.data.delReq && o.data.delReq.status==='Pending'); if (USER.role==='admin') return o.status==='Incoming' && o.data.office==='Office of the AO'; return o.email===USER.email && (o.status==='For correction' || o.status==='Ready'); }
-function rptList(){ const q = RPT.q.toLowerCase().trim(), L = RPT.data.items.filter(o => (RPT.st==='Removed' ? o.status==='Removed' : o.status!=='Removed') && (!RPT.st || (RPT.st==='todo' ? rptTodo(o) : RPT.st==='sub' ? /^Submitted to/.test(o.status) : RPT.st==='For safekeeping' ? /^For safekeeping/.test(o.status) : o.status===RPT.st)) && (!RPT.office || o.data.office===RPT.office) && (!RPT.who || o.email===RPT.who)
+function rptTodo(o){ if (o.status==='Removed') return USER.role==='head' && !!(o.data.resReq && o.data.resReq.status==='Pending'); if (USER.role==='head') return (o.status==='Incoming' && o.data.office!=='Office of the AO') || !!(o.data.delReq && o.data.delReq.status==='Pending'); if (USER.role==='admin') return o.status==='Incoming' && o.data.office==='Office of the AO'; return o.email===USER.email && (o.status==='For correction' || o.status==='Ready'); }
+function rptList(){ const q = RPT.q.toLowerCase().trim(), L = RPT.data.items.filter(o => (RPT.st==='Removed' ? o.status==='Removed' : RPT.st==='todo' || o.status!=='Removed') && (!RPT.st || (RPT.st==='todo' ? rptTodo(o) : RPT.st==='sub' ? /^Submitted to/.test(o.status) : RPT.st==='For safekeeping' ? /^For safekeeping/.test(o.status) : o.status===RPT.st)) && (!RPT.office || o.data.office===RPT.office) && (!RPT.who || o.email===RPT.who)
     && (!q || q.split(/\s+/).every(w => [o.code, o.title, o.name, o.data.sub, o.data.type, o.data.office, o.data.otherOffice, o.status, o.data.note].join(' ').toLowerCase().indexOf(w) > -1)));
   return L.sort((a,b) => RPT.sort==='old' ? String(a.on).localeCompare(String(b.on)) : RPT.sort==='upd' ? String(b.updated).localeCompare(String(a.updated)) : RPT.sort==='title' ? a.title.localeCompare(b.title) : String(b.on).localeCompare(String(a.on))); }
-function rptDraw(){ const D = RPT.data, I = D.items.filter(o => o.status!=='Removed'), gone = D.items.filter(o => o.status==='Removed'), staff = rptStaff(), L = rptList(), c = s => I.filter(o => o.status===s).length;
+function rptDraw(){ lcPut('rpt', RPT.data); const D = RPT.data, I = D.items.filter(o => o.status!=='Removed'), gone = D.items.filter(o => o.status==='Removed'), staff = rptStaff(), L = rptList(), c = s => I.filter(o => o.status===s).length;
   const card = (ico, n, l, st) => `<button class="ostat ${RPT.st===st?'on':''}" onclick="RPT.st='${st}';rptDraw()"><span class="oico">${ico}</span><b>${n}</b><span>${l}</span></button>`;
   const people = [...new Map(I.map(o => [o.email, o.name])).entries()];
   $('viewPir').innerHTML = `<div class="trk-head"><div><h2>Project DALOY: Reports and Documents</h2>${projMean('rpt')}<p>${staff ? 'Every report and document made by all personnel, including those for personal use, and the documents received from other offices. Search, sort, and track each one. Tap a report to print its cover page or transmittal again.' : 'Each report gets its own document number and QR code. Make the PABALAT cover page, send it with a PADALA transmittal, and follow where it is. Tap a report anytime to print its cover page or transmittal again.'}</p></div>
       <div class="head-actions"><button class="btn sun" onclick="rptForm()">＋ New report (PABALAT cover page)</button><button class="btn ghost" onclick="trPick()">📨 PADALA transmittal</button><button class="btn ghost" onclick="docScan()">📷 SURI: scan a QR code</button><button class="btn ghost" onclick="qgOpen('rpt')">❓ Quick guide</button>${USER.role==='head' ? '<button class="btn ghost danger" onclick="featClearAsk(\'rpt\')">🧹 Clear all data</button>' : ''}</div></div>
     <div class="ostats">${card('📚', I.length, staff ? 'Reports in all' : 'My reports', '')}${card('📥', c('Incoming'), 'Incoming', 'Incoming')}${card('📬', c('Received'), 'Received', 'Received')}${card('✔', c('Returned, correct'), 'Returned, correct', 'Returned, correct')}
-      ${card('↺', c('For correction'), 'For correction', 'For correction')}${card('🗄', I.filter(o => /^For safekeeping/.test(o.status)).length, 'For safekeeping', 'For safekeeping')}${card('🏛', I.filter(o => /^Submitted to/.test(o.status)).length, 'Submitted to District or Division', 'sub')}${card('🔴', I.filter(rptTodo).length, staff ? 'Waiting for you' : 'To do: submit or correct', 'todo')}${card('📝', c('Ready'), 'Not yet submitted', 'Ready')}${card('🔒', c('Personal'), 'For personal use', 'Personal')}${USER.role==='head' && I.some(o => o.data.delReq && o.data.delReq.status==='Pending') ? card('🗑', I.filter(o => o.data.delReq && o.data.delReq.status==='Pending').length, 'Asked to be removed', 'todo') : ''}${card('🗄', gone.length, 'Removed, kept on record', 'Removed')}${(() => { const R = I.map(rptLapse).filter(x => x.toReceive!==null); return R.length ? `<div class="ostat static"><span class="oico">⏱</span><b>${(R.reduce((a, x) => a + x.toReceive, 0) / R.length).toFixed(1)}</b><span>Average days from Incoming to Received</span></div>` : ''; })()}</div>
+      ${card('↺', c('For correction'), 'For correction', 'For correction')}${card('🗄', I.filter(o => /^For safekeeping/.test(o.status)).length, 'For safekeeping', 'For safekeeping')}${card('🏛', I.filter(o => /^Submitted to/.test(o.status)).length, 'Submitted to District or Division', 'sub')}${card('🔴', D.items.filter(rptTodo).length, staff ? 'Waiting for you' : 'To do: submit or correct', 'todo')}${card('📝', c('Ready'), 'Not yet submitted', 'Ready')}${card('🔒', c('Personal'), 'For personal use', 'Personal')}${USER.role==='head' && I.some(o => o.data.delReq && o.data.delReq.status==='Pending') ? card('🗑', I.filter(o => o.data.delReq && o.data.delReq.status==='Pending').length, 'Asked to be removed', 'todo') : ''}${card('🗄', gone.length, 'Removed, kept on record', 'Removed')}${(() => { const R = I.map(rptLapse).filter(x => x.toReceive!==null); return R.length ? `<div class="ostat static"><span class="oico">⏱</span><b>${(R.reduce((a, x) => a + x.toReceive, 0) / R.length).toFixed(1)}</b><span>Average days from Incoming to Received</span></div>` : ''; })()}</div>
     ${staff && I.length ? `<details class="byt"><summary>Reports by personnel</summary><div class="table-wrap"><table class="tqtbl"><thead><tr><th>Name</th><th>Submitted</th><th>Correct</th><th>For correction</th><th>Safekeeping</th><th>To District or Division</th></tr></thead><tbody>${people.map(([e, n]) => { const m = I.filter(o => o.email===e && o.status!=='Personal' && o.status!=='Ready'); return `<tr><td>${esc(n)}</td><td>${m.length}</td><td>${m.filter(o => o.status==='Returned, correct').length}</td><td>${m.filter(o => o.status==='For correction').length}</td><td>${m.filter(o => /^For safekeeping/.test(o.status)).length}</td><td>${m.filter(o => /^Submitted to/.test(o.status)).length}</td></tr>`; }).join('')}</tbody></table></div></details>` : ''}
     <div class="bar invbar"><input id="rpQ" placeholder="🔍 Search title, tracking code, name, type, office" value="${esc(RPT.q)}" oninput="RPT.q=this.value;clearTimeout(RPT.t);RPT.t=setTimeout(rptDraw,350)">
       <select onchange="RPT.sort=this.value;rptDraw()"><option value="new" ${RPT.sort==='new'?'selected':''}>Newest first (date and time)</option><option value="old" ${RPT.sort==='old'?'selected':''}>Oldest first</option><option value="upd" ${RPT.sort==='upd'?'selected':''}>Last updated</option><option value="title" ${RPT.sort==='title'?'selected':''}>Title A to Z</option></select>
@@ -12679,6 +13046,7 @@ function rptView(id){ const o = RPT.data.items.find(x => x.id===id); if (!o) ret
   const dq = d.delReq, head = USER.role==='head';
   stfModal(`<h3>${esc(o.title)}</h3><p class="sub"><code>${esc(o.code)}</code> · ${rptChip(o.status)}</p>
     ${o.status==='Removed' && d.removed ? `<div class="derr"><b>🗑 Removed on ${esc(dTime(d.removed.on))}, by ${esc(d.removed.by)}.</b> Reason: ${esc(d.removed.reason||'')}${d.removed.note ? '. School Head: '+esc(d.removed.note) : ''}. It is kept on record.</div>` : ''}
+    ${o.status==='Removed' && d.resReq ? `<div class="derr"><b>↺ ${d.resReq.status==='Pending' ? 'Asked to be restored' : d.resReq.status==='Approved' ? 'Restore approved' : 'Restore not approved'}</b> by ${esc(d.resReq.by)}, ${esc(dTime(d.resReq.on))}. Reason: ${esc(d.resReq.reason)}.${d.resReq.note ? ' School Head: '+esc(d.resReq.note) : ''} ${d.resReq.status==='Pending' ? (head ? 'Restore it or say why not below.' : 'Waiting for the School Head.') : ''}</div>` : ''}
     ${dq && dq.status==='Pending' && o.status!=='Removed' ? `<div class="derr"><b>🗑 Asked to be removed</b> by ${esc(dq.by)}, ${esc(dTime(dq.on))}. Reason: ${esc(dq.reason)}. ${head ? 'Approve or disapprove below.' : 'Waiting for the School Head.'}</div>` : ''}
     ${dq && dq.status==='Disapproved' && mine ? `<div class="derr"><b>Your request to remove this report was not approved.</b> ${esc(dq.note||'')}</div>` : ''}
     <div class="table-wrap"><table class="stft-table invdet"><tbody><tr><td>From</td><td>${esc(o.name)}</td></tr>${d.sub?`<tr><td>Period</td><td>${esc(d.sub)}</td></tr>`:''}<tr><td>Type</td><td>${esc(d.type||'')}</td></tr><tr><td>${o.status==='Personal'?'Use':'Submitted to'}</td><td>${esc(rptOffice(o))}</td></tr><tr><td>Date and time</td><td>${esc(dTime(o.on))}</td></tr>${d.dir==='in'?`<tr><td>Received from</td><td>${esc(d.from||'')}</td></tr>`:''}${(d.trans||[]).length?`<tr><td>Transmittal</td><td>${d.trans.map(t => `<button class="linkbtn" onclick="trPrint('${t.no}')">${esc(t.no)}</button> to ${esc(t.office)}, ${esc(dShort(String(t.on).slice(0,10)))}${USER.role==='head' || t.byEmail===USER.email ? ` <button class="linkbtn danger" style="font-size:12px" onclick="trDel('${t.no}','${o.id}')">Remove</button>` : ''}`).join('<br>')}${d.trans.length > 1 && new Set(d.trans.map(t => t.office)).size < d.trans.length ? '<br><small class="bad">Two transmittals to the same office. One was likely made twice by mistake. Remove the extra one.</small>' : ''}</td></tr>`:''}${d.note?`<tr><td>Note</td><td>${esc(d.note)}</td></tr>`:''}</tbody></table></div>
@@ -12693,16 +13061,18 @@ function rptView(id){ const o = RPT.data.items.find(x => x.id===id); if (!o) ret
       ${mine && (o.status==='Incoming' || o.status==='For correction' || o.status==='Personal') ? `<button class="btn ghost" onclick="rptForm('${o.id}')">✎ Edit</button>` : ''}${mine && o.status==='For correction' ? `<button class="btn" onclick="rptResubmit('${o.id}')">📤 Resubmit</button>` : ''}
       ${staff && o.status!=='Personal' && o.status!=='Ready' ? `${o.status==='Incoming' ? act('receive','📬 Received','') : ''}${act('correct','✔ Return, correct')}${act('correction','↺ For correction')}${act('keepOwner','🗄 Safekeeping: back to the owner')}${act('keepHead','🗄 Safekeeping: Office of the School Head')}${act('keepAO','🗄 Safekeeping: Office of the AO')}${act('district','🏢 Submitted to the District')}${act('division','🏛 Submitted to the Division')}${act('other','📤 Another office')}` : ''}
       ${head && dq && dq.status==='Pending' && o.status!=='Removed' ? `<button class="btn small" onclick="rptRemAsk('${o.id}','approve')">✔ Approve the removal</button><button class="btn ghost danger small" onclick="rptRemAsk('${o.id}','disapprove')">Disapprove</button>` : ''}
-      ${head && o.status==='Removed' ? `<button class="btn ghost small" onclick="rptRemAsk('${o.id}','restore')">↺ Restore</button>` : ''}
+      ${head && o.status==='Removed' ? `<button class="btn ${d.resReq && d.resReq.status==='Pending' ? '' : 'ghost'} small" onclick="rptRemAsk('${o.id}','restore')">↺ Restore</button>${d.resReq && d.resReq.status==='Pending' ? `<button class="btn ghost small" onclick="rptRemAsk('${o.id}','norestore')">Do not restore</button>` : ''}` : ''}
+      ${!head && mine && o.status==='Removed' && !(d.resReq && d.resReq.status==='Pending') ? `<button class="btn small" onclick="rptRemAsk('${o.id}','askres')">↺ Ask to restore</button>` : ''}
       ${o.status!=='Removed' && !(dq && dq.status==='Pending') && (head || mine) ? `<button class="btn ghost danger small" onclick="rptRemAsk('${o.id}','${head ? 'remove' : 'ask'}')">🗑 ${head ? 'Remove' : 'Ask to remove'}</button>` : ''}<button class="btn" onclick="closeModal('stfModal')">Close</button></div>`, 'wide'); qrFill(); }
 function rptRemAsk(id, k){ const L = { ask:['🗑 Ask to remove this report','Why should this report be removed? The School Head approves it first. The report stays on record.','Example: I submitted it twice by mistake.'],
     remove:['🗑 Remove this report','Reason for removing. The report stays on record, and you can restore it anytime.','Example: Duplicate entry.'], approve:['✔ Approve the removal','Your reason for approving. The teacher is told.','Example: Confirmed, it is a duplicate.'],
-    disapprove:['Disapprove the removal','Your reason for disapproving. The teacher is told.','Example: Keep it. This is the copy received by the office.'], restore:['↺ Restore this report','Reason for restoring','Example: Removed by mistake.'] }[k];
+    disapprove:['Disapprove the removal','Your reason for disapproving. The teacher is told.','Example: Keep it. This is the copy received by the office.'], restore:['↺ Restore this report','Reason for restoring','Example: Removed by mistake.'],
+    askres:['↺ Ask to restore this report','Why should this report be restored? The School Head checks it first.','Example: I removed it by mistake. This is my only copy of the October report.'], norestore:['Do not restore','Your reason. The teacher is told.','Example: The corrected copy is already in the list.'] }[k];
   stfModal(`<h3>${L[0]}</h3><div class="field"><label>${L[1]}</label><textarea id="rmN" rows="3" placeholder="${esc(L[2])}"></textarea></div><p class="err" id="raErr"></p>
     <div class="modal-actions"><button class="btn ghost" onclick="rptView('${id}')">Back</button><button class="btn ${k==='approve'||k==='restore'?'':'danger'}" onclick="rptRemGo('${id}','${k}')">${L[0].replace(/^\S+ /,'')}</button></div>`); }
 async function rptRemGo(id, k){ const note = $('rmN').value.trim(); if (!note) return $('raErr').textContent = 'Write the reason first.';
-  try{ loading(true); RPT.data = k==='ask' || k==='remove' ? await api('rptDel', { id, note }) : await api('rptDelDecide', { id, note, ok:k==='approve', restore:k==='restore' }); loading(false); rptDraw();
-    toast({ ask:'Sent to the School Head for approval.', remove:'Removed. It is kept on record.', approve:'Approved. The report is removed and kept on record.', disapprove:'Disapproved. The teacher is told.', restore:'Restored.' }[k]); rptView(id); }
+  try{ loading(true); RPT.data = k==='ask' || k==='remove' || k==='askres' ? await api('rptDel', { id, note, ask: k==='askres' ? 'restore' : '' }) : await api('rptDelDecide', { id, note, ok:k==='approve', restore:k==='restore', norestore:k==='norestore' }); loading(false); rptDraw();
+    toast({ ask:'Sent to the School Head for approval.', remove:'Removed. It is kept on record.', approve:'Approved. The report is removed and kept on record.', disapprove:'Disapproved. The teacher is told.', restore:'Restored.', askres:'Sent. The School Head will check it.', norestore:'Sent. The teacher is told.' }[k]); rptView(id); }
   catch(e){ loading(false); handleErr(e, 'raErr'); } }
 // the cover page again: choose the kind and the paper, then print (the document number stays the same)
 function coverAsk(id){ const o = RPT.data.items.find(x => x.id===id); if (!o) return; const d = o.data, c = d.cover && d.cover!=='none' ? d.cover : 'folder';
