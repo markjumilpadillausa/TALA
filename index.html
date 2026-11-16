@@ -1419,6 +1419,11 @@ body.ntklocked{overflow:hidden}
   .wellprint .itk td{font-size:10pt}.wellprint .itk td.ik{width:38%;font-weight:700}.wellprint .rcut{border-top:1px dashed #000;margin:18px 0 6px;text-align:center;font-size:8pt}
   .wellprint .fsign td{height:26px}.wellprint .fsign th.fsm{font-size:7pt;font-weight:400;max-width:80px}.wellprint .ftbl td,.wellprint .ftbl th{font-size:7.5pt;padding:2px 3px}.wellprint .f1a td,.wellprint .f1a th{font-size:7.5pt;padding:2px 3px} .wellprint h4{margin:8px 0 3px} }
 @media print{ .stfprint.wellprint{page:wellland} .wellprint .stfp-tbl td,.wellprint .stfp-tbl th{font-size:9pt;padding:3px 5px} .wellprint .stfp-tbl small{font-size:8pt} }
+.camoval{position:absolute;left:50%;top:46%;width:58%;height:72%;transform:translate(-50%,-50%);border:3px dashed rgba(255,255,255,.85);border-radius:50%;box-shadow:0 0 0 999px rgba(0,0,0,.18);pointer-events:none}
+.camsmile{position:absolute;left:50%;top:10px;transform:translateX(-50%);background:rgba(244,196,48,.95);color:#1f3a28;font-weight:800;font-size:17px;padding:7px 16px;border-radius:999px;white-space:nowrap;box-shadow:0 4px 14px rgba(0,0,0,.25);pointer-events:none}.camsmile.pop{animation:smpop .5s ease}
+@keyframes smpop{0%{transform:translateX(-50%) scale(.6);opacity:0}70%{transform:translateX(-50%) scale(1.08);opacity:1}100%{transform:translateX(-50%) scale(1)}}
+.picbtn.fflag{background:#fdecea;box-shadow:0 0 0 2px #d93025;position:relative}.picbtn.fflag::after{content:'';position:absolute;top:-4px;right:-4px;width:9px;height:9px;border-radius:50%;background:#d93025;border:2px solid #fff}
+.picbtn.fok{box-shadow:0 0 0 1px #9cc9a9}.fcbar{font-size:12.5px;color:var(--muted);margin:6px 2px}.fcbox{background:#fdecea;border-radius:12px;padding:10px 12px;margin:10px 0;font-size:14px}.fcbox.ok{background:var(--ok-soft,#e5f4ea)}.fcrow{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}.fcrow figure{margin:0;text-align:center;flex:1;min-width:140px;max-width:240px}.fcrow img{width:100%;border-radius:10px}.fcrow figcaption{font-size:12px;color:var(--muted)}
 </style>
 </head>
 <body>
@@ -2143,8 +2148,8 @@ body.ntklocked{overflow:hidden}
 
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
-const MIN_SERVER = '10.4'; // oldest Code.gs this page works with
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'10.4', date:'November 12, 2026' } };
+const MIN_SERVER = '10.5'; // oldest Code.gs this page works with
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'10.5', date:'November 16, 2026' } };
 function verLine(server){
   const old = server && (server.indexOf('older') > -1 || parseFloat(server) < parseFloat(MIN_SERVER));
   const s = server ? ' Server '+server+('.') : '';
@@ -9421,12 +9426,16 @@ function camOpen(label){
     CAM.res = res; CAM.label = label; CAM.shot = null;
     let box = $('camBox'); if (!box){ box = document.createElement('div'); box.id = 'camBox'; box.className = 'cambox'; document.body.appendChild(box); }
     box.innerHTML = `<div class="camcard"><div class="camtop"><b>${esc(label)}</b><small>${esc(USER.name)} · ${esc(dShort(todayPH()))}</small></div>
-      <div class="camview"><video id="camVid" playsinline autoplay muted></video><img id="camImg" alt="" hidden><div class="camwait" id="camMsg">Opening the camera…</div></div>
-      <div class="camnote">Face the camera. The photo is kept with your time record and cannot be removed after sending.</div>
+      <div class="camview"><video id="camVid" playsinline autoplay muted></video><img id="camImg" alt="" hidden><div class="camoval" id="camOval" hidden></div><div class="camsmile" id="camSmile" hidden></div><div class="camwait" id="camMsg">Opening the camera…</div></div>
+      <div class="camnote">For a clear photo: face the light, keep your whole face inside the oval, and look at the camera. The photo is kept with your time record and cannot be removed after sending.</div>
       <div class="cambtns" id="camBtns"></div></div>`;
     box.classList.add('open'); camStart();
   });
 }
+// A happy start of the day: a friendly line asks for a smile while the camera is open
+const CAM_SMILE = ['Smile! 😊','Ngiti naman diyan! 😄','Your smile brightens the school ☀️','Ready? Big smile! 😁','Salamat sa iyong serbisyo! 🌟','Ang ganda ng ngiti mo! 😊','Good to see you! 👋','Isang ngiti para sa mga bata! 💚'];
+function camGuide(on){ clearInterval(CAM.sm); const o = $('camOval'), m = $('camSmile'); if (!o || !m) return; o.hidden = !on; m.hidden = !on; if (!on) return;
+  let i = Math.floor(Math.random()*CAM_SMILE.length); const show = () => { m.classList.remove('pop'); void m.offsetWidth; m.textContent = CAM_SMILE[i++ % CAM_SMILE.length]; m.classList.add('pop'); }; show(); CAM.sm = setInterval(show, 2600); }
 function camBtns(html){ $('camBtns').innerHTML = html; }
 async function camStart(){
   const msg = $('camMsg'), vid = $('camVid'), img = $('camImg'); img.hidden = true; vid.hidden = false; msg.hidden = false; msg.textContent = 'Opening the camera…';
@@ -9434,7 +9443,7 @@ async function camStart(){
   if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){ return camFail('nocam', 'This browser cannot open the camera. Open TALA in Chrome or Safari.'); }
   try{
     CAM.stream = await navigator.mediaDevices.getUserMedia({ video:{ facingMode:'user', width:{ ideal:640 }, height:{ ideal:640 } }, audio:false });
-    vid.srcObject = CAM.stream; await vid.play().catch(()=>{}); msg.hidden = true;
+    vid.srcObject = CAM.stream; await vid.play().catch(()=>{}); msg.hidden = true; camGuide(true);
     camBtns(`<button class="btn ghost" onclick="camClose(null)">Cancel</button><button class="btn" onclick="camSnap()">\u{1F4F8} Take photo</button>`);
   }catch(e){
     const n = e && e.name;
@@ -9447,7 +9456,7 @@ function camFail(kind, text){
   // a device without any camera may still record, marked "No camera", so the School Head can see it
   camBtns(`<button class="btn ghost" onclick="camClose(null)">Cancel</button><button class="btn ghost" onclick="camStart()">Try again</button>${kind==='never'?`<button class="btn" onclick="camClose({ nocam:true })">Record without photo</button>`:''}`);
 }
-function camSnap(){
+function camSnap(){ camGuide(false);
   const vid = $('camVid'), w = 480, h = Math.round(w * (vid.videoHeight || 480) / (vid.videoWidth || 480)), c = document.createElement('canvas'); c.width = w; c.height = h;
   const x = c.getContext('2d'); x.drawImage(vid, 0, 0, w, h);
   const now = new Date().toLocaleString('en-US', { timeZone:'Asia/Manila', month:'short', day:'numeric', year:'numeric', hour:'numeric', minute:'2-digit' });
@@ -9456,8 +9465,8 @@ function camSnap(){
   $('camImg').src = CAM.shot; $('camImg').hidden = false; vid.hidden = true;
   camBtns(`<button class="btn ghost" onclick="camRetake()">↺ Retake</button><button class="btn" onclick="camClose({ photo: CAM.shot })">Send</button>`);
 }
-function camRetake(){ CAM.shot = null; $('camImg').hidden = true; $('camVid').hidden = false; camBtns(`<button class="btn ghost" onclick="camClose(null)">Cancel</button><button class="btn" onclick="camSnap()">\u{1F4F8} Take photo</button>`); }
-function camClose(v){ try{ (CAM.stream && CAM.stream.getTracks() || []).forEach(t => t.stop()); }catch(e){} CAM.stream = null; const b = $('camBox'); if (b){ b.classList.remove('open'); b.innerHTML = ''; } const r = CAM.res; CAM.res = null; if (r) r(v); }
+function camRetake(){ camGuide(true); CAM.shot = null; $('camImg').hidden = true; $('camVid').hidden = false; camBtns(`<button class="btn ghost" onclick="camClose(null)">Cancel</button><button class="btn" onclick="camSnap()">\u{1F4F8} Take photo</button>`); }
+function camClose(v){ camGuide(false); try{ (CAM.stream && CAM.stream.getTracks() || []).forEach(t => t.stop()); }catch(e){} CAM.stream = null; const b = $('camBox'); if (b){ b.classList.remove('open'); b.innerHTML = ''; } const r = CAM.res; CAM.res = null; if (r) r(v); }
 // Photos taken on this device are shown at once; others are fetched when tapped
 const STF_PICS = {};
 function stfPicOf(L, slot){ const id = L && L.photos && L.photos[slot]; return STF_PICS[(L&&L.email)+'|'+(L&&L.date)+'|'+slot] ? 'local' : id; }
@@ -9468,11 +9477,11 @@ function stfTimeCell(L, slot, empty){
   const p = stfPicOf(L, slot), t = esc(time12(L[slot]));
   if (!p || p==='none') return t + (L.source && /Marked by/.test(L.source) ? '' : ' <small class="nophoto" title="Tapped without a photo (older copy of TALA)">no photo</small>');
   if (p==='nocam') return t+' <small class="hint" title="No camera on the device">no camera</small>';
-  return `${t} <button class="picbtn" title="See the photo" onclick="event.stopPropagation();stfPhotoView('${esc(L.email)}','${esc(L.date)}','${slot}')">\u{1F4F7}</button>`;
+  return `${t} <button class="picbtn ${faceCls(L.email, L.date, slot)}" data-fk="${esc(L.email+'|'+L.date+'|'+slot)}" title="See the photo" onclick="event.stopPropagation();stfPhotoView('${esc(L.email)}','${esc(L.date)}','${slot}')">\u{1F4F7}</button>`;
 }
 async function stfPhotoView(email, date, slot){
   const lab = (STF_SLOTS.find(s => s[0]===slot)||[])[1] || '', local = STF_PICS[email+'|'+date+'|'+slot];
-  const show = (src, cap) => stfModal(`<h3>${esc(cap)}</h3><img src="${src}" alt="" style="width:100%;max-width:480px;border-radius:12px;display:block;margin:0 auto" oncontextmenu="return false">`);
+  const show = (src, cap) => { stfModal(`<h3>${esc(cap)}</h3><img src="${src}" alt="" style="width:100%;max-width:480px;border-radius:12px;display:block;margin:0 auto" oncontextmenu="return false">${faceNote(email, date, slot)}`); if (stfHead()) faceSee(email, date, slot, src); };
   if (local) return show(local, lab+', '+dShort(date));
   stfModal(`<div class="pirload"><div class="pirdots"><i></i><i></i><i></i></div></div>`);
   try{ const r = await api('staffPhoto', { email, date, slot });
@@ -9480,6 +9489,71 @@ async function stfPhotoView(email, date, slot){
     show(r.src, r.name+', '+lab+', '+dShort(date)+(r.time?' at '+time12(r.time):'')); }
   catch(e){ stfModal(`<p>${esc(friendly(e.message))}</p>`); }
 }
+
+/* ----- 10.5 Face check, School Head only -----
+   The School Head's browser reads each Time in and Time out photo and compares the face with the same person's earlier photos.
+   It looks at the shape of the face, so new glasses, a new hair style, or a slightly different position still match.
+   A photo that looks like a different person, has no clear face, or has more than one face gets a red mark for review. Nothing is shown to the personnel. */
+var FACE = { rows:null, map:{}, lib:false, busy:false, at:0, done:0, todo:0, err:'' };
+const FACE_CDN = 'https://cdn.jsdelivr.net/npm/@vladmandic/face-api@1.7.15/';
+const FACE_LIMIT = 50;   // closeness below 50% gets a red mark
+function faceKey(email, date, slot){ return String(email).toLowerCase()+'|'+date+'|'+slot; }
+function faceCls(email, date, slot){ if (!USER || USER.role!=='head') return ''; const r = FACE.map[faceKey(email, date, slot)]; return !r ? '' : r.flag && !r.ok ? 'fflag' : 'fok'; }
+function faceIndex(){ FACE.map = {}; (FACE.rows||[]).forEach(r => { const p = r.k.split('|'); FACE.map[faceKey(r.email, p[0], p[1])] = r; }); }
+function faceMarks(){ document.querySelectorAll('.picbtn[data-fk]').forEach(b => { const p = b.dataset.fk.split('|'), c = faceCls(p[0], p[1], p[2]); b.classList.toggle('fflag', c==='fflag'); b.classList.toggle('fok', c==='fok'); b.title = c==='fflag' ? 'Please review this photo' : 'See the photo'; });
+  const bar = $('faceBar'); if (bar) bar.innerHTML = faceBarTxt(); }
+function faceBarTxt(){ if (FACE.err) return '🧑 Face check could not run: '+esc(FACE.err); if (FACE.busy) return `🧑 Checking the faces in the photos… ${FACE.done} of ${FACE.todo}`;
+  const n = (FACE.rows||[]).filter(r => r.flag && !r.ok && r.k.slice(0,10) >= addDays(todayPH(), -7)).length; return n ? `<b style="color:#d93025">🔴 ${n} photo${n>1?'s':''} in the past 7 days need${n>1?'':'s'} your review.</b> Tap the camera with a red ring.` : FACE.rows ? '🧑 Face check: no unusual photo in the past 7 days.' : ''; }
+async function faceLib(){ if (FACE.lib) return; await loadScript(FACE_CDN+'dist/face-api.js'); const u = FACE_CDN+'model/';
+  await faceapi.nets.tinyFaceDetector.loadFromUri(u); await faceapi.nets.faceLandmark68Net.loadFromUri(u); await faceapi.nets.faceRecognitionNet.loadFromUri(u); FACE.lib = true; }
+function faceImg(src){ return new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = rej; i.src = src; }); }
+async function faceRead(src){ const img = await faceImg(src);
+  const D = await faceapi.detectAllFaces(img, new faceapi.TinyFaceDetectorOptions({ inputSize:416, scoreThreshold:0.35 })).withFaceLandmarks().withFaceDescriptors();
+  if (!D.length) return { n:0 }; const area = x => x.detection.box.width * x.detection.box.height; D.sort((a,b) => area(b) - area(a));
+  const big = D.filter(x => area(x) > area(D[0]) * 0.35).length; return { n:big, d:Array.from(D[0].descriptor).map(v => Math.round(v*10000)/10000) }; }
+function faceDist(a, b){ let s = 0; for (let i = 0; i < 128; i++){ const t = a[i]-b[i]; s += t*t; } return Math.sqrt(s); }
+// the earlier photos that agree with each other are the reference; an odd one among them is left out
+function faceRefs(email, skipKey){ let R = (FACE.rows||[]).filter(r => r.email===email && r.d && r.d.length===128 && r.k!==skipKey && (!r.flag || r.ok));
+  if (R.length >= 3){ const med = r => { const ds = R.filter(x => x!==r).map(x => faceDist(r.d, x.d)).sort((a,b) => a-b); return ds[Math.floor(ds.length/2)]; }; const good = R.filter(r => med(r) <= 0.55); if (good.length >= 2) R = good; }
+  return R; }
+function faceJudge(email, k, res){ if (!res.n) return { flag:true, why:'No clear face in the photo', score:null };
+  const R = faceRefs(email, k); if (res.n > 1) return { flag:true, why:'More than one face in the photo', score:null };
+  if (R.length < 2) return { flag:false, why:'Saved as an earlier photo for comparison', score:null };
+  const ds = R.map(r => faceDist(res.d, r.d)).sort((a,b) => a-b), near = ds.slice(0, 3), avg = near.reduce((a,b) => a+b, 0) / near.length;
+  const pct = Math.max(0, Math.min(100, Math.round((1 - avg) * 100)));
+  return pct < FACE_LIMIT ? { flag:true, why:'The face looks different from the earlier photos', score:pct } : { flag:false, why:'', score:pct }; }
+async function faceSrc(email, date, slot){ const local = STF_PICS[email+'|'+date+'|'+slot]; if (local) return local; const r = await api('staffPhoto', { email, date, slot }); return r.none ? '' : r.src; }
+async function faceRun(force){ if (!stfHead() || FACE.busy || !STF.data) return; if (!force && Date.now() - FACE.at < 90000) return faceMarks(); FACE.busy = true; FACE.err = ''; FACE.at = Date.now();
+  try{ FACE.rows = (await api('faceLoad')).rows || []; faceIndex(); faceMarks();
+    const ok = id => id && ['none','nocam','failed','local'].indexOf(id) < 0, logs = (STF.data.logs||[]).filter(L => L.email && L.email!==USER.email), from = addDays(todayPH(), -7);
+    const have = k => !!FACE.map[k], jobs = [];
+    // photos of the past 7 days to check, newest first
+    logs.filter(L => L.date >= from).sort((a,b) => String(b.date).localeCompare(String(a.date))).forEach(L => STF_SLOTS.forEach(s => { const id = (L.photos||{})[s[0]]; if (ok(id) && !have(faceKey(L.email, L.date, s[0]))) jobs.push({ L, slot:s[0], ref:false }); }));
+    // each person needs a few earlier photos to compare with
+    [...new Set(logs.map(L => L.email))].forEach(em => { const n = (FACE.rows||[]).filter(r => r.email===em && r.d && r.d.length).length; let need = Math.max(0, 4 - n);
+      logs.filter(L => L.email===em && L.date < from).sort((a,b) => String(b.date).localeCompare(String(a.date))).forEach(L => STF_SLOTS.forEach(s => { const id = (L.photos||{})[s[0]]; if (need > 0 && ok(id) && !have(faceKey(em, L.date, s[0]))){ jobs.unshift({ L, slot:s[0], ref:true }); need--; } })); });
+    FACE.todo = jobs.length; FACE.done = 0; if (!jobs.length){ FACE.busy = false; return faceMarks(); }
+    faceMarks(); await faceLib(); let batch = [];
+    for (const j of jobs){ if (!stfHead()) break; const em = j.L.email.toLowerCase(), k = j.L.date+'|'+j.slot;
+      try{ const src = await faceSrc(j.L.email, j.L.date, j.slot); if (!src) { FACE.done++; continue; } const res = await faceRead(src), v = j.ref && res.n===1 ? { flag:false, why:'Earlier photo for comparison', score:null } : faceJudge(em, k, res);
+        const row = { email:em, k, d:res.d || [], flag:v.flag, why:v.why, score:v.score }; FACE.rows.push(Object.assign({ ok:'' }, row)); faceIndex(); batch.push(row); }catch(e){}
+      FACE.done++; faceMarks(); if (batch.length >= 5){ const b = batch; batch = []; try{ FACE.rows = (await api('faceSave', { rows:b })).rows; faceIndex(); }catch(e){} } }
+    if (batch.length){ try{ FACE.rows = (await api('faceSave', { rows:batch })).rows; faceIndex(); }catch(e){} }
+  }catch(e){ FACE.err = /load|internet|fetch/i.test(String(e && e.message)) ? 'the face reader did not load. Check the internet.' : friendly(e && e.message); }
+  FACE.busy = false; faceMarks(); }
+function faceNote(email, date, slot){ if (!USER || USER.role!=='head') return ''; const r = FACE.map[faceKey(email, date, slot)];
+  if (!r) return `<div class="fcbox ok" id="fcBox">🧑 Not checked yet. TALA checks the photos while you are on this page.</div>`;
+  if (!r.flag || r.ok) return `<div class="fcbox ok" id="fcBox">✔ ${r.ok ? 'You reviewed this photo: '+esc(r.ok) : r.score != null ? 'The face matches the earlier photos ('+r.score+'% close).' : esc(r.why || 'Checked.')}</div>`;
+  return `<div class="fcbox" id="fcBox"><b>🔴 Please review.</b> ${esc(r.why)}${r.score != null ? ' ('+r.score+'% close, below '+FACE_LIMIT+'%)' : ''}.<div id="fcCmp" class="fcrow" style="margin-top:8px"></div>
+    <div class="row" style="margin-top:8px;gap:6px;flex-wrap:wrap"><button class="btn small" onclick="faceMark('${esc(email)}','${date}','${slot}')">✔ It is the same person</button><button class="btn ghost small" onclick="closeModal('stfModal')">Keep the red mark</button></div>
+    <p class="hint" style="margin:6px 0 0">This is a helper only. Poor light, a blurred photo, or a mask can also cause a red mark. Compare the photos yourself before deciding.</p></div>`; }
+// shows an earlier photo of the same person beside it, so the School Head can compare
+async function faceSee(email, date, slot, src){ const r = FACE.map[faceKey(email, date, slot)], box = $('fcCmp'); if (!r || !r.flag || r.ok || !box) return;
+  const A = faceRefs(email.toLowerCase(), r.k).sort((a,b) => String(b.k).localeCompare(String(a.k))), R = A.find(x => x.k.slice(0,10) < r.k.slice(0,10)) || A[0]; if (!R) return; const p = R.k.split('|');
+  box.innerHTML = `<figure><img src="${src}" alt=""><figcaption>This photo</figcaption></figure><figure id="fcRef"><div class="pirdots"><i></i><i></i><i></i></div><figcaption>Earlier photo, ${esc(dShort(p[0]))}</figcaption></figure>`;
+  try{ const s2 = await faceSrc(email, p[0], p[1]); const f = $('fcRef'); if (f && s2) f.innerHTML = `<img src="${s2}" alt=""><figcaption>Earlier photo, ${esc(dShort(p[0]))}</figcaption>`; }catch(e){} }
+async function faceMark(email, date, slot){ const r = FACE.map[faceKey(email, date, slot)]; if (!r) return;
+  try{ loading(true); FACE.rows = (await api('faceSave', { rows:[{ email:r.email, k:r.k, flag:false, why:'Reviewed by the School Head', score:r.score, ok:true }] })).rows; loading(false); faceIndex(); faceMarks(); closeModal('stfModal'); toast('Marked as reviewed.'); }catch(e){ loading(false); handleErr(e); } }
 
 /* ----- the personnel page ----- */
 function stfDraw(){
@@ -9500,7 +9574,7 @@ function stfDayGo(d){ const t = todayPH(); let x = addDays(STF.day || t, d); whi
 function stfMyDay(day){ const L = stfLog(USER.email, day) || {}, o = stfDay(USER.email, day);
   return `<div class="stfme"><div class="stfme-h"><div><small>My time on this day</small><b>${esc(dShort(day))}</b> ${o&&o.label?stfChip(o):''}</div></div>
     <div class="stftiles">${STF_SLOTS.map(s => `<div class="stft ${L[s[0]]?'on':''}"><small>${s[1]}</small><b>${L[s[0]] ? stfTimeCell(Object.assign({ email:USER.email, date:day }, L), s[0]) : '·'}</b></div>`).join('')}</div></div>`; }
-function stfToday(){
+function stfToday(){ if (stfHead()) setTimeout(faceRun, 800);
   const D = STF.data, now = todayPH(), today = STF.day && STF.day < now ? STF.day : now, past = today !== now; let html = '';
   html += stfDayNav(today);
   if (stfHead() && !past) html += stfAwayCard();
@@ -9510,6 +9584,7 @@ function stfToday(){
     const grp = f => rows.filter(f).map(r => r.p.name);
     const tip = (cls, n, label, names) => `<span class="atn ${cls} tip" tabindex="0" data-tip="${esc(names.length?names.join('\n'):'None')}">${n} ${label}</span>`;
     const pin = grp(r => /^Present/.test(r.o.label)), late = grp(r => r.o.tardy), outs = grp(r => r.o.cls==='exc'), wait = grp(r => r.o.label==='Not yet in'), abs = grp(r => r.o.label==='Absent');
+    if (stfHead()) html += `<div class="fcbar" id="faceBar">${faceBarTxt()}</div>`;
     html += `<div class="attoday" style="margin-top:12px"><div><small>${past ? esc(['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][dow(today)]) : 'Today'}</small><b>${esc(dShort(today))}</b></div>${tip('ok',pin.length,'in school',pin)}${tip('tdy',late.length,'late',late)}${tip('exc',outs.length,'on leave or outside',outs)}${tip('wait',wait.length,'not yet in',wait)}${abs.length?tip('bad',abs.length,'absent',abs):''}</div>
     <div class="table-wrap"><table class="stft-table"><thead><tr><th>Name</th>${STF_SLOTS.map(s=>`<th>${s[1]}</th>`).join('')}<th>Status</th>${stfHead()?'<th></th>':''}</tr></thead><tbody>
     ${rows.map(r => `<tr><td><b>${esc(r.p.name)}</b><small>${esc(r.p.position||(r.p.role==='admin'?'Administrative Officer':'Teacher'))}</small></td>${STF_SLOTS.map(s=>`<td>${stfTimeCell(Object.assign({ email:r.p.email, date:today }, r.L), s[0], '<span class="hint">·</span>')}</td>`).join('')}<td>${stfChip(r.o)}${stfConf(r.p.email, today)?`<small class="${stfConf(r.p.email, today).ok?'ok':'bad'}">${stfConf(r.p.email, today).ok?'\u2714 Times confirmed':'\u26A0 Says the times are not correct'}</small>`:''}${r.o.req&&r.o.req.length?r.o.req.map(q=>`<small>${esc(REQ_LABEL[q.type])}</small>`).join(''):''}</td>${stfHead()?`<td><button class="linkbtn" onclick="stfMarkOpen('${r.p.email}','${today}')">Mark or correct</button></td>`:''}</tr>`).join('') || `<tr><td colspan="7" class="empty">No personnel accounts yet.</td></tr>`}
@@ -13156,7 +13231,7 @@ async function openRpt(){ setTimeout(() => qgMaybe('rpt'), 1600); ['viewLac','vi
   try{ RPT.data = await api('rptLoad'); LC_AT.rpt = Date.now(); }catch(e){ if (!RPT.data){ $('viewPir').innerHTML = `<div class="empty">${esc(friendly(e.message))} <button class="btn ghost small" onclick="openRpt()">Try again</button></div>`; return; } }
   if (CUR_FEATURE==='rpt') rptDraw(); }
 function rptStaff(){ return USER && (USER.role==='head' || USER.role==='admin'); }
-function rptChip(st){ const x = RPT_STATUS[st] || ['•','']; return `<span class="atn ${x[1]}">${x[0]} ${esc(st==='Personal' ? 'For personal use' : st==='Ready' ? 'Not yet submitted' : st)}</span>`; }
+function rptChip(st){ const x = RPT_STATUS[st] || ['•','']; return `<span class="atn ${x[1]}">${x[0]} ${esc(st==='Personal' ? 'For personal use' : st==='Ready' ? 'Cover page only, not yet sent' : st)}</span>`; }
 function rptOffice(o){ return o.status==='Personal' ? 'Personal use, not submitted' : o.status==='Ready' ? 'Not yet submitted' : o.data.office==='Other office' ? (o.data.otherOffice||'Other office') : o.data.office; }
 function rptTodo(o){ if (o.status==='Removed') return USER.role==='head' && !!(o.data.resReq && o.data.resReq.status==='Pending'); if (USER.role==='head') return (o.status==='Incoming' && o.data.office!=='Office of the AO') || !!(o.data.delReq && o.data.delReq.status==='Pending'); if (USER.role==='admin') return o.status==='Incoming' && o.data.office==='Office of the AO'; return o.email===USER.email && (o.status==='For correction' || o.status==='Ready'); }
 function rptList(){ const q = RPT.q.toLowerCase().trim(), L = RPT.data.items.filter(o => (RPT.st==='Removed' ? o.status==='Removed' : RPT.st==='todo' || o.status!=='Removed') && (!RPT.st || (RPT.st==='todo' ? rptTodo(o) : RPT.st==='sub' ? /^Submitted to/.test(o.status) : RPT.st==='For safekeeping' ? /^For safekeeping/.test(o.status) : o.status===RPT.st)) && (!RPT.office || o.data.office===RPT.office) && (!RPT.who || o.email===RPT.who)
@@ -13353,7 +13428,7 @@ function rptLapse(o){ const R0 = (o.route||[]).filter(x => x.on), si = R0.findIn
   for (let i = 0; i < R.length; i++){ const nx = R[i+1], to = nx ? nx.on : (stop && /^For safekeeping|Removed/.test(R[i].act) ? R[i].on : end); steps.push({ act:R[i].act, on:R[i].on, days:rptDays(R[i].on, to), open:!nx && !stop }); }
   const first = (R.find(x => /^Received/.test(x.act))||{}).on;
   return { steps, total:rptDays(R.length ? R[0].on : o.on, end), stopped:!!stop, toReceive: first ? rptDays(R.length ? R[0].on : o.on, first) : null, now: steps.length ? steps[steps.length-1] : null }; }
-function rptLapseCell(o){ if (o.status==='Personal') return '<span class="hint">Personal</span>'; if (o.status==='Ready') return '<span class="hint">Not yet submitted</span>'; const L = rptLapse(o), n = L.now;
+function rptLapseCell(o){ if (o.status==='Personal') return '<span class="hint">Personal</span>'; if (o.status==='Ready') return '<span class="hint">Not counted yet</span><small>Starts with the transmittal</small>'; const L = rptLapse(o), n = L.now;
   if (L.stopped) return `<span class="lp ok">✔ ${rptDaysTxt(L.total)}</span><small>Kept for safekeeping</small>`;
   const late = n && n.days >= 5; return `<span class="lp ${late?'bad':n && n.days >= 3?'wait':''}">${n ? rptDaysTxt(n.days) : ''}</span><small>${n ? 'as '+esc(rptStageName(o.status)) : ''}${L.total!==(n||{}).days ? ', '+rptDaysTxt(L.total)+' in all' : ''}</small>`; }
 function rptStageName(st){ return st==='Incoming' ? 'Incoming' : st; }
