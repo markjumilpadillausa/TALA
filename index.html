@@ -2148,8 +2148,8 @@ body.ntklocked{overflow:hidden}
 
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
-const MIN_SERVER = '10.5'; // oldest Code.gs this page works with
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'10.5', date:'November 16, 2026' } };
+const MIN_SERVER = '10.6'; // oldest Code.gs this page works with
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'10.6', date:'November 16, 2026' } };
 function verLine(server){
   const old = server && (server.indexOf('older') > -1 || parseFloat(server) < parseFloat(MIN_SERVER));
   const s = server ? ' Server '+server+('.') : '';
@@ -2183,7 +2183,14 @@ const MSG = {
 const SAFE_RETRY = ['healthLoad','publicData','checkSession','getData','getAccounts','getLog','aralLoad','lacLoad','attSections','attSchool','staffLoad','aralPhoto','lacSigs','lacPhotoData'];
 const wait = ms => new Promise(r => setTimeout(r, ms));
 const SAMPLE_READ = /^(publicData|login|checkSession|version|logout|poll|getData|getMySig|photosAll|prfPhoto|logError|calList|obsList|obsSigs|obsSigsMany|lacSigs|memoGet|f201Get|staffPhoto|reqPrint|changePin)$|Load$|List$|Get$|^get[A-Z]|All$/;
-async function api(action, payload){
+/* 10.6: what you tap goes first. Quiet background work (checking for news, getting other tabs ready, the face check)
+   waits until nothing you asked for is still loading, so it never makes you wait. */
+const BGQ = { fg:0, last:0 };
+async function bgWait(){ while (BGQ.fg > 0 || Date.now() - BGQ.last < 1500) await wait(400); }
+function apiBg(action, payload){ return api(action, payload, { bg:true }); }
+async function api(action, payload, opt){ const bg = !!(opt && opt.bg); if (bg) await bgWait(); else BGQ.fg++;
+  try{ return await api0(action, payload); } finally { if (!bg){ BGQ.fg--; BGQ.last = Date.now(); } } }
+async function api0(action, payload){
   if (!connected()) throw new Error('This page is not connected yet. Please contact the School Head.');
   if (USER && USER.sample && !SAMPLE_READ.test(action)){ try{ toast('Practice account: nothing is saved.'); }catch(e){} throw new Error('This is a practice account. You can look around, but nothing is saved.'); }
   const tries = SAFE_RETRY.indexOf(action) > -1 ? 3 : 1;
@@ -2589,6 +2596,7 @@ async function openProf(){ prfReset();
   $('viewPir').style.display=''; CUR_FEATURE = 'prof'; drawSide(); window.scrollTo(0,0);
   if (!USER){ $('viewPir').innerHTML = '<div class="empty">Please sign in to open your profile.</div>'; return; }
   if (!PRF.who) PRF.who = USER.email;
+  if (!PRF.p && PRF.who===USER.email){ const c = lcGet('prf'); if (c && c.p && c.f){ PRF.p = c.p; PRF.f = c.f; } }   // 10.6: your own profile opens at once from this device
   const quick = !!(PRF.p && PRF.f && PRF.p.account && PRF.p.account.email === PRF.who);
   if (quick){ prfDraw(); if (lcFresh('prf:'+PRF.who, 120000)) return;   // opens at once with what was opened before, then updates quietly
     const dr = PRF.draft, ph = PRF.photo;
@@ -2603,9 +2611,12 @@ async function openProf(){ prfReset();
 }
 async function prfFetch(){
   const who = PRF.who || USER.email;
-  const [p, f] = await Promise.all([api('prfLoad', { email: who }), api('f201Load', prfAll() && PRF.tab!=='me' && PRF.tab!=='file' ? {} : { email: who })]);
-  PRF.p = p; PRF.f = f; PRF.draft = null; PRF.photo = undefined;
-  if (prfAll()){ try{ PRF.list = (await api('prfLoad')).list; }catch(e){} }
+  const f201All = prfAll() && PRF.tab!=='me' && PRF.tab!=='file';
+  // 10.6: one trip to the server instead of three
+  let x = null; try{ x = await api('prfOpenLoad', { email: who, f201All }); }catch(e){ if (!/Unknown request/i.test(String(e && e.message))) throw e; }
+  if (x){ PRF.p = x.p; PRF.f = x.f; if (x.list) PRF.list = x.list; }
+  else { const [p, f] = await Promise.all([api('prfLoad', { email: who }), api('f201Load', f201All ? {} : { email: who })]); PRF.p = p; PRF.f = f; if (prfAll()){ try{ PRF.list = (await api('prfLoad')).list; }catch(e){} } }
+  PRF.draft = null; PRF.photo = undefined; if (who===USER.email) lcPut('prf', { p:PRF.p, f:PRF.f });
   prfCount();
 }
 function prfCount(){ if (!USER || !PRF.f || PRF.user !== USER.email) return; const D = PRF.f.docs||[];
@@ -2796,7 +2807,7 @@ function photoIndex(){ const N = {}; Object.keys(PHOTOS.map).forEach(e => { cons
 async function photosLoad(force){ if (!USER) return;
   if (!PHOTOS.at){ try{ const c = JSON.parse(localStorage.getItem(photoKey())||'null'); if (c && c.map){ PHOTOS.map = c.map; photoIndex(); } }catch(e){} }
   if (PHOTOS.busy || (!force && Date.now() - PHOTOS.at < 10*60000)) return; PHOTOS.busy = true;
-  try{ const r = await api('photosAll'); PHOTOS.map = r.photos || {}; PHOTOS.at = Date.now(); photoIndex(); try{ localStorage.setItem(photoKey(), JSON.stringify({ map:PHOTOS.map })); }catch(e){} photoDecorate(); try{ avatarPhoto(); }catch(x){} }catch(e){}
+  try{ const r = await apiBg('photosAll'); PHOTOS.map = r.photos || {}; PHOTOS.at = Date.now(); photoIndex(); try{ localStorage.setItem(photoKey(), JSON.stringify({ map:PHOTOS.map })); }catch(e){} photoDecorate(); try{ avatarPhoto(); }catch(x){} }catch(e){}
   PHOTOS.busy = false; }
 function photoOf(email){ if (USER && USER.sample && email===USER.email) return ''; const o = PHOTOS.map[email]; return o ? o.p : ''; }
 function photoAv(email, name, cls){ const p = photoOf(email), init = String(name||email||'?').trim().charAt(0).toUpperCase(); return p ? `<img class="${cls||'pav'}" src="${p}" alt="" data-av="1">` : `<span class="${cls||'pav'} none" data-av="1">${esc(init)}</span>`; }
@@ -3772,10 +3783,10 @@ function lcFresh(n, ms){ return LC_AT[n] && Date.now() - LC_AT[n] < (ms || 20000
 // After signing in, the tabs fetch their data quietly one by one, so each opens without waiting
 function warmTabs(){ if (!USER || !TOKEN || USER.sample || warmTabs.done === USER.email) return; warmTabs.done = USER.email;
   const jobs = [];
-  if (featOn('rpt')) jobs.push(() => !RPT.data && api('rptLoad').then(d => { if (!RPT.data){ RPT.data = d; LC_AT.rpt = Date.now(); lcPut('rpt', d); } }));
-  if (featOn('inv')) jobs.push(() => !INV.data && api('invLoad').then(d => { if (!INV.data){ INV.data = d; LC_AT.inv = Date.now(); lcPut('inv', d); } }));
-  if (featOn('memo') && USER.aral !== 'only'){ jobs.push(() => { memoReset(); return !MEMO.data && api('memoLoad').then(d => { if (!MEMO.data){ MEMO.data = d; LC_AT.memo = Date.now(); lcPut('memo', d); try{ memoCount(); }catch(e){} } }); }); }
-  if (typeof WELL !== 'undefined' && featOn('well') && USER.aral !== 'only') jobs.push(() => !WELL.data && api('wellLoad').then(d => { if (!WELL.data){ WELL.data = d; LC_AT.well = Date.now(); lcPut('well', d); } }));
+  if (featOn('rpt')) jobs.push(() => !RPT.data && apiBg('rptLoad').then(d => { if (!RPT.data){ RPT.data = d; LC_AT.rpt = Date.now(); lcPut('rpt', d); } }));
+  if (featOn('inv')) jobs.push(() => !INV.data && apiBg('invLoad').then(d => { if (!INV.data){ INV.data = d; LC_AT.inv = Date.now(); lcPut('inv', d); } }));
+  if (featOn('memo') && USER.aral !== 'only'){ jobs.push(() => { memoReset(); return !MEMO.data && apiBg('memoLoad').then(d => { if (!MEMO.data){ MEMO.data = d; LC_AT.memo = Date.now(); lcPut('memo', d); try{ memoCount(); }catch(e){} } }); }); }
+  if (typeof WELL !== 'undefined' && featOn('well') && USER.aral !== 'only') jobs.push(() => !WELL.data && apiBg('wellLoad').then(d => { if (!WELL.data){ WELL.data = d; LC_AT.well = Date.now(); lcPut('well', d); } }));
   let i = 0; const next = () => { if (i >= jobs.length || !USER) return; const j = jobs[i++]; Promise.resolve().then(j).catch(()=>{}).then(() => setTimeout(next, 700)); };
   setTimeout(next, 4000); }
 /* ---------- 10.3 Deleted items. Whatever is deleted is kept for one year. The owner asks the School Head to restore it, with a reason. ---------- */
@@ -5675,7 +5686,7 @@ async function poll(){
   if (!USER || !TOKEN) return;
   LAST_POLL = Date.now();
   try{
-    const r = await api('poll', { since: MSG_SINCE, seenAral: seenAt('aral') });
+    const r = await apiBg('poll', { since: MSG_SINCE, seenAral: seenAt('aral') });
     NOTICES = r.notices || [];
     mergeMsgs(r.messages || []); MSG_SINCE = r.now ? r.now.slice(0,16) : MSG_SINCE;
     const un = r.unread || 0;
@@ -9270,7 +9281,7 @@ function stfAll(){ return stfRole()==='head' || stfRole()==='admin'; }
 function stfKey(){ return 'tala_stf_'+(USER?USER.email:''); }
 async function stfLoad(quiet){
   if (!STF.data){ try{ STF.data = JSON.parse(localStorage.getItem(stfKey())||'null'); }catch(e){} }
-  try{ const r = await api('staffLoad', { from: ATT.firstDay || '' }); STF.data = r; try{ localStorage.setItem(stfKey(), JSON.stringify(r)); }catch(e){} }
+  try{ const r = await (quiet && STF.data ? apiBg : api)('staffLoad', { from: ATT.firstDay || '' }); STF.data = r; try{ localStorage.setItem(stfKey(), JSON.stringify(r)); }catch(e){} }
   catch(e){ if (!STF.data && !quiet) throw e; }
   stfPendingApply(); stfDotCount(); return STF.data;
 }
@@ -9320,8 +9331,10 @@ function stfChip(o){ return o && o.label ? `<span class="atn ${o.cls}">${esc(o.l
 /* ----- entry from Attendance ----- */
 async function openStaff(tab){ if ((tab||STF.tab)==='today' && STF.data && stfAll()) try{ seenAdd('tin', attNewTin()); }catch(e){}
   ATT.view = 'staff'; if (tab) STF.tab = tab; if (!STF.month) STF.month = todayPH().slice(0,7);
-  if (!STF.data) $('viewAtt').innerHTML = `<div class="pirload"><div class="pirstar">★</div><b>Opening the personnel records</b><div class="pirdots"><i></i><i></i><i></i></div></div>`;
-  try{ await stfLoad(); }catch(e){ handleErr(e); ATT.view = 'home'; return attDraw(); }
+  if (!STF.data){ try{ STF.data = JSON.parse(localStorage.getItem(stfKey())||'null'); }catch(e){} }
+  if (STF.data){ attDraw(); window.scrollTo(0,0); if (lcFresh('stf', 30000)) return; try{ await stfLoad(true); LC_AT.stf = Date.now(); }catch(e){} if (ATT.view==='staff' && !document.querySelector('.overlay.open')){ const y = window.scrollY; attDraw(); window.scrollTo(0, y); } return; }   // 10.6: opens at once from this device
+  $('viewAtt').innerHTML = `<div class="pirload"><div class="pirstar">★</div><b>Opening the personnel records</b><div class="pirdots"><i></i><i></i><i></i></div></div>`;
+  try{ await stfLoad(); LC_AT.stf = Date.now(); }catch(e){ handleErr(e); ATT.view = 'home'; return attDraw(); }
   attDraw(); window.scrollTo(0,0);
 }
 // The block on the Attendance page: my time today and the buttons
@@ -9522,23 +9535,29 @@ function faceJudge(email, k, res){ if (!res.n) return { flag:true, why:'No clear
   const ds = R.map(r => faceDist(res.d, r.d)).sort((a,b) => a-b), near = ds.slice(0, 3), avg = near.reduce((a,b) => a+b, 0) / near.length;
   const pct = Math.max(0, Math.min(100, Math.round((1 - avg) * 100)));
   return pct < FACE_LIMIT ? { flag:true, why:'The face looks different from the earlier photos', score:pct } : { flag:false, why:'', score:pct }; }
-async function faceSrc(email, date, slot){ const local = STF_PICS[email+'|'+date+'|'+slot]; if (local) return local; const r = await api('staffPhoto', { email, date, slot }); return r.none ? '' : r.src; }
+async function faceSrc(email, date, slot){ const local = STF_PICS[email+'|'+date+'|'+slot]; if (local) return local; const r = await apiBg('staffPhoto', { email, date, slot }); return r.none ? '' : r.src; }
 async function faceRun(force){ if (!stfHead() || FACE.busy || !STF.data) return; if (!force && Date.now() - FACE.at < 90000) return faceMarks(); FACE.busy = true; FACE.err = ''; FACE.at = Date.now();
-  try{ FACE.rows = (await api('faceLoad')).rows || []; faceIndex(); faceMarks();
-    const ok = id => id && ['none','nocam','failed','local'].indexOf(id) < 0, logs = (STF.data.logs||[]).filter(L => L.email && L.email!==USER.email), from = addDays(todayPH(), -7);
+  try{ FACE.rows = (await apiBg('faceLoad')).rows || []; faceIndex(); faceMarks();
+    const ok = id => id && ['none','nocam','failed','local'].indexOf(id) < 0, logs = (STF.data.logs||[]).filter(L => L.email && L.email!==USER.email), from = addDays(todayPH(), -1);   // 10.6: today and yesterday only, so it stays light
     const have = k => !!FACE.map[k], jobs = [];
     // photos of the past 7 days to check, newest first
     logs.filter(L => L.date >= from).sort((a,b) => String(b.date).localeCompare(String(a.date))).forEach(L => STF_SLOTS.forEach(s => { const id = (L.photos||{})[s[0]]; if (ok(id) && !have(faceKey(L.email, L.date, s[0]))) jobs.push({ L, slot:s[0], ref:false }); }));
     // each person needs a few earlier photos to compare with
-    [...new Set(logs.map(L => L.email))].forEach(em => { const n = (FACE.rows||[]).filter(r => r.email===em && r.d && r.d.length).length; let need = Math.max(0, 4 - n);
+    [...new Set(logs.map(L => L.email))].forEach(em => { const n = (FACE.rows||[]).filter(r => r.email===em && r.d && r.d.length).length; let need = Math.max(0, 3 - n);
       logs.filter(L => L.email===em && L.date < from).sort((a,b) => String(b.date).localeCompare(String(a.date))).forEach(L => STF_SLOTS.forEach(s => { const id = (L.photos||{})[s[0]]; if (need > 0 && ok(id) && !have(faceKey(em, L.date, s[0]))){ jobs.unshift({ L, slot:s[0], ref:true }); need--; } })); });
     FACE.todo = jobs.length; FACE.done = 0; if (!jobs.length){ FACE.busy = false; return faceMarks(); }
     faceMarks(); await faceLib(); let batch = [];
-    for (const j of jobs){ if (!stfHead()) break; const em = j.L.email.toLowerCase(), k = j.L.date+'|'+j.slot;
-      try{ const src = await faceSrc(j.L.email, j.L.date, j.slot); if (!src) { FACE.done++; continue; } const res = await faceRead(src), v = j.ref && res.n===1 ? { flag:false, why:'Earlier photo for comparison', score:null } : faceJudge(em, k, res);
-        const row = { email:em, k, d:res.d || [], flag:v.flag, why:v.why, score:v.score }; FACE.rows.push(Object.assign({ ok:'' }, row)); faceIndex(); batch.push(row); }catch(e){}
-      FACE.done++; faceMarks(); if (batch.length >= 5){ const b = batch; batch = []; try{ FACE.rows = (await api('faceSave', { rows:b })).rows; faceIndex(); }catch(e){} } }
-    if (batch.length){ try{ FACE.rows = (await api('faceSave', { rows:batch })).rows; faceIndex(); }catch(e){} }
+    // the photos come six at a time in one trip, and only while you stay on Attendance
+    for (let i = 0; i < jobs.length; i += 6){ if (!stfHead() || $('viewAtt').style.display==='none') break; const part = jobs.slice(i, i+6);
+      let pics = null; try{ pics = await apiBg('faceThumbsGet', { keys: part.map(j => ({ email:j.L.email, date:j.L.date, slot:j.slot })) }); }catch(e){ pics = null; }
+      for (let q = 0; q < part.length; q++){ const j = part[q], em = j.L.email.toLowerCase(), k = j.L.date+'|'+j.slot;
+        try{ const src = STF_PICS[j.L.email+'|'+j.L.date+'|'+j.slot] || (pics ? (pics[q] && !pics[q].none ? pics[q].src : '') : await faceSrc(j.L.email, j.L.date, j.slot)); if (!src){ FACE.done++; continue; }
+          const res = await faceRead(src), v = j.ref && res.n===1 ? { flag:false, why:'Earlier photo for comparison', score:null } : faceJudge(em, k, res);
+          const row = { email:em, k, d:res.d || [], flag:v.flag, why:v.why, score:v.score }; FACE.rows.push(Object.assign({ ok:'' }, row)); faceIndex(); batch.push(row); }catch(e){}
+        FACE.done++; faceMarks(); }
+      if (batch.length >= 6){ const b = batch; batch = []; try{ FACE.rows = (await apiBg('faceSave', { rows:b })).rows; faceIndex(); }catch(e){} }
+      await wait(1500); }
+    if (batch.length){ try{ FACE.rows = (await apiBg('faceSave', { rows:batch })).rows; faceIndex(); }catch(e){} }
   }catch(e){ FACE.err = /load|internet|fetch/i.test(String(e && e.message)) ? 'the face reader did not load. Check the internet.' : friendly(e && e.message); }
   FACE.busy = false; faceMarks(); }
 function faceNote(email, date, slot){ if (!USER || USER.role!=='head') return ''; const r = FACE.map[faceKey(email, date, slot)];
@@ -10037,7 +10056,7 @@ function lacSY(){ const t = todayPH(); return ATT.firstDay || (t.slice(5,7) >= '
 
 async function lacLoad(quiet){
   if (!LAC.data){ try{ LAC.data = JSON.parse(localStorage.getItem(lacKey())||'null'); }catch(e){} }
-  try{ const r = await api('lacLoad'); LAC.data = r; lacSaveLocal(); }catch(e){ if (!LAC.data && !quiet) throw e; }
+  try{ const r = await (quiet && LAC.data ? apiBg : api)('lacLoad'); LAC.data = r; lacSaveLocal(); }catch(e){ if (!LAC.data && !quiet) throw e; }
   lacPendingApply(); return LAC.data;
 }
 function lacSaveLocal(){ try{ localStorage.setItem(lacKey(), JSON.stringify(LAC.data)); }catch(e){} }
