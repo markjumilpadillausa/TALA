@@ -2149,7 +2149,7 @@ body.ntklocked{overflow:hidden}
 <script>
 /* Version information. Update CURRENT each time a new version is released. */
 const MIN_SERVER = '10.6'; // oldest Code.gs this page works with
-const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'10.6', date:'November 16, 2026' } };
+const VERSION = { first:{ no:'1.0', date:'September 27, 2026' }, current:{ no:'10.6.1', date:'November 17, 2026' } };
 function verLine(server){
   const old = server && (server.indexOf('older') > -1 || parseFloat(server) < parseFloat(MIN_SERVER));
   const s = server ? ' Server '+server+('.') : '';
@@ -2180,7 +2180,7 @@ const MSG = {
   BUSY: 'TALA is busy for a moment. Please wait a few seconds, then try again.',
   UPLOAD: 'Your file was not sent yet, and nothing was lost. Please tap Submit again when your signal is stronger.'
 };
-const SAFE_RETRY = ['healthLoad','publicData','checkSession','getData','getAccounts','getLog','aralLoad','lacLoad','attSections','attSchool','staffLoad','aralPhoto','lacSigs','lacPhotoData'];
+const SAFE_RETRY = ['staffClock','healthLoad','publicData','checkSession','getData','getAccounts','getLog','aralLoad','lacLoad','attSections','attSchool','staffLoad','aralPhoto','lacSigs','lacPhotoData'];
 const wait = ms => new Promise(r => setTimeout(r, ms));
 const SAMPLE_READ = /^(publicData|login|checkSession|version|logout|poll|getData|getMySig|photosAll|prfPhoto|logError|calList|obsList|obsSigs|obsSigsMany|lacSigs|memoGet|f201Get|staffPhoto|reqPrint|changePin)$|Load$|List$|Get$|^get[A-Z]|All$/;
 /* 10.6: what you tap goes first. Quiet background work (checking for news, getting other tabs ready, the face check)
@@ -3777,7 +3777,10 @@ function featOn(id){ const s = (DATA||PUB||{}).settings||{}; return (s.features|
 function lcKey(n){ return 'tala_c_'+n+'_'+(USER?USER.email:''); }
 function lcGet(n){ try{ return JSON.parse(localStorage.getItem(lcKey(n))||'null'); }catch(e){ return null; } }
 const LC_LAST = {};
-function lcPut(n, d){ if (!USER || !d || LC_LAST[n] === d) return; LC_LAST[n] = d; setTimeout(() => { try{ localStorage.setItem(lcKey(n), JSON.stringify(d)); }catch(e){} }, 0); }
+function lcPut(n, d){ if (!USER || !d || LC_LAST[n] === d) return; LC_LAST[n] = d; setTimeout(() => { try{ const j = JSON.stringify(d); if (j.length > 1200000) return; localStorage.setItem(lcKey(n), j); }catch(e){ lsFree(); } }, 0); }
+// 10.6.1: when the phone's storage for TALA is full, the copies of the tabs are removed first, so a Time in waiting to be sent always fits
+function lsFree(){ try{ Object.keys(localStorage).filter(k => /^tala_(c_|sbp|photos)/.test(k)).forEach(k => localStorage.removeItem(k)); }catch(e){} }
+function lsSet(k, v){ try{ localStorage.setItem(k, v); return true; }catch(e){ lsFree(); try{ localStorage.setItem(k, v); return true; }catch(x){ return false; } } }
 const LC_AT = {};
 function lcFresh(n, ms){ return LC_AT[n] && Date.now() - LC_AT[n] < (ms || 20000); }
 // After signing in, the tabs fetch their data quietly one by one, so each opens without waiting
@@ -5891,12 +5894,14 @@ function printSigBank(){
 const OUT_KEY = 'tala_outbox';
 let SYNCING = false, LAST_SYNC = '';
 function outbox(){ try{ return JSON.parse(localStorage.getItem(OUT_KEY)||'[]'); }catch(e){ return []; } }
-function saveOut(o){ try{ localStorage.setItem(OUT_KEY, JSON.stringify(o)); }catch(e){} syncUI(); }
+function saveOut(o){ const ok = lsSet(OUT_KEY, JSON.stringify(o)); syncUI(); return ok; }
 function queueOut(action, payload, label){
   const o = outbox().filter(x => !(x.action==='saveSig' && action==='saveSig' && x.email===USER.email));
   o.push({ id: Date.now()+''+Math.floor(Math.random()*1000), email: USER.email, action, payload, label, on: nowLocal().replace('T',' ') });
-  saveOut(o);
+  return saveOut(o);
 }
+function stfLostTap(it, why){ const p = it.payload || {}, at = String(p.offlineAt||'');
+  stfModal(`<h3>⚠ Your ${esc(it.label||'time')} was not recorded</h3><p>TALA could not record the tap saved on this phone at <b>${esc(at ? dTime(at.replace(' ','T')) : '')}</b>.</p><p>Reason: ${esc(why)}</p><p>Please tap again now, or send a request to correct your time so the School Head can fix it.</p><div class="row"><button class="btn" onclick="closeModal('stfModal')">OK</button></div>`); }
 function myPending(){ return USER ? outbox().filter(x => x.email===USER.email) : []; }
 async function flushOut(){
   if (SYNCING || !USER || !TOKEN || navigator.onLine === false) return;
@@ -5904,10 +5909,15 @@ async function flushOut(){
   SYNCING = true; syncUI();
   for (const it of mine){
     try{ await api(it.action, it.payload); saveOut(outbox().filter(x => x.id !== it.id)); }
-    catch(e){ if (friendly(e.message) === MSG.NET || friendly(e.message) === MSG.BUSY) break; saveOut(outbox().filter(x => x.id !== it.id)); toast(it.label+' could not be synced: '+friendly(e.message)); }
+    catch(e){ const m = String(e && e.message || '');
+      if (friendly(m) === MSG.NET || friendly(m) === MSG.BUSY) break;
+      // 10.6.1: a signed out or PIN step keeps the item; it is sent after signing in again
+      if (/SESSION_ENDED|PIN_CHANGE_REQUIRED/.test(m)){ SYNCING = false; syncUI(); handleErr(e); return; }
+      saveOut(outbox().filter(x => x.id !== it.id));
+      if (it.action==='staffClock') stfLostTap(it, friendly(m)); else toast(it.label+' could not be synced: '+friendly(m)); }
   }
   SYNCING = false; LAST_SYNC = nowLocal(); syncUI();
-  if (!myPending().length) toast('All your offline work is synced.');
+  if (!myPending().length){ toast('Sent. All your saved work is now in TALA.'); try{ if (STF.data) stfLoad(true).then(() => { if (ATT.view==='staff') stfDraw(); else { const el = $('stfHome'); if (el) el.innerHTML = stfHomeInner(); } }); }catch(e){} }
 }
 function syncUI(){
   const el = $('syncSt'); if (!el) return;
@@ -9424,7 +9434,8 @@ async function stfClock(slot){
   L.photos = Object.assign({}, L.photos, { [slot]: shot.photo ? 'local' : 'nocam' });
   try{ if (navigator.onLine===false) throw new Error(MSG.NET);
     loading(true); const r = await api('staffClock', Object.assign({ slot }, pic)); loading(false); Object.assign(L, r.log); delete L.local; if (r.already) toast('This was already recorded at '+time12(r.log[slot])+'.'); else toast(lab+' recorded at '+time12(r.log[slot])+'.'); if (slot==='pmOut' && !r.already) setTimeout(() => stfConfirmAsk(today), 700); }
-  catch(e){ loading(false); if (friendly(e.message)===MSG.NET || friendly(e.message)===MSG.BUSY){ const at = nowLocal().replace('T',' ').slice(0,16); queueOut('staffClock', Object.assign({ slot, offlineAt:at }, pic), lab+' '+at); L[slot] = at.slice(11,16); L.local = true; toast('Saved on this device. It will sync when you are online.'); } else return handleErr(e); }
+  catch(e){ loading(false); if (friendly(e.message)===MSG.NET || friendly(e.message)===MSG.BUSY){ const at = nowLocal().replace('T',' ').slice(0,16); const kept = queueOut('staffClock', Object.assign({ slot, offlineAt:at }, pic), lab+' '+at); if (!kept){ delete L.photos[slot]; return stfModal(`<h3>⚠ Not sent yet</h3><p>There is no internet right now, and this phone has no room to keep your ${esc(lab)} for later.</p><p><b>Please tap ${esc(lab)} again</b> when you have internet.</p><div class="row"><button class="btn" onclick="closeModal('stfModal')">OK</button></div>`); }
+      L[slot] = at.slice(11,16); L.local = true; stfModal(`<h3>⏳ Saved on this phone, not yet sent</h3><p>Your ${esc(lab)} at <b>${esc(time12(at.slice(11,16)))}</b> is kept on this phone. It is sent to TALA by itself once there is internet, with the same time.</p><p><b>Keep TALA open on this phone</b> until you see <b>Sent</b>. Do not tap again on another device, and do not sign out.</p><div class="row"><button class="btn" onclick="closeModal('stfModal');flushOut()">OK</button></div>`); } else return handleErr(e); }
   try{ localStorage.setItem(stfKey(), JSON.stringify(STF.data)); }catch(e){}
   if (ATT.view==='staff') stfDraw(); else { const el = $('stfHome'); if (el) el.innerHTML = stfHomeInner(); }
 }
